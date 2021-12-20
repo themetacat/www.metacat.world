@@ -1,0 +1,28 @@
+.active::after {
+  position: absolute;
+  bottom: 0;
+  width: 180px;
+  height: 6px;
+  background-color: #00d0ec;
+  content: ' ';
+}
+
+.normal {
+  color: #aaa;
+}
+.tab {
+  position: relative;
+  color: #fff;
+  cursor: pointer;
+}
+
+.canHover {
+  color: #aaa;
+}
+
+.active,
+.active > .canHover,
+.canHover:hover {
+  color: #fff;
+  font-size: 25px;
+}
