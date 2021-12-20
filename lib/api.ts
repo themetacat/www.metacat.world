@@ -71,4 +71,4 @@ class API {
   }
 }
 
-export default new API('https://www.metacat.world/api/v1');
+export default new API('https://api.metacat.world/api/v1');
