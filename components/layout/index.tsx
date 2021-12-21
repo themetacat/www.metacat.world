@@ -85,6 +85,7 @@ export default function Layout({
           {!hideNav && (
             <header className={cn('main-content h-full flex justify-center items-center p-5')}>
               <div className="flex flex-grow items-center text-white font-bold text-3xl">
+                <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
                 <Link href="/">METACAT</Link>
               </div>
               <div className="flex flex-grow justify-end">
@@ -100,10 +101,12 @@ export default function Layout({
           )}
           <div className="flex main-content justify-between h-88 py-10">
             <div className="flex items-center" style={{ minHeight: '220px' }}>
-              <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
-              <div className="sign-mark-word text-6xl text-white font-bold">
-                <div>CATCH DATA</div>
-                <div className="mt-12">CATCH VALUE</div>
+              <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
+                <div>CATCH DATA CATCH VALUE</div>
+                <div className={style.delive}></div>
+                <div
+                  className={cn('text-2xl mt-7 font-light', style.littleText)}
+                >{`Metaverse Data Analytics & Content Navigation.`}</div>
               </div>
             </div>
             <div className={cn('image-round', style.roundImage)}>
