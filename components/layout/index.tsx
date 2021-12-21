@@ -101,10 +101,12 @@ export default function Layout({
           )}
           <div className="flex main-content justify-between h-88 py-10">
             <div className="flex items-center" style={{ minHeight: '220px' }}>
-              <div className="sign-mark-word text-5xl text-white font-bold">
-                <div>Catch Data Catch Value</div>
-                <div>-</div>
-                <div className="text-2xl mt-7 font-light">{`Metaverse Data Analytics & Content Navigation.`}</div>
+              <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
+                <div>CATCH DATA CATCH VALUE</div>
+                <div className={style.delive}></div>
+                <div
+                  className={cn('text-2xl mt-7 font-light', style.littleText)}
+                >{`Metaverse Data Analytics & Content Navigation.`}</div>
               </div>
             </div>
             <div className={cn('image-round', style.roundImage)}>
