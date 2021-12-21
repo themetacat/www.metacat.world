@@ -60,6 +60,7 @@ export default function Page({ meta, children, className, fullViewport = false }
 
   gtag('config', 'G-D79Q9ZG0RJ');`
   }
+  </script>
       </Head>
       {children}
     </div>
