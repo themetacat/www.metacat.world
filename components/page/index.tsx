@@ -50,7 +50,6 @@ export default function Page({ meta, children, className, fullViewport = false }
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
-        <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D79Q9ZG0RJ"></script>
 <script>
   {
