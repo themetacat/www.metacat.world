@@ -168,13 +168,14 @@ export default function Index(props) {
     async (subTab) => {
       setSubTabState(subTab);
       setSearchText('');
+      setTypeState('');
 
       const data = await requestData({
         tab: tabState,
         subTab,
         page: 1,
-        query: searchText,
-        type: typeState,
+        query: '',
+        type: '',
         needUpdateTypeList: true,
       });
       setDataSource(data);
