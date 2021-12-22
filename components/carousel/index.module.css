@@ -1,5 +1,6 @@
 .swiper{
   position: relative;
+  cursor: pointer;
 }
 .img{
   height: 210px;
