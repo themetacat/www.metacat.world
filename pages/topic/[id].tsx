@@ -9,8 +9,6 @@ import Card from '../../components/card';
 import Status from '../../components/status';
 import Footer from '../../components/footer';
 
-import smoke from '../../lib/somke';
-
 import { convert } from '../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
@@ -59,7 +57,7 @@ export default function Topic() {
 
   React.useEffect(() => {
     requestData(id);
-    smoke('smoke');
+    // smoke('smoke');
   }, [id]);
 
   const onRetry = React.useCallback(() => {
@@ -85,19 +83,16 @@ export default function Topic() {
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={pathname} />
         <div
-          className={cn(
-            'main-content flex justify-center items-end relative z-10 pointer-events-none',
-            style.signBack,
-          )}
+          className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
           <img src="/images/back.png" className={style.sign}></img>
         </div>
-        <canvas id="smoke" className="absolute w-full h-full top-0 left-0"></canvas>
+        {/* <canvas id="smoke" className="absolute w-full h-full top-0 left-0"></canvas> */}
       </div>
       <div className={cn('main-content')}>
         <BaseInfo {...baseInfo} />
         {parcelList.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-24 pb-7 justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
             {parcelList.map((card, idx) => {
               return <Card {...card} key={idx} hasTypeTag={false}></Card>;
             })}

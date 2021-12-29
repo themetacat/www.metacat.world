@@ -15,7 +15,7 @@ type Props = {
 
 export default function TopicCard({ topicId, name, type, imgUrlList }: Props) {
   return (
-    <Link href={`/topic/${topicId}`}>
+    <a href={`/topic/${topicId}`} target="_blank">
       <div className={cn('relative', style.topicCard)}>
         <div
           className={cn(
@@ -39,6 +39,6 @@ export default function TopicCard({ topicId, name, type, imgUrlList }: Props) {
           <div>{name}</div>
         </div>
       </div>
-    </Link>
+    </a>
   );
 }
