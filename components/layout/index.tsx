@@ -1,16 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 import { SkipNavContent } from '@reach/skip-nav';
 
 import { convert } from '../../common/utils';
-import MobileMenu from '../mobile-menu';
-import SwitchLocale from '../switch-locale';
-import { NAVIGATION } from '../../common/const';
+import Smoke from '../../lib/somke';
 
 // import Logo from './icons/icon-logo';
+import PageHeader from '../page-header';
 import Footer from '../footer';
 import Carousel from '../carousel';
 
@@ -58,11 +56,8 @@ export default function Layout({
   const router = useRouter();
   const [carouselList, setCarouselList] = React.useState([]);
   const activeRoute = router.asPath;
+  const { pathname } = router;
   const t = useTranslations('navigation');
-
-  const jumpToData = React.useCallback(() => {
-    window.open('https://www.k1ic.com/cvb-zh.html');
-  }, []);
 
   React.useEffect(() => {
     fetch('/api/carousel').then(async (res) => {
@@ -71,35 +66,20 @@ export default function Layout({
       const { list } = data.data || [];
       setCarouselList(convert(list));
     });
+    Smoke('smoke');
   }, [null]);
 
   return (
     <>
       <div className={cn('min-h-screen', 'w-full')}>
         <div
-          className={cn(headerBgCls, 'h-22 bg-black', {
+          className={cn(headerBgCls, 'relative z-10 h-22 bg-black', {
             'fixed-center': fixed,
           })}
           style={{ zIndex: 1 }}
         >
-          {!hideNav && (
-            <header className={cn('main-content h-full flex justify-center items-center p-5')}>
-              <div className="flex flex-grow items-center text-white font-bold text-3xl">
-                <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
-                <Link href="/">METACAT</Link>
-              </div>
-              <div className="flex flex-grow justify-end">
-                <div className="text-2xl font-medium text-white mx-28 cursor-pointer">Home</div>
-                <div
-                  className="text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer"
-                  onClick={jumpToData}
-                >
-                  Data
-                </div>
-              </div>
-            </header>
-          )}
-          <div className="flex main-content justify-between h-88 py-10">
+          {!hideNav && <PageHeader className="relative z-10" active={pathname} />}
+          <div className="flex main-content justify-between h-88 py-10 relative z-10 pointer-events-none">
             <div className="flex items-center" style={{ minHeight: '220px' }}>
               <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
                 <div>CATCH DATA CATCH VALUE</div>
@@ -109,10 +89,11 @@ export default function Layout({
                 >{`Metaverse Data Analytics & Content Navigation.`}</div>
               </div>
             </div>
-            <div className={cn('image-round', style.roundImage)}>
+            <div className={cn('image-round pointer-events-auto', style.roundImage)}>
               <Carousel imgs={carouselList}></Carousel>
             </div>
           </div>
+          <canvas id="smoke" className="absolute w-full h-full top-0 left-0"></canvas>
         </div>
 
         <div>

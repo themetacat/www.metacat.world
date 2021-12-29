@@ -63,7 +63,23 @@ class API {
 
   public async getCarouseList(): Promise<any> {
     const url = `${this.url}/get_carousel_list`;
+    const res = await fetch(url);
+    const json = await res.json();
 
+    return json;
+  }
+
+  public async getTopicList(): Promise<any> {
+    const url = `${this.url}/get_topic_list`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getTopicDetail(id: number): Promise<any> {
+    const search = qs.stringify({ id }, { addQueryPrefix: true });
+    const url = `${this.url}/get_topic_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
 

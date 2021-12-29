@@ -1,0 +1,29 @@
+.topicCard{
+  width: 290px;
+  height: 160px;
+  cursor: pointer;
+}
+.footer{
+  height: 44px;
+  background-color: rgba(0,0,0, 0.5);
+}
+
+.footer:hover, .footer:active{
+  font-size: 20px;
+  background-color: rgba(0,0,0, 0.7);
+  cursor: pointer;
+}
+
+.footer:hover>.icon{
+  filter: brightness(200%);
+}
+
+.icon{
+  width: 18px;
+  height: 18px;
+}
+.type{
+  height: 20px;
+  color: rgba(15, 25, 27, 1);
+  background-color: rgba(0, 208, 236, 1);
+}

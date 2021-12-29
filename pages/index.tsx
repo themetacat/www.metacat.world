@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+
 import Page from '../components/page';
 import Layout from '../components/layout';
 import { SITE_NAME, META_DESCRIPTION } from '../common/const';
@@ -14,9 +15,16 @@ import Search from '../components/search';
 import PostGrid from '../components/post-grid';
 import Status from '../components/status';
 import TopJumper from '../components/jump-to-top';
+import TopicCardList from '../components/topic-card-list';
 
 import style from './index.module.less';
-import { getCVEventList, getCVParcelList, getDCLEventList, getDCLParcelList } from '../service';
+import {
+  getCVEventList,
+  getCVParcelList,
+  getDCLEventList,
+  getDCLParcelList,
+  getTopicList,
+} from '../service';
 
 const TAB = [
   {
@@ -58,6 +66,7 @@ export default function Index(props) {
   const [searchText, setSearchText] = React.useState(props.query.search || '');
   const [typeState, setTypeState] = React.useState(props.query.type || 'all');
   const [typeList, setTypeList] = React.useState([]);
+  const [topicList, setTopicList] = React.useState([]);
   const nextCursor = React.useRef(1);
 
   const [dataSource, setDataSource] = React.useState([]);
@@ -343,7 +352,19 @@ export default function Index(props) {
     setDataSource(data);
   }, [props.query]);
 
+  const initTopic = React.useCallback(async () => {
+    try {
+      setTopicList([]);
+      const res = await getTopicList();
+      const { list } = res.data;
+      setTopicList(convert(list));
+    } catch (err) {
+      setError(true);
+    }
+  }, [null]);
+
   React.useEffect(() => {
+    initTopic();
     init();
   }, [null]);
 
@@ -352,7 +373,8 @@ export default function Index(props) {
   return (
     <Page meta={meta}>
       <Layout>
-        <div className={cn('tab-list flex pt-5', style.allHeight)}>
+        {topicList.length > 0 ? <TopicCardList topics={topicList}></TopicCardList> : null}
+        <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item, index) => {
