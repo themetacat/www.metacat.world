@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { SkipNavContent } from '@reach/skip-nav';
 
 import { convert } from '../../common/utils';
-import Smoke from '../../lib/somke';
 
 // import Logo from './icons/icon-logo';
 import PageHeader from '../page-header';
@@ -66,7 +65,7 @@ export default function Layout({
       const { list } = data.data || [];
       setCarouselList(convert(list));
     });
-    Smoke('smoke');
+    // Smoke('smoke');
   }, [null]);
 
   return (
@@ -79,7 +78,7 @@ export default function Layout({
           style={{ zIndex: 1 }}
         >
           {!hideNav && <PageHeader className="relative z-10" active={pathname} />}
-          <div className="flex main-content justify-between h-88 py-10 relative z-10 pointer-events-none">
+          <div className="flex main-content justify-between h-88 py-10 relative z-10">
             <div className="flex items-center" style={{ minHeight: '220px' }}>
               <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
                 <div>CATCH DATA CATCH VALUE</div>
@@ -93,7 +92,7 @@ export default function Layout({
               <Carousel imgs={carouselList}></Carousel>
             </div>
           </div>
-          <canvas id="smoke" className="absolute w-full h-full top-0 left-0"></canvas>
+          {/* <canvas id="smoke" className="absolute w-full h-full top-0 left-0"></canvas> */}
         </div>
 
         <div>

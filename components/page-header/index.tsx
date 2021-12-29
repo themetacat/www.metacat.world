@@ -23,7 +23,7 @@ export default function PageHeader({ active, className }: Props) {
       <div className="flex flex-grow justify-end">
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 mx-28 cursor-pointer',
+            'text-2xl font-medium text-gray-400 mx-28 cursor-pointer hover:text-white',
             active === '/' ? style.active : null,
           )}
         >

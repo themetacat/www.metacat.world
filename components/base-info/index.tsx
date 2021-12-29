@@ -37,7 +37,7 @@ export default function BaseInfo({ logoUrl, name, description, discord, twitter,
             }}
           >
             <img src="/images/icon/home.png"></img>
-            {website}
+            Home
           </div>
         ) : null}
         {website && twitter ? <div className="mx-5">|</div> : null}
@@ -49,7 +49,7 @@ export default function BaseInfo({ logoUrl, name, description, discord, twitter,
             }}
           >
             <img src="/images/icon/twitter.png"></img>
-            {twitter}
+            Twitter
           </div>
         ) : null}
         {twitter && discord ? <div className="mx-5">|</div> : null}
@@ -61,7 +61,7 @@ export default function BaseInfo({ logoUrl, name, description, discord, twitter,
             }}
           >
             <img src="/images/icon/discord.png"></img>
-            {discord}
+            Discord
           </div>
         ) : null}
       </div>
