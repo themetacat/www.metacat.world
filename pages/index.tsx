@@ -414,7 +414,7 @@ export default function Index(props) {
               <Search text={searchText} onSearch={onSearchHandler}></Search>
             ) : null}
           </div>
-          <div className="mt-8">
+          <div className={cn('mt-8', style.content)}>
             {subTabState === 'parcel' && (
               <SwiperTag onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
