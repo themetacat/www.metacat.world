@@ -29,7 +29,9 @@ type Props = {
 export default function TopicCardList({ topics }: Props) {
   return (
     <div className={cn('main-content h-full', styles.swiper)}>
-      <div className={cn('perbtn flex justify-center items-center', styles.btn, styles.perbtn)}>
+      <div
+        className={cn('topicperbtn flex justify-center items-center', styles.btn, styles.perbtn)}
+      >
         <img className={styles.icon} src="/images/carousel-left.png"></img>
       </div>
       <Swiper
@@ -37,10 +39,12 @@ export default function TopicCardList({ topics }: Props) {
         modules={[Autoplay, Navigation]}
         spaceBetween={14}
         slidesPerView={4}
-        autoplay={true}
+        autoplay={{
+          disableOnInteraction: false,
+        }}
         navigation={{
-          nextEl: '.nextbtn',
-          prevEl: '.perbtn',
+          nextEl: '.topicnextbtn',
+          prevEl: '.topicperbtn',
         }}
       >
         {topics.map((item, idx) => {
@@ -57,7 +61,9 @@ export default function TopicCardList({ topics }: Props) {
           );
         })}
       </Swiper>
-      <div className={cn('nextbtn flex justify-center items-center', styles.btn, styles.nextbtn)}>
+      <div
+        className={cn('topicnextbtn flex justify-center items-center', styles.btn, styles.nextbtn)}
+      >
         <img className={styles.icon} src="/images/carousel-right.png"></img>
       </div>
     </div>

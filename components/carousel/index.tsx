@@ -41,7 +41,9 @@ export default function Carousel({ imgs }: Props) {
         modules={[Pagination, Autoplay, Navigation]}
         spaceBetween={50}
         slidesPerView={1}
-        autoplay={true}
+        autoplay={{
+          disableOnInteraction: false,
+        }}
         navigation={{
           nextEl: '.nextbtn',
           prevEl: '.perbtn',
