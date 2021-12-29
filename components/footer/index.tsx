@@ -16,7 +16,7 @@ export default function Footer() {
             <img className="mr-4" src="/images/icon.png" alt="logo" />
           </div>
           <section className="flex flex-col	h-full">
-            <span className="sm:text-xl text-base font-semibold">Powered by metacat</span>
+            <span className="sm:text-xl text-base font-semibold">Powered by metecat</span>
           </section>
         </div>
 
@@ -29,6 +29,16 @@ export default function Footer() {
           >
             <img src="/images/twitter.png" />
           </a>
+
+          <a
+            href="https://discord.gg/RTBbx4QC"
+            target="_blank"
+            data-tip="discord"
+            className="w-10 h-10 mr-14"
+          >
+            <img src="/images/discord.png" />
+          </a>
+
           <a
             href="https://medium.com/@themetacat"
             target="_blank"

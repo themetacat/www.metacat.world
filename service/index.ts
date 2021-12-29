@@ -53,3 +53,18 @@ export const getCarouseList = async () => {
 
   return json;
 };
+
+export const getTopicList = async () => {
+  const url = `/api/topic-list`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getTopicDetail = async (id: number) => {
+  const search = qs.stringify({ id }, { addQueryPrefix: true });
+  const url = `/api/topic_detail${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};

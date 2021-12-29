@@ -1,6 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 
+import CoverImg from '../cover-img';
+
 import style from './index.module.css';
 
 type Props = {
@@ -10,6 +12,7 @@ type Props = {
   type?: string;
   parcelPageUrl?: string;
   openseaUrl?: string;
+  hasTypeTag?: boolean;
 };
 
 export default function Card({
@@ -19,6 +22,7 @@ export default function Card({
   type,
   openseaUrl,
   parcelPageUrl,
+  hasTypeTag = true,
 }: Props) {
   const jumpToOpenC = React.useCallback(
     (event) => {
@@ -38,10 +42,16 @@ export default function Card({
       onClick={jumpToParcel}
     >
       <div className={style.imgContanier}>
-        <div className={cn('flex items-center justify-center text-sm font-medium', style.tag)}>
-          {type}
-        </div>
-        <img className={style.img} src={coverImgUrl || '/images/default-cover.png'} />
+        {hasTypeTag && type ? (
+          <div className={cn('flex items-center justify-center text-sm font-medium', style.tag)}>
+            {type}
+          </div>
+        ) : null}
+        <CoverImg
+          className={style.img}
+          img={coverImgUrl}
+          error="/images/default-cover.png"
+        ></CoverImg>
       </div>
       <div className={cn('p-5 flex-1', style.content)}>
         <div className={cn('flex justify-between items-center', style.contnetHeader)}>
