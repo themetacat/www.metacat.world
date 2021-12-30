@@ -15,22 +15,27 @@ export default function PageHeader({ active, className }: Props) {
   }, []);
 
   return (
-    <header className={cn('main-content h-full flex justify-center items-center p-5', className)}>
-      <div className="flex flex-grow items-center text-white font-bold text-3xl">
+    <header
+      className={cn(
+        'main-content h-full flex justify-center items-center p-5 pointer-events-none',
+        className,
+      )}
+    >
+      <div className="flex flex-grow items-center text-white font-bold text-3xl pointer-events-auto">
         <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
         <Link href="/">METACAT</Link>
       </div>
       <div className="flex flex-grow justify-end">
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 mx-28 cursor-pointer hover:text-white',
+            'text-2xl font-medium text-gray-400 mx-28 cursor-pointer hover:text-white pointer-events-auto',
             active === '/' ? style.active : null,
           )}
         >
           <Link href="/">Home</Link>
         </div>
         <div
-          className="text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer"
+          className="text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto"
           onClick={jumpToData}
         >
           Data

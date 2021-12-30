@@ -10,6 +10,7 @@ import { convert } from '../../common/utils';
 import PageHeader from '../page-header';
 import Footer from '../footer';
 import Carousel from '../carousel';
+import AnimationBack from '../animation-back';
 
 import style from './index.module.less';
 
@@ -22,26 +23,6 @@ type Props = {
   headerBgCls?: string;
   extra?: React.ReactNode;
 };
-
-const test = [
-  {
-    imgUrl:
-      'https://media-crvox.sfo2.digitaloceanspaces.com/0x195acaf2ccb5d388f4f5a03030ad765d74d94f3f/womps/1639464964429-5727956d-03dd-4363-936f-5a4763206df9.jpg',
-    title: 'New eyes for the Sphinx...',
-    detailUrl: 'https://www.cryptovoxels.com/play?coords=N@9W,296N,6F',
-  },
-  {
-    imgUrl:
-      'https://media-crvox.sfo2.digitaloceanspaces.com/0xa214384fd96d0883a4e4c75036c2863f0f5995f5/womps/1639464976791-9cf16de0-3ac3-4088-a5c9-2292fad8d0e0.jpg',
-    title: 'happy holidays!',
-    detailUrl: 'https://www.cryptovoxels.com/play?coords=@719E,660S',
-  },
-  {
-    imgUrl: 'https://www.k1ic.com/imgs/cv_month_sold_sum.png',
-    title: 'CV parcel monthly trade sum(ETH)',
-    detailUrl: 'https://www.k1ic.com/cvb-zh.html',
-  },
-];
 
 export default function Layout({
   children,
@@ -78,7 +59,7 @@ export default function Layout({
           style={{ zIndex: 1 }}
         >
           {!hideNav && <PageHeader className="relative z-10" active={pathname} />}
-          <div className="flex main-content justify-between h-88 py-10 relative z-10">
+          <div className="flex main-content justify-between h-88 py-10 relative z-10 pointer-events-none">
             <div className="flex items-center" style={{ minHeight: '220px' }}>
               <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
                 <div>CATCH DATA CATCH VALUE</div>
@@ -92,6 +73,7 @@ export default function Layout({
               <Carousel imgs={carouselList}></Carousel>
             </div>
           </div>
+          <AnimationBack className="absolute w-full h-full top-0 left-0"></AnimationBack>
           {/* <canvas id="smoke" className="absolute w-full h-full top-0 left-0"></canvas> */}
         </div>
 
