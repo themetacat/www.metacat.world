@@ -31,7 +31,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://discord.gg/RTBbx4QC"
+            href="https://discord.gg/yRt6be237P"
             target="_blank"
             data-tip="discord"
             className="w-10 h-10 mr-14"
