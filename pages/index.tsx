@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
+import dynamic from 'next/dynamic';
 import Page from '../components/page';
 import Layout from '../components/layout';
 import { SITE_NAME, META_DESCRIPTION } from '../common/const';
@@ -17,7 +18,6 @@ import Status from '../components/status';
 import TopJumper from '../components/jump-to-top';
 import TopicCardList from '../components/topic-card-list';
 
-import style from './index.module.less';
 import {
   getCVEventList,
   getCVParcelList,
@@ -25,6 +25,12 @@ import {
   getDCLParcelList,
   getTopicList,
 } from '../service';
+
+import style from './index.module.less';
+
+const MapWithNoSSR = dynamic(() => import('../components/map'), {
+  ssr: false,
+});
 
 const TAB = [
   {
@@ -47,6 +53,10 @@ const SUBTAB = [
   {
     label: 'Event',
     type: 'event',
+  },
+  {
+    label: 'Map',
+    type: 'map',
   },
 ];
 
@@ -178,6 +188,10 @@ export default function Index(props) {
       setSubTabState(subTab);
       setSearchText('');
       setTypeState('');
+      // if(subTab == 'map'){
+      //   window.open(`/map`);
+      //   return
+      // }
 
       const data = await requestData({
         tab: tabState,
@@ -327,6 +341,9 @@ export default function Index(props) {
         </div>
       );
     }
+    if (subTabState === 'map') {
+      return <MapWithNoSSR></MapWithNoSSR>;
+    }
   }, [
     subTabState,
     error,
@@ -422,7 +439,7 @@ export default function Index(props) {
             {renderContent}
           </div>
         </div>
-        {subTabState === 'parcel' ? null : <TopJumper></TopJumper>}
+        {subTabState === 'event' ? <TopJumper></TopJumper> : null}
       </Layout>
     </Page>
   );

@@ -1,0 +1,29 @@
+.mapContainer {
+  width: 100%;
+  min-height: 660px;
+  padding: 15px;
+  position: relative;
+  margin-bottom: 50px;
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+}
+.map {
+  position: absolute;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  background-color: black !important;
+}
+
+.minMap{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30%;
+  height: 20%;
+  background-color: black !important;
+}
+
+.minimapRect{
+  z-index: 100;
+}
