@@ -68,3 +68,10 @@ export const getTopicDetail = async (id: number) => {
   const json = await res.json();
   return json;
 };
+
+export const getCvMapLevelThree = async () => {
+  const url = `/api/cv_map_level_three`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};

@@ -1,0 +1,41 @@
+.option{
+  background-color:rgba(15, 25, 27, 1); 
+  color: #AAAAAA;
+  font-weight: 400;
+  font-size: 12px;
+  width: 123px;
+  height: 41px;
+  border-bottom: #000000 solid 1px;
+}
+.option:hover{
+  color: #fff;
+  font-weight: 500;
+}
+.option:active{
+  color:  #999999;
+  font-weight: 500;
+}
+.selectDiv{
+  z-index: 1001;
+  cursor: pointer;
+  position: relative;
+}
+.selecter{
+  background-color:rgba(15, 25, 27, 1);
+  height: 48px;
+  width: 148px;
+  z-index: 1001;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.show{
+  display: none;
+}
+
+.frame{
+  width: 10px;
+  height: 10px;
+}

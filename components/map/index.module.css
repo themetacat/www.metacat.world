@@ -1,18 +1,29 @@
 .mapContainer {
   width: 100%;
-  min-height: 660px;
-  padding: 15px;
+  height: 100%;
   position: relative;
-  margin-bottom: 50px;
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
-  box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
 }
 .map {
   position: absolute;
-  width: calc(100% - 30px);
-  height: calc(100% - 30px);
-  background-color: black !important;
+  width: 100%;
+  height: 100%;
+}
+
+.picker{
+  position: absolute !important;
+  top: 45px;
+  left: 45px;
+  z-index: 1001;
+  background-color:rgba(15, 25, 27, 1); 
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.selecter{
+  top: 15px;
+  left: calc(15px);
 }
 
 .minMap{
@@ -26,4 +37,53 @@
 
 .minimapRect{
   z-index: 100;
+}
+
+.type{
+  width: 94px;
+  height: 48px;
+}
+
+.dividing{
+  height: 30px;
+  width: 0;
+  border-right: solid 1px #FFFFFF;
+  opacity: 0.3;
+}
+
+.zoom{
+  position: absolute;
+  left: 45px;
+  top: calc(15px + 30px + 48px + 30px);
+  z-index: 1001;
+}
+.zoomButton{
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.zoomButton >img{
+  width: 18px;
+}
+
+.zoomButton:hover{
+  filter: brightness(125%);
+}
+
+.zoomButton:active{
+  filter: brightness(75%);
+}
+.disable{
+  filter: brightness(25%);
+}
+
+.legend{
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1001;
 }

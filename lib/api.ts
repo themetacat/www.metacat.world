@@ -85,6 +85,14 @@ class API {
 
     return json;
   }
+
+  public async getCvMapLevelThree(): Promise<any> {
+    const url = `${this.url}/get_cv_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

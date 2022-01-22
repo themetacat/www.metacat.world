@@ -77,16 +77,12 @@ a {
     [main-end] minmax(auto, 240px) [wide-end] minmax(4vmin, auto) [full-end];
 }
 .leaflet-control-minimap {
-  background: rgb(1, 53, 59) !important;
+  background: rgb(7 36 41) !important;
   border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
   box-sizing: border-box !important;
 }
-
-.leaflet-bar a {
-  background: rgba(0, 0, 0, 0.8) !important;
-  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
-  box-sizing: border-box;
-  color: #fff !important;
+.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar{
+  display: none !important;
 }
 
 .article {

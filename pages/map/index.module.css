@@ -1,12 +1,19 @@
-.mapContainer{
-  width: 100%;
-  min-height: 660px;
-  padding: 15px;
-  position: relative;
+.bottomLine {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
-.map{
-  position: absolute;
-  width: calc(100% - 30px);
-  height: calc(100% - 30px);
-  background-color: black !important;
+
+.contentHeader {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.1);
+}
+
+.allHeight {
+  height: 100px;
+}
+
+.content {
+  min-height: 650px;
+}
+
+.mapContanier{
+  height: 60vh;
 }

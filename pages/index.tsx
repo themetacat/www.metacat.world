@@ -60,6 +60,25 @@ const SUBTAB = [
   },
 ];
 
+const legends = [
+  {
+    color: 'rgba(0, 240, 255, 1)',
+    label: 'Top 20%',
+  },
+  {
+    color: 'rgba(17, 156, 174, 1)',
+    label: '21%-50%',
+  },
+  {
+    color: 'rgba(3, 70, 79, 1)',
+    label: '51%-80%',
+  },
+  {
+    color: 'rgba(10, 34, 39, 1)',
+    label: '81%-100%',
+  },
+];
+
 export default function Index(props) {
   const meta = {
     title: `Home - ${SITE_NAME}`,
@@ -342,7 +361,21 @@ export default function Index(props) {
       );
     }
     if (subTabState === 'map') {
-      return <MapWithNoSSR></MapWithNoSSR>;
+      return (
+        <div className={style.mapContanier}>
+          <div className={style.mapBack}>
+            <MapWithNoSSR
+              zoomControl={false}
+              zoomLimit={[5, 5]}
+              legends={legends}
+              onClick={() => {
+                window.open('/map');
+              }}
+              dragging={false}
+            ></MapWithNoSSR>
+          </div>
+        </div>
+      );
     }
   }, [
     subTabState,
