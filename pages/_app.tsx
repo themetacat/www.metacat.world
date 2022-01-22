@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import * as gtag from '../lib/gtag';
 
 import Web3ModalProvider from '../components/web3modal';
+
+import 'leaflet/dist/leaflet.css';
 import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
 

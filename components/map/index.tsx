@@ -4,7 +4,6 @@ import L from 'leaflet';
 import MiniMap from 'leaflet-minimap';
 
 import style from './index.module.css';
-import 'leaflet/dist/leaflet.css';
 
 import AddLabelToGeoJSON from './label';
 
