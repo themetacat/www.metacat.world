@@ -230,7 +230,7 @@ export default function Map({
           fillOpacity: 1,
         };
       },
-    }); // .addTo(map);
+    }); //  .addTo(map);
 
     const Parcels3Layer = L.geoJSON(null, {
       style: (fe) => {
