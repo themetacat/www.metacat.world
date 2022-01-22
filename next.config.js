@@ -22,4 +22,10 @@ module.exports = withAntdLess({
   images: {
     domains: ['static.ghost.org'],
   },
+  module: {
+    rules: [
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      { test: /\.(png|svg|jpe?g|gif|woff2?|ttf|eot)$/, use: ['file-loader'] },
+    ],
+  },
 });
