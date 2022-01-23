@@ -438,7 +438,9 @@ export default function Map({
         if (!label) {
           return;
         }
-        const c = layer.getBounds().getCenter();
+
+        /* eslint no-underscore-dangle: 0 */
+        const c = (layer as any).getBounds().getCenter();
         const markerposition = c;
         const canvas = getCanvas(label);
         const markerlayer = L.marker(markerposition, {
@@ -464,12 +466,16 @@ export default function Map({
 
         const canvas = getCanvas(feature.properties.name);
         /* eslint no-underscore-dangle: 0 */
-        const markerlayer = L.marker(feature.geometry.coordinates.reverse(), {
-          icon: L.icon({
-            iconUrl: canvas.toDataURL('image/png'),
-            iconSize: [canvas.width, canvas.height],
-          }),
-        });
+        const coord = feature.geometry.coordinates.reverse();
+        const markerlayer = L.marker(
+          { lat: coord[0], lng: coord[1] },
+          {
+            icon: L.icon({
+              iconUrl: canvas.toDataURL('image/png'),
+              iconSize: [canvas.width, canvas.height],
+            }),
+          },
+        );
         return markerlayer;
       },
     }).addTo(map);
@@ -503,10 +509,10 @@ export default function Map({
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
           if (popDetail.current) {
-            popDetail.current.style.desplay = 'block';
-            popDetail.current.style.top = `${e.containerPoint.y}px`;
-            popDetail.current.style.left = `${e.containerPoint.x}px`;
-            updatePop.current.source = e.latlng;
+            (popDetail.current as any).style.desplay = 'block';
+            (popDetail.current as any).style.top = `${(e as any).containerPoint.y}px`;
+            (popDetail.current as any).style.left = `${(e as any).containerPoint.x}px`;
+            (popDetail.current as any).source = (e as any).latlng;
           }
           requestDeatil(id);
         }
@@ -521,8 +527,8 @@ export default function Map({
       map.on('move', (e) => {
         if (updatePop.current.need && popDetail.current) {
           const containerPoint = map.latLngToContainerPoint(updatePop.current.source);
-          popDetail.current.style.top = `${containerPoint.y}px`;
-          popDetail.current.style.left = `${containerPoint.x}px`;
+          (popDetail.current as any).style.top = `${containerPoint.y}px`;
+          (popDetail.current as any).style.left = `${containerPoint.x}px`;
         }
       });
 
