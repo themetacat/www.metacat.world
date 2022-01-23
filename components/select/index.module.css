@@ -39,3 +39,10 @@
   width: 10px;
   height: 10px;
 }
+
+.frame:hover{
+  filter: brightness(150%);
+}
+.frame:active{
+  filter: brightness(75%);
+}

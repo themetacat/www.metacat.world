@@ -23,8 +23,8 @@ function getTextCanvas(text) {
   canvas.height = height;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'rgba(100,200,0, 0.7)';
-  ctx.fillRect(0, 0, width, height);
+  // ctx.fillStyle = 'rgba(100,200,0, 0.7)';
+  // ctx.fillRect(0, 0, width, height);
   ctx.font = `${fontSize}px bold`;
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';

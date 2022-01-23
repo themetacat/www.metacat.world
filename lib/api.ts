@@ -93,6 +93,15 @@ class API {
 
     return json;
   }
+
+  public async getCvParcelDetail(id: number): Promise<any> {
+    const search = qs.stringify({ id }, { addQueryPrefix: true });
+    const url = `${this.url}/get_cv_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

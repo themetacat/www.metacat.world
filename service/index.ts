@@ -75,3 +75,11 @@ export const getCvMapLevelThree = async () => {
   const json = await res.json();
   return json;
 };
+
+export const getCvParcelDetail = async (id: number) => {
+  const search = qs.stringify({ id }, { addQueryPrefix: true });
+  const url = `/api/cv_parcel_detail${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};

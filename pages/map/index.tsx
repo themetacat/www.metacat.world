@@ -29,25 +29,6 @@ const TAB = [
   },
 ];
 
-const legends = [
-  {
-    color: 'rgba(0, 240, 255, 1)',
-    label: 'Top 20%',
-  },
-  {
-    color: 'rgba(17, 156, 174, 1)',
-    label: '21%-50%',
-  },
-  {
-    color: 'rgba(3, 70, 79, 1)',
-    label: '51%-80%',
-  },
-  {
-    color: 'rgba(10, 34, 39, 1)',
-    label: '81%-100%',
-  },
-];
-
 export default function MapPage() {
   const cls = cn('flex-1', style.bottomLine);
 
@@ -69,13 +50,7 @@ export default function MapPage() {
       </div>
 
       <div className={cn('w-full', style.mapContanier)}>
-        <Map
-          zoomControl={true}
-          zoomLimit={[5, 7]}
-          legends={legends}
-          dragging={true}
-          backColor="rgb(8 17 19)"
-        ></Map>
+        <Map zoomControl={true} zoomLimit={[5, 7]} dragging={true} backColor="rgb(8 17 19)"></Map>
       </div>
       <Footer />
     </Page>
