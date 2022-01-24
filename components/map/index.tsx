@@ -34,96 +34,132 @@ const colors = {
     {
       label: 'Top 20%',
       color: '#00F0FF',
-      limit: [0.8, 1.1],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '21%-50%',
       color: '#119CAE',
-      limit: [0.5, 0.8],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '51%-80%',
       color: '#03464F',
-      limit: [0.2, 0.5],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '81%-100%',
       color: '#0A2227',
-      limit: [0, 0.2],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
   ],
   1: [
     {
       label: 'Top 14%',
       color: '#4FFFF4',
-      limit: [0.86, 1.1],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '15%-30%',
       color: '#00D0DD',
-      limit: [0.7, 0.86],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '31%-45%',
       color: '#007B8C',
-      limit: [0.55, 0.7],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '45%-60%',
       color: '#00404E',
-      limit: [0.4, 0.55],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '61%-75%',
       color: '#00232B',
-      limit: [0.25, 0.4],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '76%-100%',
       color: '#00191E',
-      limit: [0, 0.25],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
   ],
   2: [
     {
       label: 'Top 10%',
       color: '#72FFE6',
-      limit: [0.9, 1.1],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '11%-20%',
       color: '#00E1EF',
-      limit: [0.8, 0.9],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '21%-30%',
       color: '#009DA7',
-      limit: [0.7, 0.8],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '31%-40%',
       color: '#006A78',
-      limit: [0.6, 0.7],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '41%-50%',
       color: '#004149',
-      limit: [0.5, 0.6],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '51%-65%',
       color: '#082C31',
-      limit: [0.35, 0.5],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '66%-80%',
       color: '#001F23',
-      limit: [0.2, 0.35],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
     {
       label: '81%-100%',
       color: '#001B21',
-      limit: [0, 0.2],
+      TOTAL: { start: 0, end: 0 },
+      MONTHLY: { start: 0, end: 0 },
+      WEEKLY: { start: 0, end: 0 },
     },
   ],
 };
@@ -251,16 +287,35 @@ export default function Map({
               type: 'Feature',
               ...all,
             };
-            const allPercent =
-              (all.traffic.all - traffic.all.min) / (traffic.all.max - traffic.all.min);
-            const monthPercent =
-              (all.traffic.month - traffic.month.min) / (traffic.month.max - traffic.month.min);
-            const weekPercent =
-              (all.traffic.week - traffic.week.min) / (traffic.week.max - traffic.week.min);
 
-            polygon.properties.TOTAL = allPercent;
-            polygon.properties.MONTHLY = monthPercent;
-            polygon.properties.WEEKLY = weekPercent;
+            colors[0].forEach(function (x, index) {
+              Object.assign(x.TOTAL, traffic.levelOne[index].all);
+              Object.assign(x.WEEKLY, traffic.levelOne[index].week);
+              Object.assign(x.MONTHLY, traffic.levelOne[index].month);
+            });
+
+            colors[1].forEach(function (x, index) {
+              Object.assign(x.TOTAL, traffic.levelTwo[index].all);
+              Object.assign(x.WEEKLY, traffic.levelTwo[index].week);
+              Object.assign(x.MONTHLY, traffic.levelTwo[index].month);
+            });
+
+            colors[2].forEach(function (x, index) {
+              Object.assign(x.TOTAL, traffic.levelThree[index].all);
+              Object.assign(x.WEEKLY, traffic.levelThree[index].week);
+              Object.assign(x.MONTHLY, traffic.levelThree[index].month);
+            });
+
+            // const allPercent =
+            //   (all.traffic.all - traffic.all.min) / (traffic.all.max - traffic.all.min);
+            // const monthPercent =
+            //   (all.traffic.month - traffic.month.min) / (traffic.month.max - traffic.month.min);
+            // const weekPercent =
+            //   (all.traffic.week - traffic.week.min) / (traffic.week.max - traffic.week.min);
+
+            polygon.properties.TOTAL = all.traffic.all;
+            polygon.properties.MONTHLY = all.traffic.month;
+            polygon.properties.WEEKLY = all.traffic.week;
 
             layer3.addData(polygon);
           }
@@ -288,7 +343,7 @@ export default function Map({
       // parcels.current = data;
       trafficRef.current = stats?.traffic;
 
-      drawGeoJsonToLayer(parcels, stats?.traffic, layers[1].layer, layers[2].layer);
+      drawGeoJsonToLayer(parcels, convert(stats?.traffic), layers[1].layer, layers[2].layer);
     },
     [null],
   );
@@ -301,7 +356,7 @@ export default function Map({
       if (!Number.isNaN(count) && legends.current) {
         count = count < 0 ? 0 : count;
         const allColor = legends.current.find((x) => {
-          return count < x.limit[1] && count >= x.limit[0];
+          return count < x[staticType.current].start && count >= x[staticType.current].end;
         });
         if (allColor) {
           color = allColor.color;
@@ -321,6 +376,7 @@ export default function Map({
   const switchLayer = React.useCallback(
     (targetLayer) => {
       markers.current.removeFrom(mapRef.current);
+      layerManager.current[2].layer.setStyle(parcelStyle);
       if (targetLayer < 2) {
         mapRef.current.removeLayer(layerManager.current[1].layer);
         mapRef.current.removeLayer(layerManager.current[0].layer);
