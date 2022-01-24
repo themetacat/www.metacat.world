@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import L, { marker } from 'leaflet';
+import L from 'leaflet';
 import MiniMap from 'leaflet-minimap';
 
 import style from './index.module.css';
@@ -23,10 +23,12 @@ const options = [
 
 interface Props {
   zoomLimit?: Array<number>;
+  initZoom?: number;
   zoomControl?: boolean;
   onClick?: () => void;
   dragging?: boolean;
   backColor?: string;
+  fullScreen?: boolean;
 }
 
 const colors = {
@@ -164,16 +166,18 @@ const colors = {
   ],
 };
 
-export default function Map({
+function Map({
   zoomLimit,
   zoomControl,
+  initZoom = zoomLimit[0],
   onClick,
   dragging = true,
   backColor = 'black',
+  fullScreen = false,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
-  const [zoomLevel, setZoomLevel] = React.useState(minZoomLevel);
+  const [zoomLevel, setZoomLevel] = React.useState(initZoom);
   const [detail, setDeatil] = React.useState();
   const updatePop = React.useRef({
     need: false,
@@ -184,13 +188,13 @@ export default function Map({
   });
   const popDetail = React.useRef();
   const staticType = React.useRef('MONTHLY');
-  const legends = React.useRef(colors[0]);
+  const legends = React.useRef(colors[1]);
   const trafficRef = React.useRef(null);
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
 
-  const requestLand = (map, layer) => {
+  const requestLand = (pageMap, layer) => {
     //
     fetch('https://www.cryptovoxels.com/api/islands.json')
       .then((res) => {
@@ -239,12 +243,12 @@ export default function Map({
             mapOptions: {
               preferCanvas: true,
             },
-          }).addTo(map);
+          }).addTo(pageMap);
         }
       });
   };
 
-  const requestSub = (map, layer) => {
+  const requestSub = (pageMap, layer) => {
     //
     fetch('https://www.cryptovoxels.com/api/suburbs.json')
       .then((res) => {
@@ -356,7 +360,7 @@ export default function Map({
       if (!Number.isNaN(count) && legends.current) {
         count = count < 0 ? 0 : count;
         const allColor = legends.current.find((x) => {
-          return count < x[staticType.current].start && count >= x[staticType.current].end;
+          return count <= x[staticType.current].start && count >= x[staticType.current].end;
         });
         if (allColor) {
           color = allColor.color;
@@ -406,10 +410,19 @@ export default function Map({
     [minZoomLevel],
   );
 
+  const getZoomChangeNumber = React.useCallback(
+    (zoom) => {
+      let result = zoom - minZoomLevel < 0 ? 0 : zoom - minZoomLevel;
+      result = result > 2 ? 2 : result;
+      return result;
+    },
+    [minZoomLevel],
+  );
+
   const zoomChange = (e) => {
     const targetLayer = e.target._zoom - minZoomLevel + 1;
 
-    legends.current = colors[e.target._zoom - minZoomLevel < 0 ? 0 : e.target._zoom - minZoomLevel];
+    legends.current = colors[getZoomChangeNumber(e.target._zoom)];
 
     /* eslint no-underscore-dangle: 0 */
     setZoomLevel(e.target._zoom);
@@ -478,7 +491,7 @@ export default function Map({
       dragging,
     }).setView([0, 0], zoomLevel);
     map.on('zoom', zoomChange);
-    legends.current = colors[zoomLevel - minZoomLevel < 0 ? 0 : zoomLevel - minZoomLevel];
+    legends.current = colors[getZoomChangeNumber(zoomLevel)];
     mapRef.current = map;
     markers.current = L.layerGroup([]);
     // map.addLayer(markers.current);
@@ -581,8 +594,8 @@ export default function Map({
       });
 
       map.on('move', (e) => {
-        if (updatePop.current.need && popDetail.current) {
-          const containerPoint = map.latLngToContainerPoint(updatePop.current.source);
+        if (updatePop.current.need && popDetail.current && (popDetail.current as any).source) {
+          const containerPoint = map.latLngToContainerPoint((popDetail.current as any).source);
           (popDetail.current as any).style.top = `${containerPoint.y}px`;
           (popDetail.current as any).style.left = `${containerPoint.x}px`;
         }
@@ -627,7 +640,7 @@ export default function Map({
       map.remove();
     };
     // requestSube(map);
-  }, [null]);
+  }, [fullScreen]);
 
   return (
     <div className={style.mapContainer} onClick={onClick}>
@@ -676,3 +689,5 @@ export default function Map({
     </div>
   );
 }
+
+export default Map;

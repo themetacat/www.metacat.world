@@ -15,5 +15,29 @@
 }
 
 .mapContanier{
+  z-index: 1001;
   height: 60vh;
+}
+.full{
+  height: 100vh;
+}
+.fullBtn{
+  z-index: 1001;
+  top:108px;
+  left: 80px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
+  box-sizing: border-box;
+  cursor: pointer;
+  
+}
+
+.fullBtn:hover{
+  filter: brightness(125%);
+}
+
+.fullBtn:active{
+  filter: brightness(75%);
 }

@@ -6,6 +6,7 @@
   box-sizing: border-box;
   border:rgba(196, 196, 196, 0.5);
   cursor: pointer;
+  background-color: rgba(0,0, 0, 0.9);
 }
 
 .popup::after{
@@ -15,7 +16,7 @@
   top: 100%;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
-  border-top: 10px solid rgba(0,0, 0, 0.8);
+  border-top: 10px solid rgba(0,0, 0, 0.9);
 }
 
 .cover{
@@ -34,4 +35,8 @@
 
 .icon:active{
   filter: brightness(75%);
+}
+
+.name{
+  max-width: 90px;
 }

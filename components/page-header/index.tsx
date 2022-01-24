@@ -28,17 +28,25 @@ export default function PageHeader({ active, className }: Props) {
       <div className="flex flex-grow justify-end">
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 mx-28 cursor-pointer hover:text-white pointer-events-auto',
+            'text-2xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/' ? style.active : null,
           )}
         >
           <Link href="/">Home</Link>
         </div>
         <div
-          className="text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto"
+          className="text-2xl font-medium text-gray-400  mr-14 hover:text-white active:text-white cursor-pointer pointer-events-auto"
           onClick={jumpToData}
         >
           Data
+        </div>
+        <div
+          className={cn(
+            'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+            active === 'map' ? style.active : null,
+          )}
+        >
+          <Link href={'/map'}>Map</Link>
         </div>
       </div>
     </header>

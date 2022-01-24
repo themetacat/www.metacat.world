@@ -87,7 +87,7 @@ class API {
   }
 
   public async getCvMapLevelThree(): Promise<any> {
-    const url = `${this.url}/get_cv_map_level_three`;
+    const url = `${this.url}/get_cv_map_level_three`; // `${this.url}/get_cv_map_level_three`;
     const res = await fetch(url);
     const json = await res.json();
 

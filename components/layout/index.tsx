@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 import { SkipNavContent } from '@reach/skip-nav';
+import Link from 'next/link';
 
 import { convert } from '../../common/utils';
 
@@ -63,10 +64,17 @@ export default function Layout({
             <div className="flex items-center" style={{ minHeight: '220px' }}>
               <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
                 <div>CATCH DATA CATCH VALUE</div>
-                <div className={style.delive}></div>
                 <div
-                  className={cn('text-2xl mt-7 font-light', style.littleText)}
+                  className={cn('text-2xl mt-5 font-light', style.littleText)}
                 >{`Metaverse Data Analytics & Content Navigation.`}</div>
+                <div
+                  className={cn(
+                    'text-xl font-semibold mt-7 flex justify-center items-center pointer-events-auto',
+                    style.gomap,
+                  )}
+                >
+                  <Link href="/map">GO MAP</Link>
+                </div>
               </div>
             </div>
             <div className={cn('image-round pointer-events-auto', style.roundImage)}>

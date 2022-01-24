@@ -70,7 +70,7 @@ export const getTopicDetail = async (id: number) => {
 };
 
 export const getCvMapLevelThree = async () => {
-  const url = `https://api.metacat.world/api/v1/get_cv_map_level_three`; // `/api/cv_map_level_three`;
+  const url = `https://api.metacat.world/api/v1/get_cv_map_level_three`; // /api/cv_map_level_three;
   const res = await fetch(url);
   const json = await res.json();
   return json;

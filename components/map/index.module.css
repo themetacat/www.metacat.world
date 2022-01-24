@@ -11,8 +11,8 @@
 
 .picker{
   position: absolute !important;
-  top: 45px;
-  left: 45px;
+  top: 30px;
+  left: 30px;
   z-index: 1001;
   background-color:rgba(15, 25, 27, 1); 
   color: #fff;
@@ -53,8 +53,8 @@
 
 .zoom{
   position: absolute;
-  left: 45px;
-  top: calc(15px + 30px + 48px + 30px);
+  left: 30px;
+  top: calc(30px + 48px + 30px);
   z-index: 1001;
 }
 .zoomButton{
@@ -108,6 +108,5 @@
 
 .pop{
   z-index: 1001;
-  background-color: rgba(0,0, 0, 0.8);
   transform: translate(-50%, calc(-100% - 10px));
 }

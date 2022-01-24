@@ -347,7 +347,8 @@ export default function Index(props) {
           <div className={style.mapBack}>
             <MapWithNoSSR
               zoomControl={false}
-              zoomLimit={[5, 5]}
+              zoomLimit={[6, 6]}
+              initZoom={6}
               onClick={() => {
                 window.open('/map');
               }}

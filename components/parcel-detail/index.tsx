@@ -63,12 +63,20 @@ export default function ParcelDeatil({ options, className, style }: Prop) {
 
   return options ? (
     <div className={cn(className, styles.popup)} style={style} onClick={jumpToParcel}>
-      <div>{`${options.island}>${options.suburb}>${options.name}`}</div>
+      <div
+        className="truncate"
+        title={`${options.island}>${options.suburb}>${options.name}`}
+      >{`${options.island}>${options.suburb}>${options.name}`}</div>
       <div className="flex justify-start items-center mt-2">
         <img className={styles.cover} src={options.coverImgUrl} />
         <div className="ml-2 w-full">
           <div className="flex justify-between">
-            <span className="text-white font-semibold text-base">{options.name}</span>
+            <span
+              className={cn('text-white font-semibold text-base truncate', styles.name)}
+              title={options.name}
+            >
+              {options.name}
+            </span>
             <img src="/images/Nomal.png" className={styles.icon} onClick={jumpToOpenC}></img>
           </div>
           <div className="mt-1">{`Week Traffic：${options.traffic.week}`}</div>

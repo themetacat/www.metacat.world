@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import cn from 'classnames';
 
@@ -32,27 +32,49 @@ const TAB = [
 export default function MapPage() {
   const cls = cn('flex-1', style.bottomLine);
 
+  const [fullScreen, setFullScreen] = React.useState(false);
+  const mapRef = useRef();
+
   return (
     <Page className="min-h-screen" meta={meta}>
-      <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'map'} />
-      </div>
+      {fullScreen ? null : (
+        <>
+          <div className="bg-black relative">
+            <PageHeader className="relative z-10" active={'map'} />
+          </div>
 
-      <div className={cn('tab-list flex mt-5', style.allHeight)}>
-        <div className={cls}></div>
-        <div className="main-content flex px-0">
-          {TAB.map((item, index) => {
-            return <Tab active={true} key={item.label} label={item.label} icon={item.icon} />;
-          })}
-          <div className={cls} />
+          <div className={cn('tab-list flex mt-5', style.allHeight)}>
+            <div className={cls}></div>
+            <div className="main-content flex px-0">
+              {TAB.map((item, index) => {
+                return <Tab active={true} key={item.label} label={item.label} icon={item.icon} />;
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+        </>
+      )}
+
+      <div className={cn('relative w-full', fullScreen ? style.full : style.mapContanier)}>
+        <div
+          className={cn('text-white absolute', style.fullBtn)}
+          onClick={() => {
+            setFullScreen(!fullScreen);
+          }}
+        >
+          <img src={`./images/${fullScreen ? 'unfull.png' : 'full.png'}`}></img>
         </div>
-        <div className={cls} />
+        <Map
+          fullScreen={fullScreen}
+          zoomControl={true}
+          zoomLimit={[5, 9]}
+          dragging={true}
+          initZoom={6}
+          backColor="rgb(8 17 19)"
+        ></Map>
       </div>
-
-      <div className={cn('w-full', style.mapContanier)}>
-        <Map zoomControl={true} zoomLimit={[5, 7]} dragging={true} backColor="rgb(8 17 19)"></Map>
-      </div>
-      <Footer />
+      {fullScreen ? null : <Footer />}
     </Page>
   );
 }
