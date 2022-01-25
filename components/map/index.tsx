@@ -237,16 +237,21 @@ function Map({
               }
             }
           }
-
-          const min = new MiniMap(minIsLandLayer, {
+          const params = {
             position: 'topright',
             width: 300,
             heigth: 150,
             zoomLevelFixed: 1,
+
             mapOptions: {
               preferCanvas: true,
             },
-          }).addTo(pageMap);
+          };
+          if (clickToJump) {
+            (params as any).centerFixed = { lat: 0, lng: 0 };
+          }
+
+          const min = new MiniMap(minIsLandLayer, options).addTo(pageMap);
         }
       });
   };
@@ -624,7 +629,7 @@ function Map({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        window.open('/map');
+        window.location.href = '/map';
       });
     }
 
