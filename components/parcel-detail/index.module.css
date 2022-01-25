@@ -29,14 +29,26 @@
   border-radius: 20px;
 }
 
-.icon:hover{
+.close{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+}
+
+.icon:hover, .close:hover{
   filter: brightness(125%);
 }
 
-.icon:active{
+.icon:active, .close:active{
   filter: brightness(75%);
 }
 
 .name{
   max-width: 90px;
+}
+
+.title{
+  max-width: 200px;
 }

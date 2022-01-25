@@ -30,6 +30,7 @@ interface Prop {
   options?: params;
   className?: string;
   style?: HTMLAttributes<CSSProperties>;
+  close?: () => void;
 }
 
 // parcel_id	int	parcel_id（地块id）
@@ -45,7 +46,7 @@ interface Prop {
 // last_price.eth	float	地块最后一次交易金额对应的eth
 // last_price.usd	int	地块最后一次交易金额对应的usd
 
-export default function ParcelDeatil({ options, className, style }: Prop) {
+export default function ParcelDeatil({ options, className, style, close }: Prop) {
   // const {parcelId, name, coverImgUrl, openseaUrl, parcelPageUrl, island, suburb, traffic, lastPrice } = detail;
   const jumpToOpenC = (event) => {
     event.stopPropagation();
@@ -61,12 +62,23 @@ export default function ParcelDeatil({ options, className, style }: Prop) {
     }
   };
 
+  const closePop = React.useCallback(
+    (event) => {
+      event.stopPropagation();
+      close();
+    },
+    [null],
+  );
+
   return options ? (
     <div className={cn(className, styles.popup)} style={style} onClick={jumpToParcel}>
-      <div
-        className="truncate"
-        title={`${options.island}>${options.suburb}>${options.name}`}
-      >{`${options.island}>${options.suburb}>${options.name}`}</div>
+      <div className="flex justify-between items-center">
+        <div
+          className={cn('truncate', styles.title)}
+          title={`${options.island}>${options.suburb}>${options.name}`}
+        >{`${options.island}>${options.suburb}>${options.name}`}</div>
+        <img className={styles.close} src="/images/close-pop.png" onClick={closePop}></img>
+      </div>
       <div className="flex justify-start items-center mt-2">
         <img className={styles.cover} src={options.coverImgUrl} />
         <div className="ml-2 w-full">

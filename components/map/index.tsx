@@ -5,8 +5,6 @@ import MiniMap from 'leaflet-minimap';
 
 import style from './index.module.css';
 
-import AddLabelToGeoJSON from './label';
-
 import Selecter from '../select';
 import Legend from '../legend';
 import ParcelDeatil from '../parcel-detail';
@@ -29,6 +27,8 @@ interface Props {
   dragging?: boolean;
   backColor?: string;
   fullScreen?: boolean;
+  changeTypeControl?: boolean;
+  clickToJump?: boolean;
 }
 
 const colors = {
@@ -174,6 +174,8 @@ function Map({
   dragging = true,
   backColor = 'black',
   fullScreen = false,
+  changeTypeControl = true,
+  clickToJump = false,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -193,6 +195,7 @@ function Map({
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
+  // const clickToJumpRef = React.useRef(clickToJump);
 
   const requestLand = (pageMap, layer) => {
     //
@@ -239,7 +242,7 @@ function Map({
             position: 'topright',
             width: 300,
             heigth: 150,
-            zoomLevelFixed: 2,
+            zoomLevelFixed: 1,
             mapOptions: {
               preferCanvas: true,
             },
@@ -352,6 +355,12 @@ function Map({
     [null],
   );
 
+  const closePop = React.useCallback(() => {
+    if (popDetail.current) {
+      (popDetail.current as any).style.display = 'none';
+    }
+  }, [popDetail.current]);
+
   // parcel style function
   const parcelStyle = React.useCallback(
     (fe) => {
@@ -406,6 +415,7 @@ function Map({
       staticType.current = newType;
       layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
+      closePop();
     },
     [minZoomLevel],
   );
@@ -428,6 +438,7 @@ function Map({
     setZoomLevel(e.target._zoom);
     /* eslint no-underscore-dangle: 0 */
     switchLayer(targetLayer);
+    // closePop();
   };
 
   const zoomButtonClick = React.useCallback(
@@ -451,7 +462,7 @@ function Map({
 
       ctx.font = `12px Arial`;
 
-      const fontSize = 12;
+      const fontSize = 13;
       const cdiv = ctx.measureText(text).width;
 
       const width = cdiv * 1.3;
@@ -464,9 +475,12 @@ function Map({
       // ctx.fillStyle = 'rgba(100,200,0, 0.7)';
       // ctx.fillRect(0, 0, width, height);
       ctx.font = `${fontSize}px bold`;
-      ctx.fillStyle = '#fff';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+      ctx.strokeStyle = '#000';
+      ctx.strokeText(text, width / 2, height / 2);
+      ctx.lineWidth = 3;
+      ctx.fillStyle = '#fff';
       ctx.fillText(text, width / 2, height / 2);
       return canvas;
     },
@@ -578,7 +592,7 @@ function Map({
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
           if (popDetail.current) {
-            (popDetail.current as any).style.desplay = 'block';
+            (popDetail.current as any).style.display = 'block';
             (popDetail.current as any).style.top = `${(e as any).containerPoint.y}px`;
             (popDetail.current as any).style.left = `${(e as any).containerPoint.x}px`;
             (popDetail.current as any).source = (e as any).latlng;
@@ -605,6 +619,12 @@ function Map({
         if (updatePop.current.need) {
           updatePop.current.need = false;
         }
+      });
+    }
+
+    if (clickToJump) {
+      map.on('click', function (e) {
+        window.open('/map');
       });
     }
 
@@ -645,12 +665,12 @@ function Map({
   return (
     <div className={style.mapContainer} onClick={onClick}>
       <div className={cn('flex justify-between items-center', style.picker)}>
-        <div className={cn('flex justify-center items-center', style.type)}>PRICE</div>
+        <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div>
         <div className={style.dividing}></div>
         <Selecter
           options={options}
           onClick={changeStaticType}
-          showArrow={zoomControl}
+          showArrow={changeTypeControl}
           defaultLabel={staticType.current}
         ></Selecter>
       </div>
@@ -682,7 +702,7 @@ function Map({
       ) : null}
       <div id="map" className={style.map} style={{ backgroundColor: backColor }}>
         <div className={cn('absolute', style.pop)} ref={popDetail}>
-          <ParcelDeatil options={detail}></ParcelDeatil>
+          <ParcelDeatil options={detail} close={closePop}></ParcelDeatil>
         </div>
       </div>
       <Legend className={style.legend} title="Level of thermal" options={legends.current}></Legend>

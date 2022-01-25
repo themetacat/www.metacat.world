@@ -16,7 +16,7 @@
 
 .mapContanier{
   z-index: 1001;
-  height: 60vh;
+  height: calc(100vh - 172px - 120px - 76px);
 }
 .full{
   height: 100vh;

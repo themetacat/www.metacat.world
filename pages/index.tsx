@@ -349,9 +349,10 @@ export default function Index(props) {
               zoomControl={false}
               zoomLimit={[6, 6]}
               initZoom={6}
-              onClick={() => {
-                window.open('/map');
-              }}
+              // onClick={() => {
+              //   window.open('/map');
+              // }}
+              clickToJump={true}
               dragging={false}
             ></MapWithNoSSR>
           </div>
