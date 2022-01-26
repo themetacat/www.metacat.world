@@ -347,6 +347,7 @@ export default function Index(props) {
               initZoom={6}
               clickToJump={true}
               dragging={false}
+              loadFinish={null}
             ></MapWithNoSSR>
           </div>
         </div>
@@ -409,6 +410,7 @@ export default function Index(props) {
                   key={item.label}
                   label={item.label}
                   icon={item.icon}
+                  isMini={false}
                   onClick={() => {
                     onTabChange(item.type);
                   }}

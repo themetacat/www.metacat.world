@@ -33,9 +33,10 @@ interface Props {
   onClick?: () => void;
   dragging?: boolean;
   backColor?: string;
-  fullScreen?: boolean;
   changeTypeControl?: boolean;
   clickToJump?: boolean;
+  fullScreenOnClick?: (show) => void;
+  loadFinish?: () => void;
 }
 
 const colors = {
@@ -180,12 +181,14 @@ function Map({
   onClick,
   dragging = true,
   backColor = 'black',
-  fullScreen = false,
   changeTypeControl = true,
   clickToJump = false,
+  fullScreenOnClick,
+  loadFinish,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
+  const [fullScreen, setFullScreen] = React.useState(false);
   const [zoomLevel, setZoomLevel] = React.useState(initZoom);
   const [detail, setDeatil] = React.useState();
   const updatePop = React.useRef({
@@ -204,8 +207,15 @@ function Map({
   const mapRef = React.useRef(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
+  const setLoading = React.useCallback(() => {
+    if (loadFinish) {
+      loadFinish();
+    }
+  }, [loadFinish]);
+
   const requestLand = React.useCallback(
     async (pageMap, layer) => {
+      setLoading();
       //
       const res = await getCvIsland();
       const { islands } = res;
@@ -261,6 +271,7 @@ function Map({
 
   const requestSub = React.useCallback(
     async (pageMap, layer) => {
+      setLoading();
       //
       const res = await getCvSuburbs();
       const { suburbs } = res;
@@ -347,6 +358,7 @@ function Map({
 
   const requestMapThreeData = React.useCallback(
     async (streetL, parcelL) => {
+      setLoading();
       const res = await getCvTrafficMapLevelThree();
       const { parcels, stats } = res.data;
 
@@ -360,6 +372,7 @@ function Map({
 
   const requestMapTwoData = React.useCallback(
     async (streetL, parcelL) => {
+      setLoading();
       const res = await getCvTrafficMapLevelTwo();
       const { parcels, stats } = res.data;
 
@@ -373,6 +386,7 @@ function Map({
 
   const requestMapOneData = React.useCallback(
     async (streetL, parcelL) => {
+      setLoading();
       const res = await getCvTrafficMapLevelOne();
       const { parcels, stats } = res.data;
 
@@ -549,6 +563,18 @@ function Map({
     },
     [null],
   );
+
+  const full = React.useCallback(async () => {
+    const isFull = !fullScreen;
+    const s = await fullScreenOnClick(isFull);
+    setFullScreen(isFull);
+    if (mapRef.current) {
+      mapRef.current.invalidateSize(true);
+      // setTimeout(() => {
+
+      // }, 1000);
+    }
+  }, [fullScreen, fullScreenOnClick]);
 
   React.useEffect(() => {
     const map = L.map('map', {
@@ -756,7 +782,7 @@ function Map({
       map.remove();
     };
     // requestSube(map);
-  }, [fullScreen]);
+  }, [null]);
 
   return (
     <div className={style.mapContainer} onClick={onClick}>
@@ -771,30 +797,38 @@ function Map({
         ></Selecter>
       </div>
       {zoomControl ? (
-        <div className={cn('flex flex-col', style.zoom)}>
-          <div
-            className={cn('flex justify-center items-center', style.zoomButton)}
-            onClick={() => {
-              zoomButtonClick('zoomIn');
-            }}
-          >
-            <img
-              className={zoomLevel >= maxZoomLevel ? style.disable : null}
-              src="./images/Union.png"
-            ></img>
+        <>
+          <div className={cn('flex flex-col', style.zoom)}>
+            <div
+              className={cn('flex justify-center items-center', style.zoomButton)}
+              onClick={() => {
+                zoomButtonClick('zoomIn');
+              }}
+            >
+              <img
+                className={zoomLevel >= maxZoomLevel ? style.disable : null}
+                src="./images/Union.png"
+              ></img>
+            </div>
+            <div
+              className={cn('flex justify-center items-center', style.zoomButton)}
+              onClick={() => {
+                zoomButtonClick('zoomOut');
+              }}
+            >
+              <img
+                className={zoomLevel <= minZoomLevel ? style.disable : null}
+                src="./images/Rectangle.png"
+              ></img>
+            </div>
           </div>
           <div
-            className={cn('flex justify-center items-center', style.zoomButton)}
-            onClick={() => {
-              zoomButtonClick('zoomOut');
-            }}
+            className={cn('text-white absolute flex justify-center items-center', style.fullBtn)}
+            onClick={full}
           >
-            <img
-              className={zoomLevel <= minZoomLevel ? style.disable : null}
-              src="./images/Rectangle.png"
-            ></img>
+            <img src={`./images/${fullScreen ? 'unfull.png' : 'full.png'}`}></img>
           </div>
-        </div>
+        </>
       ) : null}
       <div id="map" className={style.map} style={{ backgroundColor: backColor }}>
         <div className={cn('absolute', style.pop)} ref={popDetail}>
