@@ -456,7 +456,7 @@ function Map({
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
-      layerManager.current[2].layer.setStyle(parcelStyle);
+      // layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
       closePop();
     },
