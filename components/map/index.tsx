@@ -418,6 +418,16 @@ function Map({
   const switchLayer = React.useCallback(
     (targetZoom) => {
       markers.current.removeFrom(mapRef.current);
+      if (!zoomControl) {
+        mapRef.current.removeLayer(layerManager.current[1].layer);
+        mapRef.current.removeLayer(layerManager.current[2].layer);
+        mapRef.current.removeLayer(layerManager.current[4].layer);
+        mapRef.current.removeLayer(layerManager.current[5].layer);
+        layerManager.current[3].layer.addTo(mapRef.current); // add parcel2
+        layerManager.current[3].layer.setStyle(parcelStyle);
+        layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
+        return;
+      }
       // layerManager.current[2].layer.setStyle(parcelStyle);
       if (targetZoom < 2) {
         mapRef.current.removeLayer(layerManager.current[0].layer);
