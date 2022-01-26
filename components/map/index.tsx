@@ -215,7 +215,6 @@ function Map({
 
   const requestLand = React.useCallback(
     async (pageMap, layer) => {
-      setLoading();
       //
       const res = await getCvIsland();
       const { islands } = res;
@@ -249,6 +248,7 @@ function Map({
             }
           }
         }
+        setLoading();
         const params = {
           position: 'topright',
           width: 300,
@@ -271,7 +271,6 @@ function Map({
 
   const requestSub = React.useCallback(
     async (pageMap, layer) => {
-      setLoading();
       //
       const res = await getCvSuburbs();
       const { suburbs } = res;
@@ -292,6 +291,7 @@ function Map({
             }
           }
         }
+        setLoading();
       }
     },
     [null],
@@ -358,7 +358,6 @@ function Map({
 
   const requestMapThreeData = React.useCallback(
     async (streetL, parcelL) => {
-      setLoading();
       const res = await getCvTrafficMapLevelThree();
       const { parcels, stats } = res.data;
 
@@ -366,13 +365,13 @@ function Map({
       trafficRef.current = stats?.traffic;
 
       drawGeoJsonToLayer(parcels, convert(stats?.traffic), streetL, parcelL);
+      setLoading();
     },
     [null],
   );
 
   const requestMapTwoData = React.useCallback(
     async (streetL, parcelL) => {
-      setLoading();
       const res = await getCvTrafficMapLevelTwo();
       const { parcels, stats } = res.data;
 
@@ -380,13 +379,13 @@ function Map({
       trafficRef.current = stats?.traffic;
 
       drawGeoJsonToLayer(parcels, convert(stats?.traffic), streetL, parcelL);
+      setLoading();
     },
     [null],
   );
 
   const requestMapOneData = React.useCallback(
     async (streetL, parcelL) => {
-      setLoading();
       const res = await getCvTrafficMapLevelOne();
       const { parcels, stats } = res.data;
 
@@ -394,6 +393,7 @@ function Map({
       trafficRef.current = stats?.traffic;
 
       drawGeoJsonToLayer(parcels, convert(stats?.traffic), streetL, parcelL);
+      setLoading();
     },
     [null],
   );
