@@ -744,10 +744,9 @@ function Map({
 
     switchLayer(2);
     requestLand(map, isLandLayer);
+    requestSub(map, suburbsLayer);
     requestMapTwoData(null, parcelsLayerTwo);
-
     if (zoomControl) {
-      requestSub(map, suburbsLayer);
       requestMapOneData(null, parcelsLayerOne);
       requestMapThreeData(streetLayer, parcelsLayerThree);
     }
