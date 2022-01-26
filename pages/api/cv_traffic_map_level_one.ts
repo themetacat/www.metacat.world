@@ -1,7 +1,7 @@
 import api from '../../lib/api';
 
 export default async (req, res) => {
-  const data = await api.getCvMapLevelThree();
+  const data = await api.getCvTrafficMapLevelOne();
 
   res.statusCode = 200;
 

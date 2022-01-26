@@ -58,7 +58,7 @@ export default function MapPage() {
 
       <div className={cn('relative w-full', fullScreen ? style.full : style.mapContanier)}>
         <div
-          className={cn('text-white absolute', style.fullBtn)}
+          className={cn('text-white absolute flex justify-center items-center', style.fullBtn)}
           onClick={() => {
             setFullScreen(!fullScreen);
           }}

@@ -11,7 +11,14 @@ import ParcelDeatil from '../parcel-detail';
 
 import { convert } from '../../common/utils';
 
-import { getCvMapLevelThree, getCvParcelDetail } from '../../service';
+import {
+  getCvTrafficMapLevelThree,
+  getCvTrafficMapLevelTwo,
+  getCvTrafficMapLevelOne,
+  getCvParcelDetail,
+  getCvIsland,
+  getCvSuburbs,
+} from '../../service';
 
 const options = [
   { label: 'WEEKLY', value: 'WEEKLY' },
@@ -197,100 +204,92 @@ function Map({
   const mapRef = React.useRef(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
-  const requestLand = (pageMap, layer) => {
-    //
-    fetch('https://www.cryptovoxels.com/api/islands.json')
-      .then((res) => {
-        const data = res.json();
-        return data;
-      })
-      .then((a) => {
-        if (a && a.islands) {
-          const allP = a.islands;
+  const requestLand = React.useCallback(
+    async (pageMap, layer) => {
+      //
+      const res = await getCvIsland();
+      const { islands } = res;
+      if (islands) {
+        const minIsLandLayer = L.geoJSON(null, {
+          style: (fe) => {
+            return {
+              fill: true,
+              fillColor: `rgba(101, 128, 134, 1)`,
+              weight: 1,
+              fillOpacity: 1,
+              color: '#444444',
+            };
+          },
+        });
 
-          const minIsLandLayer = L.geoJSON(null, {
-            style: (fe) => {
-              return {
-                fill: true,
-                fillColor: `rgba(101, 128, 134, 1)`,
-                weight: 1,
-                fillOpacity: 1,
-                color: '#444444',
+        for (let i = 0; i < islands.length; i += 1) {
+          if (islands[i]) {
+            const all = islands[i];
+            if (all.geometry) {
+              const al = {
+                type: 'Feature',
+                geometry: all.geometry,
+                properties: {
+                  id: all.id,
+                  name: all.name,
+                },
               };
-            },
-          });
-
-          for (let i = 0; i < allP.length; i += 1) {
-            if (allP[i]) {
-              const all = allP[i];
-              if (all.geometry) {
-                const al = {
-                  type: 'Feature',
-                  geometry: all.geometry,
-                  properties: {
-                    id: all.id,
-                    name: all.name,
-                  },
-                };
-                layer.addData(al);
-                minIsLandLayer.addData(all.geometry);
-              }
-            }
-          }
-          const params = {
-            position: 'topright',
-            width: 300,
-            heigth: 150,
-            zoomLevelFixed: 1,
-
-            mapOptions: {
-              preferCanvas: true,
-            },
-          };
-          if (clickToJump) {
-            (params as any).centerFixed = { lat: 0, lng: 0 };
-          }
-
-          const min = new MiniMap(minIsLandLayer, params).addTo(pageMap);
-        }
-      });
-  };
-
-  const requestSub = (pageMap, layer) => {
-    //
-    fetch('https://www.cryptovoxels.com/api/suburbs.json')
-      .then((res) => {
-        const data = res.json();
-        return data;
-      })
-      .then((a) => {
-        if (a && a.suburbs) {
-          const allP = a.suburbs;
-
-          for (let i = 0; i < allP.length; i += 1) {
-            if (allP[i]) {
-              const all = allP[i];
-              if (all.geometry) {
-                const al = {
-                  type: 'Feature',
-                  geometry: all.position,
-                  properties: {
-                    id: all.id,
-                    name: all.name,
-                  },
-                };
-                layer.addData(al);
-              }
+              layer.addData(al);
+              minIsLandLayer.addData(all.geometry);
             }
           }
         }
-      });
-  };
+        const params = {
+          position: 'topright',
+          width: 300,
+          heigth: 150,
+          zoomLevelFixed: 1,
 
-  const drawGeoJsonToLayer = (data, traffic, layer2, layer3) => {
+          mapOptions: {
+            preferCanvas: true,
+          },
+        };
+        if (clickToJump) {
+          (params as any).centerFixed = { lat: 0, lng: 0 };
+        }
+
+        const min = new MiniMap(minIsLandLayer, params).addTo(pageMap);
+      }
+    },
+    [null],
+  );
+
+  const requestSub = React.useCallback(
+    async (pageMap, layer) => {
+      //
+      const res = await getCvSuburbs();
+      const { suburbs } = res;
+      if (suburbs) {
+        for (let i = 0; i < suburbs.length; i += 1) {
+          if (suburbs[i]) {
+            const all = suburbs[i];
+            if (all.geometry) {
+              const al = {
+                type: 'Feature',
+                geometry: all.position,
+                properties: {
+                  id: all.id,
+                  name: all.name,
+                },
+              };
+              layer.addData(al);
+            }
+          }
+        }
+      }
+    },
+    [null],
+  );
+
+  const drawGeoJsonToLayer = (data, traffic, streetL, parcelL) => {
     if (data) {
-      layer2?.clearLayers();
-      layer3?.clearLayers();
+      streetL?.clearLayers();
+      parcelL?.clearLayers();
       for (let i = 0; i < data.length; i += 1) {
         const all = data[i];
         if (all) {
@@ -300,45 +299,44 @@ function Map({
               ...all,
             };
 
-            colors[0].forEach(function (x, index) {
-              Object.assign(x.TOTAL, traffic.levelOne[index].all);
-              Object.assign(x.WEEKLY, traffic.levelOne[index].week);
-              Object.assign(x.MONTHLY, traffic.levelOne[index].month);
-            });
+            if (traffic.levelOne) {
+              colors[0].forEach(function (x, index) {
+                Object.assign(x.TOTAL, traffic.levelOne[index].all);
+                Object.assign(x.WEEKLY, traffic.levelOne[index].week);
+                Object.assign(x.MONTHLY, traffic.levelOne[index].month);
+              });
+            }
 
-            colors[1].forEach(function (x, index) {
-              Object.assign(x.TOTAL, traffic.levelTwo[index].all);
-              Object.assign(x.WEEKLY, traffic.levelTwo[index].week);
-              Object.assign(x.MONTHLY, traffic.levelTwo[index].month);
-            });
+            if (traffic.levelTwo) {
+              colors[1].forEach(function (x, index) {
+                Object.assign(x.TOTAL, traffic.levelTwo[index].all);
+                Object.assign(x.WEEKLY, traffic.levelTwo[index].week);
+                Object.assign(x.MONTHLY, traffic.levelTwo[index].month);
+              });
+            }
 
-            colors[2].forEach(function (x, index) {
-              Object.assign(x.TOTAL, traffic.levelThree[index].all);
-              Object.assign(x.WEEKLY, traffic.levelThree[index].week);
-              Object.assign(x.MONTHLY, traffic.levelThree[index].month);
-            });
-
-            // const allPercent =
-            //   (all.traffic.all - traffic.all.min) / (traffic.all.max - traffic.all.min);
-            // const monthPercent =
-            //   (all.traffic.month - traffic.month.min) / (traffic.month.max - traffic.month.min);
-            // const weekPercent =
-            //   (all.traffic.week - traffic.week.min) / (traffic.week.max - traffic.week.min);
+            if (traffic.levelThree) {
+              colors[2].forEach(function (x, index) {
+                Object.assign(x.TOTAL, traffic.levelThree[index].all);
+                Object.assign(x.WEEKLY, traffic.levelThree[index].week);
+                Object.assign(x.MONTHLY, traffic.levelThree[index].month);
+              });
+            }
 
             polygon.properties.TOTAL = all.traffic.all;
             polygon.properties.MONTHLY = all.traffic.month;
             polygon.properties.WEEKLY = all.traffic.week;
 
-            layer3.addData(polygon);
+            parcelL.addData(polygon);
           }
-          if (all.streets) {
+          if (all.streets && streetL) {
             all.streets.forEach((x) => {
               if (x && x.geometry) {
                 const stre = {
                   type: 'Feature',
                   ...x,
                 };
-                layer2.addData(stre);
+                streetL.addData(stre);
               }
             });
           }
@@ -347,15 +345,41 @@ function Map({
     }
   };
 
-  const requestMapData = React.useCallback(
-    async (layers) => {
-      const res = await getCvMapLevelThree();
+  const requestMapThreeData = React.useCallback(
+    async (streetL, parcelL) => {
+      const res = await getCvTrafficMapLevelThree();
       const { parcels, stats } = res.data;
 
       // parcels.current = data;
       trafficRef.current = stats?.traffic;
 
-      drawGeoJsonToLayer(parcels, convert(stats?.traffic), layers[1].layer, layers[2].layer);
+      drawGeoJsonToLayer(parcels, convert(stats?.traffic), streetL, parcelL);
+    },
+    [null],
+  );
+
+  const requestMapTwoData = React.useCallback(
+    async (streetL, parcelL) => {
+      const res = await getCvTrafficMapLevelTwo();
+      const { parcels, stats } = res.data;
+
+      // parcels.current = data;
+      trafficRef.current = stats?.traffic;
+
+      drawGeoJsonToLayer(parcels, convert(stats?.traffic), streetL, parcelL);
+    },
+    [null],
+  );
+
+  const requestMapOneData = React.useCallback(
+    async (streetL, parcelL) => {
+      const res = await getCvTrafficMapLevelOne();
+      const { parcels, stats } = res.data;
+
+      // parcels.current = data;
+      trafficRef.current = stats?.traffic;
+
+      drawGeoJsonToLayer(parcels, convert(stats?.traffic), streetL, parcelL);
     },
     [null],
   );
@@ -392,25 +416,39 @@ function Map({
   );
 
   const switchLayer = React.useCallback(
-    (targetLayer) => {
+    (targetZoom) => {
       markers.current.removeFrom(mapRef.current);
-      layerManager.current[2].layer.setStyle(parcelStyle);
-      if (targetLayer < 2) {
-        mapRef.current.removeLayer(layerManager.current[1].layer);
+      // layerManager.current[2].layer.setStyle(parcelStyle);
+      if (targetZoom < 2) {
         mapRef.current.removeLayer(layerManager.current[0].layer);
-        layerManager.current[3].layer.addTo(mapRef.current); // add island
+        mapRef.current.removeLayer(layerManager.current[1].layer);
+        mapRef.current.removeLayer(layerManager.current[2].layer);
+        mapRef.current.removeLayer(layerManager.current[3].layer);
+        layerManager.current[4].layer.addTo(mapRef.current); // add parcel1
+        layerManager.current[4].layer.setStyle(parcelStyle);
+        layerManager.current[5].layer.addTo(mapRef.current); // add island
         markers.current.addTo(mapRef.current);
         return;
       }
-      if (targetLayer < 3) {
+      if (targetZoom < 3) {
         mapRef.current.removeLayer(layerManager.current[1].layer);
-        mapRef.current.removeLayer(layerManager.current[3].layer);
-        layerManager.current[0].layer.addTo(mapRef.current);
+        mapRef.current.removeLayer(layerManager.current[2].layer);
+        mapRef.current.removeLayer(layerManager.current[4].layer);
+        mapRef.current.removeLayer(layerManager.current[5].layer);
+        layerManager.current[3].layer.addTo(mapRef.current); // add parcel2
+        layerManager.current[3].layer.setStyle(parcelStyle);
+        layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
         return;
       }
+
       mapRef.current.removeLayer(layerManager.current[3].layer);
-      layerManager.current[1].layer.addTo(mapRef.current);
-      layerManager.current[0].layer.addTo(mapRef.current);
+      mapRef.current.removeLayer(layerManager.current[4].layer);
+      mapRef.current.removeLayer(layerManager.current[5].layer);
+
+      layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
+      layerManager.current[1].layer.addTo(mapRef.current); // add street
+      layerManager.current[2].layer.addTo(mapRef.current); // add parcel2
+      layerManager.current[2].layer.setStyle(parcelStyle);
     },
     [null],
   );
@@ -443,7 +481,8 @@ function Map({
     setZoomLevel(e.target._zoom);
     /* eslint no-underscore-dangle: 0 */
     switchLayer(targetLayer);
-    // closePop();
+
+    closePop();
   };
 
   const zoomButtonClick = React.useCallback(
@@ -510,7 +549,12 @@ function Map({
       dragging,
     }).setView([0, 0], zoomLevel);
     map.on('zoom', zoomChange);
-    legends.current = colors[getZoomChangeNumber(zoomLevel)];
+    if (zoomControl) {
+      legends.current = colors[getZoomChangeNumber(zoomLevel)];
+    } else {
+      legends.current = colors['1'];
+    }
+
     mapRef.current = map;
     markers.current = L.layerGroup([]);
     // map.addLayer(markers.current);
@@ -580,7 +624,31 @@ function Map({
       },
     }).addTo(map);
 
-    const parcelsLayer = L.geoJSON(null, {
+    const parcelsLayerThree = L.geoJSON(null, {
+      style: parcelStyle,
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.name && zoomControl) {
+          layer.bindTooltip(feature.properties.name, {
+            direction: 'top',
+            className: style.leafletLabel,
+          });
+        }
+      },
+    }).addTo(map);
+
+    const parcelsLayerTwo = L.geoJSON(null, {
+      style: parcelStyle,
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.name && zoomControl) {
+          layer.bindTooltip(feature.properties.name, {
+            direction: 'top',
+            className: style.leafletLabel,
+          });
+        }
+      },
+    }).addTo(map);
+
+    const parcelsLayerOne = L.geoJSON(null, {
       style: parcelStyle,
       onEachFeature: (feature, layer) => {
         if (feature.properties.name && zoomControl) {
@@ -593,7 +661,7 @@ function Map({
     }).addTo(map);
 
     if (zoomControl) {
-      parcelsLayer.on('click', function (e) {
+      parcelsLayerThree.on('click', function (e) {
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
           if (popDetail.current) {
@@ -642,11 +710,19 @@ function Map({
       },
       {
         layer: streetLayer,
+        name: 'street',
+      },
+      {
+        layer: parcelsLayerThree,
+        name: 'parcels3',
+      },
+      {
+        layer: parcelsLayerTwo,
         name: 'parcels2',
       },
       {
-        layer: parcelsLayer,
-        name: 'parcels3',
+        layer: parcelsLayerOne,
+        name: 'parcels1',
       },
       {
         layer: isLandLayer,
@@ -656,10 +732,16 @@ function Map({
 
     layerManager.current = dataLayer;
 
-    switchLayer(1);
+    switchLayer(2);
     requestLand(map, isLandLayer);
-    requestSub(map, suburbsLayer);
-    requestMapData(dataLayer);
+    requestMapTwoData(null, parcelsLayerTwo);
+
+    if (zoomControl) {
+      requestSub(map, suburbsLayer);
+      requestMapOneData(null, parcelsLayerOne);
+      requestMapThreeData(streetLayer, parcelsLayerThree);
+    }
+
     return () => {
       map.off('zoom');
       map.remove();

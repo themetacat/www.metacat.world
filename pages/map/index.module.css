@@ -7,7 +7,7 @@
 }
 
 .allHeight {
-  height: 100px;
+  height: 48px;
 }
 
 .content {
@@ -16,7 +16,7 @@
 
 .mapContanier{
   z-index: 1001;
-  height: calc(100vh - 172px - 120px - 76px);
+  height: calc(100vh - 172px - 68px - 76px);
 }
 .full{
   height: 100vh;
@@ -32,6 +32,10 @@
   box-sizing: border-box;
   cursor: pointer;
   
+}
+.fullBtn>img{
+  width: 30px;
+  height: 30px;
 }
 
 .fullBtn:hover{

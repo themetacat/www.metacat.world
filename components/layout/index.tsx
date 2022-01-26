@@ -69,7 +69,7 @@ export default function Layout({
                 >{`Metaverse Data Analytics & Content Navigation.`}</div>
                 <div
                   className={cn(
-                    'text-xl font-semibold mt-7 flex justify-center items-center pointer-events-auto',
+                    'text-xl font-semibold mt-7 flex justify-center items-center pointer-events-auto cursor-pointer',
                     style.gomap,
                   )}
                 >

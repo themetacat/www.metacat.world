@@ -86,8 +86,24 @@ class API {
     return json;
   }
 
-  public async getCvMapLevelThree(): Promise<any> {
-    const url = `${this.url}/get_cv_map_level_three`; // `${this.url}/get_cv_map_level_three`;
+  public async getCvTrafficMapLevelThree(): Promise<any> {
+    const url = `${this.url}/get_cv_traffic_map_level_three`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvTrafficMapLevelOne(): Promise<any> {
+    const url = `${this.url}/get_cv_traffic_map_level_three`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvTrafficMapLevelTwo(): Promise<any> {
+    const url = `${this.url}/get_cv_traffic_map_level_three`; // `${this.url}/get_cv_traffic_map_level_three`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -97,6 +113,22 @@ class API {
   public async getCvParcelDetail(id: number): Promise<any> {
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvSuburbs(): Promise<any> {
+    const url = `${this.url}/get_cv_suburbs`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvIsland(): Promise<any> {
+    const url = `${this.url}/get_cv_islands`;
     const res = await fetch(url);
     const json = await res.json();
 

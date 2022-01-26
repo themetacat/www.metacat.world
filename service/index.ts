@@ -69,8 +69,22 @@ export const getTopicDetail = async (id: number) => {
   return json;
 };
 
-export const getCvMapLevelThree = async () => {
-  const url = `https://api.metacat.world/api/v1/get_cv_map_level_three`; // /api/cv_map_level_three;
+export const getCvTrafficMapLevelThree = async () => {
+  const url = `https://api.metacat.world/api/v1/get_cv_traffic_map_level_three`; // /api/cv_traffic_map_level_three;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvTrafficMapLevelOne = async () => {
+  const url = `https://api.metacat.world/api/v1/get_cv_traffic_map_level_one`; // /api/cv_traffic_map_level_three;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvTrafficMapLevelTwo = async () => {
+  const url = `https://api.metacat.world/api/v1/get_cv_traffic_map_level_two`; // /api/cv_traffic_map_level_three;
   const res = await fetch(url);
   const json = await res.json();
   return json;
@@ -79,6 +93,20 @@ export const getCvMapLevelThree = async () => {
 export const getCvParcelDetail = async (id: number) => {
   const search = qs.stringify({ id }, { addQueryPrefix: true });
   const url = `/api/cv_parcel_detail${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvIsland = async () => {
+  const url = `/api/cv_islands`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvSuburbs = async () => {
+  const url = `/api/cv_suburbs`;
   const res = await fetch(url);
   const json = await res.json();
   return json;
