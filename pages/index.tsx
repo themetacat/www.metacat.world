@@ -54,10 +54,6 @@ const SUBTAB = [
     label: 'Event',
     type: 'event',
   },
-  {
-    label: 'Map',
-    type: 'map',
-  },
 ];
 
 export default function Index(props) {
@@ -436,6 +432,16 @@ export default function Index(props) {
                   />
                 );
               })}
+              {tabState === 'voxel' ? (
+                <SecondTab
+                  label={'Map'}
+                  key={'Map'}
+                  onClick={() => {
+                    onSubTabChange('map');
+                  }}
+                  active={subTabState === 'map'}
+                ></SecondTab>
+              ) : null}
             </div>
             {subTabState === 'parcel' ? (
               <Search text={searchText} onSearch={onSearchHandler}></Search>

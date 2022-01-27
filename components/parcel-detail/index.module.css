@@ -1,7 +1,7 @@
 .popup{
   width: 300px;
   height: 135px;
-  color: rgba(102, 102, 102, 1);
+  color: rgba(153, 153, 153, 1);
   padding: 12px;
   box-sizing: border-box;
   border:rgba(196, 196, 196, 0.5);
@@ -51,4 +51,8 @@
 
 .title{
   max-width: 200px;
+}
+
+.label{
+  color: rgba(170, 170, 170, 1);
 }
