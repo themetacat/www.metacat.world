@@ -832,7 +832,11 @@ function Map({
       ) : null}
       <div id="map" className={style.map} style={{ backgroundColor: backColor }}>
         <div className={cn('absolute', style.pop)} ref={popDetail}>
-          <ParcelDeatil options={detail} close={closePop}></ParcelDeatil>
+          <ParcelDeatil
+            options={detail}
+            trafficType={staticType.current}
+            close={closePop}
+          ></ParcelDeatil>
         </div>
       </div>
       <Legend className={style.legend} title="Level of thermal" options={legends.current}></Legend>
