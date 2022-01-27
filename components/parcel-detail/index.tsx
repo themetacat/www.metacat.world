@@ -30,6 +30,7 @@ interface Prop {
   options?: params;
   className?: string;
   style?: HTMLAttributes<CSSProperties>;
+  trafficType?: string;
   close?: () => void;
 }
 
@@ -46,7 +47,7 @@ interface Prop {
 // last_price.eth	float	地块最后一次交易金额对应的eth
 // last_price.usd	int	地块最后一次交易金额对应的usd
 
-export default function ParcelDeatil({ options, className, style, close }: Prop) {
+export default function ParcelDeatil({ options, className, style, close, trafficType }: Prop) {
   // const {parcelId, name, coverImgUrl, openseaUrl, parcelPageUrl, island, suburb, traffic, lastPrice } = detail;
   const jumpToOpenC = (event) => {
     event.stopPropagation();
@@ -70,6 +71,16 @@ export default function ParcelDeatil({ options, className, style, close }: Prop)
     [null],
   );
 
+  const getLabel = (type, op) => {
+    if (type === 'TOTAL') {
+      return `Total Traffic：${op.traffic.all}`;
+    }
+    if (type === 'MONTHLY') {
+      return `Monthly Traffic：${op.traffic.month}`;
+    }
+    return `Week Traffic：${op.traffic.week}`;
+  };
+
   return options ? (
     <div className={cn(className, styles.popup)} style={style} onClick={jumpToParcel}>
       <div className="flex justify-between items-center">
@@ -91,9 +102,9 @@ export default function ParcelDeatil({ options, className, style, close }: Prop)
             </span>
             <img src="/images/Nomal.png" className={styles.icon} onClick={jumpToOpenC}></img>
           </div>
-          <div
-            className={cn('mt-1 font-medium', styles.label)}
-          >{`Week Traffic：${options.traffic.week}`}</div>
+          <div className={cn('mt-1 font-medium', styles.label)}>
+            {getLabel(trafficType, options)}
+          </div>
           <div className={cn('mt-1 font-medium', styles.label)}>
             {`Last Price：${options.lastPrice.eth.toFixed(1)}E (${options.lastPrice.usd.toFixed(
               0,
