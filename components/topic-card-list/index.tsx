@@ -56,7 +56,7 @@ export default function TopicCardList({ topics }: Props) {
                 console.log(item.name);
               }}
             >
-              <TopicCard {...item} key={idx} />;
+              <TopicCard {...item} key={idx} />
             </SwiperSlide>
           );
         })}
