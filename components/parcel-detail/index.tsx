@@ -91,8 +91,10 @@ export default function ParcelDeatil({ options, className, style, close }: Prop)
             </span>
             <img src="/images/Nomal.png" className={styles.icon} onClick={jumpToOpenC}></img>
           </div>
-          <div className="mt-1">{`Week Traffic：${options.traffic.week}`}</div>
-          <div className="mt-1">
+          <div
+            className={cn('mt-1 font-medium', styles.label)}
+          >{`Week Traffic：${options.traffic.week}`}</div>
+          <div className={cn('mt-1 font-medium', styles.label)}>
             {`Last Price：${options.lastPrice.eth.toFixed(1)}E (${options.lastPrice.usd.toFixed(
               0,
             )} U)`}
