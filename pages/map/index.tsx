@@ -18,7 +18,7 @@ const Map = dynamic(() => import('../../components/map'), {
 });
 
 const meta = {
-  title: `map - ${SITE_NAME}`,
+  title: `Map - ${SITE_NAME}`,
   description: META_DESCRIPTION,
 };
 

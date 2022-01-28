@@ -251,8 +251,8 @@ function Map({
         setLoading();
         const params = {
           position: 'topright',
-          width: 300,
-          heigth: 150,
+          width: 250,
+          heigth: 100,
           zoomLevelFixed: 1,
 
           mapOptions: {
@@ -436,7 +436,7 @@ function Map({
         mapRef.current.removeLayer(layerManager.current[1].layer);
         mapRef.current.removeLayer(layerManager.current[2].layer);
         mapRef.current.removeLayer(layerManager.current[4].layer);
-        mapRef.current.removeLayer(layerManager.current[5].layer);
+        // mapRef.current.removeLayer(layerManager.current[5].layer);
         layerManager.current[3].layer.addTo(mapRef.current); // add parcel2
         layerManager.current[3].layer.setStyle(parcelStyle);
         layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
@@ -450,7 +450,6 @@ function Map({
         mapRef.current.removeLayer(layerManager.current[3].layer);
         layerManager.current[4].layer.addTo(mapRef.current); // add parcel1
         layerManager.current[4].layer.setStyle(parcelStyle);
-        layerManager.current[5].layer.addTo(mapRef.current); // add island
         markers.current.addTo(mapRef.current);
         return;
       }
@@ -458,7 +457,7 @@ function Map({
         mapRef.current.removeLayer(layerManager.current[1].layer);
         mapRef.current.removeLayer(layerManager.current[2].layer);
         mapRef.current.removeLayer(layerManager.current[4].layer);
-        mapRef.current.removeLayer(layerManager.current[5].layer);
+        // mapRef.current.removeLayer(layerManager.current[5].layer);
         layerManager.current[3].layer.addTo(mapRef.current); // add parcel2
         layerManager.current[3].layer.setStyle(parcelStyle);
         layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
@@ -467,7 +466,6 @@ function Map({
 
       mapRef.current.removeLayer(layerManager.current[3].layer);
       mapRef.current.removeLayer(layerManager.current[4].layer);
-      mapRef.current.removeLayer(layerManager.current[5].layer);
 
       layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
       layerManager.current[1].layer.addTo(mapRef.current); // add street
