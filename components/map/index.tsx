@@ -72,14 +72,14 @@ const colors = {
   ],
   1: [
     {
-      label: 'Top 14%',
+      label: 'Top 15%',
       color: '#4FFFF4',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
     },
     {
-      label: '15%-30%',
+      label: '16%-30%',
       color: '#00D0DD',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
@@ -93,7 +93,7 @@ const colors = {
       WEEKLY: { start: 0, end: 0 },
     },
     {
-      label: '45%-60%',
+      label: '46%-60%',
       color: '#00404E',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
@@ -595,7 +595,7 @@ function Map({
     const isLandLayer = L.geoJSON(null, {
       style: () => {
         return {
-          weight: 1,
+          weight: 3,
           color: '#39636C',
         };
       },
