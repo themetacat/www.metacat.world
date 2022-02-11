@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import Link from 'next/link';
 
 import dynamic from 'next/dynamic';
 import Page from '../components/page';
@@ -395,7 +396,24 @@ export default function Index(props) {
   return (
     <Page meta={meta}>
       <Layout>
-        {topicList.length > 0 ? <TopicCardList topics={topicList}></TopicCardList> : null}
+        {topicList.length > 0 ? (
+          <>
+            <div
+              className={cn(
+                'main-content flex justify-between items-center mt-5 text-white font-semibold',
+                style.builders,
+              )}
+            >
+              <div>BUILDERS</div>
+
+              <div className={cn('flex items-center font-normal', style.more)}>
+                <Link href={'/topic'}>more</Link>
+                <img src="/images/tab-right.png"></img>
+              </div>
+            </div>
+            <TopicCardList topics={topicList}></TopicCardList>
+          </>
+        ) : null}
         <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">

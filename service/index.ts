@@ -111,3 +111,12 @@ export const getCvSuburbs = async () => {
   const json = await res.json();
   return json;
 };
+
+export const getBuilderList = async (page: number, count: number) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+
+  const url = `/api/builder_list${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};

@@ -134,6 +134,15 @@ class API {
 
     return json;
   }
+
+  public async getBuilderList(page: number, count: number): Promise<any> {
+    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+    const url = `${this.url}/get_builder_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

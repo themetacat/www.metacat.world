@@ -3,7 +3,8 @@
   position: relative;
   cursor: pointer;
   max-height: 160px;
-  margin: 30px auto;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 .icon{

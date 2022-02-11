@@ -1,19 +1,17 @@
 import React from 'react';
 import cn from 'classnames';
-import Link from 'next/link';
 
 import CoverImg from '../cover-img';
 
 import style from './index.module.css';
 
 type Props = {
-  topicId?: number;
+  topicId?: string;
   name?: string;
-  type?: string;
   imgUrlList?: Array<string>;
 };
 
-export default function TopicCard({ topicId, name, type, imgUrlList }: Props) {
+export default function TopicDetailCard({ topicId, name, imgUrlList }: Props) {
   return (
     <a href={`/topic/${topicId}`} target="_blank">
       <div className={cn('relative', style.topicCard)}>
@@ -25,18 +23,20 @@ export default function TopicCard({ topicId, name, type, imgUrlList }: Props) {
         >
           {type}
         </div> */}
-        <div className="w-full h-full flex flex-wrap">
+        <div className={cn('w-full flex flex-wrap')}>
           {imgUrlList.map((img, idx) => {
-            return <CoverImg className="w-1/2 h-1/2" img={img} key={idx}></CoverImg>;
+            return (
+              <CoverImg className={cn('w-1/2 h-1/2', style.cover)} img={img} key={idx}></CoverImg>
+            );
           })}
         </div>
         <div
           className={cn(
-            'absolute text-white font-semibold w-full bottom-0 flex justify-between px-4 text-lg items-center',
+            'text-white flex-1 font-semibold w-full bottom-0 flex justify-between p-4 pb-6 text-lg items-center',
             style.footer,
           )}
         >
-          <div>{name}</div>
+          <div className={cn('text-base font-semibold', style.description)}>{name}</div>
         </div>
       </div>
     </a>
