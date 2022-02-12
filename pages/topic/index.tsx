@@ -95,7 +95,7 @@ export default function TopicIndex() {
             style.signBack,
           )}
         >
-          <img src="/images/back.png" className={style.sign}></img>
+          <img src="/images/topicback.png" className={style.sign}></img>
         </div>
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
