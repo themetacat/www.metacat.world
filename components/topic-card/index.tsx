@@ -36,7 +36,7 @@ export default function TopicCard({ topicId, name, type, imgUrlList }: Props) {
             style.footer,
           )}
         >
-          <div>{name}</div>
+          <div className=" truncate">{name}</div>
         </div>
       </div>
     </a>
