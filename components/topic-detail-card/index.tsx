@@ -26,7 +26,14 @@ export default function TopicDetailCard({ topicId, name, imgUrlList }: Props) {
         <div className={cn('w-full flex flex-wrap')}>
           {imgUrlList.map((img, idx) => {
             return (
-              <CoverImg className={cn('w-1/2 h-1/2', style.cover)} img={img} key={idx}></CoverImg>
+              <img
+                className={cn('w-1/2 h-1/2', style.cover)}
+                src={img}
+                onError={() => {
+                  this.src = '/images/logo.png';
+                }}
+                key={idx}
+              ></img>
             );
           })}
         </div>
