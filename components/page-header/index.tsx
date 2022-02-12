@@ -52,10 +52,10 @@ export default function PageHeader({ active, className }: Props) {
         <div
           className={cn(
             'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
-            active === 'topic' ? style.active : null,
+            active === 'builders' ? style.active : null,
           )}
         >
-          <Link href={'/topic'}>Topic</Link>
+          <Link href={'/builders'}>Builders</Link>
         </div>
       </div>
     </header>

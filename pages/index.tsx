@@ -407,7 +407,7 @@ export default function Index(props) {
               <div>BUILDERS</div>
 
               <div className={cn('flex items-center font-normal', style.more)}>
-                <Link href={'/topic'}>more</Link>
+                <Link href={'/builders'}>more</Link>
                 <img src="/images/tab-right.png"></img>
               </div>
             </div>

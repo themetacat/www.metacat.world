@@ -39,7 +39,7 @@ export default function TopicDetailCard({ topicId, name, imgUrlList }: Props) {
         </div>
         <div
           className={cn(
-            'text-white flex-1 font-semibold w-full bottom-0 flex justify-between p-4 pb-6 text-lg items-center',
+            'text-white flex-1 font-semibold w-full bottom-0 flex justify-between p-4 pb-6 text-lg items-start',
             style.footer,
           )}
         >

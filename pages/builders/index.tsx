@@ -88,7 +88,7 @@ export default function TopicIndex() {
   return (
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'topic'} />
+        <PageHeader className="relative z-10" active={'builders'} />
         <div
           className={cn(
             'main-content flex justify-center items-end relative z-10 pointer-events-none',
@@ -99,7 +99,7 @@ export default function TopicIndex() {
         </div>
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
-      <div className={cn('main-content')}>
+      <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
