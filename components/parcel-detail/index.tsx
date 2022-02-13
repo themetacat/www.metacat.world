@@ -1,5 +1,7 @@
-import React, { CSSProperties, HTMLAttributes } from 'react';
+import React, { CSSProperties, HTMLAttributes, useEffect } from 'react';
 import cn from 'classnames';
+
+import CoverImg from '../cover-img';
 
 import styles from './index.module.css';
 
@@ -91,7 +93,7 @@ export default function ParcelDeatil({ options, className, style, close, traffic
         <img className={styles.close} src="/images/close-pop.png" onClick={closePop}></img>
       </div>
       <div className="flex justify-start items-center mt-2">
-        <img className={styles.cover} src={options.coverImgUrl} />
+        <CoverImg className={styles.cover} img={options.coverImgUrl} />
         <div className="ml-2 w-full">
           <div className="flex justify-between">
             <span

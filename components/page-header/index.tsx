@@ -38,15 +38,24 @@ export default function PageHeader({ active, className }: Props) {
           className="text-2xl font-medium text-gray-400  mr-14 hover:text-white active:text-white cursor-pointer pointer-events-auto"
           onClick={jumpToData}
         >
-          Data
+          Analytics
         </div>
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+            'text-2xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'map' ? style.active : null,
           )}
         >
           <Link href={'/map'}>Map</Link>
+        </div>
+
+        <div
+          className={cn(
+            'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+            active === 'builders' ? style.active : null,
+          )}
+        >
+          <Link href={'/builders'}>Builders</Link>
         </div>
       </div>
     </header>

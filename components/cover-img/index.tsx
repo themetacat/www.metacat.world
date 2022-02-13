@@ -10,12 +10,15 @@ export default function CoverImg({ img, className, error = '/images/logo.png' }:
   const [baseImg, setBaseImg] = React.useState(img);
 
   React.useEffect(() => {
-    setBaseImg(img);
+    setBaseImg('/images/logo.png');
   }, [img]);
   return (
     <img
       className={className}
       src={baseImg}
+      onLoad={() => {
+        setBaseImg(img);
+      }}
       onError={() => {
         setBaseImg(error);
       }}
