@@ -21,7 +21,7 @@ import style from './index.module.css';
 
 export default function TopicIndex() {
   const meta = {
-    title: `Topic - ${SITE_NAME}`,
+    title: `Builders - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
