@@ -95,7 +95,7 @@ class API {
   }
 
   public async getCvTrafficMapLevelOne(): Promise<any> {
-    const url = `${this.url}/get_cv_traffic_map_level_three`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const url = `${this.url}/get_cv_traffic_map_level_one`; // `${this.url}/get_cv_traffic_map_level_three`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -103,7 +103,31 @@ class API {
   }
 
   public async getCvTrafficMapLevelTwo(): Promise<any> {
-    const url = `${this.url}/get_cv_traffic_map_level_three`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const url = `${this.url}/get_cv_traffic_map_level_two`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvPriceMapLevelThree(): Promise<any> {
+    const url = `${this.url}/get_cv_price_map_level_three`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvPriceMapLevelOne(): Promise<any> {
+    const url = `${this.url}/get_cv_price_map_level_one`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvPriceMapLevelTwo(): Promise<any> {
+    const url = `${this.url}/get_cv_price_map_level_two`; // `${this.url}/get_cv_traffic_map_level_three`;
     const res = await fetch(url);
     const json = await res.json();
 

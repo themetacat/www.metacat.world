@@ -30,9 +30,9 @@ export default function Selecter({
 
   const itemOnClick = React.useCallback(
     (x) => {
-      setSelectedOption(x);
+      setSelectedOption(x.label);
       setShow(false);
-      onClick(x);
+      onClick(x.value);
     },
     [null],
   );
@@ -43,6 +43,15 @@ export default function Selecter({
     }
     setShow(!show);
   }, [show]);
+
+  React.useEffect(() => {
+    const s = options.find((x) => {
+      return x.value === defaultLabel;
+    });
+    if (s) {
+      setSelectedOption(s.label);
+    }
+  }, [options, defaultLabel]);
 
   return (
     <div className={cn(style.selectDiv, cls)}>
@@ -62,7 +71,7 @@ export default function Selecter({
               className={cn('flex justify-center items-center', style.option)}
               key={x.value}
               onClick={(e) => {
-                itemOnClick(x.value);
+                itemOnClick(x);
               }}
             >
               {x.label}

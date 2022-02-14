@@ -90,6 +90,27 @@ export const getCvTrafficMapLevelTwo = async () => {
   return json;
 };
 
+export const getCvPriceMapLevelThree = async () => {
+  const url = `https://api.metacat.world/api/v1/get_cv_price_map_level_three`; // /api/cv_traffic_map_level_three;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvPriceMapLevelOne = async () => {
+  const url = `https://api.metacat.world/api/v1/get_cv_price_map_level_one`; // /api/cv_traffic_map_level_three;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvPriceMapLevelTwo = async () => {
+  const url = `https://api.metacat.world/api/v1/get_cv_price_map_level_two`; // /api/cv_traffic_map_level_three;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
 export const getCvParcelDetail = async (id: number) => {
   const search = qs.stringify({ id }, { addQueryPrefix: true });
   const url = `/api/cv_parcel_detail${search}`;

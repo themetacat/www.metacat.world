@@ -3,6 +3,8 @@ import cn from 'classnames';
 import L from 'leaflet';
 import MiniMap from 'leaflet-minimap';
 
+import ReactTooltip from 'react-tooltip';
+
 import style from './index.module.css';
 
 import Selecter from '../select';
@@ -15,16 +17,32 @@ import {
   getCvTrafficMapLevelThree,
   getCvTrafficMapLevelTwo,
   getCvTrafficMapLevelOne,
+  getCvPriceMapLevelOne,
+  getCvPriceMapLevelThree,
+  getCvPriceMapLevelTwo,
   getCvParcelDetail,
   getCvIsland,
   getCvSuburbs,
 } from '../../service';
 
-const options = [
-  { label: 'WEEKLY', value: 'WEEKLY' },
-  { label: 'MONTHLY', value: 'MONTHLY' },
-  { label: 'TOTAL', value: 'TOTAL' },
+const mapT = [
+  { value: 'TRAFFIC', label: 'TRAFFIC' },
+  { value: 'PRICE', label: 'PRICE' },
 ];
+
+const options = {
+  PRICE: [
+    { label: 'MONTHLY', value: 'MONTH' },
+    { label: 'QUARTERLY', value: 'QUARTER' },
+    { label: 'YEARLY', value: 'YEAR' },
+    { label: 'All-Time', value: 'ALL' },
+  ],
+  TRAFFIC: [
+    { label: 'WEEKLY', value: 'WEEKLY' },
+    { label: 'MONTHLY', value: 'MONTHLY' },
+    { label: 'All-Time', value: 'TOTAL' },
+  ],
+};
 
 interface Props {
   zoomLimit?: Array<number>;
@@ -47,6 +65,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '21%-50%',
@@ -54,6 +76,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '51%-80%',
@@ -61,6 +87,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '81%-100%',
@@ -68,6 +98,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
   ],
   1: [
@@ -77,6 +111,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '16%-30%',
@@ -84,6 +122,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '31%-45%',
@@ -91,6 +133,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '46%-60%',
@@ -98,6 +144,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '61%-75%',
@@ -105,6 +155,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '76%-100%',
@@ -112,6 +166,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
   ],
   2: [
@@ -121,6 +179,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '11%-20%',
@@ -128,6 +190,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '21%-30%',
@@ -135,6 +201,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '31%-40%',
@@ -142,6 +212,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '41%-50%',
@@ -149,6 +223,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '51%-65%',
@@ -156,6 +234,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '66%-80%',
@@ -163,6 +245,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
     {
       label: '81%-100%',
@@ -170,6 +256,10 @@ const colors = {
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
+      ALL: { start: 0, end: 0 },
+      MONTH: { start: 0, end: 0 },
+      YEAR: { start: 0, end: 0 },
+      QUARTER: { start: 0, end: 0 },
     },
   ],
 };
@@ -199,9 +289,12 @@ function Map({
     },
   });
   const popDetail = React.useRef();
+  const mapType = React.useRef('TRAFFIC');
   const staticType = React.useRef('MONTHLY');
+  const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[1]);
   const trafficRef = React.useRef(null);
+  const priceRef = React.useRef(null);
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
@@ -356,6 +449,57 @@ function Map({
     }
   };
 
+  const drawPriceGeoJsonToLayer = (data, price, parcelL) => {
+    if (data) {
+      parcelL?.clearLayers();
+      for (let i = 0; i < data.length; i += 1) {
+        const all = data[i];
+        if (all) {
+          if (all.geometry) {
+            const polygon = {
+              type: 'Feature',
+              ...all,
+            };
+
+            if (price.levelOne) {
+              colors[0].forEach(function (x, index) {
+                Object.assign(x.ALL, price.levelOne[index].all);
+                Object.assign(x.MONTH, price.levelOne[index].month);
+                Object.assign(x.QUARTER, price.levelOne[index].quarter);
+                Object.assign(x.YEAR, price.levelOne[index].year);
+              });
+            }
+
+            if (price.levelTwo) {
+              colors[1].forEach(function (x, index) {
+                Object.assign(x.ALL, price.levelTwo[index].all);
+                Object.assign(x.MONTH, price.levelTwo[index].month);
+                Object.assign(x.QUARTER, price.levelTwo[index].quarter);
+                Object.assign(x.YEAR, price.levelTwo[index].year);
+              });
+            }
+
+            if (price.levelThree) {
+              colors[2].forEach(function (x, index) {
+                Object.assign(x.ALL, price.levelThree[index].all);
+                Object.assign(x.MONTH, price.levelThree[index].month);
+                Object.assign(x.QUARTER, price.levelThree[index].quarter);
+                Object.assign(x.YEAR, price.levelThree[index].year);
+              });
+            }
+
+            polygon.properties.ALL = all.price.all;
+            polygon.properties.MONTH = all.price.month;
+            polygon.properties.QUARTER = all.price.quarter;
+            polygon.properties.YEAR = all.price.year;
+
+            parcelL.addData(polygon);
+          }
+        }
+      }
+    }
+  };
+
   const requestMapThreeData = React.useCallback(
     async (streetL, parcelL) => {
       const res = await getCvTrafficMapLevelThree();
@@ -398,6 +542,48 @@ function Map({
     [null],
   );
 
+  const requestPriceMapTwoData = React.useCallback(
+    async (parcelL) => {
+      const res = await getCvPriceMapLevelTwo();
+      const { parcels, stats } = res.data;
+
+      // parcels.current = data;
+      priceRef.current = stats?.price;
+
+      drawPriceGeoJsonToLayer(parcels, convert(stats?.price), parcelL);
+      setLoading();
+    },
+    [null],
+  );
+
+  const requestPriceMapThreeData = React.useCallback(
+    async (parcelL) => {
+      const res = await getCvPriceMapLevelThree();
+      const { parcels, stats } = res.data;
+
+      // parcels.current = data;
+      priceRef.current = stats?.price;
+
+      drawPriceGeoJsonToLayer(parcels, convert(stats?.price), parcelL);
+      setLoading();
+    },
+    [null],
+  );
+
+  const requestPriceMapOneData = React.useCallback(
+    async (parcelL) => {
+      const res = await getCvPriceMapLevelOne();
+      const { parcels, stats } = res.data;
+
+      // parcels.current = data;
+      priceRef.current = stats?.price;
+
+      drawPriceGeoJsonToLayer(parcels, convert(stats?.price), parcelL);
+      setLoading();
+    },
+    [null],
+  );
+
   const closePop = React.useCallback(() => {
     if (popDetail.current) {
       (popDetail.current as any).style.display = 'none';
@@ -418,6 +604,9 @@ function Map({
           color = allColor.color;
         }
       }
+      // if(color == 'rgba(101, 128, 134, 1)'){
+      //   console.log(fe.properties)
+      // }
       return {
         fill: true,
         fillColor: color,
@@ -433,42 +622,89 @@ function Map({
     (targetZoom) => {
       markers.current.removeFrom(mapRef.current);
       if (!zoomControl) {
-        mapRef.current.removeLayer(layerManager.current[1].layer);
+        mapRef.current.removeLayer(layerManager.current[1].layer); // street
+        layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
+
         mapRef.current.removeLayer(layerManager.current[2].layer);
         mapRef.current.removeLayer(layerManager.current[4].layer);
+
+        mapRef.current.removeLayer(layerManager.current[6].layer);
+        mapRef.current.removeLayer(layerManager.current[8].layer);
+
+        if (mapType.current === 'PRICE') {
+          mapRef.current.removeLayer(layerManager.current[3].layer);
+          layerManager.current[7].layer.addTo(mapRef.current); // add price2
+          layerManager.current[7].layer.setStyle(parcelStyle);
+          return;
+        }
         // mapRef.current.removeLayer(layerManager.current[5].layer);
+        mapRef.current.removeLayer(layerManager.current[7].layer);
         layerManager.current[3].layer.addTo(mapRef.current); // add parcel2
         layerManager.current[3].layer.setStyle(parcelStyle);
-        layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
         return;
       }
       // layerManager.current[2].layer.setStyle(parcelStyle);
       if (targetZoom < 2) {
+        markers.current.addTo(mapRef.current);
         mapRef.current.removeLayer(layerManager.current[0].layer);
         mapRef.current.removeLayer(layerManager.current[1].layer);
+
         mapRef.current.removeLayer(layerManager.current[2].layer);
         mapRef.current.removeLayer(layerManager.current[3].layer);
+
+        mapRef.current.removeLayer(layerManager.current[6].layer);
+        mapRef.current.removeLayer(layerManager.current[7].layer);
+
+        if (mapType.current === 'PRICE') {
+          mapRef.current.removeLayer(layerManager.current[4].layer);
+          layerManager.current[8].layer.addTo(mapRef.current); // add price2
+          layerManager.current[8].layer.setStyle(parcelStyle);
+          return;
+        }
+        mapRef.current.removeLayer(layerManager.current[8].layer);
         layerManager.current[4].layer.addTo(mapRef.current); // add parcel1
         layerManager.current[4].layer.setStyle(parcelStyle);
-        markers.current.addTo(mapRef.current);
         return;
       }
       if (targetZoom < 3) {
+        layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
+
         mapRef.current.removeLayer(layerManager.current[1].layer);
         mapRef.current.removeLayer(layerManager.current[2].layer);
         mapRef.current.removeLayer(layerManager.current[4].layer);
+
+        mapRef.current.removeLayer(layerManager.current[6].layer);
+        mapRef.current.removeLayer(layerManager.current[8].layer);
+
+        if (mapType.current === 'PRICE') {
+          mapRef.current.removeLayer(layerManager.current[3].layer);
+          layerManager.current[7].layer.addTo(mapRef.current); // add price2
+          layerManager.current[7].layer.setStyle(parcelStyle);
+          return;
+        }
         // mapRef.current.removeLayer(layerManager.current[5].layer);
+        mapRef.current.removeLayer(layerManager.current[7].layer);
         layerManager.current[3].layer.addTo(mapRef.current); // add parcel2
         layerManager.current[3].layer.setStyle(parcelStyle);
-        layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
         return;
       }
 
       mapRef.current.removeLayer(layerManager.current[3].layer);
       mapRef.current.removeLayer(layerManager.current[4].layer);
 
+      mapRef.current.removeLayer(layerManager.current[7].layer);
+      mapRef.current.removeLayer(layerManager.current[8].layer);
+
       layerManager.current[0].layer.addTo(mapRef.current); // add suburbs
       layerManager.current[1].layer.addTo(mapRef.current); // add street
+
+      if (mapType.current === 'PRICE') {
+        mapRef.current.removeLayer(layerManager.current[2].layer);
+        layerManager.current[6].layer.addTo(mapRef.current); // add price2
+        layerManager.current[6].layer.setStyle(parcelStyle);
+        return;
+      }
+      mapRef.current.removeLayer(layerManager.current[6].layer);
       layerManager.current[2].layer.addTo(mapRef.current); // add parcel2
       layerManager.current[2].layer.setStyle(parcelStyle);
     },
@@ -478,6 +714,18 @@ function Map({
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
+      // layerManager.current[2].layer.setStyle(parcelStyle);
+      switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
+      closePop();
+    },
+    [minZoomLevel],
+  );
+
+  const changeMapType = React.useCallback(
+    (newType) => {
+      mapType.current = newType;
+      setStaticList(options[newType]);
+      staticType.current = options[newType][1].value;
       // layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
       closePop();
@@ -694,6 +942,42 @@ function Map({
       },
     }).addTo(map);
 
+    const parcelsPriceLayerThree = L.geoJSON(null, {
+      style: parcelStyle,
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.name && zoomControl) {
+          layer.bindTooltip(feature.properties.name, {
+            direction: 'top',
+            className: style.leafletLabel,
+          });
+        }
+      },
+    });
+
+    const parcelsPriceLayerTwo = L.geoJSON(null, {
+      style: parcelStyle,
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.name && zoomControl) {
+          layer.bindTooltip(feature.properties.name, {
+            direction: 'top',
+            className: style.leafletLabel,
+          });
+        }
+      },
+    });
+
+    const parcelsPriceLayerOne = L.geoJSON(null, {
+      style: parcelStyle,
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.name && zoomControl) {
+          layer.bindTooltip(feature.properties.name, {
+            direction: 'top',
+            className: style.leafletLabel,
+          });
+        }
+      },
+    });
+
     if (zoomControl) {
       parcelsLayerThree.on('click', function (e) {
         if (e.sourceTarget && e.sourceTarget.feature) {
@@ -762,6 +1046,18 @@ function Map({
         layer: isLandLayer,
         name: 'island',
       },
+      {
+        layer: parcelsPriceLayerThree,
+        name: 'price3',
+      },
+      {
+        layer: parcelsPriceLayerTwo,
+        name: 'price2',
+      },
+      {
+        layer: parcelsPriceLayerOne,
+        name: 'price1',
+      },
     ];
 
     layerManager.current = dataLayer;
@@ -770,9 +1066,13 @@ function Map({
     requestLand(map, isLandLayer);
     requestSub(map, suburbsLayer);
     requestMapTwoData(null, parcelsLayerTwo);
+    requestPriceMapTwoData(parcelsPriceLayerTwo);
+
     if (zoomControl) {
       requestMapOneData(null, parcelsLayerOne);
       requestMapThreeData(streetLayer, parcelsLayerThree);
+      requestPriceMapThreeData(parcelsPriceLayerThree);
+      requestPriceMapOneData(parcelsPriceLayerOne);
     }
 
     return () => {
@@ -785,14 +1085,43 @@ function Map({
   return (
     <div className={style.mapContainer} onClick={onClick}>
       <div className={cn('flex justify-between items-center', style.picker)}>
-        <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div>
+        {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
+        <Selecter
+          options={mapT}
+          onClick={changeMapType}
+          showArrow={changeTypeControl}
+          defaultLabel={mapType.current}
+        ></Selecter>
         <div className={style.dividing}></div>
         <Selecter
-          options={options}
+          options={staticList}
           onClick={changeStaticType}
           showArrow={changeTypeControl}
           defaultLabel={staticType.current}
         ></Selecter>
+      </div>
+      <div className={cn('flex justify-center items-center', style.helper)}>
+        <div
+          data-tip
+          data-for="info"
+          data-place="bottom"
+          className={cn('relative flex justify-center items-center', style.helperInfo)}
+        >
+          <img src="/images/helper.png"></img>
+        </div>
+        <ReactTooltip
+          id="info"
+          effect="solid"
+          textColor="#AAAAAA"
+          // className={style.pop}
+          backgroundColor="#0F191B"
+          border={false}
+        >
+          <div className={style.info}>
+            The first/second level show the average parcel sale USD in island/suburb, the third
+            level (and above) show the cumulative sale USD of the parcel.
+          </div>
+        </ReactTooltip>
       </div>
       {zoomControl ? (
         <>
