@@ -111,8 +111,8 @@ export const getCvPriceMapLevelTwo = async () => {
   return json;
 };
 
-export const getCvParcelDetail = async (id: number) => {
-  const search = qs.stringify({ id }, { addQueryPrefix: true });
+export const getCvParcelDetail = async (id: number, map_type?: string, time_range?: string) => {
+  const search = qs.stringify({ id, map_type, time_range }, { addQueryPrefix: true });
   const url = `/api/cv_parcel_detail${search}`;
   const res = await fetch(url);
   const json = await res.json();

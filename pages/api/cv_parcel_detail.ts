@@ -1,8 +1,8 @@
 import api from '../../lib/api';
 
 export default async (req, res) => {
-  const { id } = req.query;
-  const data = await api.getCvParcelDetail(id);
+  const { id, map_type, time_range } = req.query;
+  const data = await api.getCvParcelDetail(id, map_type, time_range);
 
   res.statusCode = 200;
 

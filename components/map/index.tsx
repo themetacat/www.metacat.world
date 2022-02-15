@@ -803,7 +803,12 @@ function Map({
 
   const requestDeatil = React.useCallback(
     async (id) => {
-      const res = await getCvParcelDetail(id);
+      let res = null;
+      if (mapType.current === 'TRAFFIC') {
+        res = await getCvParcelDetail(id);
+      } else {
+        res = await getCvParcelDetail(id, 'price', staticType.current);
+      }
       const parcel = convert(res.data);
       setDeatil(parcel);
     },
@@ -992,6 +997,19 @@ function Map({
         }
       });
 
+      parcelsPriceLayerThree.on('click', function (e) {
+        if (e.sourceTarget && e.sourceTarget.feature) {
+          const id = e.sourceTarget.feature.properties.parcel_id;
+          if (popDetail.current) {
+            (popDetail.current as any).style.display = 'block';
+            (popDetail.current as any).style.top = `${(e as any).containerPoint.y}px`;
+            (popDetail.current as any).style.left = `${(e as any).containerPoint.x}px`;
+            (popDetail.current as any).source = (e as any).latlng;
+          }
+          requestDeatil(id);
+        }
+      });
+
       map.on('movestart', (e) => {
         if (popDetail && popDetail.current) {
           updatePop.current.need = true;
@@ -1162,6 +1180,7 @@ function Map({
           <ParcelDeatil
             options={detail}
             trafficType={staticType.current}
+            mapType={mapType.current}
             close={closePop}
           ></ParcelDeatil>
         </div>

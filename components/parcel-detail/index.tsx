@@ -16,6 +16,18 @@ interface traffic {
   all?: number;
 }
 
+interface timeRangeSale {
+  eth?: string;
+  usd?: number;
+}
+
+interface lastSale {
+  date?: string;
+  eth?: string;
+  isPrimary?: number;
+  usd?: number;
+}
+
 interface params {
   parcelId?: string;
   name?: string;
@@ -26,6 +38,8 @@ interface params {
   suburb?: string;
   traffic?: traffic;
   lastPrice?: Price;
+  lastSaleList?: Array<lastSale>;
+  timeRangeSale?: timeRangeSale;
 }
 
 interface Prop {
@@ -33,6 +47,7 @@ interface Prop {
   className?: string;
   style?: HTMLAttributes<CSSProperties>;
   trafficType?: string;
+  mapType?: string;
   close?: () => void;
 }
 
@@ -49,7 +64,14 @@ interface Prop {
 // last_price.eth	float	地块最后一次交易金额对应的eth
 // last_price.usd	int	地块最后一次交易金额对应的usd
 
-export default function ParcelDeatil({ options, className, style, close, trafficType }: Prop) {
+export default function ParcelDeatil({
+  options,
+  className,
+  style,
+  close,
+  trafficType,
+  mapType,
+}: Prop) {
   // const {parcelId, name, coverImgUrl, openseaUrl, parcelPageUrl, island, suburb, traffic, lastPrice } = detail;
   const jumpToOpenC = (event) => {
     event.stopPropagation();
@@ -74,25 +96,75 @@ export default function ParcelDeatil({ options, className, style, close, traffic
   );
 
   const getLabel = (type, op) => {
+    if ((mapType === 'PRICE' && !op.timeRangeSale) || (mapType === 'TRAFFIC' && !op.traffic)) {
+      return '';
+    }
     if (type === 'TOTAL') {
       return `Total Traffic：${op.traffic.all}`;
     }
+
     if (type === 'MONTHLY') {
       return `Monthly Traffic：${op.traffic.month}`;
     }
+    const label = op.timeRangeSale?.eth ? `${op.timeRangeSale.eth}E(${op.timeRangeSale.usd}U)` : '';
+    if (type === 'ALL') {
+      return `All-Time Sales：${label}`;
+    }
+
+    if (type === 'MONTH') {
+      return `Monthly Sales：${label}`;
+    }
+
+    if (type === 'QUARTER') {
+      return `Quarterly Sales：${label}`;
+    }
+
+    if (type === 'YEAR') {
+      return `Yearly Sales：${label}`;
+    }
+
     return `Week Traffic：${op.traffic.week}`;
   };
 
+  // date?: string;
+  // eth?: string;
+  // isPromary?: number;
+  // usd?: number;
+  const renderUl = React.useCallback(
+    (list: Array<lastSale>) => {
+      if (list) {
+        return (
+          <>
+            {list.map((ite, idx) => {
+              return (
+                <li key={idx} className={cn('', styles.sales)}>
+                  {`${ite.date} ${ite.isPrimary > 0 ? '(primary sales) /' : ''}`}{' '}
+                  <span className="text-white">{`${ite.eth}E(${ite.usd}U)`}</span>
+                </li>
+              );
+            })}
+          </>
+        );
+      }
+      return <li className={cn('', styles.sales)}>NO DATA</li>;
+    },
+    [null],
+  );
+
   return options ? (
-    <div className={cn(className, styles.popup)} style={style} onClick={jumpToParcel}>
-      <div className="flex justify-between items-center">
+    <div
+      className={cn(className, styles.popup, mapType === 'PRICE' ? '' : styles.widthlimit)}
+      style={style}
+      onClick={jumpToParcel}
+    >
+      <div className={cn('flex justify-between items-center', styles.titleContainer)}>
         <div
-          className={cn('truncate', styles.title)}
+          className={cn('truncate w-full', styles.title)}
           title={`${options.island}>${options.suburb}>${options.name}`}
         >{`${options.island}>${options.suburb}>${options.name}`}</div>
         <img className={styles.close} src="/images/close-pop.png" onClick={closePop}></img>
       </div>
-      <div className="flex justify-start items-center mt-2">
+      <div className="flex justify-start items-start mt-2">
         <CoverImg className={styles.cover} img={options.coverImgUrl} />
         <div className="ml-2 w-full">
           <div className="flex justify-between">
@@ -107,11 +179,18 @@ export default function ParcelDeatil({ options, className, style, close, traffic
           <div className={cn('mt-1 font-medium', styles.label)}>
             {getLabel(trafficType, options)}
           </div>
-          <div className={cn('mt-1 font-medium', styles.label)}>
-            {`Last Price：${options.lastPrice.eth.toFixed(1)}E (${options.lastPrice.usd.toFixed(
-              0,
-            )} U)`}
-          </div>
+          {options.lastSaleList ? (
+            <div className={cn('mt-1 font-medium', styles.label)}>
+              Last two sales：
+              <ul className="list-none">{renderUl(options.lastSaleList)}</ul>
+            </div>
+          ) : (
+            <div className={cn('mt-1 font-medium', styles.label)}>
+              {`Last Price：${options.lastPrice.eth.toFixed(1)}E (${options.lastPrice.usd.toFixed(
+                0,
+              )} U)`}
+            </div>
+          )}
         </div>
       </div>
     </div>

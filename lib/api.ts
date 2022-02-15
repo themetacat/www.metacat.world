@@ -134,8 +134,8 @@ class API {
     return json;
   }
 
-  public async getCvParcelDetail(id: number): Promise<any> {
-    const search = qs.stringify({ id }, { addQueryPrefix: true });
+  public async getCvParcelDetail(id: number, map_type?: string, time_range?: string): Promise<any> {
+    const search = qs.stringify({ id, map_type, time_range }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_parcel_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
