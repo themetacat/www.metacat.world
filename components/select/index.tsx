@@ -68,7 +68,11 @@ export default function Selecter({
         {options.map((x) => {
           return (
             <li
-              className={cn('flex justify-center items-center', style.option)}
+              className={cn(
+                'flex justify-center items-center',
+                style.option,
+                selectedOption === x.label ? style.active : '',
+              )}
               key={x.value}
               onClick={(e) => {
                 itemOnClick(x);

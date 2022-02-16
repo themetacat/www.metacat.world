@@ -1118,29 +1118,34 @@ function Map({
           defaultLabel={staticType.current}
         ></Selecter>
       </div>
-      <div className={cn('flex justify-center items-center', style.helper)}>
-        <div
-          data-tip
-          data-for="info"
-          data-place="bottom"
-          className={cn('relative flex justify-center items-center', style.helperInfo)}
-        >
-          <img src="/images/helper.png"></img>
-        </div>
-        <ReactTooltip
-          id="info"
-          effect="solid"
-          textColor="#AAAAAA"
-          // className={style.pop}
-          backgroundColor="#0F191B"
-          border={false}
-        >
-          <div className={style.info}>
-            The first/second level show the average parcel sale USD in island/suburb, the third
-            level (and above) show the cumulative sale USD of the parcel.
+      {mapType.current === 'PRICE' ? (
+        <div className={cn('flex justify-center items-center', style.helper)}>
+          <div
+            data-tip
+            data-for="info"
+            data-place="bottom"
+            className={cn('relative flex justify-center items-center', style.helperInfo)}
+          >
+            <img src="/images/helper.png"></img>
           </div>
-        </ReactTooltip>
-      </div>
+          <ReactTooltip
+            id="info"
+            effect="solid"
+            textColor="#AAAAAA"
+            // className={style.pop}
+            backgroundColor="#0F191B"
+            border={false}
+          >
+            <div className={style.info}>
+              The brighter the area, the higher the average price in the selected time frame.The
+              first/second level show the average parcel sale USD in island/suburb, the third level
+              (and above) show the cumulative sale USD of the parcel.
+            </div>
+          </ReactTooltip>
+        </div>
+      ) : (
+        <></>
+      )}
       {zoomControl ? (
         <>
           <div className={cn('flex flex-col', style.zoom)}>

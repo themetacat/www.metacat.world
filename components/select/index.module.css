@@ -46,3 +46,7 @@
 .frame:active{
   filter: brightness(75%);
 }
+
+.active{
+  filter: brightness(150%);
+}

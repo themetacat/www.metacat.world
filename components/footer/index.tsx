@@ -50,10 +50,17 @@ export default function Footer() {
           <div
             data-tip
             data-for="code"
-            className="w-10 h-10  rounded-full justify-center items-center flex bg-transparent"
+            className="w-10 h-10  rounded-full  mr-14 justify-center items-center flex bg-transparent"
           >
             <img src="/images/wx.png" />
           </div>
+          <a
+            href="mailto:metacat@tutanota.com"
+            data-tip="metacat@tutanota.com"
+            className="w-10 h-10  rounded-full mr-14 justify-center items-center flex bg-transparent"
+          >
+            <img src="/images/emailW.png" />
+          </a>
           <ReactTooltip
             id="code"
             effect="solid"
