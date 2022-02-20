@@ -52,6 +52,16 @@ const SUBTAB = [
     type: 'parcel',
   },
   {
+    label: 'Map',
+    type: 'map',
+    isVoxelOnly: true,
+  },
+  {
+    label: 'Analytics',
+    type: 'analytics',
+    isVoxelOnly: true,
+  },
+  {
     label: 'Event',
     type: 'event',
   },
@@ -439,27 +449,20 @@ export default function Index(props) {
           <div className={cn('flex justify-between items-center pt-5', style.contentHeader)}>
             <div className="flex">
               {SUBTAB.map((item, index) => {
-                return (
-                  <SecondTab
-                    label={item.label}
-                    key={item.label}
-                    onClick={() => {
-                      onSubTabChange(item.type);
-                    }}
-                    active={subTabState === item.type}
-                  />
-                );
+                if (!item.isVoxelOnly || (item.isVoxelOnly && tabState === 'voxel')) {
+                  return (
+                    <SecondTab
+                      label={item.label}
+                      key={item.label}
+                      onClick={() => {
+                        onSubTabChange(item.type);
+                      }}
+                      active={subTabState === item.type}
+                    />
+                  );
+                }
+                return <></>;
               })}
-              {tabState === 'voxel' ? (
-                <SecondTab
-                  label={'Map'}
-                  key={'Map'}
-                  onClick={() => {
-                    onSubTabChange('map');
-                  }}
-                  active={subTabState === 'map'}
-                ></SecondTab>
-              ) : null}
             </div>
             {subTabState === 'parcel' ? (
               <Search text={searchText} onSearch={onSearchHandler}></Search>
@@ -468,6 +471,22 @@ export default function Index(props) {
           <div className={cn('mt-8', style.content)}>
             {subTabState === 'parcel' && (
               <SwiperTag onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+            )}
+
+            {subTabState === 'analytics' && (
+              <div
+                className={cn(
+                  'main-content flex justify-between items-center mt-5 text-white font-normal',
+                  style.analytics,
+                )}
+              >
+                <div>For more data, to Metaverse Analytics </div>
+
+                <div className={cn('flex items-center font-normal', style.analyticsMore)}>
+                  <Link href={'/analytics'}>GET MORE</Link>
+                  <img className="ml-2" src="/images/tab-right.png"></img>
+                </div>
+              </div>
             )}
 
             {renderContent}

@@ -35,10 +35,13 @@ export default function PageHeader({ active, className }: Props) {
           <Link href="/">Home</Link>
         </div>
         <div
-          className="text-2xl font-medium text-gray-400  mr-14 hover:text-white active:text-white cursor-pointer pointer-events-auto"
-          onClick={jumpToData}
+          className={cn(
+            'text-2xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+            active === 'analytics' ? style.active : null,
+          )}
+          // onClick={jumpToData}
         >
-          Analytics
+          <Link href={'/analytics'}>Analytics</Link>
         </div>
         <div
           className={cn(

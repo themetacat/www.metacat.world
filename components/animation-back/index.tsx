@@ -9,7 +9,7 @@ type Props = {
   pointNum?: number;
 };
 
-export default function AnimationBack({ className, pointNum = 1500 }: Props) {
+export default function AnimationBack({ className, pointNum = 1000 }: Props) {
   const render = React.useMemo(() => {
     const all = [];
     for (let i = 1; i <= pointNum; i += 1) {
