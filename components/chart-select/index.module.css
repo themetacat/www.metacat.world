@@ -1,0 +1,55 @@
+.option{
+  background-color:rgba(15, 25, 27, 1); 
+  color: #AAAAAA;
+  font-weight: 400;
+  font-size: 12px;
+  width: 69px;
+  height: 41px;
+  border-bottom: #000000 solid 1px;
+}
+.option:hover{
+  color: #fff;
+  font-weight: 500;
+}
+.option:active{
+  color:  #999999;
+  font-weight: 500;
+}
+.selectDiv{
+  z-index: 1005;
+  cursor: pointer;
+  position: relative;
+}
+.selecter{
+  height: 30px;
+  width: 80px;
+  z-index: 1005;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.6);
+  box-sizing: border-box;
+}
+
+.show{
+  display: none;
+}
+
+.frame{
+  width: 10px;
+  height: 10px;
+}
+
+.frame:hover{
+  filter: brightness(150%);
+}
+.frame:active{
+  filter: brightness(75%);
+}
+
+.active{
+  filter: brightness(150%);
+}

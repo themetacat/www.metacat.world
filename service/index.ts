@@ -141,3 +141,17 @@ export const getBuilderList = async (page: number, count: number) => {
   const json = await res.json();
   return json;
 };
+
+export const getCvParcelSoldTotalStats = async () => {
+  const url = `/api/cv_parcel_sold_total_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvTrafficStats = async () => {
+  const url = `/api/cv_traffic_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};

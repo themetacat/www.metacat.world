@@ -5,10 +5,14 @@ import style from './index.module.css';
 
 interface Props {
   status: 'loading' | 'error' | 'success' | 'empty';
+  mini?: boolean;
   retry?: () => void;
 }
-export default function Status({ status, retry }: Props) {
-  const commonCls = cn('flex w-full flex-col justify-center items-center py-10', style.baseText);
+export default function Status({ status, retry, mini = false }: Props) {
+  const commonCls = cn(
+    'flex w-full flex-col justify-center items-center py-10',
+    mini ? style.mini : style.baseText,
+  );
   if (status === 'loading') {
     return (
       <div className={cn(commonCls, 'animate-spin')}>

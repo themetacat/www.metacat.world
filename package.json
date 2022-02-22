@@ -33,6 +33,7 @@
     "**/*.less": "npm run lint:style"
   },
   "dependencies": {
+    "@antv/g2": "^4.1.46",
     "@headlessui/react": "^1.3.0",
     "@heroicons/react": "^1.0.2",
     "@mui/material": "^5.1.0",

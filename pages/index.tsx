@@ -19,12 +19,18 @@ import Status from '../components/status';
 import TopJumper from '../components/jump-to-top';
 import TopicCardList from '../components/topic-card-list';
 
+import BaseBar from '../components/base-bar';
+import StackBar from '../components/stack-bar';
+import ChartLine from '../components/chart-line';
+
 import {
   getCVEventList,
   getCVParcelList,
   getDCLEventList,
   getDCLParcelList,
   getTopicList,
+  getCvParcelSoldTotalStats,
+  getCvTrafficStats,
 } from '../service';
 
 import style from './index.module.less';
@@ -360,6 +366,42 @@ export default function Index(props) {
         </div>
       );
     }
+    if (subTabState === 'analytics') {
+      return (
+        <div className={cn('main-content')}>
+          <BaseBar
+            id={'basebar1'}
+            className=" my-5"
+            labelText={'MONTHLY TRAFFIC'}
+            dataHandlder={getCvTrafficStats}
+            limit={12}
+          ></BaseBar>
+          <ChartLine
+            id={'chartline1'}
+            className=" mb-5"
+            labelText={'AVERAGE PARCEL PRICE'}
+            dataHandlder={getCvTrafficStats}
+          ></ChartLine>
+          <StackBar
+            id={'stackbar'}
+            className=" mb-5"
+            labelText={'NUMBER OF PARCEL SALES'}
+            dataHandler={getCvParcelSoldTotalStats}
+            limit={12}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+            ]}
+          ></StackBar>
+        </div>
+      );
+    }
   }, [
     subTabState,
     error,
@@ -474,19 +516,21 @@ export default function Index(props) {
             )}
 
             {subTabState === 'analytics' && (
-              <div
-                className={cn(
-                  'main-content flex justify-between items-center mt-5 text-white font-normal',
-                  style.analytics,
-                )}
-              >
-                <div>For more data, to Metaverse Analytics </div>
+              <a href={`/analytics`}>
+                <div
+                  className={cn(
+                    'main-content flex justify-between items-center mt-5 text-white font-normal',
+                    style.analytics,
+                  )}
+                >
+                  <div>For more data, to Metaverse Analytics </div>
 
-                <div className={cn('flex items-center font-normal', style.analyticsMore)}>
-                  <Link href={'/analytics'}>GET MORE</Link>
-                  <img className="ml-2" src="/images/tab-right.png"></img>
+                  <div className={cn('flex items-center font-normal', style.analyticsMore)}>
+                    GET MORE
+                    <img className="ml-2" src="/images/tab-right.png"></img>
+                  </div>
                 </div>
-              </div>
+              </a>
             )}
 
             {renderContent}
