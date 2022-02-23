@@ -9,7 +9,7 @@ import style from './index.module.css';
 
 type Props = {
   id?: string;
-  dataHandlder?: () => void;
+  dataHandlder?: () => any;
   defaultColor?: Array<number>;
   gradient?: boolean;
   className?: string;

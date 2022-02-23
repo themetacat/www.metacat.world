@@ -17,7 +17,7 @@ type optionItem = {
 
 type Props = {
   id?: string;
-  dataHandlder?: () => void;
+  dataHandlder?: () => any;
   color1?: Array<number>;
   color2?: Array<number>;
   className?: string;
@@ -98,7 +98,10 @@ export default function ChartLine({
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
-          const result = {};
+          const result = {
+            primary: null,
+            secondary: null,
+          };
           if (items.length <= 0) {
             return;
           }

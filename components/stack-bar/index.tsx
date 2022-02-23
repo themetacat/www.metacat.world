@@ -17,7 +17,7 @@ type optionItem = {
 
 type Props = {
   id?: string;
-  dataHandler?: () => void;
+  dataHandler?: () => any;
   color1?: Array<number>;
   color2?: Array<number>;
   gradient?: boolean;
