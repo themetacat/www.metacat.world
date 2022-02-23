@@ -15,6 +15,7 @@ interface Props {
   className?: string;
   showArrow?: boolean;
   defaultLabel?: string;
+  hasBorder?: boolean;
 }
 
 export default function ChartSelecter({
@@ -23,6 +24,7 @@ export default function ChartSelecter({
   className,
   showArrow = false,
   defaultLabel = 'Daily',
+  hasBorder = true,
 }: Props) {
   const cls = cn(className);
   const [selectedOption, setSelectedOption] = React.useState(defaultLabel);
@@ -57,7 +59,14 @@ export default function ChartSelecter({
 
   return (
     <div className={cn(style.selectDiv, cls)}>
-      <div className={cn('flex justify-center items-center', style.selecter)} onClick={changeShow}>
+      <div
+        className={cn(
+          'flex justify-center items-center',
+          style.selecter,
+          hasBorder ? style.border : '',
+        )}
+        onClick={changeShow}
+      >
         <div>{selectedOption}</div>
         {showArrow ? (
           <img

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Chart } from '@antv/g2';
+import cn from 'classnames';
 
-import BaseChart from '../base-chart';
+import ChartTitle from '../chart-title';
 import Status from '../status';
+
+import style from './index.module.css';
 
 type Props = {
   id?: string;
@@ -156,8 +159,14 @@ export default function BaseBar({
   }, [null]);
 
   return (
-    <BaseChart labelText={labelText} className={className}>
+    <div>
+      <div className={cn('w-full flex justify-between item-center', style.header)}>
+        <ChartTitle text={labelText}></ChartTitle>
+        <div className="flex items-center">
+          <div className="flex items-center mr-7"></div>
+        </div>
+      </div>
       {render}
-    </BaseChart>
+    </div>
   );
 }

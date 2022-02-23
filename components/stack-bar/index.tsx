@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { Chart } from '@antv/g2';
 
-import BaseChart from '../base-chart';
+import ChartTitle from '../chart-title';
 
 import Status from '../status';
 import IconLabel from '../icon-label';
@@ -47,6 +47,32 @@ export default function StackBar({
 
   const chart = React.useRef(null);
 
+  const transfromData = React.useCallback(
+    (data, type, lim) => {
+      const result = [];
+      if (lim && data.length > lim) {
+        const l = data.length;
+        const d = l - lim * 2;
+        const last = data.slice(d);
+        last.forEach((element) => {
+          result.push({
+            ...element,
+            staticT: type,
+          });
+        });
+        return result;
+      }
+      data.forEach((element) => {
+        result.push({
+          ...element,
+          staticT: type,
+        });
+      });
+      return result;
+    },
+    [null],
+  );
+
   const initChart = React.useCallback(
     (data) => {
       chart.current = new Chart({
@@ -64,6 +90,7 @@ export default function StackBar({
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
           let sum = 0;
           let listItem = '';
+          let type = '';
           items.forEach((item) => {
             listItem += `
           <li class="g2-tooltip-list-item" data-index={index}>
@@ -71,14 +98,15 @@ export default function StackBar({
             :
             <span class="g2-tooltip-value" style="color:${item.color}">
               <span>${item.value}</span>
-              <span ${isEth ? 'style="margin-left:5px"' : ''}>${isEth ? staticType : ''}</span>
+              <span ${isEth ? 'style="margin-left:5px"' : ''}>${isEth ? item.staticT : ''}</span>
             </span>
           </li>`;
             sum += item.value;
+            type = item.staticT;
           });
           const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${sum}</span><span ${
             isEth ? 'style="margin-left:5px"' : ''
-          }>${isEth ? staticType : ''}</span><span style="margin-left:5px">Total</span></div>`;
+          }>${isEth ? type : ''}</span><span style="margin-left:5px">Total</span></div>`;
           container.innerHTML = title + staticItem + listItem;
           return container;
         },
@@ -131,13 +159,14 @@ export default function StackBar({
 
       // 数据处理
       if (data) {
-        if (limit && data[staticType].data?.length > limit) {
-          const l = data[staticType].data.length;
-          const d = l - limit * 2;
-          chart.current.data(data[staticType].data.slice(d));
-        } else {
-          chart.current.data(data[staticType].data);
-        }
+        // if (limit && data[staticType].data?.length > limit) {
+        //   const l = data[staticType].data.length;
+        //   const d = l - limit * 2;
+        //   chart.current.data(data[staticType].data.slice(d));
+        // } else {
+        //   chart.current.data(data[staticType].data);
+        // }
+        chart.current.data(transfromData(data[staticType].data, staticType, limit));
         chart.current
           .interval()
           .position('time*value')
@@ -159,7 +188,7 @@ export default function StackBar({
               };
             },
           })
-          .tooltip('time*value*type', (time, value, type) => {
+          .tooltip('time*value*type*staticT', (time, value, type, staticT) => {
             let s = type;
             if (type) {
               const temp = type;
@@ -173,6 +202,7 @@ export default function StackBar({
                 type === 'primary'
                   ? `rgb(${color1[0]}, ${color1[1]}, ${color1[2]})`
                   : `rgb(${color2[0]}, ${color2[1]}, ${color2[2]})`,
+              staticT,
             };
           })
           .adjust({
@@ -214,13 +244,15 @@ export default function StackBar({
     (val) => {
       setStaticType(val);
       if (chart.current && dataSource) {
-        if (limit && dataSource[val].data?.length > limit) {
-          const l = dataSource[val].data.length;
-          const d = l - limit * 2;
-          chart.current.changeData(dataSource[val].data.slice(d));
-        } else {
-          chart.current.changeData(dataSource[val].data);
-        }
+        // if (limit && dataSource[val].data?.length > limit) {
+        //   const l = dataSource[val].data.length;
+        //   const d = l - limit * 2;
+        //   chart.current.changeData(dataSource[val].data.slice(d));
+        // } else {
+        //   chart.current.changeData(dataSource[val].data);
+        // }
+
+        chart.current.changeData(transfromData(dataSource[val].data, val, limit));
       }
     },
     [dataSource, limit],
@@ -261,13 +293,15 @@ export default function StackBar({
   }, [loading, error, onRetry]);
 
   return (
-    <BaseChart
-      labelText={labelText}
-      lenged={getLenged}
-      selectChild={getSelect}
-      className={className}
-    >
+    <div>
+      <div className={cn('w-full flex justify-between item-center', style.header)}>
+        <ChartTitle text={labelText}></ChartTitle>
+        <div className="flex items-center">
+          <div className="flex items-center mr-7">{getLenged}</div>
+          {getSelect}
+        </div>
+      </div>
       {render}
-    </BaseChart>
+    </div>
   );
 }

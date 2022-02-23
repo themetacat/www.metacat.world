@@ -19,6 +19,7 @@ import Status from '../components/status';
 import TopJumper from '../components/jump-to-top';
 import TopicCardList from '../components/topic-card-list';
 
+import BaseChart from '../components/base-chart';
 import BaseBar from '../components/base-bar';
 import StackBar from '../components/stack-bar';
 import ChartLine from '../components/chart-line';
@@ -31,6 +32,7 @@ import {
   getTopicList,
   getCvParcelSoldTotalStats,
   getCvTrafficStats,
+  getCvParcelAvgPriceStats,
 } from '../service';
 
 import style from './index.module.less';
@@ -369,36 +371,61 @@ export default function Index(props) {
     if (subTabState === 'analytics') {
       return (
         <div className={cn('main-content')}>
-          <BaseBar
-            id={'basebar1'}
-            className=" my-5"
-            labelText={'MONTHLY TRAFFIC'}
-            dataHandlder={getCvTrafficStats}
-            limit={12}
-          ></BaseBar>
-          <ChartLine
-            id={'chartline1'}
-            className=" mb-5"
-            labelText={'AVERAGE PARCEL PRICE'}
-            dataHandlder={getCvTrafficStats}
-          ></ChartLine>
-          <StackBar
-            id={'stackbar'}
-            className=" mb-5"
-            labelText={'NUMBER OF PARCEL SALES'}
-            dataHandler={getCvParcelSoldTotalStats}
-            limit={12}
-            options={[
-              {
-                label: 'Daily',
-                value: 'daily',
-              },
-              {
-                label: 'Monthly',
-                value: 'monthly',
-              },
-            ]}
-          ></StackBar>
+          <BaseChart className=" my-5">
+            <BaseBar
+              id={'basebar1'}
+              labelText={'MONTHLY TRAFFIC'}
+              dataHandlder={getCvTrafficStats}
+              limit={12}
+            ></BaseBar>
+          </BaseChart>
+          <BaseChart className=" mb-5">
+            <ChartLine
+              id={'chartline1'}
+              labelText={'AVERAGE PARCEL PRICE'}
+              dataHandlder={getCvParcelAvgPriceStats}
+              options={[
+                {
+                  label: 'Daily price',
+                  value: 'daily',
+                },
+                {
+                  label: 'Monthly price',
+                  value: 'monthly',
+                },
+              ]}
+              priceOptions={[
+                {
+                  label: 'ETH',
+                  value: 'eth',
+                },
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+              ]}
+              limit={12}
+            ></ChartLine>
+          </BaseChart>
+          <BaseChart className=" mb-5">
+            <StackBar
+              id={'stackbar'}
+              labelText={'NUMBER OF PARCEL SALES'}
+              dataHandler={getCvParcelSoldTotalStats}
+              limit={12}
+              isEth={true}
+              options={[
+                {
+                  label: 'Daily',
+                  value: 'daily',
+                },
+                {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+              ]}
+            ></StackBar>
+          </BaseChart>
         </div>
       );
     }

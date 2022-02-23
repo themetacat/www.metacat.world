@@ -3,7 +3,8 @@
   color: #AAAAAA;
   font-weight: 400;
   font-size: 12px;
-  width: 69px;
+  min-width: 69px;
+  padding: 0 5px;
   height: 41px;
   border-bottom: #000000 solid 1px;
 }
@@ -22,13 +23,16 @@
 }
 .selecter{
   height: 30px;
-  width: 80px;
+  /* width: 80px; */
+  padding: 0 20px;
   z-index: 1005;
   color: #fff;
   text-align: center;
   font-size: 12px;
   font-weight: 400;
+}
 
+.border{
   background: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.6);
   box-sizing: border-box;

@@ -1,365 +1,160 @@
 import React from 'react';
 import { Chart } from '@antv/g2';
+import cn from 'classnames';
 
-import BaseChart from '../base-chart';
+import ChartTitle from '../chart-title';
 import Status from '../status';
+import IconLabel from '../icon-label';
+import ChartSelecter from '../chart-select';
 
 import style from './index.module.css';
+import { convert } from '../../common/utils';
+
+type optionItem = {
+  label?: string;
+  value?: string;
+};
 
 type Props = {
   id?: string;
   dataHandlder?: () => void;
-  defaultColor?: Array<number>;
-  gradient?: boolean;
+  color1?: Array<number>;
+  color2?: Array<number>;
   className?: string;
   labelText?: string;
   limit?: number;
+  options?: Array<optionItem>;
+  priceOptions?: Array<optionItem>;
 };
-
-const dd = [
-  {
-    time: '2019.09',
-    value: 152,
-    type: 'primary',
-  },
-  {
-    time: '2019.10',
-    value: 153,
-    type: 'primary',
-  },
-  {
-    time: '2019.11',
-    value: 166,
-    type: 'primary',
-  },
-  {
-    time: '2019.12',
-    value: 188,
-    type: 'primary',
-  },
-  {
-    time: '2020.01',
-    value: 381,
-    type: 'primary',
-  },
-  {
-    time: '2020.02',
-    value: 262,
-    type: 'primary',
-  },
-  {
-    time: '2020.03',
-    value: 243,
-    type: 'primary',
-  },
-  {
-    time: '2020.04',
-    value: 125,
-    type: 'primary',
-  },
-  {
-    time: '2020.05',
-    value: 180,
-    type: 'primary',
-  },
-  {
-    time: '2020.06',
-    value: 233,
-    type: 'primary',
-  },
-  {
-    time: '2020.07',
-    value: 159,
-    type: 'primary',
-  },
-  {
-    time: '2020.08',
-    value: 62,
-    type: 'primary',
-  },
-  {
-    time: '2020.09',
-    value: 184,
-    type: 'primary',
-  },
-  {
-    time: '2020.10',
-    value: 153,
-    type: 'primary',
-  },
-  {
-    time: '2020.11',
-    value: 159,
-    type: 'primary',
-  },
-  {
-    time: '2020.12',
-    value: 40,
-    type: 'primary',
-  },
-  {
-    time: '2021.01',
-    value: 42,
-    type: 'primary',
-  },
-  {
-    time: '2021.02',
-    value: 87,
-    type: 'primary',
-  },
-  {
-    time: '2021.03',
-    value: 158,
-    type: 'primary',
-  },
-  {
-    time: '2021.04',
-    value: 190,
-    type: 'primary',
-  },
-  {
-    time: '2021.05',
-    value: 164,
-    type: 'primary',
-  },
-  {
-    time: '2021.06',
-    value: 103,
-    type: 'primary',
-  },
-  {
-    time: '2021.07',
-    value: 244,
-    type: 'primary',
-  },
-  {
-    time: '2021.08',
-    value: 217,
-    type: 'primary',
-  },
-  {
-    time: '2021.09',
-    value: 215,
-    type: 'primary',
-  },
-  {
-    time: '2021.10',
-    value: 177,
-    type: 'primary',
-  },
-  {
-    time: '2021.11',
-    value: 360,
-    type: 'primary',
-  },
-  {
-    time: '2021.12',
-    value: 217,
-    type: 'primary',
-  },
-  {
-    time: '2022.01',
-    value: 165,
-    type: 'primary',
-  },
-  {
-    time: '2022.02',
-    value: 201,
-    type: 'primary',
-  },
-  {
-    time: '2019.09',
-    value: 27,
-    type: 'secondary',
-  },
-  {
-    time: '2019.10',
-    value: 21,
-    type: 'secondary',
-  },
-  {
-    time: '2019.11',
-    value: 31,
-    type: 'secondary',
-  },
-  {
-    time: '2019.12',
-    value: 97,
-    type: 'secondary',
-  },
-  {
-    time: '2020.01',
-    value: 133,
-    type: 'secondary',
-  },
-  {
-    time: '2020.02',
-    value: 140,
-    type: 'secondary',
-  },
-  {
-    time: '2020.03',
-    value: 180,
-    type: 'secondary',
-  },
-  {
-    time: '2020.04',
-    value: 114,
-    type: 'secondary',
-  },
-  {
-    time: '2020.05',
-    value: 109,
-    type: 'secondary',
-  },
-  {
-    time: '2020.06',
-    value: 158,
-    type: 'secondary',
-  },
-  {
-    time: '2020.07',
-    value: 81,
-    type: 'secondary',
-  },
-  {
-    time: '2020.08',
-    value: 66,
-    type: 'secondary',
-  },
-  {
-    time: '2020.09',
-    value: 77,
-    type: 'secondary',
-  },
-  {
-    time: '2020.10',
-    value: 172,
-    type: 'secondary',
-  },
-  {
-    time: '2020.11',
-    value: 59,
-    type: 'secondary',
-  },
-  {
-    time: '2020.12',
-    value: 43,
-    type: 'secondary',
-  },
-  {
-    time: '2021.01',
-    value: 46,
-    type: 'secondary',
-  },
-  {
-    time: '2021.02',
-    value: 97,
-    type: 'secondary',
-  },
-  {
-    time: '2021.03',
-    value: 174,
-    type: 'secondary',
-  },
-  {
-    time: '2021.04',
-    value: 147,
-    type: 'secondary',
-  },
-  {
-    time: '2021.05',
-    value: 106,
-    type: 'secondary',
-  },
-  {
-    time: '2021.06',
-    value: 99,
-    type: 'secondary',
-  },
-  {
-    time: '2021.07',
-    value: 153,
-    type: 'secondary',
-  },
-  {
-    time: '2021.08',
-    value: 225,
-    type: 'secondary',
-  },
-  {
-    time: '2021.09',
-    value: 148,
-    type: 'secondary',
-  },
-  {
-    time: '2021.10',
-    value: 133,
-    type: 'secondary',
-  },
-  {
-    time: '2021.11',
-    value: 261,
-    type: 'secondary',
-  },
-  {
-    time: '2021.12',
-    value: 230,
-    type: 'secondary',
-  },
-  {
-    time: '2022.01',
-    value: 157,
-    type: 'secondary',
-  },
-  {
-    time: '2022.02',
-    value: 94,
-    type: 'secondary',
-  },
-];
 
 export default function ChartLine({
   id,
   dataHandlder,
-  defaultColor = [0, 0, 255],
-  gradient = false,
-  className,
+  color1 = [95, 213, 236],
+  color2 = [255, 207, 95],
   labelText,
   limit,
+  options,
+  priceOptions,
 }: Props) {
+  const [staticType, setStaticType] = React.useState(options[0].value);
+  const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
+  const [dataSource, setDataSource] = React.useState(null);
+  const chart = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
 
+  const transfromData = React.useCallback(
+    (data, type, priceType) => {
+      const result = [];
+      if (limit) {
+        const l = data.length;
+        const d = l - limit * 2;
+        const last = data.slice(d);
+        last.forEach((element) => {
+          result.push({
+            ...element,
+            staticT: type,
+            priceStaticT: priceType,
+          });
+        });
+        return result;
+      }
+      data.forEach((element) => {
+        result.push({
+          ...element,
+          staticT: type,
+          priceStaticT: priceType,
+        });
+      });
+      return result;
+    },
+    [limit],
+  );
+
   const initChart = React.useCallback(
-    (monthly) => {
-      const chart = new Chart({
+    (data) => {
+      chart.current = new Chart({
         container: id,
         autoFit: true,
         height: 210,
       });
-      if (limit && monthly.data?.length > limit) {
-        const l = monthly.data.length;
-        const d = l - limit;
-        chart.data(monthly.data.slice(d));
-      } else {
-        chart.data(monthly.data);
-      }
-      chart.scale('value', {
+
+      chart.current.data(
+        transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
+      );
+      chart.current.scale('time', {
+        range: [0, 1],
+      });
+
+      chart.current.scale('valueAvg', {
         nice: true,
       });
-      chart.tooltip({
-        showMarkers: false,
+      chart.current.tooltip({
+        // showMarkers: false,
+        showCrosshairs: true,
+        shared: true,
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
-          let sum = 0;
+          const result = {};
+          if (items.length <= 0) {
+            return;
+          }
           items.forEach((item) => {
-            sum += item.value;
+            result[item.type] = item;
           });
-          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${sum}</span></div>`;
-          container.innerHTML = title + staticItem;
+          const staticItem = `
+            <div style="color:#fff;margin-bottom:12px">
+              <span style="color:rgba(${color1[0]}, ${color1[1]}, ${
+            color1[2]
+          }, 1); font-size: 20px; font-weight:700;">
+              ${result.primary?.valueAvg}
+              <span style="font-size: 12px;color:#fff;font-weight:400;">${result.primary.priceStaticT.toLocaleUpperCase()} Avg</span>
+              </span>
+            </div>
+            <div style="color:#fff;margin-bottom:12px">
+              <span style="color:rgba(${color2[0]}, ${color2[1]}, ${
+            color2[2]
+          }, 1); font-size: 20px; font-weight:700;">
+              ${result.secondary?.valueAvg}
+              <span style="font-size: 12px;color:#fff;font-weight:400;">${result.secondary.priceStaticT.toLocaleUpperCase()} Avg</span>
+              </span>
+            </div>`;
+          const priceDetail = `
+          <div style="color:#fff;margin-bottom:12px">
+            <span style="color:#999999;">
+            Lowest:
+              <span style="color:#fff;">
+                <span style="margin:0px 5px; color:rgba(${color1[0]}, ${color1[1]}, ${
+            color1[2]
+          }, 1);">${result.primary?.valueMin}</span>
+                /
+                <span style="margin:0px 5px; color:rgba(${color2[0]}, ${color2[1]}, ${
+            color2[2]
+          }, 1);">${result.secondary?.valueMin}</span>
+                <span>${result.secondary.priceStaticT.toLocaleUpperCase()}</span>
+              </span>
+            </span>
+          </div>
+          <div style="color:#fff;margin-bottom:12px">
+            <span style="color:#999999;">
+            Highest:
+              <span style="color:#fff;">
+                <span style="margin:0px 5px; color:rgba(${color1[0]}, ${color1[1]}, ${
+            color1[2]
+          }, 1);">${result.primary?.valueMax}</span>
+                /
+                <span style="margin:0px 5px; color:rgba(${color2[0]}, ${color2[1]}, ${
+            color2[2]
+          }, 1);">${result.secondary?.valueMax}</span>
+                <span>${result.secondary.priceStaticT.toLocaleUpperCase()}</span>
+              </span>
+            </span>
+          </div>
+          `;
+          container.innerHTML = title + staticItem + priceDetail;
           return container;
         },
         domStyles: {
@@ -383,10 +178,10 @@ export default function ChartLine({
         },
       });
 
-      chart.legend(false);
+      chart.current.legend(false);
 
       // 设置横纵轴
-      chart.axis('value', {
+      chart.current.axis('valueAvg', {
         grid: {
           line: {
             type: 'line',
@@ -398,38 +193,65 @@ export default function ChartLine({
           },
         },
       });
-      chart.axis('time', {
+      chart.current.axis('time', {
         tickLine: null,
       });
 
-      chart
-        .interval()
-        .position('time*value')
-        .color('value')
+      chart.current
+        .area()
+        .position('time*valueAvg')
+        .color('type')
         .style({
-          fill: gradient
-            ? `l(270) 0:rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 0.2) 1:rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`
-            : `rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`,
+          fields: ['type'],
+          callback: (tVal) => {
+            if (tVal === 'primary') {
+              return {
+                fill: `rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 0.8)`,
+              };
+            }
+            return {
+              fill: `rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 0.8)`,
+            };
+          },
         })
-        .tooltip('time*value*type', (time, value) => {
-          return {
-            value: value * 1,
-            time,
-          };
-        });
+        .tooltip(
+          'time*valueAvg*type*valueMax*valueMin*staticT*priceStaticT',
+          (time, valueAvg, type, valueMax, valueMin, staticT, priceStaticT) => {
+            return {
+              valueAvg,
+              time,
+              type,
+              valueMax,
+              valueMin,
+              staticT,
+              priceStaticT,
+            };
+          },
+        );
 
-      chart.render();
+      chart.current
+        .line()
+        .position('time*valueAvg')
+        .size(2)
+        .tooltip(false)
+        .color('type', [
+          `rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 1)`,
+          `rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 1)`,
+        ]);
+      chart.current.render();
     },
-    [limit],
+    [staticType, priceStaticType, limit],
   );
 
   const requestData = React.useCallback(async () => {
     setLoading(true);
     let result = null;
     try {
-      const res = await dataHandlder();
-      const { monthly } = res.data;
-      result = monthly;
+      if (!result) {
+        const res = await dataHandlder();
+        result = convert(res.data);
+        setDataSource(result);
+      }
     } catch (ex) {
       setError(true);
     }
@@ -438,11 +260,11 @@ export default function ChartLine({
       initChart(result);
     }
     return result;
-  }, [limit]);
+  }, [staticType, priceStaticType, limit]);
 
   const onRetry = React.useCallback(() => {
     requestData();
-  }, [limit]);
+  }, [null]);
 
   const render = React.useMemo(() => {
     if (loading) {
@@ -456,13 +278,105 @@ export default function ChartLine({
     return <div id={id}></div>;
   }, [loading, error, onRetry]);
 
+  const getLenged = React.useMemo(() => {
+    return (
+      <>
+        <IconLabel
+          text="Primary"
+          color={`rgb(${color1[0]}, ${color1[1]}, ${color1[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
+          text="Secondary"
+          color={`rgb(${color2[0]}, ${color2[1]}, ${color2[2]})`}
+        ></IconLabel>
+      </>
+    );
+  }, [color1, color2]);
+
+  const updateData = React.useCallback(
+    (staticT, priceStaticT) => {
+      if (chart.current && dataSource) {
+        // if (limit && dataSource[staticT].data[priceStaticT]?.length > limit) {
+        //   const l = dataSource[staticT].data[priceStaticT].length;
+        //   const d = l - limit * 2;
+        //   const data = dataSource[staticT].data[priceStaticT].slice(d);
+        //   data.forEach((element) => {
+        //     element.staticType = staticType;
+        //     element.priceStaticType = priceStaticType;
+        //   });
+        //   chart.current.changeData(data);
+        // } else {
+        //   dataSource[staticT].data[priceStaticT].forEach((element) => {
+        //     element.staticType = staticType;
+        //     element.priceStaticType = priceStaticType;
+        //   });
+        //   chart.current.changeData(dataSource[staticT].data[priceStaticT]);
+        // }
+        chart.current.changeData(
+          transfromData(dataSource[staticT].data[priceStaticT], staticT, priceStaticT),
+        );
+      }
+    },
+    [dataSource, staticType, priceStaticType, limit],
+  );
+
+  const changeStatic = React.useCallback(
+    (val) => {
+      setStaticType(val);
+      if (chart.current && dataSource) {
+        updateData(val, priceStaticType);
+      }
+    },
+    [dataSource, limit, priceStaticType, updateData],
+  );
+
+  const changePriceStatic = React.useCallback(
+    (val) => {
+      setPriceStaticType(val);
+      if (chart.current && dataSource) {
+        updateData(staticType, val);
+      }
+    },
+    [dataSource, staticType, limit, updateData],
+  );
+
+  const getSelect = React.useMemo(() => {
+    return (
+      <div className={cn('flex items-center', style.border)}>
+        <ChartSelecter
+          options={options}
+          showArrow={true}
+          onClick={changeStatic}
+          defaultLabel={options[0].value}
+          hasBorder={false}
+        ></ChartSelecter>
+        <span style={{ color: 'rgba(255,255,255, 0.3)' }}>|</span>
+        <ChartSelecter
+          options={priceOptions}
+          showArrow={true}
+          onClick={changePriceStatic}
+          defaultLabel={priceOptions[0].value}
+          hasBorder={false}
+        ></ChartSelecter>
+      </div>
+    );
+  }, [options, changeStatic]);
+
   React.useEffect(() => {
     requestData();
   }, [null]);
 
   return (
-    <BaseChart labelText={labelText} className={className}>
+    <div>
+      <div className={cn('w-full flex justify-between item-center', style.header)}>
+        <ChartTitle text={labelText}></ChartTitle>
+        <div className="flex items-center">
+          <div className="flex items-center mr-7">{getLenged}</div>
+          {getSelect}
+        </div>
+      </div>
       {render}
-    </BaseChart>
+    </div>
   );
 }

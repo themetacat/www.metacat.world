@@ -183,6 +183,14 @@ class API {
 
     return json;
   }
+
+  public async getCvParcelAvgPriceStats(): Promise<any> {
+    const url = `${this.url}/get_cv_parcel_avg_price_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

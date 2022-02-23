@@ -99,23 +99,19 @@ export default function AnalyticsIndex() {
         </div>
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
-      <div className={cn('main-content', style.content)}>
-        {builders.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
-              {builders.map((card, idx) => {
-                return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
-              })}
-            </div>
-            <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-          </>
-        ) : null}
-        {renderStatus}
+      <div className={cn('', style.content)}>
+        <div className="w-full h-48">
+          <table>
+            <tr>
+              <td>WORKDS</td>
+              <td>WORKDS</td>
+              <td>WORKDS</td>
+              <td>WORKDS</td>
+              <td>WORKDS</td>
+              <td>WORKDS</td>
+            </tr>
+          </table>
+        </div>
       </div>
       <Footer />
     </Page>
