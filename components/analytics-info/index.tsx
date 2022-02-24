@@ -23,7 +23,7 @@ export default function AnalyticsInfo() {
   return (
     <table className={cn('w-full', style.table)}>
       <tbody>
-        <tr className={cn('text-base font-medium', style.title)}>
+        <tr className={cn('text-base font-normal', style.title)}>
           <th>
             <div>WORLDS</div>
           </th>

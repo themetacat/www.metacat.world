@@ -56,7 +56,7 @@ export default function ChartLineSimple({
         nice: true,
       });
       chart.current.tooltip({
-        showMarkers: false,
+        showCrosshairs: true,
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';

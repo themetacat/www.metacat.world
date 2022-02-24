@@ -146,7 +146,7 @@ export default function AnalyticsIndex() {
   }, [showType]);
 
   return (
-    <Page className="min-h-screen" meta={meta}>
+    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'analytics'} />
         <div

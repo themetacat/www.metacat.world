@@ -381,7 +381,7 @@ export default function Index(props) {
               id={'basebar1'}
               labelText={'MONTHLY TRAFFIC'}
               dataHandlder={getCvTrafficStats}
-              limit={12}
+              limit={15}
             ></BaseBar>
           </BaseChart>
           <BaseChart className=" mb-5">
@@ -409,7 +409,7 @@ export default function Index(props) {
                   value: 'usd',
                 },
               ]}
-              limit={12}
+              limit={15}
             ></ChartLine>
           </BaseChart>
           <BaseChart className=" mb-5">
@@ -417,7 +417,7 @@ export default function Index(props) {
               id={'stackbar'}
               labelText={'NUMBER OF PARCEL SALES'}
               dataHandler={getCvParcelSoldTotalStats}
-              limit={12}
+              limit={15}
               isEth={true}
               options={[
                 {

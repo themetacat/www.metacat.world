@@ -52,7 +52,7 @@ export default function BaseBar({
         nice: true,
       });
       chart.current.tooltip({
-        showMarkers: false,
+        showCrosshairs: true,
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
@@ -103,6 +103,12 @@ export default function BaseBar({
       });
       chart.current.axis('time', {
         tickLine: null,
+        line: {
+          style: {
+            lineWidth: 0.5,
+            fill: 'rgba(0, 0, 0, 0.15)',
+          },
+        },
       });
 
       chart.current

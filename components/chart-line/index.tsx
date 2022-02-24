@@ -214,11 +214,11 @@ export default function ChartLine({
           callback: (tVal) => {
             if (tVal === 'primary') {
               return {
-                fill: `rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 0.8)`,
+                fill: `l(270) 0:rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 0.2) 1:rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 1)`,
               };
             }
             return {
-              fill: `rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 0.8)`,
+              fill: `l(270) 0:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 0.2) 0:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 1)`,
             };
           },
         })

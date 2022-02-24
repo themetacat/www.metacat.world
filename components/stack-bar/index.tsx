@@ -87,7 +87,7 @@ export default function StackBar({
       // 设置弹窗
       chart.current.tooltip({
         shared: true,
-        showMarkers: false,
+        showCrosshairs: true,
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
