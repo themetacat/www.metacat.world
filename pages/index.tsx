@@ -182,6 +182,11 @@ export default function Index(props) {
 
   const onTabChange = async (tab) => {
     setTabState(tab);
+    let sub = subTabState;
+    if (subTabState === 'analytics' || 'map') {
+      sub = 'parcel';
+      setSubTabState(sub);
+    }
     setSearchText('');
     setTypeState('all');
 
@@ -189,7 +194,7 @@ export default function Index(props) {
 
     const data = await requestData({
       tab,
-      subTab: subTabState,
+      subTab: sub,
       page: 1,
       query: '',
       type: '',
