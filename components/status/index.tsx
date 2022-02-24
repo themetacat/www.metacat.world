@@ -4,7 +4,7 @@ import cn from 'classnames';
 import style from './index.module.css';
 
 interface Props {
-  status: 'loading' | 'error' | 'success' | 'empty';
+  status: 'loading' | 'error' | 'success' | 'coming' | 'empty';
   mini?: boolean;
   retry?: () => void;
 }
@@ -35,6 +35,15 @@ export default function Status({ status, retry, mini = false }: Props) {
         >
           Retry
         </span>
+      </div>
+    );
+  }
+
+  if (status === 'coming') {
+    return (
+      <div className={cn(commonCls)}>
+        <img src="/images/default-image.png" className={style.baseImg} />
+        <span className="mt-4 text-xl font-semibold">COMING SOON!</span>
       </div>
     );
   }

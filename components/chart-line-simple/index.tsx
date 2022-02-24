@@ -17,7 +17,7 @@ type Props = {
   limit?: number;
 };
 
-export default function BaseBar({
+export default function ChartLineSimple({
   id,
   dataHandlder,
   defaultColor = [34, 118, 252],
@@ -48,6 +48,10 @@ export default function BaseBar({
       } else {
         chart.current.data(monthly.data);
       }
+      chart.current.scale('time', {
+        range: [0, 1],
+      });
+
       chart.current.scale('value', {
         nice: true,
       });
@@ -106,7 +110,7 @@ export default function BaseBar({
       });
 
       chart.current
-        .interval()
+        .area()
         .position('time*value')
         .color('value')
         .style({
@@ -121,6 +125,12 @@ export default function BaseBar({
           };
         });
 
+      chart.current
+        .line()
+        .position('time*value')
+        .size(2)
+        .tooltip(false)
+        .color(`rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`);
       chart.current.render();
     },
     [limit],

@@ -1,0 +1,27 @@
+.base {
+  min-width: 300px;
+  min-height: 60px;
+  padding: 0 30px;
+  border: 1px solid #086975;
+  box-sizing: border-box;
+  font-weight: 500;
+  color: rgba(153, 153, 153, 1)
+}
+
+.active{
+  background-color: #00D0EC;
+  font-weight: 600;
+  color: black
+}
+
+.active > .canHover,
+.canHover:hover {
+  filter: brightness(150%);
+  cursor: pointer;
+}
+
+.tabIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+}

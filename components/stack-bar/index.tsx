@@ -75,6 +75,10 @@ export default function StackBar({
 
   const initChart = React.useCallback(
     (data) => {
+      const dom = document.getElementById(id);
+      if (!dom) {
+        return;
+      }
       chart.current = new Chart({
         container: id,
         autoFit: true,
@@ -98,15 +102,19 @@ export default function StackBar({
             :
             <span class="g2-tooltip-value" style="color:${item.color}">
               <span>${item.value}</span>
-              <span ${isEth ? 'style="margin-left:5px"' : ''}>${isEth ? item.staticT : ''}</span>
+              <span ${isEth ? 'style="margin-left:5px"' : ''}>${
+              isEth ? item.staticT.toLocaleUpperCase() : ''
+            }</span>
             </span>
           </li>`;
-            sum += item.value;
+            sum += item.value * 1000;
             type = item.staticT;
           });
-          const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${sum}</span><span ${
-            isEth ? 'style="margin-left:5px"' : ''
-          }>${isEth ? type : ''}</span><span style="margin-left:5px">Total</span></div>`;
+          const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${
+            sum / 1000
+          }</span><span ${isEth ? 'style="margin-left:5px"' : ''}>${
+            isEth ? type.toLocaleUpperCase() : ''
+          }</span><span style="margin-left:5px">Total</span></div>`;
           container.innerHTML = title + staticItem + listItem;
           return container;
         },
@@ -195,7 +203,7 @@ export default function StackBar({
               s = temp.charAt(0).toUpperCase() + temp.slice(1);
             }
             return {
-              value,
+              value: value * 1,
               type: s,
               time,
               color:
@@ -238,6 +246,11 @@ export default function StackBar({
 
   React.useEffect(() => {
     requestData();
+    return () => {
+      if (chart.current) {
+        chart.current.destroy();
+      }
+    };
   }, [null]);
 
   const changeStatic = React.useCallback(
@@ -276,7 +289,12 @@ export default function StackBar({
 
   const getSelect = React.useMemo(() => {
     return (
-      <ChartSelecter options={options} showArrow={true} onClick={changeStatic}></ChartSelecter>
+      <ChartSelecter
+        options={options}
+        showArrow={true}
+        onClick={changeStatic}
+        defaultLabel={options[0].value}
+      ></ChartSelecter>
     );
   }, [options, changeStatic]);
 
@@ -293,15 +311,17 @@ export default function StackBar({
   }, [loading, error, onRetry]);
 
   return (
-    <div>
-      <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}></ChartTitle>
-        <div className="flex items-center">
-          <div className="flex items-center mr-7">{getLenged}</div>
-          {getSelect}
+    <div className={cn('w-full p-5', style.content, className)}>
+      <div>
+        <div className={cn('w-full flex justify-between item-center', style.header)}>
+          <ChartTitle text={labelText}></ChartTitle>
+          <div className="flex items-center">
+            <div className="flex items-center mr-7">{getLenged}</div>
+            {getSelect}
+          </div>
         </div>
+        {render}
       </div>
-      {render}
     </div>
   );
 }

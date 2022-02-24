@@ -36,6 +36,7 @@ export default function ChartLine({
   limit,
   options,
   priceOptions,
+  className,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
@@ -74,6 +75,10 @@ export default function ChartLine({
 
   const initChart = React.useCallback(
     (data) => {
+      const dom = document.getElementById(id);
+      if (!dom) {
+        return;
+      }
       chart.current = new Chart({
         container: id,
         autoFit: true,
@@ -368,18 +373,25 @@ export default function ChartLine({
 
   React.useEffect(() => {
     requestData();
+    return () => {
+      if (chart.current) {
+        chart.current.destroy();
+      }
+    };
   }, [null]);
 
   return (
-    <div>
-      <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}></ChartTitle>
-        <div className="flex items-center">
-          <div className="flex items-center mr-7">{getLenged}</div>
-          {getSelect}
+    <div className={cn('w-full p-5', style.content, className)}>
+      <div>
+        <div className={cn('w-full flex justify-between item-center', style.header)}>
+          <ChartTitle text={labelText}></ChartTitle>
+          <div className="flex items-center">
+            <div className="flex items-center mr-7">{getLenged}</div>
+            {getSelect}
+          </div>
         </div>
+        {render}
       </div>
-      {render}
     </div>
   );
 }

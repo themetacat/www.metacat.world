@@ -191,6 +191,38 @@ class API {
 
     return json;
   }
+
+  public async getWorldsStats(): Promise<any> {
+    const url = `${this.url}/get_worlds_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvParcelSoldSumStats(): Promise<any> {
+    const url = `${this.url}/get_cv_parcel_sold_sum_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvMintStats(): Promise<any> {
+    const url = `${this.url}/get_cv_mint_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getCvParcelOwnerStats(): Promise<any> {
+    const url = `${this.url}/get_cv_parcel_owner_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

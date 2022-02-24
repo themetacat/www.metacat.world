@@ -1,0 +1,39 @@
+.table>tbody >tr> th{
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  min-width: 195px;
+  height: 50px;
+  padding: 10px;
+}
+
+.table >tbody >tr> th>div{
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 3px 20px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.title{
+  color:#AAAAAA
+}
+.cell{
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.info{
+  height: 70px;
+}
+
+.type{
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.unit{
+
+}

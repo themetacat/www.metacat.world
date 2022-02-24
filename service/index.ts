@@ -162,3 +162,31 @@ export const getCvParcelAvgPriceStats = async () => {
   const json = await res.json();
   return json;
 };
+
+export const getWorldsStats = async () => {
+  const url = `/api/worlds_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvParcelSoldSumStats = async () => {
+  const url = `/api/cv_parcel_sold_sum_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvMintStats = async () => {
+  const url = `/api/cv_mint_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getCvParcelOwnerStats = async () => {
+  const url = `/api/cv_parcel_owner_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};

@@ -9,9 +9,5 @@ type Props = {
 };
 
 export default function BaseChart({ className, children }: Props) {
-  return (
-    <div className={cn('', className, style.baseChart)}>
-      <div className={cn('w-full p-5', style.content)}>{children}</div>
-    </div>
-  );
+  return <div className={cn('', className, style.baseChart)}>{children}</div>;
 }

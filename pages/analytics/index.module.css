@@ -13,3 +13,15 @@
   min-height: 650px;
   padding: 30px;
 }
+
+.table, .chartList{
+  max-width: 1860px;
+  min-width: 1380px;
+}
+
+.chartList{
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  min-height: 650px;
+}
