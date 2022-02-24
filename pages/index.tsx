@@ -542,7 +542,7 @@ export default function Index(props) {
               <SwiperTag onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
 
-            {subTabState === 'analytics' && (
+            {tabState === 'voxel' && subTabState === 'analytics' && (
               <a href={`/analytics`}>
                 <div
                   className={cn(

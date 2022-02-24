@@ -51,9 +51,9 @@ export default function AnalyticsInfo() {
               </th>
               <th className={cn('', style.cell)}>
                 <div>
-                  {item.totalParcelSales.value || `--`}
+                  {item.totalParcelSales?.value || `--`}
                   <span className="ml-3">
-                    {item.totalParcelSales.value ? item.totalParcelSales.symbol : ''}
+                    {item.totalParcelSales?.value ? item.totalParcelSales.symbol : ''}
                   </span>
                 </div>
               </th>
