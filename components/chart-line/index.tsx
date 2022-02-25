@@ -44,6 +44,8 @@ export default function ChartLine({
   const chart = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
+  const [visible1, setVisible1] = React.useState(true);
+  const [visible2, setVisible2] = React.useState(true);
 
   const transfromData = React.useCallback(
     (data, type, priceType) => {
@@ -387,6 +389,11 @@ export default function ChartLine({
           className={style.selecterLong}
           defaultLabel={options[0].value}
           hasBorder={false}
+          visible={visible1}
+          trigger={(show) => {
+            console.log(show);
+            setVisible2(!show);
+          }}
         ></ChartSelecter>
         丨
         <ChartSelecter
@@ -395,10 +402,15 @@ export default function ChartLine({
           onClick={changePriceStatic}
           defaultLabel={priceOptions[0].value}
           hasBorder={false}
+          visible={visible2}
+          trigger={(show) => {
+            console.log(show);
+            setVisible1(!show);
+          }}
         ></ChartSelecter>
       </div>
     );
-  }, [options, changeStatic]);
+  }, [options, visible1, visible2, changeStatic]);
 
   React.useEffect(() => {
     requestData();

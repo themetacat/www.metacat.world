@@ -16,6 +16,8 @@ interface Props {
   showArrow?: boolean;
   defaultLabel?: string;
   hasBorder?: boolean;
+  visible?: boolean;
+  trigger?: (x: boolean) => void;
 }
 
 export default function ChartSelecter({
@@ -25,6 +27,8 @@ export default function ChartSelecter({
   showArrow = false,
   defaultLabel = 'Daily',
   hasBorder = true,
+  visible = true,
+  trigger,
 }: Props) {
   const cls = cn(className);
   const [selectedOption, setSelectedOption] = React.useState(defaultLabel);
@@ -34,19 +38,26 @@ export default function ChartSelecter({
     (x) => {
       setSelectedOption(x.label);
       setShow(false);
+      if (trigger) {
+        trigger(false);
+      }
       if (onClick) {
         onClick(x.value);
       }
     },
-    [onClick],
+    [onClick, trigger],
   );
 
   const changeShow = React.useCallback(() => {
-    if (!showArrow) {
+    if (!showArrow || !visible) {
       return;
     }
-    setShow(!show);
-  }, [show]);
+    const s = !show;
+    setShow(s);
+    if (trigger) {
+      trigger(s);
+    }
+  }, [show, visible, trigger]);
 
   React.useEffect(() => {
     const s = options.find((x) => {
