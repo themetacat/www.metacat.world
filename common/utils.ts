@@ -15,3 +15,13 @@ export const convert = (data) => {
 
   return newObj;
 };
+
+export const formatNum = (value: number, fixed = 3) => {
+  if (value === undefined || value === null) {
+    return '--';
+  }
+  if (value === 0) {
+    return 0;
+  }
+  return value.toLocaleString(undefined, { minimumFractionDigits: fixed });
+};

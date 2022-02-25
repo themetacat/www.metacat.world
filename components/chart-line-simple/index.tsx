@@ -5,6 +5,8 @@ import cn from 'classnames';
 import ChartTitle from '../chart-title';
 import Status from '../status';
 
+import { formatNum } from '../../common/utils';
+
 import style from './index.module.css';
 
 type Props = {
@@ -65,7 +67,9 @@ export default function ChartLineSimple({
           items.forEach((item) => {
             sum += item.value;
           });
-          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${sum}</span></div>`;
+          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${formatNum(
+            sum,
+          )}</span></div>`;
           container.innerHTML = title + staticItem;
           return container;
         },
@@ -97,16 +101,30 @@ export default function ChartLineSimple({
         grid: {
           line: {
             type: 'line',
-            style: {
-              lineDash: [5, 5],
-              lineWidth: 0.2,
-              fill: 'rgba(255, 255, 255, 0.15)',
+            style: (x, y) => {
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
             },
           },
         },
       });
       chart.current.axis('time', {
         tickLine: null,
+        line: {
+          style: {
+            lineWidth: 1,
+            stroke: 'rgba(255, 255, 255, .15)',
+          },
+        },
+        label: {
+          style: { fill: 'rgba(255,255, 255, 0.85)' },
+        },
       });
 
       chart.current

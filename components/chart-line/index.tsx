@@ -8,7 +8,7 @@ import IconLabel from '../icon-label';
 import ChartSelecter from '../chart-select';
 
 import style from './index.module.css';
-import { convert } from '../../common/utils';
+import { convert, formatNum } from '../../common/utils';
 
 type optionItem = {
   label?: string;
@@ -118,7 +118,7 @@ export default function ChartLine({
               <span style="color:rgba(${color1[0]}, ${color1[1]}, ${
             color1[2]
           }, 1); font-size: 20px; font-weight:700;">
-              ${result.primary?.valueAvg}
+              ${formatNum(result.primary?.valueAvg)}
               <span style="font-size: 12px;color:#fff;font-weight:400;">${result.primary.priceStaticT.toLocaleUpperCase()} Avg</span>
               </span>
             </div>
@@ -126,7 +126,7 @@ export default function ChartLine({
               <span style="color:rgba(${color2[0]}, ${color2[1]}, ${
             color2[2]
           }, 1); font-size: 20px; font-weight:700;">
-              ${result.secondary?.valueAvg}
+              ${formatNum(result.secondary?.valueAvg)}
               <span style="font-size: 12px;color:#fff;font-weight:400;">${result.secondary.priceStaticT.toLocaleUpperCase()} Avg</span>
               </span>
             </div>`;
@@ -137,11 +137,11 @@ export default function ChartLine({
               <span style="color:#fff;">
                 <span style="margin:0px 5px; color:rgba(${color1[0]}, ${color1[1]}, ${
             color1[2]
-          }, 1);">${result.primary?.valueMin}</span>
+          }, 1);">${formatNum(result.primary?.valueMin)}</span>
                 /
                 <span style="margin:0px 5px; color:rgba(${color2[0]}, ${color2[1]}, ${
             color2[2]
-          }, 1);">${result.secondary?.valueMin}</span>
+          }, 1);">${formatNum(result.secondary?.valueMin)}</span>
                 <span>${result.secondary.priceStaticT.toLocaleUpperCase()}</span>
               </span>
             </span>
@@ -152,11 +152,11 @@ export default function ChartLine({
               <span style="color:#fff;">
                 <span style="margin:0px 5px; color:rgba(${color1[0]}, ${color1[1]}, ${
             color1[2]
-          }, 1);">${result.primary?.valueMax}</span>
+          }, 1);">${formatNum(result.primary?.valueMax)}</span>
                 /
                 <span style="margin:0px 5px; color:rgba(${color2[0]}, ${color2[1]}, ${
             color2[2]
-          }, 1);">${result.secondary?.valueMax}</span>
+          }, 1);">${formatNum(result.secondary?.valueMax)}</span>
                 <span>${result.secondary.priceStaticT.toLocaleUpperCase()}</span>
               </span>
             </span>
@@ -193,16 +193,30 @@ export default function ChartLine({
         grid: {
           line: {
             type: 'line',
-            style: {
-              lineDash: [5, 5],
-              lineWidth: 0.2,
-              fill: 'rgba(255, 255, 255, 0.15)',
+            style: (x, y) => {
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
             },
           },
         },
       });
       chart.current.axis('time', {
         tickLine: null,
+        line: {
+          style: {
+            lineWidth: 1,
+            stroke: 'rgba(255, 255, 255, .15)',
+          },
+        },
+        label: {
+          style: { fill: 'rgba(255,255, 255, 0.85)' },
+        },
       });
 
       chart.current

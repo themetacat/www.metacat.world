@@ -8,6 +8,8 @@ import Status from '../status';
 import IconLabel from '../icon-label';
 import ChartSelecter from '../chart-select';
 
+import { formatNum } from '../../common/utils';
+
 import style from './index.module.css';
 
 type optionItem = {
@@ -101,7 +103,7 @@ export default function StackBar({
             <span class="g2-tooltip-name">${item.type}</span>
             :
             <span class="g2-tooltip-value" style="color:${item.color}">
-              <span>${item.value}</span>
+              <span>${formatNum(item.value)}</span>
               <span ${isEth ? 'style="margin-left:5px"' : ''}>${
               isEth ? item.staticT.toLocaleUpperCase() : ''
             }</span>
@@ -110,9 +112,9 @@ export default function StackBar({
             sum += item.value * 1000;
             type = item.staticT;
           });
-          const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${
-            sum / 1000
-          }</span><span ${isEth ? 'style="margin-left:5px"' : ''}>${
+          const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${formatNum(
+            sum / 1000,
+          )}</span><span ${isEth ? 'style="margin-left:5px"' : ''}>${
             isEth ? type.toLocaleUpperCase() : ''
           }</span><span style="margin-left:5px">Total</span></div>`;
           container.innerHTML = title + staticItem + listItem;
@@ -148,16 +150,30 @@ export default function StackBar({
         grid: {
           line: {
             type: 'line',
-            style: {
-              lineDash: [5, 5],
-              lineWidth: 0.2,
-              fill: 'rgba(255, 255, 255, 0.15)',
+            style: (x, y) => {
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
             },
           },
         },
       });
       chart.current.axis('time', {
         tickLine: null,
+        line: {
+          style: {
+            lineWidth: 1,
+            stroke: 'rgba(255, 255, 255, .15)',
+          },
+        },
+        label: {
+          style: { fill: 'rgba(255,255, 255, 0.85)' },
+        },
       });
 
       // 设置纵轴值

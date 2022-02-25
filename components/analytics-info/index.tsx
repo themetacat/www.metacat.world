@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { getWorldsStats } from '../../service';
 
-import { convert } from '../../common/utils';
+import { convert, formatNum } from '../../common/utils';
 
 import style from './index.module.css';
 
@@ -51,23 +51,23 @@ export default function AnalyticsInfo() {
               </th>
               <th className={cn('', style.cell)}>
                 <div>
-                  {item.totalParcelSales?.value || `--`}
+                  {formatNum(item.totalParcelSales?.value)}
                   <span className="ml-3">
                     {item.totalParcelSales?.value ? item.totalParcelSales.symbol : ''}
                   </span>
                 </div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{item.numberOfParcelSales || `--`}</div>
+                <div>{formatNum(item.numberOfParcelSales)}</div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{item.totalParcelSupply || `--`}</div>
+                <div>{formatNum(item.totalParcelSupply)}</div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{item.totalLandOwner || `--`}</div>
+                <div>{formatNum(item.totalLandOwner)}</div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{item.totalTraffic || `--`}</div>
+                <div>{formatNum(item.totalTraffic)}</div>
               </th>
             </tr>
           );

@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import ChartTitle from '../chart-title';
 import Status from '../status';
+import { formatNum } from '../../common/utils';
 
 import style from './index.module.css';
 
@@ -61,7 +62,9 @@ export default function BaseBar({
           items.forEach((item) => {
             sum += item.value;
           });
-          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${sum}</span></div>`;
+          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${formatNum(
+            sum,
+          )}</span></div>`;
           container.innerHTML = title + staticItem;
           return container;
         },
@@ -93,10 +96,15 @@ export default function BaseBar({
         grid: {
           line: {
             type: 'line',
-            style: {
-              lineDash: [5, 5],
-              lineWidth: 0.2,
-              fill: 'rgba(255, 255, 255, 0.15)',
+            style: (x, y) => {
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
             },
           },
         },
@@ -105,9 +113,12 @@ export default function BaseBar({
         tickLine: null,
         line: {
           style: {
-            lineWidth: 0.5,
-            fill: 'rgba(0, 0, 0, 0.15)',
+            lineWidth: 1,
+            stroke: 'rgba(255, 255, 255, .15)',
           },
+        },
+        label: {
+          style: { fill: 'rgba(255,255, 255, 0.85)' },
         },
       });
 
