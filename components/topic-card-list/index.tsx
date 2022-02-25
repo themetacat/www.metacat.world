@@ -24,11 +24,12 @@ type Item = {
 
 type Props = {
   topics?: Array<Item>;
+  className?: string;
 };
 
-export default function TopicCardList({ topics }: Props) {
+export default function TopicCardList({ topics, className }: Props) {
   return (
-    <div className={cn('main-content h-full', styles.swiper)}>
+    <div className={cn('main-content h-full', styles.swiper, className)}>
       <div
         className={cn('topicperbtn flex justify-center items-center', styles.btn, styles.perbtn)}
       >

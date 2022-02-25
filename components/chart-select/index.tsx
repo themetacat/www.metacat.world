@@ -79,17 +79,13 @@ export default function ChartSelecter({
         {options.map((x) => {
           return (
             <li
-              className={cn(
-                'flex justify-center items-center',
-                style.option,
-                selectedOption === x.label ? style.active : '',
-              )}
+              className={cn('flex justify-center items-center', style.option)}
               key={x.value}
               onClick={(e) => {
                 itemOnClick(x);
               }}
             >
-              {x.label}
+              <span className={selectedOption === x.label ? style.active : ''}>{x.label}</span>
             </li>
           );
         })}

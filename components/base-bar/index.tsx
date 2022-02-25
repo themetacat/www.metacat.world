@@ -16,6 +16,7 @@ type Props = {
   className?: string;
   labelText?: string;
   limit?: number;
+  barWidth?: number;
 };
 
 export default function BaseBar({
@@ -26,6 +27,7 @@ export default function BaseBar({
   className,
   labelText,
   limit,
+  barWidth = 35,
 }: Props) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -54,6 +56,16 @@ export default function BaseBar({
       });
       chart.current.tooltip({
         showCrosshairs: true,
+        crosshairs: {
+          line: {
+            style: {
+              lineWidth: 0.5,
+            },
+          },
+        },
+        marker: {
+          fill: `rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`,
+        },
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
@@ -62,7 +74,7 @@ export default function BaseBar({
           items.forEach((item) => {
             sum += item.value;
           });
-          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${formatNum(
+          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:600;">${formatNum(
             sum,
           )}</span></div>`;
           container.innerHTML = title + staticItem;
@@ -127,6 +139,7 @@ export default function BaseBar({
 
       chart.current
         .interval()
+        .size(barWidth)
         .position('time*value')
         .color('value')
         .style({

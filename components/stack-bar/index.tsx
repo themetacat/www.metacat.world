@@ -90,6 +90,13 @@ export default function StackBar({
       chart.current.tooltip({
         shared: true,
         showCrosshairs: true,
+        crosshairs: {
+          line: {
+            style: {
+              lineWidth: 0.5,
+            },
+          },
+        },
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
@@ -173,6 +180,8 @@ export default function StackBar({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
+          offset: 25,
+          rotate: 1,
         },
       });
 
@@ -182,6 +191,7 @@ export default function StackBar({
       });
 
       chart.current.scale('time', {
+        type: 'cat',
         mask: 'YYYY.MM.DD',
       });
 

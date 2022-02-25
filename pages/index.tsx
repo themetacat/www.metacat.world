@@ -382,6 +382,7 @@ export default function Index(props) {
               labelText={'MONTHLY TRAFFIC'}
               dataHandlder={getCvTrafficStats}
               limit={15}
+              barWidth={25}
             ></BaseBar>
           </BaseChart>
           <BaseChart className=" mb-5">
@@ -418,7 +419,6 @@ export default function Index(props) {
               labelText={'NUMBER OF PARCEL SALES'}
               dataHandler={getCvParcelSoldTotalStats}
               limit={15}
-              isEth={true}
               options={[
                 {
                   label: 'Daily',
@@ -551,7 +551,7 @@ export default function Index(props) {
               <a href={`/analytics`}>
                 <div
                   className={cn(
-                    'main-content flex justify-between items-center mt-5 text-white font-normal',
+                    'main-content flex justify-between items-center mt-5font-normal',
                     style.analytics,
                   )}
                 >

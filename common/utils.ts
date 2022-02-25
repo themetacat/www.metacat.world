@@ -17,11 +17,8 @@ export const convert = (data) => {
 };
 
 export const formatNum = (value: number, noNeedFixed = true, fixed = 3) => {
-  if (value === undefined || value === null) {
+  if (value === undefined || value === null || (value === 0 && !noNeedFixed)) {
     return '--';
-  }
-  if (value === 0) {
-    return 0;
   }
   if (value.toString().indexOf('.') < 0 || noNeedFixed) {
     return value.toLocaleString();

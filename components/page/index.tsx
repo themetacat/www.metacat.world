@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 
 import { SITE_NAME, SITE_URL } from '../../common/const';
 
+import style from './index.module.css';
+
 type Meta = {
   title: string;
   description?: string;
@@ -28,7 +30,7 @@ export default function Page({ meta, children, className, fullViewport = false }
   const description = meta.description || SITE_NAME;
 
   return (
-    <div className={cn('page-container', className, { full: fullViewport })}>
+    <div className={cn('page-container', style.widthLimit, className, { full: fullViewport })}>
       <Head>
         <title>{title}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />

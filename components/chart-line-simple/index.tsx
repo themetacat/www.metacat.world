@@ -51,7 +51,8 @@ export default function ChartLineSimple({
         chart.current.data(monthly.data);
       }
       chart.current.scale('time', {
-        range: [0, 1],
+        range: [0.01, 1],
+        type: 'cat',
       });
 
       chart.current.scale('value', {
@@ -59,6 +60,13 @@ export default function ChartLineSimple({
       });
       chart.current.tooltip({
         showCrosshairs: true,
+        crosshairs: {
+          line: {
+            style: {
+              lineWidth: 0.5,
+            },
+          },
+        },
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
@@ -67,7 +75,7 @@ export default function ChartLineSimple({
           items.forEach((item) => {
             sum += item.value;
           });
-          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:700;">${formatNum(
+          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:600;">${formatNum(
             sum,
           )}</span></div>`;
           container.innerHTML = title + staticItem;
@@ -124,6 +132,8 @@ export default function ChartLineSimple({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
+          offset: 25,
+          rotate: 1,
         },
       });
 

@@ -89,7 +89,8 @@ export default function ChartLine({
         transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
       );
       chart.current.scale('time', {
-        range: [0, 1],
+        range: [0.01, 0.99],
+        type: 'cat',
         mask: 'YYYY.MM.DD',
       });
 
@@ -100,6 +101,13 @@ export default function ChartLine({
         // showMarkers: false,
         showCrosshairs: true,
         shared: true,
+        crosshairs: {
+          line: {
+            style: {
+              lineWidth: 0.5,
+            },
+          },
+        },
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
@@ -217,6 +225,8 @@ export default function ChartLine({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
+          offset: 25,
+          rotate: 1,
         },
       });
 
@@ -366,15 +376,19 @@ export default function ChartLine({
 
   const getSelect = React.useMemo(() => {
     return (
-      <div className={cn('flex items-center', style.border)}>
+      <div
+        className={cn('flex items-center', style.border)}
+        style={{ color: 'rgba(255,255,255, 0.3)' }}
+      >
         <ChartSelecter
           options={options}
           showArrow={true}
           onClick={changeStatic}
+          className={style.selecterLong}
           defaultLabel={options[0].value}
           hasBorder={false}
         ></ChartSelecter>
-        <span style={{ color: 'rgba(255,255,255, 0.3)' }}>|</span>
+        丨
         <ChartSelecter
           options={priceOptions}
           showArrow={true}
