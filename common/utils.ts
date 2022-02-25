@@ -16,14 +16,14 @@ export const convert = (data) => {
   return newObj;
 };
 
-export const formatNum = (value: number, fixed = 3) => {
+export const formatNum = (value: number, noNeedFixed = true, fixed = 3) => {
   if (value === undefined || value === null) {
     return '--';
   }
   if (value === 0) {
     return 0;
   }
-  if (value.toString().indexOf('.') < 0) {
+  if (value.toString().indexOf('.') < 0 || noNeedFixed) {
     return value.toLocaleString();
   }
   return value.toLocaleString(undefined, { minimumFractionDigits: fixed });

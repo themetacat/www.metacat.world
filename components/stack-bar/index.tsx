@@ -181,6 +181,10 @@ export default function StackBar({
         nice: true,
       });
 
+      chart.current.scale('time', {
+        mask: 'YYYY.MM.DD',
+      });
+
       // 数据处理
       if (data) {
         // if (limit && data[staticType].data?.length > limit) {

@@ -51,23 +51,23 @@ export default function AnalyticsInfo() {
               </th>
               <th className={cn('', style.cell)}>
                 <div>
-                  {formatNum(item.totalParcelSales?.value)}
+                  {formatNum(item.totalParcelSales?.value, false)}
                   <span className="ml-3">
                     {item.totalParcelSales?.value ? item.totalParcelSales.symbol : ''}
                   </span>
                 </div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{formatNum(item.numberOfParcelSales)}</div>
+                <div>{formatNum(item.numberOfParcelSales, false)}</div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{formatNum(item.totalParcelSupply)}</div>
+                <div>{formatNum(item.totalParcelSupply, false)}</div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{formatNum(item.totalLandOwner)}</div>
+                <div>{formatNum(item.totalLandOwner, false)}</div>
               </th>
               <th className={cn('', style.cell)}>
-                <div>{formatNum(item.totalTraffic)}</div>
+                <div>{formatNum(item.totalTraffic, false)}</div>
               </th>
             </tr>
           );

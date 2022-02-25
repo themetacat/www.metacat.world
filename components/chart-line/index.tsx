@@ -90,6 +90,7 @@ export default function ChartLine({
       );
       chart.current.scale('time', {
         range: [0, 1],
+        mask: 'YYYY.MM.DD',
       });
 
       chart.current.scale('valueAvg', {
