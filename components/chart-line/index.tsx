@@ -227,7 +227,9 @@ export default function ChartLine({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          offset: 25,
+          // offset: 25,
+          offsetX: 25,
+          offsetY: 0,
           rotate: 1,
         },
       });
@@ -245,7 +247,7 @@ export default function ChartLine({
               };
             }
             return {
-              fill: `l(270) 0:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 0.2) 0:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 1)`,
+              fill: `l(270) 0:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 0.2) 1:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 1)`,
             };
           },
         })

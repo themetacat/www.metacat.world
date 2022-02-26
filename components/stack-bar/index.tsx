@@ -180,7 +180,8 @@ export default function StackBar({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          offset: 25,
+          offsetX: 25,
+          offsetY: 0,
           rotate: 1,
         },
       });

@@ -131,7 +131,8 @@ export default function BaseBar({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          offset: 20,
+          offsetX: barWidth / 2,
+          offsetY: 0,
           rotate: 1,
           mask: 'YYYY.MM.DD',
         },

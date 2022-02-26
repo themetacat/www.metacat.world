@@ -135,7 +135,8 @@ export default function ChartLineSimple({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          offset: 25,
+          offsetX: 20,
+          offsetY: 0,
           rotate: 1,
         },
       });
