@@ -67,6 +67,9 @@ export default function ChartLineSimple({
             },
           },
         },
+        marker: {
+          fill: `rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`,
+        },
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
