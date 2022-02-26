@@ -28,6 +28,7 @@ type Props = {
   isEth?: boolean;
   labelText?: string;
   limit?: number;
+  barWidth?: number;
 };
 
 export default function StackBar({
@@ -41,6 +42,7 @@ export default function StackBar({
   isEth = false,
   labelText,
   limit,
+  barWidth = 25,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [dataSource, setDataSource] = React.useState(null);
@@ -169,6 +171,12 @@ export default function StackBar({
             },
           },
         },
+        label: {
+          offsetX: barWidth / 2,
+          formatter: (text, item, index) => {
+            return formatNum(parseFloat(text));
+          },
+        },
       });
       chart.current.axis('time', {
         tickLine: null,
@@ -209,6 +217,7 @@ export default function StackBar({
         chart.current
           .interval()
           .position('time*value')
+          .size(barWidth)
           .color('type')
           .style({
             fields: ['type'],

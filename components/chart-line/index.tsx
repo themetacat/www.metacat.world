@@ -216,6 +216,11 @@ export default function ChartLine({
             },
           },
         },
+        label: {
+          formatter: (text, item, index) => {
+            return formatNum(parseFloat(text));
+          },
+        },
       });
       chart.current.axis('time', {
         tickLine: null,

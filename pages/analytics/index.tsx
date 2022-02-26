@@ -63,6 +63,7 @@ export default function AnalyticsIndex() {
           className="mt-5"
           labelText={'MONTHLY TRAFFIC'}
           dataHandlder={getCvTrafficStats}
+          barWidth={18}
         ></BaseBar>
         <ChartLine
           id={'chartline1'}
@@ -95,6 +96,7 @@ export default function AnalyticsIndex() {
           className="mt-5"
           labelText={'NUMBER OF PARCEL SALES'}
           dataHandler={getCvParcelSoldTotalStats}
+          barWidth={18}
           options={[
             {
               label: 'Daily',
@@ -112,6 +114,7 @@ export default function AnalyticsIndex() {
           labelText={'MONTHLY PARCEL SALES AMOUNT'}
           dataHandler={getCvParcelSoldSumStats}
           isEth={true}
+          barWidth={18}
           options={[
             {
               label: 'ETH',
@@ -130,6 +133,7 @@ export default function AnalyticsIndex() {
           labelText={'MONTHLY PARCEL MINTED'}
           dataHandlder={getCvMintStats}
           defaultColor={[33, 212, 115]}
+          barWidth={18}
         ></BaseBar>
 
         <ChartLineSimple
