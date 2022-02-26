@@ -16,19 +16,19 @@ interface Props {
   showArrow?: boolean;
   defaultLabel?: string;
   hasBorder?: boolean;
-  visible?: boolean;
   trigger?: (x: boolean) => void;
+  useRef?: React.Ref<any>;
 }
 
-export default function ChartSelecter({
+function ChartSelecter({
   options,
   onClick,
   className,
   showArrow = false,
   defaultLabel = 'Daily',
   hasBorder = true,
-  visible = true,
   trigger,
+  useRef,
 }: Props) {
   const cls = cn(className);
   const [selectedOption, setSelectedOption] = React.useState(defaultLabel);
@@ -49,7 +49,7 @@ export default function ChartSelecter({
   );
 
   const changeShow = React.useCallback(() => {
-    if (!showArrow || !visible) {
+    if (!showArrow) {
       return;
     }
     const s = !show;
@@ -57,7 +57,15 @@ export default function ChartSelecter({
     if (trigger) {
       trigger(s);
     }
-  }, [show, visible, trigger]);
+  }, [show, trigger]);
+
+  React.useImperativeHandle(useRef, () => {
+    return {
+      forceToClose: (newVal) => {
+        setShow(false);
+      },
+    };
+  });
 
   React.useEffect(() => {
     const s = options.find((x) => {
@@ -104,4 +112,6 @@ export default function ChartSelecter({
     </div>
   );
 }
+
+export default React.forwardRef(ChartSelecter);
 /* eslint-enable */
