@@ -20,7 +20,7 @@ interface Props {
   useRef?: React.Ref<any>;
 }
 
-function ChartSelecter({
+export default function ChartSelecter({
   options,
   onClick,
   className,
@@ -112,6 +112,4 @@ function ChartSelecter({
     </div>
   );
 }
-
-export default React.forwardRef(ChartSelecter);
 /* eslint-enable */

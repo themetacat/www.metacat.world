@@ -17,11 +17,16 @@ type optionItem = {
   value?: string;
 };
 
+type legend = {
+  label?: string;
+  color?: Array<number>;
+};
+
 type Props = {
   id?: string;
   dataHandler?: () => any;
-  color1?: Array<number>;
-  color2?: Array<number>;
+  legend1?: legend;
+  legend2?: legend;
   gradient?: boolean;
   className?: string;
   options?: Array<optionItem>;
@@ -29,13 +34,14 @@ type Props = {
   labelText?: string;
   limit?: number;
   barWidth?: number;
+  keyTypes?: Array<string>;
 };
 
 export default function StackBar({
   id,
   dataHandler,
-  color1 = [95, 213, 236],
-  color2 = [255, 207, 95],
+  legend1 = { label: 'Primary', color: [95, 213, 236] },
+  legend2 = { label: 'Secondary', color: [255, 207, 95] },
   gradient = true,
   className,
   options,
@@ -43,6 +49,7 @@ export default function StackBar({
   labelText,
   limit,
   barWidth = 25,
+  keyTypes = ['primary', 'secondary'],
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [dataSource, setDataSource] = React.useState(null);
@@ -52,11 +59,11 @@ export default function StackBar({
   const chart = React.useRef(null);
 
   const transfromData = React.useCallback(
-    (data, type, lim) => {
+    (data, type) => {
       const result = [];
-      if (lim && data.length > lim) {
+      if (limit && data.length > limit) {
         const l = data.length;
-        const d = l - lim * 2;
+        const d = l - limit * 2;
         const last = data.slice(d);
         last.forEach((element) => {
           result.push({
@@ -74,7 +81,7 @@ export default function StackBar({
       });
       return result;
     },
-    [null],
+    [limit],
   );
 
   const initChart = React.useCallback(
@@ -88,6 +95,8 @@ export default function StackBar({
         autoFit: true,
         height: 210,
       });
+      const tempData = transfromData(data[staticType].data, staticType);
+      chart.current.data(tempData);
       // 设置弹窗
       chart.current.tooltip({
         shared: true,
@@ -206,14 +215,7 @@ export default function StackBar({
 
       // 数据处理
       if (data) {
-        // if (limit && data[staticType].data?.length > limit) {
-        //   const l = data[staticType].data.length;
-        //   const d = l - limit * 2;
-        //   chart.current.data(data[staticType].data.slice(d));
-        // } else {
-        //   chart.current.data(data[staticType].data);
-        // }
-        chart.current.data(transfromData(data[staticType].data, staticType, limit));
+        // chart.current.data(transfromData(data[staticType].data, staticType, limit));
         chart.current
           .interval()
           .position('time*value')
@@ -222,17 +224,17 @@ export default function StackBar({
           .style({
             fields: ['type'],
             callback: (tVal) => {
-              if (tVal === 'primary') {
+              if (tVal === keyTypes[0]) {
                 return {
                   fill: gradient
-                    ? `l(270) 0:rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 0.2) 1:rgba(${color1[0]}, ${color1[1]}, ${color1[2]}, 1)`
-                    : `rgb(${color1[0]}, ${color1[1]}, ${color1[2]})`,
+                    ? `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`
+                    : `rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`,
                 };
               }
               return {
                 fill: gradient
-                  ? `l(270) 0:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 0.2) 1:rgba(${color2[0]}, ${color2[1]}, ${color2[2]}, 1)`
-                  : `rgb(${color2[0]}, ${color2[1]}, ${color2[2]})`,
+                  ? `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`
+                  : `rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`,
               };
             },
           })
@@ -247,9 +249,9 @@ export default function StackBar({
               type: s,
               time,
               color:
-                type === 'primary'
-                  ? `rgb(${color1[0]}, ${color1[1]}, ${color1[2]})`
-                  : `rgb(${color2[0]}, ${color2[1]}, ${color2[2]})`,
+                type === keyTypes[0]
+                  ? `rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`
+                  : `rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`,
               staticT,
             };
           })
@@ -260,7 +262,7 @@ export default function StackBar({
         chart.current.render();
       }
     },
-    [staticType, limit],
+    [staticType, limit, id],
   );
 
   const requestData = React.useCallback(async () => {
@@ -278,7 +280,7 @@ export default function StackBar({
       initChart(result);
     }
     return result;
-  }, [staticType, limit]);
+  }, [staticType, limit, dataHandler, initChart]);
 
   const onRetry = React.useCallback(() => {
     requestData();
@@ -286,6 +288,7 @@ export default function StackBar({
 
   React.useEffect(() => {
     requestData();
+
     return () => {
       if (chart.current) {
         chart.current.destroy();
@@ -297,15 +300,7 @@ export default function StackBar({
     (val) => {
       setStaticType(val);
       if (chart.current && dataSource) {
-        // if (limit && dataSource[val].data?.length > limit) {
-        //   const l = dataSource[val].data.length;
-        //   const d = l - limit * 2;
-        //   chart.current.changeData(dataSource[val].data.slice(d));
-        // } else {
-        //   chart.current.changeData(dataSource[val].data);
-        // }
-
-        chart.current.changeData(transfromData(dataSource[val].data, val, limit));
+        chart.current.changeData(transfromData(dataSource[val].data, val));
       }
     },
     [dataSource, limit],
@@ -315,17 +310,17 @@ export default function StackBar({
     return (
       <>
         <IconLabel
-          text="Primary"
-          color={`rgb(${color1[0]}, ${color1[1]}, ${color1[2]})`}
+          text={legend1.label}
+          color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-          text="Secondary"
-          color={`rgb(${color2[0]}, ${color2[1]}, ${color2[2]})`}
+          text={legend2.label}
+          color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
         ></IconLabel>
       </>
     );
-  }, [color1, color2]);
+  }, [legend1, legend2]);
 
   const getSelect = React.useMemo(() => {
     return (

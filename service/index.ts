@@ -190,3 +190,35 @@ export const getCvParcelOwnerStats = async () => {
   const json = await res.json();
   return json;
 };
+
+export const getDclParcelAvgPriceStats = async () => {
+  const url = `api/dcl_parcel_avg_price_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getDclParcelSoldTotalStats = async () => {
+  const url = `api/dcl_parcel_sold_total_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getDclParcelSoldSumStats = async () => {
+  const url = `api/dcl_parcel_sold_sum_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getDclParcelOwnerStats = async () => {
+  const url = `api/dcl_parcel_owner_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};

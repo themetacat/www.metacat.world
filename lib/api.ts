@@ -223,6 +223,38 @@ class API {
 
     return json;
   }
+
+  public async getDclParcelAvgPriceStats(): Promise<any> {
+    const url = `${this.url}/get_dcl_parcel_avg_price_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getDclParcelSoldTotalStats(): Promise<any> {
+    const url = `${this.url}/get_dcl_parcel_sold_total_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getDclParcelSoldSumStats(): Promise<any> {
+    const url = `${this.url}/get_dcl_parcel_sold_sum_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getDclParcelOwnerStats(): Promise<any> {
+    const url = `${this.url}/get_dcl_parcel_owner_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

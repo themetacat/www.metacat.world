@@ -6,7 +6,6 @@ import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import AnalyticsInfo from '../../components/analytics-info';
 import Switch from '../../components/switch';
-import BaseBar from '../../components/base-bar';
 
 import AnimationBack from '../../components/animation-back';
 
@@ -19,13 +18,19 @@ import {
   getCvParcelSoldSumStats,
   getCvMintStats,
   getCvParcelOwnerStats,
+  getDclParcelAvgPriceStats,
+  getDclParcelSoldSumStats,
+  getDclParcelSoldTotalStats,
+  getDclParcelOwnerStats,
 } from '../../service';
 
 import style from './index.module.css';
+
+import BaseBar from '../../components/base-bar';
 import ChartLine from '../../components/chart-line';
 import StackBar from '../../components/stack-bar';
 import ChartLineSimple from '../../components/chart-line-simple';
-import Status from '../../components/status';
+import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
 
 const types = [
   {
@@ -145,7 +150,89 @@ export default function AnalyticsIndex() {
         ></ChartLineSimple>
       </>
     ) : (
-      <Status status="coming"></Status>
+      <>
+        <ChartLine
+          id={'dcl-chartline-1'}
+          className="mt-5"
+          labelText={'AVERAGE PARCEL PRICE'}
+          dataHandlder={getDclParcelAvgPriceStats}
+          legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
+          legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
+          keyTypes={['land', 'estate']}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+          ]}
+          priceOptions={[
+            {
+              label: 'USD',
+              value: 'usd',
+            },
+            {
+              label: 'Mana',
+              value: 'mana',
+            },
+          ]}
+        ></ChartLine>
+        <ChartLineToolTipSimple
+          id={'dcl-chartline-2'}
+          className="mt-5"
+          labelText={'NUMBER OF PARCEL SALES'}
+          dataHandlder={getDclParcelSoldTotalStats}
+          legend1={{ label: 'Land', color: [33, 212, 115] }}
+          legend2={{ label: 'Estate', color: [255, 172, 95] }}
+          keyTypes={['land', 'estate']}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+          ]}
+        ></ChartLineToolTipSimple>
+        <>
+          <span className="hidden"></span>
+          <StackBar
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            dataHandler={getDclParcelSoldSumStats}
+            legend1={{ label: 'Land', color: [33, 212, 115] }}
+            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            options={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'Mana',
+                value: 'mana',
+              },
+            ]}
+          ></StackBar>
+        </>
+        <>
+          <span className="hidden"></span>
+          <ChartLineSimple
+            id={'chartlinesimple2'}
+            className="mt-5"
+            labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
+            dataHandlder={getDclParcelOwnerStats}
+            defaultColor={[34, 118, 252]}
+          ></ChartLineSimple>
+        </>
+      </>
     );
   }, [showType]);
 

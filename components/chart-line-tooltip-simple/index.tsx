@@ -31,9 +31,10 @@ type Props = {
   options?: Array<optionItem>;
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
+  simpleTooltip?: boolean;
 };
 
-export default function ChartLine({
+export default function ChartLineToolTipSimple({
   id,
   dataHandlder,
   legend1 = { label: 'Primary', color: [95, 213, 236] },
@@ -46,16 +47,13 @@ export default function ChartLine({
   keyTypes = ['primary', 'secondary'],
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
-  const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
   const [dataSource, setDataSource] = React.useState(null);
   const chart = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const visible1 = React.useRef();
-  const visible2 = React.useRef();
 
   const transfromData = React.useCallback(
-    (data, type, priceType) => {
+    (data, type) => {
       const result = [];
       if (limit) {
         const l = data.length;
@@ -65,7 +63,6 @@ export default function ChartLine({
           result.push({
             ...element,
             staticT: type,
-            priceStaticT: priceType,
           });
         });
         return result;
@@ -74,13 +71,46 @@ export default function ChartLine({
         result.push({
           ...element,
           staticT: type,
-          priceStaticT: priceType,
         });
       });
       return result;
     },
     [limit],
   );
+
+  const simpleToolTip = (name, items) => {
+    const container = document.createElement('div');
+    container.className = 'g2-tooltip';
+    const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
+    const result = {};
+    if (items.length <= 0) {
+      return;
+    }
+    items.forEach((item) => {
+      result[item.type] = item.value;
+    });
+
+    const staticItem = `
+    <div style="color:#fff;margin-bottom:12px">
+      <span style="font-size: 12px;color:#999999;font-weight:400;">Land:</span>
+      <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
+      legend1.color[2]
+    }, 1); font-size: 18px; font-weight:700;">
+        ${formatNum(result[keyTypes[0]])}
+        </span>
+    </div>
+    <div style="color:#fff;margin-bottom:12px">
+      <span style="font-size: 12px;color:#999999;font-weight:400;">Estate:</span>
+      <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
+      legend2.color[2]
+    }, 1); font-size: 18px; font-weight:700;">
+        ${formatNum(result[keyTypes[1]])}
+        </span>
+    </div>
+    `;
+    container.innerHTML = title + staticItem;
+    return container;
+  };
 
   const initChart = React.useCallback(
     (data) => {
@@ -94,16 +124,14 @@ export default function ChartLine({
         height: 210,
       });
 
-      chart.current.data(
-        transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
-      );
+      chart.current.data(transfromData(data[staticType].data, staticType));
       chart.current.scale('time', {
         range: [0.01, 0.99],
         type: 'cat',
         mask: 'YYYY.MM.DD',
       });
 
-      chart.current.scale('valueAvg', {
+      chart.current.scale('value', {
         nice: true,
       });
       chart.current.tooltip({
@@ -117,76 +145,7 @@ export default function ChartLine({
             },
           },
         },
-        customContent: (name, items) => {
-          const container = document.createElement('div');
-          container.className = 'g2-tooltip';
-          const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
-          const result = {
-            primary: null,
-            secondary: null,
-          };
-          if (items.length <= 0) {
-            return;
-          }
-          items.forEach((item) => {
-            result[item.type] = item;
-          });
-          const staticItem = `
-            <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1); font-size: 20px; font-weight:700;">
-              ${formatNum(result[keyTypes[0]]?.valueAvg)}
-              <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
-                keyTypes[0]
-              ].priceStaticT.toLocaleUpperCase()} Avg</span>
-              </span>
-            </div>
-            <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1); font-size: 20px; font-weight:700;">
-              ${formatNum(result[keyTypes[1]]?.valueAvg)}
-              <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
-                keyTypes[1]
-              ].priceStaticT.toLocaleUpperCase()} Avg</span>
-              </span>
-            </div>`;
-          const priceDetail = `
-          <div style="color:#fff;margin-bottom:12px">
-            <span style="color:#999999;">
-            Lowest:
-              <span style="color:#fff;">
-                <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1);">${formatNum(result[keyTypes[0]]?.valueMin)}</span>
-                /
-                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">${formatNum(result[keyTypes[1]]?.valueMin)}</span>
-                <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-              </span>
-            </span>
-          </div>
-          <div style="color:#fff;margin-bottom:12px">
-            <span style="color:#999999;">
-            Highest:
-              <span style="color:#fff;">
-                <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1);">${formatNum(result[keyTypes[0]]?.valueMax)}</span>
-                /
-                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">${formatNum(result[keyTypes[1]]?.valueMax)}</span>
-                <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-              </span>
-            </span>
-          </div>
-          `;
-          container.innerHTML = title + staticItem + priceDetail;
-          return container;
-        },
+        customContent: simpleToolTip,
         domStyles: {
           'g2-tooltip': {
             background: 'rgba(0,0,0,0.9)',
@@ -252,7 +211,7 @@ export default function ChartLine({
 
       chart.current
         .area()
-        .position('time*valueAvg')
+        .position('time*value')
         .color('type')
         .style({
           fields: ['type'],
@@ -267,24 +226,18 @@ export default function ChartLine({
             };
           },
         })
-        .tooltip(
-          'time*valueAvg*type*valueMax*valueMin*staticT*priceStaticT',
-          (time, valueAvg, type, valueMax, valueMin, staticT, priceStaticT) => {
-            return {
-              valueAvg,
-              time,
-              type,
-              valueMax,
-              valueMin,
-              staticT,
-              priceStaticT,
-            };
-          },
-        );
+        .tooltip('time*value*type*staticT', (time, value, type, staticT) => {
+          return {
+            value,
+            time,
+            type,
+            staticT,
+          };
+        });
 
       chart.current
         .line()
-        .position('time*valueAvg')
+        .position('time*value')
         .size(2)
         .tooltip(false)
         .color('type', [
@@ -293,7 +246,7 @@ export default function ChartLine({
         ]);
       chart.current.render();
     },
-    [staticType, priceStaticType, limit],
+    [staticType, limit],
   );
 
   const requestData = React.useCallback(async () => {
@@ -313,7 +266,7 @@ export default function ChartLine({
       initChart(result);
     }
     return result;
-  }, [staticType, priceStaticType, limit]);
+  }, [staticType, limit]);
 
   const onRetry = React.useCallback(() => {
     requestData();
@@ -348,73 +301,35 @@ export default function ChartLine({
   }, [legend1, legend2]);
 
   const updateData = React.useCallback(
-    (staticT, priceStaticT) => {
+    (staticT) => {
       if (chart.current && dataSource) {
-        chart.current.changeData(
-          transfromData(dataSource[staticT].data[priceStaticT], staticT, priceStaticT),
-        );
+        chart.current.changeData(transfromData(dataSource[staticT].data, staticT));
       }
     },
-    [dataSource, staticType, priceStaticType, limit],
+    [dataSource, staticType, limit],
   );
 
   const changeStatic = React.useCallback(
     (val) => {
       setStaticType(val);
       if (chart.current && dataSource) {
-        updateData(val, priceStaticType);
+        updateData(val);
       }
     },
-    [dataSource, limit, priceStaticType, updateData],
-  );
-
-  const changePriceStatic = React.useCallback(
-    (val) => {
-      setPriceStaticType(val);
-      if (chart.current && dataSource) {
-        updateData(staticType, val);
-      }
-    },
-    [dataSource, staticType, limit, updateData],
+    [dataSource, limit, updateData],
   );
 
   const getSelect = React.useMemo(() => {
     return (
-      <div
-        className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(255,255,255, 0.3)' }}
-      >
-        <ChartSelecter
-          options={options}
-          showArrow={true}
-          onClick={changeStatic}
-          className={style.selecterLong}
-          defaultLabel={options[0].value}
-          hasBorder={false}
-          useRef={visible1}
-          trigger={(show) => {
-            if (visible2.current) {
-              (visible2.current as any).forceToClose();
-            }
-          }}
-        ></ChartSelecter>
-        丨
-        <ChartSelecter
-          options={priceOptions}
-          showArrow={true}
-          onClick={changePriceStatic}
-          defaultLabel={priceOptions[0].value}
-          hasBorder={false}
-          useRef={visible2}
-          trigger={(show) => {
-            if (visible1.current) {
-              (visible1.current as any).forceToClose();
-            }
-          }}
-        ></ChartSelecter>
-      </div>
+      <ChartSelecter
+        options={options}
+        showArrow={true}
+        onClick={changeStatic}
+        className={style.selecterLong}
+        defaultLabel={options[0].value}
+      ></ChartSelecter>
     );
-  }, [options, visible1, visible2, changeStatic]);
+  }, [options, changeStatic]);
 
   React.useEffect(() => {
     requestData();

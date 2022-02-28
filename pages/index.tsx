@@ -23,6 +23,7 @@ import BaseChart from '../components/base-chart';
 import BaseBar from '../components/base-bar';
 import StackBar from '../components/stack-bar';
 import ChartLine from '../components/chart-line';
+import ChartLineToolTipSimple from '../components/chart-line-tooltip-simple';
 
 import {
   getCVEventList,
@@ -33,6 +34,9 @@ import {
   getCvParcelSoldTotalStats,
   getCvTrafficStats,
   getCvParcelAvgPriceStats,
+  getDclParcelAvgPriceStats,
+  getDclParcelSoldSumStats,
+  getDclParcelSoldTotalStats,
 } from '../service';
 
 import style from './index.module.less';
@@ -67,7 +71,6 @@ const SUBTAB = [
   {
     label: 'Analytics',
     type: 'analytics',
-    isVoxelOnly: true,
   },
   {
     label: 'Event',
@@ -183,7 +186,7 @@ export default function Index(props) {
   const onTabChange = async (tab) => {
     setTabState(tab);
     let sub = subTabState;
-    if (subTabState === 'analytics' || 'map') {
+    if (subTabState === 'map') {
       sub = 'parcel';
       setSubTabState(sub);
     }
@@ -374,7 +377,7 @@ export default function Index(props) {
       );
     }
     if (subTabState === 'analytics') {
-      return (
+      return tabState === 'voxel' ? (
         <div className={cn('main-content')}>
           <BaseChart className=" my-5">
             <BaseBar
@@ -432,9 +435,89 @@ export default function Index(props) {
             ></StackBar>
           </BaseChart>
         </div>
+      ) : (
+        <div className={cn('main-content')}>
+          <BaseChart className=" my-5">
+            <ChartLine
+              id={'dcl-chartline-1'}
+              labelText={'AVERAGE PARCEL PRICE'}
+              dataHandlder={getDclParcelAvgPriceStats}
+              legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
+              legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
+              keyTypes={['land', 'estate']}
+              options={[
+                {
+                  label: 'Daily price',
+                  value: 'daily',
+                },
+                {
+                  label: 'Monthly price',
+                  value: 'monthly',
+                },
+              ]}
+              priceOptions={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'Mana',
+                  value: 'mana',
+                },
+              ]}
+              limit={15}
+            ></ChartLine>
+          </BaseChart>
+          <BaseChart className=" my-5">
+            <ChartLineToolTipSimple
+              id={'dcl-chartline-2'}
+              labelText={'NUMBER OF PARCEL SALES'}
+              dataHandlder={getDclParcelSoldTotalStats}
+              legend1={{ label: 'Land', color: [33, 212, 115] }}
+              legend2={{ label: 'Estate', color: [255, 172, 95] }}
+              keyTypes={['land', 'estate']}
+              options={[
+                {
+                  label: 'Daily price',
+                  value: 'daily',
+                },
+                {
+                  label: 'Monthly price',
+                  value: 'monthly',
+                },
+              ]}
+              limit={15}
+            ></ChartLineToolTipSimple>
+          </BaseChart>
+          <BaseChart className=" mb-5">
+            <>
+              <span className="hidden"></span>
+              <StackBar
+                id={'stackbar1'}
+                labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                dataHandler={getDclParcelSoldSumStats}
+                limit={15}
+                legend1={{ label: 'Land', color: [33, 212, 115] }}
+                legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                keyTypes={['land', 'estate']}
+                options={[
+                  {
+                    label: 'USD',
+                    value: 'usd',
+                  },
+                  {
+                    label: 'Mana',
+                    value: 'mana',
+                  },
+                ]}
+              ></StackBar>
+            </>
+          </BaseChart>
+        </div>
       );
     }
   }, [
+    tabState,
     subTabState,
     error,
     dataSource,
@@ -535,7 +618,7 @@ export default function Index(props) {
                     />
                   );
                 }
-                return <></>;
+                return null;
               })}
             </div>
             {subTabState === 'parcel' ? (
@@ -547,7 +630,7 @@ export default function Index(props) {
               <SwiperTag onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
 
-            {tabState === 'voxel' && subTabState === 'analytics' && (
+            {subTabState === 'analytics' && (
               <a href={`/analytics`}>
                 <div
                   className={cn(
