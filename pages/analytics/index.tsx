@@ -190,11 +190,11 @@ export default function AnalyticsIndex() {
           keyTypes={['land', 'estate']}
           options={[
             {
-              label: 'Daily price',
+              label: 'Daily',
               value: 'daily',
             },
             {
-              label: 'Monthly price',
+              label: 'Monthly',
               value: 'monthly',
             },
           ]}
@@ -210,6 +210,7 @@ export default function AnalyticsIndex() {
             legend2={{ label: 'Estate', color: [255, 172, 95] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
+            isEth={true}
             options={[
               {
                 label: 'USD',
