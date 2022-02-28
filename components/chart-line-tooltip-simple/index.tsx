@@ -170,7 +170,7 @@ export default function ChartLineToolTipSimple({
       chart.current.legend(false);
 
       // 设置横纵轴
-      chart.current.axis('valueAvg', {
+      chart.current.axis('value', {
         grid: {
           line: {
             type: 'line',

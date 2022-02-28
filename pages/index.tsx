@@ -478,11 +478,11 @@ export default function Index(props) {
               keyTypes={['land', 'estate']}
               options={[
                 {
-                  label: 'Daily price',
+                  label: 'Daily',
                   value: 'daily',
                 },
                 {
-                  label: 'Monthly price',
+                  label: 'Monthly',
                   value: 'monthly',
                 },
               ]}
