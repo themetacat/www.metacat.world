@@ -175,7 +175,7 @@ export default function AnalyticsIndex() {
               value: 'usd',
             },
             {
-              label: 'Mana',
+              label: 'MANA',
               value: 'mana',
             },
           ]}
