@@ -461,7 +461,7 @@ export default function Index(props) {
                   value: 'usd',
                 },
                 {
-                  label: 'Mana',
+                  label: 'MANA',
                   value: 'mana',
                 },
               ]}
@@ -506,7 +506,7 @@ export default function Index(props) {
                     value: 'usd',
                   },
                   {
-                    label: 'Mana',
+                    label: 'MANA',
                     value: 'mana',
                   },
                 ]}

@@ -280,11 +280,11 @@ export default function StackBar({
       initChart(result);
     }
     return result;
-  }, [staticType, limit, dataHandler, initChart]);
+  }, [dataHandler]);
 
   const onRetry = React.useCallback(() => {
     requestData();
-  }, [staticType, limit]);
+  }, [requestData]);
 
   React.useEffect(() => {
     requestData();
@@ -294,7 +294,7 @@ export default function StackBar({
         chart.current.destroy();
       }
     };
-  }, [null]);
+  }, [requestData]);
 
   const changeStatic = React.useCallback(
     (val) => {

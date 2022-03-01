@@ -180,11 +180,11 @@ export default function BaseBar({
       initChart(result);
     }
     return result;
-  }, [limit]);
+  }, [dataHandlder]);
 
   const onRetry = React.useCallback(() => {
     requestData();
-  }, [limit]);
+  }, [requestData]);
 
   const render = React.useMemo(() => {
     if (loading) {
@@ -205,7 +205,7 @@ export default function BaseBar({
         chart.current.destroy();
       }
     };
-  }, [null]);
+  }, [requestData]);
 
   return (
     <div className={cn('w-full p-5', style.content, className)}>

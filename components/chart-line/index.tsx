@@ -313,11 +313,11 @@ export default function ChartLine({
       initChart(result);
     }
     return result;
-  }, [staticType, priceStaticType, limit]);
+  }, [dataHandlder]);
 
   const onRetry = React.useCallback(() => {
     requestData();
-  }, [null]);
+  }, [requestData]);
 
   const render = React.useMemo(() => {
     if (loading) {
@@ -423,7 +423,7 @@ export default function ChartLine({
         chart.current.destroy();
       }
     };
-  }, [null]);
+  }, [requestData]);
 
   return (
     <div className={cn('w-full p-5', style.content, className)}>
