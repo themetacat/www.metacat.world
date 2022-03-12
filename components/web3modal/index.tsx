@@ -54,11 +54,20 @@ const INITIAL_STATE: IAppState = {
   result: null,
 };
 
+interface Iconnect {
+  address: string;
+  web3: Web3;
+  provider: any;
+  connected: boolean;
+  chainId: number;
+  networkId: number;
+}
+
 const state = new Rekv<IAppState>(INITIAL_STATE);
 
 export const ProviderContext = React.createContext<{
   data: IAppState | undefined;
-  connect: () => Promise<IAssetData[] | undefined>;
+  connect: () => Promise<Iconnect | undefined>;
   getAccountAssets: (_address: string, _chainId: number) => Promise<IAssetData[] | undefined>;
   resetApp: () => Promise<IAppState>;
   // @ts-ignore
@@ -110,9 +119,9 @@ export default function Web3ModalProvider({
 
   const resetApp = async () => {
     // @ts-ignore
-    if (web3 && web3.currentProvider && web3.currentProvider.close) {
+    if (web3 && web3.currentProvider && web3.currentProvider.disconnect) {
       // @ts-ignore
-      await web3.currentProvider.close();
+      await web3.currentProvider.disconnect();
     }
 
     await web3ModalRef.current?.clearCachedProvider();
@@ -190,16 +199,18 @@ export default function Web3ModalProvider({
 
       if (!getNetwork(+cid)) return;
 
-      state.setState({
+      const result = {
         web3: w3,
         provider,
         connected: true,
         address: addr,
         chainId: cid,
         networkId,
-      });
+      };
+      state.setState(result);
 
-      return getAccountAssets(addr, cid);
+      getAccountAssets(addr, cid);
+      return result;
     } catch (err) {
       console.log('onConnect error: ', err);
     }

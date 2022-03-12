@@ -222,3 +222,86 @@ export const getDclParcelOwnerStats = async () => {
 
   return json;
 };
+
+export const getNonce = async (address: string) => {
+  const search = qs.stringify({ address }, { addQueryPrefix: true });
+  const url = `api/nonce${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const loginSignature = async (address: string, signature: string) => {
+  const search = qs.stringify({ address, signature }, { addQueryPrefix: false });
+  const url = `api/login_signature`;
+  const res = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: search,
+  });
+  const json = await res.json();
+
+  return json;
+};
+
+export const refreshToken = async (reToken: string) => {
+  const search = qs.stringify({ refreshToken: reToken }, { addQueryPrefix: true });
+  const url = `api/refresh_token${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getBaseInfo = async (token: string) => {
+  const url = `api/base_info`;
+  const res = await fetch(url, {
+    method: 'get',
+    headers: {
+      Authorization: token,
+    },
+  });
+  const json = await res.json();
+
+  return json;
+};
+
+export const updateBaseInfo = async (
+  token: string,
+  nickName: string,
+  twitterName: string,
+  websiteUrl: string,
+) => {
+  const url = `api/update_base_info`;
+  const res = await fetch(url, {
+    method: 'post',
+    headers: {
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      nickName,
+      twitterName,
+      websiteUrl,
+    }),
+  });
+  const json = await res.json();
+
+  return json;
+};
+
+export const getParcelList = async (token: string) => {
+  const url = `api/parcel_list`;
+  const res = await fetch(url, {
+    method: 'post',
+    headers: {
+      Authorization: token,
+    },
+  });
+  const json = await res.json();
+
+  return json;
+};

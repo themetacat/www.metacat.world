@@ -1,0 +1,7 @@
+.iconLabel{
+  color: #fff;
+}
+.iconLabel>img{
+  width: 22px;
+  height: 22px;
+}

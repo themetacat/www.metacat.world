@@ -1,0 +1,45 @@
+.in{
+  padding: 10px;
+}
+
+.icon{
+  width: 19px;
+  height: 19px;
+}
+
+.inputContent{
+  background-color: rgba(0, 208, 236, 0.1);
+  position: relative;
+  padding: 0px 20px;
+  color: rgba(153, 153, 153, 1);
+  box-sizing: border-box;
+  border: 0.5px solid rgba(0, 208, 236, 0.1);
+  min-height: 44px;
+}
+
+.input{
+  border: none;
+  outline: none;
+  padding: 0;
+  background-color: rgba(0, 208, 236, 0);
+  border: solid 1px rgba(0, 208, 236, 0);
+  color: #fff;
+  min-width: 380px;
+  caret-color: #00D0EC;
+  flex: 1;
+}
+
+.metainput{
+  width: 500px;
+  color: rgba(153, 153, 153, 1);
+}
+
+.inputContent:focus-within, .inputContent:hover{
+  border: 0.5px solid #00D0EC;
+}
+
+.require{
+  color: red;
+}
+
+

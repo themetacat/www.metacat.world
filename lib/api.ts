@@ -255,6 +255,90 @@ class API {
 
     return json;
   }
+
+  public async getNonce(address: string): Promise<any> {
+    const search = qs.stringify({ address }, { addQueryPrefix: true });
+    const url = `${this.url}/user/get_nonce${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async loginSignature(address: string, signature: string): Promise<any> {
+    const search = qs.stringify({ address, signature }, { addQueryPrefix: false });
+    const url = `${this.url}/user/login_signature`;
+    const res = await fetch(url, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async refreshToken(refreshToken: string): Promise<any> {
+    const search = qs.stringify({ refreshToken }, { addQueryPrefix: true });
+    const url = `${this.url}/user/refresh_token${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getBaseInfo(token: string): Promise<any> {
+    const url = `${this.url}/user/get_base_info`;
+    const res = await fetch(url, {
+      method: 'get',
+      headers: {
+        Authorization: token,
+      },
+    });
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async updateBaseInfo(
+    token: string,
+    nickName: string,
+    twitterName: string,
+    websiteUrl,
+  ): Promise<any> {
+    const url = `${this.url}/user/update_base_info`;
+
+    const res = await fetch(url, {
+      method: 'get',
+      headers: {
+        Authorization: token,
+      },
+      body: JSON.stringify({
+        nick_name: nickName,
+        twitter_name: twitterName,
+        website_url: websiteUrl,
+      }),
+    });
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getParcelList(token: string): Promise<any> {
+    const url = `${this.url}/user/get_parcel_list`;
+
+    const res = await fetch(url, {
+      method: 'get',
+      headers: {
+        Authorization: token,
+      },
+    });
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

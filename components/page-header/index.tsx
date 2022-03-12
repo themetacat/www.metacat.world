@@ -2,6 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
 
+import { ToastContainer } from 'react-toastify';
+
+import WalletBtn from '../wallet-btn';
+
+import 'react-toastify/dist/ReactToastify.css';
 import style from './index.module.css';
 
 type Props = {
@@ -17,7 +22,7 @@ export default function PageHeader({ active, className }: Props) {
   return (
     <header
       className={cn(
-        'main-content h-full flex justify-center items-center p-5 pointer-events-none',
+        'main-content h-full flex justify-center items-center p-5 pointer-events-none z-50',
         className,
       )}
     >
@@ -54,12 +59,31 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+            'text-2xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
         >
           <Link href={'/builders'}>Builders</Link>
         </div>
+        <div
+          className={cn(
+            'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+            active === 'builders' ? style.active : null,
+          )}
+        >
+          <WalletBtn></WalletBtn>
+        </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </header>
   );

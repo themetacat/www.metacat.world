@@ -1,0 +1,21 @@
+.avater{
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+}
+
+.profile{
+  height: 200px;
+  background: url('/images/1.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+.divide{
+  width: 1px;
+  height: 10px;
+  background-color: rgba(196, 196, 196, 1);
+}
+
+.address{
+  color: rgba(102, 102, 102, 1);
+}
