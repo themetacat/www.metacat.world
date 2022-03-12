@@ -236,14 +236,20 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     });
   }, [profileData, clickItem, clickOperationItem, loading]);
 
-  const getText = React.useCallback(() => {
-    if (profileData.profile) {
+  const getText = React.useMemo(() => {
+    let text = 'Connect';
+    if (profileData.profile && profileData.profile.address) {
       if (profileData.profile.name) {
-        return profileData.profile.name;
+        text = profileData.profile.name;
+      } else {
+        text = clipName(profileData.profile.address);
       }
-      return clipName(profileData.profile.address);
     }
-    return 'Connect';
+    return (
+      <div className={cn('font-semibold', profileData.profile.address ? 'text-xs' : 'text-base')}>
+        {text}
+      </div>
+    );
   }, [profileData, clipName]);
 
   return (
@@ -253,9 +259,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         onClick={onClick}
       >
         <img className="mr-1" src="/images/v5/wallet.png" />
-        <div className={cn('font-semibold', profileData.profile.address ? 'text-xs' : 'text-base')}>
-          {getText()}
-        </div>
+        {getText}
       </div>
       <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
       {/* <div className='z-10 absolute w-screen h-screen' onClick={()=>{setShowMenu(false)}}></div> */}
