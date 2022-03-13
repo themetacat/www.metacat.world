@@ -31,7 +31,7 @@ export default function AnalyticsInfo() {
             <div>TOTAL PARCEL SALES VOLUME</div>
           </th>
           <th>
-            <div>NUMBER OF PARCEL SOLD</div>
+            <div>NUMBER OF PARCELS SOLD</div>
           </th>
           <th>
             <div>TOTAL PARCEL SUPPLY</div>
