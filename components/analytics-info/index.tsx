@@ -25,19 +25,19 @@ export default function AnalyticsInfo() {
       <tbody>
         <tr className={cn('text-base font-normal', style.title)}>
           <th>
-            <div>WORLDS</div>
+            <div>WORLD</div>
           </th>
           <th>
-            <div>TOTAL PRACEL SALES</div>
+            <div>TOTAL PARCEL SALES VOLUME</div>
           </th>
           <th>
-            <div>NUMBER OF PRACEL SALES</div>
+            <div>NUMBER OF PARCEL SOLD</div>
           </th>
           <th>
-            <div>TOTAL PRACEL SUPPLIES</div>
+            <div>TOTAL PARCEL SUPPLY</div>
           </th>
           <th>
-            <div>TOTAL LANDLORDS</div>
+            <div>TOTAL NUMBER OF LANDLORDS</div>
           </th>
           <th>
             <div>TOTAL TRAFFIC</div>

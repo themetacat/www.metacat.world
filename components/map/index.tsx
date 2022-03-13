@@ -1190,7 +1190,11 @@ function Map({
           ></ParcelDeatil>
         </div>
       </div>
-      <Legend className={style.legend} title="Level of thermal" options={legends.current}></Legend>
+      <Legend
+        className={style.legend}
+        title={mapType.current === 'TRAFFIC' ? 'Traffic ranking' : 'Price ranking'}
+        options={legends.current}
+      ></Legend>
     </div>
   );
 }

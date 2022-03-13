@@ -73,7 +73,7 @@ const SUBTAB = [
     type: 'analytics',
   },
   {
-    label: 'Event',
+    label: 'Events',
     type: 'event',
   },
 ];

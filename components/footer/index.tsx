@@ -16,7 +16,7 @@ export default function Footer() {
             <img className="mr-4" src="/images/icon.png" alt="logo" />
           </div>
           <section className="flex flex-col	h-full">
-            <span className="sm:text-xl text-base font-semibold">Powered by MeteCat</span>
+            <span className="sm:text-xl text-base font-semibold">Powered by MetaCat</span>
           </section>
         </div>
 
