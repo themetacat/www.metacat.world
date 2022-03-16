@@ -16,14 +16,7 @@ type Props = {
   classname?: string;
 };
 
-export default function Profile({
-  name = '',
-  address = '0xjdasfkhajsafsdjkafhk',
-  twitter = 'http://localhost:8081/twitter',
-  home = 'http://localhost:8081/twitter',
-  avater = '',
-  classname,
-}: Props) {
+export default function Profile({ name, address, twitter, home, avater = '', classname }: Props) {
   const clipName = React.useCallback(
     (addres) => {
       if (addres?.length > 8) {
@@ -38,7 +31,6 @@ export default function Profile({
 
   const copyName = React.useCallback(
     (evt) => {
-      console.log(1);
       toast.success('copied!', {
         position: 'top-center',
         autoClose: 2000,
@@ -92,7 +84,7 @@ export default function Profile({
           </div>
         </div>
       </div>
-      {/* <img className="h-full w-1/2" src="/images/1.png"></img> */}
+      <img className={cn('h-1/2 w-1/2', style.back)} src="/images/v5/textOnly.png"></img>
     </div>
   );
 }

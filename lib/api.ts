@@ -306,20 +306,21 @@ class API {
     token: string,
     nickName: string,
     twitterName: string,
-    websiteUrl,
+    websiteUrl: string,
   ): Promise<any> {
     const url = `${this.url}/user/update_base_info`;
-
+    const search = qs.stringify(
+      { nick_name: nickName, twitter_name: twitterName, website_url: websiteUrl },
+      { addQueryPrefix: false },
+    );
     const res = await fetch(url, {
-      method: 'get',
+      method: 'post',
+      mode: 'cors',
       headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: token,
       },
-      body: JSON.stringify({
-        nick_name: nickName,
-        twitter_name: twitterName,
-        website_url: websiteUrl,
-      }),
+      body: search,
     });
     const json = await res.json();
 
@@ -335,6 +336,15 @@ class API {
         Authorization: token,
       },
     });
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async nickNameExit(nickName: string): Promise<any> {
+    const search = qs.stringify({ nick_name: nickName }, { addQueryPrefix: true });
+    const url = `${this.url}/user/is_nick_name_exist${search}`;
+    const res = await fetch(url);
     const json = await res.json();
 
     return json;

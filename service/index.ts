@@ -192,7 +192,7 @@ export const getCvParcelOwnerStats = async () => {
 };
 
 export const getDclParcelAvgPriceStats = async () => {
-  const url = `api/dcl_parcel_avg_price_stats`;
+  const url = `/api/dcl_parcel_avg_price_stats`;
   const res = await fetch(url);
   const json = await res.json();
 
@@ -200,7 +200,7 @@ export const getDclParcelAvgPriceStats = async () => {
 };
 
 export const getDclParcelSoldTotalStats = async () => {
-  const url = `api/dcl_parcel_sold_total_stats`;
+  const url = `/api/dcl_parcel_sold_total_stats`;
   const res = await fetch(url);
   const json = await res.json();
 
@@ -208,7 +208,7 @@ export const getDclParcelSoldTotalStats = async () => {
 };
 
 export const getDclParcelSoldSumStats = async () => {
-  const url = `api/dcl_parcel_sold_sum_stats`;
+  const url = `/api/dcl_parcel_sold_sum_stats`;
   const res = await fetch(url);
   const json = await res.json();
 
@@ -216,7 +216,7 @@ export const getDclParcelSoldSumStats = async () => {
 };
 
 export const getDclParcelOwnerStats = async () => {
-  const url = `api/dcl_parcel_owner_stats`;
+  const url = `/api/dcl_parcel_owner_stats`;
   const res = await fetch(url);
   const json = await res.json();
 
@@ -225,7 +225,7 @@ export const getDclParcelOwnerStats = async () => {
 
 export const getNonce = async (address: string) => {
   const search = qs.stringify({ address }, { addQueryPrefix: true });
-  const url = `api/nonce${search}`;
+  const url = `/api/nonce${search}`;
   const res = await fetch(url);
   const json = await res.json();
 
@@ -234,7 +234,7 @@ export const getNonce = async (address: string) => {
 
 export const loginSignature = async (address: string, signature: string) => {
   const search = qs.stringify({ address, signature }, { addQueryPrefix: false });
-  const url = `api/login_signature`;
+  const url = `/api/login_signature`;
   const res = await fetch(url, {
     method: 'post',
     mode: 'cors',
@@ -250,7 +250,7 @@ export const loginSignature = async (address: string, signature: string) => {
 
 export const refreshToken = async (reToken: string) => {
   const search = qs.stringify({ refreshToken: reToken }, { addQueryPrefix: true });
-  const url = `api/refresh_token${search}`;
+  const url = `/api/refresh_token${search}`;
   const res = await fetch(url);
   const json = await res.json();
 
@@ -258,7 +258,7 @@ export const refreshToken = async (reToken: string) => {
 };
 
 export const getBaseInfo = async (token: string) => {
-  const url = `api/base_info`;
+  const url = `/api/base_info`;
   const res = await fetch(url, {
     method: 'get',
     headers: {
@@ -276,17 +276,16 @@ export const updateBaseInfo = async (
   twitterName: string,
   websiteUrl: string,
 ) => {
-  const url = `api/update_base_info`;
+  const url = `/api/update_base_info`;
+  const search = qs.stringify({ nickName, twitterName, websiteUrl }, { addQueryPrefix: false });
   const res = await fetch(url, {
     method: 'post',
+    mode: 'cors',
     headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: token,
     },
-    body: JSON.stringify({
-      nickName,
-      twitterName,
-      websiteUrl,
-    }),
+    body: search,
   });
   const json = await res.json();
 
@@ -294,7 +293,7 @@ export const updateBaseInfo = async (
 };
 
 export const getParcelList = async (token: string) => {
-  const url = `api/parcel_list`;
+  const url = `/api/parcel_list`;
   const res = await fetch(url, {
     method: 'post',
     headers: {
@@ -303,5 +302,14 @@ export const getParcelList = async (token: string) => {
   });
   const json = await res.json();
 
+  return json;
+};
+
+export const nickNameExist = async (nickName: string) => {
+  const search = qs.stringify({ nickName }, { addQueryPrefix: true });
+  const url = `/api/nick_name_exist${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
   return json;
 };

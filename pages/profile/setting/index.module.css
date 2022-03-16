@@ -76,3 +76,9 @@
   color: rgba(15, 25, 27, 1);
   background-color: rgba(0, 208, 236, 1);
 }
+
+
+.loading{
+  width: 20px;
+  height: 20px;
+}

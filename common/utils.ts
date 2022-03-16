@@ -25,3 +25,8 @@ export const formatNum = (value: number, noNeedFixed = true, fixed = 3) => {
   }
   return value.toLocaleString(undefined, { minimumFractionDigits: fixed });
 };
+
+export const getToken = (address, type) => {
+  const accessToken = localStorage.getItem(`${address}_${type}`);
+  return accessToken;
+};

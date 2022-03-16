@@ -2,7 +2,7 @@
 import api from '../../lib/api';
 
 export default async (req, res) => {
-  const token = req.headers.Authorization;
+  const token = req.headers.authorization;
   const data = await api.getParcelList(token);
 
   res.statusCode = 200;

@@ -1,13 +1,16 @@
 import React from 'react';
 import cn from 'classnames';
 
+import Rekv from 'rekv';
+import Link from 'next/link';
+
 import { toast } from 'react-toastify';
 
 import { useWalletProvider } from '../web3modal';
 
-import { getNonce, loginSignature } from '../../service';
+import { getNonce, loginSignature, getBaseInfo } from '../../service';
 
-import { convert } from '../../common/utils';
+import { convert, getToken } from '../../common/utils';
 
 import style from './index.module.css';
 
@@ -15,6 +18,26 @@ type Props = {
   name?: string;
   address?: string;
   onClickHandler?: () => void;
+};
+
+interface IProfileData {
+  accessToken: string;
+  refreshToken: string;
+  profile: {
+    name: string;
+    address: string;
+    avatar: string;
+  };
+}
+
+const INITIAL_STATE: IProfileData = {
+  accessToken: null,
+  refreshToken: null,
+  profile: {
+    name: null,
+    address: null,
+    avatar: null,
+  },
 };
 
 const MENU = [
@@ -47,18 +70,13 @@ const WALLET = [
   },
 ];
 
+export const state = new Rekv<IProfileData>(INITIAL_STATE);
+
 export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [showMenu, setShowMenu] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [profileData, setrProfileData] = React.useState({
-    accessToken: null,
-    refreshToken: null,
-    profile: {
-      name: null,
-      address: null,
-      avatar: null,
-    },
-  });
+  const profileData = state.useState('accessToken', 'refreshToken', 'profile');
+  const { accessToken, refreshToken, profile } = profileData;
   const web3 = useWalletProvider();
 
   const resultHandler = React.useCallback(
@@ -91,20 +109,17 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [null],
   );
 
-  const getLocal = React.useCallback(
-    (key) => {
-      return localStorage.getItem(key);
-    },
-    [null],
-  );
-
   const checkLoginStatu = React.useCallback(
     (res) => {
       const data = resultHandler(res);
       if (data) {
-        setrProfileData(data);
-        updateLocal('accessToken', data.accessToken);
-        updateLocal('refreshToken', data.refreshToken);
+        state.setState({
+          accessToken: data.accessToken,
+          profile: data.profile,
+          refreshToken: data.refreshToken,
+        });
+        updateLocal(`${data.profile.address}_atk`, data.accessToken);
+        updateLocal(`${data.profile.address}_rtk`, data.refreshToken);
       }
       setLoading(false);
     },
@@ -119,29 +134,36 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [resultHandler],
   );
 
+  const connect = React.useCallback(
+    async (addr, provider) => {
+      const nonceData = await requireNonce(addr);
+      if (nonceData) {
+        const { address: add, nonce } = nonceData;
+        provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+          async (signature) => {
+            const result = await loginSignature(add, signature);
+            checkLoginStatu(result);
+          },
+          (error: any) => {
+            throw error;
+          },
+        );
+      }
+    },
+    [requireNonce, checkLoginStatu],
+  );
+
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
     if (typeof (window as any).ethereum !== 'undefined') {
       web3.connect().then(async (res) => {
         const { address: addr, provider } = res;
-        const nonceData = await requireNonce(addr);
-        if (nonceData) {
-          const { address: add, nonce } = nonceData;
-          provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
-            async (signature) => {
-              const result = await loginSignature(add, signature);
-              checkLoginStatu(result);
-            },
-            (error: any) => {
-              throw error;
-            },
-          );
-        }
+        connect(addr, provider);
       });
     } else {
       window.open('https://metamask.io/');
     }
-  }, [web3, checkLoginStatu, requireNonce]);
+  }, [web3]);
 
   const clipName = React.useCallback(
     (addres) => {
@@ -165,20 +187,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const clickItem = React.useCallback(
     (item) => {
       if (item.type === 'wallet') {
-        if (!profileData.profile?.address && item.value === 'metemask') {
+        if (!profile.address && item.value === 'metemask') {
           connectToChain();
         }
       }
     },
-    [profileData.profile, connectToChain],
+    [profile, connectToChain],
   );
 
   const clickOperationItem = React.useCallback(
     (item) => {
-      if (item.value !== 'resetApp') {
-        window.location.href = item.value;
-      }
-
       if (item.value === 'resetApp') {
         web3.resetApp();
       }
@@ -188,23 +206,34 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const render = React.useMemo(() => {
-    if (profileData.profile?.address) {
+    if (profile?.address) {
       return MENU.map((item, idx) => {
         return (
-          <li
-            className={cn('flex justify-between  items-center', style.menuItem)}
-            key={idx}
-            onClick={() => {
-              clickOperationItem(item);
-            }}
-          >
-            <div className="w-full flex justify-between  items-center p-3 text-xs">
-              <div className="flex items-center justify-around">
-                <img src={item.icon} className={cn('mr-2', style.operation)}></img>
-                <span>{item.label}</span>
+          <li className={cn('flex justify-between  items-center', style.menuItem)} key={idx}>
+            {item.value === 'resetApp' ? (
+              <div
+                className="w-full flex justify-between  items-center p-3 text-xs"
+                onClick={() => {
+                  clickOperationItem(item);
+                }}
+              >
+                <div className="flex items-center justify-around">
+                  <img src={item.icon} className={cn('mr-2', style.operation)}></img>
+                  <span>{item.label}</span>
+                </div>
+                <img src="/images/v5/arrow-simple.png" className={style.activeOperation}></img>
               </div>
-              <img src="/images/v5/arrow-simple.png" className={style.activeOperation}></img>
-            </div>
+            ) : (
+              <Link href={item.value}>
+                <div className="w-full flex justify-between  items-center p-3 text-xs">
+                  <div className="flex items-center justify-around">
+                    <img src={item.icon} className={cn('mr-2', style.operation)}></img>
+                    <span>{item.label}</span>
+                  </div>
+                  <img src="/images/v5/arrow-simple.png" className={style.activeOperation}></img>
+                </div>
+              </Link>
+            )}
           </li>
         );
       });
@@ -234,23 +263,48 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         </li>
       );
     });
-  }, [profileData, clickItem, clickOperationItem, loading]);
+  }, [profile, clickItem, clickOperationItem, loading]);
 
   const getText = React.useMemo(() => {
     let text = 'Connect';
-    if (profileData.profile && profileData.profile.address) {
-      if (profileData.profile.name) {
-        text = profileData.profile.name;
+    if (profile.address) {
+      if (profile.name) {
+        text = profile.name;
       } else {
-        text = clipName(profileData.profile.address);
+        text = clipName(profile.address);
       }
     }
     return (
-      <div className={cn('font-semibold', profileData.profile.address ? 'text-xs' : 'text-base')}>
-        {text}
-      </div>
+      <>
+        {profile.address ? (
+          <img className={cn('mr-1', style.avatar)} src={profile.avatar || '/images/icon.png'} />
+        ) : (
+          <img className="mr-1" src="/images/v5/wallet.png" />
+        )}
+        <div className={cn('font-semibold', profile.address ? 'text-xs' : 'text-base')}>{text}</div>
+      </>
     );
-  }, [profileData, clipName]);
+  }, [profile, clipName]);
+
+  const requireBaseData = React.useCallback(
+    async (tk) => {
+      const res = await getBaseInfo(tk);
+      const { data } = res;
+      const { address: addr, avatar } = data;
+      const newProfile = Object.assign({ address: addr, avatar }, profile);
+      state.setState({ profile: newProfile });
+    },
+    [profile],
+  );
+
+  React.useEffect(() => {
+    if (web3.data.address && !profile.address) {
+      const tk = getToken(web3.data.address, 'atk');
+      if (tk) {
+        // requireBaseData(tk)
+      }
+    }
+  }, [web3, getToken, requireBaseData]);
 
   return (
     <div className={cn('cursor-pointer', style.btn)}>
@@ -258,7 +312,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         className={cn('flex justify-center items-center w-full h-full text-xs', style.btnDiv)}
         onClick={onClick}
       >
-        <img className="mr-1" src="/images/v5/wallet.png" />
         {getText}
       </div>
       <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>

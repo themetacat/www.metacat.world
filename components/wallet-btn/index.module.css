@@ -11,6 +11,12 @@
   height: 13px;
 }
 
+.avatar{
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 11px !important;
+}
+
 .menu{
   position: absolute;
   top: 40px;

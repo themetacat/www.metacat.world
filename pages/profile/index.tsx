@@ -6,11 +6,15 @@ import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
-import PagiNation from '../../components/pagination';
 import Status from '../../components/status';
 import Card from '../../components/card';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
+import { useWalletProvider } from '../../components/web3modal';
+
+import { convert, getToken } from '../../common/utils';
+
+import { getParcelList, getBaseInfo } from '../../service';
 
 import style from './index.module.css';
 
@@ -31,51 +35,54 @@ export default function ProfilePage() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
-  const [pageNumber, setPageNumber] = React.useState(1);
-  const [totalPage, setTotalPage] = React.useState(1);
-  const [noData, setNoData] = React.useState(false);
+  const [avatar, setAvatarUrl] = React.useState('');
+  const [address, setAddress] = React.useState('');
+  const [nickName, setNickName] = React.useState('');
+  const [twitterAddress, setTwitterAddress] = React.useState('');
+  const [websiteAddress, setWebsiteAddress] = React.useState('');
+
+  const web3 = useWalletProvider();
 
   const cls = cn('flex-1', style.bottomLine);
 
-  const requestData = async ({
-    tab,
-    subTab,
-    page,
-    query = '',
-    type,
-    needUpdateTypeList = false,
-  }): Promise<any[]> => {
-    const data = [];
-    return data;
-  };
+  const requestData = React.useCallback(
+    async (token: string) => {
+      try {
+        const res = await getParcelList(token);
+        const { data } = res;
+        const { cryptovoxelsParcelList, decentralandparcelList } = convert(data);
+        setDataSource(cryptovoxelsParcelList);
+      } catch {
+        setError(true);
+      }
+    },
+    [null],
+  );
 
-  const onPageChangeHandler = React.useCallback(
-    async (number: number) => {
-      const requestNumber = number + 1;
-      const data = await requestData({
-        tab: '',
-        subTab: '',
-        page: requestNumber,
-        query: '',
-        type: '',
-      });
-      setPageNumber(requestNumber);
-      setDataSource(data);
+  const requestPersonal = React.useCallback(
+    async (token: string) => {
+      const res = await getBaseInfo(token);
+      const { data } = res;
+      if (data) {
+        const profile = convert(data.profile);
+        const { address: addr, nickName: name, avatar: ava, links } = profile;
+        const { twitterName, websiteUrl } = links;
+        setAvatarUrl(ava);
+        setAddress(addr);
+        setNickName(name);
+        setTwitterAddress(twitterName);
+        setWebsiteAddress(websiteUrl);
+      }
     },
     [null],
   );
 
   const onRetry = React.useCallback(async () => {
-    const data = await requestData({
-      tab: '',
-      subTab: '',
-      page: pageNumber,
-      query: '',
-      type: '',
-      needUpdateTypeList: true,
-    });
-    setDataSource(data);
-  }, [pageNumber]);
+    const accessToken = getToken(web3.data.address, 'atk');
+    if (accessToken) {
+      requestData(accessToken);
+    }
+  }, [requestData, getToken]);
 
   const renderContent = React.useMemo(() => {
     if (loading) {
@@ -97,7 +104,17 @@ export default function ProfilePage() {
         })}
       </div>
     );
-  }, [error, dataSource, loading, totalPage, pageNumber, onPageChangeHandler, onRetry]);
+  }, [error, dataSource, loading, onRetry]);
+
+  React.useEffect(() => {
+    const accessToken = getToken(web3.data.address, 'atk');
+    if (accessToken) {
+      requestData(accessToken);
+      requestPersonal(accessToken);
+      return;
+    }
+    window.location.href = '/';
+  }, [getToken, requestData, requestPersonal]);
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
@@ -105,7 +122,14 @@ export default function ProfilePage() {
         <PageHeader className="relative z-10" active={'profile'} />
       </div>
       <div className={cn('bg-black flex flex-col justify-center items-center')}>
-        <Profile classname="main-content"></Profile>
+        <Profile
+          avater={avatar}
+          address={address}
+          twitter={twitterAddress}
+          home={websiteAddress}
+          name={nickName}
+          classname="main-content"
+        ></Profile>
       </div>
       <div className={cn('tab-list flex mt-5', style.allHeight)}>
         <div className={cls}></div>
@@ -125,7 +149,7 @@ export default function ProfilePage() {
         </div>
         <div className={cls} />
       </div>
-      <div className={cn('mt-8', style.content)}>{renderContent}</div>
+      <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
       <Footer />
     </Page>
   );
