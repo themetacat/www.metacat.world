@@ -13,12 +13,12 @@ import MeteInput from '../../../components/meta-input';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { getBaseInfo, updateBaseInfo, nickNameExist } from '../../../service';
+import { getBaseInfo, updateBaseInfo, nickNameExist, refreshToken } from '../../../service';
 
 import { useWalletProvider } from '../../../components/web3modal';
 
 import style from './index.module.css';
-import { convert, getToken } from '../../../common/utils';
+import { convert, getToken, setToken } from '../../../common/utils';
 import UploadImg from '../../../components/upload-img';
 
 export default function Settings() {
@@ -28,32 +28,106 @@ export default function Settings() {
   };
 
   const [infoMsg, setInfoMsg] = React.useState('');
-  const [imgInfoMsg, setImgInfoMsg] = React.useState('Update failed');
+  const [imgInfoMsg, setImgInfoMsg] = React.useState('');
   const [nickName, setNickName] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const [avaterUrl, setAvaterUrl] = React.useState('/images/icon.png');
+  const [avatarUrl, setAvatarUrl] = React.useState('/images/icon.png');
   const [canSave, setCanSave] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
   const web3 = useWalletProvider();
 
+  const refreshTK = React.useCallback(async () => {
+    const rToken = getToken(web3.data.address, 'rtk');
+    if (rToken) {
+      const res = await refreshToken(rToken);
+      const { code, data, msg } = res;
+      if (code === 100003) {
+        toast.warn('Token timeout', {
+          position: 'top-center',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'dark',
+          onClose: () => {
+            window.location.href = '/';
+          },
+        });
+        return null;
+      }
+      if (code !== 100000) {
+        toast.warn(msg, {
+          position: 'top-center',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'dark',
+        });
+        return null;
+      }
+      const { accessToken, refreshToken: rtk } = convert(data);
+      setToken(web3.data.address, 'atk', accessToken);
+      setToken(web3.data.address, 'rtk', rtk);
+      return accessToken;
+    }
+    return null;
+  }, [null]);
+
+  const resultHandler = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
+      toast.error(msg, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: 'dark',
+        className: style.toast,
+      });
+
+      return null;
+    },
+    [refreshTK],
+  );
+
   const requireData = React.useCallback(
     async (token) => {
       const res = await getBaseInfo(token);
-      const { data } = res;
+      const data = resultHandler(res, requireData);
       if (data) {
         const profile = convert(data.profile);
         const { address: addr, nickName: name, avatar, links } = profile;
         const { twitterName, websiteUrl } = links;
-        setAvaterUrl(avatar);
+        setAvatarUrl(avatar);
         setAddress(addr);
         setNickName(name);
         setTwitterAddress(twitterName);
         setWebsiteAddress(websiteUrl);
       }
     },
-    [null],
+    [resultHandler],
   );
 
   React.useEffect(() => {
@@ -79,8 +153,11 @@ export default function Settings() {
 
   const submit = React.useCallback(
     (event) => {
-      setSaving(true);
       event.preventDefault();
+      if (!canSave) {
+        return;
+      }
+      setSaving(true);
       if (infoMsg || infoMsg !== '') {
         toast.warn('Invalid username', {
           position: 'top-center',
@@ -97,7 +174,7 @@ export default function Settings() {
       }
       const token = getToken(address, 'atk');
       if (token) {
-        updateBaseInfo(token, nickName, twitterAddress, websiteAddress).then((res) => {
+        updateBaseInfo(token, nickName, twitterAddress, websiteAddress, avatarUrl).then((res) => {
           const { code, msg } = res;
           if (code !== 100000) {
             toast.error('Update failed', {
@@ -127,7 +204,20 @@ export default function Settings() {
         });
       }
     },
-    [nickName, twitterAddress, websiteAddress, address],
+    [nickName, twitterAddress, websiteAddress, address, avatarUrl, canSave],
+  );
+
+  const uploadImage = React.useCallback(
+    (res) => {
+      setImgInfoMsg('');
+      if (!res.success) {
+        setImgInfoMsg('Update failed');
+        return;
+      }
+      const url = res.data.res.requestUrls[0].split('?')[0];
+      setAvatarUrl(url);
+    },
+    [null],
   );
 
   return (
@@ -182,7 +272,19 @@ export default function Settings() {
                         }
                         if (res.code === 100000) {
                           setCanSave(true);
+                          return;
                         }
+                        setCanSave(false);
+                        toast.warn(res.msg, {
+                          position: 'top-center',
+                          autoClose: 2000,
+                          hideProgressBar: false,
+                          closeOnClick: true,
+                          pauseOnHover: false,
+                          draggable: false,
+                          progress: undefined,
+                          theme: 'dark',
+                        });
                       });
                     }
                   }}
@@ -234,7 +336,7 @@ export default function Settings() {
                   >
                     {saving ? (
                       <img
-                        src="/images/loading.png"
+                        src="/images/v5/Frame.png"
                         className={cn('animate-spin', style.loading)}
                       />
                     ) : (
@@ -264,7 +366,10 @@ export default function Settings() {
                   </div>
                 </ReactTooltip>
               </div>
-              <UploadImg imgUrl={avaterUrl || '/images/icon.png'}></UploadImg>
+              <UploadImg
+                imgUrl={avatarUrl || '/images/icon.png'}
+                afterUpload={uploadImage}
+              ></UploadImg>
               <div className={cn('flex items-center text-xs mt-1 mb-2', style.warnContent)}>
                 {imgInfoMsg && imgInfoMsg !== '' ? (
                   <>

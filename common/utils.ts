@@ -1,3 +1,5 @@
+const OSS = require('ali-oss');
+
 export const convert = (data) => {
   if (typeof data !== 'object' || !data) return data;
   if (Array.isArray(data)) {
@@ -29,4 +31,28 @@ export const formatNum = (value: number, noNeedFixed = true, fixed = 3) => {
 export const getToken = (address, type) => {
   const accessToken = localStorage.getItem(`${address}_${type}`);
   return accessToken;
+};
+
+export const setToken = (address, type, value) => {
+  const accessToken = localStorage.setItem(`${address}_${type}`, value);
+  return accessToken;
+};
+
+export const removeToken = (address, type) => {
+  const accessToken = localStorage.removeItem(`${address}_${type}`);
+  return accessToken;
+};
+
+export const client = () => {
+  // 后端提供数据
+  return new OSS({
+    region: 'oss-cn-hongkong',
+    endpoint: 'oss-cn-hongkong.aliyuncs.com',
+    stsToken: '',
+    crossOriginIsolated: true,
+    secure: true,
+    accessKeyId: 'LTAI5tCXLNPjxpZkoDeAyDNL',
+    accessKeySecret: '25qppPU9EUK5CVChJLTyBgnspL4mLk',
+    bucket: 'metacat',
+  });
 };

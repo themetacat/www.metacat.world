@@ -281,7 +281,7 @@ class API {
   }
 
   public async refreshToken(refreshToken: string): Promise<any> {
-    const search = qs.stringify({ refreshToken }, { addQueryPrefix: true });
+    const search = qs.stringify({ refresh_token: refreshToken }, { addQueryPrefix: true });
     const url = `${this.url}/user/refresh_token${search}`;
     const res = await fetch(url);
     const json = await res.json();
@@ -307,10 +307,11 @@ class API {
     nickName: string,
     twitterName: string,
     websiteUrl: string,
+    avatar: string,
   ): Promise<any> {
     const url = `${this.url}/user/update_base_info`;
     const search = qs.stringify(
-      { nick_name: nickName, twitter_name: twitterName, website_url: websiteUrl },
+      { nick_name: nickName, twitter_name: twitterName, website_url: websiteUrl, avatar },
       { addQueryPrefix: false },
     );
     const res = await fetch(url, {

@@ -275,9 +275,13 @@ export const updateBaseInfo = async (
   nickName: string,
   twitterName: string,
   websiteUrl: string,
+  avatar: string,
 ) => {
   const url = `/api/update_base_info`;
-  const search = qs.stringify({ nickName, twitterName, websiteUrl }, { addQueryPrefix: false });
+  const search = qs.stringify(
+    { nickName, twitterName, websiteUrl, avatar },
+    { addQueryPrefix: false },
+  );
   const res = await fetch(url, {
     method: 'post',
     mode: 'cors',

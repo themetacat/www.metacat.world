@@ -2,9 +2,9 @@
 import api from '../../lib/api';
 
 export default async (req, res) => {
-  const { nickName, twitterName, websiteUrl } = req.body;
+  const { nickName, twitterName, websiteUrl, avatar } = req.body;
   const token = req.headers.authorization;
-  const data = await api.updateBaseInfo(token, nickName, twitterName, websiteUrl);
+  const data = await api.updateBaseInfo(token, nickName, twitterName, websiteUrl, avatar);
 
   res.statusCode = 200;
 

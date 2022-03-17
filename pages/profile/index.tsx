@@ -1,6 +1,9 @@
 import React from 'react';
 
 import cn from 'classnames';
+
+import { toast } from 'react-toastify';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -12,9 +15,9 @@ import Card from '../../components/card';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
 
-import { convert, getToken } from '../../common/utils';
+import { convert, getToken, setToken } from '../../common/utils';
 
-import { getParcelList, getBaseInfo } from '../../service';
+import { getParcelList, getBaseInfo, refreshToken } from '../../service';
 
 import style from './index.module.css';
 
@@ -45,36 +48,114 @@ export default function ProfilePage() {
 
   const cls = cn('flex-1', style.bottomLine);
 
+  const refreshTK = React.useCallback(async () => {
+    const rToken = getToken(web3.data.address, 'rtk');
+    if (rToken) {
+      const res = await refreshToken(rToken);
+      const { code, data, msg } = res;
+      if (code === 100003) {
+        toast.warn('Token timeout', {
+          position: 'top-center',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'dark',
+          onClose: () => {
+            window.location.href = '/';
+          },
+        });
+        return null;
+      }
+      if (code !== 100000) {
+        toast.warn(msg, {
+          position: 'top-center',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'dark',
+        });
+        return null;
+      }
+      const { accessToken, refreshToken: rtk } = convert(data);
+      setToken(web3.data.address, 'atk', accessToken);
+      setToken(web3.data.address, 'rtk', rtk);
+      return accessToken;
+    }
+    return null;
+  }, [null]);
+
+  const resultHandler = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
+      toast.error(msg, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: 'dark',
+        className: style.toast,
+      });
+
+      return null;
+    },
+    [refreshTK],
+  );
+
   const requestData = React.useCallback(
     async (token: string) => {
       try {
         const res = await getParcelList(token);
-        const { data } = res;
-        const { cryptovoxelsParcelList, decentralandparcelList } = convert(data);
+        const data = resultHandler(res, requestData);
+        if (!data) {
+          return;
+        }
+        const { cryptovoxelsParcelList, decentralandparcelList } = data;
         setDataSource(cryptovoxelsParcelList);
       } catch {
         setError(true);
       }
     },
-    [null],
+    [resultHandler],
   );
 
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
-      const { data } = res;
-      if (data) {
-        const profile = convert(data.profile);
-        const { address: addr, nickName: name, avatar: ava, links } = profile;
-        const { twitterName, websiteUrl } = links;
-        setAvatarUrl(ava);
-        setAddress(addr);
-        setNickName(name);
-        setTwitterAddress(twitterName);
-        setWebsiteAddress(websiteUrl);
+      const data = resultHandler(res, requestPersonal);
+      if (!data) {
+        return;
       }
+      const { profile } = data;
+      const { address: addr, nickName: name, avatar: ava, links } = profile;
+      const { twitterName, websiteUrl } = links;
+      setAvatarUrl(ava);
+      setAddress(addr);
+      setNickName(name);
+      setTwitterAddress(twitterName);
+      setWebsiteAddress(websiteUrl);
     },
-    [null],
+    [resultHandler],
   );
 
   const onRetry = React.useCallback(async () => {

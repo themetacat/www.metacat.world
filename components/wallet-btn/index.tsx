@@ -10,7 +10,7 @@ import { useWalletProvider } from '../web3modal';
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 
-import { convert, getToken } from '../../common/utils';
+import { convert, getToken, removeToken, setToken } from '../../common/utils';
 
 import style from './index.module.css';
 
@@ -102,13 +102,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [null],
   );
 
-  const updateLocal = React.useCallback(
-    (key, value) => {
-      localStorage.setItem(key, value);
-    },
-    [null],
-  );
-
   const checkLoginStatu = React.useCallback(
     (res) => {
       const data = resultHandler(res);
@@ -118,12 +111,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           profile: data.profile,
           refreshToken: data.refreshToken,
         });
-        updateLocal(`${data.profile.address}_atk`, data.accessToken);
-        updateLocal(`${data.profile.address}_rtk`, data.refreshToken);
+        setToken(data.profile.address, 'atk', data.accessToken);
+        setToken(data.profile.address, 'rtk', data.refreshToken);
       }
+      setShowMenu(false);
       setLoading(false);
     },
-    [resultHandler, updateLocal],
+    [resultHandler],
   );
 
   const requireNonce = React.useCallback(
@@ -145,7 +139,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             checkLoginStatu(result);
           },
           (error: any) => {
-            throw error;
+            setLoading(false);
           },
         );
       }
@@ -156,10 +150,19 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
     if (typeof (window as any).ethereum !== 'undefined') {
-      web3.connect().then(async (res) => {
-        const { address: addr, provider } = res;
-        connect(addr, provider);
-      });
+      try {
+        web3.connect().then(
+          async (res) => {
+            const { address: addr, provider } = res;
+            connect(addr, provider);
+          },
+          (err) => {
+            setLoading(false);
+          },
+        );
+      } catch {
+        setLoading(false);
+      }
     } else {
       window.open('https://metamask.io/');
     }
@@ -198,7 +201,14 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const clickOperationItem = React.useCallback(
     (item) => {
       if (item.value === 'resetApp') {
+        removeToken(profile.address, 'atk');
+        removeToken(profile.address, 'rtk');
         web3.resetApp();
+        state.setState({
+          accessToken: '',
+          refreshToken: '',
+          profile: { address: null, name: null, avatar: null },
+        });
       }
       setShowMenu(false);
     },

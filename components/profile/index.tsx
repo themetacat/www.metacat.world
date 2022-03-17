@@ -67,7 +67,7 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
               classname={cn('mb-4 text-sm', style.address)}
             ></ProfileIconLabel>
           ) : null}
-          <div className={cn('flex justify-between items-center', style.links)}>
+          <div className={cn('flex justify-start items-center', style.links)}>
             <ProfileIconLabel
               label={twitter}
               icon="/images/v5/Twitter.png"
