@@ -4,6 +4,8 @@ import cn from 'classnames';
 import Rekv from 'rekv';
 import Link from 'next/link';
 
+import { useRouter } from 'next/router';
+
 import { toast } from 'react-toastify';
 
 import { useWalletProvider } from '../web3modal';
@@ -210,6 +212,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           refreshToken: '',
           profile: { address: null, name: null, avatar: null },
         });
+        window.location.href = '/';
       }
       setShowMenu(false);
     },

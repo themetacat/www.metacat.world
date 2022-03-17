@@ -31,7 +31,7 @@ const TAB = [
 
 export default function ProfilePage() {
   const meta = {
-    title: `ProfileSetting - ${SITE_NAME}`,
+    title: `Profile - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
