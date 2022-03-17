@@ -203,6 +203,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (item.value === 'resetApp') {
         removeToken(profile.address, 'atk');
         removeToken(profile.address, 'rtk');
+        console.log(1);
         web3.resetApp();
         state.setState({
           accessToken: '',
