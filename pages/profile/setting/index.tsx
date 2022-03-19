@@ -273,7 +273,7 @@ export default function Settings() {
                   value={twitterAddress}
                   name={'twitter'}
                   label="Links"
-                  prefix="/images/v5/twitter.png"
+                  prefix="/images/v5/Twitter.png"
                   prefixLabel="https://twitter.com/"
                   placeholder={'YourTwitterHandle'}
                   onChangeHandler={(val) => {
