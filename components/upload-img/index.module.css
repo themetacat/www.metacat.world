@@ -5,8 +5,16 @@
   position: relative;
 }
 .cover{
-  background-color: rgba(0, 208, 236, 0.8);
+  /* background-color: rgba(0, 208, 236, 0.8); */
   border-radius: 60px;
+}
+
+.cover:hover{
+  background-image: url('/images/v5/edit.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px;
+  background-color: rgba(0, 208, 236, 0.8);
 }
 
 .cover>img{

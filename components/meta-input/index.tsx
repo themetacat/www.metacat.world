@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import style from './index.module.css';
@@ -19,6 +19,7 @@ type Props = {
   bold?: boolean;
   disable?: boolean;
   name?: string;
+  onBlur?: (valu) => void;
 };
 
 export default function MeteInput({
@@ -34,6 +35,7 @@ export default function MeteInput({
   bold = false,
   disable = false,
   name,
+  onBlur,
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
@@ -57,14 +59,11 @@ export default function MeteInput({
   const iconClick = React.useCallback(
     (evt) => {
       toast.success('copied!', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: 'dark',
+        duration: 2000,
+        style: {
+          background: 'rgba(0, 208, 236, 1)',
+          color: 'black',
+        },
       });
     },
     [null],
@@ -81,6 +80,13 @@ export default function MeteInput({
     }
   }, [onClearHandler]);
 
+  const inputBlur = React.useCallback(() => {
+    setShowClear(false);
+    if (onBlur) {
+      onBlur(val);
+    }
+  }, [onBlur, val]);
+
   React.useEffect(() => {
     if (val !== value) {
       setVal(value);
@@ -96,7 +102,13 @@ export default function MeteInput({
           {require && !requirePrefix && <span className={cn('ml-1', style.require)}>*</span>}
         </div>
       ) : null}
-      <div className={cn('inline-flex items-center w-full h-full', style.inputContent)}>
+      <div
+        className={cn(
+          'inline-flex items-center w-full h-full',
+          style.inputContent,
+          disable ? style.disableContent : null,
+        )}
+      >
         {prefix ? (
           <span className=" inline-flex items-center mr-5">
             <img className={style.icon} src={prefix}></img>
@@ -114,12 +126,10 @@ export default function MeteInput({
               setShowClear(true);
             }
           }}
-          onBlur={() => {
-            setShowClear(false);
-          }}
+          onBlur={inputBlur}
           className={cn(
             ' text-sm',
-            bold ? 'font-semibold' : '',
+            bold ? 'font-medium' : '',
             style.input,
             disable ? style.disable : null,
           )}

@@ -174,12 +174,8 @@ export default function Web3ModalProvider({
   };
 
   const onConnect = async () => {
-    if (!window.web3 || !window.ethereum) {
-      const modalDom = document.querySelector('.web3modal-modal-card');
-      if (!modalDom) return;
-
-      modalDom.innerHTML =
-        '<div id="installMetaMask" class="p-10 web3modal-provider-wrapper"><a href="https://metamask.io/" target="_blank" class="cjAFRf web3modal-provider-container"><div class="jMhaxE web3modal-provider-icon"><img src="https://metamask.io/images/mm-logo.svg" alt="MetaMask"></div><div class="bktcUM sc-web3modal-provider-name mt-0">Install MetaMask</div><div class="eFHlqH web3modal-provider-description">Connect using browser wallet</div></a></div>';
+    if (!window.web3 || !window.ethereum || !window.ethereum.isMetaMask) {
+      return;
     }
 
     try {
@@ -241,9 +237,9 @@ export default function Web3ModalProvider({
     // @ts-ignore
     web3ModalRef.current = w3Modal;
 
-    // if (w3Modal.cachedProvider) {
-    //   onConnect();
-    // }
+    if (w3Modal.cachedProvider) {
+      onConnect();
+    }
   }, [options]);
 
   const ctx = {

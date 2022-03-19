@@ -7251,6 +7251,11 @@ gonzales-pe@^4.2.3, gonzales-pe@^4.3.0:
   dependencies:
     minimist "^1.2.5"
 
+goober@^2.1.1:
+  version "2.1.8"
+  resolved "https://registry.npmmirror.com/goober/-/goober-2.1.8.tgz#e592c04d093cb38f77b38cfcb012b7811c85765e"
+  integrity sha512-S0C85gCzcfFCMSdjD/CxyQMt1rbf2qEg6hmDzxk2FfD7+7Ogk55m8ZFUMtqNaZM4VVX/qaU9AzSORG+Gf4ZpAQ==
+
 got@9.6.0:
   version "9.6.0"
   resolved "https://registry.npmmirror.com/got/-/got-9.6.0.tgz#edf45e7d67f99545705de1f7bbeeeb121765ed85"
@@ -10679,6 +10684,13 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-hot-toast@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmmirror.com/react-hot-toast/-/react-hot-toast-2.2.0.tgz#ab6f4caed4214b9534f94bb8cfaaf21b051e62b9"
+  integrity sha512-248rXw13uhf/6TNDVzagX+y7R8J183rp7MwUMNkcrBRyHj/jWOggfXTGlM8zAOuh701WyVW+eUaWG2LeSufX9g==
+  dependencies:
+    goober "^2.1.1"
+
 react-infinite-scroll-component@^6.1.0:
   version "6.1.0"
   resolved "https://registry.nlark.com/react-infinite-scroll-component/download/react-infinite-scroll-component-6.1.0.tgz#7e511e7aa0f728ac3e51f64a38a6079ac522407f"
@@ -10720,13 +10732,6 @@ react-search-input@^0.11.3:
   dependencies:
     fuse.js "^3.0.0"
     prop-types "^15.5.8"
-
-react-toastify@^8.0.2:
-  version "8.1.0"
-  resolved "https://registry.npmmirror.com/react-toastify/download/react-toastify-8.1.0.tgz#acaca4e8c4415c8474562dd84a14e6f390ed7f17"
-  integrity sha1-rKyk6MRBXIR0Vi3YShTm85Dtfxc=
-  dependencies:
-    clsx "^1.1.1"
 
 react-tooltip@^4.2.21:
   version "4.2.21"

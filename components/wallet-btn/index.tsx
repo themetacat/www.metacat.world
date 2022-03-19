@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { useRouter } from 'next/router';
 
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 import { useWalletProvider } from '../web3modal';
 
@@ -26,7 +26,7 @@ interface IProfileData {
   accessToken: string;
   refreshToken: string;
   profile: {
-    name: string;
+    nickName: string;
     address: string;
     avatar: string;
   };
@@ -36,7 +36,7 @@ const INITIAL_STATE: IProfileData = {
   accessToken: null,
   refreshToken: null,
   profile: {
-    name: null,
+    nickName: null,
     address: null,
     avatar: null,
   },
@@ -87,17 +87,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (code === 100000) {
         return convert(data);
       }
-      toast.error(msg, {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: 'dark',
-        className: style.toast,
-      });
+      toast.error(msg);
 
       return null;
     },
@@ -151,22 +141,32 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
-    if (typeof (window as any).ethereum !== 'undefined') {
-      try {
-        web3.connect().then(
-          async (res) => {
-            const { address: addr, provider } = res;
-            connect(addr, provider);
-          },
-          (err) => {
-            setLoading(false);
-          },
-        );
-      } catch {
-        setLoading(false);
-      }
-    } else {
+    if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
+      setLoading(false);
+      setShowMenu(false);
       window.open('https://metamask.io/');
+      return;
+    }
+    try {
+      // removeToken(profile.address, 'atk');
+      // removeToken(profile.address, 'rtk');
+      // state.setState({
+      //   accessToken: '',
+      //   refreshToken: '',
+      //   profile: { address: null, nickName: null, avatar: null },
+      // });
+
+      web3.connect().then(
+        async (res) => {
+          const { address: addr, provider } = res;
+          connect(addr, provider);
+        },
+        (err) => {
+          setLoading(false);
+        },
+      );
+    } catch {
+      setLoading(false);
     }
   }, [web3]);
 
@@ -182,12 +182,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [null],
   );
 
-  const onClick = React.useCallback(() => {
-    setShowMenu(!showMenu);
-    if (onClickHandler) {
-      onClickHandler();
-    }
-  }, [showMenu, onClickHandler]);
+  const onClick = React.useCallback(
+    (event) => {
+      event.nativeEvent.stopImmediatePropagation();
+      setShowMenu(!showMenu);
+      if (onClickHandler) {
+        onClickHandler();
+      }
+    },
+    [showMenu, onClickHandler],
+  );
 
   const clickItem = React.useCallback(
     (item) => {
@@ -205,25 +209,31 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (item.value === 'resetApp') {
         removeToken(profile.address, 'atk');
         removeToken(profile.address, 'rtk');
-        console.log(1);
         web3.resetApp();
         state.setState({
           accessToken: '',
           refreshToken: '',
-          profile: { address: null, name: null, avatar: null },
+          profile: { address: null, nickName: null, avatar: null },
         });
         window.location.href = '/';
       }
       setShowMenu(false);
     },
-    [web3],
+    [web3, profile, state],
   );
 
   const render = React.useMemo(() => {
     if (profile?.address) {
       return MENU.map((item, idx) => {
         return (
-          <li className={cn('flex justify-between  items-center', style.menuItem)} key={idx}>
+          <li
+            className={cn(
+              'flex justify-between  items-center',
+              style.menuItem,
+              idx === MENU.length - 1 ? style.last : null,
+            )}
+            key={idx}
+          >
             {item.value === 'resetApp' ? (
               <div
                 className="w-full flex justify-between  items-center p-3 text-xs"
@@ -268,11 +278,19 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
               <img src={item.icon} className={cn('mr-2', style.walletLogo)}></img>
               <span>{item.label}</span>
             </div>
-            {loading ? (
+            <img
+              src="/images/loading.png"
+              className={cn('animate-spin', style.loading, loading ? null : ' hidden')}
+            />
+            <img
+              src="/images/v5/arrow.png"
+              className={cn(style.activeWallet, loading ? ' hidden' : null)}
+            ></img>
+            {/* {loading ? (
               <img src="/images/loading.png" className={cn('animate-spin', style.loading)} />
             ) : (
               <img src="/images/v5/arrow.png" className={style.activeWallet}></img>
-            )}
+            )} */}
           </div>
         </li>
       );
@@ -282,8 +300,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const getText = React.useMemo(() => {
     let text = 'Connect';
     if (profile.address) {
-      if (profile.name) {
-        text = profile.name;
+      if (profile.nickName) {
+        text = profile.nickName;
       } else {
         text = clipName(profile.address);
       }
@@ -311,14 +329,27 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [profile],
   );
 
-  React.useEffect(() => {
-    if (web3.data.address && !profile.address) {
-      const tk = getToken(web3.data.address, 'atk');
-      if (tk) {
-        // requireBaseData(tk)
-      }
+  // React.useEffect(() => {
+  //   if (web3.data.address && !profile.address) {
+  //     const tk = getToken(web3.data.address, 'atk');
+  //     if (tk) {
+  //       // requireBaseData(tk)
+  //     }
+  //   }
+  // }, [web3, getToken, requireBaseData]);
+
+  const close = React.useCallback(() => {
+    if (profile?.address) {
+      setShowMenu(false);
     }
-  }, [web3, getToken, requireBaseData]);
+  }, [profile]);
+
+  React.useEffect(() => {
+    document.addEventListener('click', close);
+    return () => {
+      document.removeEventListener('click', close);
+    };
+  }, [close]);
 
   return (
     <div className={cn('cursor-pointer', style.btn)}>
@@ -329,7 +360,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         {getText}
       </div>
       <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
-      {/* <div className='z-10 absolute w-screen h-screen' onClick={()=>{setShowMenu(false)}}></div> */}
     </div>
   );
 }

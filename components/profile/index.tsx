@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 import ProfileIconLabel from '../profile-icon-label';
 
@@ -31,16 +31,7 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
 
   const copyName = React.useCallback(
     (evt) => {
-      toast.success('copied!', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: 'dark',
-      });
+      toast.success('copied!');
     },
     [null],
   );
@@ -68,19 +59,25 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
             ></ProfileIconLabel>
           ) : null}
           <div className={cn('flex justify-start items-center', style.links)}>
-            <ProfileIconLabel
-              label={twitter}
-              icon="/images/v5/Twitter.png"
-              prefix={true}
-              classname={'text-sm'}
-            ></ProfileIconLabel>
-            <div className={cn('mx-5', style.divide)}></div>
-            <ProfileIconLabel
-              label={home}
-              icon="/images/v5/yoursite.io.png"
-              prefix={true}
-              classname={'text-sm'}
-            ></ProfileIconLabel>
+            {twitter ? (
+              <ProfileIconLabel
+                label={`https://twitter.com/${twitter}`}
+                icon="/images/v5/Twitter.png"
+                prefix={true}
+                isLink={true}
+                classname={'text-sm'}
+              ></ProfileIconLabel>
+            ) : null}
+            {twitter && home ? <div className={cn('mx-5', style.divide)}></div> : null}
+            {home ? (
+              <ProfileIconLabel
+                label={home}
+                icon="/images/v5/yoursite.io.png"
+                prefix={true}
+                isLink={true}
+                classname={'text-sm'}
+              ></ProfileIconLabel>
+            ) : null}
           </div>
         </div>
       </div>

@@ -2,11 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
 
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
 
-import 'react-toastify/dist/ReactToastify.css';
 import style from './index.module.css';
 
 type Props = {
@@ -73,16 +72,15 @@ export default function PageHeader({ active, className }: Props) {
         >
           <WalletBtn></WalletBtn>
         </div>
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
+        <Toaster
+          toastOptions={{
+            duration: 2000,
+            style: {
+              background: 'rgba(0, 208, 236, 1)',
+              color: 'black',
+              borderRadius: 0,
+            },
+          }}
         />
       </div>
     </header>

@@ -3,10 +3,13 @@ import cn from 'classnames';
 import Link from 'next/link';
 
 import dynamic from 'next/dynamic';
+
+import toast from 'react-hot-toast';
+
 import Page from '../components/page';
 import Layout from '../components/layout';
 import { SITE_NAME, META_DESCRIPTION } from '../common/const';
-import { convert } from '../common/utils';
+import { convert, getToken, setToken } from '../common/utils';
 
 import Tab from '../components/tab';
 import SecondTab from '../components/tab2';
@@ -25,6 +28,10 @@ import StackBar from '../components/stack-bar';
 import ChartLine from '../components/chart-line';
 import ChartLineToolTipSimple from '../components/chart-line-tooltip-simple';
 
+import { useWalletProvider } from '../components/web3modal';
+
+import { state } from '../components/wallet-btn';
+
 import {
   getCVEventList,
   getCVParcelList,
@@ -37,6 +44,8 @@ import {
   getDclParcelAvgPriceStats,
   getDclParcelSoldSumStats,
   getDclParcelSoldTotalStats,
+  refreshToken,
+  getBaseInfo,
 } from '../service';
 
 import style from './index.module.less';
@@ -100,6 +109,8 @@ export default function Index(props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
+
+  const web3 = useWalletProvider();
 
   const requestData = async ({
     tab,
@@ -552,6 +563,74 @@ export default function Index(props) {
       setError(true);
     }
   }, [null]);
+
+  const refreshTK = React.useCallback(async () => {
+    const rToken = getToken(web3.data.address, 'rtk');
+    if (rToken) {
+      const res = await refreshToken(rToken);
+      const { code, data, msg } = res;
+      if (code === 100003) {
+        toast.error('Token timeout');
+        window.location.href = '/';
+        return null;
+      }
+      if (code !== 100000) {
+        toast.error(msg);
+        return null;
+      }
+      const { accessToken, refreshToken: rtk } = convert(data);
+      setToken(web3.data.address, 'atk', accessToken);
+      setToken(web3.data.address, 'rtk', rtk);
+      state.setState({ accessToken, refreshToken: rtk });
+      return accessToken;
+    }
+    return null;
+  }, [null]);
+
+  const resultHandler = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
+      toast.error(msg);
+
+      return null;
+    },
+    [refreshTK],
+  );
+
+  const requestPersonal = React.useCallback(
+    async (token: string) => {
+      const res = await getBaseInfo(token);
+      const data = resultHandler(res, requestPersonal);
+      if (!data) {
+        return;
+      }
+      const { profile } = data;
+      state.setState({ profile });
+    },
+    [resultHandler],
+  );
+
+  React.useEffect(() => {
+    if (!web3.data.address) {
+      return;
+    }
+    const accessToken = getToken(web3.data.address, 'atk');
+    if (accessToken) {
+      requestPersonal(accessToken);
+    }
+  }, [web3.data.address, requestPersonal]);
 
   React.useEffect(() => {
     initTopic();

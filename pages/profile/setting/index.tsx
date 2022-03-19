@@ -4,12 +4,13 @@ import cn from 'classnames';
 
 import ReactTooltip from 'react-tooltip';
 
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 import Page from '../../../components/page';
 import PageHeader from '../../../components/page-header';
 import Footer from '../../../components/footer';
 import MeteInput from '../../../components/meta-input';
+import { state } from '../../../components/wallet-btn';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
@@ -44,37 +45,18 @@ export default function Settings() {
       const res = await refreshToken(rToken);
       const { code, data, msg } = res;
       if (code === 100003) {
-        toast.warn('Token timeout', {
-          position: 'top-center',
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'dark',
-          onClose: () => {
-            window.location.href = '/';
-          },
-        });
+        toast.error('Token timeout');
+        window.location.href = '/';
         return null;
       }
       if (code !== 100000) {
-        toast.warn(msg, {
-          position: 'top-center',
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'dark',
-        });
+        toast.error(msg);
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
       setToken(web3.data.address, 'atk', accessToken);
       setToken(web3.data.address, 'rtk', rtk);
+      state.setState({ accessToken, refreshToken: rtk });
       return accessToken;
     }
     return null;
@@ -95,17 +77,7 @@ export default function Settings() {
         return null;
       }
 
-      toast.error(msg, {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: 'dark',
-        className: style.toast,
-      });
+      toast.error(msg);
 
       return null;
     },
@@ -125,19 +97,22 @@ export default function Settings() {
         setNickName(name);
         setTwitterAddress(twitterName);
         setWebsiteAddress(websiteUrl);
+        state.setState({ profile });
       }
     },
     [resultHandler],
   );
 
   React.useEffect(() => {
+    if (!web3.data.address) {
+      window.location.href = '/';
+      return;
+    }
     const accessToken = getToken(web3.data.address, 'atk');
     if (accessToken) {
       requireData(accessToken);
-      return;
     }
-    window.location.href = '/';
-  }, [getToken, requireData]);
+  }, [web3.data.address, getToken, requireData]);
 
   const clipName = React.useCallback(
     (addres) => {
@@ -151,60 +126,63 @@ export default function Settings() {
     [null],
   );
 
+  const checkName = React.useCallback(
+    async (val) => {
+      const res = await nickNameExist(val);
+      const { code, msg } = res;
+      if (code === 100006) {
+        setInfoMsg('Invalid username. The username is already taken');
+        return false;
+      }
+      if (code === 100000) {
+        return true;
+      }
+      toast.error(msg);
+      return false;
+    },
+    [nickNameExist],
+  );
+
   const submit = React.useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
-      if (!canSave) {
+      setInfoMsg('');
+      let goSave = true;
+      const rel = /^[0-9a-zA-Z.\d+\x7f-\xff_-]+$/;
+      if (!rel.test(nickName)) {
+        setInfoMsg(
+          'Invalid username. Can only contain letters,numbers,hyphens(-),and underscores(_)',
+        );
+        goSave = false;
+        return;
+      }
+      goSave = await checkName(nickName);
+      if (!goSave) {
         return;
       }
       setSaving(true);
-      if (infoMsg || infoMsg !== '') {
-        toast.warn('Invalid username', {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'dark',
-        });
-        setSaving(false);
-        return;
-      }
       const token = getToken(address, 'atk');
       if (token) {
         updateBaseInfo(token, nickName, twitterAddress, websiteAddress, avatarUrl).then((res) => {
           const { code, msg } = res;
           if (code !== 100000) {
-            toast.error('Update failed', {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-              progress: undefined,
-              theme: 'dark',
-            });
+            toast.error('Update failed');
             setSaving(false);
             return;
           }
-          toast.success('Profile successfully updated', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: 'dark',
-          });
+          toast.success('Profile successfully updated');
           setSaving(false);
+          state.setState({
+            profile: {
+              nickName,
+              address,
+              avatar: avatarUrl,
+            },
+          });
         });
       }
     },
-    [nickName, twitterAddress, websiteAddress, address, avatarUrl, canSave],
+    [nickName, twitterAddress, websiteAddress, address, avatarUrl, canSave, checkName],
   );
 
   const uploadImage = React.useCallback(
@@ -221,7 +199,7 @@ export default function Settings() {
   );
 
   return (
-    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
+    <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'profile'} />
       </div>
@@ -235,12 +213,12 @@ export default function Settings() {
           >
             Profile Setting
           </div>
-          <div className="flex justify-center items-center pt-8">
+          <div className="flex justify-center items-center py-8">
             <div className="mr-7">
               <form onSubmit={submit}>
                 <div className="mb-5 ">
                   <div className={cn('text-xs', style.baseInfo)}>
-                    <span className={cn('mr-1', style.unNull)}>*</span>Require file
+                    <span className={cn('mr-1', style.unNull)}>*</span>Required fields
                   </div>
                   <div></div>
                 </div>
@@ -249,43 +227,23 @@ export default function Settings() {
                   require={true}
                   name={'username'}
                   bold={true}
-                  value={nickName || clipName(address)}
+                  value={nickName}
                   requirePrefix={false}
                   onChangeHandler={(val) => {
                     setNickName(val);
+                  }}
+                  onBlur={(val) => {
                     setInfoMsg('');
-                    const rel = /^[0-9a-zA-Z.\d+\x7f-\xff_-]+$/;
-                    if (!rel.test(val)) {
-                      setInfoMsg(
-                        'Invalid username. Can only contain letters,numbers,huyphens(-),and underscores(_)',
-                      );
-                      setCanSave(false);
-                      return;
+                    let temp = val;
+                    if (temp === '') {
+                      temp = clipName(address);
+                      setNickName(temp);
                     }
-                    if (val) {
-                      const check = nickNameExist(val);
-                      check.then((res) => {
-                        if (res.code === 100006) {
-                          setInfoMsg('Invalid username. The username is already taken');
-                          setCanSave(false);
-                          return;
-                        }
-                        if (res.code === 100000) {
-                          setCanSave(true);
-                          return;
-                        }
-                        setCanSave(false);
-                        toast.warn(res.msg, {
-                          position: 'top-center',
-                          autoClose: 2000,
-                          hideProgressBar: false,
-                          closeOnClick: true,
-                          pauseOnHover: false,
-                          draggable: false,
-                          progress: undefined,
-                          theme: 'dark',
-                        });
-                      });
+                    const rel = /^[0-9a-zA-Z.\d+\x7f-\xff_-]+$/;
+                    if (!rel.test(temp)) {
+                      setInfoMsg(
+                        'Invalid username. Can only contain letters,numbers,hyphens(-),and underscores(_)',
+                      );
                     }
                   }}
                   prefix="/images/v5/Username.png"
@@ -304,7 +262,7 @@ export default function Settings() {
                   name={'twitter'}
                   label="Links"
                   prefix="/images/v5/Twitter.png"
-                  placeholder={'Twitter'}
+                  placeholder={'YourTwitterHandle'}
                   onChangeHandler={(val) => {
                     setTwitterAddress(val);
                   }}
@@ -330,7 +288,7 @@ export default function Settings() {
                 <div className=" pt-7">
                   <button
                     className={cn(
-                      'flex justify-center items-center text-xl font-semibold',
+                      'flex justify-center items-center text-base font-semibold',
                       style.saveBtn,
                     )}
                   >

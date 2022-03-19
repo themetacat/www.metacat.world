@@ -29,7 +29,12 @@
   color: rgba(204, 204, 204, 1);
   min-width: 133px;
   min-height: 50px;
+  box-sizing: border-box;
   border-bottom: solid 1px rgba(0, 208, 236, .2)
+}
+
+.last{
+  border: none
 }
 
 .walletItem{
@@ -62,6 +67,9 @@
 }
 .menuItem:hover{
   filter: brightness(125%);
+}
+.menuItem:active{
+  filter: brightness(75%);
 }
 
 .walletLogo{

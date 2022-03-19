@@ -54,7 +54,13 @@ export default function ProfileIconLabel({
       {prefix && hasIcon ? (
         <img className="mr-2 cursor-pointer" src={icon} onClick={iconClick}></img>
       ) : null}
-      {isLink ? <a>{label}</a> : <span>{label}</span>}
+      {isLink ? (
+        <a href={label} target="_blank">
+          {label}
+        </a>
+      ) : (
+        <span>{label}</span>
+      )}
       {renderSuffix}
     </div>
   );

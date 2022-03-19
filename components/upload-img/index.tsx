@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 import Upload from 'rc-upload';
 import { client } from '../../common/utils';
@@ -22,6 +22,29 @@ interface Props {
 export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
   const [showCover, setShowCover] = React.useState(false);
 
+  const multipartUpload = React.useCallback(
+    async (file) => {
+      const names = file.name.split('.');
+      const suffix = names[names.length - 1];
+      const fileName = `file${file.uid}.${suffix}`;
+      client()
+        .multipartUpload(fileName, file)
+        .then((res) => {
+          toast.success('Update success');
+          if (afterUpload) {
+            afterUpload({ success: true, data: res });
+          }
+        })
+        .catch((err) => {
+          toast.error('Update failed');
+          if (afterUpload) {
+            afterUpload({ success: false });
+          }
+        });
+    },
+    [afterUpload],
+  );
+
   const customRequest = React.useCallback(
     ({
       action,
@@ -36,70 +59,20 @@ export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
     }) => {
       const size = file.size / 1024 / 1024;
       if (size >= 1) {
-        toast.warn('Max size: 1M', {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'dark',
-        });
+        toast.error('Max size: 1M');
         return;
       }
-      async function multipartUpload() {
-        const names = file.name.split('.');
-        const suffix = names[names.length - 1];
-        const fileName = `file${file.uid}.${suffix}`;
-        client()
-          .multipartUpload(fileName, file)
-          .then((res) => {
-            toast.success('Update success', {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-              progress: undefined,
-              theme: 'dark',
-            });
-            if (afterUpload) {
-              afterUpload({ success: true, data: res });
-            }
-          })
-          .catch((err) => {
-            toast.error('Update failed', {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: false,
-              progress: undefined,
-              theme: 'dark',
-            });
-            if (afterUpload) {
-              afterUpload({ success: false });
-            }
-          });
-      }
-      multipartUpload();
+      multipartUpload(file);
 
-      return {
-        abort() {
-          console.log('upload progress is aborted.');
-        },
-      };
+      return {};
     },
-    [null],
+    [multipartUpload],
   );
 
   return (
     <div className={cn('cursor-pointer', style.uploadContainer)}>
-      {showCover ? (
-        <Upload customRequest={customRequest}>
+      <Upload customRequest={customRequest}>
+        {/* {showCover ? (
           <div
             onMouseOut={() => {
               setShowCover(false);
@@ -111,8 +84,15 @@ export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
           >
             <img src="/images/v5/edit.png"></img>
           </div>
-        </Upload>
-      ) : null}
+        ) : null} */}
+        <div
+          className={cn(
+            'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',
+            style.cover,
+          )}
+        ></div>
+      </Upload>
+
       <img
         onMouseOver={() => {
           setShowCover(true);

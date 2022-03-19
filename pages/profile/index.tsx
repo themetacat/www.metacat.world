@@ -2,7 +2,7 @@ import React from 'react';
 
 import cn from 'classnames';
 
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
@@ -11,6 +11,8 @@ import Profile from '../../components/profile';
 import Tab from '../../components/tab';
 import Status from '../../components/status';
 import Card from '../../components/card';
+
+import { state } from '../../components/wallet-btn';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -25,7 +27,12 @@ const TAB = [
   {
     label: 'Cryptovoxel',
     icon: '/images/Crypto Voxel.jpg',
-    type: 'voxel',
+    type: 'cryptovoxels',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
   },
 ];
 
@@ -43,6 +50,8 @@ export default function ProfilePage() {
   const [nickName, setNickName] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
+  const [orginData, setOrginData] = React.useState();
+  const [tabState, setTabState] = React.useState('cryptovoxels');
 
   const web3 = useWalletProvider();
 
@@ -54,41 +63,32 @@ export default function ProfilePage() {
       const res = await refreshToken(rToken);
       const { code, data, msg } = res;
       if (code === 100003) {
-        toast.warn('Token timeout', {
-          position: 'top-center',
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'dark',
-          onClose: () => {
-            window.location.href = '/';
-          },
-        });
+        toast.error('Token timeout');
+        window.location.href = '/';
         return null;
       }
       if (code !== 100000) {
-        toast.warn(msg, {
-          position: 'top-center',
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'dark',
-        });
+        toast.error(msg);
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
       setToken(web3.data.address, 'atk', accessToken);
       setToken(web3.data.address, 'rtk', rtk);
+      state.setState({ accessToken, refreshToken: rtk });
       return accessToken;
     }
     return null;
   }, [null]);
+
+  const onTabChange = React.useCallback(
+    async (tab) => {
+      setTabState(tab);
+      if (orginData) {
+        setDataSource(orginData[`${tab}ParcelList`]);
+      }
+    },
+    [orginData],
+  );
 
   const resultHandler = React.useCallback(
     (res, callback) => {
@@ -105,17 +105,7 @@ export default function ProfilePage() {
         return null;
       }
 
-      toast.error(msg, {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: 'dark',
-        className: style.toast,
-      });
+      toast.error(msg);
 
       return null;
     },
@@ -130,13 +120,13 @@ export default function ProfilePage() {
         if (!data) {
           return;
         }
-        const { cryptovoxelsParcelList, decentralandparcelList } = data;
-        setDataSource(cryptovoxelsParcelList);
+        setOrginData(data);
+        setDataSource(data[`${tabState}ParcelList`]);
       } catch {
         setError(true);
       }
     },
-    [resultHandler],
+    [resultHandler, tabState],
   );
 
   const requestPersonal = React.useCallback(
@@ -154,6 +144,7 @@ export default function ProfilePage() {
       setNickName(name);
       setTwitterAddress(twitterName);
       setWebsiteAddress(websiteUrl);
+      state.setState({ profile });
     },
     [resultHandler],
   );
@@ -188,14 +179,16 @@ export default function ProfilePage() {
   }, [error, dataSource, loading, onRetry]);
 
   React.useEffect(() => {
+    if (!web3.data.address) {
+      window.location.href = '/';
+      return;
+    }
     const accessToken = getToken(web3.data.address, 'atk');
     if (accessToken) {
       requestData(accessToken);
       requestPersonal(accessToken);
-      return;
     }
-    window.location.href = '/';
-  }, [getToken, requestData, requestPersonal]);
+  }, [web3.data.address, getToken, requestData, requestPersonal]);
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
@@ -218,11 +211,14 @@ export default function ProfilePage() {
           {TAB.map((item, index) => {
             return (
               <Tab
-                active={true}
+                active={tabState === item.type}
                 isMini={true}
                 key={item.label}
                 label={item.label}
                 icon={item.icon}
+                onClick={() => {
+                  onTabChange(item.type);
+                }}
               />
             );
           })}
