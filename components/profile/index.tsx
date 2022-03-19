@@ -72,7 +72,7 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
             {twitter && home ? <div className={cn('mx-5', style.divide)}></div> : null}
             {home ? (
               <ProfileIconLabel
-                label={`yoursite.io`}
+                label={`Homepage`}
                 link={home}
                 icon="/images/v5/home.png"
                 prefix={true}

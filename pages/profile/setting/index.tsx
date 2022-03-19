@@ -21,6 +21,7 @@ import { useWalletProvider } from '../../../components/web3modal';
 import style from './index.module.css';
 import { convert, getToken, setToken } from '../../../common/utils';
 import UploadImg from '../../../components/upload-img';
+import MeteInputLimit from '../../../components/meta-input-limit';
 
 export default function Settings() {
   const meta = {
@@ -268,16 +269,16 @@ export default function Settings() {
                   ) : null}
                 </div>
 
-                <MeteInput
+                <MeteInputLimit
                   value={twitterAddress}
                   name={'twitter'}
                   label="Links"
-                  prefix="/images/v5/Twitter.png"
+                  prefix="https://twitter.com/"
                   placeholder={'YourTwitterHandle'}
                   onChangeHandler={(val) => {
                     setTwitterAddress(val);
                   }}
-                ></MeteInput>
+                ></MeteInputLimit>
                 <MeteInput
                   value={websiteAddress}
                   name={'website'}
