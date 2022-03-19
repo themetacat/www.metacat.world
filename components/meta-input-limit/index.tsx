@@ -13,6 +13,7 @@ type Props = {
   onClearHandler?: () => void;
   value?: string;
   prefix?: string;
+  prefixLabel?: string;
   classname?: string;
   require?: boolean;
   requirePrefix?: boolean;
@@ -29,6 +30,7 @@ export default function MeteInputLimit({
   onClearHandler,
   value,
   prefix,
+  prefixLabel,
   classname,
   require = false,
   requirePrefix = true,
@@ -109,52 +111,50 @@ export default function MeteInputLimit({
           disable ? style.disableContent : null,
         )}
       >
-        <span className=" inline-flex items-center mr-1 ml-5">{prefix}</span>
-        <div
+        {prefix ? (
+          <span className=" inline-flex items-center">
+            <img className={style.icon} src={prefix}></img>
+            <span className="ml-5 text-sm">{prefixLabel}</span>
+          </span>
+        ) : null}
+        <input
+          type="text"
+          placeholder={placeholder}
+          name={name}
+          value={val}
+          onChange={onChange}
+          disabled={disable}
+          autoComplete="off"
+          onFocus={() => {
+            if (val) {
+              setShowClear(true);
+            }
+          }}
+          onBlur={inputBlur}
           className={cn(
-            'flex justify-center items-center h-full flex-1 pl-1 pr-5',
-            style.limitInput,
+            ' text-sm',
+            bold ? 'font-medium' : '',
+            style.input,
+            disable ? style.disable : null,
           )}
-        >
-          <input
-            type="text"
-            placeholder={placeholder}
-            name={name}
-            value={val}
-            onChange={onChange}
-            disabled={disable}
-            autoComplete="off"
-            onFocus={() => {
-              if (val) {
-                setShowClear(true);
-              }
-            }}
-            onBlur={inputBlur}
-            className={cn(
-              ' text-sm w-full',
-              bold ? 'font-medium' : '',
-              style.input,
-              disable ? style.disable : null,
-            )}
-          ></input>
-          {disable ? (
-            <CopyToClipboard text={val} onCopy={iconClick}>
-              <span className={cn('inline-flex items-center ml-5', style.icon)}>
-                <img
-                  className={cn('cursor-pointer', 'inline-flex', style.icon)}
-                  src="/images/v5/copy.png"
-                ></img>
-              </span>
-            </CopyToClipboard>
-          ) : (
-            <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
+        ></input>
+        {disable ? (
+          <CopyToClipboard text={val} onCopy={iconClick}>
+            <span className={cn('inline-flex items-center ml-5', style.icon)}>
               <img
-                className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
-                src="/images/close.png"
+                className={cn('cursor-pointer', 'inline-flex', style.icon)}
+                src="/images/v5/copy.png"
               ></img>
             </span>
-          )}
-        </div>
+          </CopyToClipboard>
+        ) : (
+          <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
+            <img
+              className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
+              src="/images/close.png"
+            ></img>
+          </span>
+        )}
       </div>
     </div>
   );
