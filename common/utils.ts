@@ -28,18 +28,18 @@ export const formatNum = (value: number, noNeedFixed = true, fixed = 3) => {
   return value.toLocaleString(undefined, { minimumFractionDigits: fixed });
 };
 
-export const getToken = (address, type) => {
-  const accessToken = localStorage.getItem(`${address}_${type}`);
+export const getToken = (type) => {
+  const accessToken = localStorage.getItem(`METACAT_${type}`);
   return accessToken;
 };
 
-export const setToken = (address, type, value) => {
-  const accessToken = localStorage.setItem(`${address}_${type}`, value);
+export const setToken = (type, value) => {
+  const accessToken = localStorage.setItem(`METACAT_${type}`, value);
   return accessToken;
 };
 
-export const removeToken = (address, type) => {
-  const accessToken = localStorage.removeItem(`${address}_${type}`);
+export const removeToken = (type) => {
+  const accessToken = localStorage.removeItem(`METACAT_${type}`);
   return accessToken;
 };
 

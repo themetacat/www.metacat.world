@@ -81,6 +81,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const { accessToken, refreshToken, profile } = profileData;
   const web3 = useWalletProvider();
 
+  const router = useRouter();
+
+  const { pathname } = router;
+
   const resultHandler = React.useCallback(
     (res) => {
       const { code, msg, data } = res;
@@ -103,8 +107,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           profile: data.profile,
           refreshToken: data.refreshToken,
         });
-        setToken(data.profile.address, 'atk', data.accessToken);
-        setToken(data.profile.address, 'rtk', data.refreshToken);
+        setToken('atk', data.accessToken);
+        setToken('rtk', data.refreshToken);
       }
       setShowMenu(false);
       setLoading(false);
@@ -207,19 +211,21 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const clickOperationItem = React.useCallback(
     (item) => {
       if (item.value === 'resetApp') {
-        removeToken(profile.address, 'atk');
-        removeToken(profile.address, 'rtk');
+        removeToken('atk');
+        removeToken('rtk');
         web3.resetApp();
         state.setState({
           accessToken: '',
           refreshToken: '',
           profile: { address: null, nickName: null, avatar: null },
         });
-        window.location.href = '/';
+        if (pathname !== '/') {
+          window.location.href = '/';
+        }
       }
       setShowMenu(false);
     },
-    [web3, profile, state],
+    [pathname, web3, profile, state],
   );
 
   const render = React.useMemo(() => {
@@ -313,7 +319,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         ) : (
           <img className="mr-1" src="/images/v5/wallet.png" />
         )}
-        <div className={cn('font-semibold', profile.address ? 'text-xs' : 'text-base')}>{text}</div>
+        <div
+          title={text}
+          className={cn(
+            'font-semibold truncate',
+            style.walletText,
+            profile.address ? 'text-xs' : 'text-base',
+          )}
+        >
+          {text}
+        </div>
       </>
     );
   }, [profile, clipName]);

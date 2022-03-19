@@ -30,6 +30,7 @@ export default function Settings() {
 
   const [infoMsg, setInfoMsg] = React.useState('');
   const [imgInfoMsg, setImgInfoMsg] = React.useState('');
+  const [orginName, setOrginName] = React.useState('');
   const [nickName, setNickName] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
@@ -40,7 +41,7 @@ export default function Settings() {
   const web3 = useWalletProvider();
 
   const refreshTK = React.useCallback(async () => {
-    const rToken = getToken(web3.data.address, 'rtk');
+    const rToken = getToken('rtk');
     if (rToken) {
       const res = await refreshToken(rToken);
       const { code, data, msg } = res;
@@ -54,8 +55,8 @@ export default function Settings() {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
-      setToken(web3.data.address, 'atk', accessToken);
-      setToken(web3.data.address, 'rtk', rtk);
+      setToken('atk', accessToken);
+      setToken('rtk', rtk);
       state.setState({ accessToken, refreshToken: rtk });
       return accessToken;
     }
@@ -95,6 +96,7 @@ export default function Settings() {
         setAvatarUrl(avatar);
         setAddress(addr);
         setNickName(name);
+        setOrginName(name);
         setTwitterAddress(twitterName);
         setWebsiteAddress(websiteUrl);
         state.setState({ profile });
@@ -104,15 +106,13 @@ export default function Settings() {
   );
 
   React.useEffect(() => {
-    if (!web3.data.address) {
-      window.location.href = '/';
-      return;
-    }
-    const accessToken = getToken(web3.data.address, 'atk');
+    const accessToken = getToken('atk');
     if (accessToken) {
       requireData(accessToken);
+      return;
     }
-  }, [web3.data.address, getToken, requireData]);
+    window.location.href = '/';
+  }, [getToken, requireData]);
 
   const clipName = React.useCallback(
     (addres) => {
@@ -140,28 +140,34 @@ export default function Settings() {
       toast.error(msg);
       return false;
     },
-    [nickNameExist],
+    [nickNameExist, address, getToken],
   );
 
   const submit = React.useCallback(
     async (event) => {
       event.preventDefault();
-      setInfoMsg('');
-      let goSave = true;
-      const rel = /^[0-9a-zA-Z.\d+\x7f-\xff_-]+$/;
-      if (!rel.test(nickName)) {
-        setInfoMsg(
-          'Invalid username. Can only contain letters,numbers,hyphens(-),and underscores(_)',
-        );
-        goSave = false;
+      if (!canSave) {
+        toast.error('Avatar uploading!');
         return;
       }
-      goSave = await checkName(nickName);
+      setInfoMsg('');
+      let goSave = true;
+      if (nickName !== orginName) {
+        const rel = /^[0-9a-zA-Z.\d+\x7f-\xff_-]+$/;
+        if (!rel.test(nickName)) {
+          setInfoMsg(
+            'Invalid username. Can only contain letters,numbers,hyphens(-),and underscores(_)',
+          );
+          goSave = false;
+          return;
+        }
+        goSave = await checkName(nickName);
+      }
       if (!goSave) {
         return;
       }
       setSaving(true);
-      const token = getToken(address, 'atk');
+      const token = getToken('atk');
       if (token) {
         updateBaseInfo(token, nickName, twitterAddress, websiteAddress, avatarUrl).then((res) => {
           const { code, msg } = res;
@@ -182,11 +188,12 @@ export default function Settings() {
         });
       }
     },
-    [nickName, twitterAddress, websiteAddress, address, avatarUrl, canSave, checkName],
+    [nickName, twitterAddress, websiteAddress, address, avatarUrl, canSave, orginName, checkName],
   );
 
   const uploadImage = React.useCallback(
     (res) => {
+      setCanSave(true);
       setImgInfoMsg('');
       if (!res.success) {
         setImgInfoMsg('Update failed');
@@ -197,6 +204,10 @@ export default function Settings() {
     },
     [null],
   );
+
+  const beginUpload = React.useCallback(() => {
+    setCanSave(false);
+  }, [null]);
 
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
@@ -236,7 +247,7 @@ export default function Settings() {
                     setInfoMsg('');
                     let temp = val;
                     if (temp === '') {
-                      temp = clipName(address);
+                      temp = orginName || clipName(address);
                       setNickName(temp);
                     }
                     const rel = /^[0-9a-zA-Z.\d+\x7f-\xff_-]+$/;
@@ -270,7 +281,7 @@ export default function Settings() {
                 <MeteInput
                   value={websiteAddress}
                   name={'website'}
-                  prefix="/images/v5/yoursite.io.png"
+                  prefix="/images/v5/home.png"
                   placeholder={'yoursite.io'}
                   classname="mt-3"
                   onChangeHandler={(val) => {
@@ -327,6 +338,7 @@ export default function Settings() {
               <UploadImg
                 imgUrl={avatarUrl || '/images/icon.png'}
                 afterUpload={uploadImage}
+                beginUpload={beginUpload}
               ></UploadImg>
               <div className={cn('flex items-center text-xs mt-1 mb-2', style.warnContent)}>
                 {imgInfoMsg && imgInfoMsg !== '' ? (

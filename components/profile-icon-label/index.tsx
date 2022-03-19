@@ -12,6 +12,7 @@ type Porps = {
   classname?: string;
   suffixCopy?: boolean;
   hasIcon?: boolean;
+  link?: string;
   onClick?: (evt) => void;
   isLink?: boolean;
 };
@@ -25,6 +26,7 @@ export default function ProfileIconLabel({
   suffixCopy = false,
   hasIcon = true,
   isLink = false,
+  link,
 }: Porps) {
   const iconClick = React.useCallback(
     (evt) => {
@@ -55,11 +57,11 @@ export default function ProfileIconLabel({
         <img className="mr-2 cursor-pointer" src={icon} onClick={iconClick}></img>
       ) : null}
       {isLink ? (
-        <a href={label} target="_blank">
+        <a href={link} target="_blank" title={link}>
           {label}
         </a>
       ) : (
-        <span>{label}</span>
+        <span title={label}>{label}</span>
       )}
       {renderSuffix}
     </div>

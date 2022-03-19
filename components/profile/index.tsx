@@ -61,9 +61,10 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
               <ProfileIconLabel
-                label={`https://twitter.com/${twitter}`}
+                label="Twitter"
                 icon="/images/v5/Twitter.png"
                 prefix={true}
+                link={`https://twitter.com/${twitter}`}
                 isLink={true}
                 classname={'text-sm'}
               ></ProfileIconLabel>
@@ -71,8 +72,9 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
             {twitter && home ? <div className={cn('mx-5', style.divide)}></div> : null}
             {home ? (
               <ProfileIconLabel
-                label={home}
-                icon="/images/v5/yoursite.io.png"
+                label={`yoursite.io`}
+                link={home}
+                icon="/images/v5/home.png"
                 prefix={true}
                 isLink={true}
                 classname={'text-sm'}

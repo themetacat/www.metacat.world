@@ -58,7 +58,7 @@ export default function ProfilePage() {
   const cls = cn('flex-1', style.bottomLine);
 
   const refreshTK = React.useCallback(async () => {
-    const rToken = getToken(web3.data.address, 'rtk');
+    const rToken = getToken('rtk');
     if (rToken) {
       const res = await refreshToken(rToken);
       const { code, data, msg } = res;
@@ -72,8 +72,8 @@ export default function ProfilePage() {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
-      setToken(web3.data.address, 'atk', accessToken);
-      setToken(web3.data.address, 'rtk', rtk);
+      setToken('atk', accessToken);
+      setToken('rtk', rtk);
       state.setState({ accessToken, refreshToken: rtk });
       return accessToken;
     }
@@ -150,7 +150,7 @@ export default function ProfilePage() {
   );
 
   const onRetry = React.useCallback(async () => {
-    const accessToken = getToken(web3.data.address, 'atk');
+    const accessToken = getToken('atk');
     if (accessToken) {
       requestData(accessToken);
     }
@@ -179,16 +179,14 @@ export default function ProfilePage() {
   }, [error, dataSource, loading, onRetry]);
 
   React.useEffect(() => {
-    if (!web3.data.address) {
-      window.location.href = '/';
-      return;
-    }
-    const accessToken = getToken(web3.data.address, 'atk');
+    const accessToken = getToken('atk');
     if (accessToken) {
       requestData(accessToken);
       requestPersonal(accessToken);
+      return;
     }
-  }, [web3.data.address, getToken, requestData, requestPersonal]);
+    window.location.href = '/';
+  }, [getToken, requestData, requestPersonal]);
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>

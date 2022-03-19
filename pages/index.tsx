@@ -565,7 +565,7 @@ export default function Index(props) {
   }, [null]);
 
   const refreshTK = React.useCallback(async () => {
-    const rToken = getToken(web3.data.address, 'rtk');
+    const rToken = getToken('rtk');
     if (rToken) {
       const res = await refreshToken(rToken);
       const { code, data, msg } = res;
@@ -579,8 +579,8 @@ export default function Index(props) {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
-      setToken(web3.data.address, 'atk', accessToken);
-      setToken(web3.data.address, 'rtk', rtk);
+      setToken('atk', accessToken);
+      setToken('rtk', rtk);
       state.setState({ accessToken, refreshToken: rtk });
       return accessToken;
     }
@@ -623,14 +623,11 @@ export default function Index(props) {
   );
 
   React.useEffect(() => {
-    if (!web3.data.address) {
-      return;
-    }
-    const accessToken = getToken(web3.data.address, 'atk');
+    const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
     }
-  }, [web3.data.address, requestPersonal]);
+  }, [requestPersonal]);
 
   React.useEffect(() => {
     initTopic();

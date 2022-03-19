@@ -121,6 +121,7 @@ export default function MeteInput({
           value={val}
           onChange={onChange}
           disabled={disable}
+          autoComplete="off"
           onFocus={() => {
             if (val) {
               setShowClear(true);

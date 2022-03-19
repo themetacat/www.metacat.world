@@ -8,20 +8,13 @@ import { client } from '../../common/utils';
 
 import style from './index.module.css';
 
-interface eventResult {
-  success?: boolean;
-  data?: string;
-}
-
 interface Props {
   imgUrl?: string;
-  actionPath?: string;
+  beginUpload?: () => void;
   afterUpload?: (event) => void;
 }
 
-export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
-  const [showCover, setShowCover] = React.useState(false);
-
+export default function UploadImg({ imgUrl, afterUpload, beginUpload }: Props) {
   const multipartUpload = React.useCallback(
     async (file) => {
       const names = file.name.split('.');
@@ -46,7 +39,7 @@ export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
   );
 
   const customRequest = React.useCallback(
-    ({
+    async ({
       action,
       data,
       file,
@@ -62,29 +55,19 @@ export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
         toast.error('Max size: 1M');
         return;
       }
+      if (beginUpload) {
+        await beginUpload();
+      }
       multipartUpload(file);
 
       return {};
     },
-    [multipartUpload],
+    [multipartUpload, beginUpload],
   );
 
   return (
     <div className={cn('cursor-pointer', style.uploadContainer)}>
       <Upload customRequest={customRequest}>
-        {/* {showCover ? (
-          <div
-            onMouseOut={() => {
-              setShowCover(false);
-            }}
-            className={cn(
-              'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',
-              style.cover,
-            )}
-          >
-            <img src="/images/v5/edit.png"></img>
-          </div>
-        ) : null} */}
         <div
           className={cn(
             'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',
@@ -93,13 +76,7 @@ export default function UploadImg({ imgUrl, actionPath, afterUpload }: Props) {
         ></div>
       </Upload>
 
-      <img
-        onMouseOver={() => {
-          setShowCover(true);
-        }}
-        className={cn(' w-full h-full', style.backImg)}
-        src={imgUrl}
-      />
+      <img className={cn(' w-full h-full', style.backImg)} src={imgUrl} />
     </div>
   );
 }
