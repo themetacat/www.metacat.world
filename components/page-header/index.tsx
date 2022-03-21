@@ -21,7 +21,8 @@ export default function PageHeader({ active, className }: Props) {
   return (
     <header
       className={cn(
-        'main-content h-full flex justify-center items-center p-5 pointer-events-none z-50',
+        'main-content h-full flex justify-center items-center p-5 pointer-events-none',
+        style.base,
         className,
       )}
     >
