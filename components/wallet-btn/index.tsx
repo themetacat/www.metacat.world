@@ -67,7 +67,7 @@ const WALLET = [
   {
     label: 'MetaMask',
     icon: '/images/v5/Maskgroup.png',
-    value: 'metemask',
+    value: 'metamask',
     type: 'wallet',
   },
 ];
@@ -200,7 +200,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const clickItem = React.useCallback(
     (item) => {
       if (item.type === 'wallet') {
-        if (!profile.address && item.value === 'metemask') {
+        if (!profile.address && item.value === 'metamask') {
           connectToChain();
         }
       }
