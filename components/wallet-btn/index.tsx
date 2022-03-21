@@ -65,7 +65,7 @@ const MENU = [
 
 const WALLET = [
   {
-    label: 'MeteMask',
+    label: 'MetaMask',
     icon: '/images/v5/Maskgroup.png',
     value: 'metemask',
     type: 'wallet',
