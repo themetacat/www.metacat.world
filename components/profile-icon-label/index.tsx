@@ -8,6 +8,7 @@ import style from './index.module.css';
 type Porps = {
   icon?: string;
   prefix?: boolean;
+  address?: string;
   label?: string;
   classname?: string;
   suffixCopy?: boolean;
@@ -27,6 +28,7 @@ export default function ProfileIconLabel({
   hasIcon = true,
   isLink = false,
   link,
+  address,
 }: Porps) {
   const iconClick = React.useCallback(
     (evt) => {
@@ -37,19 +39,30 @@ export default function ProfileIconLabel({
     [label, onClick],
   );
 
+  const clipName = React.useCallback(
+    (addres) => {
+      if (addres?.length > 8) {
+        const end = addres.length - 4;
+        const all = addres.slice(4, end);
+        return addres.replace(all, '***');
+      }
+      return addres;
+    },
+    [null],
+  );
+
   const renderSuffix = React.useMemo(() => {
     if (!prefix && hasIcon) {
-      if (suffixCopy) {
-        return (
-          <CopyToClipboard text={label} onCopy={iconClick}>
-            <img className="ml-2 cursor-pointer" src={icon}></img>
-          </CopyToClipboard>
-        );
-      }
-      return <img className="ml-2 cursor-pointer" src={icon} onClick={iconClick}></img>;
+      return suffixCopy ? (
+        <CopyToClipboard text={label || address} onCopy={iconClick}>
+          <img className="ml-2 cursor-pointer" src={icon}></img>
+        </CopyToClipboard>
+      ) : (
+        <img className="ml-2 cursor-pointer" src={icon} onClick={iconClick}></img>
+      );
     }
     return null;
-  }, [prefix, hasIcon, suffixCopy, label, iconClick, icon]);
+  }, [prefix, hasIcon, suffixCopy, label, iconClick, icon, address]);
 
   return (
     <div className={cn('flex items-center', style.iconLabel, classname)}>
@@ -58,7 +71,7 @@ export default function ProfileIconLabel({
       ) : null}
       {isLink ? (
         <a href={link} target="_blank" title={link}>
-          {label}
+          {label || clipName(address)}
         </a>
       ) : (
         <span title={label}>{label}</span>

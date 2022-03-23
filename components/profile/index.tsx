@@ -17,18 +17,6 @@ type Props = {
 };
 
 export default function Profile({ name, address, twitter, home, avater = '', classname }: Props) {
-  const clipName = React.useCallback(
-    (addres) => {
-      if (addres?.length > 8) {
-        const end = addres.length - 4;
-        const all = addres.slice(4, end);
-        return addres.replace(all, '***');
-      }
-      return addres;
-    },
-    [null],
-  );
-
   const copyName = React.useCallback(
     (evt) => {
       toast.success('copied!');
@@ -42,7 +30,8 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
         <img className={style.avater} src={avater || '/images/logo.png'}></img>
         <div className={cn('ml-8', style.info)}>
           <ProfileIconLabel
-            label={name || clipName(address)}
+            label={name}
+            address={address}
             icon="/images/v5/copy.png"
             suffixCopy={true}
             hasIcon={!(name && name !== '')}

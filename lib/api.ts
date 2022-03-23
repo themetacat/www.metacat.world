@@ -350,6 +350,14 @@ class API {
 
     return json;
   }
+
+  public async getDecentralandMapLevelThreeData(): Promise<any> {
+    const url = `${this.url}/get_dcl_price_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

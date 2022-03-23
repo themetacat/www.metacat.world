@@ -17,6 +17,10 @@ const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
 
+const DecentralandMap = dynamic(() => import('../../components/decentraland-map'), {
+  ssr: false,
+});
+
 const meta = {
   title: `Map - ${SITE_NAME}`,
   description: META_DESCRIPTION,
@@ -28,6 +32,11 @@ const TAB = [
     icon: '/images/Crypto Voxel.jpg',
     type: 'voxel',
   },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
+  },
 ];
 
 export default function MapPage() {
@@ -35,6 +44,7 @@ export default function MapPage() {
 
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [mapType, setMapType] = React.useState('voxel');
 
   const showFull = React.useCallback(
     (x) => {
@@ -42,6 +52,42 @@ export default function MapPage() {
     },
     [null],
   );
+
+  const renderMap = React.useMemo(() => {
+    if (loading) {
+      return (
+        <div className="w-max">
+          <Status status="loading" />
+        </div>
+      );
+    }
+    return mapType === 'voxel' ? (
+      <Map
+        fullScreenOnClick={showFull}
+        zoomControl={true}
+        zoomLimit={[5, 9]}
+        dragging={true}
+        initZoom={6}
+        loadFinish={() => {
+          setLoading(false);
+        }}
+        backColor="rgb(8 17 19)"
+      ></Map>
+    ) : (
+      <DecentralandMap
+        fullScreenOnClick={showFull}
+        zoomControl={true}
+        zoomLimit={[5, 9]}
+        dragging={true}
+        initZoom={6}
+        changeTypeControl={false}
+        loadFinish={() => {
+          setLoading(false);
+        }}
+        backColor="rgb(8 17 19)"
+      ></DecentralandMap>
+    );
+  }, [mapType, loading]);
 
   return (
     <Page className="min-h-screen" meta={meta}>
@@ -57,11 +103,14 @@ export default function MapPage() {
               {TAB.map((item, index) => {
                 return (
                   <Tab
-                    active={true}
+                    active={mapType === item.type}
                     isMini={true}
                     key={item.label}
                     label={item.label}
                     icon={item.icon}
+                    onClick={(val) => {
+                      setMapType(item.type);
+                    }}
                   />
                 );
               })}
@@ -78,23 +127,7 @@ export default function MapPage() {
           fullScreen ? style.full : style.mapContanier,
         )}
       >
-        {loading ? (
-          <div className="w-max">
-            <Status status="loading" />
-          </div>
-        ) : (
-          <Map
-            fullScreenOnClick={showFull}
-            zoomControl={true}
-            zoomLimit={[5, 9]}
-            dragging={true}
-            initZoom={6}
-            loadFinish={() => {
-              setLoading(false);
-            }}
-            backColor="rgb(8 17 19)"
-          ></Map>
-        )}
+        {renderMap}
       </div>
       {fullScreen ? null : <Footer />}
     </Page>
