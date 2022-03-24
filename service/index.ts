@@ -305,7 +305,18 @@ export const getParcelList = async (token: string) => {
     },
   });
   const json = await res.json();
-
+  return json;
+};
+// 获取当前登陆者Cryptovoxels地块列表接口
+export const getParcelList2 = async (token: string) => {
+  const url = `/api/owned_cv_parcel_list`;
+  const res = await fetch(url, {
+    method: 'get',
+    headers: {
+      Authorization: token,
+    },
+  });
+  const json = await res.json();
   return json;
 };
 

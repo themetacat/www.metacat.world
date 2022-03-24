@@ -342,6 +342,22 @@ class API {
     return json;
   }
 
+  // 获取当前登陆者Cryptovoxels地块列表接口
+
+  public async getParcelList2(token: string): Promise<any> {
+    const url = `${this.url}/rent/get_owned_cv_parcel_list`;
+
+    const res = await fetch(url, {
+      method: 'get',
+      headers: {
+        Authorization: token,
+      },
+    });
+    const json = await res.json();
+
+    return json;
+  }
+
   public async nickNameExit(nickName: string): Promise<any> {
     const search = qs.stringify({ nick_name: nickName }, { addQueryPrefix: true });
     const url = `${this.url}/user/is_nick_name_exist${search}`;
