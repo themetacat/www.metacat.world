@@ -1,0 +1,27 @@
+.normal {
+  color: #aaa;
+}
+.tab {
+  position: relative;
+  color: #FFF;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  padding-top: 17px;
+  padding-bottom: 11px;
+  margin-right: 70px;
+}
+.active {
+  border-bottom: 6px solid #00d0ec;
+}
+.canHover {
+  color: #aaa;
+}
+.active,
+.active > .canHover,
+.canHover:hover {
+  color: #fff;
+  font-size: 20px;
+}
