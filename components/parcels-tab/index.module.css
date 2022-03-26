@@ -1,0 +1,28 @@
+.navItem {
+  font-size: 16px;
+  width: 120px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  color: #666;
+}
+.active {
+  color: #fff;
+}
+.active::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  height: 4px;
+  background-color: #00d0ec;
+  content: ' ';
+}
+.navItem_span {
+  color: #666;
+}
+.active_span {
+  color: #999;
+}
