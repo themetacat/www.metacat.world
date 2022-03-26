@@ -1033,7 +1033,7 @@ function Map({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        window.location.href = '/map';
+        window.location.href = '/map?type=voxel';
       });
     }
 

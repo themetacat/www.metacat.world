@@ -56,7 +56,6 @@ interface Props {
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
   withPopup?: boolean;
-  canClick?: boolean;
 }
 
 export type AtlasTile = {
@@ -278,7 +277,6 @@ function DecentralandMap({
   fullScreenOnClick,
   loadFinish,
   withPopup = true,
-  canClick = true,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -528,6 +526,10 @@ function DecentralandMap({
     requestLand();
   }, [null]);
 
+  const jumpToMap = () => {
+    window.location.href = '/map?type=decentraland';
+  };
+
   // mouse move
 
   React.useEffect(() => {
@@ -632,11 +634,17 @@ function DecentralandMap({
         </>
       ) : null}
 
-      <div className={style.map} style={{ backgroundColor: backColor }} onMouseDown={handleDrag}>
+      <div
+        className={style.map}
+        style={{ backgroundColor: backColor }}
+        onClick={clickToJump ? jumpToMap : null}
+        onMouseDown={dragging ? handleDrag : null}
+      >
         <TileMap
           layers={[Layer]}
           zoom={zoomLevel}
           minSize={2}
+          isDraggable={dragging}
           size={2}
           onChange={onMapChange}
           onHover={handleHover}

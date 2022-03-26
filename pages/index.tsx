@@ -54,6 +54,10 @@ const MapWithNoSSR = dynamic(() => import('../components/map'), {
   ssr: false,
 });
 
+const DCLMapWithNoSSR = dynamic(() => import('../components/decentraland-map'), {
+  ssr: false,
+});
+
 const TAB = [
   {
     label: 'Cryptovoxel',
@@ -75,7 +79,6 @@ const SUBTAB = [
   {
     label: 'Map',
     type: 'map',
-    isVoxelOnly: true,
   },
   {
     label: 'Analytics',
@@ -196,11 +199,11 @@ export default function Index(props) {
 
   const onTabChange = async (tab) => {
     setTabState(tab);
-    let sub = subTabState;
-    if (subTabState === 'map') {
-      sub = 'parcel';
-      setSubTabState(sub);
-    }
+    const sub = subTabState;
+    // if (subTabState === 'map') {
+    //   sub = 'parcel';
+    //   setSubTabState(sub);
+    // }
     setSearchText('');
     setTypeState('all');
 
@@ -375,14 +378,26 @@ export default function Index(props) {
       return (
         <div className={style.mapContanier}>
           <div className={style.mapBack}>
-            <MapWithNoSSR
-              zoomControl={false}
-              zoomLimit={[6, 6]}
-              initZoom={6}
-              clickToJump={true}
-              dragging={false}
-              loadFinish={null}
-            ></MapWithNoSSR>
+            {tabState === 'voxel' ? (
+              <MapWithNoSSR
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                dragging={false}
+                loadFinish={null}
+              ></MapWithNoSSR>
+            ) : (
+              <DCLMapWithNoSSR
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                changeTypeControl={false}
+                dragging={false}
+                loadFinish={null}
+              ></DCLMapWithNoSSR>
+            )}
           </div>
         </div>
       );
@@ -682,7 +697,7 @@ export default function Index(props) {
           <div className={cn('flex justify-between items-center pt-5', style.contentHeader)}>
             <div className="flex">
               {SUBTAB.map((item, index) => {
-                if (!item.isVoxelOnly || (item.isVoxelOnly && tabState === 'voxel')) {
+                if (item) {
                   return (
                     <SecondTab
                       label={item.label}

@@ -16,6 +16,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
   const ac = isMini ? style.miniActive : style.active;
   const no = isMini ? style.miniNormal : style.normal;
   const st = active ? ac : no;
+
   return isMini ? (
     <div
       className={cn('flex justify-center items-center text-white', st, style.miniBase)}

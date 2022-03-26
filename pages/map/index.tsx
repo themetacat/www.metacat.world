@@ -3,6 +3,8 @@ import React from 'react';
 import cn from 'classnames';
 
 import dynamic from 'next/dynamic';
+
+import { useRouter } from 'next/router';
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -42,9 +44,13 @@ const TAB = [
 export default function MapPage() {
   const cls = cn('flex-1', style.bottomLine);
 
+  const router = useRouter();
+
+  const { type } = router.query;
+
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [mapType, setMapType] = React.useState('voxel');
+  const [mapType, setMapType] = React.useState(type);
 
   const showFull = React.useCallback(
     (x) => {
@@ -89,6 +95,23 @@ export default function MapPage() {
     );
   }, [mapType, loading]);
 
+  const renderHeaderTab = React.useMemo(() => {
+    return TAB.map((item, index) => {
+      return (
+        <Tab
+          active={mapType === item.type}
+          isMini={true}
+          key={item.label}
+          label={item.label}
+          icon={item.icon}
+          onClick={(val) => {
+            setMapType(item.type);
+          }}
+        />
+      );
+    });
+  }, [TAB]);
+
   return (
     <Page className="min-h-screen" meta={meta}>
       {fullScreen ? null : (
@@ -100,20 +123,7 @@ export default function MapPage() {
           <div className={cn('tab-list flex mt-5', style.allHeight)}>
             <div className={cls}></div>
             <div className="main-content flex px-0">
-              {TAB.map((item, index) => {
-                return (
-                  <Tab
-                    active={mapType === item.type}
-                    isMini={true}
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    onClick={(val) => {
-                      setMapType(item.type);
-                    }}
-                  />
-                );
-              })}
+              {renderHeaderTab}
               <div className={cls} />
             </div>
             <div className={cls} />
