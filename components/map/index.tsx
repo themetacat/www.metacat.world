@@ -356,7 +356,10 @@ function Map({
           (params as any).centerFixed = { lat: 0, lng: 0 };
         }
 
-        const min = new MiniMap(minIsLandLayer, params).addTo(pageMap);
+        const min = new MiniMap(minIsLandLayer, params);
+        if (min) {
+          min.addTo(pageMap);
+        }
       }
     },
     [null],

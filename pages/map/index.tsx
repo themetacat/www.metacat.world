@@ -4,7 +4,6 @@ import cn from 'classnames';
 
 import dynamic from 'next/dynamic';
 
-import { useRouter } from 'next/router';
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -41,16 +40,12 @@ const TAB = [
   },
 ];
 
-export default function MapPage() {
+export default function MapPage(props) {
   const cls = cn('flex-1', style.bottomLine);
-
-  const router = useRouter();
-
-  const { type } = router.query;
 
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [mapType, setMapType] = React.useState(type);
+  const [mapType, setMapType] = React.useState(props.query.type || 'voxel');
 
   const showFull = React.useCallback(
     (x) => {
@@ -95,23 +90,6 @@ export default function MapPage() {
     );
   }, [mapType, loading]);
 
-  const renderHeaderTab = React.useMemo(() => {
-    return TAB.map((item, index) => {
-      return (
-        <Tab
-          active={mapType === item.type}
-          isMini={true}
-          key={item.label}
-          label={item.label}
-          icon={item.icon}
-          onClick={(val) => {
-            setMapType(item.type);
-          }}
-        />
-      );
-    });
-  }, [TAB]);
-
   return (
     <Page className="min-h-screen" meta={meta}>
       {fullScreen ? null : (
@@ -123,7 +101,20 @@ export default function MapPage() {
           <div className={cn('tab-list flex mt-5', style.allHeight)}>
             <div className={cls}></div>
             <div className="main-content flex px-0">
-              {renderHeaderTab}
+              {TAB.map((item, index) => {
+                return (
+                  <Tab
+                    active={mapType === item.type}
+                    isMini={true}
+                    key={item.label}
+                    label={item.label}
+                    icon={item.icon}
+                    onClick={(val) => {
+                      setMapType(item.type);
+                    }}
+                  />
+                );
+              })}
               <div className={cls} />
             </div>
             <div className={cls} />
@@ -142,4 +133,12 @@ export default function MapPage() {
       {fullScreen ? null : <Footer />}
     </Page>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      query,
+    }, // will be passed to the page component as props
+  };
 }
