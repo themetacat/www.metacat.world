@@ -1,6 +1,5 @@
 import React from 'react';
 import cn from 'classnames';
-import L from 'leaflet';
 
 import ReactTooltip from 'react-tooltip';
 import { TileMap } from 'react-tile-map';
@@ -8,16 +7,12 @@ import style from './index.module.css';
 
 import Selecter from '../select';
 import Legend from '../legend';
-import ParcelDeatil from '../parcel-detail';
+import DecentralandDeatil from '../decentraland-detail';
 
 import { convert } from '../../common/utils';
+import Popup from '../decentraland-popup';
 
-import {
-  getDecentralandMapLevelThreeData,
-  getCvParcelDetail,
-  getCvIsland,
-  getCvSuburbs,
-} from '../../service';
+import { getDecentralandMapLevelThreeData, getDclParcelDetail } from '../../service';
 
 // this type is same as https://github.com/decentraland/atlas-server v2 version. There is only 5 types has color
 const COLOR_BY_TYPE = Object.freeze({
@@ -60,6 +55,8 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
+  withPopup?: boolean;
+  canClick?: boolean;
 }
 
 export type AtlasTile = {
@@ -73,6 +70,7 @@ export type AtlasTile = {
   name?: string;
   estate_id?: string;
   color?: string;
+  land_id?: string;
 };
 
 export type AtlasState = {
@@ -262,7 +260,11 @@ const colors = {
   ],
 };
 
-const NOT_CUSTOME_COLOR = ['road', 'plaza', 'district'];
+const NOT_CUSTOME_COLOR = {
+  road: '#15282C',
+  plaza: '#011406',
+  district: '#021B16',
+};
 
 function DecentralandMap({
   zoomLimit,
@@ -275,49 +277,45 @@ function DecentralandMap({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
+  withPopup = true,
+  canClick = true,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [zoomLevel, setZoomLevel] = React.useState(initZoom);
   const [detail, setDeatil] = React.useState();
-  const updatePop = React.useRef({
-    need: false,
-    source: {
-      lat: 0,
-      lng: 0,
-    },
-  });
-  const popDetail = React.useRef();
+  const [showPopup, setShowPopup] = React.useState(false);
+  const [hoveredTile, setHoveredTile] = React.useState(null);
+  const [mouseX, setMouseX] = React.useState(-1);
+  const [mouseY, setMouseY] = React.useState(-1);
+  const [positionX, setPositionX] = React.useState(0);
+  const [positionY, setPositionY] = React.useState(0);
+  const [showDetail, setShowDetail] = React.useState(false);
   const mapType = React.useRef('price');
   const staticType = React.useRef('all');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[2]);
-  const trafficRef = React.useRef(null);
-  const priceRef = React.useRef(null);
-  const markers = React.useRef(null);
-  const layerManager = React.useRef(null);
-  const mapRef = React.useRef(null);
   const [mapTiles, setMapTiles] = React.useState(null);
+  const orginData = React.useRef(null);
+  const mousedownTimestamp = React.useRef(0);
+  const lastDragX = React.useRef(-1);
+  const lastDragY = React.useRef(-1);
+  const detailY = React.useRef(0);
+  const detailX = React.useRef(0);
   // const clickToJumpRef = React.useRef(clickToJump);
-
-  const setLoading = React.useCallback(() => {
-    if (loadFinish) {
-      loadFinish();
-    }
-  }, [loadFinish]);
 
   const dealWithParcel = React.useCallback(
     (data, colorsLimit) => {
       const tiles = {};
 
       for (let i = 0; i < data.length; i += 1) {
-        let color = null;
-        if (NOT_CUSTOME_COLOR.indexOf(data[i].properties.type) < 0) {
+        let color = NOT_CUSTOME_COLOR[data[i].properties.type];
+        if (!NOT_CUSTOME_COLOR[data[i].properties.type]) {
           let count = data[i][mapType.current][staticType.current];
           count = count < 0 ? 0 : count;
-          const allColor = colorsLimit.find((x) => {
-            return count <= x[staticType.current].start && count >= x[staticType.current].end;
+          const allColor = colorsLimit.find((co) => {
+            return count <= co[staticType.current].start && count >= co[staticType.current].end;
           });
 
           if (allColor) {
@@ -336,7 +334,7 @@ function DecentralandMap({
       }
       setMapTiles(tiles as Record<string, AtlasTile>);
     },
-    [mapType.current, staticType.current],
+    [null],
   );
 
   const requestLand = React.useCallback(async () => {
@@ -346,28 +344,30 @@ function DecentralandMap({
     if (code === 100000 && data) {
       const { stats, parcels } = convert(data);
       const limit = stats[mapType.current].levelOne;
-      colors[2].forEach((x, index) => {
-        Object.assign(x.all, limit[index].all);
-        Object.assign(x.month, limit[index].month);
-        Object.assign(x.quarter, limit[index].quarter);
-        Object.assign(x.year, limit[index].year);
+      colors[2].forEach((co, index) => {
+        Object.assign(co.all, limit[index].all);
+        Object.assign(co.month, limit[index].month);
+        Object.assign(co.quarter, limit[index].quarter);
+        Object.assign(co.year, limit[index].year);
       });
+      orginData.current = parcels;
       dealWithParcel(parcels, colors[2]);
     }
-  }, [dealWithParcel, colors, mapType.current]);
+  }, [dealWithParcel, colors]);
 
   const closePop = React.useCallback(() => {
-    if (popDetail.current) {
-      (popDetail.current as any).style.display = 'none';
-    }
-  }, [popDetail.current]);
+    setShowDetail(false);
+  }, [null]);
 
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
       closePop();
+      if (orginData.current) {
+        dealWithParcel(orginData.current, colors[2]);
+      }
     },
-    [minZoomLevel],
+    [dealWithParcel, colors],
   );
 
   const changeMapType = React.useCallback(
@@ -382,27 +382,19 @@ function DecentralandMap({
 
   const zoomButtonClick = React.useCallback(
     (type) => {
-      if (mapRef.current) {
-        if (type === 'zoomIn') {
-          mapRef.current.zoomIn();
-        } else {
-          mapRef.current.zoomOut();
-        }
+      if (type === 'zoomIn') {
+        setZoomLevel(zoomLevel > maxZoomLevel ? maxZoomLevel : zoomLevel + 1);
+      } else {
+        setZoomLevel(zoomLevel < minZoomLevel ? minZoomLevel : zoomLevel - 1);
       }
     },
-    [null],
+    [zoomLevel, maxZoomLevel, minZoomLevel],
   );
 
   const full = React.useCallback(async () => {
     const isFull = !fullScreen;
     const s = await fullScreenOnClick(isFull);
     setFullScreen(isFull);
-    if (mapRef.current) {
-      mapRef.current.invalidateSize(true);
-      // setTimeout(() => {
-
-      // }, 1000);
-    }
   }, [fullScreen, fullScreenOnClick]);
 
   const Layer = React.useCallback(
@@ -424,12 +416,143 @@ function DecentralandMap({
     [mapTiles],
   );
 
+  const onMapChange = React.useCallback(
+    ({ zoom: z, nw, se, center }) => {
+      if (z !== zoomLevel) {
+        setZoomLevel(z);
+      }
+    },
+    [zoomLevel],
+  );
+
+  const handleHover = React.useCallback(
+    (x: number, y: number) => {
+      if (!withPopup || !mapTiles) return;
+      const id = `${x},${y}`;
+      const tile = mapTiles[id];
+      if (tile && !showPopup) {
+        setShowPopup(true);
+        setHoveredTile(tile);
+        setMouseX(-1);
+        setMouseY(-1);
+      } else if (tile && tile !== hoveredTile) {
+        setHoveredTile(tile);
+        setMouseX(-1);
+        setMouseY(-1);
+      } else if (!tile && showPopup) {
+        setShowPopup(false);
+      }
+    },
+    [hoveredTile, showPopup, withPopup, mapTiles],
+  );
+
+  const requestDetail = React.useCallback(
+    async (id: string) => {
+      const d = await getDclParcelDetail(id);
+      const { data } = d;
+      setShowDetail(true);
+      setDeatil(convert(data));
+    },
+    [convert],
+  );
+
+  const handleClick = React.useCallback(
+    (x: number, y: number) => {
+      if (!mapTiles) return;
+      const id = `${x},${y}`;
+      const tile = mapTiles[id];
+      if (tile && tile.type === 'owned') {
+        requestDetail(tile.landId);
+        return;
+      }
+      setShowDetail(false);
+    },
+    [mapTiles, requestDetail],
+  );
+
+  const handleHidePopup = React.useCallback(() => {
+    setShowPopup(false);
+    setMouseX(-1);
+    setMouseY(-1);
+  }, [null]);
+
+  const handleDraging = React.useCallback(
+    (event) => {
+      if (lastDragX.current === -1 && lastDragY.current === -1) {
+        return;
+      }
+      const newX = event.layerX;
+      const newY = event.layerY;
+
+      const dX = newX - lastDragX.current;
+      const dY = newY - lastDragY.current;
+
+      lastDragX.current = newX;
+      lastDragY.current = newY;
+
+      detailX.current = detailX.current + dX;
+      detailY.current = detailY.current + dY;
+    },
+    [lastDragX, lastDragY],
+  );
+  const handleDragEnd = React.useCallback(
+    (event) => {
+      event.preventDefault();
+      mousedownTimestamp.current = Date.now() - mousedownTimestamp.current;
+      if (mousedownTimestamp.current < 200) {
+        detailX.current = event.layerX;
+        detailY.current = event.layerY;
+      }
+      document.removeEventListener('mousemove', handleDraging);
+      lastDragX.current = -1;
+      lastDragY.current = -1;
+    },
+    [handleDraging],
+  );
+
+  const handleDrag = React.useCallback(
+    (event) => {
+      mousedownTimestamp.current = Date.now();
+      if (showDetail) {
+        lastDragX.current = event.nativeEvent.layerX;
+        lastDragY.current = event.nativeEvent.layerY;
+      }
+
+      document.addEventListener('mousemove', handleDraging);
+      document.addEventListener('mouseup', handleDragEnd);
+    },
+    [showDetail, handleDraging, handleDragEnd],
+  );
+
   React.useEffect(() => {
     requestLand();
   }, [null]);
 
+  // mouse move
+
+  React.useEffect(() => {
+    function handleMouseMove(event: MouseEvent) {
+      if (showPopup && mouseX === -1 && mouseY === -1) {
+        setMouseX(event.offsetX);
+        setMouseY(event.offsetY);
+        setPositionX(event.offsetX);
+        setPositionY(event.offsetY);
+      }
+    }
+
+    if (withPopup) {
+      document.addEventListener('mousemove', handleMouseMove);
+    }
+
+    return () => {
+      if (withPopup) {
+        document.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, [withPopup, showPopup, mouseX, mouseY]);
+
   return (
-    <div className={style.mapContainer} onClick={onClick}>
+    <div className={style.mapContainer} onClick={onClick} onMouseLeave={handleHidePopup}>
       <div className={cn('flex justify-between items-center', style.picker)}>
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter
@@ -442,11 +565,11 @@ function DecentralandMap({
         <Selecter
           options={staticList}
           onClick={changeStaticType}
-          showArrow={changeTypeControl}
+          showArrow={true}
           defaultLabel={staticType.current}
         ></Selecter>
       </div>
-      {mapType.current === 'PRICE' ? (
+      {mapType.current === 'price' ? (
         <div className={cn('flex justify-center items-center', style.helper)}>
           <div
             data-tip
@@ -509,16 +632,37 @@ function DecentralandMap({
         </>
       ) : null}
 
-      <div className={style.map} style={{ backgroundColor: backColor }}>
-        <TileMap layers={[Layer]} zoom={3} minSize={2} size={2}></TileMap>
-        <div className={cn('absolute', style.pop)} ref={popDetail}>
-          <ParcelDeatil
+      <div className={style.map} style={{ backgroundColor: backColor }} onMouseDown={handleDrag}>
+        <TileMap
+          layers={[Layer]}
+          zoom={zoomLevel}
+          minSize={2}
+          size={2}
+          onChange={onMapChange}
+          onHover={handleHover}
+          onClick={handleClick}
+        ></TileMap>
+        {hoveredTile ? (
+          <Popup
+            x={positionX}
+            y={positionY}
+            tile={hoveredTile}
+            visible={showPopup}
+            position={positionX > window.innerWidth - 280 ? 'left' : 'right'}
+          ></Popup>
+        ) : null}
+        {showDetail ? (
+          <DecentralandDeatil
+            showRef={showDetail}
+            className={cn('absolute')}
+            x={detailX.current}
+            y={detailY.current}
             options={detail}
             trafficType={staticType.current}
             mapType={mapType.current}
             close={closePop}
-          ></ParcelDeatil>
-        </div>
+          ></DecentralandDeatil>
+        ) : null}
       </div>
       <Legend
         className={style.legend}

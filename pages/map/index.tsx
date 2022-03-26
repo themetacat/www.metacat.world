@@ -77,9 +77,9 @@ export default function MapPage() {
       <DecentralandMap
         fullScreenOnClick={showFull}
         zoomControl={true}
-        zoomLimit={[5, 9]}
+        zoomLimit={[1, 7]}
         dragging={true}
-        initZoom={6}
+        initZoom={5}
         changeTypeControl={false}
         loadFinish={() => {
           setLoading(false);
