@@ -27,7 +27,7 @@ import style from './index.module.css';
 
 const TAB = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
     type: 'cryptovoxels',
   },

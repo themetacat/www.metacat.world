@@ -60,9 +60,9 @@ const DCLMapWithNoSSR = dynamic(() => import('../components/decentraland-map'), 
 
 const TAB = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
-    type: 'voxel',
+    type: 'cryptovoxels',
   },
   {
     label: 'Decentraland',
@@ -99,7 +99,7 @@ export default function Index(props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
 
-  const [tabState, setTabState] = React.useState(props.query.tab || 'voxel');
+  const [tabState, setTabState] = React.useState(props.query.tab || 'cryptovoxels');
   const [subTabState, setSubTabState] = React.useState(props.query.subTab || 'parcel');
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
@@ -128,7 +128,7 @@ export default function Index(props) {
     setError(false);
 
     try {
-      if (tab === 'voxel') {
+      if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
           const res = await getCVParcelList(page, 50, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
@@ -378,7 +378,7 @@ export default function Index(props) {
       return (
         <div className={style.mapContanier}>
           <div className={cn(' flex justify-center items-center', style.mapBack)}>
-            {tabState === 'voxel' ? (
+            {tabState === 'cryptovoxels' ? (
               <MapWithNoSSR
                 zoomControl={false}
                 zoomLimit={[6, 6]}
@@ -403,7 +403,7 @@ export default function Index(props) {
       );
     }
     if (subTabState === 'analytics') {
-      return tabState === 'voxel' ? (
+      return tabState === 'cryptovoxels' ? (
         <div className={cn('main-content')}>
           <BaseChart className=" my-5">
             <BaseBar

@@ -30,9 +30,9 @@ const meta = {
 
 const TAB = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
-    type: 'voxel',
+    type: 'cryptovoxels',
   },
   {
     label: 'Decentraland',
@@ -46,7 +46,7 @@ export default function MapPage(props) {
 
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [mapType, setMapType] = React.useState(props.query.type || 'voxel');
+  const [mapType, setMapType] = React.useState(props.query.type || 'cryptovoxels');
 
   const router = useRouter();
 
@@ -65,7 +65,7 @@ export default function MapPage(props) {
         </div>
       );
     }
-    return mapType === 'voxel' ? (
+    return mapType === 'cryptovoxels' ? (
       <Map
         fullScreenOnClick={showFull}
         zoomControl={true}

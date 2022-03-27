@@ -1037,7 +1037,7 @@ function Map({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        Router.push('/map?type=voxel');
+        Router.push('/map?type=cryptovoxels');
         // window.location.href = '/map?type=voxel';
       });
     }

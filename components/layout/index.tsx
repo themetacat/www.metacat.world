@@ -73,7 +73,7 @@ export default function Layout({
                     style.gomap,
                   )}
                 >
-                  <Link href="/map?type=voxel">GO MAP</Link>
+                  <Link href="/map?type=cryptovoxels">GO MAP</Link>
                 </div>
               </div>
             </div>

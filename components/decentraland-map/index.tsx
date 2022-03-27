@@ -286,6 +286,7 @@ function DecentralandMap({
   const [detail, setDeatil] = React.useState();
   const [showPopup, setShowPopup] = React.useState(false);
   const [hoveredTile, setHoveredTile] = React.useState(null);
+  const [selectTile, setSelectTile] = React.useState(null);
   const [mouseX, setMouseX] = React.useState(-1);
   const [mouseY, setMouseY] = React.useState(-1);
   const [positionX, setPositionX] = React.useState(0);
@@ -373,7 +374,7 @@ function DecentralandMap({
 
   const closePop = React.useCallback(() => {
     setShowDetail(false);
-    setHoveredTile(null);
+    setSelectTile(null);
   }, [null]);
 
   const changeStaticType = React.useCallback(
@@ -434,7 +435,7 @@ function DecentralandMap({
   );
 
   const isSelected = (x: number, y: number) => {
-    return hoveredTile ? hoveredTile.x === x.toString() && hoveredTile.y === y.toString() : false;
+    return selectTile ? selectTile.x === x.toString() && selectTile.y === y.toString() : false;
   };
 
   const selectedStrokeLayer = (x, y) => {
@@ -461,10 +462,12 @@ function DecentralandMap({
       const id = `${x},${y}`;
       const tile = mapTiles[id];
       if (tile && !showPopup) {
+        setHoveredTile(tile);
         setShowPopup(true);
         setMouseX(-1);
         setMouseY(-1);
       } else if (tile && tile !== hoveredTile) {
+        setHoveredTile(tile);
         setMouseX(-1);
         setMouseY(-1);
       } else if (!tile && showPopup) {
@@ -490,14 +493,14 @@ function DecentralandMap({
       const id = `${x},${y}`;
       const tile = mapTiles[id];
       if (tile && tile.type === 'owned') {
-        setHoveredTile({
+        setSelectTile({
           x: tile.x,
           y: tile.y,
         });
         requestDetail(tile.landId);
         return;
       }
-      setHoveredTile(null);
+      setSelectTile(null);
       setShowDetail(false);
     },
     [mapTiles, requestDetail],

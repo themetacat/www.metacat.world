@@ -35,9 +35,9 @@ import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
 
 const types = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
-    value: 'voxel',
+    value: 'cryptovoxels',
   },
   {
     label: 'Decentraland',
@@ -54,7 +54,7 @@ export default function AnalyticsIndex(props) {
 
   const router = useRouter();
 
-  const [showType, setShowType] = React.useState(props.query.type || 'voxel');
+  const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
 
   const changeType = React.useCallback(
     (newType) => {
@@ -65,7 +65,7 @@ export default function AnalyticsIndex(props) {
   );
 
   const renderChartList = React.useMemo(() => {
-    return showType === 'voxel' ? (
+    return showType === 'cryptovoxels' ? (
       <>
         <BaseBar
           id={'basebar1'}
