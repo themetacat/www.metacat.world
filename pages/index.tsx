@@ -377,7 +377,7 @@ export default function Index(props) {
     if (subTabState === 'map') {
       return (
         <div className={style.mapContanier}>
-          <div className={style.mapBack}>
+          <div className={cn(' flex justify-center items-center', style.mapBack)}>
             {tabState === 'voxel' ? (
               <MapWithNoSSR
                 zoomControl={false}
