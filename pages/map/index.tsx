@@ -4,6 +4,7 @@ import cn from 'classnames';
 
 import dynamic from 'next/dynamic';
 
+import { useRouter } from 'next/router';
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -47,6 +48,8 @@ export default function MapPage(props) {
   const [loading, setLoading] = React.useState(false);
   const [mapType, setMapType] = React.useState(props.query.type || 'voxel');
 
+  const router = useRouter();
+
   const showFull = React.useCallback(
     (x) => {
       setFullScreen(x);
@@ -82,9 +85,6 @@ export default function MapPage(props) {
         dragging={true}
         initZoom={5}
         changeTypeControl={false}
-        loadFinish={() => {
-          setLoading(false);
-        }}
         backColor="rgb(8 17 19)"
       ></DecentralandMap>
     );
@@ -111,6 +111,7 @@ export default function MapPage(props) {
                     icon={item.icon}
                     onClick={(val) => {
                       setMapType(item.type);
+                      router.replace(`/map?type=${item.type}`);
                     }}
                   />
                 );

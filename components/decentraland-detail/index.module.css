@@ -9,6 +9,8 @@
   background-color: rgba(0,0, 0, 0.9);
   transform: translate(-51%,-110%);
   pointer-events: auto;
+  font-family:"Microsoft YaHei",微软雅黑,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu;
+  width: fit-content;
 }
 
 .widthlimit{
@@ -72,9 +74,6 @@
   max-width: 90%;
 }
 
-.title{
-  /* max-width: 200px; */
-}
 
 .label{
   color: rgba(170, 170, 170, 1);

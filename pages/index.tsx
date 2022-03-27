@@ -722,7 +722,7 @@ export default function Index(props) {
             )}
 
             {subTabState === 'analytics' && (
-              <a href={`/analytics`}>
+              <a href={`/analytics?type=${tabState}`}>
                 <div
                   className={cn(
                     'main-content flex justify-between items-center mt-5font-normal',

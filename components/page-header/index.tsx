@@ -54,7 +54,7 @@ export default function PageHeader({ active, className }: Props) {
             active === 'map' ? style.active : null,
           )}
         >
-          <Link href={'/map'}>Map</Link>
+          <Link href={'/map?typoe=voxel'}>Map</Link>
         </div>
 
         <div

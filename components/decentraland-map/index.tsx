@@ -1,13 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
 
-import ReactTooltip from 'react-tooltip';
+import Router from 'next/router';
 import { TileMap } from 'react-tile-map';
 import style from './index.module.css';
 
 import Selecter from '../select';
 import Legend from '../legend';
 import DecentralandDeatil from '../decentraland-detail';
+import Status from '../status';
 
 import { convert } from '../../common/utils';
 import Popup from '../decentraland-popup';
@@ -301,6 +302,7 @@ function DecentralandMap({
   const lastDragY = React.useRef(-1);
   const detailY = React.useRef(0);
   const detailX = React.useRef(0);
+  const [loading, setLoading] = React.useState(false);
   // const clickToJumpRef = React.useRef(clickToJump);
 
   const dealWithParcel = React.useCallback(
@@ -337,6 +339,21 @@ function DecentralandMap({
 
   const requestLand = React.useCallback(async () => {
     //
+    // fetch("https://poster-phi.vercel.app/dcl/all_price_map_level_three.json").then(res=>{
+    //   return res.json()
+    // }).then(data=>{
+    //   const { stats, parcels } = convert(data);
+    //   const limit = stats[mapType.current].levelOne;
+    //   colors[2].forEach((co, index) => {
+    //     Object.assign(co.all, limit[index].all);
+    //     Object.assign(co.month, limit[index].month);
+    //     Object.assign(co.quarter, limit[index].quarter);
+    //     Object.assign(co.year, limit[index].year);
+    //   });
+    //   orginData.current = parcels;
+    //   dealWithParcel(parcels, colors[2]);
+    // })
+    setLoading(true);
     const res = await getDecentralandMapLevelThreeData();
     const { code, data } = res;
     if (code === 100000 && data) {
@@ -351,10 +368,12 @@ function DecentralandMap({
       orginData.current = parcels;
       dealWithParcel(parcels, colors[2]);
     }
+    setLoading(false);
   }, [dealWithParcel, colors]);
 
   const closePop = React.useCallback(() => {
     setShowDetail(false);
+    setHoveredTile(null);
   }, [null]);
 
   const changeStaticType = React.useCallback(
@@ -414,13 +433,26 @@ function DecentralandMap({
     [mapTiles],
   );
 
+  const isSelected = (x: number, y: number) => {
+    return hoveredTile ? hoveredTile.x === x.toString() && hoveredTile.y === y.toString() : false;
+  };
+
+  const selectedStrokeLayer = (x, y) => {
+    return isSelected(x, y) ? { color: '#ff0044', scale: 1.4 } : null;
+  };
+
+  const selectedFillLayer = (x, y) => {
+    return isSelected(x, y) ? { color: '#ff9990', scale: 1.2 } : null;
+  };
+
   const onMapChange = React.useCallback(
     ({ zoom: z, nw, se, center }) => {
       if (z !== zoomLevel) {
         setZoomLevel(z);
+        closePop();
       }
     },
-    [zoomLevel],
+    [zoomLevel, closePop],
   );
 
   const handleHover = React.useCallback(
@@ -430,11 +462,9 @@ function DecentralandMap({
       const tile = mapTiles[id];
       if (tile && !showPopup) {
         setShowPopup(true);
-        setHoveredTile(tile);
         setMouseX(-1);
         setMouseY(-1);
       } else if (tile && tile !== hoveredTile) {
-        setHoveredTile(tile);
         setMouseX(-1);
         setMouseY(-1);
       } else if (!tile && showPopup) {
@@ -460,9 +490,14 @@ function DecentralandMap({
       const id = `${x},${y}`;
       const tile = mapTiles[id];
       if (tile && tile.type === 'owned') {
+        setHoveredTile({
+          x: tile.x,
+          y: tile.y,
+        });
         requestDetail(tile.landId);
         return;
       }
+      setHoveredTile(null);
       setShowDetail(false);
     },
     [mapTiles, requestDetail],
@@ -527,7 +562,8 @@ function DecentralandMap({
   }, [null]);
 
   const jumpToMap = () => {
-    window.location.href = '/map?type=decentraland';
+    Router.push('/map?type=decentraland');
+    // window.location.href = '/map?type=decentraland';
   };
 
   // mouse move
@@ -553,7 +589,11 @@ function DecentralandMap({
     };
   }, [withPopup, showPopup, mouseX, mouseY]);
 
-  return (
+  return loading ? (
+    <div className="w-max">
+      <Status status="loading" />
+    </div>
+  ) : (
     <div className={style.mapContainer} onClick={onClick} onMouseLeave={handleHidePopup}>
       <div className={cn('flex justify-between items-center', style.picker)}>
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
@@ -571,34 +611,6 @@ function DecentralandMap({
           defaultLabel={staticType.current}
         ></Selecter>
       </div>
-      {mapType.current === 'price' ? (
-        <div className={cn('flex justify-center items-center', style.helper)}>
-          <div
-            data-tip
-            data-for="info"
-            data-place="bottom"
-            className={cn('relative flex justify-center items-center', style.helperInfo)}
-          >
-            <img src="/images/helper.png"></img>
-          </div>
-          <ReactTooltip
-            id="info"
-            effect="solid"
-            textColor="#AAAAAA"
-            // className={style.pop}
-            backgroundColor="#0F191B"
-            border={false}
-          >
-            <div className={style.info}>
-              The brighter the area, the higher the average price in the selected time frame.The
-              first/second level show the average parcel sale USD in island/suburb, the third level
-              (and above) show the cumulative sale USD of the parcel.
-            </div>
-          </ReactTooltip>
-        </div>
-      ) : (
-        <></>
-      )}
       {zoomControl ? (
         <>
           <div className={cn('flex flex-col', style.zoom)}>
@@ -641,7 +653,7 @@ function DecentralandMap({
         onMouseDown={dragging ? handleDrag : null}
       >
         <TileMap
-          layers={[Layer]}
+          layers={[Layer, selectedStrokeLayer, selectedFillLayer]}
           zoom={zoomLevel}
           minSize={2}
           isDraggable={dragging}
@@ -662,7 +674,7 @@ function DecentralandMap({
         {showDetail ? (
           <DecentralandDeatil
             showRef={showDetail}
-            className={cn('absolute')}
+            className={cn('relative')}
             x={detailX.current}
             y={detailY.current}
             options={detail}

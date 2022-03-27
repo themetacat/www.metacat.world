@@ -3,6 +3,7 @@ import cn from 'classnames';
 import L from 'leaflet';
 import MiniMap from 'leaflet-minimap';
 
+import Router from 'next/router';
 import ReactTooltip from 'react-tooltip';
 
 import style from './index.module.css';
@@ -1036,7 +1037,8 @@ function Map({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        window.location.href = '/map?type=voxel';
+        Router.push('/map?type=voxel');
+        // window.location.href = '/map?type=voxel';
       });
     }
 

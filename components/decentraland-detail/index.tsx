@@ -1,29 +1,20 @@
-import React, { CSSProperties, HTMLAttributes, LegacyRef, useEffect } from 'react';
+import React, { CSSProperties, HTMLAttributes } from 'react';
 import cn from 'classnames';
 
 import CoverImg from '../cover-img';
 
+import { formatNum } from '../../common/utils';
+
 import styles from './index.module.css';
 
-interface Price {
-  eth?: number;
-  usd?: number;
-}
-
-interface traffic {
-  month?: number;
-  week?: number;
-  all?: number;
-}
-
 interface timeRangeSale {
-  mana?: string;
+  mana?: number;
   usd?: number;
 }
 
 interface lastSale {
   date?: string;
-  mana?: string;
+  mana?: number;
   isPrimary?: number;
   usd?: number;
 }
@@ -115,7 +106,7 @@ export default function DecentralandDeatil({
       label = op.traffic.month;
     }
     const condition = op.timeRangeSale?.mana
-      ? `${op.timeRangeSale.mana}MANA(${op.timeRangeSale.usd}U)`
+      ? `${op.timeRangeSale.mana} MANA(${op.timeRangeSale.usd} U)`
       : '';
     if (type === 'all') {
       preffix = 'All-Time Sales：';
@@ -162,7 +153,10 @@ export default function DecentralandDeatil({
               return (
                 <li key={idx} className={cn('', styles.sales)}>
                   {`${ite.date} ${ite.isPrimary > 0 ? '(primary sales) /' : ''}`}{' '}
-                  <span className="text-white">{`${ite.mana}MANA(${ite.usd}U)`}</span>
+                  <span className="text-white">{`${formatNum(ite.mana, false)} MANA(${formatNum(
+                    ite.usd,
+                    false,
+                  )} U)`}</span>
                 </li>
               );
             })}
@@ -181,10 +175,10 @@ export default function DecentralandDeatil({
       onClick={jumpToParcel}
     >
       <div className={cn('flex justify-between items-center', styles.titleContainer)}>
-        <div className={cn('truncate w-full', styles.title)}></div>
+        <div className={cn('truncate w-full')}></div>
         <img className={styles.close} src="/images/close-pop.png" onClick={closePop}></img>
       </div>
-      <div className="flex justify-start items-start mt-0">
+      <div className={cn('flex justify-start items-start mt-0')}>
         <CoverImg className={styles.cover} img={options.coverImgUrl} />
         <div className="ml-2 w-full">
           <div className={cn('flex justify-between', styles.row)}>
