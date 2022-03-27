@@ -46,7 +46,7 @@ export default function PageHeader({ active, className }: Props) {
           )}
           // onClick={jumpToData}
         >
-          <Link href={'/analytics'}>Analytics</Link>
+          <Link href={'/analytics?typoe=cryptovoxels'}>Analytics</Link>
         </div>
         <div
           className={cn(
