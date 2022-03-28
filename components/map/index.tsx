@@ -3,6 +3,7 @@ import cn from 'classnames';
 import L from 'leaflet';
 import MiniMap from 'leaflet-minimap';
 
+import Router from 'next/router';
 import ReactTooltip from 'react-tooltip';
 
 import style from './index.module.css';
@@ -356,7 +357,10 @@ function Map({
           (params as any).centerFixed = { lat: 0, lng: 0 };
         }
 
-        const min = new MiniMap(minIsLandLayer, params).addTo(pageMap);
+        const min = new MiniMap(minIsLandLayer, params);
+        if (min) {
+          min.addTo(pageMap);
+        }
       }
     },
     [null],
@@ -1033,7 +1037,8 @@ function Map({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        window.location.href = '/map';
+        Router.push('/map?type=cryptovoxels');
+        // window.location.href = '/map?type=voxel';
       });
     }
 

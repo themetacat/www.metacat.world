@@ -54,11 +54,15 @@ const MapWithNoSSR = dynamic(() => import('../components/map'), {
   ssr: false,
 });
 
+const DCLMapWithNoSSR = dynamic(() => import('../components/decentraland-map'), {
+  ssr: false,
+});
+
 const TAB = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
-    type: 'voxel',
+    type: 'cryptovoxels',
   },
   {
     label: 'Decentraland',
@@ -75,7 +79,6 @@ const SUBTAB = [
   {
     label: 'Map',
     type: 'map',
-    isVoxelOnly: true,
   },
   {
     label: 'Analytics',
@@ -96,7 +99,7 @@ export default function Index(props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
 
-  const [tabState, setTabState] = React.useState(props.query.tab || 'voxel');
+  const [tabState, setTabState] = React.useState(props.query.tab || 'cryptovoxels');
   const [subTabState, setSubTabState] = React.useState(props.query.subTab || 'parcel');
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
@@ -125,7 +128,7 @@ export default function Index(props) {
     setError(false);
 
     try {
-      if (tab === 'voxel') {
+      if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
           const res = await getCVParcelList(page, 50, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
@@ -196,11 +199,11 @@ export default function Index(props) {
 
   const onTabChange = async (tab) => {
     setTabState(tab);
-    let sub = subTabState;
-    if (subTabState === 'map') {
-      sub = 'parcel';
-      setSubTabState(sub);
-    }
+    const sub = subTabState;
+    // if (subTabState === 'map') {
+    //   sub = 'parcel';
+    //   setSubTabState(sub);
+    // }
     setSearchText('');
     setTypeState('all');
 
@@ -374,21 +377,33 @@ export default function Index(props) {
     if (subTabState === 'map') {
       return (
         <div className={style.mapContanier}>
-          <div className={style.mapBack}>
-            <MapWithNoSSR
-              zoomControl={false}
-              zoomLimit={[6, 6]}
-              initZoom={6}
-              clickToJump={true}
-              dragging={false}
-              loadFinish={null}
-            ></MapWithNoSSR>
+          <div className={cn(' flex justify-center items-center', style.mapBack)}>
+            {tabState === 'cryptovoxels' ? (
+              <MapWithNoSSR
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                dragging={false}
+                loadFinish={null}
+              ></MapWithNoSSR>
+            ) : (
+              <DCLMapWithNoSSR
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                changeTypeControl={false}
+                dragging={false}
+                loadFinish={null}
+              ></DCLMapWithNoSSR>
+            )}
           </div>
         </div>
       );
     }
     if (subTabState === 'analytics') {
-      return tabState === 'voxel' ? (
+      return tabState === 'cryptovoxels' ? (
         <div className={cn('main-content')}>
           <BaseChart className=" my-5">
             <BaseBar
@@ -682,7 +697,7 @@ export default function Index(props) {
           <div className={cn('flex justify-between items-center pt-5', style.contentHeader)}>
             <div className="flex">
               {SUBTAB.map((item, index) => {
-                if (!item.isVoxelOnly || (item.isVoxelOnly && tabState === 'voxel')) {
+                if (item) {
                   return (
                     <SecondTab
                       label={item.label}
@@ -707,7 +722,7 @@ export default function Index(props) {
             )}
 
             {subTabState === 'analytics' && (
-              <a href={`/analytics`}>
+              <a href={`/analytics?type=${tabState}`}>
                 <div
                   className={cn(
                     'main-content flex justify-between items-center mt-5font-normal',

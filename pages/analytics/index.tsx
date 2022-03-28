@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
+import { useRouter } from 'next/router';
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -34,9 +35,9 @@ import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
 
 const types = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
-    value: 'voxel',
+    value: 'cryptovoxels',
   },
   {
     label: 'Decentraland',
@@ -45,23 +46,26 @@ const types = [
   },
 ];
 
-export default function AnalyticsIndex() {
+export default function AnalyticsIndex(props) {
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
-  const [showType, setShowType] = React.useState(types[0].value);
+  const router = useRouter();
+
+  const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
 
   const changeType = React.useCallback(
     (newType) => {
       setShowType(newType);
+      router.replace(`/analytics?type=${newType}`);
     },
     [types],
   );
 
   const renderChartList = React.useMemo(() => {
-    return showType === 'voxel' ? (
+    return showType === 'cryptovoxels' ? (
       <>
         <BaseBar
           id={'basebar1'}
@@ -261,11 +265,19 @@ export default function AnalyticsIndex() {
             style.chartList,
           )}
         >
-          <Switch onActive={changeType} options={types}></Switch>
+          <Switch onActive={changeType} options={types} defaultValue={showType}></Switch>
           {renderChartList}
         </div>
       </div>
       <Footer />
     </Page>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      query,
+    }, // will be passed to the page component as props
+  };
 }

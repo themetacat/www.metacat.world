@@ -76,6 +76,39 @@ class API {
 
     return json;
   }
+
+  // 单个更新CV地块租赁
+
+  public async req_parcels_update(
+    token: string,
+    parcel_ids: string,
+    is_built?: string,
+    price?: string,
+    start_at?: number,
+    end_at?: number,
+  ): Promise<any> {
+    const search = qs.stringify(
+      {
+        parcel_ids,
+        is_built,
+        price,
+        start_at,
+        end_at,
+      },
+      { addQueryPrefix: true },
+    );
+    const url = `${this.url}/rent/update_cv_parcel`;
+    const result = await fetch(url, {
+      method: 'post',
+      headers: {
+        Authorization: token,
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

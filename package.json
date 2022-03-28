@@ -58,6 +58,7 @@
     "isomorphic-fetch": "^3.0.0",
     "leaflet": "^1.7.1",
     "leaflet-minimap": "^3.6.1",
+    "moment": "^2.29.1",
     "next": "12",
     "next-intl": "^1.4.4",
     "next-plugin-antd-less": "^1.3.0",

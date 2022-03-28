@@ -12,9 +12,10 @@ type optionItem = {
 type Props = {
   onActive?: (x) => void;
   options?: Array<optionItem>;
+  defaultValue?: string;
 };
-export default function Switch({ onActive, options }: Props) {
-  const [active, setActive] = React.useState(options[0].value);
+export default function Switch({ onActive, options, defaultValue }: Props) {
+  const [active, setActive] = React.useState(defaultValue || options[0].value);
 
   const changeActive = React.useCallback(
     (acitveItem) => {

@@ -106,7 +106,9 @@ export default function ParcelDeatil({
     if (type === 'MONTHLY') {
       return `Monthly Traffic：${op.traffic.month}`;
     }
-    const label = op.timeRangeSale?.eth ? `${op.timeRangeSale.eth}E(${op.timeRangeSale.usd}U)` : '';
+    const label = op.timeRangeSale?.eth
+      ? `${op.timeRangeSale.eth} E(${op.timeRangeSale.usd} U)`
+      : '';
     if (type === 'ALL') {
       return `All-Time Sales：${label}`;
     }
@@ -139,7 +141,7 @@ export default function ParcelDeatil({
               return (
                 <li key={idx} className={cn('', styles.sales)}>
                   {`${ite.date} ${ite.isPrimary > 0 ? '(primary sales) /' : ''}`}{' '}
-                  <span className="text-white">{`${ite.eth}E(${ite.usd}U)`}</span>
+                  <span className="text-white">{`${ite.eth} E(${ite.usd} U)`}</span>
                 </li>
               );
             })}
@@ -186,7 +188,7 @@ export default function ParcelDeatil({
             </div>
           ) : (
             <div className={cn('mt-1 font-medium', styles.label)}>
-              {`Last Price：${options.lastPrice.eth.toFixed(1)}E (${options.lastPrice.usd.toFixed(
+              {`Last Price：${options.lastPrice.eth.toFixed(1)} E (${options.lastPrice.usd.toFixed(
                 0,
               )} U)`}
             </div>

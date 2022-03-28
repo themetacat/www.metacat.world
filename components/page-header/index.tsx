@@ -21,7 +21,8 @@ export default function PageHeader({ active, className }: Props) {
   return (
     <header
       className={cn(
-        'main-content h-full flex justify-center items-center p-5 pointer-events-none z-50',
+        'main-content h-full flex justify-center items-center p-5 pointer-events-none',
+        style.base,
         className,
       )}
     >
@@ -45,7 +46,7 @@ export default function PageHeader({ active, className }: Props) {
           )}
           // onClick={jumpToData}
         >
-          <Link href={'/analytics'}>Analytics</Link>
+          <Link href={'/analytics?typoe=cryptovoxels'}>Analytics</Link>
         </div>
         <div
           className={cn(
@@ -53,7 +54,7 @@ export default function PageHeader({ active, className }: Props) {
             active === 'map' ? style.active : null,
           )}
         >
-          <Link href={'/map'}>Map</Link>
+          <Link href={'/map?typoe=cryptovoxels'}>Map</Link>
         </div>
 
         <div

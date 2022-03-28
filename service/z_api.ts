@@ -7,10 +7,11 @@ export const req_parcels_rent_out = async (
   parcel_ids: string,
   is_built: string,
   price: string,
-  start_at: number,
-  end_at: number,
+  start_at: string,
+  end_at: string,
 ) => {
   const url = '/api/batch_list_cv_parcels';
+
   const search = qs.stringify(
     {
       parcel_ids,
@@ -55,6 +56,39 @@ export const req_parcels_cancel = async (token: string, parcel_ids: string) => {
 export const req_parcels_leased = async (token: string, parcel_ids: string) => {
   const search = qs.stringify({ parcel_ids }, { addQueryPrefix: true });
   const url = `/api/batch_lease_listed_cv_parcels`;
+  const result = await fetch(url, {
+    method: 'post',
+    headers: {
+      Authorization: token,
+    },
+    body: search,
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 单个更新CV地块租赁
+
+export const req_parcels_update = async (
+  token: string,
+  parcel_ids: string,
+  is_built?: string,
+  price?: string,
+  start_at?: number,
+  end_at?: number,
+) => {
+  const url = '/api/update_cv_parcel';
+  const search = qs.stringify(
+    {
+      parcel_ids,
+      is_built,
+      price,
+      start_at,
+      end_at,
+    },
+    { addQueryPrefix: true },
+  );
   const result = await fetch(url, {
     method: 'post',
     headers: {

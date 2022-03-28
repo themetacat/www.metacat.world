@@ -3,6 +3,8 @@ import React from 'react';
 import cn from 'classnames';
 
 import dynamic from 'next/dynamic';
+
+import { useRouter } from 'next/router';
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -17,6 +19,10 @@ const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
 
+const DecentralandMap = dynamic(() => import('../../components/decentraland-map'), {
+  ssr: false,
+});
+
 const meta = {
   title: `Map - ${SITE_NAME}`,
   description: META_DESCRIPTION,
@@ -24,17 +30,25 @@ const meta = {
 
 const TAB = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
-    type: 'voxel',
+    type: 'cryptovoxels',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
   },
 ];
 
-export default function MapPage() {
+export default function MapPage(props) {
   const cls = cn('flex-1', style.bottomLine);
 
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [mapType, setMapType] = React.useState(props.query.type || 'cryptovoxels');
+
+  const router = useRouter();
 
   const showFull = React.useCallback(
     (x) => {
@@ -42,6 +56,39 @@ export default function MapPage() {
     },
     [null],
   );
+
+  const renderMap = React.useMemo(() => {
+    if (loading) {
+      return (
+        <div className="w-max">
+          <Status status="loading" />
+        </div>
+      );
+    }
+    return mapType === 'cryptovoxels' ? (
+      <Map
+        fullScreenOnClick={showFull}
+        zoomControl={true}
+        zoomLimit={[5, 9]}
+        dragging={true}
+        initZoom={6}
+        loadFinish={() => {
+          setLoading(false);
+        }}
+        backColor="rgb(8 17 19)"
+      ></Map>
+    ) : (
+      <DecentralandMap
+        fullScreenOnClick={showFull}
+        zoomControl={true}
+        zoomLimit={[1, 7]}
+        dragging={true}
+        initZoom={5}
+        changeTypeControl={false}
+        backColor="rgb(8 17 19)"
+      ></DecentralandMap>
+    );
+  }, [mapType, loading]);
 
   return (
     <Page className="min-h-screen" meta={meta}>
@@ -57,11 +104,15 @@ export default function MapPage() {
               {TAB.map((item, index) => {
                 return (
                   <Tab
-                    active={true}
+                    active={mapType === item.type}
                     isMini={true}
                     key={item.label}
                     label={item.label}
                     icon={item.icon}
+                    onClick={(val) => {
+                      setMapType(item.type);
+                      router.replace(`/map?type=${item.type}`);
+                    }}
                   />
                 );
               })}
@@ -78,25 +129,17 @@ export default function MapPage() {
           fullScreen ? style.full : style.mapContanier,
         )}
       >
-        {loading ? (
-          <div className="w-max">
-            <Status status="loading" />
-          </div>
-        ) : (
-          <Map
-            fullScreenOnClick={showFull}
-            zoomControl={true}
-            zoomLimit={[5, 9]}
-            dragging={true}
-            initZoom={6}
-            loadFinish={() => {
-              setLoading(false);
-            }}
-            backColor="rgb(8 17 19)"
-          ></Map>
-        )}
+        {renderMap}
       </div>
       {fullScreen ? null : <Footer />}
     </Page>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      query,
+    }, // will be passed to the page component as props
+  };
 }

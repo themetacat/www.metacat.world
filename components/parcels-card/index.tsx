@@ -60,21 +60,21 @@ export default function Card({
     window.open(parcelPageUrl);
   }, [parcelPageUrl]);
 
-  // React.useEffect(() => {
-
-  // }, [parcelsIds, selectedIds])
+  React.useEffect(() => {
+    console.log(1);
+  }, [parcelsIds, selectedIds]);
 
   const tag1 = () => {
     if (selectedIds.findIndex((item) => item === parcelId) === -1) {
       return (
         <div>
-          <img src="/images/Rectangle_1.png" className={style.changeImg} />
+          <img src="/images/Group2.png" className={style.changeImg} />
         </div>
       );
     }
     return (
       <div>
-        <img src="/images/Rectangle_2.png" className={style.changeImg} />
+        <img src="/images/Group1.png" className={style.changeImg} />
       </div>
     );
   };

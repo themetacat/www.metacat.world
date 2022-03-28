@@ -1,58 +1,291 @@
+import React from 'react';
+import moment from 'moment';
 import style from './index.module.css';
+import { getToken } from '../../common/utils';
+
+import { req_parcels_rent_out } from '../../service/z_api';
 
 type Props = {
   state?: boolean;
   onClick?;
+  selectedIds;
 };
-export default function rent_set({ state, onClick }: Props) {
-  const value = '0.1';
-  console.log(state);
+export default function rent_set({ state, onClick, selectedIds }: Props) {
+  const [show_built, set_show_built] = React.useState('Built');
+  const [show_time, set_show_time] = React.useState('1 Month');
+  const [parcel_state, set_parcel_state] = React.useState(false);
+  const [term_state, set_term_state] = React.useState(false);
+  const [start_at, set_start_at] = React.useState('');
+  const [end_at, set_end_at] = React.useState('');
+
+  // 发送保存请求所需参数
+  const [end_timestamp, set_end_timestamp] = React.useState('');
+  const [start_timestamp, set_start_timestamp] = React.useState('');
+  const [price, set_price] = React.useState('0.1');
+  const [built, set_built] = React.useState('yes');
+  const [selected_ids, set_selected_ids] = React.useState('');
+  const [token, set_token] = React.useState('');
+  const is_built = [
+    {
+      label: 'Built',
+    },
+    {
+      label: 'Not built',
+    },
+  ];
+  const is_time = [
+    {
+      value: '1 Week',
+    },
+    {
+      value: '1 Month',
+    },
+    {
+      value: '3 Months',
+    },
+    {
+      value: '6 Months',
+    },
+  ];
+
+  const show_parcel = React.useCallback(
+    (current_state) => {
+      set_parcel_state(!current_state);
+    },
+    [parcel_state],
+  );
+
+  const set_parcel_show = React.useCallback(
+    (label) => {
+      set_show_built(label);
+      if (label === 'Built') {
+        set_built('yes');
+      }
+      if (label === 'Not built') {
+        set_built('no');
+      }
+    },
+    [show_built],
+  );
+  const change_show_time_state = React.useCallback(
+    (time_state) => {
+      set_term_state(!time_state);
+    },
+    [term_state],
+  );
+
+  const change_price = React.useCallback((event) => {
+    set_price(event.target.value.toString());
+  }, []);
+  const start_time = React.useCallback(() => {
+    const start = moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss');
+    set_start_at(start);
+    set_start_timestamp(moment(start).valueOf().toString().slice(0, 10));
+  }, [start_at]);
+  const end_time = React.useCallback(
+    (type = '1 Month') => {
+      if (type === '1 Week') {
+        set_end_at(moment().add(7, 'd').format('YYYY-MM-DD HH:mm:ss'));
+
+        set_start_timestamp(
+          moment(moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+        set_end_timestamp(
+          moment(moment().add(7, 'd').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+      }
+      if (type === '1 Month') {
+        set_end_at(moment().add(1, 'M').format('YYYY-MM-DD HH:mm:ss'));
+        set_start_timestamp(
+          moment(moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+        set_end_timestamp(
+          moment(moment().add(1, 'M').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+      }
+      if (type === '3 Months') {
+        set_end_at(moment().add(3, 'M').format('YYYY-MM-DD HH:mm:ss'));
+        set_start_timestamp(
+          moment(moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+        set_end_timestamp(
+          moment(moment().add(3, 'M').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+      }
+      if (type === '6 Months') {
+        set_end_at(moment().add(6, 'M').format('YYYY-MM-DD HH:mm:ss'));
+        set_start_timestamp(
+          moment(moment().locale('zh-cn').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+        set_end_timestamp(
+          moment(moment().add(6, 'M').format('YYYY-MM-DD HH:mm:ss'))
+            .valueOf()
+            .toString()
+            .slice(0, 10),
+        );
+      }
+    },
+    [end_at],
+  );
+  const change_show_time = React.useCallback(
+    (value) => {
+      set_show_time(value);
+      start_time();
+      end_time(value);
+    },
+    [show_time],
+  );
+  const save = React.useCallback(async () => {
+    if (token) {
+      console.log(token, selected_ids, built, price, start_timestamp, end_timestamp);
+      const result = await req_parcels_rent_out(
+        token,
+        selected_ids,
+        built,
+        price,
+        start_timestamp,
+        end_timestamp,
+      );
+      console.log(result);
+    }
+  }, [selectedIds, getToken, show_built, price, start_at, end_at, token]);
+  React.useEffect(() => {
+    start_time();
+    end_time();
+    set_selected_ids(selectedIds.join(','));
+    const accessToken = getToken('atk');
+    if (accessToken) {
+      set_token(accessToken);
+    }
+  }, [selectedIds, state, token]);
+
   if (state) {
     return (
-      <div className={style.container}>
-        <div className={style.header}>
-          <h3>Rent out Setting</h3>
-          <span>&ensp;*&nbsp;</span>
-          <p>Required fields</p>
-          <div
-            onClick={() => {
-              onClick(false);
-            }}
-          >
-            x
+      <div className={style.shade}>
+        <div className={style.container}>
+          <div className={style.header}>
+            <h3>Rent out Setting</h3>
+            <span>&ensp;*&nbsp;</span>
+            <p>Required fields</p>
+            <div
+              onClick={() => {
+                onClick(false);
+              }}
+            >
+              x
+            </div>
           </div>
-        </div>
-        <div className={style.body}>
-          <div className={style.parcel}>
-            Parcel
-            <span>&nbsp;*</span>
+          <div className={style.body}>
+            <div className={style.parcel}>
+              Parcel
+              <span>&nbsp;*</span>
+            </div>
+            <div
+              className={style.built}
+              onClick={() => {
+                show_parcel(parcel_state);
+              }}
+            >
+              <div>{show_built}</div>
+              <img src="/images/Frame-down.png" />
+              {parcel_state ? (
+                <div className={style.parcel_show}>
+                  {is_built.map((item) => {
+                    return (
+                      <div
+                        key={item.label}
+                        className={style.item}
+                        onClick={() => {
+                          set_parcel_show(item.label);
+                        }}
+                      >
+                        {item.label}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+            <div className={style.term}>
+              <div>Lease Term</div>
+              <span>&nbsp;*</span>
+            </div>
+            <div
+              className={style.time}
+              onClick={() => {
+                change_show_time_state(term_state);
+              }}
+            >
+              <div>{show_time}</div>
+              <img src="/images/Frame-down.png" />
+              {term_state ? (
+                <div className={style.show_term}>
+                  {is_time.map((item) => {
+                    return (
+                      <div
+                        key={item.value}
+                        className={style.show_item}
+                        onClick={() => {
+                          change_show_time(item.value);
+                        }}
+                      >
+                        {item.value}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+            <div className={style.tdoa}>
+              <div>{start_at}</div>
+              <p>to</p>
+              <div>{end_at}</div>
+            </div>
+            <div className={style.rental}>
+              <div>Rental price</div>
+              <span>&nbsp;*</span>
+            </div>
+            <div className={style.price}>
+              <input
+                type="text"
+                placeholder="0.1"
+                value={price}
+                onInput={(event) => {
+                  change_price(event);
+                }}
+              />
+              <div>ETH / Week</div>
+            </div>
+            <div
+              className={style.save}
+              onClick={() => {
+                save();
+              }}
+            >
+              Save
+            </div>
           </div>
-          <div className={style.built}>
-            <div>Built</div>
-            <img src="/images/Frame-down.png" />
-          </div>
-          <div className={style.term}>
-            <div>Lease Term</div>
-            <span>&nbsp;*</span>
-          </div>
-          <div className={style.time}>
-            <div>1 Month</div>
-            <img src="/images/Frame-down.png" />
-          </div>
-          <div className={style.tdoa}>
-            <div>2020-03-19 12:50:18</div>
-            <p>to</p>
-            <div>2020-03-19 12:50:19</div>
-          </div>
-          <div className={style.rental}>
-            <div>Rental price</div>
-            <span>&nbsp;*</span>
-          </div>
-          <div className={style.price}>
-            <input type="text" value={value} />
-            <div>ETH / Week</div>
-          </div>
-          <div className={style.save}>Save</div>
         </div>
       </div>
     );

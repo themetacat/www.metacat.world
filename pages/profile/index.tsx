@@ -28,7 +28,7 @@ import style from './index.module.css';
 
 const TAB = [
   {
-    label: 'Cryptovoxel',
+    label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
     type: 'cryptovoxels',
   },
@@ -75,7 +75,7 @@ export default function ProfilePage() {
   const [cardState, setCardState] = React.useState(false);
   const [label, setLabel] = React.useState('');
   const [selectedIds, setSelectedIds] = React.useState([]);
-  const [rent_set_state, set_rent_set_state] = React.useState(true);
+  const [rent_set_state, set_rent_set_state] = React.useState(false);
   const Nav = [
     {
       label: 'All',
@@ -391,6 +391,13 @@ export default function ProfilePage() {
     [rent_set_state],
   );
 
+  const req_event = React.useCallback((req_label) => {
+    if (req_label === 'Rent out several') {
+      set_rent_set_state(true);
+      setCardState(false);
+    }
+  }, []);
+
   React.useEffect(() => {
     const accessToken = getToken('atk');
     if (accessToken) {
@@ -414,7 +421,14 @@ export default function ProfilePage() {
           <div className={style.info}>
             selected ({selectedIds.length}/{parcelsIds.length})
           </div>
-          <div className={style.succeed}>{label === 'Rent out several' ? 'rent out' : tag1()}</div>
+          <div
+            className={style.succeed}
+            onClick={() => {
+              req_event(label);
+            }}
+          >
+            {label === 'Rent out several' ? 'rent out' : tag1()}
+          </div>
           <div
             className={style.cancel}
             onClick={() => {
@@ -538,6 +552,7 @@ export default function ProfilePage() {
         onClick={(current_state) => {
           close_rent_set(current_state);
         }}
+        selectedIds={selectedIds}
       />
       <Footer />
     </Page>
