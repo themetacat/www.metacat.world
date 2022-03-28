@@ -1,16 +1,16 @@
 .price {
+  position: relative;
   color: #ffb800;
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
+  font-style: normal;
   line-height: 22px;
-  position: relative;
 }
 .leasen_Container {
   margin-top: 13px;
+  display: flex;
 }
 .leasen_Container .price::after {
-  content: ' ';
   position: absolute;
   right: -10px;
   bottom: 3px;
@@ -18,52 +18,56 @@
   height: 15px;
   background: #999;
   transform: scaleX(0.5);
+  content: ' ';
 }
 .leasen_Container .lease {
-  margin-left: 19px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
   display: flex;
   align-items: center;
-  color: #dddddd;
+  margin-left: 19px;
+  color: #ddd;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px;
 }
 .not_for_rent {
   width: 90px;
   height: 28px;
+  margin: 10px 0;
+  color: #00d0ec;
   line-height: 28px;
   text-align: center;
-  cursor: pointer;
   background: #0f403f;
-  color: #00d0ec;
-  margin: 10px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+.not_for_rent:hover {
+  font-size: 16px;
 }
 .for_rent_Container {
-  margin: 13px 0;
   display: flex;
   justify-content: space-between;
+  margin: 13px 0;
 }
 .for_rent_Container .option {
-  width: 131px;
-  height: 28px;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  width: 180px;
+  height: 28px;
   background-color: #0f403f;
 }
 .for_rent_Container .option div {
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 20px;
+  position: relative;
   display: flex;
   align-items: center;
   color: #00d0ec;
-  position: relative;
+  font-weight: 600;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px;
 }
-.for_rent_Container .option div:first-child::after {
-  content: ' ';
+.for_rent_Container .option .edit::after {
   position: absolute;
   right: -11px;
   bottom: 2px;
@@ -71,6 +75,17 @@
   height: 15px;
   background: #999;
   transform: scaleX(0.5);
+  content: ' ';
+}
+.for_rent_Container .option .leased::after {
+  position: absolute;
+  right: -11px;
+  bottom: 2px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
 }
 .for_rent_Container .option div:hover {
   font-size: 16px;

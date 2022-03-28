@@ -8,8 +8,8 @@
   line-height: 22px;
 }
 .leasen_Container {
+  display: flex;
   margin-top: 13px;
-
   .price::after {
     position: absolute;
     right: -10px;
@@ -39,10 +39,14 @@
   height: 28px;
   margin: 10px 0;
   color: #00d0ec;
+  font-size: 14px;
   line-height: 28px;
   text-align: center;
   background: #0f403f;
   cursor: pointer;
+}
+.not_for_rent:hover {
+  font-size: 16px;
 }
 //未出租状态样式结束
 
@@ -56,7 +60,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 131px;
+    width: 180px;
     height: 28px;
     background-color: #0f403f;
     div {
@@ -69,7 +73,17 @@
       font-style: normal;
       line-height: 20px;
     }
-    div:first-child::after {
+    .edit::after {
+      position: absolute;
+      right: -11px;
+      bottom: 2px;
+      width: 1px;
+      height: 15px;
+      background: #999;
+      transform: scaleX(0.5);
+      content: ' ';
+    }
+    .leased::after {
       position: absolute;
       right: -11px;
       bottom: 2px;

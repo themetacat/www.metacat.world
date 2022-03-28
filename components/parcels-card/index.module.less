@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   box-sizing: border-box;
   max-width: 385px;
   background: rgba(0, 236, 222, 0.05);
@@ -123,4 +124,20 @@
       content: ' ';
     }
   }
+}
+.shade {
+  position: absolute;
+  top: -1;
+  left: -1;
+  z-index: 999;
+  width: 379px;
+  height: 406px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.changeImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99999;
 }
