@@ -78,7 +78,7 @@ export const req_parcels_leased = async (token: string, parcel_ids: string) => {
 
 export const req_parcels_update = async (
   token: string,
-  parcel_ids: string,
+  parcel_id: string,
   is_built?: string,
   price?: string,
   start_at?: string,
@@ -87,7 +87,7 @@ export const req_parcels_update = async (
   const url = '/api/update_cv_parcel';
   const search = qs.stringify(
     {
-      parcel_ids,
+      parcel_id,
       is_built,
       price,
       start_at,
