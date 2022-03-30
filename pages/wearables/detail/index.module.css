@@ -1,0 +1,95 @@
+.signBack{
+  height: 230px;
+}
+
+.anPage{
+  min-width: 1440px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.content{
+  min-height: 650px;
+  padding: 30px;
+  flex: 1 auto;
+}
+
+.guide, .info{
+  color: rgba(102, 102, 102, 1);
+}
+
+.info{
+  font-size: 14px;
+}
+
+.desc{
+  color: rgba(153, 153, 153, 1);
+
+}
+
+.modelCard{
+  min-width: 420px;
+  min-height: 420px;
+  background: rgba(0, 236, 222, 0.05);
+  /* 辅-亮绿 */
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  padding: 15px;
+}
+
+.graphic{
+  min-height: 420px;
+  max-height: 420px;
+}
+
+.guide>img{
+  width: 10px;
+  height: 10;
+  filter: brightness(75%);
+}
+
+.avatar{
+  width: 90px;
+  height: 90px;
+  top: 15px;
+  left: 15px;
+}
+
+.opese{
+  width: 32px;
+  height: 32px;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.icon{
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background-color: rgba(0, 208, 236, 0.2);
+  padding: 5px;
+}
+
+.icon:hover, .guideHome:hover, .other:hover, .opese:hover{
+  filter: brightness(125%);
+}
+
+.icon:active, .guideHome:active,.other:active, .opese:active{
+  filter: brightness(75%);
+}
+
+.infoRow{
+  background-color: rgba(0, 208, 236, 0.05);
+}
+
+.other{
+  filter: brightness(75%);
+  cursor: pointer;
+}
+
+.other>img{
+  width: 10px;
+  height: 10px;
+}

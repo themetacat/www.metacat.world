@@ -345,3 +345,20 @@ export const getDclParcelDetail = async (landId: string) => {
   const json = await res.json();
   return json;
 };
+
+export const getOkxWearableList = async () => {
+  const url = `/api/okx_wearable_list`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
+
+export const getOkxWearableDetail = async (id: string) => {
+  const search = qs.stringify({ id }, { addQueryPrefix: true });
+  const url = `/api/okx_wearable_detail${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};

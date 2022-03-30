@@ -1,0 +1,9 @@
+.userAvatar{
+  width: 110px;
+  height: 110px;
+}
+.divide{
+  width: 1px;
+  height: 10px;
+  background-color: rgba(196, 196, 196, 1);
+}
