@@ -173,10 +173,10 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
           end_timestamp,
         );
         if (result.code === 100000) {
-          store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
+          store.setState(() => ({ rentOutState: false, status: 'Successfully listed!', id: null }));
           return;
         }
-        store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        store.setState(() => ({ rentOutState: false, status: 'Failed!', id: null }));
       }
     }
     if (s.updateOrAdd === 'update') {

@@ -54,10 +54,10 @@ export default ({ status, price, id, is_state }: Props) => {
     const token = await refreshTK();
     const result = await req_parcels_leased(token, id.toString());
     if (result.code === 100000) {
-      store.setState(() => ({ status: 'Successfully marked!' }));
+      store.setState(() => ({ status: 'Successfully marked!', id: null }));
       return;
     }
-    store.setState(() => ({ status: 'Failed!' }));
+    store.setState(() => ({ status: 'Failed!', id: null }));
   }, []);
 
   const cancel = React.useCallback(async (event) => {
@@ -65,10 +65,10 @@ export default ({ status, price, id, is_state }: Props) => {
     const token = await refreshTK();
     const result = await req_parcels_cancel(token, id.toString());
     if (result.code === 100000) {
-      store.setState(() => ({ status: 'Successfully cancelled' }));
+      store.setState(() => ({ status: 'Successfully cancelled', id: null }));
       return;
     }
-    store.setState(() => ({ status: 'Failed!' }));
+    store.setState(() => ({ status: 'Failed!', id: null }));
   }, []);
 
   React.useEffect(() => {
