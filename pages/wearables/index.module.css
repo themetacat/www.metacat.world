@@ -1,0 +1,67 @@
+.signBack{
+  height: 286px;
+  background-color: black;
+}
+
+.anPage{
+  min-width: 1440px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.sign{
+  width: 1087px;
+  height: 125px;
+  margin-bottom: 67px;
+}
+.info{
+  color: #fff
+}
+.content{
+  min-height: 650px;
+  padding: 20px;
+  flex: 1 auto;
+}
+
+.table, .chartList{
+  max-width: 1860px;
+  min-width: 1380px;
+}
+
+.chartList{
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  min-height: 650px;
+}
+
+.desc{
+  color: rgba(170, 170, 170, 1)
+}
+
+.searchbtn{
+  width: 110px;
+  height: 44px;
+  color: rgba(153, 153, 153, 1);
+  background: rgba(27, 241, 255, 1);
+  color: rgba(17, 26, 27, 1);
+}
+.active{
+  color: rgba(17, 26, 27, 1);
+  background: rgba(0, 208, 236, 1)
+}
+.searchbtn:active{
+  background: #00ABC2;
+}
+
+.searchIcon{
+  width: 30px;
+  height: 30px;
+  filter: contrast(0.0);
+}
+
+.active>.searchIcon ,
+.searchbtn:hover>.searchIcon,
+.searchbtn:active>.searchIcon{
+  filter: none;
+}

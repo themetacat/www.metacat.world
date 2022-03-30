@@ -65,14 +65,25 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href={'/builders'}>Builders</Link>
         </div>
+
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+            'text-2xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            active === 'wearables' ? style.active : null,
+          )}
+        >
+          <Link href={'/wearables'}>Wearables</Link>
+        </div>
+
+        <div
+          className={cn(
+            'text-2xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
         >
           <WalletBtn></WalletBtn>
         </div>
+
         <Toaster
           toastOptions={{
             duration: 2000,
