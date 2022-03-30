@@ -5,6 +5,7 @@ import { toast } from '../../node_modules/react-hot-toast/dist/index';
 import { req_parcels_cancel, req_parcels_leased } from '../../service/z_api';
 import { refreshToken } from '../../service';
 import { convert, getToken, setToken } from '../../common/utils';
+import store from '../../store/profile';
 
 import { state } from '../wallet-btn';
 
@@ -12,9 +13,19 @@ type Props = {
   status?: string;
   price?: number;
   id?: number;
+  is_state?: boolean;
 };
-
-export default ({ status, price, id }: Props) => {
+export default ({ status, price, id, is_state }: Props) => {
+  const s = store.useState('parcels_cardState');
+  const [current_state, set_current_state] = React.useState(false);
+  const rent_out = React.useCallback(
+    async (event) => {
+      event.stopPropagation();
+      if (s.parcels_cardState) return;
+      store.setState(() => ({ rentOutState: true, id, updateOrAdd: 'add' }));
+    },
+    [s],
+  );
   const refreshTK = React.useCallback(async () => {
     const rToken = getToken('rtk');
     if (rToken) {
@@ -38,26 +49,36 @@ export default ({ status, price, id }: Props) => {
     return null;
   }, [null]);
 
-  const rent_out = React.useCallback(async (event) => {
-    event.stopPropagation();
-  }, []);
-
   const leased = React.useCallback(async (event) => {
     event.stopPropagation();
     const token = await refreshTK();
     const result = await req_parcels_leased(token, id.toString());
-    console.log(result);
+    if (result.code === 100000) {
+      store.setState(() => ({ status: 'Successfully marked!' }));
+      return;
+    }
+    store.setState(() => ({ status: 'Failed!' }));
   }, []);
 
   const cancel = React.useCallback(async (event) => {
     event.stopPropagation();
     const token = await refreshTK();
     const result = await req_parcels_cancel(token, id.toString());
-    console.log(result);
+    if (result.code === 100000) {
+      store.setState(() => ({ status: 'Successfully cancelled' }));
+      return;
+    }
+    store.setState(() => ({ status: 'Failed!' }));
   }, []);
+
+  React.useEffect(() => {
+    set_current_state(is_state);
+  }, [set_current_state, is_state]);
 
   const edit = React.useCallback(async (event) => {
     event.stopPropagation();
+    if (current_state) return;
+    store.setState(() => ({ rentOutState: true, id, updateOrAdd: 'update' }));
   }, []);
 
   if (status === 'leased') {

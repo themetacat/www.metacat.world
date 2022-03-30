@@ -2,14 +2,16 @@ import React from 'react';
 import moment from 'moment';
 import style from './index.module.css';
 import { getToken } from '../../common/utils';
+import store from '../../store/profile';
 
-import { req_parcels_rent_out } from '../../service/z_api';
+import { req_parcels_rent_out, req_parcels_update } from '../../service/z_api';
 
 type Props = {
   state?: boolean;
   onClick?;
   selectedIds;
 };
+
 export default function rent_set({ state, onClick, selectedIds }: Props) {
   const [show_built, set_show_built] = React.useState('Built');
   const [show_time, set_show_time] = React.useState('1 Month');
@@ -25,6 +27,8 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
   const [built, set_built] = React.useState('yes');
   const [selected_ids, set_selected_ids] = React.useState('');
   const [token, set_token] = React.useState('');
+
+  const s = store.useState('updateOrAdd', 'parcels_cardState');
   const is_built = [
     {
       label: 'Built',
@@ -148,6 +152,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
     },
     [end_at],
   );
+
   const change_show_time = React.useCallback(
     (value) => {
       set_show_time(value);
@@ -157,19 +162,49 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
     [show_time],
   );
   const save = React.useCallback(async () => {
-    if (token) {
-      console.log(token, selected_ids, built, price, start_timestamp, end_timestamp);
-      const result = await req_parcels_rent_out(
-        token,
-        selected_ids,
-        built,
-        price,
-        start_timestamp,
-        end_timestamp,
-      );
-      console.log(result);
+    if (s.updateOrAdd === 'add') {
+      if (token) {
+        const result = await req_parcels_rent_out(
+          token,
+          selected_ids,
+          built,
+          price,
+          start_timestamp,
+          end_timestamp,
+        );
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
+          return;
+        }
+        store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+      }
     }
-  }, [selectedIds, getToken, show_built, price, start_at, end_at, token]);
+    if (s.updateOrAdd === 'update') {
+      if (token) {
+        const result = await req_parcels_update(
+          token,
+          selected_ids,
+          built,
+          price,
+          start_timestamp,
+          end_timestamp,
+        );
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
+          return;
+        }
+        store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+      }
+    }
+    set_end_timestamp('');
+    set_start_timestamp('');
+    set_price('0.1');
+    set_built('yes');
+    set_selected_ids('');
+    set_show_built('Built');
+    set_show_time('1 Month');
+    store.setState(() => ({ parcels_cardState: false, id: null }));
+  }, [selectedIds, getToken, show_built, price, start_at, end_at, token, s]);
   React.useEffect(() => {
     start_time();
     end_time();
@@ -191,6 +226,14 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
             <div
               onClick={() => {
                 onClick(false);
+                set_end_timestamp('');
+                set_start_timestamp('');
+                set_price('0.1');
+                set_built('yes');
+                set_selected_ids('');
+                set_show_built('Built');
+                set_show_time('1 Month');
+                store.setState(() => ({ parcels_cardState: false, id: null }));
               }}
             >
               x

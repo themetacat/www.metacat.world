@@ -7,8 +7,8 @@
   line-height: 22px;
 }
 .leasen_Container {
-  margin-top: 13px;
   display: flex;
+  margin-top: 13px;
 }
 .leasen_Container .price::after {
   position: absolute;
@@ -33,13 +33,13 @@
 .not_for_rent {
   width: 90px;
   height: 28px;
-  margin: 10px 0;
+  margin: 21px 0;
   color: #00d0ec;
+  font-size: 14px;
   line-height: 28px;
   text-align: center;
   background: #0f403f;
   cursor: pointer;
-  font-size: 14px;
 }
 .not_for_rent:hover {
   font-size: 16px;

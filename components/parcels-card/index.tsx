@@ -61,7 +61,7 @@ export default function Card({
   }, [parcelPageUrl]);
 
   React.useEffect(() => {
-    console.log(1);
+    console.log('');
   }, [parcelsIds, selectedIds]);
 
   const tag1 = () => {
@@ -93,7 +93,7 @@ export default function Card({
       onClick={
         state
           ? () => {
-              onClick(parcelId, parcelsIds);
+              onClick(parcelId, parcelsIds, state);
             }
           : jumpToParcel
       }
@@ -113,7 +113,7 @@ export default function Card({
           <span>.</span>
           {` ${suburb}`}
         </h2>
-        <ParcelsState status={status} price={price} id={parcelId} />
+        <ParcelsState status={status} price={price} id={parcelId} is_state={state} />
         <div className={style.detail}>
           <div className={cn('flex', style.coord)}>
             <img src="/images/icon/traffic.png" />

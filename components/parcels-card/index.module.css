@@ -1,8 +1,8 @@
 .card {
+  position: relative;
   box-sizing: border-box;
   max-width: 385px;
   background: rgba(0, 236, 222, 0.05);
-  position: relative;
   /* 辅-亮绿 */
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   box-shadow: inset 0 0 15px rgba(24, 255, 241, 0.3);
@@ -112,17 +112,17 @@
   content: ' ';
 }
 .shade {
-  width: 379px;
-  height: 406px;
-  background: rgba(0, 0, 0, 0.5);
   position: absolute;
-  left: -1;
   top: -1;
+  left: -1;
   z-index: 999;
+  width: 379px;
+  height: 423px;
+  background: rgba(0, 0, 0, 0.5);
 }
 .changeImg {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   z-index: 99999;
 }

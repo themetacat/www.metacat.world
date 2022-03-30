@@ -10580,8 +10580,8 @@ regjsparser@^0.7.0:
 
 rekv@^1.2.2:
   version "1.2.2"
-  resolved "https://registry.npmmirror.com/rekv/download/rekv-1.2.2.tgz#211f7e579e3f5f4a7a91e935f8a2753b8b8c8d37"
-  integrity sha1-IR9+V54/X0p6kek1+KJ1O4uMjTc=
+  resolved "https://registry.npmmirror.com/rekv/-/rekv-1.2.2.tgz#211f7e579e3f5f4a7a91e935f8a2753b8b8c8d37"
+  integrity sha512-DecmizYqcrNg1KGB/4kN+U15ojLtwgVEU/w5VRnjkDiKs15UHkHZPCNQKJmOkSpcXNJFBbJpHQy3TwYnt9+F3Q==
 
 remark-parse@^5.0.0:
   version "5.0.0"
