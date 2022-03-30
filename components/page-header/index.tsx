@@ -41,6 +41,14 @@ export default function PageHeader({ active, className }: Props) {
         </div>
         <div
           className={cn(
+            'text-2xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+            active === 'rent' ? style.active : null,
+          )}
+        >
+          <Link href="rent">Rent</Link>
+        </div>
+        <div
+          className={cn(
             'text-2xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
           )}

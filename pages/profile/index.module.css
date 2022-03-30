@@ -157,6 +157,7 @@
   cursor: pointer;
   position: relative;
 }
+
 .nav_right_item:first-child {
   margin-right: 10px;
 }
@@ -187,4 +188,71 @@
   height: 15px;
   background: #999;
   transform: scaleX(0.5);
+}
+
+.container {
+  position: relative;
+}
+.manySetList {
+  position: absolute;
+  left: -121px;
+  top: 33px;
+  z-index: 99999;
+}
+
+.setItem {
+  width: 166px;
+  height: 40px;
+  background-color: #000;
+  color: #999;
+  font-size: 12px;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid #0f191b;
+}
+.setItem:hover {
+  color: #fff;
+}
+
+.succeedOrCancel {
+  width: 400px;
+  height: 50px;
+  background: #00d0ec;
+  position: fixed;
+  left: 750px;
+  bottom: 80px;
+  z-index: 99999;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  line-height: 30px;
+  display: flex;
+}
+.succeedOrCancel > .info {
+  color: #000;
+  font-weight: 500;
+  font-size: 18px;
+}
+.succeedOrCancel > .succeed,.cancel {
+  margin: 0 10px 0 30px;
+  border: 1px solid #000;
+  font-size: 14px;
+  padding: 0 8px;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 600;
+}
+.succeedOrCancel > .succeed:hover{
+  color: #fff;
+}
+.succeedOrCancel>.cancel:hover{
+  color:#fff;
+}
+.succeedOrCancel > .succeed{
+  background-color: #000;
+  color: #00D0EC;
+}
+.succeedOrCancel>.cancel{
+  margin-left: 10px;
+  background:#00D0EC;
+  color: #000;
 }

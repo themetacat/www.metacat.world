@@ -1,0 +1,206 @@
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 450px;
+  height: 430px;
+  margin: auto;
+  background-color: #000;
+  z-index: 99999;
+}
+.container .header {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  line-height: 60px;
+  border-bottom: 1px solid #055661;
+}
+.container .header h3 {
+  color: #fff;
+}
+.container .header p {
+  color: #666;
+  font-size: 12px;
+}
+.container .header div {
+  margin-left: 170px;
+  color: #999;
+  font-size: 26px;
+  cursor: pointer;
+}
+.container .header span {
+  color: #ff3838;
+  font-size: 12px;
+}
+.container .body {
+  padding: 15px 30px;
+}
+.container .body span {
+  color: #ff3838;
+  font-size: 12px;
+}
+.container .body .parcel {
+  color: #999;
+}
+.container .body .built {
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
+  height: 32px;
+  margin: 15px 0;
+  padding: 5px 10px;
+  color: #fff;
+  background: rgba(0, 208, 236, 0.1);
+  position: relative;
+  cursor: pointer;
+}
+.container .body .built div {
+  font-weight: 500;
+  font-size: 14px;
+}
+.container .body .built img {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+}
+.container .body .built .parcel_show {
+  position: absolute;
+  left: 43px;
+  bottom: -80px;
+  background-color: #0f191b;
+}
+.container .body .built .parcel_show .item {
+  width: 77px;
+  height: 40px;
+  border-bottom: 1px solid #000;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  color: #999;
+}
+.container .body .built .parcel_show .item:last-child {
+  border: 0;
+}
+.container .body .built .parcel_show .item:hover {
+  color: #fff;
+}
+.container .body .term {
+  display: flex;
+}
+.container .body .term div {
+  color: #999;
+}
+.container .body .term span {
+  margin-top: 5px;
+}
+.container .body .time {
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
+  height: 32px;
+  margin: 15px 0;
+  padding: 5px 10px;
+  color: #fff;
+  background: rgba(0, 208, 236, 0.1);
+  cursor: pointer;
+}
+.container .body .time div {
+  font-weight: 500;
+  font-size: 14px;
+}
+.container .body .time img {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+}
+.container .body .time .show_term {
+  position: absolute;
+  left: 73px;
+  bottom: 38px;
+  background-color: #0f191b;
+}
+.container .body .time .show_term .show_item {
+  width: 77px;
+  height: 40px;
+  border-bottom: 1px solid #000;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  color: #999;
+}
+.container .body .time .show_term .show_item:last-child {
+  border: 0;
+}
+.container .body .time .show_term .show_item:hover {
+  color: #fff;
+}
+.container .body .tdoa {
+  display: flex;
+  margin-bottom: 15px;
+}
+.container .body .tdoa div {
+  width: 182px;
+  height: 32px;
+  color: #666;
+  line-height: 32px;
+  text-align: center;
+  background: rgba(0, 208, 236, 0.1);
+}
+.container .body .tdoa p {
+  margin: 3px 6px 0;
+  color: #fff;
+}
+.container .body .rental {
+  display: flex;
+}
+.container .body .rental div {
+  color: #999;
+}
+.container .body .rental span {
+  margin-top: 5px;
+}
+.container .body .price {
+  display: flex;
+  margin-top: 5px;
+  color: #fff;
+}
+.container .body .price input {
+  box-sizing: border-box;
+  width: 120px;
+  height: 32px;
+  padding-left: 10px;
+  color: #000;
+  color: #fff;
+  background: rgba(0, 208, 236, 0.1);
+  outline: none;
+}
+.container .body .price div {
+  margin-top: 7px;
+  margin-left: 5px;
+  font-size: 12px;
+}
+.container .body .save {
+  width: 117px;
+  height: 42px;
+  margin-top: 15px;
+  color: #000;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 42px;
+  text-align: center;
+  background: #00d0ec;
+  cursor: pointer;
+}
+.shade {
+  position: absolute;
+  width: 100%;
+  height: 300%;
+  left: 0px;
+  top: 0px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 99998;
+}
