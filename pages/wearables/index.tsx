@@ -120,7 +120,7 @@ export default function Wearables(props) {
               contact={[
                 { icon: '/images/icon/home.png', label: 'Home', address: 'https://www.okx.com/' },
                 {
-                  icon: '/images/icon/Twitter.png',
+                  icon: '/images/v5/Twitter.png',
                   label: 'Twitter',
                   address: 'https://twitter.com/okx',
                 },
