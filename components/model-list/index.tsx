@@ -74,7 +74,7 @@ export default function ModelList({ models }: Props) {
     allScene.forEach((scene) => {
       // so something moves
       const { targetRotation, targetMesh } = scene.userData;
-      if (targetRotation && scene.userData.targetMesh) {
+      if (targetRotation && targetMesh) {
         targetMesh.rotation.y = Date.now() * 0.001;
       }
 
