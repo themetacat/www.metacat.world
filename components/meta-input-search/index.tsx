@@ -20,6 +20,7 @@ type Props = {
   disable?: boolean;
   name?: string;
   onBlur?: (valu) => void;
+  onEnter?: () => void;
 };
 
 export default function MeteInputSearch({
@@ -36,6 +37,7 @@ export default function MeteInputSearch({
   disable = false,
   name,
   onBlur,
+  onEnter,
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
@@ -53,6 +55,17 @@ export default function MeteInputSearch({
       }
     },
     [onChangeHandler, setShowClear],
+  );
+
+  const handleEnterKey = React.useCallback(
+    (e) => {
+      if (e.nativeEvent.keyCode === 13) {
+        if (onEnter) {
+          onEnter();
+        }
+      }
+    },
+    [onEnter],
   );
 
   const iconClick = React.useCallback(
@@ -115,6 +128,7 @@ export default function MeteInputSearch({
           onChange={onChange}
           disabled={disable}
           autoComplete="off"
+          onKeyPress={handleEnterKey}
           onFocus={() => {
             if (val) {
               setShowClear(true);

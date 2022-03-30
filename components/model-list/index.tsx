@@ -89,7 +89,7 @@ export default function ModelList({ models }: Props) {
         rect.bottom < 0 ||
         rect.top > renderer.current.domElement.clientHeight ||
         rect.right < 0 ||
-        rect.left > renderer.current.domElement.clientWidth
+        rect.left > renderer.current.domElement.clientWidth + renderer.current.domElement.left
       ) {
         return; // it's off screen
       }

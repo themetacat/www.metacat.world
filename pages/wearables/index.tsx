@@ -130,10 +130,9 @@ export default function Wearables(props) {
           <div className={cn(' text-center mt-4 mb-7', style.desc)}>
             Wearable Dao is a decentralized collaborative organization started by Metacat,
             MetaEstate, MetaLandscape and MetaFocus to design and produce Wearable Vox for the
-            Metaverse.The current major business types of Wearable Dao are:Theme series of wearable
-            design and production sales,cooperation with the company’s metaverse
-            t-shirts,cooperation with artists,cooperation activities with various brands,meme
-            series.
+            Metaverse.The major business of Wearable Dao are: Wearable design and production sales
+            of theme series ,cooperation with the company’s metaverse t-shirts,cooperation with
+            artists,cooperation activities with various brands,meme series.
           </div>
         </div>
       </div>
@@ -148,6 +147,7 @@ export default function Wearables(props) {
             onChangeHandler={(val) => {
               onSearchHandler(val);
             }}
+            onEnter={search}
             placeholder="Search"
             prefix="/images/Frame.png"
           ></MeteInput>

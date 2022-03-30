@@ -98,6 +98,7 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
       }
       return;
     }
+
     // add one random mesh to each scene
     const loader = new VOXLoader();
     loader.load(model.kol.d3Url, function (chunks) {
