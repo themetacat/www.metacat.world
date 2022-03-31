@@ -179,7 +179,7 @@ export default function WearablesDetail({ kol, artist, id }) {
             ></img>
           </div>
           <div className={cn('ml-5 mt-5 flex-1', style.info)}>
-            <div className=" flex items-center text-white mt-2 text-xl font-medium">
+            <div className=" flex items-center text-white text-xl font-medium">
               <img src={kolData.d2Url} className={cn('mr-2', style.avatar)}></img>
               {kolData.name}
             </div>
