@@ -28,7 +28,8 @@
 }
 
 .modelCard {
-  height: 600px;
+  width: 480px;
+  height: 480px;
   background: rgba(0, 236, 222, 0.05);
   /* 辅-亮绿 */
   border: 0.5px solid rgba(0, 208, 236, 0.5);

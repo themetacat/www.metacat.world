@@ -33,7 +33,7 @@ export default function PageHeader({ active, className }: Props) {
       <div className="flex flex-grow justify-end">
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
+            'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/' ? style.active : null,
           )}
         >
@@ -41,7 +41,7 @@ export default function PageHeader({ active, className }: Props) {
         </div>
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+            'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === 'rent' ? style.active : null,
           )}
         >
@@ -49,7 +49,7 @@ export default function PageHeader({ active, className }: Props) {
         </div>
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
           )}
           // onClick={jumpToData}
@@ -58,7 +58,7 @@ export default function PageHeader({ active, className }: Props) {
         </div>
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'map' ? style.active : null,
           )}
         >
@@ -67,7 +67,7 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
         >
@@ -76,7 +76,7 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'wearables' ? style.active : null,
           )}
         >
@@ -85,7 +85,7 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-2xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
         >
