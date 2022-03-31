@@ -217,9 +217,7 @@ export default function ProfilePage() {
   const changeNum = React.useCallback(
     (data, current_label = 'All') => {
       if (current_label === 'All') {
-        const current_all = data.filter((item) => {
-          return true;
-        });
+        const current_all = data.slice();
         setCartData(current_all);
       }
       if (current_label === 'For rent') {
@@ -476,9 +474,9 @@ export default function ProfilePage() {
 
   const tag1 = () => {
     if (label === 'Cancel lease for multiple') {
-      return 'cancel leased';
+      return 'Cancel leased';
     }
-    return 'mark as leased';
+    return 'Mark as leased';
   };
   const tag2 = () => {
     if (cardState) {
@@ -497,7 +495,7 @@ export default function ProfilePage() {
               }
             }}
           >
-            {label === 'Rent out several' ? 'rent out' : tag1()}
+            {label === 'Rent out several' ? 'Rent out' : tag1()}
           </div>
           <div
             className={style.cancel}
