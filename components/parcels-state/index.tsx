@@ -2,7 +2,7 @@ import React from 'react';
 import style from './index.module.css';
 
 import { toast } from '../../node_modules/react-hot-toast/dist/index';
-import { req_parcels_cancel, req_parcels_leased } from '../../service/z_api';
+import { req_parcels_cancel, req_parcels_leased, req_parcels_finish } from '../../service/z_api';
 import { refreshToken } from '../../service';
 import { convert, getToken, setToken } from '../../common/utils';
 import store from '../../store/profile';
@@ -81,11 +81,25 @@ export default ({ status, price, id, is_state }: Props) => {
     store.setState(() => ({ rentOutState: true, id, updateOrAdd: 'update' }));
   }, []);
 
+  const finish = React.useCallback(async (event) => {
+    event.stopPropagation();
+    const token = await refreshTK();
+    const result = await req_parcels_finish(token, id);
+    if (result.code === 100000) {
+      store.setState(() => ({ status: 'Successfully finished!', id: null }));
+      return;
+    }
+    store.setState(() => ({ status: 'Failed!', id: null }));
+  }, []);
+
   if (status === 'leased') {
     return (
       <div className={style.leasen_Container}>
         <div className={style.price}>{`${price} ETH/WEEK`}</div>
         <div className={style.lease}>Leased</div>
+        <div onClick={finish} className={style.finish}>
+          Finish
+        </div>
       </div>
     );
   }

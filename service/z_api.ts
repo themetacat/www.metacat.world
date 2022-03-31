@@ -78,7 +78,7 @@ export const req_parcels_leased = async (token: string, parcel_ids: string) => {
 
 export const req_parcels_update = async (
   token: string,
-  parcel_id: string,
+  parcel_id: number,
   is_built?: string,
   price?: string,
   start_at?: string,
@@ -95,6 +95,25 @@ export const req_parcels_update = async (
     },
     { addQueryPrefix: false },
   );
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: search,
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 设置单个取消挂出
+
+export const req_parcels_finish = async (token: string, id: number) => {
+  const url = '/api/cv_parcel_fallback_to_listed_status';
+  const search = qs.stringify({ parcel_id: id }, { addQueryPrefix: false });
   const result = await fetch(url, {
     method: 'post',
     mode: 'cors',

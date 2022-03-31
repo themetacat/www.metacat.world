@@ -117,6 +117,24 @@ class API {
 
     return json;
   }
+
+  // 取消挂出
+  public async req_parcels_finish(token: string, id: number): Promise<any> {
+    const search = qs.stringify({ parcel_id: id }, { addQueryPrefix: false });
+    const url = `${this.url}/rent/cv_parcel_fallback_to_listed_status`;
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

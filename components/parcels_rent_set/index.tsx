@@ -51,7 +51,15 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
       value: '6 Months',
     },
   ];
-
+  const clear = React.useCallback(() => {
+    set_end_timestamp('');
+    set_start_timestamp('');
+    set_price('0.1');
+    set_built('yes');
+    set_selected_ids('');
+    set_show_built('Built');
+    set_show_time('1 Month');
+  }, []);
   const show_parcel = React.useCallback(
     (current_state) => {
       set_parcel_state(!current_state);
@@ -183,7 +191,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
       if (token) {
         const result = await req_parcels_update(
           token,
-          selected_ids,
+          Number(selected_ids),
           built,
           price,
           start_timestamp,
@@ -196,13 +204,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
         store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
       }
     }
-    set_end_timestamp('');
-    set_start_timestamp('');
-    set_price('0.1');
-    set_built('yes');
-    set_selected_ids('');
-    set_show_built('Built');
-    set_show_time('1 Month');
+    clear();
     store.setState(() => ({ parcels_cardState: false, id: null }));
   }, [selectedIds, getToken, show_built, price, start_at, end_at, token, s]);
   React.useEffect(() => {
@@ -226,13 +228,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
             <div
               onClick={() => {
                 onClick(false);
-                set_end_timestamp('');
-                set_start_timestamp('');
-                set_price('0.1');
-                set_built('yes');
-                set_selected_ids('');
-                set_show_built('Built');
-                set_show_time('1 Month');
+                clear();
                 store.setState(() => ({ parcels_cardState: false, id: null }));
               }}
             >

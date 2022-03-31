@@ -4,11 +4,11 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 99999;
   width: 450px;
   height: 430px;
   margin: auto;
   background-color: #000;
-  z-index: 99999;
 }
 .container .header {
   display: flex;
@@ -47,6 +47,7 @@
   color: #999;
 }
 .container .body .built {
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 120px;
@@ -55,7 +56,6 @@
   padding: 5px 10px;
   color: #fff;
   background: rgba(0, 208, 236, 0.1);
-  position: relative;
   cursor: pointer;
 }
 .container .body .built div {
@@ -69,18 +69,18 @@
 }
 .container .body .built .parcel_show {
   position: absolute;
-  left: 43px;
   bottom: -80px;
+  left: 43px;
   background-color: #0f191b;
 }
 .container .body .built .parcel_show .item {
   width: 77px;
   height: 40px;
-  border-bottom: 1px solid #000;
-  text-align: center;
-  line-height: 40px;
-  cursor: pointer;
   color: #999;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
 }
 .container .body .built .parcel_show .item:last-child {
   border: 0;
@@ -119,18 +119,18 @@
 }
 .container .body .time .show_term {
   position: absolute;
-  left: 73px;
   bottom: 38px;
+  left: 73px;
   background-color: #0f191b;
 }
 .container .body .time .show_term .show_item {
   width: 77px;
   height: 40px;
-  border-bottom: 1px solid #000;
-  text-align: center;
-  line-height: 40px;
-  cursor: pointer;
   color: #999;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
 }
 .container .body .time .show_term .show_item:last-child {
   border: 0;
@@ -196,11 +196,14 @@
   cursor: pointer;
 }
 .shade {
-  position: absolute;
-  width: 100%;
-  height: 300%;
-  left: 0px;
-  top: 0px;
-  background: rgba(255, 255, 255, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
   z-index: 99998;
+  width: 100%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.3);
 }

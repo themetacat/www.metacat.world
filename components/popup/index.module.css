@@ -1,16 +1,16 @@
 .error {
-  width: 94px;
-  height: 40px;
-  display: flex;
-  align-items: center;
   position: fixed;
-  left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 94px;
+  height: 40px;
   margin: auto;
   background: #00d0ec;
-  justify-content: center;
 }
 .error img {
   width: 16px;
@@ -18,24 +18,24 @@
   margin-right: 5px;
 }
 .error p {
-  font-style: normal;
+  color: #000;
   font-weight: 400;
   font-size: 16px;
-  color: #000000;
+  font-style: normal;
 }
 .succeed {
-  width: 170px;
-  height: 40px;
-  display: flex;
-  align-items: center;
   position: fixed;
-  left: 0;
   top: 0;
   right: 0;
   bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 40px;
   margin: auto;
   background: #00d0ec;
-  justify-content: center;
   opacity: 0.8;
 }
 .succeed img {
@@ -44,8 +44,8 @@
   margin-right: 5px;
 }
 .succeed p {
-  color: #000000;
-  font-style: normal;
+  color: #000;
   font-weight: 400;
   font-size: 14px;
+  font-style: normal;
 }
