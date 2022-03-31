@@ -82,10 +82,10 @@ export default function WearablesDetail({ kol, artist, id }) {
       scene.userData.camera = camera;
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
-      controls.minDistance = 1.5;
-      controls.maxDistance = 4;
+      controls.minDistance = 2;
+      controls.maxDistance = 5;
       controls.enablePan = true;
-      controls.enableZoom = true;
+      controls.enableZoom = false;
       scene.userData.controls = controls;
 
       scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
@@ -157,7 +157,12 @@ export default function WearablesDetail({ kol, artist, id }) {
           <span className=" text-white">{kolData.name}</span>
         </div>
         <div className="mt-5 flex justify-between items-start w-full">
-          <div className={cn('relative', style.modelCard)}>
+          <div className="flex-1">
+            <div className=" text-white mt-2 text-xl font-medium">{kolData.name}</div>
+            <div className=" mt-1 text-sm">{kolData.title}</div>
+            <div className={cn(' mt-3', style.desc)}>{kolData.desc}</div>
+          </div>
+          <div className={cn('relative flkex', style.modelCard)}>
             <img
               src={kolData.d2Url}
               className={cn('absolute top-0 left-0 z-20', style.avatar)}
@@ -183,9 +188,6 @@ export default function WearablesDetail({ kol, artist, id }) {
             ></img>
           </div>
           <div className={cn('ml-5 flex-1', style.info)}>
-            <div className=" text-white mt-2 text-xl font-medium">{kolData.name}</div>
-            <div className=" mt-1 text-sm">{kolData.title}</div>
-            <div className={cn(' mt-3', style.desc)}>{kolData.desc}</div>
             <div className={cn('mt-7 w-full p-5 flex items-center justify-start', style.infoRow)}>
               <div>Contact：</div>
               {kolData.contact.twitter ? (

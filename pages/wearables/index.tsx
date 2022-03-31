@@ -56,7 +56,10 @@ export default function Wearables(props) {
         return;
       }
       const dataToShow = orginData.filter((x) => {
-        return x.kol.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1;
+        return (
+          x.kol.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+          x.artist.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+        );
       });
       setDataSource(dataToShow);
     }

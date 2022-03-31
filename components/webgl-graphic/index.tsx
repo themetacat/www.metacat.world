@@ -63,6 +63,8 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
   const sceneRef = React.useRef(null);
 
   const goToDetail = React.useCallback(() => {
+    // window.open(`${process.env.NEXT_PUBLIC_HOST_ADDRESS}/wearables/detail/${model.id}`)
+
     Router.push(`/wearables/detail/${model.id}`);
   }, [model]);
 
