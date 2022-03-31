@@ -37,11 +37,20 @@ export default function WearablesDetail({ kol, artist, id }) {
   const sceneRef = React.useRef(null);
   const renderer = React.useRef(null);
   const animationRef = React.useRef(null);
+  const [intro, setIntro] = React.useState(true);
+
+  const removeIntro = React.useCallback(() => {
+    setIntro(false);
+  }, [null]);
 
   const render = React.useCallback(() => {
     if (!renderer.current || !sceneRef.current) {
       return;
     }
+    // const sceneElement = document.getElementById(`webgl${id}`);
+    // if(sceneElement){
+    //   renderer.current.setSize(sceneElement.clientWidth, sceneElement.clientHeight, true);
+    // }
     // so something moves
     const { targetMesh } = sceneRef.current.userData;
     if (targetMesh) {
@@ -60,55 +69,58 @@ export default function WearablesDetail({ kol, artist, id }) {
     if (!kolData.d3Url) {
       return;
     }
-    const re = new WebGLRenderer({ antialias: true });
-    re.setClearColor(0xffffff, 0);
-    re.setPixelRatio(window.devicePixelRatio);
-    renderer.current = re;
-    const scene = new Scene();
-    const sceneElement = document.getElementById(`webgl${id}`);
-    re.setSize(sceneElement.clientWidth, sceneElement.clientHeight, false);
-    sceneElement.appendChild(re.domElement);
+    if (!renderer.current) {
+      const re = new WebGLRenderer({ antialias: true });
+      re.setClearColor(0xffffff, 0);
+      re.setPixelRatio(window.devicePixelRatio);
+      renderer.current = re;
+      const scene = new Scene();
+      const sceneElement = document.getElementById(`webgl${id}`);
 
-    const camera = new PerspectiveCamera(50, 1, 1, 10);
-    camera.position.z = 2;
-    scene.userData.camera = camera;
+      const camera = new PerspectiveCamera(50, 1, 1, 10);
+      camera.position.z = 2;
+      scene.userData.camera = camera;
 
-    const controls = new OrbitControls(scene.userData.camera, re.domElement);
-    controls.minDistance = 2;
-    controls.maxDistance = 5;
-    controls.enablePan = true;
-    controls.enableZoom = false;
-    scene.userData.controls = controls;
+      const controls = new OrbitControls(scene.userData.camera, re.domElement);
+      controls.minDistance = 2;
+      controls.maxDistance = 5;
+      controls.enablePan = true;
+      controls.enableZoom = false;
+      scene.userData.controls = controls;
 
-    scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
+      scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
 
-    const light = new DirectionalLight(0xffffff, 0.5);
-    light.position.set(1, 1, 1);
-    scene.add(light);
-    sceneRef.current = scene;
+      const light = new DirectionalLight(0xffffff, 0.5);
+      light.position.set(1, 1, 1);
+      scene.add(light);
+      sceneRef.current = scene;
 
-    // add one random mesh to each scene
-    const loader = new VOXLoader();
-    loader.load(kolData.d3Url, function (chunks) {
-      for (let i = 0; i < chunks.length; i += 1) {
-        const chunk = chunks[i];
-        const mesh = new VOXMesh(chunk);
-        mesh.name = 'targetMesh';
-        const boxHelper = new BoxHelper(mesh);
-        boxHelper.geometry.computeBoundingBox();
-        const box = boxHelper.geometry.boundingBox;
-        const maxDiameter = Math.max(
-          box.max.x - box.min.x,
-          box.max.y - box.min.y,
-          box.max.z - box.min.z,
-        );
-        mesh.scale.setScalar((1 / maxDiameter) * 0.9); // 0.015
-        scene.userData.targetMesh = mesh;
-        //
-        scene.add(mesh);
-      }
-    });
+      // add one random mesh to each scene
+      const loader = new VOXLoader();
+      loader.load(kolData.d3Url, function (chunks) {
+        for (let i = 0; i < chunks.length; i += 1) {
+          const chunk = chunks[i];
+          const mesh = new VOXMesh(chunk);
+          mesh.name = 'targetMesh';
+          const boxHelper = new BoxHelper(mesh);
+          boxHelper.geometry.computeBoundingBox();
+          const box = boxHelper.geometry.boundingBox;
+          const maxDiameter = Math.max(
+            box.max.x - box.min.x,
+            box.max.y - box.min.y,
+            box.max.z - box.min.z,
+          );
+          mesh.scale.setScalar((1 / maxDiameter) * 1.1); // 0.015
+          scene.userData.targetMesh = mesh;
+          //
+          scene.add(mesh);
+        }
+      });
+      re.setSize(sceneElement.clientWidth, sceneElement.clientHeight, true);
+      sceneElement.appendChild(re.domElement);
+    }
     animation();
+
     return () => {
       if (renderer.current) {
         // renderer.current.dispose();
@@ -117,6 +129,7 @@ export default function WearablesDetail({ kol, artist, id }) {
         // renderer.current.domElement = null;
         // renderer.current = null;
       }
+
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
@@ -149,7 +162,18 @@ export default function WearablesDetail({ kol, artist, id }) {
               src={kolData.d2Url}
               className={cn('absolute top-0 left-0 z-20', style.avatar)}
             ></img>
-            <div id={`webgl${id}`} className={cn('w-full h-full z-10', style.graphic)}></div>
+            {intro ? (
+              <div
+                className={cn('absolute w-full h-full z-30 pointer-events-none', style.animation)}
+              >
+                <div className={cn('animate-bounce', style.animationIcon)}></div>
+              </div>
+            ) : null}
+            <div
+              id={`webgl${id}`}
+              onMouseDown={removeIntro}
+              className={cn('w-full h-full z-10', style.graphic)}
+            ></div>
             <img
               src="/images/Nomal.png"
               className={cn('absolute bottom-0 right-0 z-20', style.opese)}
@@ -158,7 +182,7 @@ export default function WearablesDetail({ kol, artist, id }) {
               }}
             ></img>
           </div>
-          <div className={cn('ml-5 flex-auto', style.info)}>
+          <div className={cn('ml-5 flex-1', style.info)}>
             <div className=" text-white mt-2 text-xl font-medium">{kolData.name}</div>
             <div className=" mt-1 text-sm">{kolData.title}</div>
             <div className={cn(' mt-3', style.desc)}>{kolData.desc}</div>
