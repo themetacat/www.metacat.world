@@ -78,7 +78,6 @@ const Built_sort = [
     state: false,
   },
 ];
-
 const Rank = [
   {
     value: 'Area',
