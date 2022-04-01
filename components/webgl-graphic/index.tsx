@@ -63,7 +63,9 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
   const sceneRef = React.useRef(null);
 
   const goToDetail = React.useCallback(() => {
-    Router.push(`/wearables/detail/${model.id}`);
+    window.open(`${process.env.NEXT_PUBLIC_HOST_ADDRESS}/wearables/detail/${model.id}`);
+
+    // Router.push(`/wearables/detail/${model.id}`);
   }, [model]);
 
   const init = React.useCallback(() => {
@@ -115,7 +117,7 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
           box.max.y - box.min.y,
           box.max.z - box.min.z,
         );
-        mesh.scale.setScalar((1 / maxDiameter) * 0.9); // 0.015
+        mesh.scale.setScalar(1 / maxDiameter); // 0.015
         scene.userData.targetMesh = mesh;
         scene.userData.targetRotation = false;
         scene.add(mesh);
@@ -160,7 +162,9 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
       >
         <div className="flex justify-between items-center w-full text-lg font-medium">
           {model.kol.name}
-          <span className={cn('flex justify-between items-center cursor-pointer', styles.goDetail)}>
+          <span
+            className={cn('flex justify-between items-center cursor-pointer', styles.goDetail2)}
+          >
             {`Detail`}
             <img className=" ml-1" src="/images/v5/arrow-simple.png"></img>
           </span>

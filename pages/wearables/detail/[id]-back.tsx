@@ -84,7 +84,7 @@ export default function WearablesDetail({ kol, artist, id }) {
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
       controls.minDistance = 1.5;
       controls.maxDistance = 4;
-      controls.enablePan = false;
+      controls.enablePan = true;
       controls.enableZoom = true;
       scene.userData.controls = controls;
 
@@ -158,6 +158,10 @@ export default function WearablesDetail({ kol, artist, id }) {
         </div>
         <div className="mt-5 flex justify-between items-start w-full">
           <div className={cn('relative', style.modelCard)}>
+            <img
+              src={kolData.d2Url}
+              className={cn('absolute top-0 left-0 z-20', style.avatar)}
+            ></img>
             {intro ? (
               <div
                 className={cn('absolute w-full h-full z-30 pointer-events-none', style.animation)}
@@ -172,19 +176,16 @@ export default function WearablesDetail({ kol, artist, id }) {
             ></div>
             <img
               src="/images/Nomal.png"
-              className={cn('absolute z-20', style.opese)}
+              className={cn('absolute bottom-0 right-0 z-20', style.opese)}
               onClick={() => {
                 window.open(kolData.openseaUrl);
               }}
             ></img>
           </div>
-          <div className={cn('ml-5 mt-5 flex-1', style.info)}>
-            <div className=" flex items-center text-white text-xl font-medium">
-              <img src={kolData.d2Url} className={cn('mr-2', style.avatar)}></img>
-              {kolData.name}
-            </div>
-            <div className=" mt-4 text-sm">{kolData.title}</div>
-            <div className={cn(' mt-2', style.desc)}>{kolData.desc}</div>
+          <div className={cn('ml-5 flex-1', style.info)}>
+            <div className=" text-white mt-2 text-xl font-medium">{kolData.name}</div>
+            <div className=" mt-1 text-sm">{kolData.title}</div>
+            <div className={cn(' mt-3', style.desc)}>{kolData.desc}</div>
             <div className={cn('mt-7 w-full p-5 flex items-center justify-start', style.infoRow)}>
               <div>Contact：</div>
               {kolData.contact.twitter ? (

@@ -26,9 +26,18 @@
 .footer{
   background-color: rgba(0,0,0,0.2);
 }
+.footer:hover{
+  background-color: rgba(0,0,0,0.5);
+}
 
 .goDetail{
-  color: rgba(85, 85, 85, 1);
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.goDetail2{
+  color: #777;
   font-size: 12px;
   cursor: pointer;
 }
@@ -41,13 +50,13 @@
   padding: 5px;
 }
 
-.goDetail>img{
+.goDetail2>img{
   width: 10px;
   height: 10;
   filter: brightness(75%);
 }
 
-.goDetail:hover, .icon:hover{
+.goDetail:hover, .goDetail2:hover,.icon:hover{
   filter: brightness(125%);
 }
 
@@ -55,6 +64,6 @@
   filter: brightness(75%);
 }
 
-.goDetail:active{
+.goDetail:active, .goDetail2:active{
   filter: brightness(50%);
 }

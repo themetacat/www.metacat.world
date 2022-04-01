@@ -56,7 +56,10 @@ export default function Wearables(props) {
         return;
       }
       const dataToShow = orginData.filter((x) => {
-        return x.kol.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1;
+        return (
+          x.kol.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+          x.artist.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+        );
       });
       setDataSource(dataToShow);
     }
@@ -128,11 +131,8 @@ export default function Wearables(props) {
             ></UserAvatar>
           </div>
           <div className={cn(' text-center mt-4 mb-7', style.desc)}>
-            Wearable Dao is a decentralized collaborative organization started by Metacat,
-            MetaEstate, MetaLandscape and MetaFocus to design and produce Wearable Vox for the
-            Metaverse.The major business of Wearable Dao are: Wearable design and production sales
-            of theme series ,cooperation with the company’s metaverse t-shirts,cooperation with
-            artists,cooperation activities with various brands,meme series.
+            For a new product launch held by OKX in metaverse, wearableDao customized a variety of
+            3D wearables for invited KOLs.
           </div>
         </div>
       </div>

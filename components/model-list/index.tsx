@@ -41,13 +41,14 @@ export default function ModelList({ models }: Props) {
   const canvaRef = React.useRef(null);
   const animationRef = React.useRef(null);
 
-  const updateSize = () => {
+  const updateSize = (offsetY?: number) => {
     if (!canvaRef.current) {
       return;
     }
+    const offset = offsetY === null ? 800 : offsetY;
     // async canvas and container window
-    if (window.scrollY > 800) {
-      canvaRef.current.style.transform = `translateY(${window.scrollY}px)`;
+    if (window.scrollY > offset) {
+      canvaRef.current.style.transform = `translateY(${window.scrollY - offset}px)`;
     } else {
       canvaRef.current.style.transform = `translateY(0px)`;
     }
@@ -59,65 +60,71 @@ export default function ModelList({ models }: Props) {
     }
   };
 
-  const render = React.useCallback(() => {
-    if (!allScene || allScene.length <= 0 || !renderer.current || !canvaRef.current) {
-      return;
-    }
-    updateSize();
-    renderer.current.setClearColor(0xffffff, 0);
-    renderer.current.setScissorTest(false);
-    renderer.current.clear();
-    const base = canvaRef.current.getBoundingClientRect();
-    renderer.current.setClearColor(0xffffff, 0);
-    renderer.current.setScissorTest(true);
-
-    allScene.forEach((scene) => {
-      // so something moves
-      const { targetRotation, targetMesh } = scene.userData;
-      if (targetRotation && targetMesh) {
-        targetMesh.rotation.y = Date.now() * 0.001;
+  const render = React.useCallback(
+    (offsetY?: number) => {
+      if (!allScene || allScene.length <= 0 || !renderer.current || !canvaRef.current) {
+        return;
       }
+      updateSize(offsetY);
+      renderer.current.setClearColor(0xffffff, 0);
+      renderer.current.setScissorTest(false);
+      renderer.current.clear();
+      const base = canvaRef.current.getBoundingClientRect();
+      renderer.current.setClearColor(0xffffff, 0);
+      renderer.current.setScissorTest(true);
 
-      // get the element that is a place holder for where we want to
-      // draw the scene
-      const { element } = scene.userData;
+      allScene.forEach((scene) => {
+        // so something moves
+        const { targetRotation, targetMesh } = scene.userData;
+        if (targetRotation && targetMesh) {
+          targetMesh.rotation.y = Date.now() * 0.001;
+        }
 
-      // get its position relative to the page's viewport
-      const rect = element.getBoundingClientRect();
-      // check if it's offscreen. If so skip it
-      if (
-        rect.bottom < 0 ||
-        rect.top > renderer.current.domElement.clientHeight ||
-        rect.right < 0 ||
-        rect.left > renderer.current.domElement.clientWidth + renderer.current.domElement.left
-      ) {
-        return; // it's off screen
-      }
+        // get the element that is a place holder for where we want to
+        // draw the scene
+        const { element } = scene.userData;
 
-      // set the viewport
-      const width = rect.right - rect.left;
-      const height = rect.bottom - rect.top;
-      const left = rect.left - base.left;
-      const bottom = renderer.current.domElement.clientHeight - rect.bottom + base.top;
+        // get its position relative to the page's viewport
+        const rect = element.getBoundingClientRect();
+        // check if it's offscreen. If so skip it
+        if (
+          rect.bottom < 0 ||
+          rect.top > renderer.current.domElement.clientHeight ||
+          rect.right < 0 ||
+          rect.left > renderer.current.domElement.clientWidth + renderer.current.domElement.left
+        ) {
+          return; // it's off screen
+        }
 
-      renderer.current.setViewport(left, bottom, width, height);
-      renderer.current.setScissor(left, bottom, width, height);
+        // set the viewport
+        const width = rect.right - rect.left;
+        const height = rect.bottom - rect.top;
+        const left = rect.left - base.left;
+        const bottom = renderer.current.domElement.clientHeight - rect.bottom + base.top;
 
-      const { camera } = scene.userData;
+        renderer.current.setViewport(left, bottom, width, height);
+        renderer.current.setScissor(left, bottom, width, height);
 
-      // camera.aspect = width / height; // not changing in this example
-      // camera.updateProjectionMatrix();
+        const { camera } = scene.userData;
 
-      // scene.userData.controls.update();
+        // camera.aspect = width / height; // not changing in this example
+        // camera.updateProjectionMatrix();
 
-      renderer.current.render(scene, camera);
-    });
-  }, [updateSize]);
+        // scene.userData.controls.update();
 
-  const animation = React.useCallback(() => {
-    render();
-    animationRef.current = requestAnimationFrame(animation);
-  }, [render]);
+        renderer.current.render(scene, camera);
+      });
+    },
+    [updateSize],
+  );
+
+  const animation = React.useCallback(
+    (offsetY?: number) => {
+      render(offsetY);
+      animationRef.current = requestAnimationFrame(animation);
+    },
+    [render],
+  );
 
   const renderGraphic = React.useMemo(() => {
     const scenes = [];
@@ -145,6 +152,11 @@ export default function ModelList({ models }: Props) {
     re.setClearColor(0xffffff, 0);
     re.setPixelRatio(window.devicePixelRatio);
     renderer.current = re;
+    if (canvaRef.current) {
+      const domParams = canvaRef.current.getBoundingClientRect();
+      animation(domParams.top);
+      return;
+    }
     animation();
   }, [animation]);
 

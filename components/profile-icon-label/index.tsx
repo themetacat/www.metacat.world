@@ -74,7 +74,7 @@ export default function ProfileIconLabel({
           {label || clipName(address)}
         </a>
       ) : (
-        <span title={label}>{label}</span>
+        <span title={label || clipName(address)}>{label || clipName(address)}</span>
       )}
       {renderSuffix}
     </div>
