@@ -135,6 +135,18 @@ class API {
 
     return json;
   }
+
+  // 获取Cryptovoxels岛屿列表接口
+  public async req_rent_islands(): Promise<any> {
+    const url = `${this.url}/rent/get_cv_island_list`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

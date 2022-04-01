@@ -45,7 +45,7 @@ export default function PageHeader({ active, className }: Props) {
             active === 'rent' ? style.active : null,
           )}
         >
-          <Link href="rent">Rent</Link>
+          <Link href="/rent">Rent</Link>
         </div>
         <div
           className={cn(

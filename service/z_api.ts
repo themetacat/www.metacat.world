@@ -127,3 +127,14 @@ export const req_parcels_finish = async (token: string, id: number) => {
 
   return json;
 };
+
+export const req_rent_islands = async () => {
+  const url = '/api/get_cv_island_list';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};

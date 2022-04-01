@@ -55,7 +55,6 @@ export default function Card({
     },
     [openseaUrl],
   );
-
   const jumpToParcel = React.useCallback(() => {
     window.open(parcelPageUrl);
   }, [parcelPageUrl]);

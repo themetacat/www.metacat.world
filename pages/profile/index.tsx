@@ -1,7 +1,7 @@
 import React from 'react';
 
 import cn from 'classnames';
-
+import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
 
 import Page from '../../components/page';
@@ -312,13 +312,14 @@ export default function ProfilePage() {
     }
     return (
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
-        {cartData.map((card, idx) => {
+        {cartData.map((card) => {
           return (
             <Card
               {...card}
               parcelsIds={parcelsIds}
               state={cardState}
-              key={idx}
+              key={uuid()}
+              y
               selectedIds={selectedIds}
               onClick={(id, ids) => {
                 select(id, ids);
@@ -401,7 +402,6 @@ export default function ProfilePage() {
     // 批量标记已出租
     if (label === 'Mark several as leased') {
       const token = await refreshTK();
-      console.log(token);
       const result = await req_parcels_leased(token, selectedIds.join(','));
       if (result.code === 100000) {
         store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
@@ -415,7 +415,6 @@ export default function ProfilePage() {
     // 批量取消出租
     if (label === 'Cancel lease for multiple') {
       const token = await refreshTK();
-      console.log(token);
       const result = await req_parcels_cancel(token, selectedIds.join(','));
       if (result.code === 100000) {
         store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
