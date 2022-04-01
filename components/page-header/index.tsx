@@ -39,14 +39,14 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href="/">Home</Link>
         </div>
-        <div
+        {/* <div
           className={cn(
             'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === 'rent' ? style.active : null,
           )}
         >
           <Link href="/rent">Rent</Link>
-        </div>
+        </div> */}
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
