@@ -65,3 +65,7 @@
 .searchbtn:active>.searchIcon{
   filter: none;
 }
+
+.jumper{
+  bottom: 25%;
+}

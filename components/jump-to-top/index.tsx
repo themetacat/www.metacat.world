@@ -2,7 +2,11 @@ import React from 'react';
 import cn from 'classnames';
 import style from './index.module.css';
 
-export default function TopJumper() {
+interface Props {
+  classname?: string;
+}
+
+export default function TopJumper({ classname }: Props) {
   const [show, switchShow] = React.useState(false);
 
   React.useEffect(() => {
@@ -15,7 +19,7 @@ export default function TopJumper() {
 
   return show ? (
     <div
-      className={cn('flex flex-col justify-center items-center', style.topJumper)}
+      className={cn('flex flex-col justify-center items-center', style.topJumper, classname)}
       onClick={() => window.scrollTo(0, 0)}
     >
       <img src="/images/jump-top.png" className={style.img}></img>

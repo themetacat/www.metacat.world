@@ -67,3 +67,11 @@
 .goDetail:active, .goDetail2:active{
   filter: brightness(50%);
 }
+
+.opese {
+  width: 32px;
+  height: 32px;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
