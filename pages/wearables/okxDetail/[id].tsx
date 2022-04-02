@@ -25,15 +25,14 @@ import { convert } from '../../../common/utils';
 
 import style from './index.module.css';
 
-export default function WearablesDetail({ artwork, artist, id }) {
+export default function OkxWearablesDetail({ kol, artist, id }) {
   const meta = {
     title: `WearablesDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
-  const artworkData = convert(artwork);
+  const kolData = convert(kol);
   const artistData = convert(artist);
-  console.log(artistData);
 
   const sceneRef = React.useRef(null);
   const renderer = React.useRef(null);
@@ -48,6 +47,11 @@ export default function WearablesDetail({ artwork, artist, id }) {
     if (!renderer.current || !sceneRef.current) {
       return;
     }
+    // const sceneElement = document.getElementById(`webgl${id}`);
+    // if(sceneElement){
+    //   renderer.current.setSize(sceneElement.clientWidth, sceneElement.clientHeight, true);
+    // }
+    // so something moves
     const { targetMesh } = sceneRef.current.userData;
     if (targetMesh) {
       targetMesh.rotation.y = Date.now() * 0.001;
@@ -62,7 +66,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
   }, [render]);
 
   React.useEffect(() => {
-    if (!artworkData.voxUrl) {
+    if (!kolData.d3Url) {
       return;
     }
     if (!renderer.current) {
@@ -93,7 +97,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
       // add one random mesh to each scene
       const loader = new VOXLoader();
-      loader.load(artworkData.voxUrl, function (chunks) {
+      loader.load(kolData.d3Url, function (chunks) {
         for (let i = 0; i < chunks.length; i += 1) {
           const chunk = chunks[i];
           const mesh = new VOXMesh(chunk);
@@ -130,7 +134,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animation, artworkData]);
+  }, [animation, kolData]);
 
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
@@ -144,13 +148,13 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              Router.push('/wearables?type=wearables');
+              Router.push('/wearables?type=okx');
             }}
           >
             Wearables
           </span>
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
-          <span className=" text-white">{artworkData.name}</span>
+          <span className=" text-white">{kolData.name}</span>
         </div>
         <div className="mt-5 flex justify-between items-start w-full">
           <div className={cn('relative', style.modelCard)}>
@@ -170,16 +174,38 @@ export default function WearablesDetail({ artwork, artist, id }) {
               src="/images/Nomal.png"
               className={cn('absolute z-20', style.opese)}
               onClick={() => {
-                window.open(artworkData.openseaUrl);
+                window.open(kolData.openseaUrl);
               }}
             ></img>
           </div>
           <div className={cn('ml-5 mt-5 flex-1', style.info)}>
             <div className=" flex items-center text-white text-xl font-medium">
-              {artworkData.name}
+              <img src={kolData.d2Url} className={cn('mr-2', style.avatar)}></img>
+              {kolData.name}
             </div>
-            <div className={cn(' mt-2', style.desc)}>{artworkData.desc}</div>
-
+            <div className=" mt-4 text-sm">{kolData.title}</div>
+            <div className={cn(' mt-2', style.desc)}>{kolData.desc}</div>
+            <div className={cn('mt-7 w-full p-5 flex items-center justify-start', style.infoRow)}>
+              <div>Contact：</div>
+              {kolData.contact.twitter ? (
+                <img
+                  className={cn(' ml-9 cursor-pointer', style.icon)}
+                  src="/images/twitter.png"
+                  onClick={() => {
+                    window.open(kolData.contact.twitter);
+                  }}
+                ></img>
+              ) : null}
+              {kolData.contact.weibo ? (
+                <img
+                  className={cn(' ml-10 cursor-pointer', style.icon)}
+                  src="/images/weibo.png"
+                  onClick={() => {
+                    window.open(kolData.contact.weibo);
+                  }}
+                ></img>
+              ) : null}
+            </div>
             <div className={cn('mt-7 w-full p-5 flex items-start justify-start', style.infoRow)}>
               <div>Voxel Artist：</div>
               <div className=" ml-2">
@@ -195,37 +221,6 @@ export default function WearablesDetail({ artwork, artist, id }) {
                 </div>
               </div>
             </div>
-
-            <div className={cn('mt-7 w-full p-5 flex items-center justify-start', style.infoRow)}>
-              <div>Contact：</div>
-              {artistData.contact.homepage ? (
-                <img
-                  className={cn(' ml-9 cursor-pointer', style.icon)}
-                  src="/images/icon/home.png"
-                  onClick={() => {
-                    window.open(artistData.contact.homepage);
-                  }}
-                ></img>
-              ) : null}
-              {artistData.contact.twitter ? (
-                <img
-                  className={cn(' ml-9 cursor-pointer', style.icon)}
-                  src="/images/twitter.png"
-                  onClick={() => {
-                    window.open(artistData.contact.twitter);
-                  }}
-                ></img>
-              ) : null}
-              {artistData.contact.weibo ? (
-                <img
-                  className={cn(' ml-10 cursor-pointer', style.icon)}
-                  src="/images/weibo.png"
-                  onClick={() => {
-                    window.open(artistData.contact.weibo);
-                  }}
-                ></img>
-              ) : null}
-            </div>
           </div>
         </div>
       </div>
@@ -236,11 +231,11 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-  const res = await api.getDaoWearableDetail(id);
-  const { artwork, artist } = res.data[0];
+  const res = await api.getOkxWearableDetail(id);
+  const { kol, artist } = res.data[0];
   return {
     props: {
-      artwork,
+      kol,
       artist,
       id,
     }, // will be passed to the page component as props

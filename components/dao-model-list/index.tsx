@@ -2,40 +2,39 @@ import React from 'react';
 import cn from 'classnames';
 
 import { WebGLRenderer } from 'three';
-import WebglCard from '../webgl-graphic';
+import DaoWebglCard from '../dao-webgl-graphic';
 
 import styles from './index.module.css';
 
-type ModelCard = {
-  kol?: Kol;
-  artist?: Artist;
+type Artwork = {
+  name?: string;
+  desc?: string;
+  voxUrl?: string;
+  openseaUrl?: string;
+};
+
+type DaoArtist = {
+  name?: string;
+  contact?: Contact;
+};
+
+type DaoCard = {
+  artwork?: Artwork;
+  artist?: DaoArtist;
   id?: string;
 };
 
 type Contact = {
   twitter?: string;
   weibo?: string;
-};
-
-type Kol = {
-  name?: string;
-  title?: string;
-  desc?: string;
-  d2Url?: string;
-  d3Url?: string;
-  contact?: Contact;
-};
-
-type Artist = {
-  name?: string;
-  website?: string;
+  homepage?: string;
 };
 
 interface Props {
-  models: Array<ModelCard>;
+  models: Array<DaoCard>;
 }
 
-export default function ModelList({ models }: Props) {
+export default function DaoModelList({ models }: Props) {
   const [allScene, setAllScene] = React.useState([]);
   const renderer = React.useRef(null);
   const canvaRef = React.useRef(null);
@@ -131,14 +130,14 @@ export default function ModelList({ models }: Props) {
     }
     const modelEle = models.map((model, idx) => {
       return (
-        <WebglCard
+        <DaoWebglCard
           model={model}
           key={idx}
-          graphicId={idx.toString()}
+          graphicId={`dao-${idx.toString()}`}
           initFinish={(se) => {
             scenes.push(se);
           }}
-        ></WebglCard>
+        ></DaoWebglCard>
       );
     });
     setAllScene(scenes);
@@ -175,7 +174,7 @@ export default function ModelList({ models }: Props) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [models, allScene]);
+  }, [models]);
 
   return (
     <div id="container" className="relative w-full h-full">

@@ -70,3 +70,12 @@
   right: 50px;
   bottom: 25%;
 }
+
+
+.bottomLine {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+
+.allHeight {
+  height: 48px;
+}
