@@ -172,7 +172,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
     [show_time],
   );
   const save = React.useCallback(async () => {
-    if (Number(price) <= 0) {
+    if (Number(price) <= 0 || Number(price) > 10) {
       set_is_price(true);
       return;
     }
