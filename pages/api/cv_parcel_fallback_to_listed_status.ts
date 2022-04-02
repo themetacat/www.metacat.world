@@ -4,8 +4,8 @@ import api from '../../lib/z_api';
 
 export default async (req, res) => {
   const token = req.headers.authorization;
-  const { parcel_ids } = req.body;
-  const data = await api.req_parcels_finish(token, parcel_ids);
+  const { parcel_id } = req.body;
+  const data = await api.req_parcels_finish(token, parcel_id);
 
   res.statusCode = 200;
 

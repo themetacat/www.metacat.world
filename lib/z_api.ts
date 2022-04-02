@@ -87,7 +87,7 @@ class API {
 
   public async req_parcels_update(
     token: string,
-    parcel_ids: string,
+    parcel_id: number,
     is_built?: string,
     price?: string,
     start_at?: number,
@@ -95,7 +95,7 @@ class API {
   ): Promise<any> {
     const search = qs.stringify(
       {
-        parcel_ids,
+        parcel_id,
         is_built,
         price,
         start_at,

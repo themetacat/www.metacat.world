@@ -81,10 +81,11 @@ export const req_parcels_update = async (
   parcel_id: number,
   is_built?: string,
   price?: string,
-  start_at?: string,
-  end_at?: string,
+  start_at?: number,
+  end_at?: number,
 ) => {
   const url = '/api/update_cv_parcel';
+
   const search = qs.stringify(
     {
       parcel_id,

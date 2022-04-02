@@ -201,8 +201,8 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
           Number(selected_ids),
           built,
           price,
-          start_timestamp,
-          end_timestamp,
+          Number(start_timestamp),
+          Number(end_timestamp),
         );
         if (result.code === 100000) {
           store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
