@@ -1,14 +1,14 @@
 .containerBanner {
   width: 1200px;
-  margin: 0 auto;
   height: 200px;
+  margin: 0 auto;
   background: #000;
 }
 .containerBanner .banner {
   width: 1100px;
   height: 130px;
-  margin-bottom: 67px;
   margin-top: 20px;
+  margin-bottom: 67px;
 }
 .allHeight {
   height: 48px;
@@ -17,31 +17,31 @@
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .filterNav {
-  background: #0c1416;
   width: 1200px;
-  margin: 30px auto 0px;
+  margin: 30px auto 0;
   padding: 30px 20px;
+  background: #0c1416;
 }
 .filterNav .navItem .title {
+  width: 60px;
+  margin-top: 3px;
   color: #fff;
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
+  font-style: normal;
   line-height: 17px;
-  margin-top: 3px;
-  width: 60px;
 }
 .filterNav .navItem .list {
   flex-wrap: wrap;
-  color: #ccc;
   margin-left: 40px;
+  color: #ccc;
 }
 .filterNav .navItem .list .c {
   cursor: pointer;
 }
 .filterNav .navItem .list .i {
-  cursor: pointer;
   width: 200px;
+  cursor: pointer;
 }
 .filterNav .navItem .list .i .active {
   color: #fff;
@@ -55,19 +55,19 @@
   margin: 0 auto;
 }
 .sort .sortMode {
+  float: right;
   width: 420px;
   height: 100%;
-  float: right;
 }
 .sort .sortMode .sortModeItem {
   position: relative;
+  color: #999;
   cursor: pointer;
-  color: #999999;
 }
 .sort .sortMode .sortModeItem .title {
-  line-height: 40px;
   font-weight: 500;
   font-size: 14px;
+  line-height: 40px;
 }
 .sort .sortMode .sortModeItem .active {
   color: #fff;
@@ -80,8 +80,8 @@
 }
 .sort .sortMode .sortModeItem::after {
   position: absolute;
-  left: -13px;
   bottom: 12px;
+  left: -13px;
   width: 1px;
   height: 15px;
   background: #999;
@@ -99,12 +99,161 @@
   margin-right: 3px;
 }
 .sort .clearSort div {
-  font-style: normal;
+  color: #fff;
   font-weight: 400;
   font-size: 14px;
+  font-style: normal;
   line-height: 20px;
-  color: #fff;
 }
 .content {
   min-height: 650px;
+}
+.container {
+  width: 100%;
+  height: 1000px;
+  background: #ffffff;
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+.detailCard {
+  width: 680px;
+  height: 400px;
+  background: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  padding: 30px;
+}
+.imgContanier {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.contactTitle {
+  color: #fff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  margin-top: 35px;
+  margin-left: 83px;
+}
+.right {
+  margin-left: 20px;
+}
+.right h2 {
+  position: relative;
+  font-weight: 600;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 28px;
+  color: #fff;
+}
+.right h2 span {
+  vertical-align: super;
+}
+.right .endTime {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #fff;
+  margin-top: 20px;
+  margin-bottom: 35px;
+}
+.detail {
+  margin-top: 10px;
+  color: #ddd;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+}
+.detail img {
+  width: 14px;
+  height: 14px;
+  margin-top: 5px;
+  margin-right: 7px;
+}
+.detail .coord div {
+  margin-top: 1px;
+}
+.detail .plot {
+  margin: 12px 0;
+}
+.detail .plot div {
+  margin-top: 2px;
+}
+.detail .info {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.detail .info .info_item {
+  position: relative;
+  margin-top: 2px;
+  margin-right: 8px;
+  font-size: 14px;
+}
+.detail .info .info_item::after {
+  position: absolute;
+  right: -4px;
+  bottom: 4px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.detail .info .info_item:last-child::after {
+  width: 0;
+  content: ' ';
+}
+.price {
+  position: relative;
+  color: #ffb800;
+  font-weight: 600;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 22px;
+  margin: 25px 0;
+}
+.contact {
+  display: flex;
+  margin-top: 25px;
+}
+.contact div {
+  width: 114px;
+  display: flex;
+  height: 42px;
+  background: #00d0ec;
+  margin-right: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.contact div img {
+  width: 16px;
+  height: 16px;
+  margin-left: 15px;
+}
+.contact div div {
+  margin-left: 5px;
+}
+.close {
+  position: absolute;
+  right: 30px;
+  top: 15px;
+  color: #999;
+  font-size: 26px;
+  cursor: pointer;
 }

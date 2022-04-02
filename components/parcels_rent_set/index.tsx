@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import cn from 'classnames';
 import style from './index.module.css';
 import { getToken } from '../../common/utils';
 import store from '../../store/profile';
@@ -19,6 +20,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
   const [term_state, set_term_state] = React.useState(false);
   const [start_at, set_start_at] = React.useState('');
   const [end_at, set_end_at] = React.useState('');
+  const [is_price, set_is_price] = React.useState(false);
 
   // 发送保存请求所需参数
   const [end_timestamp, set_end_timestamp] = React.useState('');
@@ -170,6 +172,11 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
     [show_time],
   );
   const save = React.useCallback(async () => {
+    if (Number(price) <= 0) {
+      set_is_price(true);
+      return;
+    }
+    set_is_price(false);
     if (s.updateOrAdd === 'add') {
       if (token) {
         const result = await req_parcels_rent_out(
@@ -230,6 +237,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
                 onClick(false);
                 clear();
                 store.setState(() => ({ parcels_cardState: false, id: null }));
+                set_is_price(false);
               }}
             >
               x
@@ -316,6 +324,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
               />
               <div>ETH / Week</div>
             </div>
+            <div className={cn(style.iv, is_price ? null : style.dn)}>Invalid value</div>
             <div
               className={style.save}
               onClick={() => {

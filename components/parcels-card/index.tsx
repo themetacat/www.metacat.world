@@ -120,14 +120,18 @@ export default function Card({
           </div>
           <div className={cn('flex', style.plot)}>
             <img src="/images/icon/dizhi.png" />
-            <div>{`#${parcelId} ${name}`}</div>
+            <div>{`#${parcelId} ${name === 'None' ? '' : name}`}</div>
           </div>
           <div className={cn('flex', style.info)}>
             <img src="/images/icon/dikuai.png" />
             <div className={style.info_item}>{`${area}㎡`}</div>
             <div className={style.info_item}>{`${high}m High`}</div>
-            <div className={style.info_item}>{isBuilt === 'no' ? 'Not Built' : 'Built'}</div>
-            <div className={style.info_item}>{endDate}</div>
+            <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>
+              {isBuilt === 'no' ? 'Not Built' : 'Built'}
+            </div>
+            <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>
+              {endDate}
+            </div>
           </div>
         </div>
       </div>
