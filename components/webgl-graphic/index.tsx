@@ -26,6 +26,7 @@ type Kol = {
   desc?: string;
   d2Url?: string;
   d3Url?: string;
+  openseaUrl?: string;
   contact?: Contact;
 };
 
@@ -155,6 +156,15 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
           className={cn('absolute top-0 left-0 z-20', styles.avatar)}
         ></img>
         <div id={`webgl${graphicId}`} className={styles.graphic}></div>
+        {model.kol.openseaUrl ? (
+          <img
+            src="/images/Nomal.png"
+            className={cn('absolute z-20', styles.opese)}
+            onClick={() => {
+              window.open(model.kol.openseaUrl);
+            }}
+          ></img>
+        ) : null}
       </div>
       <div
         className={cn('flex flex-col justify-start items-center p-4 text-white', styles.footer)}

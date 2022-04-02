@@ -56,11 +56,20 @@
   filter: brightness(75%);
 }
 
-.goDetail:hover, .goDetail2:hover,.icon:hover{
+
+.opese {
+  width: 32px;
+  height: 32px;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.goDetail:hover, .goDetail2:hover,.icon:hover, .opese:hover{
   filter: brightness(125%);
 }
 
-.icon:active{
+.icon:active, .opese:active{
   filter: brightness(75%);
 }
 

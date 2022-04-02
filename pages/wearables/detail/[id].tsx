@@ -168,7 +168,7 @@ export default function WearablesDetail({ kol, artist, id }) {
             <div
               id={`webgl${id}`}
               onMouseDown={removeIntro}
-              className={cn('w-full h-full z-10', style.graphic)}
+              className={cn('w-full h-full z-10')}
             ></div>
             <img
               src="/images/Nomal.png"

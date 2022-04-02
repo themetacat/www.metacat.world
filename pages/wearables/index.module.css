@@ -19,7 +19,7 @@
 }
 .content{
   min-height: 650px;
-  padding: 20px;
+  padding: 20px 0;
   flex: 1 auto;
 }
 
@@ -64,4 +64,9 @@
 .searchbtn:hover>.searchIcon,
 .searchbtn:active>.searchIcon{
   filter: none;
+}
+
+.jumper{
+  right: 50px;
+  bottom: 25%;
 }

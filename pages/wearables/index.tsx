@@ -8,6 +8,7 @@ import ModelList from '../../components/model-list';
 import UserAvatar from '../../components/user-avatar';
 import MeteInput from '../../components/meta-input-search';
 import Status from '../../components/status';
+import TopJumper from '../../components/jump-to-top';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
@@ -163,6 +164,7 @@ export default function Wearables(props) {
         </div>
         {renderContent}
       </div>
+      <TopJumper classname={style.jumper}></TopJumper>
       <Footer />
     </Page>
   );
