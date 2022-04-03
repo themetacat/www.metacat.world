@@ -170,8 +170,11 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
         className={cn('flex flex-col justify-start items-center p-4 text-white', styles.footer)}
         onClick={goToDetail}
       >
-        <div className="flex justify-between items-center w-full text-lg font-medium">
-          {model.kol?.name}
+        <div className="flex justify-between items-center w-full text-lg font-medium truncate">
+          <span title={model.kol?.name} className={cn('truncate', styles.title)}>
+            {' '}
+            {model.kol?.name}
+          </span>
           <span
             className={cn('flex justify-between items-center cursor-pointer', styles.goDetail2)}
           >

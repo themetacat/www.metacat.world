@@ -166,7 +166,9 @@ export default function DaoWebglCard({ graphicId, initFinish, model }: Props) {
         onClick={goToDetail}
       >
         <div className="flex flex-col justify-start items-start w-full text-lg font-medium">
-          {model.artwork?.name}
+          <span title={model.artwork?.name} className={cn('truncate', styles.title)}>
+            {model.artwork?.name}
+          </span>
           <div
             className={cn('flex items-end justify-center text-xs text-right mt-4', styles.goDetail)}
           >

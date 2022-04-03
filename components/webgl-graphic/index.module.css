@@ -76,3 +76,7 @@
 .goDetail:active, .goDetail2:active{
   filter: brightness(50%);
 }
+
+.title{
+  max-width: 250px;
+}
