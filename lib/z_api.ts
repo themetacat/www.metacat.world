@@ -87,7 +87,7 @@ class API {
 
   public async req_parcels_update(
     token: string,
-    parcel_ids: string,
+    parcel_id: number,
     is_built?: string,
     price?: string,
     start_at?: number,
@@ -95,7 +95,7 @@ class API {
   ): Promise<any> {
     const search = qs.stringify(
       {
-        parcel_ids,
+        parcel_id,
         is_built,
         price,
         start_at,
@@ -139,6 +139,42 @@ class API {
   // 获取Cryptovoxels岛屿列表接口
   public async req_rent_islands(): Promise<any> {
     const url = `${this.url}/rent/get_cv_island_list`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 8.8 获取租赁市场 Cryptovoxels 地块列表接口
+  public async req_rent_cardList(
+    page: number,
+    count: number,
+    island_ids: string,
+    area_scope: string,
+    height_scope: string,
+    price_scope: string,
+    built_status: string,
+    sort_field: string,
+    sort_type: string,
+  ): Promise<any> {
+    const search = qs.stringify(
+      {
+        page,
+        count,
+        island_ids,
+        area_scope,
+        height_scope,
+        price_scope,
+        built_status,
+        sort_field,
+        sort_type,
+      },
+      { addQueryPrefix: true },
+    );
+    const url = `${this.url}/rent/get_listed_cv_parcels${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',

@@ -50,7 +50,6 @@ export default ({ status, price, id, is_state }: Props) => {
   }, [null]);
 
   const leased = React.useCallback(async (event) => {
-    console.log(id);
     event.stopPropagation();
     const token = await refreshTK();
     const result = await req_parcels_leased(token, id.toString());
@@ -62,7 +61,6 @@ export default ({ status, price, id, is_state }: Props) => {
   }, []);
 
   const cancel = React.useCallback(async (event) => {
-    console.log(id);
     event.stopPropagation();
     const token = await refreshTK();
     const result = await req_parcels_cancel(token, id.toString());
@@ -78,14 +76,12 @@ export default ({ status, price, id, is_state }: Props) => {
   }, [set_current_state, is_state]);
 
   const edit = React.useCallback(async (event) => {
-    console.log(id);
     event.stopPropagation();
     if (current_state) return;
     store.setState(() => ({ rentOutState: true, id, updateOrAdd: 'update' }));
   }, []);
 
   const finish = React.useCallback(async (event) => {
-    console.log(id);
     event.stopPropagation();
     const token = await refreshTK();
     const result = await req_parcels_finish(token, id);
