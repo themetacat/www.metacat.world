@@ -138,7 +138,7 @@ export default function Wearables(props) {
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'wearables'} />
-        <div className={cn('tab-list flex mt-5', style.allHeight)}>
+        {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item, index) => {
@@ -158,7 +158,7 @@ export default function Wearables(props) {
             <div className={cls} />
           </div>
           <div className={cls} />
-        </div>
+        </div> */}
         <div
           className={cn(
             'main-content flex flex-col justify-center items-center relative z-10 text-white mt-5',
