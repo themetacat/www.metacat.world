@@ -1,16 +1,18 @@
 import React from 'react';
 import cn from 'classnames';
-
+import { v4 as uuid } from 'uuid';
 import PageHeader from '../../components/page-header';
 import Tab from '../../components/tab';
 import Page from '../../components/page';
 import Footer from '../../components/footer';
-import Pagination from '../../components/pagination';
+import PagiNation from '../../components/pagination';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
+import RentCard from '../../components/rent-card';
+import CoverImg from '../../components/cover-img';
 
 import style from './index.module.css';
 
-import { req_rent_islands } from '../../service/z_api';
+import { req_rent_islands, req_rent_cardList } from '../../service/z_api';
 
 import Status from '../../components/status';
 
@@ -120,10 +122,37 @@ export default function Rent() {
 
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [islands_data, set_islands_data] = React.useState([]);
-  const [islands_id, set_islands_id] = React.useState(null);
+  const [islands_ids, set_islands_ids] = React.useState([]);
 
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(false);
+
+  const [cardInfoList, setCardInfoList] = React.useState([]);
+  const [page, setPage] = React.useState(1);
+  const [totalPage, setTotalPage] = React.useState(0);
+  const [pageCount, setPageCount] = React.useState(20);
+  const [idsQuery, setIdsQuery] = React.useState('all');
+  const [areaQuery, setAreaQuery] = React.useState('');
+  const [heightQuery, setHeightQuery] = React.useState('');
+  const [priceQuery, setPriceQuery] = React.useState('');
+  const [builtQuery, setBuiltQuery] = React.useState('all');
+  const [fieldQuery, setFieldQuery] = React.useState('default');
+  const [typeQuery, setTypeQuery] = React.useState('desc');
+
+  const [detailState, setDetailState] = React.useState(false);
+
+  const [cardInfo, setCardInfo] = React.useState({
+    parcel_id: null,
+    name: null,
+    island: null,
+    suburb: null,
+    height: null,
+    area: null,
+    built_status: null,
+    end_date: null,
+    traffic: null,
+    price: null,
+    cover_img_url: null,
+  });
 
   const cls = cn('flex-1', style.bottomLine);
 
@@ -135,17 +164,54 @@ export default function Rent() {
     const result = await req_rent_islands();
     set_islands_data(result.data);
   }, []);
+  // 获取card列表数据
+  const get_rent_cardList = React.useCallback(async () => {
+    setLoading(true);
+    const result = await req_rent_cardList(
+      page,
+      pageCount,
+      idsQuery,
+      areaQuery,
+      heightQuery,
+      priceQuery,
+      builtQuery,
+      fieldQuery,
+      typeQuery,
+    );
+    if (result.code === 100000) {
+      setLoading(false);
+      setCardInfoList(result.data.parcel_list);
+      setTotalPage(result.data.total_page);
+    } else {
+      setLoading(false);
+    }
+  }, [
+    page,
+    pageCount,
+    idsQuery,
+    areaQuery,
+    heightQuery,
+    priceQuery,
+    builtQuery,
+    fieldQuery,
+    typeQuery,
+  ]);
   // 获取列表id 更改高亮效果
   const get_islands_id = React.useCallback(
     (id) => {
-      if (id === islands_id) {
-        set_islands_id(null);
+      setLocationAll('');
+      if (islands_ids.findIndex((item) => item === id) === -1) {
+        islands_ids.push(id);
+        set_islands_ids([...islands_ids]);
         return;
       }
-      setLocationAll('');
-      set_islands_id(id);
+      islands_ids.splice(
+        islands_ids.findIndex((item) => item === id),
+        1,
+      );
+      set_islands_ids([...islands_ids]);
     },
-    [islands_id],
+    [islands_ids],
   );
   // 改变状态是否选中
   const select = React.useCallback(
@@ -218,27 +284,11 @@ export default function Rent() {
     },
     [rank],
   );
-
-  const renderContent = React.useMemo(() => {
-    if (loading) {
-      return <Status status="loading" />;
-    }
-    if (error) {
-      return <Status status="error" />;
-    }
-    // if (cartData.length === 0) {
-    //   return <Status status="empty" />;
-    // }
-    // return (
-    //   <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
-    //     {cartData.map((card, idx) => {
-    //       return (
-    //         <Card></Card>
-    //       );
-    //     })}
-    //   </div>
-    // );
-  }, [error, loading]);
+  // 弹出框的状态
+  const toDetail = React.useCallback((Info) => {
+    setCardInfo(Info);
+    setDetailState(true);
+  }, []);
 
   const AreaAll = React.useCallback(() => {
     if (areaAll === 'All') return;
@@ -281,12 +331,75 @@ export default function Rent() {
   const LocationAll = React.useCallback(() => {
     if (locationAll === 'All') return;
     setLocationAll('All');
-    set_islands_id(null);
+    set_islands_ids([]);
   }, [locationAll]);
+  const renderContent = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (cardInfoList.length === 0) {
+      return <Status status="empty" />;
+    }
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
+        {cardInfoList.map((item) => {
+          return (
+            <RentCard
+              key={uuid()}
+              {...item}
+              onClick={(Info) => {
+                toDetail(Info);
+              }}
+            ></RentCard>
+          );
+        })}
+      </div>
+    );
+  }, [loading, cardInfoList]);
 
+  const onPageChangeHandler = React.useCallback(
+    async (number: number) => {
+      const requestNumber = number + 1;
+      setLoading(true);
+      const result = await req_rent_cardList(
+        requestNumber,
+        pageCount,
+        idsQuery,
+        areaQuery,
+        heightQuery,
+        priceQuery,
+        builtQuery,
+        fieldQuery,
+        typeQuery,
+      );
+      if (result.code === 100000) {
+        setLoading(false);
+        setCardInfoList(result.data.parcel_list);
+        setPage(requestNumber);
+        setTotalPage(result.data.total_page);
+      } else {
+        setLoading(false);
+      }
+    },
+    [
+      pageCount,
+      idsQuery,
+      areaQuery,
+      heightQuery,
+      priceQuery,
+      builtQuery,
+      fieldQuery,
+      typeQuery,
+      page,
+    ],
+  );
+  const closeDetail = React.useCallback(() => {
+    setDetailState(false);
+  }, []);
   React.useEffect(() => {
     get_islands_list();
-  }, [get_islands_list]);
+    get_rent_cardList();
+  }, [get_islands_list, get_rent_cardList]);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -334,7 +447,7 @@ export default function Rent() {
                   className={cn(
                     'flex mr-8 mb-2',
                     style.c,
-                    item.id === islands_id ? style.active : null,
+                    islands_ids.findIndex((i) => i === item.id) !== -1 ? style.active : null,
                   )}
                   onClick={() => {
                     get_islands_id(item.id);
@@ -503,7 +616,74 @@ export default function Rent() {
         </div>
       </div>
       <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
-      <Pagination />
+      <PagiNation
+        total={totalPage}
+        pageNumber={page - 1}
+        pageSize={20}
+        pageChange={onPageChangeHandler}
+      />
+
+      {detailState ? (
+        <div>
+          <div className={style.container}></div>
+          <div className={cn('flex', style.detailCard)}>
+            <div className={style.left}>
+              <div className={style.imgContanier}>
+                <CoverImg
+                  className={style.img}
+                  img={cardInfo.cover_img_url}
+                  error="/images/default-cover.png"
+                ></CoverImg>
+              </div>
+              <div className={style.contactTitle}>Contact the Owner:</div>
+            </div>
+            <div className={style.right}>
+              <h2>
+                {`${cardInfo.island} `}
+                <span>.</span>
+                {` ${cardInfo.suburb}`}
+              </h2>
+              <div className={style.price}>{`${cardInfo.price} ETH/WEEK`}</div>
+              <div className={style.endTime}>Can be rented until: {cardInfo.end_date}</div>
+              <div className={style.detail}>
+                <div className={cn('flex', style.coord)}>
+                  <img src="/images/icon/traffic.png" />
+                  <div>{`Month Traffic :  ${cardInfo.traffic}`}</div>
+                </div>
+                <div className={cn('flex', style.plot)}>
+                  <img src="/images/icon/dizhi.png" />
+                  <div>{`#${cardInfo.parcel_id} ${cardInfo.name}`}</div>
+                </div>
+                <div className={cn('flex', style.info)}>
+                  <img src="/images/icon/dikuai.png" />
+                  <div className={style.info_item}>{`${cardInfo.area}㎡`}</div>
+                  <div className={style.info_item}>{`${cardInfo.height}m High`}</div>
+                  <div className={style.info_item}>
+                    {cardInfo.built_status === 0 ? 'Not Built' : 'Built'}
+                  </div>
+                </div>
+              </div>
+              <div className={style.contact}>
+                <a href="">
+                  <div>
+                    <img src="/images/rent-twitter.png" />
+                    <div>Twitter</div>
+                  </div>
+                </a>
+                <a href="mailto:metacat@tutanota.com" data-tip="metacat@tutanota.com">
+                  <div>
+                    <img src="/images/rent-email.png" />
+                    <div>Email</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div className={style.close} onClick={closeDetail}>
+              x
+            </div>
+          </div>
+        </div>
+      ) : null}
       <Footer />
     </Page>
   );

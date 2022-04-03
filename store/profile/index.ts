@@ -6,4 +6,5 @@ export default new Rekv({
   id: null,
   updateOrAdd: 'add',
   parcels_cardState: false,
+  manyState: false,
 });

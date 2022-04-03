@@ -126,6 +126,12 @@
   left: 0;
   z-index: 99999;
 }
-.dn {
-  display: none;
+.price {
+  position: relative;
+  color: #ffb800;
+  font-weight: 600;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 22px;
+  margin: 13px 0;
 }

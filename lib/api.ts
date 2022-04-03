@@ -400,6 +400,23 @@ class API {
 
     return json;
   }
+
+  public async getDaoWearableList(): Promise<any> {
+    const url = `${this.url}/wearable/get_dao_wearable_list`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getDaoWearableDetail(id: string): Promise<any> {
+    const search = qs.stringify({ id }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_dao_wearable_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

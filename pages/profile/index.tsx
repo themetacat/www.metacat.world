@@ -385,6 +385,7 @@ export default function ProfilePage() {
     (current_state) => {
       manyChange(label, cartData);
       set_rent_set_state(current_state);
+      setManySetState(false);
       setSelectedIds([]);
       store.setState(() => ({ rentOutState: false }));
     },
@@ -396,6 +397,7 @@ export default function ProfilePage() {
     // 批量挂出
     if (label === 'Rent out several') {
       set_rent_set_state(true);
+      setManySetState(false);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false }));
     }
@@ -409,6 +411,7 @@ export default function ProfilePage() {
         store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
       }
       set_rent_set_state(true);
+      setManySetState(false);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false }));
     }
@@ -422,6 +425,7 @@ export default function ProfilePage() {
         store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
       }
       set_rent_set_state(true);
+      setManySetState(false);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false }));
     }
@@ -429,6 +433,7 @@ export default function ProfilePage() {
 
   const watcher_store = React.useCallback(() => {
     set_rent_set_state(s.rentOutState);
+    setManySetState(false);
     const id = [];
     if (s.id) {
       id.push(s.id);
@@ -515,120 +520,127 @@ export default function ProfilePage() {
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
-      <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'profile'} />
-      </div>
-
-      <div className={cn('bg-black flex flex-col justify-center items-center')}>
-        <Profile
-          avater={avatar}
-          address={address}
-          twitter={twitterAddress}
-          home={websiteAddress}
-          name={nickName}
-          classname="main-content"
-        ></Profile>
-      </div>
-      <div className={cn(style.tablebg)}>
-        <div className={cn(style.tableList)}>
-          {TAB3.map((item) => {
-            return <Tab3 label={item.label} key={item.label} active={item.active} />;
-          })}
+      <div
+        onClick={() => {
+          setManySetState(false);
+        }}
+      >
+        <div className="bg-black relative">
+          <PageHeader className="relative z-10" active={'profile'} />
         </div>
-      </div>
-      <div className={cn('tab-list flex mt-5', style.allHeight)}>
-        <div className={cls}></div>
-        <div className="main-content flex px-0">
-          {TAB.map((item) => {
-            return (
-              <Tab
-                active={tabState === item.type}
-                isMini={true}
-                key={item.label}
-                label={item.label}
-                icon={item.icon}
-                onClick={() => {
-                  onTabChange(item.type);
-                }}
-              />
-            );
-          })}
+
+        <div className={cn('bg-black flex flex-col justify-center items-center')}>
+          <Profile
+            avater={avatar}
+            address={address}
+            twitter={twitterAddress}
+            home={websiteAddress}
+            name={nickName}
+            classname="main-content"
+          ></Profile>
+        </div>
+        <div className={cn(style.tablebg)}>
+          <div className={cn(style.tableList)}>
+            {TAB3.map((item) => {
+              return <Tab3 label={item.label} key={item.label} active={item.active} />;
+            })}
+          </div>
+        </div>
+        <div className={cn('tab-list flex mt-5', style.allHeight)}>
+          <div className={cls}></div>
+          <div className="main-content flex px-0">
+            {TAB.map((item) => {
+              return (
+                <Tab
+                  active={tabState === item.type}
+                  isMini={true}
+                  key={item.label}
+                  label={item.label}
+                  icon={item.icon}
+                  onClick={() => {
+                    onTabChange(item.type);
+                  }}
+                />
+              );
+            })}
+            <div className={cls} />
+          </div>
           <div className={cls} />
         </div>
-        <div className={cls} />
-      </div>
-      {/* 导航 */}
-      <div className={style.nav}>
-        <div className={style.nav_left}>
-          {nav.map((item, index) => {
-            return (
-              <ParcelsTab
-                dataSource={dataSource}
-                label={item.label}
-                state={item.state}
-                num={item.num}
-                key={item.label}
-                onClick={() => {
-                  changeNavTab(item.label, index);
-                }}
-              />
-            );
-          })}
-        </div>
-        <div className={style.nav_right}>
-          <div
-            className={style.nav_right_item}
-            onClick={() => {
-              manySet(manySetState);
-            }}
-          >
-            <img src="/images/v5/settings.png" alt="" />
-            <div>Batch setting</div>
-            {manySetState ? (
-              <div className={style.container}>
-                <div className={style.manySetList}>
-                  {manySetLabel.map((item) => {
-                    return (
-                      <div
-                        className={style.setItem}
-                        key={item.label}
-                        onClick={() => {
-                          manyChange(item.label, cartData);
-                          store.setState(() => ({ parcels_cardState: true }));
-                        }}
-                      >
-                        {item.label}
-                      </div>
-                    );
-                  })}
+        {/* 导航 */}
+        <div className={style.nav}>
+          <div className={style.nav_left}>
+            {nav.map((item, index) => {
+              return (
+                <ParcelsTab
+                  dataSource={dataSource}
+                  label={item.label}
+                  state={item.state}
+                  num={item.num}
+                  key={item.label}
+                  onClick={() => {
+                    changeNavTab(item.label, index);
+                  }}
+                />
+              );
+            })}
+          </div>
+          <div className={style.nav_right}>
+            <div
+              className={style.nav_right_item}
+              onClick={(event) => {
+                event.stopPropagation();
+                manySet(manySetState);
+              }}
+            >
+              <img src="/images/v5/settings.png" alt="" />
+              <div>Batch setting</div>
+              {manySetState ? (
+                <div className={style.container}>
+                  <div className={style.manySetList}>
+                    {manySetLabel.map((item) => {
+                      return (
+                        <div
+                          className={style.setItem}
+                          key={item.label}
+                          onClick={() => {
+                            manyChange(item.label, cartData);
+                            store.setState(() => ({ parcels_cardState: true }));
+                          }}
+                        >
+                          {item.label}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
-          <div className={style.nav_right_item}>
-            <img src="/images/icon/kapian.png" className={style.left} />
-            <div className={style.shuxian}></div>
-            <img src="/images/icon/liebiao.png" className={style.right} />
+              ) : (
+                <div></div>
+              )}
+            </div>
+            <div className={style.nav_right_item}>
+              <img src="/images/icon/kapian.png" className={style.left} />
+              <div className={style.shuxian}></div>
+              <img src="/images/icon/liebiao.png" className={style.right} />
+            </div>
           </div>
         </div>
-      </div>
-      {/* 导航结束 */}
-      {/* 卡片开始 */}
-      <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
+        {/* 导航结束 */}
+        {/* 卡片开始 */}
+        <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
 
-      {/* 卡片结束 */}
-      {tag2()}
-      <RentSet
-        state={rent_set_state}
-        onClick={(current_state) => {
-          close_rent_set(current_state);
-        }}
-        selectedIds={selectedIds}
-      />
-      <Popup status={status} type={type} value={value} />
-      <Footer />
+        {/* 卡片结束 */}
+        {tag2()}
+        <RentSet
+          state={rent_set_state}
+          onClick={(current_state) => {
+            close_rent_set(current_state);
+          }}
+          selectedIds={selectedIds}
+        />
+        <Popup status={status} type={type} value={value} />
+        <Footer />
+      </div>
     </Page>
   );
 }

@@ -362,3 +362,20 @@ export const getOkxWearableDetail = async (id: string) => {
   const json = await res.json();
   return json;
 };
+
+export const getDaoWearableList = async () => {
+  const url = `/api/dao_wearable_list`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
+
+export const getDaoWearableDetail = async (id: string) => {
+  const search = qs.stringify({ id }, { addQueryPrefix: true });
+  const url = `/api/dao_wearable_detail${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
