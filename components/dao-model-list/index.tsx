@@ -152,6 +152,9 @@ export default function DaoModelList({ models }: Props) {
     if (canvaRef.current) {
       const domParams = canvaRef.current.getBoundingClientRect();
       offsetY.current = domParams.top;
+      if (window.screenY > 0) {
+        offsetY.current = offsetY.current + window.screenY;
+      }
       animation();
       return;
     }
