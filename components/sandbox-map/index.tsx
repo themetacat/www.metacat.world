@@ -304,6 +304,7 @@ function SandBoxMap({
   const detailY = React.useRef(0);
   const detailX = React.useRef(0);
   const [loading, setLoading] = React.useState(false);
+  const [versionNumber, setVersionNumber] = React.useState(0);
   // const clickToJumpRef = React.useRef(clickToJump);
 
   const dealWithParcel = React.useCallback(
@@ -533,8 +534,8 @@ function SandBoxMap({
       if (mousedownTimestamp.current < 200) {
         detailX.current = event.layerX;
         detailY.current = event.layerY;
-        console.log(detailX.current, detailY.current);
       }
+      setVersionNumber(0);
       document.removeEventListener('mousemove', handleDraging);
       lastDragX.current = -1;
       lastDragY.current = -1;
@@ -545,6 +546,7 @@ function SandBoxMap({
   const handleDrag = React.useCallback(
     (event) => {
       mousedownTimestamp.current = Date.now();
+      setVersionNumber(1);
       if (showDetail) {
         lastDragX.current = event.nativeEvent.layerX;
         lastDragY.current = event.nativeEvent.layerY;
