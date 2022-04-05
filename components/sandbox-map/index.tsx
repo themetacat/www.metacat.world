@@ -7,13 +7,13 @@ import style from './index.module.css';
 
 import Selecter from '../select';
 import Legend from '../legend';
-import DecentralandDeatil from '../decentraland-detail';
+import DecentralandDeatil from '../sandbox-detail';
 import Status from '../status';
 
 import { convert } from '../../common/utils';
-import Popup from '../decentraland-popup';
+import Popup from '../sandbox-popup';
 
-import { getDecentralandMapLevelThreeData, getDclParcelDetail } from '../../service';
+import { getSandboxMapLevelThreeData, getSandboxParcelDetail } from '../../service';
 
 // this type is same as https://github.com/decentraland/atlas-server v2 version. There is only 5 types has color
 const COLOR_BY_TYPE = Object.freeze({
@@ -266,7 +266,7 @@ const NOT_CUSTOME_COLOR = {
   district: '#021B16',
 };
 
-function DecentralandMap({
+function SandBoxMap({
   zoomLimit,
   zoomControl,
   initZoom = zoomLimit[0],
@@ -323,14 +323,15 @@ function DecentralandMap({
             color = allColor.color;
           }
         }
-
-        const name = data[i].properties.id;
-        const coord = data[i].properties.id.split(',');
+        const id = data[i].properties.coordinate;
+        const name = id;
+        const coord = data[i].properties.coordinate.split(',');
         tiles[name] = {
           ...data[i].properties,
           x: coord[0],
           y: coord[1],
           color,
+          id,
         };
       }
       setMapTiles(tiles as Record<string, AtlasTile>);
@@ -339,23 +340,8 @@ function DecentralandMap({
   );
 
   const requestLand = React.useCallback(async () => {
-    //
-    // fetch("https://poster-phi.vercel.app/dcl/all_price_map_level_three.json").then(res=>{
-    //   return res.json()
-    // }).then(data=>{
-    //   const { stats, parcels } = convert(data);
-    //   const limit = stats[mapType.current].levelOne;
-    //   colors[2].forEach((co, index) => {
-    //     Object.assign(co.all, limit[index].all);
-    //     Object.assign(co.month, limit[index].month);
-    //     Object.assign(co.quarter, limit[index].quarter);
-    //     Object.assign(co.year, limit[index].year);
-    //   });
-    //   orginData.current = parcels;
-    //   dealWithParcel(parcels, colors[2]);
-    // })
     setLoading(true);
-    const res = await getDecentralandMapLevelThreeData();
+    const res = await getSandboxMapLevelThreeData();
     const { code, data } = res;
     if (code === 100000 && data) {
       const { stats, parcels } = convert(data);
@@ -460,7 +446,7 @@ function DecentralandMap({
         setZoomLevel(minZoomLevel);
       }
     },
-    [zoomLevel, maxZoomLevel, minZoomLevel, closePop],
+    [zoomLevel, minZoomLevel, maxZoomLevel, closePop],
   );
 
   const handleHover = React.useCallback(
@@ -479,6 +465,8 @@ function DecentralandMap({
         setMouseY(-1);
       } else if (!tile && showPopup) {
         setShowPopup(false);
+      } else if (!tile) {
+        setHoveredTile(null);
       }
     },
     [hoveredTile, showPopup, withPopup, mapTiles],
@@ -486,7 +474,7 @@ function DecentralandMap({
 
   const requestDetail = React.useCallback(
     async (id: string) => {
-      const d = await getDclParcelDetail(id);
+      const d = await getSandboxParcelDetail(id);
       const { data } = d;
       setShowDetail(true);
       setDeatil(convert(data));
@@ -499,12 +487,12 @@ function DecentralandMap({
       if (!mapTiles) return;
       const id = `${x},${y}`;
       const tile = mapTiles[id];
-      if (tile && tile.type === 'owned') {
+      if (tile) {
         setSelectTile({
           x: tile.x,
           y: tile.y,
         });
-        requestDetail(tile.landId);
+        requestDetail(tile.tokenId);
         return;
       }
       setSelectTile(null);
@@ -545,6 +533,7 @@ function DecentralandMap({
       if (mousedownTimestamp.current < 200) {
         detailX.current = event.layerX;
         detailY.current = event.layerY;
+        console.log(detailX.current, detailY.current);
       }
       document.removeEventListener('mousemove', handleDraging);
       lastDragX.current = -1;
@@ -703,4 +692,4 @@ function DecentralandMap({
   );
 }
 
-export default DecentralandMap;
+export default SandBoxMap;
