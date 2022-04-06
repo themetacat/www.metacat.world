@@ -299,6 +299,7 @@ function Map({
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
+  const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
   const setLoading = React.useCallback(() => {
@@ -592,6 +593,7 @@ function Map({
     if (popDetail.current) {
       (popDetail.current as any).style.display = 'none';
     }
+    setActiveColor(null);
   }, [popDetail.current]);
 
   // parcel style function
@@ -601,10 +603,13 @@ function Map({
       let count = fe.properties[staticType.current];
       if (!Number.isNaN(count) && legends.current) {
         count = count < 0 ? 0 : count;
-        const allColor = legends.current.find((x) => {
+        const index = legends.current.findIndex((x) => {
           return count <= x[staticType.current].start && count >= x[staticType.current].end;
         });
-        if (allColor) {
+        if (index > -1) {
+          const allColor = legends.current[index];
+          /* eslint no-underscore-dangle: 0 */
+          fe.properties.colorIndex = index; // eslint-disable-line
           color = allColor.color;
         }
       }
@@ -991,6 +996,10 @@ function Map({
       parcelsLayerThree.on('click', function (e) {
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
+          const { colorIndex } = e.sourceTarget.feature.properties;
+          if (colorIndex !== null || colorIndex !== undefined) {
+            setActiveColor(colorIndex);
+          }
           if (popDetail.current) {
             (popDetail.current as any).style.display = 'block';
             (popDetail.current as any).style.top = `${(e as any).containerPoint.y}px`;
@@ -1004,6 +1013,10 @@ function Map({
       parcelsPriceLayerThree.on('click', function (e) {
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
+          const { colorIndex } = e.sourceTarget.feature.properties;
+          if (colorIndex !== null || colorIndex !== undefined) {
+            setActiveColor(colorIndex);
+          }
           if (popDetail.current) {
             (popDetail.current as any).style.display = 'block';
             (popDetail.current as any).style.top = `${(e as any).containerPoint.y}px`;
@@ -1199,6 +1212,7 @@ function Map({
         className={style.legend}
         title={mapType.current === 'TRAFFIC' ? 'Traffic ranking' : 'Price ranking'}
         options={legends.current}
+        active={activeColor}
       ></Legend>
     </div>
   );

@@ -65,6 +65,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
   const show_parcel = React.useCallback(
     (current_state) => {
       set_parcel_state(!current_state);
+      set_term_state(false);
     },
     [parcel_state],
   );
@@ -84,6 +85,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
   const change_show_time_state = React.useCallback(
     (time_state) => {
       set_term_state(!time_state);
+      set_parcel_state(false);
     },
     [term_state],
   );
@@ -240,7 +242,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
                 set_is_price(false);
               }}
             >
-              x
+              <img src="/images/guanbi.png" className={style.guanbi} />
             </div>
           </div>
           <div className={style.body}>
@@ -255,7 +257,11 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
               }}
             >
               <div>{show_built}</div>
-              <img src="/images/Frame-down.png" />
+              {parcel_state ? (
+                <img src="/images/Frame-up.png" />
+              ) : (
+                <img src="/images/Frame-down.png" />
+              )}
               {parcel_state ? (
                 <div className={style.parcel_show}>
                   {is_built.map((item) => {
@@ -285,7 +291,11 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
               }}
             >
               <div>{show_time}</div>
-              <img src="/images/Frame-down.png" />
+              {term_state ? (
+                <img src="/images/Frame-up.png" />
+              ) : (
+                <img src="/images/Frame-down.png" />
+              )}
               {term_state ? (
                 <div className={style.show_term}>
                   {is_time.map((item) => {
@@ -324,7 +334,9 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
               />
               <div>ETH / Week</div>
             </div>
-            <div className={cn(style.iv, is_price ? null : style.dn)}>Invalid value</div>
+            <div className={cn(style.iv, is_price ? null : style.dn)}>
+              Invalid value，0 ETH＜price≤10.00 ETH
+            </div>
             <div
               className={style.save}
               onClick={() => {

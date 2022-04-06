@@ -43,20 +43,20 @@ const TAB = [
   },
 ];
 
-const TAB3 = [
-  {
-    label: 'PARCEL LIST',
-    active: true,
-  },
-  {
-    label: 'TRAFFIC REPORT',
-    active: false,
-  },
-  {
-    label: 'SALES REPORT',
-    active: false,
-  },
-];
+// const TAB3 = [
+//   {
+//     label: 'PARCEL LIST',
+//     active: true,
+//   },
+//   {
+//     label: 'TRAFFIC REPORT',
+//     active: false,
+//   },
+//   {
+//     label: 'SALES REPORT',
+//     active: false,
+//   },
+// ];
 export default function ProfilePage() {
   const nav_Label = React.useRef(null);
   const meta = {
@@ -356,7 +356,7 @@ export default function ProfilePage() {
   );
 
   const manyChange = React.useCallback(
-    (many_label, data) => {
+    (many_label, data, sta = true) => {
       const ids = [];
       if (many_label === 'Rent out several') {
         data.forEach((item) => {
@@ -373,7 +373,7 @@ export default function ProfilePage() {
         });
       }
       setParcelsIds(ids);
-      setCardState(true);
+      setCardState(sta);
       setLabel(many_label);
       setSelectedIds([]);
       changeNum(dataSource, nav_Label);
@@ -383,7 +383,7 @@ export default function ProfilePage() {
 
   const close_rent_set = React.useCallback(
     (current_state) => {
-      manyChange(label, cartData);
+      manyChange(label, cartData, false);
       set_rent_set_state(current_state);
       setManySetState(false);
       setSelectedIds([]);
@@ -539,13 +539,13 @@ export default function ProfilePage() {
             classname="main-content"
           ></Profile>
         </div>
-        <div className={cn(style.tablebg)}>
+        {/* <div className={cn(style.tablebg)}>
           <div className={cn(style.tableList)}>
             {TAB3.map((item) => {
               return <Tab3 label={item.label} key={item.label} active={item.active} />;
             })}
           </div>
-        </div>
+        </div> */}
         <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
@@ -593,7 +593,7 @@ export default function ProfilePage() {
                 manySet(manySetState);
               }}
             >
-              <img src="/images/v5/settings.png" alt="" />
+              <img src="/images/Settings.png" />
               <div>Batch setting</div>
               {manySetState ? (
                 <div className={style.container}>
@@ -618,11 +618,12 @@ export default function ProfilePage() {
                 <div></div>
               )}
             </div>
-            <div className={style.nav_right_item}>
+
+            {/* <div className={style.nav_right_item}>
               <img src="/images/icon/kapian.png" className={style.left} />
               <div className={style.shuxian}></div>
               <img src="/images/icon/liebiao.png" className={style.right} />
-            </div>
+            </div> */}
           </div>
         </div>
         {/* 导航结束 */}
