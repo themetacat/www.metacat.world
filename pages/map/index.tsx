@@ -44,7 +44,7 @@ const TAB = [
     type: 'decentraland',
   },
   {
-    label: 'TheSandbox',
+    label: 'The Sandbox',
     icon: '/images/home-icon.svg',
     type: 'sandbox',
   },

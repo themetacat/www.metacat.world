@@ -30,8 +30,8 @@ const COLOR_BY_TYPE = Object.freeze({
   10: '#3D3A46', // parcels on sale (we show them as owned parcels)
   unowned: '#09080A', // unowned pacel/estate
   12: '#18141a', // background
-  13: '#110e13', // loading odd
-  14: '#0d0b0e', // loading even
+  13: '#15282C', // '#110e13', // loading odd
+  14: '#15282C', // '#0d0b0e', // loading even
 });
 
 const mapT = [{ value: 'price', label: 'PRICE' }];
@@ -430,6 +430,9 @@ function SandBoxMap({
       }
       return {
         color: (x + y) % 2 === 0 ? COLOR_BY_TYPE[13] : COLOR_BY_TYPE[14],
+        top: true,
+        left: true,
+        topLeft: true,
       };
     },
     [mapTiles],

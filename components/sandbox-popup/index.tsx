@@ -34,6 +34,6 @@ export default function Popup({ x, y, visible, tile, position }: Props) {
     <div
       className={cls}
       style={{ top: y, left: x, opacity: visible ? 1 : 0 }}
-    >{`land： (${tile.x},${tile.y})`}</div>
+    >{`Land：  (${tile.x},${tile.y})`}</div>
   );
 }
