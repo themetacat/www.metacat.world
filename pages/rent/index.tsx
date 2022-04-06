@@ -138,7 +138,14 @@ export default function Rent() {
   const [fieldQuery, setFieldQuery] = React.useState('default');
   const [typeQuery, setTypeQuery] = React.useState('desc');
 
+  const [Defaultsort, setDefaultsort] = React.useState(true);
+
   const [detailState, setDetailState] = React.useState(false);
+
+  const [imgState, setImgState] = React.useState(false);
+
+  const [hoverState, setHoverState] = React.useState(false);
+  const [hoverText, setHoverText] = React.useState('');
 
   const [cardInfo, setCardInfo] = React.useState({
     parcel_id: null,
@@ -149,6 +156,8 @@ export default function Rent() {
     area: null,
     built_status: null,
     end_date: null,
+    owner: null,
+    parcel_page_url: null,
     traffic: null,
     price: null,
     cover_img_url: null,
@@ -170,7 +179,7 @@ export default function Rent() {
     const result = await req_rent_cardList(
       page,
       pageCount,
-      idsQuery,
+      islands_ids.length === 0 ? idsQuery : islands_ids.join(','),
       areaQuery,
       heightQuery,
       priceQuery,
@@ -195,6 +204,7 @@ export default function Rent() {
     builtQuery,
     fieldQuery,
     typeQuery,
+    islands_ids,
   ]);
   // 获取列表id 更改高亮效果
   const get_islands_id = React.useCallback(
@@ -209,6 +219,7 @@ export default function Rent() {
         islands_ids.findIndex((item) => item === id),
         1,
       );
+
       set_islands_ids([...islands_ids]);
     },
     [islands_ids],
@@ -224,7 +235,22 @@ export default function Rent() {
           }
           return { ...item };
         });
-
+        result.forEach((item) => {
+          if (item.state) {
+            if (item.value === '< 100㎡') {
+              setAreaQuery(`${areaQuery}0_100,`);
+            }
+            if (item.value === '100㎡-200㎡') {
+              setAreaQuery(`${areaQuery}100_200,`);
+            }
+            if (item.value === '200㎡-500㎡') {
+              setAreaQuery(`${areaQuery}200_500,`);
+            }
+            if (item.value === '> 500㎡') {
+              setAreaQuery(`${areaQuery}500_,`);
+            }
+          }
+        });
         setAreaSort([...result]);
       }
       if (type === 'Height') {
@@ -234,6 +260,22 @@ export default function Rent() {
             return { value: item.value, state: !item.state };
           }
           return { ...item };
+        });
+        result.forEach((item) => {
+          if (item.state) {
+            if (item.value === '< 10m') {
+              setHeightQuery(`${heightQuery}0_10,`);
+            }
+            if (item.value === '10 - 15m') {
+              setHeightQuery(`${heightQuery}10_15,`);
+            }
+            if (item.value === '15 - 20m') {
+              setHeightQuery(`${heightQuery}15_20,`);
+            }
+            if (item.value === '> 20m') {
+              setHeightQuery(`${heightQuery}20_,`);
+            }
+          }
         });
         setHeightSort([...result]);
       }
@@ -245,6 +287,24 @@ export default function Rent() {
           }
           return { ...item };
         });
+
+        result.forEach((item) => {
+          if (item.state) {
+            if (item.value === '< 0.1 ETH') {
+              setPriceQuery(`${priceQuery}0_0.1,`);
+            }
+            if (item.value === '0.1 ETH - 0.2 ETH') {
+              setPriceQuery(`${priceQuery}0.1_0.2,`);
+            }
+            if (item.value === '0.2 ETH - 0.5 ETH') {
+              setPriceQuery(`${priceQuery}0.2_0.5,`);
+            }
+            if (item.value === '> 0.5 ETH') {
+              setPriceQuery(`${priceQuery}0.5_,`);
+            }
+          }
+        });
+
         setPriceWeekSort([...result]);
       }
       if (type === 'built') {
@@ -255,30 +315,71 @@ export default function Rent() {
           }
           return { ...item };
         });
+        result.forEach((item) => {
+          if (item.state) {
+            if (item.value === 'Built') {
+              setBuiltQuery(`${builtQuery === 'all' ? '' : builtQuery}yes,`);
+            }
+            if (item.value === 'Not built') {
+              setBuiltQuery(`${builtQuery === 'all' ? '' : builtQuery}no,`);
+            }
+          }
+        });
+
         setBuiltSort([...result]);
       }
     },
-    [areaSort, heightSort, priceWeekSort, builtSort],
+    [
+      areaSort,
+      heightSort,
+      priceWeekSort,
+      builtSort,
+      areaQuery,
+      heightQuery,
+      priceQuery,
+      builtQuery,
+    ],
   );
   // 改变排序状态
   const sort = React.useCallback(
-    (index) => {
+    (index, val) => {
+      setDefaultsort(false);
       const result = rank.map((item, i) => {
         if (index !== i && item.state !== '') {
           return { value: item.value, state: '' };
         }
         return { ...item };
       });
-      if (result[index].state === '') {
+
+      setFieldQuery(val);
+      if (result[index].state === '' && val !== 'Price') {
         result[index].state = 'desc';
       }
-      if (result[index].state === 'desc') {
+      if (result[index].state === 'desc' && val !== 'Price') {
         result[index].state = 'asc';
+        setTypeQuery('asc');
         setRank([...result]);
         return;
       }
-      if (result[index].state === 'asc') {
+      if (result[index].state === 'asc' && val !== 'Price') {
         result[index].state = 'desc';
+        setTypeQuery('desc');
+        setRank([...result]);
+      }
+
+      if (result[index].state === '' && val === 'Price') {
+        result[index].state = 'asc';
+      }
+
+      if (result[index].state === 'asc' && val === 'Price') {
+        result[index].state = 'desc';
+        setTypeQuery('desc');
+        setRank([...result]);
+        return;
+      }
+      if (result[index].state === 'desc' && val === 'Price') {
+        result[index].state = 'asc';
+        setTypeQuery('asc');
         setRank([...result]);
       }
     },
@@ -293,6 +394,7 @@ export default function Rent() {
   const AreaAll = React.useCallback(() => {
     if (areaAll === 'All') return;
     setAreaAll('All');
+    setAreaQuery('');
     const result = areaSort.map((item) => {
       return { value: item.value, state: false };
     });
@@ -301,6 +403,7 @@ export default function Rent() {
   const HeightAll = React.useCallback(() => {
     if (heightAll === 'All') return;
     setHeightAll('All');
+    setHeightQuery('');
     const result = heightSort.map((item) => {
       return { value: item.value, state: false };
     });
@@ -309,6 +412,7 @@ export default function Rent() {
   const PriceAll = React.useCallback(() => {
     if (priceWeekAll === 'All') return;
     setPriceWeekAll('All');
+    setPriceQuery('');
     const result = priceWeekSort.map((item) => {
       return { value: item.value, state: false };
     });
@@ -317,12 +421,16 @@ export default function Rent() {
   const BuiltAll = React.useCallback(() => {
     if (builtAll === 'All') return;
     setBuiltAll('All');
+    setBuiltQuery('all');
     const result = builtSort.map((item) => {
       return { value: item.value, state: false };
     });
     setBuiltSort([...result]);
   }, [builtAll, builtSort]);
   const clearSort = React.useCallback(() => {
+    setDefaultsort(true);
+    setFieldQuery('default');
+    setTypeQuery('desc');
     const result = rank.map((item) => {
       return { value: item.value, state: '' };
     });
@@ -364,7 +472,7 @@ export default function Rent() {
       const result = await req_rent_cardList(
         requestNumber,
         pageCount,
-        idsQuery,
+        islands_ids.length === 0 ? idsQuery : islands_ids.join(','),
         areaQuery,
         heightQuery,
         priceQuery,
@@ -393,6 +501,19 @@ export default function Rent() {
       page,
     ],
   );
+
+  const hint = React.useCallback((val) => {
+    setHoverState(true);
+    if (val === 'Area') {
+      setHoverText('Click to sort by area from small to large');
+    }
+    if (val === 'Height') {
+      setHoverText('Click to sort by height from low to high');
+    }
+    if (val === 'Price') {
+      setHoverText('Click to sort by height from low to Price');
+    }
+  }, []);
   const closeDetail = React.useCallback(() => {
     setDetailState(false);
   }, []);
@@ -590,25 +711,49 @@ export default function Rent() {
       </div>
       <div className={style.sort}>
         <div className={cn('flex', style.sortMode)}>
-          <div className={cn('flex mr-8', style.clearSort)}>
-            <div onClick={clearSort}>Default sort</div>
+          <div className={cn('flex', style.clearSort)}>
+            <div onClick={clearSort} className={cn(Defaultsort ? style.active : null)}>
+              Default sort
+            </div>
           </div>
+          {hoverState ? <div className={style.hover_text}>{hoverText}</div> : null}
           {rank.map((item, index) => {
             return (
               <div
                 key={item.value}
-                className={cn('mr-8', style.sortModeItem)}
+                className={cn('ml-8', style.sortModeItem)}
                 onClick={() => {
-                  sort(index);
+                  sort(index, item.value);
+                }}
+                onMouseOver={() => {
+                  hint(item.value);
+                }}
+                onMouseOut={() => {
+                  setHoverState(false);
                 }}
               >
                 <div className={cn('flex')}>
                   <div className={cn(style.title, item.state !== '' ? style.active : null)}>
                     {item.value}
                   </div>
-                  {item.state === '' ? <img src="/images/stateless.png" /> : null}
-                  {item.state === 'desc' ? <img src="/images/desc.png" /> : null}
-                  {item.state === 'asc' ? <img src="/images/asc.png" /> : null}
+                  {item.state === '' && item.value !== 'Price' ? (
+                    <img src="/images/stateless.png" />
+                  ) : null}
+                  {item.state === 'desc' && item.value !== 'Price' ? (
+                    <img src="/images/desc.png" />
+                  ) : null}
+                  {item.state === 'asc' && item.value !== 'Price' ? (
+                    <img src="/images/asc.png" />
+                  ) : null}
+                  {item.state === '' && item.value === 'Price' ? (
+                    <img src="/images/stateless.png" />
+                  ) : null}
+                  {item.state === 'desc' && item.value === 'Price' ? (
+                    <img src="/images/desc.png" />
+                  ) : null}
+                  {item.state === 'asc' && item.value === 'Price' ? (
+                    <img src="/images/asc.png" />
+                  ) : null}
                 </div>
               </div>
             );
@@ -634,6 +779,28 @@ export default function Rent() {
                   img={cardInfo.cover_img_url}
                   error="/images/default-cover.png"
                 ></CoverImg>
+                <a href={cardInfo.parcel_page_url} target="_blank">
+                  <div
+                    className={imgState ? style.shade : style.sd}
+                    onMouseOver={() => {
+                      setImgState(true);
+                    }}
+                    onMouseOut={(e) => {
+                      setImgState(false);
+                    }}
+                  ></div>
+                  {imgState ? (
+                    <div
+                      className={style.toTitle}
+                      onMouseEnter={() => {
+                        setImgState(true);
+                      }}
+                    >
+                      {`Click to the building`}
+                      <img src="/images/xiangyou.png" />
+                    </div>
+                  ) : null}
+                </a>
               </div>
               <div className={style.contactTitle}>Contact the Owner:</div>
             </div>
@@ -664,7 +831,7 @@ export default function Rent() {
                 </div>
               </div>
               <div className={style.contact}>
-                <a href="">
+                <a href="https://twitter.com/Metacat007" target="_blank" data-tip="twitter">
                   <div>
                     <img src="/images/rent-twitter.png" />
                     <div>Twitter</div>
@@ -678,8 +845,8 @@ export default function Rent() {
                 </a>
               </div>
             </div>
-            <div className={style.close} onClick={closeDetail}>
-              x
+            <div className={cn(style.guanbi, style.close)} onClick={closeDetail}>
+              <img src="/images/guanbi.png" />
             </div>
           </div>
         </div>

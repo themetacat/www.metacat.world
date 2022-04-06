@@ -207,7 +207,7 @@
   color: #999;
   font-size: 12px;
   line-height: 40px;
-  text-align: center;
+  padding-left: 10px;
   border-bottom: 1px solid #0f191b;
 }
 .setItem:hover {
@@ -232,7 +232,8 @@
   font-weight: 500;
   font-size: 18px;
 }
-.succeedOrCancel > .succeed,.cancel {
+.succeedOrCancel > .succeed,
+.cancel {
   margin: 0 10px 0 30px;
   border: 1px solid #000;
   font-size: 14px;
@@ -241,18 +242,18 @@
   font-style: normal;
   font-weight: 600;
 }
-.succeedOrCancel > .succeed:hover{
+.succeedOrCancel > .succeed:hover {
   color: #fff;
 }
-.succeedOrCancel>.cancel:hover{
-  color:#fff;
+.succeedOrCancel > .cancel:hover {
+  color: #fff;
 }
-.succeedOrCancel > .succeed{
+.succeedOrCancel > .succeed {
   background-color: #000;
-  color: #00D0EC;
+  color: #00d0ec;
 }
-.succeedOrCancel>.cancel{
+.succeedOrCancel > .cancel {
   margin-left: 10px;
-  background:#00D0EC;
+  background: #00d0ec;
   color: #000;
 }

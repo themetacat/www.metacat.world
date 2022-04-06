@@ -94,13 +94,15 @@ export default ({ status, price, id, is_state }: Props) => {
 
   if (status === 'leased') {
     return (
-      <div className={style.leasen_Container}>
-        <div className={style.price}>{`${price} ETH/WEEK`}</div>
-        <div className={style.lease}>Leased</div>
+      <>
+        <div className={style.leasen_Container}>
+          <div className={style.price}>{`${price} ETH/WEEK`}</div>
+          <div className={style.lease}>Leased</div>
+        </div>
         <div onClick={finish} className={style.finish}>
           Finish
         </div>
-      </div>
+      </>
     );
   }
   if (status === 'not_for_rent') {
