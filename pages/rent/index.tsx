@@ -502,25 +502,37 @@ export default function Rent() {
     ],
   );
 
-  const hint = React.useCallback((val) => {
-    setHoverState(true);
-    if (val === 'Area') {
-      setHoverText('Click to sort by area from small to large');
-    }
-    if (val === 'Height') {
-      setHoverText('Click to sort by height from low to high');
-    }
-    if (val === 'Price') {
-      setHoverText('Click to sort by height from low to Price');
-    }
-  }, []);
+  const hint = React.useCallback(
+    (val, sta) => {
+      setHoverState(true);
+      if (val === 'Area' && (sta === '' || sta === 'desc')) {
+        setHoverText('Click to sort by area from large to small');
+      }
+      if (val === 'Area' && sta === 'asc') {
+        setHoverText('Click to sort by area from samll to large');
+      }
+      if (val === 'Height' && (sta === '' || sta === 'desc')) {
+        setHoverText('Click to sort by height from high to low');
+      }
+      if (val === 'Height' && sta === 'asc') {
+        setHoverText('Click to sort by area from low to high');
+      }
+      if (val === 'Price' && (sta === '' || sta === 'asc')) {
+        setHoverText('Click to sort by height from low to high');
+      }
+      if (val === 'Price' && sta === 'desc') {
+        setHoverText('Click to sort by height from high to low');
+      }
+    },
+    [hoverText],
+  );
   const closeDetail = React.useCallback(() => {
     setDetailState(false);
   }, []);
   React.useEffect(() => {
     get_islands_list();
     get_rent_cardList();
-  }, [get_islands_list, get_rent_cardList]);
+  }, [get_islands_list, get_rent_cardList, hint]);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -726,7 +738,7 @@ export default function Rent() {
                   sort(index, item.value);
                 }}
                 onMouseOver={() => {
-                  hint(item.value);
+                  hint(item.value, item.state);
                 }}
                 onMouseOut={() => {
                   setHoverState(false);

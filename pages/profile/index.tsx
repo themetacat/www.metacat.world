@@ -43,20 +43,20 @@ const TAB = [
   },
 ];
 
-const TAB3 = [
-  {
-    label: 'PARCEL LIST',
-    active: true,
-  },
-  {
-    label: 'TRAFFIC REPORT',
-    active: false,
-  },
-  {
-    label: 'SALES REPORT',
-    active: false,
-  },
-];
+// const TAB3 = [
+//   {
+//     label: 'PARCEL LIST',
+//     active: true,
+//   },
+//   {
+//     label: 'TRAFFIC REPORT',
+//     active: false,
+//   },
+//   {
+//     label: 'SALES REPORT',
+//     active: false,
+//   },
+// ];
 export default function ProfilePage() {
   const nav_Label = React.useRef(null);
   const meta = {

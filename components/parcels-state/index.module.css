@@ -31,9 +31,9 @@
   line-height: 20px;
 }
 .finish {
-  margin-top: 10px;
   width: 70px;
   height: 28px;
+  margin-top: 10px;
   color: #00d0ec;
   font-size: 14px;
   line-height: 28px;
@@ -68,19 +68,18 @@
   justify-content: space-around;
   width: 211px;
   height: 28px;
-  background-color: #0f403f;
   margin-top: 8px;
+  background-color: #0f403f;
 }
 .for_rent_Container .option div {
   position: relative;
   display: flex;
   align-items: center;
+  margin: 0 16px;
   color: #00d0ec;
-  font-weight: 600;
   font-size: 14px;
   font-style: normal;
   line-height: 20px;
-  margin: 0 16px;
 }
 .for_rent_Container .option .edit::after {
   position: absolute;
