@@ -23,10 +23,12 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
       onClick={onClick}
     >
       <div className={cn('flex justify-center items-center', style.miniCanHover)}>
-        <div
-          className={cn('bg-contain mr-2', style.miniTabIcon)}
-          style={{ backgroundImage: `url('${icon}')` }}
-        ></div>
+        {icon ? (
+          <div
+            className={cn('bg-contain mr-2', style.miniTabIcon)}
+            style={{ backgroundImage: `url('${icon}')` }}
+          ></div>
+        ) : null}
         <div>{label}</div>
       </div>
     </div>

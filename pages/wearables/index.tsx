@@ -1,6 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 
+import { useRouter } from 'next/router';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -9,13 +11,26 @@ import UserAvatar from '../../components/user-avatar';
 import MeteInput from '../../components/meta-input-search';
 import Status from '../../components/status';
 import TopJumper from '../../components/jump-to-top';
+import Tab from '../../components/tab';
+import DaoModelList from '../../components/dao-model-list';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
-import { getOkxWearableList } from '../../service';
+import { getDaoWearableList, getOkxWearableList } from '../../service';
 
 import style from './index.module.css';
 import { convert } from '../../common/utils';
+
+const TAB = [
+  {
+    label: 'Wearables for OKX',
+    type: 'okx',
+  },
+  {
+    label: 'Wearables',
+    type: 'wearables',
+  },
+];
 
 export default function Wearables(props) {
   const meta = {
@@ -23,17 +38,25 @@ export default function Wearables(props) {
     description: META_DESCRIPTION,
   };
 
+  const [tabState, setTabState] = React.useState(props.query.type || 'okx');
   const [orginData, setOrigData] = React.useState(null);
   const [dataSource, setDataSource] = React.useState(null);
   const [searchText, setSearchText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
 
+  const router = useRouter();
+
   const requestData = React.useCallback(async () => {
     setLoading(true);
     setError(false);
     try {
-      const res = await getOkxWearableList();
+      let res = null;
+      if (tabState === 'okx') {
+        res = await getOkxWearableList();
+      } else {
+        res = await getDaoWearableList();
+      }
       const { code, data, msg } = res;
       setOrigData(convert(data));
       setDataSource(convert(data));
@@ -41,7 +64,7 @@ export default function Wearables(props) {
       setError(true);
     }
     setLoading(false);
-  }, [null]);
+  }, [tabState]);
 
   const onSearchHandler = React.useCallback(
     (text: string) => {
@@ -57,18 +80,33 @@ export default function Wearables(props) {
         return;
       }
       const dataToShow = orginData.filter((x) => {
+        if (tabState === 'okx') {
+          return (
+            x.kol.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+            x.artist.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+          );
+        }
         return (
-          x.kol.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+          x.artwork.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
           x.artist.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
         );
       });
       setDataSource(dataToShow);
     }
-  }, [searchText, orginData]);
+  }, [searchText, orginData, tabState]);
 
   const onRetry = React.useCallback(() => {
     requestData();
   }, [requestData]);
+
+  const onTabChange = React.useCallback(
+    (type) => {
+      requestData();
+      setTabState(type);
+      router.replace(`/wearables?type=${type}`);
+    },
+    [requestData],
+  );
 
   const renderContent = React.useMemo(() => {
     if (loading) {
@@ -83,17 +121,44 @@ export default function Wearables(props) {
       return <Status status="empty" />;
     }
 
-    return <ModelList models={dataSource}></ModelList>;
-  }, [dataSource, loading, error, onRetry]);
+    return tabState === 'okx' ? (
+      <ModelList models={dataSource}></ModelList>
+    ) : (
+      <DaoModelList models={dataSource}></DaoModelList>
+    );
+  }, [dataSource, loading, error, onRetry, tabState]);
 
   React.useEffect(() => {
     requestData();
   }, [requestData]);
 
+  const cls = cn('flex-1', style.bottomLine);
+
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'wearables'} />
+        {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
+          <div className={cls}></div>
+          <div className="main-content flex px-0">
+            {TAB.map((item, index) => {
+              return (
+                <Tab
+                  active={tabState === item.type}
+                  key={item.label}
+                  icon={null}
+                  label={item.label}
+                  isMini={true}
+                  onClick={() => {
+                    onTabChange(item.type);
+                  }}
+                />
+              );
+            })}
+            <div className={cls} />
+          </div>
+          <div className={cls} />
+        </div> */}
         <div
           className={cn(
             'main-content flex flex-col justify-center items-center relative z-10 text-white mt-5',
@@ -101,39 +166,66 @@ export default function Wearables(props) {
           )}
         >
           <div className="flex justify-center items-center">
-            <UserAvatar
-              avatar="/images/v5/WearableDao.png"
-              name="WearableDao"
-              contact={[
-                {
-                  icon: '/images/v5/Twitter.png',
-                  label: 'Twitter',
-                  address: 'https://twitter.com/WearableDao',
-                },
-                {
-                  icon: '/images/icon/discord.png',
-                  label: 'Discord',
-                  address: 'https://discord.gg/t3Wrb4JvDF',
-                },
-              ]}
-            ></UserAvatar>
-            <div className=" text-3xl mx-4 mb-3">{`&`}</div>
-            <UserAvatar
-              avatar="/images/v5/OKX.png"
-              name="OKX"
-              contact={[
-                { icon: '/images/icon/home.png', label: 'Home', address: 'https://www.okx.com/' },
-                {
-                  icon: '/images/v5/Twitter.png',
-                  label: 'Twitter',
-                  address: 'https://twitter.com/okx',
-                },
-              ]}
-            ></UserAvatar>
+            {tabState === 'okx' ? (
+              <>
+                <UserAvatar
+                  avatar="/images/v5/WearableDao.png"
+                  name="WearableDao"
+                  contact={[
+                    {
+                      icon: '/images/v5/Twitter.png',
+                      label: 'Twitter',
+                      address: 'https://twitter.com/WearableDao',
+                    },
+                    {
+                      icon: '/images/icon/discord.png',
+                      label: 'Discord',
+                      address: 'https://discord.gg/t3Wrb4JvDF',
+                    },
+                  ]}
+                ></UserAvatar>
+                <div className=" text-3xl mx-4 mb-3">{`&`}</div>
+                <UserAvatar
+                  avatar="/images/v5/OKX.png"
+                  name="OKX"
+                  contact={[
+                    {
+                      icon: '/images/icon/home.png',
+                      label: 'Home',
+                      address: 'https://www.okx.com/',
+                    },
+                    {
+                      icon: '/images/v5/Twitter.png',
+                      label: 'Twitter',
+                      address: 'https://twitter.com/okx',
+                    },
+                  ]}
+                ></UserAvatar>
+              </>
+            ) : (
+              <UserAvatar
+                avatar="/images/v5/WearableDao.png"
+                name="WearableDao"
+                contact={[
+                  {
+                    icon: '/images/v5/Twitter.png',
+                    label: 'Twitter',
+                    address: 'https://twitter.com/WearableDao',
+                  },
+                  {
+                    icon: '/images/icon/discord.png',
+                    label: 'Discord',
+                    address: 'https://discord.gg/t3Wrb4JvDF',
+                  },
+                ]}
+              ></UserAvatar>
+            )}
           </div>
           <div className={cn(' text-center mt-4 mb-7', style.desc)}>
-            For a new product launch held by OKX in metaverse, wearableDao customized a variety of
-            3D wearables for invited KOLs.
+            {tabState === 'okx'
+              ? `For a new product launch held by OKX in metaverse, wearableDao customized a variety of
+              3D wearables for invited KOLs.`
+              : `WearableDao was co-founded by MetaCat, MetaEstate and MetaLandscape to design and produce Wearables in Metaverse.`}
           </div>
         </div>
       </div>
@@ -168,4 +260,12 @@ export default function Wearables(props) {
       <Footer />
     </Page>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      query,
+    }, // will be passed to the page component as props
+  };
 }

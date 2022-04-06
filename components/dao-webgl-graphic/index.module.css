@@ -36,6 +36,10 @@
   cursor: pointer;
 }
 
+.title{
+  max-width: 250px;
+}
+
 .goDetail2{
   color: #777;
   font-size: 12px;
@@ -75,8 +79,4 @@
 
 .goDetail:active, .goDetail2:active{
   filter: brightness(50%);
-}
-
-.title{
-  max-width: 250px;
 }

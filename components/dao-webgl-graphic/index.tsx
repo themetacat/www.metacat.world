@@ -9,64 +9,60 @@ import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 
 import styles from './index.module.css';
 
-type ModelCard = {
-  kol?: Kol;
-  artist?: Artist;
-  id?: string;
+type DaoArtist = {
+  name?: string;
+  contact?: Contact;
 };
 
 type Contact = {
   twitter?: string;
   weibo?: string;
+  homepage?: string;
 };
 
-type Kol = {
+type Artwork = {
   name?: string;
-  title?: string;
   desc?: string;
-  d2Url?: string;
-  d3Url?: string;
+  voxUrl?: string;
   openseaUrl?: string;
-  contact?: Contact;
 };
 
-type Artist = {
-  name?: string;
-  website?: string;
+type DaoCard = {
+  artwork?: Artwork;
+  artist?: DaoArtist;
+  id?: string;
 };
 
 interface Props {
   graphicId?: string;
   initFinish?: (se) => void;
-  model?: ModelCard;
+  model?: DaoCard;
 }
 
 // {
-//   "kol": {
+//   "artwork": {
 //     "name": "比特币子琪",
-//     "title": "",
-//     "desc": "",
-//     "2d_url": "https://poster-phi.vercel.app/wearable/okx/BTC521.png",
-//     "3d_url": "https://poster-phi.vercel.app/wearable/okx/BTC521.vox",
-//     "contact": {
-//       "twitter": "https://twitter.com/BTC521",
-//       "weibo": ""
-//     }
+//     "desc": "微博@公众号：子棋-热搜点评员 专注行情分析，挖掘优质项目！ Weibo and WeChat public account: Bitcoin Ziqi, focusing on market analysis,discover high-quality projects. #BTC $ETH",
+//     "vox_url": "https://poster-phi.vercel.app/wearable/okx/BTC521.vox",
+//     "opensea_url": "https://opensea.io/assets/matic/0x469da19448b0fafcf781350efcd5a09267ca1f99/60"
 //   },
 //   "artist": {
-//     "name": "MERMAID",
-//     "website": ""
+//     "name": "Angelica",
+//     "contact": {
+//       "homepape": "https://www.xuechun.space/",
+//       "twitter": "https://twitter.com/BTC521",
+//       "weibo": "https://weibo.com/u/6201825184"
+//     }
 //   },
 //   "id": 100
 // },
 
-export default function WebglCard({ graphicId, initFinish, model }: Props) {
+export default function DaoWebglCard({ graphicId, initFinish, model }: Props) {
   const sceneRef = React.useRef(null);
-
   const goToDetail = React.useCallback(() => {
-    window.open(`${process.env.NEXT_PUBLIC_HOST_ADDRESS}wearables/okxDetail/${model.id}`);
+    window.open(`${process.env.NEXT_PUBLIC_HOST_ADDRESS}wearables/detail/${model.id}`);
 
-    // Router.push(`/wearables/okxDetail/${model.id}`);
+    // Router.push(`/wearables/detail/${model.id}`);
   }, [model]);
 
   const init = React.useCallback(() => {
@@ -95,7 +91,7 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
     scene.add(light);
     sceneRef.current = scene;
 
-    if (!model.kol?.d3Url) {
+    if (!model.artwork.voxUrl) {
       if (initFinish) {
         initFinish(scene);
       }
@@ -104,7 +100,7 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
 
     // add one random mesh to each scene
     const loader = new VOXLoader();
-    loader.load(model.kol?.d3Url, function (chunks) {
+    loader.load(model.artwork.voxUrl, function (chunks) {
       for (let i = 0; i < chunks.length; i += 1) {
         const chunk = chunks[i];
         // displayPalette( chunk.palette );
@@ -131,8 +127,11 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
   }, [initFinish]);
 
   React.useEffect(() => {
+    if (!model.artwork) {
+      return;
+    }
     init();
-  }, [init]);
+  }, [model, init]);
 
   const triggerModelRotation = React.useCallback((roatation) => {
     if (sceneRef.current) {
@@ -151,69 +150,36 @@ export default function WebglCard({ graphicId, initFinish, model }: Props) {
       }}
     >
       <div className="relative">
-        <img
-          src={model.kol?.d2Url}
-          className={cn('absolute top-0 left-0 z-20', styles.avatar)}
-        ></img>
         <div id={`webgl${graphicId}`} className={styles.graphic}></div>
-        {model.kol?.openseaUrl ? (
+        {model.artwork?.openseaUrl ? (
           <img
             src="/images/Nomal.png"
             className={cn('absolute z-20', styles.opese)}
             onClick={() => {
-              window.open(model.kol.openseaUrl);
+              window.open(model.artwork.openseaUrl);
             }}
           ></img>
         ) : null}
       </div>
       <div
-        className={cn('flex flex-col justify-start items-center p-4 text-white', styles.footer)}
+        className={cn('flex justify-start items-center p-4 text-white', styles.footer)}
         onClick={goToDetail}
       >
-        <div className="flex justify-between items-center w-full text-lg font-medium truncate">
-          <span title={model.kol?.name} className={cn('truncate', styles.title)}>
-            {' '}
-            {model.kol?.name}
+        <div className="flex flex-col justify-start items-start w-full text-lg font-medium">
+          <span title={model.artwork?.name} className={cn('truncate', styles.title)}>
+            {model.artwork?.name}
           </span>
-          <span
-            className={cn('flex justify-between items-center cursor-pointer', styles.goDetail2)}
+          <div
+            className={cn('flex items-end justify-center text-xs text-right mt-4', styles.goDetail)}
           >
-            {`Detail`}
-            <img className=" ml-1" src="/images/v5/arrow-simple.png"></img>
-          </span>
-        </div>
-        <div className="flex justify-between items-center w-full  mt-3">
-          <div className={cn('flex justify-between items-center', styles.contact)}>
-            {model.kol?.contact.twitter ? (
-              <img
-                className={cn(' cursor-pointer', styles.icon)}
-                src="/images/twitter.png"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(model.kol.contact.twitter);
-                }}
-              ></img>
-            ) : null}
-            {model.kol?.contact.weibo ? (
-              <img
-                className={cn(
-                  model.kol.contact.weibo ? 'ml-5' : null,
-                  'cursor-pointer',
-                  styles.icon,
-                )}
-                src="/images/weibo.png"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(model.kol.contact.weibo);
-                }}
-              ></img>
-            ) : null}
-          </div>
-          <div className="flex items-end flex-col justify-center text-xs text-right">
-            <div className={styles.goDetail}>Voxel Artist</div>
+            <div>Voxel Artist：</div>
             <div>{model.artist.name}</div>
           </div>
         </div>
+        <span className={cn('flex justify-between items-center cursor-pointer', styles.goDetail2)}>
+          {`Detail`}
+          <img className=" ml-1" src="/images/v5/arrow-simple.png"></img>
+        </span>
       </div>
     </div>
   );
