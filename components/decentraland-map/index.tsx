@@ -305,6 +305,7 @@ function DecentralandMap({
   const detailX = React.useRef(0);
   const [loading, setLoading] = React.useState(false);
   const [versionNumber, setVersionNumber] = React.useState(0);
+  const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
   const dealWithParcel = React.useCallback(
@@ -313,16 +314,27 @@ function DecentralandMap({
 
       for (let i = 0; i < data.length; i += 1) {
         let color = NOT_CUSTOME_COLOR[data[i].properties.type];
+        let index;
         if (!NOT_CUSTOME_COLOR[data[i].properties.type]) {
           let count = data[i][mapType.current][staticType.current];
           count = count < 0 ? 0 : count;
-          const allColor = colorsLimit.find((co) => {
+
+          index = colorsLimit.findIndex((co) => {
             return count <= co[staticType.current].start && count >= co[staticType.current].end;
           });
-
-          if (allColor) {
+          if (index > -1) {
+            const allColor = legends.current[index];
+            /* eslint no-underscore-dangle: 0 */
             color = allColor.color;
           }
+
+          // const allColor = colorsLimit.find((co) => {
+          //   return count <= co[staticType.current].start && count >= co[staticType.current].end;
+          // });
+
+          // if (allColor) {
+          //   color = allColor.color;
+          // }
         }
 
         const name = data[i].properties.id;
@@ -332,6 +344,7 @@ function DecentralandMap({
           x: coord[0],
           y: coord[1],
           color,
+          index,
         };
       }
       setMapTiles(tiles as Record<string, AtlasTile>);
@@ -376,6 +389,7 @@ function DecentralandMap({
   const closePop = React.useCallback(() => {
     setShowDetail(false);
     setSelectTile(null);
+    setActiveColor(null);
   }, [null]);
 
   const changeStaticType = React.useCallback(
@@ -505,9 +519,11 @@ function DecentralandMap({
           x: tile.x,
           y: tile.y,
         });
+        setActiveColor(tile.index);
         requestDetail(tile.landId);
         return;
       }
+      setActiveColor(null);
       setSelectTile(null);
       setShowDetail(false);
     },
@@ -701,6 +717,7 @@ function DecentralandMap({
         className={style.legend}
         title={mapType.current === 'TRAFFIC' ? 'Traffic ranking' : 'Price ranking'}
         options={legends.current}
+        active={activeColor}
       ></Legend>
     </div>
   );
