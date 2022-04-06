@@ -356,7 +356,7 @@ export default function ProfilePage() {
   );
 
   const manyChange = React.useCallback(
-    (many_label, data) => {
+    (many_label, data, sta = true) => {
       const ids = [];
       if (many_label === 'Rent out several') {
         data.forEach((item) => {
@@ -373,7 +373,7 @@ export default function ProfilePage() {
         });
       }
       setParcelsIds(ids);
-      setCardState(true);
+      setCardState(sta);
       setLabel(many_label);
       setSelectedIds([]);
       changeNum(dataSource, nav_Label);
@@ -383,7 +383,7 @@ export default function ProfilePage() {
 
   const close_rent_set = React.useCallback(
     (current_state) => {
-      manyChange(label, cartData);
+      manyChange(label, cartData, false);
       set_rent_set_state(current_state);
       setManySetState(false);
       setSelectedIds([]);

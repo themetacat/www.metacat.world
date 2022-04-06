@@ -48,13 +48,6 @@ export default function Card({
   onClick,
   selectedIds,
 }: Props) {
-  const jumpToOpenC = React.useCallback(
-    (event) => {
-      event.stopPropagation();
-      window.open(openseaUrl);
-    },
-    [openseaUrl],
-  );
   const jumpToParcel = React.useCallback(() => {
     window.open(parcelPageUrl);
   }, [parcelPageUrl]);
