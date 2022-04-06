@@ -593,7 +593,7 @@ export default function ProfilePage() {
                 manySet(manySetState);
               }}
             >
-              <img src="/images/v5/settings.png" />
+              <img src="/images/settings.png" />
               <div>Batch setting</div>
               {manySetState ? (
                 <div className={style.container}>
