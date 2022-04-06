@@ -13,7 +13,7 @@
   .price::after {
     position: absolute;
     right: -10px;
-    bottom: 7px;
+    bottom: 5px;
     width: 1px;
     height: 15px;
     background: #999;
@@ -30,20 +30,20 @@
     font-style: normal;
     line-height: 20px;
   }
-  .finish {
-    width: 70px;
-    height: 28px;
-    margin-left: 30px;
-    color: #00d0ec;
-    font-size: 14px;
-    line-height: 28px;
-    text-align: center;
-    background: #0f403f;
-    cursor: pointer;
-  }
-  .finish:hover {
-    font-size: 16px;
-  }
+}
+.finish {
+  width: 70px;
+  height: 28px;
+  margin-top: 10px;
+  color: #00d0ec;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: #0f403f;
+  cursor: pointer;
+}
+.finish:hover {
+  font-size: 16px;
 }
 // 出租中状态样式结束
 
@@ -66,7 +66,6 @@
 
 //出租状态样式开始
 .for_rent_Container {
-  display: flex;
   justify-content: space-between;
   margin: 13px 0;
 
@@ -74,22 +73,23 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 180px;
+    width: 211px;
     height: 28px;
+    margin-top: 8px;
     background-color: #0f403f;
     div {
       position: relative;
       display: flex;
       align-items: center;
+      margin: 0 16px;
       color: #00d0ec;
-      font-weight: 600;
       font-size: 14px;
       font-style: normal;
       line-height: 20px;
     }
     .edit::after {
       position: absolute;
-      right: -11px;
+      right: -16px;
       bottom: 2px;
       width: 1px;
       height: 15px;
@@ -99,7 +99,7 @@
     }
     .leased::after {
       position: absolute;
-      right: -11px;
+      right: -16px;
       bottom: 2px;
       width: 1px;
       height: 15px;

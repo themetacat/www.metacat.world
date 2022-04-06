@@ -48,13 +48,6 @@ export default function Card({
   onClick,
   selectedIds,
 }: Props) {
-  const jumpToOpenC = React.useCallback(
-    (event) => {
-      event.stopPropagation();
-      window.open(openseaUrl);
-    },
-    [openseaUrl],
-  );
   const jumpToParcel = React.useCallback(() => {
     window.open(parcelPageUrl);
   }, [parcelPageUrl]);
@@ -126,12 +119,16 @@ export default function Card({
             <img src="/images/icon/dikuai.png" />
             <div className={style.info_item}>{`${area}㎡`}</div>
             <div className={style.info_item}>{`${high}m High`}</div>
-            <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>
-              {isBuilt === 'no' ? 'Not Built' : 'Built'}
-            </div>
-            <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>
-              {endDate}
-            </div>
+            {status === 'not_for_rent' ? null : (
+              <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>
+                {isBuilt === 'no' ? 'Not Built' : 'Built'}
+              </div>
+            )}
+            {status === 'not_for_rent' ? null : (
+              <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>
+                {endDate}
+              </div>
+            )}
           </div>
         </div>
       </div>

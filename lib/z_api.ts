@@ -183,6 +183,149 @@ class API {
 
     return json;
   }
+
+  // 12.1 获取当前登录者 Decentraland 地块列表接口
+  public async req_dcl_parcel_list(token: string): Promise<any> {
+    const url = `${this.url}/rent/get_owned_dcl_parcel_list`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 12.2 批量（单个）挂出 Decentraland 待租地块接口
+
+  public async req_dcl_batch_parcels(
+    token: string,
+    parcel_ids: string,
+    is_built: string,
+    price: number,
+    start_at: number,
+    end_at: number,
+  ): Promise<any> {
+    const url = `${this.url}/rent/batch_list_dcl_parcels`;
+    const search = qs.stringify(
+      {
+        parcel_ids,
+        is_built,
+        price,
+        start_at,
+        end_at,
+      },
+      { addQueryPrefix: false },
+    );
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 12.3 批量（单个）取消已挂出 Decentraland 地块接口
+
+  public async req_dcl_cancel(token: string, parcel_ids: string): Promise<any> {
+    const url = `${this.url}/rent/batch_cancel_listed_dcl_parcels`;
+    const search = qs.stringify({ parcel_ids });
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 12.4 批量（单个）更新已挂出 Decentraland 地块为租赁中接口
+
+  public async req_dcl_leased(token: string, parcel_ids: string): Promise<any> {
+    const url = `${this.url}/rent/batch_lease_listed_dcl_parcels`;
+    const search = qs.stringify({ parcel_ids });
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 12.5 单个更新 Decentraland 地块租赁信息接口
+
+  public async req_dcl_update(
+    token: string,
+    parcel_id: string,
+    is_built: string,
+    price: number,
+    start_at: number,
+    end_at: number,
+  ): Promise<any> {
+    const url = `${this.url}/rent/update_dcl_parcel`;
+    const search = qs.stringify(
+      {
+        parcel_id,
+        is_built,
+        price,
+        start_at,
+        end_at,
+      },
+      { addQueryPrefix: false },
+    );
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 12.6 单个更新租赁中 Decentraland 地块为已挂出状态接口
+
+  public async req_dcl_listed(token: string, parcel_id: string): Promise<any> {
+    const url = `${this.url}/rent/dcl_parcel_fallback_to_listed_status`;
+    const search = qs.stringify({ parcel_id });
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

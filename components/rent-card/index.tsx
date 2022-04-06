@@ -7,6 +7,8 @@ import style from './index.module.css';
 type Props = {
   parcel_id: number;
   name: string;
+  owner: unknown;
+  parcel_page_url: string;
   island: string;
   suburb: string;
   height: number;
@@ -22,6 +24,8 @@ type Props = {
 export default function Card({
   parcel_id,
   name,
+  owner,
+  parcel_page_url,
   island,
   suburb,
   height,
@@ -40,6 +44,8 @@ export default function Card({
         onClick({
           parcel_id,
           name,
+          owner,
+          parcel_page_url,
           island,
           suburb,
           height,
