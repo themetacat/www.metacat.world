@@ -23,6 +23,10 @@ const DecentralandMap = dynamic(() => import('../../components/decentraland-map'
   ssr: false,
 });
 
+const SandboxMap = dynamic(() => import('../../components/sandbox-map'), {
+  ssr: false,
+});
+
 const meta = {
   title: `Map - ${SITE_NAME}`,
   description: META_DESCRIPTION,
@@ -38,6 +42,11 @@ const TAB = [
     label: 'Decentraland',
     icon: '/images/Decentraland.jpg',
     type: 'decentraland',
+  },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    type: 'sandbox',
   },
 ];
 
@@ -65,7 +74,52 @@ export default function MapPage(props) {
         </div>
       );
     }
-    return mapType === 'cryptovoxels' ? (
+
+    if (mapType === 'cryptovoxels') {
+      return (
+        <Map
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[5, 9]}
+          dragging={true}
+          initZoom={6}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="rgb(8 17 19)"
+        ></Map>
+      );
+    }
+
+    if (mapType === 'decentraland') {
+      return (
+        <DecentralandMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[1, 9]}
+          dragging={true}
+          initZoom={5}
+          changeTypeControl={false}
+          backColor="rgb(8 17 19)"
+        ></DecentralandMap>
+      );
+    }
+
+    if (mapType === 'sandbox') {
+      return (
+        <SandboxMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[1, 9]}
+          dragging={true}
+          initZoom={6}
+          changeTypeControl={false}
+          backColor="rgb(8 17 19)"
+        ></SandboxMap>
+      );
+    }
+
+    return (
       <Map
         fullScreenOnClick={showFull}
         zoomControl={true}
@@ -77,16 +131,6 @@ export default function MapPage(props) {
         }}
         backColor="rgb(8 17 19)"
       ></Map>
-    ) : (
-      <DecentralandMap
-        fullScreenOnClick={showFull}
-        zoomControl={true}
-        zoomLimit={[1, 7]}
-        dragging={true}
-        initZoom={5}
-        changeTypeControl={false}
-        backColor="rgb(8 17 19)"
-      ></DecentralandMap>
     );
   }, [mapType, loading]);
 

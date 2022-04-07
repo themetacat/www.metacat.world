@@ -256,7 +256,7 @@ export default function AnalyticsIndex(props) {
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
       <div className={cn('flex flex-col justify-center items-center', style.content)}>
-        <div className={cn('w-full h-48', style.table)}>
+        <div className={cn('w-full h-auto', style.table)}>
           <AnalyticsInfo></AnalyticsInfo>
         </div>
         <div

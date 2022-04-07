@@ -379,3 +379,20 @@ export const getDaoWearableDetail = async (id: string) => {
   const json = await res.json();
   return json;
 };
+
+export const getSandboxMapLevelThreeData = async () => {
+  const url = `https://api.metacat.world/api/v1/get_sandbox_price_map_level_three`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
+
+export const getSandboxParcelDetail = async (tokenId: string) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/sandbox_parcel_detail${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
