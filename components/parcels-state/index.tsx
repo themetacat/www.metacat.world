@@ -12,7 +12,7 @@ import { state } from '../wallet-btn';
 type Props = {
   status?: string;
   price?: number;
-  id?: number | string;
+  id?: number;
   is_state?: boolean;
 };
 export default ({ status, price, id, is_state }: Props) => {
