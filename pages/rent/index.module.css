@@ -1,9 +1,9 @@
 .containerBanner {
+  position: relative;
   width: 1200px;
   height: 200px;
   margin: 0 auto;
   background: #000;
-  position: relative;
 }
 .containerBanner .banner {
   height: 130px;
@@ -51,10 +51,10 @@
   color: #00d0ec;
 }
 .sort {
+  position: relative;
   width: 1200px;
   height: 40px;
   margin: 0 auto;
-  position: relative;
 }
 .sort .sortMode {
   position: absolute;
@@ -96,18 +96,12 @@
   margin-top: 10px;
   cursor: pointer;
 }
-.sort .clearSort img {
-  width: 16px;
-  height: 16px;
-  margin-top: 2px;
-  margin-right: 3px;
-}
 .sort .clearSort div {
+  color: #999;
   font-weight: 400;
   font-size: 14px;
   font-style: normal;
   line-height: 20px;
-  color: #999;
 }
 .sort .clearSort .active {
   color: #fff;
@@ -148,12 +142,12 @@
   position: absolute;
   top: 50%;
   right: 50%;
+  display: flex;
   margin-top: -10px;
   margin-right: -60px;
-  cursor: pointer;
   color: #fff;
   font-size: 12px;
-  display: flex;
+  cursor: pointer;
 }
 .imgContanier .toTitle img {
   width: 12px;
@@ -207,9 +201,6 @@
   height: 14px;
   margin-top: 5px;
   margin-right: 7px;
-}
-.detail .coord div {
-  margin-top: 1px;
 }
 .detail .plot {
   margin: 12px 0;
@@ -279,40 +270,48 @@
   color: #999;
   font-size: 26px;
   cursor: pointer;
-}
-.guanbi {
+  top: 24px;
+  right: 24px;
   width: 16px;
   height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
 }
 .shade {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 260px;
   height: 260px;
-  background: #000000;
+  background: #000;
   opacity: 0.4;
 }
 .sd {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 260px;
   height: 260px;
-  background: #000000;
+  background: #000;
   opacity: 0;
 }
 .hover_text {
   position: absolute;
-  left: 98px;
   top: -35px;
-  width: 260px;
+  left: 98px;
   height: 41px;
-  background: #000000;
+  padding: 12px;
   color: #fff;
   font-size: 12px;
-  padding: 12px;
+  background: #000;
+}
+.zhezhao {
+  width: 114px;
+  height: 42px;
+  background: #000;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.guan {
+  max-width: none;
+  width: 20px;
+  height: 20px;
 }

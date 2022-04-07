@@ -185,6 +185,7 @@ class API {
   }
 
   // 12.1 获取当前登录者 Decentraland 地块列表接口
+
   public async req_dcl_parcel_list(token: string): Promise<any> {
     const url = `${this.url}/rent/get_owned_dcl_parcel_list`;
     const result = await fetch(url, {
@@ -241,7 +242,7 @@ class API {
     const url = `${this.url}/rent/batch_cancel_listed_dcl_parcels`;
     const search = qs.stringify({ parcel_ids });
     const result = await fetch(url, {
-      method: 'get',
+      method: 'post',
       mode: 'cors',
       headers: {
         Authorization: token,
@@ -260,7 +261,7 @@ class API {
     const url = `${this.url}/rent/batch_lease_listed_dcl_parcels`;
     const search = qs.stringify({ parcel_ids });
     const result = await fetch(url, {
-      method: 'get',
+      method: 'post',
       mode: 'cors',
       headers: {
         Authorization: token,
@@ -295,7 +296,7 @@ class API {
       { addQueryPrefix: false },
     );
     const result = await fetch(url, {
-      method: 'get',
+      method: 'post',
       mode: 'cors',
       headers: {
         Authorization: token,
@@ -314,12 +315,44 @@ class API {
     const url = `${this.url}/rent/dcl_parcel_fallback_to_listed_status`;
     const search = qs.stringify({ parcel_id });
     const result = await fetch(url, {
-      method: 'get',
+      method: 'post',
       mode: 'cors',
       headers: {
         Authorization: token,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 12.7 获取租赁市场 Decentraland 地块列表接口
+
+  public async req_dcl_List(
+    page: number,
+    count: number,
+    size_scope: string,
+    price_scope: string,
+    built_status: string,
+    sort_field: string,
+    sort_type: string,
+  ): Promise<any> {
+    const url = `${this.url}/rent/get_listed_dcl_parcels`;
+    const search = qs.stringify({
+      page,
+      count,
+      size_scope,
+      price_scope,
+      built_status,
+      sort_field,
+      sort_type,
+    });
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
       body: search,
     });
     const json = await result.json();

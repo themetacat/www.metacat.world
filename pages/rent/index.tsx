@@ -351,7 +351,7 @@ export default function Rent() {
         return { ...item };
       });
 
-      setFieldQuery(val);
+      setFieldQuery(val.toLowerCase());
       if (result[index].state === '' && val !== 'Price') {
         result[index].state = 'desc';
       }
@@ -509,19 +509,19 @@ export default function Rent() {
         setHoverText('Click to sort by area from large to small');
       }
       if (val === 'Area' && sta === 'asc') {
-        setHoverText('Click to sort by area from samll to large');
+        setHoverText('Click to sort by area from small to large');
       }
       if (val === 'Height' && (sta === '' || sta === 'desc')) {
         setHoverText('Click to sort by height from high to low');
       }
       if (val === 'Height' && sta === 'asc') {
-        setHoverText('Click to sort by area from low to high');
-      }
-      if (val === 'Price' && (sta === '' || sta === 'asc')) {
         setHoverText('Click to sort by height from low to high');
       }
+      if (val === 'Price' && (sta === '' || sta === 'asc')) {
+        setHoverText('Click to sort by price from low to high');
+      }
       if (val === 'Price' && sta === 'desc') {
-        setHoverText('Click to sort by height from high to low');
+        setHoverText('Click to sort by price from high to low');
       }
     },
     [hoverText],
@@ -532,7 +532,7 @@ export default function Rent() {
   React.useEffect(() => {
     get_islands_list();
     get_rent_cardList();
-  }, [get_islands_list, get_rent_cardList, hint]);
+  }, [get_islands_list, get_rent_cardList]);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -843,22 +843,40 @@ export default function Rent() {
                 </div>
               </div>
               <div className={style.contact}>
-                <a href="https://twitter.com/Metacat007" target="_blank" data-tip="twitter">
-                  <div>
+                {cardInfo.owner.twitter_name !== '' ? (
+                  <a
+                    href={`https://twitter.com/${cardInfo.owner.twitter_name}`}
+                    target="_blank"
+                    data-tip="twitter"
+                  >
+                    <div>
+                      <img src="/images/rent-twitter.png" />
+                      <div>Twitter</div>
+                    </div>
+                  </a>
+                ) : (
+                  <div className={style.zhezhao}>
                     <img src="/images/rent-twitter.png" />
                     <div>Twitter</div>
                   </div>
-                </a>
-                <a href="mailto:metacat@tutanota.com" data-tip="metacat@tutanota.com">
-                  <div>
+                )}
+                {cardInfo.owner.email !== '' ? (
+                  <a href={`mailto:${cardInfo.owner.email}`} data-tip={cardInfo.owner.email}>
+                    <div>
+                      <img src="/images/rent-email.png" />
+                      <div>Email</div>
+                    </div>
+                  </a>
+                ) : (
+                  <div className={style.zhezhao}>
                     <img src="/images/rent-email.png" />
                     <div>Email</div>
                   </div>
-                </a>
+                )}
               </div>
             </div>
-            <div className={cn(style.guanbi, style.close)} onClick={closeDetail}>
-              <img src="/images/guanbi.png" />
+            <div className={cn(style.close)} onClick={closeDetail}>
+              <img src="/images/guan.png" className={style.guan} />
             </div>
           </div>
         </div>

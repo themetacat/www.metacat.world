@@ -2,7 +2,7 @@ import React from 'react';
 import style from './index.module.css';
 
 import { toast } from '../../node_modules/react-hot-toast/dist/index';
-import { req_parcels_cancel, req_parcels_leased, req_parcels_finish } from '../../service/z_api';
+import { req_dcl_cancel, req_dcl_leased, req_dcl_listed } from '../../service/z_api';
 import { refreshToken } from '../../service';
 import { convert, getToken, setToken } from '../../common/utils';
 import store from '../../store/profile';
@@ -12,20 +12,13 @@ import { state } from '../wallet-btn';
 type Props = {
   status?: string;
   price?: number;
-  id?: number | string;
+  id?: string;
   is_state?: boolean;
 };
 export default ({ status, price, id, is_state }: Props) => {
   const s = store.useState('parcels_cardState');
   const [current_state, set_current_state] = React.useState(false);
-  const rent_out = React.useCallback(
-    async (event) => {
-      event.stopPropagation();
-      if (s.parcels_cardState) return;
-      store.setState(() => ({ rentOutState: true, id, updateOrAdd: 'add', type: 'cv' }));
-    },
-    [s],
-  );
+
   const refreshTK = React.useCallback(async () => {
     const rToken = getToken('rtk');
     if (rToken) {
@@ -48,11 +41,18 @@ export default ({ status, price, id, is_state }: Props) => {
     }
     return null;
   }, [null]);
-
+  const rent_out = React.useCallback(
+    async (event) => {
+      event.stopPropagation();
+      if (s.parcels_cardState) return;
+      store.setState(() => ({ rentOutState: true, id, updateOrAdd: 'add', type: 'dcl' }));
+    },
+    [s],
+  );
   const leased = React.useCallback(async (event) => {
     event.stopPropagation();
     const token = await refreshTK();
-    const result = await req_parcels_leased(token, id.toString());
+    const result = await req_dcl_leased(token, id.toString());
     if (result.code === 100000) {
       store.setState(() => ({ status: 'Successfully marked!', id: null }));
       return;
@@ -63,7 +63,7 @@ export default ({ status, price, id, is_state }: Props) => {
   const cancel = React.useCallback(async (event) => {
     event.stopPropagation();
     const token = await refreshTK();
-    const result = await req_parcels_cancel(token, id.toString());
+    const result = await req_dcl_cancel(token, id.toString());
     if (result.code === 100000) {
       store.setState(() => ({ status: 'Successfully cancelled', id: null }));
       return;
@@ -84,7 +84,7 @@ export default ({ status, price, id, is_state }: Props) => {
   const finish = React.useCallback(async (event) => {
     event.stopPropagation();
     const token = await refreshTK();
-    const result = await req_parcels_finish(token, id);
+    const result = await req_dcl_listed(token, id);
     if (result.code === 100000) {
       store.setState(() => ({ status: 'Successfully finished!', id: null }));
       return;

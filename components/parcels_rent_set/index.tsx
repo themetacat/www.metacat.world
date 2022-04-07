@@ -5,7 +5,12 @@ import style from './index.module.css';
 import { getToken } from '../../common/utils';
 import store from '../../store/profile';
 
-import { req_parcels_rent_out, req_parcels_update } from '../../service/z_api';
+import {
+  req_parcels_rent_out,
+  req_parcels_update,
+  req_dcl_batch_parcels,
+  req_dcl_update,
+} from '../../service/z_api';
 
 type Props = {
   state?: boolean;
@@ -30,7 +35,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
   const [selected_ids, set_selected_ids] = React.useState('');
   const [token, set_token] = React.useState('');
 
-  const s = store.useState('updateOrAdd', 'parcels_cardState');
+  const s = store.useState('updateOrAdd', 'parcels_cardState', 'type');
   const is_built = [
     {
       label: 'Built',
@@ -179,38 +184,86 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
       return;
     }
     set_is_price(false);
-    if (s.updateOrAdd === 'add') {
-      if (token) {
-        const result = await req_parcels_rent_out(
-          token,
-          selected_ids,
-          built,
-          price,
-          start_timestamp,
-          end_timestamp,
-        );
-        if (result.code === 100000) {
-          store.setState(() => ({ rentOutState: false, status: 'Successfully listed!', id: null }));
-          return;
+
+    console.log(s.type);
+    if (s.type === 'cv') {
+      if (s.updateOrAdd === 'add') {
+        if (token) {
+          const result = await req_parcels_rent_out(
+            token,
+            selected_ids,
+            built,
+            price,
+            start_timestamp,
+            end_timestamp,
+          );
+          if (result.code === 100000) {
+            store.setState(() => ({
+              rentOutState: false,
+              status: 'Successfully listed!',
+              id: null,
+            }));
+            return;
+          }
+          store.setState(() => ({ rentOutState: false, status: 'Failed!', id: null }));
         }
-        store.setState(() => ({ rentOutState: false, status: 'Failed!', id: null }));
+      }
+      if (s.updateOrAdd === 'update') {
+        if (token) {
+          const result = await req_parcels_update(
+            token,
+            Number(selected_ids),
+            built,
+            price,
+            Number(start_timestamp),
+            Number(end_timestamp),
+          );
+          if (result.code === 100000) {
+            store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
+            return;
+          }
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
       }
     }
-    if (s.updateOrAdd === 'update') {
-      if (token) {
-        const result = await req_parcels_update(
-          token,
-          Number(selected_ids),
-          built,
-          price,
-          Number(start_timestamp),
-          Number(end_timestamp),
-        );
-        if (result.code === 100000) {
-          store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
-          return;
+    if (s.type === 'dcl') {
+      if (s.updateOrAdd === 'add') {
+        if (token) {
+          const result = await req_dcl_batch_parcels(
+            token,
+            selected_ids,
+            built,
+            Number(price),
+            Number(start_timestamp),
+            Number(end_timestamp),
+          );
+          if (result.code === 100000) {
+            store.setState(() => ({
+              rentOutState: false,
+              status: 'Successfully listed!',
+              id: null,
+            }));
+            return;
+          }
+          store.setState(() => ({ rentOutState: false, status: 'Failed!', id: null }));
         }
-        store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+      }
+      if (s.updateOrAdd === 'update') {
+        if (token) {
+          const result = await req_dcl_update(
+            token,
+            selected_ids,
+            built,
+            Number(price),
+            Number(start_timestamp),
+            Number(end_timestamp),
+          );
+          if (result.code === 100000) {
+            store.setState(() => ({ rentOutState: false, status: 'Successfully listed!' }));
+            return;
+          }
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
       }
     }
     clear();
@@ -228,7 +281,13 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
 
   if (state) {
     return (
-      <div className={style.shade}>
+      <div
+        className={style.shade}
+        onClick={() => {
+          set_parcel_state(false);
+          set_term_state(false);
+        }}
+      >
         <div className={style.container}>
           <div className={style.header}>
             <h3>Rent out Setting</h3>
@@ -252,8 +311,9 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
             </div>
             <div
               className={style.built}
-              onClick={() => {
+              onClick={(event) => {
                 show_parcel(parcel_state);
+                event.stopPropagation();
               }}
             >
               <div>{show_built}</div>
@@ -286,8 +346,9 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
             </div>
             <div
               className={style.time}
-              onClick={() => {
+              onClick={(event) => {
                 change_show_time_state(term_state);
+                event.stopPropagation();
               }}
             >
               <div>{show_time}</div>
