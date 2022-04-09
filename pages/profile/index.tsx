@@ -174,7 +174,12 @@ export default function ProfilePage() {
 
   const onTabChange = React.useCallback(
     async (tab) => {
+      setLoading(true)
       setTabState(tab);
+      setParcelsIds([])
+      setSelectedIds([])
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
       if (tab === 'cryptovoxels') {
         setDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'cv' }));
@@ -183,6 +188,7 @@ export default function ProfilePage() {
         setDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'dcl' }));
       }
+
     },
     [orginData],
   );
@@ -266,6 +272,7 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
+      setLoading(false)
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -284,6 +291,7 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
+      setLoading(false)
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -466,7 +474,7 @@ export default function ProfilePage() {
       set_rent_set_state(true);
       setManySetState(false);
       setCardState(false);
-      store.setState(() => ({ parcels_cardState: false }));
+      store.setState(() => ({ parcels_cardState: false, updateOrAdd: "add" }));
     }
     if (s.type === 'cv') {
       // 批量标记已出租
@@ -703,6 +711,7 @@ export default function ProfilePage() {
               onClick={(event) => {
                 event.stopPropagation();
                 manySet(manySetState);
+                setSelectedIds([])
               }}
             >
               <img src="/images/Settings.png" />
@@ -717,6 +726,7 @@ export default function ProfilePage() {
                           key={item.label}
                           onClick={() => {
                             manyChange(item.label, cartData);
+                            setSelectedIds([])
                             store.setState(() => ({ parcels_cardState: true }));
                           }}
                         >

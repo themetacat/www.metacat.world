@@ -27,6 +27,9 @@
   font-size: 20px;
   font-style: normal;
   line-height: 28px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .content h2 span {
   vertical-align: super;
@@ -129,8 +132,8 @@
   display: none;
 }
 .coord {
-  margin-right: 10px;
   position: relative;
+  margin-right: 10px;
 }
 .coord::after {
   position: absolute;
@@ -147,6 +150,6 @@
   content: ' ';
 }
 .shenglue {
-  margin-left: 2px;
   margin-top: 2px;
+  margin-left: 2px;
 }

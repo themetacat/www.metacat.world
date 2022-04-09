@@ -184,8 +184,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
       return;
     }
     set_is_price(false);
-
-    console.log(s.type);
+    
     if (s.type === 'cv') {
       if (s.updateOrAdd === 'add') {
         if (token) {

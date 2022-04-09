@@ -334,7 +334,6 @@ export const req_dcl_List = async (
   sort_field: string,
   sort_type: string,
 ) => {
-  const url = `/api/get_listed_dcl_parcels`;
   const search = qs.stringify({
     page,
     count,
@@ -343,12 +342,14 @@ export const req_dcl_List = async (
     built_status,
     sort_field,
     sort_type,
-  });
+  },
+  { addQueryPrefix: true} 
+  );
+  const url = `/api/get_listed_dcl_parcels${search}`;
 
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
-    body: search,
   });
   const json = await result.json();
 

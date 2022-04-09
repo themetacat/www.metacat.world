@@ -339,7 +339,6 @@ class API {
     sort_field: string,
     sort_type: string,
   ): Promise<any> {
-    const url = `${this.url}/rent/get_listed_dcl_parcels`;
     const search = qs.stringify({
       page,
       count,
@@ -348,12 +347,14 @@ class API {
       built_status,
       sort_field,
       sort_type,
-    });
+    },
+      { addQueryPrefix: true }
+    );
+    const url = `${this.url}/rent/get_listed_dcl_parcels${search}`;
 
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
-      body: search,
     });
     const json = await result.json();
 

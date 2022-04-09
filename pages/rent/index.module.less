@@ -61,6 +61,7 @@
   width: 1200px;
   height: 40px;
   margin: 0 auto;
+
   .sortMode {
     position: absolute;
     right: -55px;
@@ -113,7 +114,42 @@
     }
   }
 }
-
+.sortMode2 {
+  position: absolute;
+  right: -174px;
+  bottom: -12px;
+  width: 420px;
+  height: 100%;
+  .sortModeItem {
+    position: relative;
+    color: #999;
+    cursor: pointer;
+    .title {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 40px;
+    }
+    .active {
+      color: #fff;
+    }
+    img {
+      width: 16px;
+      height: 16px;
+      margin-top: 13px;
+      margin-left: 5px;
+    }
+  }
+  .sortModeItem::after {
+    position: absolute;
+    bottom: 12px;
+    left: -13px;
+    width: 1px;
+    height: 15px;
+    background: #999;
+    transform: scaleX(0.5);
+    content: ' ';
+  }
+}
 .content {
   min-height: 650px;
 }
@@ -181,6 +217,7 @@
 
 .right {
   margin-left: 20px;
+  position: relative;
   h2 {
     position: relative;
     color: #fff;
@@ -202,7 +239,7 @@
   }
 }
 
-.detail {
+.detail1 {
   margin-top: 10px;
   color: #ddd;
   font-weight: 400;
@@ -257,9 +294,11 @@
   line-height: 22px;
 }
 
-.contact {
+.contact1 {
   display: flex;
-  margin-top: 25px;
+  position: absolute;
+  bottom: 9px;
+  right: -22px;
   div {
     display: flex;
     align-items: center;
@@ -280,7 +319,31 @@
     }
   }
 }
+.contact2 {
+  display: flex;
+  position: absolute;
+  bottom: 9px;
+  right: -22px;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 114px;
+    height: 42px;
+    margin-right: 30px;
+    background: #00d0ec;
+    cursor: pointer;
+    img {
+      width: 16px;
+      height: 16px;
+      margin-left: 22px;
+    }
 
+    div {
+      margin-left: 5px;
+    }
+  }
+}
 .close {
   position: absolute;
   top: 15px;
