@@ -245,52 +245,43 @@ export default function Rent() {
     islands_ids,
   ]);
   // 获取列表id 更改高亮效果
-  // const get_islands_id = React.useCallback(
-  //   (id) => {
-  //     setLocationAll('');
-  //     if (islands_ids.findIndex((item) => item === id) === -1) {
-  //       islands_ids.push(id);
-  //       set_islands_ids([...islands_ids]);
-  //       return;
-  //     }
-  //     islands_ids.splice(
-  //       islands_ids.findIndex((item) => item === id),
-  //       1,
-  //     );
+  const get_islands_id = React.useCallback(
+    (id) => {
+      setLocationAll('');
+      if (islands_ids.findIndex((item) => item === id) === -1) {
+        islands_ids.push(id);
+        set_islands_ids([...islands_ids]);
+        return;
+      }
+      islands_ids.splice(
+        islands_ids.findIndex((item) => item === id),
+        1,
+      );
 
-  //     set_islands_ids([...islands_ids]);
-  //   },
-  //   [islands_ids],
-  // );
-  // // 获取dcl card 列表数据
-  // const get_rent_dcl_cardList = React.useCallback(
-  //   async () => {
-  //     setLoading(true);
-  //     const result = await req_dcl_List(
-  //       page,
-  //       pageCount,
-  //       sizeQuery.join(","),
-  //       priceQuery.join(","),
-  //       builtQuery.length === 0 ? builtAll : builtQuery.join(","),
-  //       fieldQuery,
-  //       typeQuery
-  //     )
-  //     if (result.code === 100000) {
-  //       setLoading(false);
-  //       setCardInfoList(result.data.parcel_list);
-  //       setTotalPage(result.data.total_page);
-  //     } else {
-  //       setLoading(false);
-  //     }
-  //   },
-  //   [page,
-  //     pageCount,
-  //     sizeQuery,
-  //     priceQuery,
-  //     builtQuery,
-  //     fieldQuery,
-  //     typeQuery]
-  // )
+      set_islands_ids([...islands_ids]);
+    },
+    [islands_ids],
+  );
+  // 获取dcl card 列表数据
+  const get_rent_dcl_cardList = React.useCallback(async () => {
+    setLoading(true);
+    const result = await req_dcl_List(
+      page,
+      pageCount,
+      sizeQuery.join(','),
+      priceQuery.join(','),
+      builtQuery.length === 0 ? builtAll : builtQuery.join(','),
+      fieldQuery,
+      typeQuery,
+    );
+    if (result.code === 100000) {
+      setLoading(false);
+      setCardInfoList(result.data.parcel_list);
+      setTotalPage(result.data.total_page);
+    } else {
+      setLoading(false);
+    }
+  }, [page, pageCount, sizeQuery, priceQuery, builtQuery, fieldQuery, typeQuery]);
 
   // 改变状态是否选中
   const select = React.useCallback(
