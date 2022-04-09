@@ -34,16 +34,16 @@ module.exports = {
     {
       files: ['*.js'],
       rules: {
-        '@typescript-eslint/no-var-requires': 'off',
+        // '@typescript-eslint/no-var-requires': 'off',
       },
     },
     {
       files: ['**.tsx', '**.ts'],
       rules: {
-        'import/no-unresolved': 'off',
-        'import/extensions': 'off',
-        '@typescript-eslint/no-var-requires': 0,
-        'operator-assignment': 'off',
+        // 'import/no-unresolved': 'off',
+        // 'import/extensions': 'off',
+        // '@typescript-eslint/no-var-requires': 0,
+        // 'operator-assignment': 'off',
       },
     },
   ],
@@ -64,7 +64,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
+    // '@typescript-eslint/no-use-before-define': ['error'],
     'import/extensions': 'off',
     'import/prefer-default-export': ['warn'],
     'react/prop-types': 'off',
