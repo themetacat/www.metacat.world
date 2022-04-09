@@ -583,56 +583,72 @@ export default function Rent() {
     ],
   );
   // 改变排序状态
-  // const sort = React.useCallback(
-  //   (index, val, type) => {
-  //     setDefaultsort(false);
-  //     let r = []
-  //     if (type === "cv") {
-  //       r = rank
-  //     }
-  //     if (type === "dcl") {
-  //       r = rank_dcl
-  //     }
-  //     const result = r.map((item, i) => {
-  //       if (index !== i && item.state !== '') {
-  //         return { value: item.value, state: '' };
-  //       }
-  //       return { ...item };
-  //     });
-  //     setFieldQuery(val.toLowerCase());
-  //     if (result[index].state === '' && val !== 'Price') {
-  //       result[index].state = 'desc';
-  //     }
-  //     if (result[index].state === 'desc' && val !== 'Price') {
-  //       result[index].state = 'asc';
-  //       setTypeQuery('asc');
-  //       type === "cv" ? setRank([...result]) : setRank_dcl([...result])
-  //       return;
-  //     }
-  //     if (result[index].state === 'asc' && val !== 'Price') {
-  //       result[index].state = 'desc';
-  //       setTypeQuery('desc');
-  //       type === "cv" ? setRank([...result]) : setRank_dcl([...result])
-  //     }
+  const sort = React.useCallback(
+    (index, val, type) => {
+      setDefaultsort(false);
+      let r = [];
+      if (type === 'cv') {
+        r = rank;
+      }
+      if (type === 'dcl') {
+        r = rank_dcl;
+      }
+      const result = r.map((item, i) => {
+        if (index !== i && item.state !== '') {
+          return { value: item.value, state: '' };
+        }
+        return { ...item };
+      });
+      setFieldQuery(val.toLowerCase());
+      if (result[index].state === '' && val !== 'Price') {
+        result[index].state = 'desc';
+      }
+      if (result[index].state === 'desc' && val !== 'Price') {
+        result[index].state = 'asc';
+        setTypeQuery('asc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+        return;
+      }
+      if (result[index].state === 'asc' && val !== 'Price') {
+        result[index].state = 'desc';
+        setTypeQuery('desc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+      }
 
-  //     if (result[index].state === '' && val === 'Price') {
-  //       result[index].state = 'asc';
-  //     }
+      if (result[index].state === '' && val === 'Price') {
+        result[index].state = 'asc';
+      }
 
-  //     if (result[index].state === 'asc' && val === 'Price') {
-  //       result[index].state = 'desc';
-  //       setTypeQuery('desc');
-  //       type === "cv" ? setRank([...result]) : setRank_dcl([...result])
-  //       return;
-  //     }
-  //     if (result[index].state === 'desc' && val === 'Price') {
-  //       result[index].state = 'asc';
-  //       setTypeQuery('asc');
-  //       type === "cv" ? setRank([...result]) : setRank_dcl([...result])
-  //     }
-  //   },
-  //   [rank, rank_dcl],
-  // );
+      if (result[index].state === 'asc' && val === 'Price') {
+        result[index].state = 'desc';
+        setTypeQuery('desc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+        return;
+      }
+      if (result[index].state === 'desc' && val === 'Price') {
+        result[index].state = 'asc';
+        setTypeQuery('asc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+      }
+    },
+    [rank, rank_dcl],
+  );
 
   // 弹出框的状态
   const toDetail = React.useCallback((Info) => {
