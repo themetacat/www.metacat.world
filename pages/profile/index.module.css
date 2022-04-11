@@ -219,7 +219,9 @@
   height: 50px;
   background: #00d0ec;
   position: fixed;
-  left: 750px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   bottom: 80px;
   z-index: 99999;
   box-sizing: border-box;
@@ -227,12 +229,12 @@
   line-height: 30px;
   display: flex;
 }
-.succeedOrCancel > .info {
+.succeedOrCancel > div > .info {
   color: #000;
   font-weight: 500;
   font-size: 18px;
 }
-.succeedOrCancel > .succeed,
+.succeedOrCancel > div > .succeed,
 .cancel {
   margin: 0 10px 0 30px;
   border: 1px solid #000;
@@ -242,18 +244,22 @@
   font-style: normal;
   font-weight: 600;
 }
-.succeedOrCancel > .succeed:hover {
+.succeedOrCancel > div > .succeed:hover {
   color: #fff;
 }
-.succeedOrCancel > .cancel:hover {
+.succeedOrCancel > div > .cancel:hover {
   color: #fff;
 }
-.succeedOrCancel > .succeed {
+.succeedOrCancel > div > .succeed {
   background-color: #000;
   color: #00d0ec;
 }
-.succeedOrCancel > .cancel {
+.succeedOrCancel > div > .cancel {
   margin-left: 10px;
   background: #00d0ec;
   color: #000;
+}
+.succeedOrCancel > .container {
+  display: flex;
+  margin: 0 auto;
 }

@@ -53,7 +53,6 @@ export default function ChartLine({
   const [error, setError] = React.useState(false);
   const visible1 = React.useRef();
   const visible2 = React.useRef();
-
   const transfromData = React.useCallback(
     (data, type, priceType) => {
       const result = [];
@@ -131,6 +130,7 @@ export default function ChartLine({
           items.forEach((item) => {
             result[item.type] = item;
           });
+
           const staticItem = `
             <div style="color:#fff;margin-bottom:12px">
               <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${

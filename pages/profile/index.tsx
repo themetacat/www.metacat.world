@@ -11,6 +11,7 @@ import Profile from '../../components/profile';
 import Tab from '../../components/tab';
 import Status from '../../components/status';
 import Card from '../../components/parcels-card';
+import DclCard from '../../components/parcels-dcl-card';
 import Tab3 from '../../components/tab3';
 import ParcelsTab from '../../components/parcels-tab';
 import RentSet from '../../components/parcels_rent_set';
@@ -26,7 +27,13 @@ import { convert, getToken, setToken } from '../../common/utils';
 
 import { getBaseInfo, refreshToken, getParcelList2 } from '../../service';
 
-import { req_parcels_cancel, req_parcels_leased } from '../../service/z_api';
+import {
+  req_parcels_cancel,
+  req_parcels_leased,
+  req_dcl_parcel_list,
+  req_dcl_cancel,
+  req_dcl_leased,
+} from '../../service/z_api';
 
 import style from './index.module.css';
 
@@ -63,7 +70,7 @@ export default function ProfilePage() {
     title: `Profile - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-  const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState');
+  const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
@@ -167,9 +174,19 @@ export default function ProfilePage() {
 
   const onTabChange = React.useCallback(
     async (tab) => {
+      setLoading(true);
       setTabState(tab);
-      if (orginData) {
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
+      if (tab === 'cryptovoxels') {
         setDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'decentraland') {
+        setDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'dcl' }));
       }
     },
     [orginData],
@@ -244,6 +261,7 @@ export default function ProfilePage() {
       try {
         const res = await getParcelList2(token);
         const data = resultHandler(res, requestData);
+
         if (!data) {
           return;
         }
@@ -253,6 +271,26 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
+      setLoading(false);
+    },
+    [resultHandler, tabState, nav_Label],
+  );
+
+  const reqDclData = React.useCallback(
+    async (token: string) => {
+      try {
+        const res = await req_dcl_parcel_list(token);
+        const data = resultHandler(res, reqDclData);
+        if (!data) {
+          return;
+        }
+        setOrginData(data);
+        setDataSource(data.parcelList);
+        changeNum(data.parcelList, nav_Label.current);
+      } catch {
+        setError(true);
+      }
+      setLoading(false);
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -278,10 +316,13 @@ export default function ProfilePage() {
   );
   const onRetry = React.useCallback(async () => {
     const accessToken = getToken('atk');
-    if (accessToken) {
+    if (accessToken && tabState === 'cryptovoxels') {
       requestData(accessToken);
     }
-  }, [requestData, getToken]);
+    if (accessToken && tabState === 'decentraland') {
+      reqDclData(accessToken);
+    }
+  }, [requestData, getToken, reqDclData]);
 
   const select = React.useCallback(
     (id, ids) => {
@@ -310,26 +351,59 @@ export default function ProfilePage() {
     if (cartData.length === 0) {
       return <Status status="empty" />;
     }
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
-        {cartData.map((card) => {
-          return (
-            <Card
-              {...card}
-              parcelsIds={parcelsIds}
-              state={cardState}
-              key={uuid()}
-              y
-              selectedIds={selectedIds}
-              onClick={(id, ids) => {
-                select(id, ids);
-              }}
-            ></Card>
-          );
-        })}
-      </div>
-    );
-  }, [error, dataSource, loading, onRetry, changeNum, parcelsIds, setCardState]);
+    if (tabState === 'cryptovoxels') {
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
+          {cartData.map((card) => {
+            return (
+              <Card
+                {...card}
+                parcelsIds={parcelsIds}
+                state={cardState}
+                key={uuid()}
+                y
+                selectedIds={selectedIds}
+                onClick={(id, ids) => {
+                  select(id, ids);
+                }}
+              ></Card>
+            );
+          })}
+        </div>
+      );
+    }
+    if (tabState === 'decentraland') {
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
+          {cartData.map((card) => {
+            return (
+              <DclCard
+                {...card}
+                parcelsIds={parcelsIds}
+                state={cardState}
+                key={uuid()}
+                y
+                selectedIds={selectedIds}
+                onClick={(id, ids) => {
+                  select(id, ids);
+                }}
+              ></DclCard>
+            );
+          })}
+        </div>
+      );
+    }
+  }, [
+    error,
+    dataSource,
+    loading,
+    onRetry,
+    changeNum,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
+  ]);
 
   // 批量设置
   const manySet = React.useCallback(
@@ -399,35 +473,67 @@ export default function ProfilePage() {
       set_rent_set_state(true);
       setManySetState(false);
       setCardState(false);
-      store.setState(() => ({ parcels_cardState: false }));
+      store.setState(() => ({ parcels_cardState: false, updateOrAdd: 'add' }));
     }
-    // 批量标记已出租
-    if (label === 'Mark several as leased') {
-      const token = await refreshTK();
-      const result = await req_parcels_leased(token, selectedIds.join(','));
-      if (result.code === 100000) {
-        store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
-      } else {
-        store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+    if (s.type === 'cv') {
+      // 批量标记已出租
+      if (label === 'Mark several as leased') {
+        const token = await refreshTK();
+        const result = await req_parcels_leased(token, selectedIds.join(','));
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
+        } else {
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
+        set_rent_set_state(true);
+        setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
       }
-      set_rent_set_state(true);
-      setManySetState(false);
-      setCardState(false);
-      store.setState(() => ({ parcels_cardState: false }));
+      // 批量取消出租
+      if (label === 'Cancel lease for multiple') {
+        const token = await refreshTK();
+        const result = await req_parcels_cancel(token, selectedIds.join(','));
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
+        } else {
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
+        set_rent_set_state(true);
+        setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
+      }
     }
-    // 批量取消出租
-    if (label === 'Cancel lease for multiple') {
-      const token = await refreshTK();
-      const result = await req_parcels_cancel(token, selectedIds.join(','));
-      if (result.code === 100000) {
-        store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
-      } else {
-        store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+    if (s.type === 'dcl') {
+      // 批量标记已出租
+      if (label === 'Mark several as leased') {
+        const token = await refreshTK();
+        const result = await req_dcl_leased(token, selectedIds.join(','));
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
+        } else {
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
+        set_rent_set_state(true);
+        setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
       }
-      set_rent_set_state(true);
-      setManySetState(false);
-      setCardState(false);
-      store.setState(() => ({ parcels_cardState: false }));
+      // 批量取消出租
+      if (label === 'Cancel lease for multiple') {
+        const token = await refreshTK();
+        const result = await req_dcl_cancel(token, selectedIds.join(','));
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
+        } else {
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
+        set_rent_set_state(true);
+        setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
+      }
     }
   }, [selectedIds, setCardState, set_rent_set_state]);
 
@@ -466,7 +572,12 @@ export default function ProfilePage() {
   React.useEffect(() => {
     const accessToken = getToken('atk');
     if (accessToken) {
-      requestData(accessToken);
+      if (tabState === 'cryptovoxels') {
+        requestData(accessToken);
+      }
+      if (tabState === 'decentraland') {
+        reqDclData(accessToken);
+      }
       requestPersonal(accessToken);
       watcher_store();
       watcher_store_status();
@@ -474,7 +585,15 @@ export default function ProfilePage() {
       return;
     }
     window.location.href = '/';
-  }, [getToken, requestData, requestPersonal, watcher_store, nav_Label.current]);
+  }, [
+    getToken,
+    requestData,
+    requestPersonal,
+    watcher_store,
+    nav_Label.current,
+    reqDclData,
+    tabState,
+  ]);
 
   const tag1 = () => {
     if (label === 'Cancel lease for multiple') {
@@ -486,31 +605,37 @@ export default function ProfilePage() {
     if (cardState) {
       return (
         <div className={style.succeedOrCancel}>
-          <div className={style.info}>
-            selected ({selectedIds.length}/{parcelsIds.length})
-          </div>
-          <div
-            className={style.succeed}
-            onClick={() => {
-              req_event();
-              if (selectedIds.length === 0) return;
-              if (label === 'Rent out several') {
-                store.setState(() => ({ parcels_cardState: false, rentOutState: true, id: null }));
-              }
-            }}
-          >
-            {label === 'Rent out several' ? 'Rent out' : tag1()}
-          </div>
-          <div
-            className={style.cancel}
-            onClick={() => {
-              manyChange(label, cartData);
-              setCardState(false);
-              setSelectedIds([]);
-              store.setState(() => ({ parcels_cardState: false }));
-            }}
-          >
-            Close
+          <div className={style.container}>
+            <div className={style.info}>
+              selected ({selectedIds.length}/{parcelsIds.length})
+            </div>
+            <div
+              className={style.succeed}
+              onClick={() => {
+                req_event();
+                if (selectedIds.length === 0) return;
+                if (label === 'Rent out several') {
+                  store.setState(() => ({
+                    parcels_cardState: false,
+                    rentOutState: true,
+                    id: null,
+                  }));
+                }
+              }}
+            >
+              {label === 'Rent out several' ? 'Rent out' : tag1()}
+            </div>
+            <div
+              className={style.cancel}
+              onClick={() => {
+                manyChange(label, cartData);
+                setCardState(false);
+                setSelectedIds([]);
+                store.setState(() => ({ parcels_cardState: false }));
+              }}
+            >
+              Close
+            </div>
           </div>
         </div>
       );
@@ -591,6 +716,7 @@ export default function ProfilePage() {
               onClick={(event) => {
                 event.stopPropagation();
                 manySet(manySetState);
+                setSelectedIds([]);
               }}
             >
               <img src="/images/Settings.png" />
@@ -605,6 +731,7 @@ export default function ProfilePage() {
                           key={item.label}
                           onClick={() => {
                             manyChange(item.label, cartData);
+                            setSelectedIds([]);
                             store.setState(() => ({ parcels_cardState: true }));
                           }}
                         >

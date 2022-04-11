@@ -4,7 +4,7 @@ import cn from 'classnames';
 import Rekv from 'rekv';
 import Link from 'next/link';
 
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import { toast } from 'react-hot-toast';
 
@@ -109,6 +109,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         setToken('atk', data.accessToken);
         setToken('rtk', data.refreshToken);
+        Router.push('/profile');
       }
       setShowMenu(false);
       setLoading(false);

@@ -396,3 +396,20 @@ export const getSandboxParcelDetail = async (tokenId: string) => {
   const json = await res.json();
   return json;
 };
+
+export const getSomniumSpacePriceMapLevelThreeData = async () => {
+  const url = `https://api.metacat.world/api/v1/get_somniumspace_price_map_level_three`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
+
+export const getSomniumSpaceParcelDeatil = async (tokenId: string) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/somniumspace_parcel_detail${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};

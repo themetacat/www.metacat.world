@@ -106,7 +106,7 @@ export default function DecentralandDeatil({
       label = op.traffic.month;
     }
     const condition = op.timeRangeSale?.eth
-      ? `${op.timeRangeSale.eth} E(${op.timeRangeSale.usd} U)`
+      ? `${op.timeRangeSale.eth} ETH(${op.timeRangeSale.usd} USD)`
       : '';
     if (type === 'all') {
       preffix = 'All-Time Sales：';
@@ -153,10 +153,10 @@ export default function DecentralandDeatil({
               return (
                 <li key={idx} className={cn('', styles.sales)}>
                   {`${ite.date} ${ite.isPrimary > 0 ? '(primary sales) /' : ''}`}{' '}
-                  <span className="text-white">{`${formatNum(ite.eth, false)} E(${formatNum(
+                  <span className="text-white">{`${formatNum(ite.eth, false)} ETH(${formatNum(
                     ite.usd,
                     false,
-                  )} U)`}</span>
+                  )} USD)`}</span>
                 </li>
               );
             })}

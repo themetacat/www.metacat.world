@@ -1,9 +1,9 @@
 .containerBanner {
+  position: relative;
   width: 1200px;
   height: 200px;
   margin: 0 auto;
   background: #000;
-  position: relative;
 }
 .containerBanner .banner {
   height: 130px;
@@ -20,10 +20,16 @@
 .filterNav {
   width: 1200px;
   margin: 30px auto 0;
-  padding: 30px 20px;
+  padding: 20px 10px 20px;
   background: #0c1416;
 }
-.filterNav .navItem .title {
+.dclFilterNav {
+  width: 1200px;
+  margin: 30px auto 0;
+  padding: 1px 10px 20px;
+  background: #0c1416;
+}
+.navItem .title {
   width: 60px;
   margin-top: 3px;
   color: #fff;
@@ -32,29 +38,29 @@
   font-style: normal;
   line-height: 17px;
 }
-.filterNav .navItem .list {
+.navItem .list {
   flex-wrap: wrap;
   margin-left: 40px;
   color: #ccc;
 }
-.filterNav .navItem .list .c {
+.navItem .list .c {
   cursor: pointer;
 }
-.filterNav .navItem .list .i {
+.navItem .list .i {
   width: 200px;
   cursor: pointer;
 }
-.filterNav .navItem .list .i .active {
+.navItem .list .i .active {
   color: #fff;
 }
-.filterNav .navItem .list .active {
+.navItem .list .active {
   color: #00d0ec;
 }
 .sort {
+  position: relative;
   width: 1200px;
   height: 40px;
   margin: 0 auto;
-  position: relative;
 }
 .sort .sortMode {
   position: absolute;
@@ -96,21 +102,51 @@
   margin-top: 10px;
   cursor: pointer;
 }
-.sort .clearSort img {
-  width: 16px;
-  height: 16px;
-  margin-top: 2px;
-  margin-right: 3px;
-}
 .sort .clearSort div {
+  color: #999;
   font-weight: 400;
   font-size: 14px;
   font-style: normal;
   line-height: 20px;
-  color: #999;
 }
 .sort .clearSort .active {
   color: #fff;
+}
+.sortMode2 {
+  position: absolute;
+  right: -174px;
+  bottom: -12px;
+  width: 420px;
+  height: 100%;
+}
+.sortMode2 .sortModeItem {
+  position: relative;
+  color: #999;
+  cursor: pointer;
+}
+.sortMode2 .sortModeItem .title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 40px;
+}
+.sortMode2 .sortModeItem .active {
+  color: #fff;
+}
+.sortMode2 .sortModeItem img {
+  width: 16px;
+  height: 16px;
+  margin-top: 13px;
+  margin-left: 5px;
+}
+.sortMode2 .sortModeItem::after {
+  position: absolute;
+  bottom: 12px;
+  left: -13px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
 }
 .content {
   min-height: 650px;
@@ -148,12 +184,12 @@
   position: absolute;
   top: 50%;
   right: 50%;
+  display: flex;
   margin-top: -10px;
   margin-right: -60px;
-  cursor: pointer;
   color: #fff;
   font-size: 12px;
-  display: flex;
+  cursor: pointer;
 }
 .imgContanier .toTitle img {
   width: 12px;
@@ -175,6 +211,7 @@
 }
 .right {
   margin-left: 20px;
+  position: relative;
 }
 .right h2 {
   position: relative;
@@ -195,39 +232,36 @@
   font-size: 18px;
   font-style: normal;
 }
-.detail {
+.detail1 {
   margin-top: 10px;
   color: #ddd;
   font-weight: 400;
   font-size: 14px;
   font-style: normal;
 }
-.detail img {
+.detail1 img {
   width: 14px;
   height: 14px;
   margin-top: 5px;
   margin-right: 7px;
 }
-.detail .coord div {
-  margin-top: 1px;
-}
-.detail .plot {
+.detail1 .plot {
   margin: 12px 0;
 }
-.detail .plot div {
+.detail1 .plot div {
   margin-top: 2px;
 }
-.detail .info {
+.detail1 .info {
   display: flex;
   flex-wrap: nowrap;
 }
-.detail .info .info_item {
+.detail1 .info .info_item {
   position: relative;
   margin-top: 2px;
   margin-right: 8px;
   font-size: 14px;
 }
-.detail .info .info_item::after {
+.detail1 .info .info_item::after {
   position: absolute;
   right: -4px;
   bottom: 4px;
@@ -237,7 +271,7 @@
   transform: scaleX(0.5);
   content: ' ';
 }
-.detail .info .info_item:last-child::after {
+.detail1 .info .info_item:last-child::after {
   width: 0;
   content: ' ';
 }
@@ -250,11 +284,13 @@
   font-style: normal;
   line-height: 22px;
 }
-.contact {
+.contact1 {
   display: flex;
-  margin-top: 25px;
+  position: absolute;
+  bottom: 9px;
+  right: -22px;
 }
-.contact div {
+.contact1 div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,55 +300,87 @@
   background: #00d0ec;
   cursor: pointer;
 }
-.contact div img {
+.contact1 div img {
   width: 16px;
   height: 16px;
   margin-left: 22px;
 }
-.contact div div {
+.contact1 div div {
+  margin-left: 5px;
+}
+.contact2 {
+  display: flex;
+  position: absolute;
+  bottom: 9px;
+  right: -22px;
+}
+.contact2 div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 42px;
+  margin-right: 30px;
+  background: #00d0ec;
+  cursor: pointer;
+}
+.contact2 div img {
+  width: 16px;
+  height: 16px;
+  margin-left: 22px;
+}
+.contact2 div div {
   margin-left: 5px;
 }
 .close {
   position: absolute;
   top: 15px;
+  top: 24px;
   right: 30px;
+  right: 24px;
+  width: 16px;
+  height: 16px;
   color: #999;
   font-size: 26px;
   cursor: pointer;
 }
-.guanbi {
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  right: 24px;
-  top: 24px;
-}
 .shade {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 260px;
   height: 260px;
-  background: #000000;
+  background: #000;
   opacity: 0.4;
 }
 .sd {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 260px;
   height: 260px;
-  background: #000000;
+  background: #000;
   opacity: 0;
 }
 .hover_text {
   position: absolute;
-  left: 98px;
   top: -35px;
-  width: 260px;
+  left: 98px;
   height: 41px;
-  background: #000000;
+  padding: 12px;
   color: #fff;
   font-size: 12px;
-  padding: 12px;
+  background: #000;
+}
+.zhezhao {
+  width: 114px;
+  height: 42px;
+  background: #000;
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+.guan {
+  width: 20px;
+  max-width: none;
+  height: 20px;
 }

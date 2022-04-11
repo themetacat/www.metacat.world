@@ -9,10 +9,11 @@ import PagiNation from '../../components/pagination';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import RentCard from '../../components/rent-card';
 import CoverImg from '../../components/cover-img';
+import DclCard from '../../components/rent-dcl-card';
 
 import style from './index.module.css';
 
-import { req_rent_islands, req_rent_cardList } from '../../service/z_api';
+import { req_rent_islands, req_rent_cardList, req_dcl_List } from '../../service/z_api';
 
 import Status from '../../components/status';
 
@@ -80,6 +81,24 @@ const Built_sort = [
     state: false,
   },
 ];
+const size_sort = [
+  {
+    value: '1 Land',
+    state: false,
+  },
+  {
+    value: '2 Land - 9 Land',
+    state: false,
+  },
+  {
+    value: '10 Land - 20 Land',
+    state: false,
+  },
+  {
+    value: '> 20 Land',
+    state: false,
+  },
+];
 const Rank = [
   {
     value: 'Area',
@@ -94,11 +113,26 @@ const Rank = [
     state: '',
   },
 ];
+const Rank_dcl = [
+  {
+    value: 'Size',
+    state: '',
+  },
+  {
+    value: 'Price',
+    state: '',
+  },
+];
 const TAB = [
   {
     label: 'Cryptovoxels',
     icon: '/images/Crypto Voxel.jpg',
     type: 'cryptovoxels',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
   },
 ];
 
@@ -112,13 +146,16 @@ export default function Rent() {
   const [heightSort, setHeightSort] = React.useState(Height_sort);
   const [priceWeekSort, setPriceWeekSort] = React.useState(Price_week_sort);
   const [builtSort, setBuiltSort] = React.useState(Built_sort);
+  const [sizeSort, setSizeSort] = React.useState(size_sort);
   const [rank, setRank] = React.useState(Rank);
+  const [rank_dcl, setRank_dcl] = React.useState(Rank_dcl);
 
-  const [areaAll, setAreaAll] = React.useState('');
-  const [heightAll, setHeightAll] = React.useState('');
-  const [priceWeekAll, setPriceWeekAll] = React.useState('');
-  const [builtAll, setBuiltAll] = React.useState('');
-  const [locationAll, setLocationAll] = React.useState('');
+  const [areaAll, setAreaAll] = React.useState('All');
+  const [heightAll, setHeightAll] = React.useState('All');
+  const [priceWeekAll, setPriceWeekAll] = React.useState('All');
+  const [builtAll, setBuiltAll] = React.useState('All');
+  const [locationAll, setLocationAll] = React.useState('All');
+  const [sizeAll, setSizeAll] = React.useState('All');
 
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [islands_data, set_islands_data] = React.useState([]);
@@ -131,10 +168,11 @@ export default function Rent() {
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageCount, setPageCount] = React.useState(20);
   const [idsQuery, setIdsQuery] = React.useState('all');
-  const [areaQuery, setAreaQuery] = React.useState('');
-  const [heightQuery, setHeightQuery] = React.useState('');
-  const [priceQuery, setPriceQuery] = React.useState('');
-  const [builtQuery, setBuiltQuery] = React.useState('all');
+  const [areaQuery, setAreaQuery] = React.useState([]);
+  const [heightQuery, setHeightQuery] = React.useState([]);
+  const [priceQuery, setPriceQuery] = React.useState([]);
+  const [sizeQuery, setSizeQuery] = React.useState([]);
+  const [builtQuery, setBuiltQuery] = React.useState([]);
   const [fieldQuery, setFieldQuery] = React.useState('default');
   const [typeQuery, setTypeQuery] = React.useState('desc');
 
@@ -161,13 +199,13 @@ export default function Rent() {
     traffic: null,
     price: null,
     cover_img_url: null,
+    coordinate: null,
+    land_total: null,
+    internal_type: null,
   });
 
   const cls = cn('flex-1', style.bottomLine);
 
-  const onTabChange = React.useCallback(async (tab) => {
-    setTabState(tab);
-  }, []);
   // 获取岛屿列表
   const get_islands_list = React.useCallback(async () => {
     const result = await req_rent_islands();
@@ -180,10 +218,10 @@ export default function Rent() {
       page,
       pageCount,
       islands_ids.length === 0 ? idsQuery : islands_ids.join(','),
-      areaQuery,
-      heightQuery,
-      priceQuery,
-      builtQuery,
+      areaQuery.join(','),
+      heightQuery.join(','),
+      priceQuery.join(','),
+      builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
       fieldQuery,
       typeQuery,
     );
@@ -224,6 +262,27 @@ export default function Rent() {
     },
     [islands_ids],
   );
+  // 获取dcl card 列表数据
+  const get_rent_dcl_cardList = React.useCallback(async () => {
+    setLoading(true);
+    const result = await req_dcl_List(
+      page,
+      pageCount,
+      sizeQuery.join(','),
+      priceQuery.join(','),
+      builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
+      fieldQuery,
+      typeQuery,
+    );
+    if (result.code === 100000) {
+      setLoading(false);
+      setCardInfoList(result.data.parcel_list);
+      setTotalPage(result.data.total_page);
+    } else {
+      setLoading(false);
+    }
+  }, [page, pageCount, sizeQuery, priceQuery, builtQuery, fieldQuery, typeQuery]);
+
   // 改变状态是否选中
   const select = React.useCallback(
     (type, value) => {
@@ -237,17 +296,51 @@ export default function Rent() {
         });
         result.forEach((item) => {
           if (item.state) {
-            if (item.value === '< 100㎡') {
-              setAreaQuery(`${areaQuery}0_100,`);
+            if (item.value === '< 100㎡' && !areaQuery.includes('0_100')) {
+              areaQuery.push('0_100');
+              setAreaQuery(areaQuery);
             }
-            if (item.value === '100㎡-200㎡') {
-              setAreaQuery(`${areaQuery}100_200,`);
+            if (item.value === '100㎡-200㎡' && !areaQuery.includes('100_200')) {
+              areaQuery.push('100_200');
+              setAreaQuery(areaQuery);
             }
-            if (item.value === '200㎡-500㎡') {
-              setAreaQuery(`${areaQuery}200_500,`);
+            if (item.value === '200㎡-500㎡' && !areaQuery.includes('200_500')) {
+              areaQuery.push('200_500');
+              setAreaQuery(areaQuery);
             }
-            if (item.value === '> 500㎡') {
-              setAreaQuery(`${areaQuery}500_,`);
+            if (item.value === '> 500㎡' && !areaQuery.includes('500_')) {
+              areaQuery.push('500_');
+              setAreaQuery(areaQuery);
+            }
+          }
+          if (!item.state) {
+            if (item.value === '< 100㎡' && areaQuery.includes('0_100')) {
+              areaQuery.splice(
+                areaQuery.findIndex((areaQueryItem) => areaQueryItem === '0_100'),
+                1,
+              );
+              setAreaQuery(areaQuery);
+            }
+            if (item.value === '100㎡-200㎡' && areaQuery.includes('100_200')) {
+              areaQuery.splice(
+                areaQuery.findIndex((areaQueryItem) => areaQueryItem === '100_200'),
+                1,
+              );
+              setAreaQuery(areaQuery);
+            }
+            if (item.value === '200㎡-500㎡' && areaQuery.includes('200_500')) {
+              areaQuery.splice(
+                areaQuery.findIndex((areaQueryItem) => areaQueryItem === '200_500'),
+                1,
+              );
+              setAreaQuery(areaQuery);
+            }
+            if (item.value === '> 500㎡' && areaQuery.includes('500_')) {
+              areaQuery.splice(
+                areaQuery.findIndex((areaQueryItem) => areaQueryItem === '500_'),
+                1,
+              );
+              setAreaQuery(areaQuery);
             }
           }
         });
@@ -263,17 +356,51 @@ export default function Rent() {
         });
         result.forEach((item) => {
           if (item.state) {
-            if (item.value === '< 10m') {
-              setHeightQuery(`${heightQuery}0_10,`);
+            if (item.value === '< 10m' && !heightQuery.includes('0_10')) {
+              heightQuery.push('0_10');
+              setHeightQuery(heightQuery);
             }
-            if (item.value === '10 - 15m') {
-              setHeightQuery(`${heightQuery}10_15,`);
+            if (item.value === '10 - 15m' && !heightQuery.includes('10_15')) {
+              heightQuery.push('10_15');
+              setHeightQuery(heightQuery);
             }
-            if (item.value === '15 - 20m') {
-              setHeightQuery(`${heightQuery}15_20,`);
+            if (item.value === '15 - 20m' && !heightQuery.includes('15_20')) {
+              heightQuery.push('15_20');
+              setHeightQuery(heightQuery);
             }
-            if (item.value === '> 20m') {
-              setHeightQuery(`${heightQuery}20_,`);
+            if (item.value === '> 20m' && !heightQuery.includes('20_')) {
+              heightQuery.push('20_');
+              setHeightQuery(heightQuery);
+            }
+          }
+          if (!item.state) {
+            if (item.value === '< 10m' && heightQuery.includes('0_10')) {
+              heightQuery.splice(
+                heightQuery.findIndex((heightQueryItem) => heightQueryItem === '0_10'),
+                1,
+              );
+              setHeightQuery(heightQuery);
+            }
+            if (item.value === '10 - 15m' && heightQuery.includes('10_15')) {
+              heightQuery.splice(
+                heightQuery.findIndex((heightQueryItem) => heightQueryItem === '10_15'),
+                1,
+              );
+              setHeightQuery(heightQuery);
+            }
+            if (item.value === '15 - 20m' && heightQuery.includes('15_20')) {
+              heightQuery.splice(
+                heightQuery.findIndex((heightQueryItem) => heightQueryItem === '15_20'),
+                1,
+              );
+              setHeightQuery(heightQuery);
+            }
+            if (item.value === '> 20m' && heightQuery.includes('20_')) {
+              heightQuery.splice(
+                heightQuery.findIndex((heightQueryItem) => heightQueryItem === '20_'),
+                1,
+              );
+              setHeightQuery(heightQuery);
             }
           }
         });
@@ -290,17 +417,51 @@ export default function Rent() {
 
         result.forEach((item) => {
           if (item.state) {
-            if (item.value === '< 0.1 ETH') {
-              setPriceQuery(`${priceQuery}0_0.1,`);
+            if (item.value === '< 0.1 ETH' && !priceQuery.includes('0_0.1')) {
+              priceQuery.push('0_0.1');
+              setPriceQuery(priceQuery);
             }
-            if (item.value === '0.1 ETH - 0.2 ETH') {
-              setPriceQuery(`${priceQuery}0.1_0.2,`);
+            if (item.value === '0.1 ETH - 0.2 ETH' && !priceQuery.includes('0.1_0.2')) {
+              priceQuery.push('0.1_0.2');
+              setPriceQuery(priceQuery);
             }
-            if (item.value === '0.2 ETH - 0.5 ETH') {
-              setPriceQuery(`${priceQuery}0.2_0.5,`);
+            if (item.value === '0.2 ETH - 0.5 ETH' && !priceQuery.includes('0.2_0.5')) {
+              priceQuery.push('0.2_0.5');
+              setPriceQuery(priceQuery);
             }
-            if (item.value === '> 0.5 ETH') {
-              setPriceQuery(`${priceQuery}0.5_,`);
+            if (item.value === '> 0.5 ETH' && !priceQuery.includes('0.5_')) {
+              priceQuery.push('0.5_');
+              setPriceQuery(priceQuery);
+            }
+          }
+          if (!item.state) {
+            if (item.value === '< 0.1 ETH' && priceQuery.includes('0_0.1')) {
+              priceQuery.splice(
+                priceQuery.findIndex((priceQueryItem) => priceQueryItem === '0_0.1'),
+                1,
+              );
+              setPriceQuery(priceQuery);
+            }
+            if (item.value === '0.1 ETH - 0.2 ETH' && priceQuery.includes('0.1_0.2')) {
+              priceQuery.splice(
+                priceQuery.findIndex((priceQueryItem) => priceQueryItem === '0.1_0.2'),
+                1,
+              );
+              setPriceQuery(priceQuery);
+            }
+            if (item.value === '0.2 ETH - 0.5 ETH' && priceQuery.includes('0.2_0.5')) {
+              priceQuery.splice(
+                priceQuery.findIndex((priceQueryItem) => priceQueryItem === '0.2_0.5'),
+                1,
+              );
+              setPriceQuery(priceQuery);
+            }
+            if (item.value === '> 0.5 ETH' && priceQuery.includes('0.5_')) {
+              priceQuery.splice(
+                priceQuery.findIndex((priceQueryItem) => priceQueryItem === '0.5_'),
+                1,
+              );
+              setPriceQuery(priceQuery);
             }
           }
         });
@@ -317,16 +478,95 @@ export default function Rent() {
         });
         result.forEach((item) => {
           if (item.state) {
-            if (item.value === 'Built') {
-              setBuiltQuery(`${builtQuery === 'all' ? '' : builtQuery}yes,`);
+            if (item.value === 'Built' && !builtQuery.includes('yes')) {
+              builtQuery.push('yes');
+              setBuiltQuery(builtQuery);
             }
-            if (item.value === 'Not built') {
-              setBuiltQuery(`${builtQuery === 'all' ? '' : builtQuery}no,`);
+            if (item.value === 'Not built' && !builtQuery.includes('no')) {
+              builtQuery.push('no');
+              setBuiltQuery(builtQuery);
+            }
+          }
+          if (!item.state) {
+            if (item.value === 'Built' && builtQuery.includes('yes')) {
+              builtQuery.splice(
+                builtQuery.findIndex((builtQueryItem) => builtQueryItem === 'yes'),
+                1,
+              );
+              setBuiltQuery(builtQuery);
+            }
+            if (item.value === 'Not built' && builtQuery.includes('no')) {
+              builtQuery.splice(
+                builtQuery.findIndex((builtQueryItem) => builtQueryItem === 'no'),
+                1,
+              );
+              setBuiltQuery(builtQuery);
             }
           }
         });
 
         setBuiltSort([...result]);
+      }
+      if (type === 'size') {
+        setSizeAll('');
+        const result = sizeSort.map((item) => {
+          if (item.value === value) {
+            return { value: item.value, state: !item.state };
+          }
+          return { ...item };
+        });
+
+        result.forEach((item) => {
+          if (item.state) {
+            if (item.value === '1 Land' && !sizeQuery.includes('0_1')) {
+              sizeQuery.push('0_1');
+              setSizeQuery(sizeQuery);
+            }
+            if (item.value === '2 Land - 9 Land' && !sizeQuery.includes('2_9')) {
+              sizeQuery.push('2_9');
+              setSizeQuery(sizeQuery);
+            }
+            if (item.value === '10 Land - 20 Land' && !sizeQuery.includes('10_20')) {
+              sizeQuery.push('10_20');
+              setSizeQuery(sizeQuery);
+            }
+            if (item.value === '> 20 Land' && !sizeQuery.includes('20_')) {
+              sizeQuery.push('20_');
+              setSizeQuery(sizeQuery);
+            }
+          }
+          if (!item.state) {
+            if (item.value === '1 Land' && sizeQuery.includes('0_1')) {
+              sizeQuery.splice(
+                sizeQuery.findIndex((sizeQueryItem) => sizeQueryItem === '0_1'),
+                1,
+              );
+              setSizeQuery(sizeQuery);
+            }
+            if (item.value === '2 Land - 9 Land' && sizeQuery.includes('2_9')) {
+              sizeQuery.splice(
+                sizeQuery.findIndex((sizeQueryItem) => sizeQueryItem === '2_9'),
+                1,
+              );
+              setSizeQuery(sizeQuery);
+            }
+            if (item.value === '10 Land - 20 Land' && sizeQuery.includes('10_20')) {
+              sizeQuery.splice(
+                sizeQuery.findIndex((sizeQueryItem) => sizeQueryItem === '10_20'),
+                1,
+              );
+              setSizeQuery(sizeQuery);
+            }
+            if (item.value === '> 20 Land' && sizeQuery.includes('20_')) {
+              sizeQuery.splice(
+                sizeQuery.findIndex((sizeQueryItem) => sizeQueryItem === '20_'),
+                1,
+              );
+              setSizeQuery(sizeQuery);
+            }
+          }
+        });
+        setSizeSort([...result]);
       }
     },
     [
@@ -338,35 +578,50 @@ export default function Rent() {
       heightQuery,
       priceQuery,
       builtQuery,
+      sizeSort,
+      sizeQuery,
     ],
   );
   // 改变排序状态
   const sort = React.useCallback(
-    (index, val) => {
+    (index, val, type) => {
       setDefaultsort(false);
-      const result = rank.map((item, i) => {
+      let r = [];
+      if (type === 'cv') {
+        r = rank;
+      }
+      if (type === 'dcl') {
+        r = rank_dcl;
+      }
+      const result = r.map((item, i) => {
         if (index !== i && item.state !== '') {
           return { value: item.value, state: '' };
         }
         return { ...item };
       });
-
-      setFieldQuery(val);
-      if (result[index].state === '' && val !== 'Price') {
+      setFieldQuery(val.toLowerCase());
+      if (result[index].state === '' && val !== 'Price' && val !== 'Size') {
         result[index].state = 'desc';
       }
-      if (result[index].state === 'desc' && val !== 'Price') {
+      if (result[index].state === 'desc' && val !== 'Price' && val !== 'Size') {
         result[index].state = 'asc';
         setTypeQuery('asc');
-        setRank([...result]);
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
         return;
       }
-      if (result[index].state === 'asc' && val !== 'Price') {
+      if (result[index].state === 'asc' && val !== 'Price' && val !== 'Size') {
         result[index].state = 'desc';
         setTypeQuery('desc');
-        setRank([...result]);
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
       }
-
       if (result[index].state === '' && val === 'Price') {
         result[index].state = 'asc';
       }
@@ -374,73 +629,110 @@ export default function Rent() {
       if (result[index].state === 'asc' && val === 'Price') {
         result[index].state = 'desc';
         setTypeQuery('desc');
-        setRank([...result]);
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
         return;
       }
       if (result[index].state === 'desc' && val === 'Price') {
         result[index].state = 'asc';
         setTypeQuery('asc');
-        setRank([...result]);
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+      }
+      if (result[index].state === '' && val === 'Size') {
+        result[index].state = 'asc';
+      }
+
+      if (result[index].state === 'asc' && val === 'Size') {
+        result[index].state = 'desc';
+        setTypeQuery('desc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+        return;
+      }
+      if (result[index].state === 'desc' && val === 'Size') {
+        result[index].state = 'asc';
+        setTypeQuery('asc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
       }
     },
-    [rank],
+    [rank, rank_dcl],
   );
+
   // 弹出框的状态
   const toDetail = React.useCallback((Info) => {
     setCardInfo(Info);
     setDetailState(true);
   }, []);
 
+  const toDclDetail = React.useCallback((info) => {
+    setCardInfo(info);
+    setDetailState(true);
+  }, []);
   const AreaAll = React.useCallback(() => {
     if (areaAll === 'All') return;
     setAreaAll('All');
-    setAreaQuery('');
-    const result = areaSort.map((item) => {
-      return { value: item.value, state: false };
-    });
+    setAreaQuery([]);
+    const result = areaSort.map((item) => ({ value: item.value, state: false }));
     setAreaSort([...result]);
-  }, [areaSort, areaAll]);
+  }, [areaAll, areaSort]);
   const HeightAll = React.useCallback(() => {
     if (heightAll === 'All') return;
     setHeightAll('All');
-    setHeightQuery('');
-    const result = heightSort.map((item) => {
-      return { value: item.value, state: false };
-    });
+    setHeightQuery([]);
+    const result = heightSort.map((item) => ({ value: item.value, state: false }));
     setHeightSort([...result]);
-  }, [heightSort, heightAll]);
+  }, [heightAll, heightSort]);
   const PriceAll = React.useCallback(() => {
     if (priceWeekAll === 'All') return;
     setPriceWeekAll('All');
-    setPriceQuery('');
-    const result = priceWeekSort.map((item) => {
-      return { value: item.value, state: false };
-    });
+    setPriceQuery([]);
+    const result = priceWeekSort.map((item) => ({ value: item.value, state: false }));
     setPriceWeekSort([...result]);
   }, [priceWeekAll, priceWeekSort]);
   const BuiltAll = React.useCallback(() => {
     if (builtAll === 'All') return;
     setBuiltAll('All');
-    setBuiltQuery('all');
-    const result = builtSort.map((item) => {
-      return { value: item.value, state: false };
-    });
+    setBuiltQuery([]);
+    const result = builtSort.map((item) => ({ value: item.value, state: false }));
     setBuiltSort([...result]);
   }, [builtAll, builtSort]);
   const clearSort = React.useCallback(() => {
     setDefaultsort(true);
     setFieldQuery('default');
     setTypeQuery('desc');
-    const result = rank.map((item) => {
-      return { value: item.value, state: '' };
-    });
-    setRank([...result]);
-  }, [rank]);
+    const result1 = rank.map((item) => ({ value: item.value, state: '' }));
+    const result2 = rank_dcl.map((item) => ({ value: item.value, state: '' }));
+
+    setRank([...result1]);
+    setRank_dcl([...result2]);
+  }, []);
   const LocationAll = React.useCallback(() => {
     if (locationAll === 'All') return;
     setLocationAll('All');
     set_islands_ids([]);
   }, [locationAll]);
+  const SizeAll = React.useCallback(() => {
+    if (sizeAll === 'All') return;
+    setSizeAll('All');
+    const result = sizeSort.map((item) => {
+      return { value: item.value, state: false };
+    });
+    setSizeSort([...result]);
+  }, [sizeSort]);
   const renderContent = React.useMemo(() => {
     if (loading) {
       return <Status status="loading" />;
@@ -448,45 +740,83 @@ export default function Rent() {
     if (cardInfoList.length === 0) {
       return <Status status="empty" />;
     }
+    if (tabState === 'cryptovoxels') {
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
+          {cardInfoList.map((item) => {
+            return (
+              <RentCard
+                key={uuid()}
+                {...item}
+                onClick={(Info) => {
+                  toDetail(Info);
+                }}
+              ></RentCard>
+            );
+          })}
+        </div>
+      );
+    }
     return (
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
         {cardInfoList.map((item) => {
           return (
-            <RentCard
+            <DclCard
               key={uuid()}
               {...item}
-              onClick={(Info) => {
-                toDetail(Info);
+              onClick={(info) => {
+                toDclDetail(info);
               }}
-            ></RentCard>
+            ></DclCard>
           );
         })}
       </div>
     );
-  }, [loading, cardInfoList]);
+  }, [loading, cardInfoList, tabState]);
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
       const requestNumber = number + 1;
       setLoading(true);
-      const result = await req_rent_cardList(
-        requestNumber,
-        pageCount,
-        islands_ids.length === 0 ? idsQuery : islands_ids.join(','),
-        areaQuery,
-        heightQuery,
-        priceQuery,
-        builtQuery,
-        fieldQuery,
-        typeQuery,
-      );
-      if (result.code === 100000) {
-        setLoading(false);
-        setCardInfoList(result.data.parcel_list);
-        setPage(requestNumber);
-        setTotalPage(result.data.total_page);
-      } else {
-        setLoading(false);
+      if (tabState === 'cryptovoxels') {
+        const result = await req_rent_cardList(
+          requestNumber,
+          pageCount,
+          islands_ids.length === 0 ? idsQuery : islands_ids.join(','),
+          areaQuery.join(','),
+          heightQuery.join(','),
+          priceQuery.join(','),
+          builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
+          fieldQuery,
+          typeQuery,
+        );
+        if (result.code === 100000) {
+          setLoading(false);
+          setCardInfoList(result.data.parcel_list);
+          setPage(requestNumber);
+          setTotalPage(result.data.total_page);
+        } else {
+          setLoading(false);
+        }
+      }
+      if (tabState === 'decentraland') {
+        const result = await req_dcl_List(
+          requestNumber,
+          pageCount,
+          sizeQuery.join(','),
+          priceQuery.join(','),
+          builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
+          fieldQuery,
+          typeQuery,
+        );
+        if (result.code === 100000) {
+          setLoading(false);
+          setCardInfoList(result.data.parcel_list);
+          setPage(requestNumber);
+          setTotalPage(result.data.total_page);
+        } else {
+          setLoading(false);
+        }
       }
     },
     [
@@ -509,19 +839,25 @@ export default function Rent() {
         setHoverText('Click to sort by area from large to small');
       }
       if (val === 'Area' && sta === 'asc') {
-        setHoverText('Click to sort by area from samll to large');
+        setHoverText('Click to sort by area from small to large');
       }
       if (val === 'Height' && (sta === '' || sta === 'desc')) {
         setHoverText('Click to sort by height from high to low');
       }
       if (val === 'Height' && sta === 'asc') {
-        setHoverText('Click to sort by area from low to high');
-      }
-      if (val === 'Price' && (sta === '' || sta === 'asc')) {
         setHoverText('Click to sort by height from low to high');
       }
+      if (val === 'Price' && (sta === '' || sta === 'asc')) {
+        setHoverText('Click to sort by price from low to high');
+      }
       if (val === 'Price' && sta === 'desc') {
-        setHoverText('Click to sort by height from high to low');
+        setHoverText('Click to sort by price from high to low');
+      }
+      if (val === 'Size' && (sta === '' || sta === 'desc')) {
+        setHoverText('Click to sort by size from small to large');
+      }
+      if (val === 'Size' && sta === 'asc') {
+        setHoverText('Click to sort by size from large to small');
       }
     },
     [hoverText],
@@ -529,10 +865,64 @@ export default function Rent() {
   const closeDetail = React.useCallback(() => {
     setDetailState(false);
   }, []);
+  const clear = React.useCallback(() => {
+    setDefaultsort(true);
+    setFieldQuery('default');
+    setTypeQuery('desc');
+
+    setAreaAll('All');
+    setHeightAll('All');
+    setPriceWeekAll('All');
+    setBuiltAll('All');
+    setLocationAll('All');
+    setSizeAll('All');
+    set_islands_ids([]);
+
+    setIdsQuery('all');
+    setAreaQuery([]);
+    setHeightQuery([]);
+    setPriceQuery([]);
+    setSizeQuery([]);
+    setBuiltQuery([]);
+
+    setPage(1);
+
+    const result1 = rank.map((item) => ({ value: item.value, state: '' }));
+    const result2 = rank_dcl.map((item) => ({ value: item.value, state: '' }));
+    const result3 = areaSort.map((item) => ({ value: item.value, state: false }));
+    const result4 = heightSort.map((item) => ({ value: item.value, state: false }));
+    const result5 = priceWeekSort.map((item) => ({ value: item.value, state: false }));
+    const result6 = builtSort.map((item) => ({ value: item.value, state: false }));
+    const result7 = sizeSort.map((item) => ({ value: item.value, state: false }));
+    setRank([...result1]);
+    setRank_dcl([...result2]);
+    setAreaSort([...result3]);
+    setHeightSort([...result4]);
+    setPriceWeekSort([...result5]);
+    setBuiltSort([...result6]);
+    setSizeSort([...result7]);
+  }, []);
+  const onTabChange = React.useCallback(
+    async (tab) => {
+      if (tab === 'cryptovoxels') {
+        setTabState('cryptovoxels');
+      }
+      if (tab === 'decentraland') {
+        setTabState('decentraland');
+      }
+      clear();
+    },
+    [clear],
+  );
   React.useEffect(() => {
-    get_islands_list();
-    get_rent_cardList();
-  }, [get_islands_list, get_rent_cardList, hint]);
+    if (tabState === 'cryptovoxels') {
+      get_islands_list();
+      get_rent_cardList();
+    }
+    if (tabState === 'decentraland') {
+      get_rent_dcl_cardList();
+    }
+  }, [get_islands_list, get_rent_cardList, tabState, select]);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -566,100 +956,166 @@ export default function Rent() {
         <div className={cls} />
       </div>
       {/* 条件筛选导航区域 */}
-      <div className={style.filterNav}>
-        <div className={cn('flex', style.navItem)}>
-          <div className={cn(style.title)}>Location:</div>
-          <div className={cn('flex', style.list)}>
-            <div className={cn('flex mr-8', style.c)} onClick={LocationAll}>
-              <div className={cn(locationAll === 'All' ? style.active : null)}>All</div>
-            </div>
-            {islands_data.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className={cn(
-                    'flex mr-8 mb-2',
-                    style.c,
-                    islands_ids.findIndex((i) => i === item.id) !== -1 ? style.active : null,
-                  )}
-                  onClick={() => {
-                    get_islands_id(item.id);
-                  }}
-                >
-                  {item.name}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className={cn('flex mt-2', style.navItem)}>
-          <div className={style.title}>Area:</div>
-          <div className={cn('flex', style.list)}>
-            <div className={cn('flex', style.i)} onClick={AreaAll}>
-              {areaAll === 'All' ? (
-                <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-              ) : (
-                <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-              )}
-              <div className={cn('mr-5', areaAll === 'All' ? style.active : null)}>All</div>
-            </div>
-            {areaSort.map((item) => {
-              return (
-                <div key={item.value}>
+      <div className={tabState === 'cryptovoxels' ? style.filterNav : style.dclFilterNav}>
+        {tabState === 'cryptovoxels' ? (
+          <div className={cn('flex', style.navItem)}>
+            <div className={cn(style.title)}>Location:</div>
+            <div className={cn('flex', style.list)}>
+              <div className={cn('flex mr-8', style.c)} onClick={LocationAll}>
+                <div className={cn(locationAll === 'All' ? style.active : null)}>All</div>
+              </div>
+              {islands_data.map((item) => {
+                return (
                   <div
-                    onClick={() => {
-                      select('Area', item.value);
-                    }}
-                    className={cn('flex', style.i)}
-                  >
-                    {!item.state ? (
-                      <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-                    ) : (
-                      <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                    key={item.id}
+                    className={cn(
+                      'flex mr-8 mb-2',
+                      style.c,
+                      islands_ids.findIndex((i) => i === item.id) !== -1 ? style.active : null,
                     )}
-                    <div className={cn('mr-5', item.state ? style.active : null)}>{item.value}</div>
+                    onClick={() => {
+                      get_islands_id(item.id);
+                    }}
+                  >
+                    {item.name}
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className={cn('flex mt-6', style.navItem)}>
-          <div className={style.title}>Height:</div>
-          <div className={cn('flex', style.list)}>
-            <div className={cn('flex', style.i)} onClick={HeightAll}>
-              {heightAll === 'All' ? (
-                <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-              ) : (
-                <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-              )}
-              <div className={cn('mr-5', heightAll === 'All' ? style.active : null)}>All</div>
+                );
+              })}
             </div>
-            {heightSort.map((item) => {
-              return (
-                <div key={item.value}>
-                  <div
-                    onClick={() => {
-                      select('Height', item.value);
-                    }}
-                    className={cn('flex', style.i)}
-                  >
-                    {!item.state ? (
-                      <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-                    ) : (
-                      <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
-                    )}
-                    <div className={cn('mr-5', item.state ? style.active : null)}>{item.value}</div>
-                  </div>
-                </div>
-              );
-            })}
           </div>
-        </div>
+        ) : null}
+        {tabState === 'cryptovoxels' ? (
+          <div className={cn('flex mt-2', style.navItem)}>
+            <div className={style.title}>Area:</div>
+            <div className={cn('flex', style.list)}>
+              <div
+                className={cn('flex', style.i)}
+                onClick={() => {
+                  AreaAll();
+                }}
+              >
+                {areaAll === 'All' ? (
+                  <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                ) : (
+                  <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                )}
+                <div className={cn('mr-5', areaAll === 'All' ? style.active : null)}>All</div>
+              </div>
+              {areaSort.map((item) => {
+                return (
+                  <div key={item.value}>
+                    <div
+                      onClick={() => {
+                        select('Area', item.value);
+                      }}
+                      className={cn('flex', style.i)}
+                    >
+                      {!item.state ? (
+                        <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                      ) : (
+                        <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                      )}
+                      <div className={cn('mr-5', item.state ? style.active : null)}>
+                        {item.value}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+        {tabState === 'cryptovoxels' ? (
+          <div className={cn('flex mt-6', style.navItem)}>
+            <div className={style.title}>Height:</div>
+            <div className={cn('flex', style.list)}>
+              <div
+                className={cn('flex', style.i)}
+                onClick={() => {
+                  HeightAll();
+                }}
+              >
+                {heightAll === 'All' ? (
+                  <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                ) : (
+                  <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                )}
+                <div className={cn('mr-5', heightAll === 'All' ? style.active : null)}>All</div>
+              </div>
+              {heightSort.map((item) => {
+                return (
+                  <div key={item.value}>
+                    <div
+                      onClick={() => {
+                        select('Height', item.value);
+                      }}
+                      className={cn('flex', style.i)}
+                    >
+                      {!item.state ? (
+                        <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                      ) : (
+                        <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                      )}
+                      <div className={cn('mr-5', item.state ? style.active : null)}>
+                        {item.value}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+        {tabState === 'decentraland' ? (
+          <div className={cn('flex mt-6', style.navItem)}>
+            <div className={style.title}>Size:</div>
+            <div className={cn('flex ml-10', style.list)}>
+              <div
+                className={cn('flex', style.i)}
+                onClick={() => {
+                  SizeAll();
+                }}
+              >
+                {sizeAll === 'All' ? (
+                  <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                ) : (
+                  <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                )}
+                <div className={cn('mr-5', sizeAll === 'All' ? style.active : null)}>All</div>
+              </div>
+              {sizeSort.map((item) => {
+                return (
+                  <div key={item.value}>
+                    <div
+                      onClick={() => {
+                        select('size', item.value);
+                      }}
+                      className={cn('flex', style.i)}
+                    >
+                      {!item.state ? (
+                        <img src="/images/option_no.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                      ) : (
+                        <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
+                      )}
+                      <div className={cn('mr-5', item.state ? style.active : null)}>
+                        {item.value}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
         <div className={cn('flex mt-6', style.navItem)}>
           <div className={style.title}>Price/week:</div>
           <div className={cn('flex ml-10', style.list)}>
-            <div className={cn('flex', style.i)} onClick={PriceAll}>
+            <div
+              className={cn('flex', style.i)}
+              onClick={() => {
+                PriceAll();
+              }}
+            >
               {priceWeekAll === 'All' ? (
                 <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
               ) : (
@@ -691,7 +1147,12 @@ export default function Rent() {
         <div className={cn('flex mt-6', style.navItem)}>
           <div className={style.title}>Built:</div>
           <div className={cn('flex ml-10', style.list)}>
-            <div className={cn('flex', style.i)} onClick={BuiltAll}>
+            <div
+              className={cn('flex', style.i)}
+              onClick={() => {
+                BuiltAll();
+              }}
+            >
               {builtAll === 'All' ? (
                 <img src="/images/option_yes.png" className={cn('w-4 h-4 mt-1 mr-1')} />
               ) : (
@@ -721,65 +1182,98 @@ export default function Rent() {
           </div>
         </div>
       </div>
+      {/* 排序区域 */}
       <div className={style.sort}>
-        <div className={cn('flex', style.sortMode)}>
+        <div className={cn('flex', tabState === 'cryptovoxels' ? style.sortMode : style.sortMode2)}>
           <div className={cn('flex', style.clearSort)}>
             <div onClick={clearSort} className={cn(Defaultsort ? style.active : null)}>
               Default sort
             </div>
           </div>
           {hoverState ? <div className={style.hover_text}>{hoverText}</div> : null}
-          {rank.map((item, index) => {
-            return (
-              <div
-                key={item.value}
-                className={cn('ml-8', style.sortModeItem)}
-                onClick={() => {
-                  sort(index, item.value);
-                }}
-                onMouseOver={() => {
-                  hint(item.value, item.state);
-                }}
-                onMouseOut={() => {
-                  setHoverState(false);
-                }}
-              >
-                <div className={cn('flex')}>
-                  <div className={cn(style.title, item.state !== '' ? style.active : null)}>
-                    {item.value}
+          {tabState === 'cryptovoxels'
+            ? rank.map((item, index) => {
+                return (
+                  <div
+                    key={item.value}
+                    className={cn('ml-8', style.sortModeItem)}
+                    onClick={() => {
+                      sort(index, item.value, 'cv');
+                    }}
+                    onMouseOver={() => {
+                      hint(item.value, item.state);
+                    }}
+                    onMouseOut={() => {
+                      setHoverState(false);
+                    }}
+                  >
+                    <div className={cn('flex')}>
+                      <div className={cn(style.title, item.state !== '' ? style.active : null)}>
+                        {item.value}
+                      </div>
+                      {item.state === '' && item.value !== 'Price' ? (
+                        <img src="/images/stateless.png" />
+                      ) : null}
+                      {item.state === 'desc' && item.value !== 'Price' ? (
+                        <img src="/images/desc.png" />
+                      ) : null}
+                      {item.state === 'asc' && item.value !== 'Price' ? (
+                        <img src="/images/asc.png" />
+                      ) : null}
+                      {item.state === '' && item.value === 'Price' ? (
+                        <img src="/images/stateless.png" />
+                      ) : null}
+                      {item.state === 'desc' && item.value === 'Price' ? (
+                        <img src="/images/desc.png" />
+                      ) : null}
+                      {item.state === 'asc' && item.value === 'Price' ? (
+                        <img src="/images/asc.png" />
+                      ) : null}
+                    </div>
                   </div>
-                  {item.state === '' && item.value !== 'Price' ? (
-                    <img src="/images/stateless.png" />
-                  ) : null}
-                  {item.state === 'desc' && item.value !== 'Price' ? (
-                    <img src="/images/desc.png" />
-                  ) : null}
-                  {item.state === 'asc' && item.value !== 'Price' ? (
-                    <img src="/images/asc.png" />
-                  ) : null}
-                  {item.state === '' && item.value === 'Price' ? (
-                    <img src="/images/stateless.png" />
-                  ) : null}
-                  {item.state === 'desc' && item.value === 'Price' ? (
-                    <img src="/images/desc.png" />
-                  ) : null}
-                  {item.state === 'asc' && item.value === 'Price' ? (
-                    <img src="/images/asc.png" />
-                  ) : null}
-                </div>
-              </div>
-            );
-          })}
+                );
+              })
+            : null}
+          {tabState === 'decentraland'
+            ? rank_dcl.map((item, index) => {
+                return (
+                  <div
+                    key={item.value}
+                    className={cn('ml-8', style.sortModeItem)}
+                    onClick={() => {
+                      sort(index, item.value, 'dcl');
+                    }}
+                    onMouseOver={() => {
+                      hint(item.value, item.state);
+                    }}
+                    onMouseOut={() => {
+                      setHoverState(false);
+                    }}
+                  >
+                    <div className={cn('flex')}>
+                      <div className={cn(style.title, item.state !== '' ? style.active : null)}>
+                        {item.value}
+                      </div>
+                      {item.state === '' ? <img src="/images/stateless.png" /> : null}
+                      {item.state === 'desc' ? <img src="/images/desc.png" /> : null}
+                      {item.state === 'asc' ? <img src="/images/asc.png" /> : null}
+                    </div>
+                  </div>
+                );
+              })
+            : null}
         </div>
       </div>
+      {/* card展示区域 */}
       <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
+      {/* 分页 */}
       <PagiNation
         total={totalPage}
         pageNumber={page - 1}
         pageSize={20}
         pageChange={onPageChangeHandler}
       />
-
+      {/* 点击card跳详情区域 */}
       {detailState ? (
         <div>
           <div className={style.container}></div>
@@ -817,48 +1311,108 @@ export default function Rent() {
               <div className={style.contactTitle}>Contact the Owner:</div>
             </div>
             <div className={style.right}>
-              <h2>
-                {`${cardInfo.island} `}
-                <span>.</span>
-                {` ${cardInfo.suburb}`}
-              </h2>
+              {tabState === 'cryptovoxels' ? (
+                <h2>
+                  {`${cardInfo.island} `}
+                  <span>.</span>
+                  {` ${cardInfo.suburb}`}
+                </h2>
+              ) : null}
+              {tabState === 'decentraland' ? <h2>{cardInfo.name}</h2> : null}
               <div className={style.price}>{`${cardInfo.price} ETH/WEEK`}</div>
               <div className={style.endTime}>Can be rented until: {cardInfo.end_date}</div>
-              <div className={style.detail}>
-                <div className={cn('flex', style.coord)}>
-                  <img src="/images/icon/traffic.png" />
-                  <div>{`Month Traffic :  ${cardInfo.traffic}`}</div>
-                </div>
-                <div className={cn('flex', style.plot)}>
-                  <img src="/images/icon/dizhi.png" />
-                  <div>{`#${cardInfo.parcel_id} ${cardInfo.name}`}</div>
-                </div>
-                <div className={cn('flex', style.info)}>
-                  <img src="/images/icon/dikuai.png" />
-                  <div className={style.info_item}>{`${cardInfo.area}㎡`}</div>
-                  <div className={style.info_item}>{`${cardInfo.height}m High`}</div>
-                  <div className={style.info_item}>
-                    {cardInfo.built_status === 0 ? 'Not Built' : 'Built'}
+              {tabState === 'cryptovoxels' ? (
+                <div className={style.detail1}>
+                  <div className={cn('flex', style.coord)}>
+                    <img src="/images/icon/traffic.png" />
+                    <div>{`Month Traffic :  ${cardInfo.traffic}`}</div>
+                  </div>
+                  <div className={cn('flex', style.plot)}>
+                    <img src="/images/icon/dizhi.png" />
+                    <div>{`#${cardInfo.parcel_id} ${cardInfo.name}`}</div>
+                  </div>
+                  <div className={cn('flex', style.info)}>
+                    <img src="/images/icon/dikuai.png" />
+                    <div className={style.info_item}>{`${cardInfo.area}㎡`}</div>
+                    <div className={style.info_item}>{`${cardInfo.height}m High`}</div>
+                    <div className={style.info_item}>
+                      {cardInfo.built_status === 0 ? 'Not Built' : 'Built'}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className={style.contact}>
-                <a href="https://twitter.com/Metacat007" target="_blank" data-tip="twitter">
-                  <div>
+              ) : null}
+              {tabState === 'decentraland' ? (
+                <div className={style.detail1}>
+                  <div className={cn('flex', style.plot)}>
+                    <img src="/images/icon/dizhi.png" />
+                    {cardInfo.coordinate
+                      ? cardInfo.coordinate.map((item, i) => {
+                          if (i <= 2) {
+                            return (
+                              <div className={i === 2 ? null : style.coord} key={uuid()}>
+                                {item}
+                              </div>
+                            );
+                          }
+                          return (
+                            <span className={style.shenglue} key={uuid()}>
+                              ...
+                            </span>
+                          );
+                        })
+                      : null}
+                  </div>
+                  <div className={cn('flex', style.info)}>
+                    <img src="/images/icon/dikuai.png" />
+                    <div className={style.info_item}>
+                      {cardInfo.internal_type === 'land' ? 'Land' : null}
+                      {cardInfo.internal_type === 'estate'
+                        ? `Estate (${cardInfo.land_total} land)`
+                        : null}
+                    </div>
+                    <div className={cn(style.info_item)}>
+                      {cardInfo.built_status === 0 ? 'Not Built' : 'Built'}
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              <div className={tabState === 'cryptovoxels' ? style.contact1 : style.contact2}>
+                {cardInfo.owner &&
+                cardInfo.owner.twitter_name !== '' &&
+                cardInfo.owner.twitter_name ? (
+                  <a
+                    href={`https://twitter.com/${cardInfo.owner.twitter_name}`}
+                    target="_blank"
+                    data-tip="twitter"
+                  >
+                    <div>
+                      <img src="/images/rent-twitter.png" />
+                      <div>Twitter</div>
+                    </div>
+                  </a>
+                ) : (
+                  <div className={style.zhezhao}>
                     <img src="/images/rent-twitter.png" />
                     <div>Twitter</div>
                   </div>
-                </a>
-                <a href="mailto:metacat@tutanota.com" data-tip="metacat@tutanota.com">
-                  <div>
+                )}
+                {cardInfo.owner && cardInfo.owner.email !== '' && cardInfo.owner.email ? (
+                  <a href={`mailto:${cardInfo.owner.email}`} data-tip={cardInfo.owner.email}>
+                    <div>
+                      <img src="/images/rent-email.png" />
+                      <div>Email</div>
+                    </div>
+                  </a>
+                ) : (
+                  <div className={style.zhezhao}>
                     <img src="/images/rent-email.png" />
                     <div>Email</div>
                   </div>
-                </a>
+                )}
               </div>
             </div>
-            <div className={cn(style.guanbi, style.close)} onClick={closeDetail}>
-              <img src="/images/guanbi.png" />
+            <div className={cn(style.close)} onClick={closeDetail}>
+              <img src="/images/guan.png" className={style.guan} />
             </div>
           </div>
         </div>

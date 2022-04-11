@@ -32,6 +32,7 @@ type Props = {
   options?: Array<optionItem>;
   isEth?: boolean;
   labelText?: string;
+  showMarkerType?: string;
   limit?: number;
   barWidth?: number;
   keyTypes?: Array<string>;
@@ -47,6 +48,7 @@ export default function StackBar({
   options,
   isEth = false,
   labelText,
+  showMarkerType,
   limit,
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
@@ -182,7 +184,7 @@ export default function StackBar({
         },
         label: {
           offsetX: barWidth / 2,
-          formatter: (text, item, index) => {
+          formatter: (text) => {
             return formatNum(parseFloat(text));
           },
         },
@@ -307,19 +309,22 @@ export default function StackBar({
   );
 
   const getLenged = React.useMemo(() => {
-    return (
-      <>
-        <IconLabel
-          text={legend1.label}
-          color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
-          className="mr-5"
-        ></IconLabel>
-        <IconLabel
-          text={legend2.label}
-          color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
-        ></IconLabel>
-      </>
-    );
+    if (showMarkerType !== 'sandbox') {
+      return (
+        <>
+          <IconLabel
+            text={legend1.label}
+            color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
+            className="mr-5"
+          ></IconLabel>
+          <IconLabel
+            text={legend2.label}
+            color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
+          ></IconLabel>
+        </>
+      );
+    }
+    return null;
   }, [legend1, legend2]);
 
   const getSelect = React.useMemo(() => {

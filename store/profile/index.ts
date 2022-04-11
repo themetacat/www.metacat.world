@@ -7,4 +7,5 @@ export default new Rekv({
   updateOrAdd: 'add',
   parcels_cardState: false,
   manyState: false,
+  type: 'cv',
 });

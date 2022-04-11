@@ -1,0 +1,106 @@
+.price {
+  position: relative;
+  color: #ffb800;
+  font-weight: 600;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 22px;
+}
+.leasen_Container {
+  display: flex;
+  margin-top: 13px;
+}
+.leasen_Container .price::after {
+  position: absolute;
+  right: -10px;
+  bottom: 5px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.leasen_Container .lease {
+  display: flex;
+  align-items: center;
+  margin-left: 19px;
+  color: #ddd;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px;
+}
+.finish {
+  width: 70px;
+  height: 28px;
+  margin-top: 10px;
+  color: #00d0ec;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: #0f403f;
+  cursor: pointer;
+}
+.finish:hover {
+  font-size: 16px;
+}
+.not_for_rent {
+  width: 90px;
+  height: 28px;
+  margin: 10px 0;
+  color: #00d0ec;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+  background: #0f403f;
+  cursor: pointer;
+}
+.not_for_rent:hover {
+  font-size: 16px;
+}
+.for_rent_Container {
+  justify-content: space-between;
+  margin: 13px 0;
+}
+.for_rent_Container .option {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 211px;
+  height: 28px;
+  margin-top: 8px;
+  background-color: #0f403f;
+}
+.for_rent_Container .option div {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 16px;
+  color: #00d0ec;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px;
+}
+.for_rent_Container .option .edit::after {
+  position: absolute;
+  right: -16px;
+  bottom: 2px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.for_rent_Container .option .leased::after {
+  position: absolute;
+  right: -16px;
+  bottom: 2px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.for_rent_Container .option div:hover {
+  font-size: 16px;
+}

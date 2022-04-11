@@ -23,35 +23,41 @@
 .filterNav {
   width: 1200px;
   margin: 30px auto 0;
-  padding: 30px 20px;
+  padding: 20px 10px 20px;
   background: #0c1416;
-  .navItem {
-    .title {
-      width: 60px;
-      margin-top: 3px;
-      color: #fff;
-      font-weight: 500;
-      font-size: 14px;
-      font-style: normal;
-      line-height: 17px;
+}
+.dclFilterNav {
+  width: 1200px;
+  margin: 30px auto 0;
+  padding: 1px 10px 20px;
+  background: #0c1416;
+}
+.navItem {
+  .title {
+    width: 60px;
+    margin-top: 3px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    font-style: normal;
+    line-height: 17px;
+  }
+  .list {
+    flex-wrap: wrap;
+    margin-left: 40px;
+    color: #ccc;
+    .c {
+      cursor: pointer;
     }
-    .list {
-      flex-wrap: wrap;
-      margin-left: 40px;
-      color: #ccc;
-      .c {
-        cursor: pointer;
-      }
-      .i {
-        width: 200px;
-        cursor: pointer;
-        .active {
-          color: #fff;
-        }
-      }
+    .i {
+      width: 200px;
+      cursor: pointer;
       .active {
-        color: #00d0ec;
+        color: #fff;
       }
+    }
+    .active {
+      color: #00d0ec;
     }
   }
 }
@@ -61,6 +67,7 @@
   width: 1200px;
   height: 40px;
   margin: 0 auto;
+
   .sortMode {
     position: absolute;
     right: -55px;
@@ -100,12 +107,7 @@
   .clearSort {
     margin-top: 10px;
     cursor: pointer;
-    img {
-      width: 16px;
-      height: 16px;
-      margin-top: 2px;
-      margin-right: 3px;
-    }
+
     div {
       color: #999;
       font-weight: 400;
@@ -118,7 +120,42 @@
     }
   }
 }
-
+.sortMode2 {
+  position: absolute;
+  right: -174px;
+  bottom: -12px;
+  width: 420px;
+  height: 100%;
+  .sortModeItem {
+    position: relative;
+    color: #999;
+    cursor: pointer;
+    .title {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 40px;
+    }
+    .active {
+      color: #fff;
+    }
+    img {
+      width: 16px;
+      height: 16px;
+      margin-top: 13px;
+      margin-left: 5px;
+    }
+  }
+  .sortModeItem::after {
+    position: absolute;
+    bottom: 12px;
+    left: -13px;
+    width: 1px;
+    height: 15px;
+    background: #999;
+    transform: scaleX(0.5);
+    content: ' ';
+  }
+}
 .content {
   min-height: 650px;
 }
@@ -185,6 +222,7 @@
 }
 
 .right {
+  position: relative;
   margin-left: 20px;
   h2 {
     position: relative;
@@ -207,7 +245,7 @@
   }
 }
 
-.detail {
+.detail1 {
   margin-top: 10px;
   color: #ddd;
   font-weight: 400;
@@ -219,13 +257,6 @@
     margin-top: 5px;
     margin-right: 7px;
   }
-
-  .coord {
-    div {
-      margin-top: 1px;
-    }
-  }
-
   .plot {
     margin: 12px 0;
     div {
@@ -269,9 +300,11 @@
   line-height: 22px;
 }
 
-.contact {
+.contact1 {
+  position: absolute;
+  right: -22px;
+  bottom: 9px;
   display: flex;
-  margin-top: 25px;
   div {
     display: flex;
     align-items: center;
@@ -286,27 +319,48 @@
       height: 16px;
       margin-left: 22px;
     }
+
     div {
       margin-left: 5px;
     }
   }
 }
+.contact2 {
+  position: absolute;
+  right: -22px;
+  bottom: 9px;
+  display: flex;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 114px;
+    height: 42px;
+    margin-right: 30px;
+    background: #00d0ec;
+    cursor: pointer;
+    img {
+      width: 16px;
+      height: 16px;
+      margin-left: 22px;
+    }
 
+    div {
+      margin-left: 5px;
+    }
+  }
+}
 .close {
   position: absolute;
   top: 15px;
-  right: 30px;
-  color: #999;
-  font-size: 26px;
-  cursor: pointer;
-}
-
-.guanbi {
-  position: absolute;
   top: 24px;
+  right: 30px;
   right: 24px;
   width: 16px;
   height: 16px;
+  color: #999;
+  font-size: 26px;
+  cursor: pointer;
 }
 
 .shade {
@@ -333,10 +387,23 @@
   position: absolute;
   top: -35px;
   left: 98px;
-  width: 260px;
   height: 41px;
   padding: 12px;
   color: #fff;
   font-size: 12px;
   background: #000;
+}
+
+.zhezhao {
+  width: 114px;
+  height: 42px;
+  background: #000;
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.guan {
+  width: 20px;
+  max-width: none;
+  height: 20px;
 }
