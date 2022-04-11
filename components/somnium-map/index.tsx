@@ -285,6 +285,7 @@ function SomniumMap({
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
+  const heighFeature = React.useRef(null);
   const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
@@ -390,12 +391,20 @@ function SomniumMap({
     [null],
   );
 
+  const clearHeightLight = React.useCallback(() => {
+    if (heighFeature.current) {
+      layerManager.current[1].layer.clearLayers();
+      heighFeature.current = null;
+    }
+  }, []);
+
   const closePop = React.useCallback(() => {
     if (popDetail.current) {
       (popDetail.current as any).style.display = 'none';
     }
     setActiveColor(null);
-  }, [popDetail.current]);
+    clearHeightLight();
+  }, [popDetail.current, clearHeightLight]);
 
   // parcel style function
   const parcelStyle = React.useCallback(
@@ -546,11 +555,29 @@ function SomniumMap({
       },
     }).addTo(map);
 
+    const heighLayer = L.geoJSON(null, {
+      style: {
+        fill: true,
+        fillColor: 'rgb(255,0,0)',
+        weight: 1,
+        color: 'rgb(255,0,0)',
+        fillOpacity: 0.6,
+      },
+    }).addTo(map);
+
     if (zoomControl) {
       parcelsPriceLayerThree.on('click', function (e) {
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.token_id;
           const { colorIndex } = e.sourceTarget.feature.properties;
+
+          clearHeightLight();
+
+          const polygon = JSON.parse(JSON.stringify(e.sourceTarget.feature));
+          polygon.properties.active = true;
+          heighFeature.current = polygon;
+          layerManager.current[1].layer.addData(heighFeature.current);
+
           if (colorIndex !== null || colorIndex !== undefined) {
             setActiveColor(colorIndex);
           }
@@ -596,6 +623,10 @@ function SomniumMap({
         layer: parcelsPriceLayerThree,
         name: 'price3',
       },
+      {
+        layer: heighLayer,
+        name: 'heighLayer',
+      },
     ];
 
     layerManager.current = dataLayer;
@@ -609,7 +640,7 @@ function SomniumMap({
       map.remove();
     };
     // requestSube(map);
-  }, [null]);
+  }, [clearHeightLight]);
 
   return (
     <div className={style.mapContainer} onClick={onClick}>
