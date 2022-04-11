@@ -150,12 +150,12 @@ export default function Rent() {
   const [rank, setRank] = React.useState(Rank);
   const [rank_dcl, setRank_dcl] = React.useState(Rank_dcl);
 
-  const [areaAll, setAreaAll] = React.useState('');
-  const [heightAll, setHeightAll] = React.useState('');
-  const [priceWeekAll, setPriceWeekAll] = React.useState('');
-  const [builtAll, setBuiltAll] = React.useState('all');
-  const [locationAll, setLocationAll] = React.useState('');
-  const [sizeAll, setSizeAll] = React.useState('');
+  const [areaAll, setAreaAll] = React.useState('All');
+  const [heightAll, setHeightAll] = React.useState('All');
+  const [priceWeekAll, setPriceWeekAll] = React.useState('All');
+  const [builtAll, setBuiltAll] = React.useState('All');
+  const [locationAll, setLocationAll] = React.useState('All');
+  const [sizeAll, setSizeAll] = React.useState('All');
 
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [islands_data, set_islands_data] = React.useState([]);
@@ -221,7 +221,7 @@ export default function Rent() {
       areaQuery.join(','),
       heightQuery.join(','),
       priceQuery.join(','),
-      builtQuery.length === 0 ? builtAll : builtQuery.join(','),
+      builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
       fieldQuery,
       typeQuery,
     );
@@ -270,7 +270,7 @@ export default function Rent() {
       pageCount,
       sizeQuery.join(','),
       priceQuery.join(','),
-      builtQuery.length === 0 ? builtAll : builtQuery.join(','),
+      builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
       fieldQuery,
       typeQuery,
     );
@@ -764,7 +764,7 @@ export default function Rent() {
           areaQuery.join(','),
           heightQuery.join(','),
           priceQuery.join(','),
-          builtQuery.length === 0 ? builtAll : builtQuery.join(','),
+          builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
           fieldQuery,
           typeQuery,
         );
@@ -783,7 +783,7 @@ export default function Rent() {
           pageCount,
           sizeQuery.join(','),
           priceQuery.join(','),
-          builtQuery.length === 0 ? builtAll : builtQuery.join(','),
+          builtQuery.length === 0 ? builtAll.toLowerCase() : builtQuery.join(','),
           fieldQuery,
           typeQuery,
         );
@@ -934,7 +934,7 @@ export default function Rent() {
         <div className={cls} />
       </div>
       {/* 条件筛选导航区域 */}
-      <div className={style.filterNav}>
+      <div className={tabState === 'cryptovoxels' ? style.filterNav : style.dclFilterNav}>
         {tabState === 'cryptovoxels' ? (
           <div className={cn('flex', style.navItem)}>
             <div className={cn(style.title)}>Location:</div>

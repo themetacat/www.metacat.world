@@ -20,10 +20,16 @@
 .filterNav {
   width: 1200px;
   margin: 30px auto 0;
-  padding: 30px 20px;
+  padding: 20px 10px 20px;
   background: #0c1416;
 }
-.filterNav .navItem .title {
+.dclFilterNav {
+  width: 1200px;
+  margin: 30px auto 0;
+  padding: 1px 10px 20px;
+  background: #0c1416;
+}
+.navItem .title {
   width: 60px;
   margin-top: 3px;
   color: #fff;
@@ -32,22 +38,22 @@
   font-style: normal;
   line-height: 17px;
 }
-.filterNav .navItem .list {
+.navItem .list {
   flex-wrap: wrap;
   margin-left: 40px;
   color: #ccc;
 }
-.filterNav .navItem .list .c {
+.navItem .list .c {
   cursor: pointer;
 }
-.filterNav .navItem .list .i {
+.navItem .list .i {
   width: 200px;
   cursor: pointer;
 }
-.filterNav .navItem .list .i .active {
+.navItem .list .i .active {
   color: #fff;
 }
-.filterNav .navItem .list .active {
+.navItem .list .active {
   color: #00d0ec;
 }
 .sort {

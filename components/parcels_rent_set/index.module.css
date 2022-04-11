@@ -221,3 +221,7 @@
   right: 25px;
   margin-top: 22px;
 }
+.bd {
+  border: 1px solid #00d0ec;
+  box-sizing: border-box;
+}

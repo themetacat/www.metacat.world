@@ -174,10 +174,10 @@ export default function ProfilePage() {
 
   const onTabChange = React.useCallback(
     async (tab) => {
-      setLoading(true)
+      setLoading(true);
       setTabState(tab);
-      setParcelsIds([])
-      setSelectedIds([])
+      setParcelsIds([]);
+      setSelectedIds([]);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
       if (tab === 'cryptovoxels') {
@@ -188,7 +188,6 @@ export default function ProfilePage() {
         setDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'dcl' }));
       }
-
     },
     [orginData],
   );
@@ -272,7 +271,7 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
-      setLoading(false)
+      setLoading(false);
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -291,7 +290,7 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
-      setLoading(false)
+      setLoading(false);
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -474,7 +473,7 @@ export default function ProfilePage() {
       set_rent_set_state(true);
       setManySetState(false);
       setCardState(false);
-      store.setState(() => ({ parcels_cardState: false, updateOrAdd: "add" }));
+      store.setState(() => ({ parcels_cardState: false, updateOrAdd: 'add' }));
     }
     if (s.type === 'cv') {
       // 批量标记已出租
@@ -606,31 +605,37 @@ export default function ProfilePage() {
     if (cardState) {
       return (
         <div className={style.succeedOrCancel}>
-          <div className={style.info}>
-            selected ({selectedIds.length}/{parcelsIds.length})
-          </div>
-          <div
-            className={style.succeed}
-            onClick={() => {
-              req_event();
-              if (selectedIds.length === 0) return;
-              if (label === 'Rent out several') {
-                store.setState(() => ({ parcels_cardState: false, rentOutState: true, id: null }));
-              }
-            }}
-          >
-            {label === 'Rent out several' ? 'Rent out' : tag1()}
-          </div>
-          <div
-            className={style.cancel}
-            onClick={() => {
-              manyChange(label, cartData);
-              setCardState(false);
-              setSelectedIds([]);
-              store.setState(() => ({ parcels_cardState: false }));
-            }}
-          >
-            Close
+          <div className={style.container}>
+            <div className={style.info}>
+              selected ({selectedIds.length}/{parcelsIds.length})
+            </div>
+            <div
+              className={style.succeed}
+              onClick={() => {
+                req_event();
+                if (selectedIds.length === 0) return;
+                if (label === 'Rent out several') {
+                  store.setState(() => ({
+                    parcels_cardState: false,
+                    rentOutState: true,
+                    id: null,
+                  }));
+                }
+              }}
+            >
+              {label === 'Rent out several' ? 'Rent out' : tag1()}
+            </div>
+            <div
+              className={style.cancel}
+              onClick={() => {
+                manyChange(label, cartData);
+                setCardState(false);
+                setSelectedIds([]);
+                store.setState(() => ({ parcels_cardState: false }));
+              }}
+            >
+              Close
+            </div>
           </div>
         </div>
       );
@@ -711,7 +716,7 @@ export default function ProfilePage() {
               onClick={(event) => {
                 event.stopPropagation();
                 manySet(manySetState);
-                setSelectedIds([])
+                setSelectedIds([]);
               }}
             >
               <img src="/images/Settings.png" />
@@ -726,7 +731,7 @@ export default function ProfilePage() {
                           key={item.label}
                           onClick={() => {
                             manyChange(item.label, cartData);
-                            setSelectedIds([])
+                            setSelectedIds([]);
                             store.setState(() => ({ parcels_cardState: true }));
                           }}
                         >

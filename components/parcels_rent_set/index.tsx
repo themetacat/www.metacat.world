@@ -26,6 +26,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
   const [start_at, set_start_at] = React.useState('');
   const [end_at, set_end_at] = React.useState('');
   const [is_price, set_is_price] = React.useState(false);
+  const [inputState, setInputState] = React.useState(false);
 
   // 发送保存请求所需参数
   const [end_timestamp, set_end_timestamp] = React.useState('');
@@ -184,7 +185,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
       return;
     }
     set_is_price(false);
-    
+
     if (s.type === 'cv') {
       if (s.updateOrAdd === 'add') {
         if (token) {
@@ -309,7 +310,7 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
               <span>&nbsp;*</span>
             </div>
             <div
-              className={style.built}
+              className={cn(style.built, parcel_state ? style.bd : null)}
               onClick={(event) => {
                 show_parcel(parcel_state);
                 event.stopPropagation();
@@ -339,12 +340,12 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
                 </div>
               ) : null}
             </div>
-            <div className={style.term}>
+            <div className={cn(style.term)}>
               <div>Lease Term</div>
               <span>&nbsp;*</span>
             </div>
             <div
-              className={style.time}
+              className={cn(style.time, term_state ? style.bd : null)}
               onClick={(event) => {
                 change_show_time_state(term_state);
                 event.stopPropagation();
@@ -388,8 +389,15 @@ export default function rent_set({ state, onClick, selectedIds }: Props) {
                 type="text"
                 placeholder="0.1"
                 value={price}
+                className={inputState ? style.bd : null}
                 onInput={(event) => {
                   change_price(event);
+                }}
+                onFocus={() => {
+                  setInputState(true);
+                }}
+                onBlur={() => {
+                  setInputState(false);
                 }}
               />
               <div>ETH / Week</div>
