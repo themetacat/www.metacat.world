@@ -155,7 +155,7 @@ export default function ChartLine({
                 <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
           }, 1);">${formatNum(result[keyTypes[0]]?.valueMin)}</span>
-               
+          <span>${result[keyTypes[0]].priceStaticT.toLocaleUpperCase()}</span>
                
             </span>
           </div>
