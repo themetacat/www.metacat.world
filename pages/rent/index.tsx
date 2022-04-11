@@ -600,10 +600,10 @@ export default function Rent() {
         return { ...item };
       });
       setFieldQuery(val.toLowerCase());
-      if (result[index].state === '' && val !== 'Price') {
+      if (result[index].state === '' && val !== 'Price' && val !== 'Size') {
         result[index].state = 'desc';
       }
-      if (result[index].state === 'desc' && val !== 'Price') {
+      if (result[index].state === 'desc' && val !== 'Price' && val !== 'Size') {
         result[index].state = 'asc';
         setTypeQuery('asc');
         if (type === 'cv') {
@@ -613,7 +613,7 @@ export default function Rent() {
         }
         return;
       }
-      if (result[index].state === 'asc' && val !== 'Price') {
+      if (result[index].state === 'asc' && val !== 'Price' && val !== 'Size') {
         result[index].state = 'desc';
         setTypeQuery('desc');
         if (type === 'cv') {
@@ -622,7 +622,6 @@ export default function Rent() {
           setRank_dcl([...result]);
         }
       }
-
       if (result[index].state === '' && val === 'Price') {
         result[index].state = 'asc';
       }
@@ -638,6 +637,29 @@ export default function Rent() {
         return;
       }
       if (result[index].state === 'desc' && val === 'Price') {
+        result[index].state = 'asc';
+        setTypeQuery('asc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+      }
+      if (result[index].state === '' && val === 'Size') {
+        result[index].state = 'asc';
+      }
+
+      if (result[index].state === 'asc' && val === 'Size') {
+        result[index].state = 'desc';
+        setTypeQuery('desc');
+        if (type === 'cv') {
+          setRank([...result]);
+        } else {
+          setRank_dcl([...result]);
+        }
+        return;
+      }
+      if (result[index].state === 'desc' && val === 'Size') {
         result[index].state = 'asc';
         setTypeQuery('asc');
         if (type === 'cv') {
@@ -1232,24 +1254,9 @@ export default function Rent() {
                       <div className={cn(style.title, item.state !== '' ? style.active : null)}>
                         {item.value}
                       </div>
-                      {item.state === '' && item.value !== 'Price' ? (
-                        <img src="/images/stateless.png" />
-                      ) : null}
-                      {item.state === 'desc' && item.value !== 'Price' ? (
-                        <img src="/images/desc.png" />
-                      ) : null}
-                      {item.state === 'asc' && item.value !== 'Price' ? (
-                        <img src="/images/asc.png" />
-                      ) : null}
-                      {item.state === '' && item.value === 'Price' ? (
-                        <img src="/images/stateless.png" />
-                      ) : null}
-                      {item.state === 'desc' && item.value === 'Price' ? (
-                        <img src="/images/desc.png" />
-                      ) : null}
-                      {item.state === 'asc' && item.value === 'Price' ? (
-                        <img src="/images/asc.png" />
-                      ) : null}
+                      {item.state === '' ? <img src="/images/stateless.png" /> : null}
+                      {item.state === 'desc' ? <img src="/images/desc.png" /> : null}
+                      {item.state === 'asc' ? <img src="/images/asc.png" /> : null}
                     </div>
                   </div>
                 );
