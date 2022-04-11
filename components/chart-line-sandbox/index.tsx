@@ -117,7 +117,6 @@ export default function ChartLine({
           },
         },
         customContent: (name, items) => {
-          console.log(items);
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -136,8 +135,14 @@ export default function ChartLine({
               <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
           }, 1); font-size: 20px; font-weight:700;">
-              ${formatNum(result[keyTypes[0]]?.valueAvg)}
-           
+              <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
+            legend1.color[2]
+          }, 1); font-size: 20px; font-weight:700;">
+                  ${formatNum(result[keyTypes[0]]?.valueAvg)}
+                  <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
+                    keyTypes[0]
+                  ].priceStaticT.toLocaleUpperCase()} Avg</span>
+                  </span>
             </div>
             <div style="color:#fff;margin-bottom:12px">
          
@@ -162,7 +167,7 @@ export default function ChartLine({
             legend1.color[2]
           }, 1);">${formatNum(result[keyTypes[0]]?.valueMax)}</span>
               
-              
+            <span>${result[keyTypes[0]].priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </div>
           `;

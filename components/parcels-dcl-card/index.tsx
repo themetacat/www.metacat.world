@@ -125,7 +125,7 @@ export default function Card({
             <img src="/images/icon/dikuai.png" />
             <div className={style.info_item}>
               {internalType === 'land' ? 'Land' : null}
-              {internalType === 'estate' ? `Estate (${landTotal} land)` : null}
+              {internalType === 'estate' ? `Estate (${landTotal} Land)` : null}
             </div>
             {status === 'not_for_rent' ? null : (
               <div className={cn(style.info_item, status === 'not_for_rent' ? style.dn : null)}>

@@ -276,12 +276,12 @@ export default function AnalyticsIndex(props) {
             ]}
             priceOptions={[
               {
-                label: 'ETH',
-                value: 'eth',
-              },
-              {
                 label: 'USD',
                 value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
               },
             ]}
           ></ChartLineSandBox>
