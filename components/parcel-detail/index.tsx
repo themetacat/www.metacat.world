@@ -49,6 +49,7 @@ interface Prop {
   trafficType?: string;
   mapType?: string;
   close?: () => void;
+  isSomnium?: boolean;
 }
 
 // parcel_id	int	parcel_id（地块id）
@@ -71,6 +72,7 @@ export default function ParcelDeatil({
   close,
   trafficType,
   mapType,
+  isSomnium = false,
 }: Prop) {
   // const {parcelId, name, coverImgUrl, openseaUrl, parcelPageUrl, island, suburb, traffic, lastPrice } = detail;
   const jumpToOpenC = (event) => {
@@ -107,7 +109,7 @@ export default function ParcelDeatil({
       return `Monthly Traffic：${op.traffic.month}`;
     }
     const label = op.timeRangeSale?.eth
-      ? `${op.timeRangeSale.eth} E(${op.timeRangeSale.usd} U)`
+      ? `${op.timeRangeSale.eth} ETH(${op.timeRangeSale.usd} USD)`
       : '';
     if (type === 'ALL') {
       return `All-Time Sales：${label}`;
@@ -141,7 +143,7 @@ export default function ParcelDeatil({
               return (
                 <li key={idx} className={cn('', styles.sales)}>
                   {`${ite.date} ${ite.isPrimary > 0 ? '(primary sales) /' : ''}`}{' '}
-                  <span className="text-white">{`${ite.eth} E(${ite.usd} U)`}</span>
+                  <span className="text-white">{`${ite.eth} ETH(${ite.usd} USD)`}</span>
                 </li>
               );
             })}
@@ -160,16 +162,23 @@ export default function ParcelDeatil({
       onClick={jumpToParcel}
     >
       <div className={cn('flex justify-between items-center', styles.titleContainer)}>
-        <div
-          className={cn('truncate w-full', styles.title)}
-          title={`${options.island}>${options.suburb}>${options.name}`}
-        >{`${options.island}>${options.suburb}>${options.name}`}</div>
+        {isSomnium ? (
+          <div className={cn('truncate w-full', styles.title)}></div>
+        ) : (
+          <div
+            className={cn('truncate w-full', styles.title)}
+            title={`${options.island}>${options.suburb}>${options.name}`}
+          >{`${options.island}>${options.suburb}>${options.name}`}</div>
+        )}
         <img className={styles.close} src="/images/close-pop.png" onClick={closePop}></img>
       </div>
       <div className="flex justify-start items-start mt-2">
-        <CoverImg className={styles.cover} img={options.coverImgUrl} />
+        <CoverImg
+          className={cn(styles.cover, isSomnium ? styles.somnium : '')}
+          img={options.coverImgUrl}
+        />
         <div className="ml-2 w-full">
-          <div className="flex justify-between">
+          <div className={cn('flex justify-between', isSomnium ? styles.row : null)}>
             <span
               className={cn('text-white font-semibold text-base truncate', styles.name)}
               title={options.name}
@@ -188,9 +197,9 @@ export default function ParcelDeatil({
             </div>
           ) : (
             <div className={cn('mt-1 font-medium', styles.label)}>
-              {`Last Price：${options.lastPrice.eth.toFixed(1)} E (${options.lastPrice.usd.toFixed(
-                0,
-              )} U)`}
+              {`Last Price：${options.lastPrice.eth.toFixed(
+                1,
+              )} ETH (${options.lastPrice.usd.toFixed(0)} USD)`}
             </div>
           )}
         </div>
