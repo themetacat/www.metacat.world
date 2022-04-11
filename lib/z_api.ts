@@ -339,18 +339,102 @@ class API {
     sort_field: string,
     sort_type: string,
   ): Promise<any> {
-    const search = qs.stringify({
-      page,
-      count,
-      size_scope,
-      price_scope,
-      built_status,
-      sort_field,
-      sort_type,
-    },
-      { addQueryPrefix: true }
+    const search = qs.stringify(
+      {
+        page,
+        count,
+        size_scope,
+        price_scope,
+        built_status,
+        sort_field,
+        sort_type,
+      },
+      { addQueryPrefix: true },
     );
     const url = `${this.url}/rent/get_listed_dcl_parcels${search}`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.12 获取 Sandbox 地块成交均价统计信息接口
+
+  public async req_sandbox_avg_price_stats(): Promise<any> {
+    const url = `${this.url}/get_sandbox_parcel_avg_price_stats`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.13 获取 Sandbox 地块成交总数量统计信息接口
+
+  public async req_sandbox_sold_total_stats(): Promise<any> {
+    const url = `${this.url}/get_sandbox_parcel_sold_total_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.14 获取 Sandbox 地块销售总额统计信息接口
+
+  public async req_sandbox_sold_sun_stats(): Promise<any> {
+    const url = `${this.url}/get_sandbox_parcel_sold_sum_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.15 获取 SomniumSpace 地块成交均价统计信息接口
+
+  public async req_somniumspace__avg_price_stats(): Promise<any> {
+    const url = `${this.url}/get_somniumspace_parcel_avg_price_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.16 获取 SomniumSpace 地块成交总数量统计信息接口
+
+  public async req_somniumspace_sold_total_stats(): Promise<any> {
+    const url = `${this.url}/get_somniumspace_parcel_sold_total_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.17 获取 SomniumSpace 地块销售总额统计信息接口
+
+  public async req_somniumspace_sold_sum_stats(): Promise<any> {
+    const url = `${this.url}/get_somniumspace_parcel_sold_sum_stats`;
 
     const result = await fetch(url, {
       method: 'get',
