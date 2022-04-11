@@ -277,7 +277,7 @@ function SomniumMap({
   });
   const popDetail = React.useRef();
   const mapType = React.useRef('PRICE');
-  const staticType = React.useRef('MONTH');
+  const staticType = React.useRef('ALL');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[2]);
   const trafficRef = React.useRef(null);
@@ -670,6 +670,7 @@ function SomniumMap({
             trafficType={staticType.current}
             mapType={mapType.current}
             close={closePop}
+            isSomnium={true}
           ></ParcelDeatil>
         </div>
       </div>
