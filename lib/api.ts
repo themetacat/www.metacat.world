@@ -434,6 +434,23 @@ class API {
 
     return json;
   }
+
+  public async getSomniumSpacePriceMapLevelThreeData(): Promise<any> {
+    const url = `${this.url}/get_somniumspace_price_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getSomniumSpaceParcelDeatil(tokenId: string): Promise<any> {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_somniumspace_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

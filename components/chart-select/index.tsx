@@ -67,6 +67,12 @@ export default function ChartSelecter({
     };
   });
 
+  const close = React.useCallback(() => {
+    if (show) {
+      setShow(false);
+    }
+  }, [show]);
+
   React.useEffect(() => {
     const s = options.find((x) => {
       return x.value === defaultLabel;
@@ -75,6 +81,13 @@ export default function ChartSelecter({
       setSelectedOption(s.label);
     }
   }, [options, defaultLabel]);
+
+  React.useEffect(() => {
+    document.addEventListener('click', close);
+    return () => {
+      document.removeEventListener('click', close);
+    };
+  }, [close]);
 
   return (
     <div className={cn(style.selectDiv, cls)}>
@@ -101,6 +114,7 @@ export default function ChartSelecter({
               className={cn('flex justify-center items-center', style.option)}
               key={x.value}
               onClick={(e) => {
+                e.stopPropagation();
                 itemOnClick(x);
               }}
             >
