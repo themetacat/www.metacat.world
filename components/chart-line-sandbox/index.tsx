@@ -43,7 +43,7 @@ export default function ChartLine({
   options,
   priceOptions,
   className,
-  keyTypes = ['primary', 'secondary'],
+  keyTypes = ['land'],
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
@@ -117,6 +117,7 @@ export default function ChartLine({
           },
         },
         customContent: (name, items) => {
+          console.log(items);
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -130,27 +131,16 @@ export default function ChartLine({
           items.forEach((item) => {
             result[item.type] = item;
           });
-
           const staticItem = `
             <div style="color:#fff;margin-bottom:12px">
               <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
           }, 1); font-size: 20px; font-weight:700;">
               ${formatNum(result[keyTypes[0]]?.valueAvg)}
-              <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
-                keyTypes[0]
-              ].priceStaticT.toLocaleUpperCase()} Avg</span>
-              </span>
+           
             </div>
             <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1); font-size: 20px; font-weight:700;">
-              ${formatNum(result[keyTypes[1]]?.valueAvg)}
-              <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
-                keyTypes[1]
-              ].priceStaticT.toLocaleUpperCase()} Avg</span>
-              </span>
+         
             </div>`;
           const priceDetail = `
           <div style="color:#fff;margin-bottom:12px">
@@ -160,12 +150,8 @@ export default function ChartLine({
                 <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
           }, 1);">${formatNum(result[keyTypes[0]]?.valueMin)}</span>
-                /
-                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">${formatNum(result[keyTypes[1]]?.valueMin)}</span>
-                <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-              </span>
+               
+               
             </span>
           </div>
           <div style="color:#fff;margin-bottom:12px">
@@ -175,12 +161,8 @@ export default function ChartLine({
                 <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
           }, 1);">${formatNum(result[keyTypes[0]]?.valueMax)}</span>
-                /
-                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">${formatNum(result[keyTypes[1]]?.valueMax)}</span>
-                <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-              </span>
+              
+              
             </span>
           </div>
           `;
@@ -262,9 +244,6 @@ export default function ChartLine({
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
             }
-            return {
-              fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-            };
           },
         })
         .tooltip(
@@ -287,10 +266,7 @@ export default function ChartLine({
         .position('time*valueAvg')
         .size(2)
         .tooltip(false)
-        .color('type', [
-          `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
-          `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-        ]);
+        .color('type', [`rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`]);
       chart.current.render();
     },
     [staticType, priceStaticType, limit],
@@ -330,22 +306,6 @@ export default function ChartLine({
 
     return <div id={id}></div>;
   }, [loading, error, onRetry]);
-
-  const getLenged = React.useMemo(() => {
-    return (
-      <>
-        <IconLabel
-          text={legend1.label}
-          color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
-          className="mr-5"
-        ></IconLabel>
-        <IconLabel
-          text={legend2.label}
-          color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
-        ></IconLabel>
-      </>
-    );
-  }, [legend1, legend2]);
 
   const updateData = React.useCallback(
     (staticT, priceStaticT) => {
@@ -430,10 +390,7 @@ export default function ChartLine({
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
           <ChartTitle text={labelText}></ChartTitle>
-          <div className="flex items-center">
-            <div className="flex items-center mr-7">{getLenged}</div>
-            {getSelect}
-          </div>
+          <div className="flex items-center">{getSelect}</div>
         </div>
         {render}
       </div>

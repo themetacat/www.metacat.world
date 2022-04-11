@@ -25,6 +25,12 @@ import {
   getDclParcelOwnerStats,
 } from '../../service';
 
+import {
+  req_sandbox_avg_price_stats,
+  req_sandbox_sold_total_stats,
+  req_sandbox_sold_sun_stats,
+} from '../../service/z_api';
+
 import style from './index.module.css';
 
 import BaseBar from '../../components/base-bar';
@@ -32,6 +38,8 @@ import ChartLine from '../../components/chart-line';
 import StackBar from '../../components/stack-bar';
 import ChartLineSimple from '../../components/chart-line-simple';
 import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
+import ChartLineSandBox from '../../components/chart-line-sandbox';
+import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
 
 const types = [
   {
@@ -43,6 +51,11 @@ const types = [
     label: 'Decentraland',
     icon: '/images/Decentraland.jpg',
     value: 'decentraland',
+  },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    value: 'sandbox',
   },
 ];
 
@@ -65,157 +78,117 @@ export default function AnalyticsIndex(props) {
   );
 
   const renderChartList = React.useMemo(() => {
-    return showType === 'cryptovoxels' ? (
-      <>
-        <BaseBar
-          id={'basebar1'}
-          className="mt-5"
-          labelText={'MONTHLY TRAFFIC'}
-          dataHandlder={getCvTrafficStats}
-          barWidth={18}
-        ></BaseBar>
-        <ChartLine
-          id={'chartline1'}
-          labelText={'AVERAGE PARCEL PRICE'}
-          className="mt-5"
-          dataHandlder={getCvParcelAvgPriceStats}
-          options={[
-            {
-              label: 'Daily price',
-              value: 'daily',
-            },
-            {
-              label: 'Monthly price',
-              value: 'monthly',
-            },
-          ]}
-          priceOptions={[
-            {
-              label: 'ETH',
-              value: 'eth',
-            },
-            {
-              label: 'USD',
-              value: 'usd',
-            },
-          ]}
-        ></ChartLine>
-        <StackBar
-          id={'stackbar'}
-          className="mt-5"
-          labelText={'NUMBER OF PARCEL SALES'}
-          dataHandler={getCvParcelSoldTotalStats}
-          barWidth={18}
-          options={[
-            {
-              label: 'Daily',
-              value: 'daily',
-            },
-            {
-              label: 'Monthly',
-              value: 'monthly',
-            },
-          ]}
-        ></StackBar>
-        <StackBar
-          id={'stackbar1'}
-          className="mt-5"
-          labelText={'MONTHLY PARCEL SALES AMOUNT'}
-          dataHandler={getCvParcelSoldSumStats}
-          isEth={true}
-          barWidth={18}
-          options={[
-            {
-              label: 'ETH',
-              value: 'eth',
-            },
-            {
-              label: 'USD',
-              value: 'usd',
-            },
-          ]}
-        ></StackBar>
-
-        <BaseBar
-          id={'basebar2'}
-          className="mt-5"
-          labelText={'MONTHLY PARCEL MINTED'}
-          dataHandlder={getCvMintStats}
-          defaultColor={[33, 212, 115]}
-          barWidth={18}
-        ></BaseBar>
-
-        <ChartLineSimple
-          id={'chartlinesimple'}
-          className="mt-5"
-          labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
-          dataHandlder={getCvParcelOwnerStats}
-          defaultColor={[246, 147, 55]}
-        ></ChartLineSimple>
-      </>
-    ) : (
-      <>
-        <ChartLine
-          id={'dcl-chartline-1'}
-          className="mt-5"
-          labelText={'AVERAGE PARCEL PRICE'}
-          dataHandlder={getDclParcelAvgPriceStats}
-          legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
-          legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
-          keyTypes={['land', 'estate']}
-          options={[
-            {
-              label: 'Daily price',
-              value: 'daily',
-            },
-            {
-              label: 'Monthly price',
-              value: 'monthly',
-            },
-          ]}
-          priceOptions={[
-            {
-              label: 'USD',
-              value: 'usd',
-            },
-            {
-              label: 'MANA',
-              value: 'mana',
-            },
-          ]}
-        ></ChartLine>
-        <ChartLineToolTipSimple
-          id={'dcl-chartline-2'}
-          className="mt-5"
-          labelText={'NUMBER OF PARCEL SALES'}
-          dataHandlder={getDclParcelSoldTotalStats}
-          legend1={{ label: 'Land', color: [33, 212, 115] }}
-          legend2={{ label: 'Estate', color: [255, 172, 95] }}
-          keyTypes={['land', 'estate']}
-          options={[
-            {
-              label: 'Daily',
-              value: 'daily',
-            },
-            {
-              label: 'Monthly',
-              value: 'monthly',
-            },
-          ]}
-        ></ChartLineToolTipSimple>
+    if (showType === 'cryptovoxels') {
+      return (
         <>
-          <span className="hidden"></span>
+          <BaseBar
+            id={'basebar1'}
+            className="mt-5"
+            labelText={'MONTHLY TRAFFIC'}
+            dataHandlder={getCvTrafficStats}
+            barWidth={18}
+          ></BaseBar>
+          <ChartLine
+            id={'chartline1'}
+            labelText={'AVERAGE PARCEL PRICE'}
+            className="mt-5"
+            dataHandlder={getCvParcelAvgPriceStats}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+            ]}
+          ></ChartLine>
+          <StackBar
+            id={'stackbar'}
+            className="mt-5"
+            labelText={'NUMBER OF PARCEL SALES'}
+            dataHandler={getCvParcelSoldTotalStats}
+            barWidth={18}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+            ]}
+          ></StackBar>
           <StackBar
             id={'stackbar1'}
             className="mt-5"
             labelText={'MONTHLY PARCEL SALES AMOUNT'}
-            dataHandler={getDclParcelSoldSumStats}
-            legend1={{ label: 'Land', color: [33, 212, 115] }}
-            legend2={{ label: 'Estate', color: [255, 172, 95] }}
-            keyTypes={['land', 'estate']}
-            barWidth={18}
+            dataHandler={getCvParcelSoldSumStats}
             isEth={true}
+            barWidth={18}
             options={[
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+            ]}
+          ></StackBar>
+          <BaseBar
+            id={'basebar2'}
+            className="mt-5"
+            labelText={'MONTHLY PARCEL MINTED'}
+            dataHandlder={getCvMintStats}
+            defaultColor={[33, 212, 115]}
+            barWidth={18}
+          ></BaseBar>
+          <ChartLineSimple
+            id={'chartlinesimple'}
+            className="mt-5"
+            labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
+            dataHandlder={getCvParcelOwnerStats}
+            defaultColor={[246, 147, 55]}
+          ></ChartLineSimple>
+        </>
+      );
+    }
+    if (showType === 'decentraland') {
+      return (
+        <>
+          <ChartLine
+            id={'dcl-chartline-1'}
+            className="mt-5"
+            labelText={'AVERAGE PARCEL PRICE'}
+            dataHandlder={getDclParcelAvgPriceStats}
+            legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
+            legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
+            keyTypes={['land', 'estate']}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+            ]}
+            priceOptions={[
               {
                 label: 'USD',
                 value: 'usd',
@@ -225,20 +198,136 @@ export default function AnalyticsIndex(props) {
                 value: 'mana',
               },
             ]}
+          ></ChartLine>
+          <ChartLineToolTipSimple
+            id={'dcl-chartline-2'}
+            className="mt-5"
+            labelText={'NUMBER OF PARCEL SALES'}
+            dataHandlder={getDclParcelSoldTotalStats}
+            legend1={{ label: 'Land', color: [33, 212, 115] }}
+            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            keyTypes={['land', 'estate']}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+            ]}
+          ></ChartLineToolTipSimple>
+          <>
+            <span className="hidden"></span>
+            <StackBar
+              id={'stackbar1'}
+              className="mt-5"
+              labelText={'MONTHLY PARCEL SALES AMOUNT'}
+              dataHandler={getDclParcelSoldSumStats}
+              legend1={{ label: 'Land', color: [33, 212, 115] }}
+              legend2={{ label: 'Estate', color: [255, 172, 95] }}
+              keyTypes={['land', 'estate']}
+              barWidth={18}
+              isEth={true}
+              options={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'MANA',
+                  value: 'mana',
+                },
+              ]}
+            ></StackBar>
+          </>
+          <>
+            <span className="hidden"></span>
+            <ChartLineSimple
+              id={'chartlinesimple2'}
+              className="mt-5"
+              labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
+              dataHandlder={getDclParcelOwnerStats}
+              defaultColor={[34, 118, 252]}
+            ></ChartLineSimple>
+          </>
+        </>
+      );
+    }
+
+    if (showType === 'sandbox') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'chartline1'}
+            labelText={'AVERAGE PARCEL PRICE'}
+            className="mt-5"
+            dataHandlder={req_sandbox_avg_price_stats}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+            ]}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'dcl-chartline-2'}
+            className="mt-5"
+            labelText={'NUMBER OF PARCEL SALES'}
+            dataHandlder={req_sandbox_sold_total_stats}
+            legend1={{ label: 'Land', color: [33, 212, 115] }}
+            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            keyTypes={['land', 'estate']}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+            ]}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBar
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            dataHandler={req_sandbox_sold_sun_stats}
+            legend1={{ label: 'Land', color: [255, 207, 95] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            options={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
           ></StackBar>
         </>
-        <>
-          <span className="hidden"></span>
-          <ChartLineSimple
-            id={'chartlinesimple2'}
-            className="mt-5"
-            labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
-            dataHandlder={getDclParcelOwnerStats}
-            defaultColor={[34, 118, 252]}
-          ></ChartLineSimple>
-        </>
-      </>
-    );
+      );
+    }
   }, [showType]);
 
   return (
