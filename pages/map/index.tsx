@@ -27,6 +27,10 @@ const SandboxMap = dynamic(() => import('../../components/sandbox-map'), {
   ssr: false,
 });
 
+const SomniumMap = dynamic(() => import('../../components/somnium-map'), {
+  ssr: false,
+});
+
 const meta = {
   title: `Map - ${SITE_NAME}`,
   description: META_DESCRIPTION,
@@ -47,6 +51,11 @@ const TAB = [
     label: 'The Sandbox',
     icon: '/images/home-icon.svg',
     type: 'sandbox',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
   },
 ];
 
@@ -116,6 +125,22 @@ export default function MapPage(props) {
           changeTypeControl={false}
           backColor="rgb(8 17 19)"
         ></SandboxMap>
+      );
+    }
+
+    if (mapType === 'somniumspace') {
+      return (
+        <SomniumMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="#15282C"
+        ></SomniumMap>
       );
     }
 
