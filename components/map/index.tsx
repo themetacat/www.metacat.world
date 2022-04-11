@@ -299,6 +299,7 @@ function Map({
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
+  const heighFeature = React.useRef(null);
   const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
@@ -519,6 +520,13 @@ function Map({
     [null],
   );
 
+  const clearHeightLight = React.useCallback(() => {
+    if (heighFeature.current) {
+      layerManager.current[9].layer.clearLayers();
+      heighFeature.current = null;
+    }
+  }, []);
+
   const requestMapTwoData = React.useCallback(
     async (streetL, parcelL) => {
       const res = await getCvTrafficMapLevelTwo();
@@ -593,8 +601,9 @@ function Map({
     if (popDetail.current) {
       (popDetail.current as any).style.display = 'none';
     }
+    clearHeightLight();
     setActiveColor(null);
-  }, [popDetail.current]);
+  }, [popDetail.current, clearHeightLight]);
 
   // parcel style function
   const parcelStyle = React.useCallback(
@@ -956,6 +965,16 @@ function Map({
       },
     }).addTo(map);
 
+    const heighLayer = L.geoJSON(null, {
+      style: {
+        fill: true,
+        fillColor: 'rgb(255,0,0)',
+        weight: 1,
+        color: 'rgb(255,0,0)',
+        fillOpacity: 0.6,
+      },
+    }).addTo(map);
+
     const parcelsPriceLayerThree = L.geoJSON(null, {
       style: parcelStyle,
       onEachFeature: (feature, layer) => {
@@ -997,6 +1016,14 @@ function Map({
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
           const { colorIndex } = e.sourceTarget.feature.properties;
+
+          clearHeightLight();
+
+          const polygon = JSON.parse(JSON.stringify(e.sourceTarget.feature));
+          polygon.properties.active = true;
+          heighFeature.current = polygon;
+          layerManager.current[9].layer.addData(heighFeature.current);
+
           if (colorIndex !== null || colorIndex !== undefined) {
             setActiveColor(colorIndex);
           }
@@ -1014,6 +1041,14 @@ function Map({
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
           const { colorIndex } = e.sourceTarget.feature.properties;
+
+          clearHeightLight();
+
+          const polygon = JSON.parse(JSON.stringify(e.sourceTarget.feature));
+          polygon.properties.active = true;
+          heighFeature.current = polygon;
+          layerManager.current[9].layer.addData(heighFeature.current);
+
           if (colorIndex !== null || colorIndex !== undefined) {
             setActiveColor(colorIndex);
           }
@@ -1093,6 +1128,10 @@ function Map({
       {
         layer: parcelsPriceLayerOne,
         name: 'price1',
+      },
+      {
+        layer: heighLayer,
+        name: 'heighLayer',
       },
     ];
 
