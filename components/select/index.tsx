@@ -44,6 +44,12 @@ export default function Selecter({
     setShow(!show);
   }, [show]);
 
+  const close = React.useCallback(() => {
+    if (show) {
+      setShow(false);
+    }
+  }, [show]);
+
   React.useEffect(() => {
     const s = options.find((x) => {
       return x.value === defaultLabel;
@@ -52,6 +58,13 @@ export default function Selecter({
       setSelectedOption(s.label);
     }
   }, [options, defaultLabel]);
+
+  React.useEffect(() => {
+    document.addEventListener('click', close);
+    return () => {
+      document.removeEventListener('click', close);
+    };
+  }, [close]);
 
   return (
     <div className={cn(style.selectDiv, cls)}>
@@ -75,6 +88,7 @@ export default function Selecter({
               )}
               key={x.value}
               onClick={(e) => {
+                e.stopPropagation();
                 itemOnClick(x);
               }}
             >

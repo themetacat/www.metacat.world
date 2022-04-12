@@ -870,12 +870,12 @@ export default function Rent() {
     setFieldQuery('default');
     setTypeQuery('desc');
 
-    setAreaAll('');
-    setHeightAll('');
-    setPriceWeekAll('');
-    setBuiltAll('');
-    setLocationAll('');
-    setSizeAll('');
+    setAreaAll('All');
+    setHeightAll('All');
+    setPriceWeekAll('All');
+    setBuiltAll('All');
+    setLocationAll('All');
+    setSizeAll('All');
     set_islands_ids([]);
 
     setIdsQuery('all');

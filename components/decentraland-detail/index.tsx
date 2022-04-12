@@ -106,7 +106,7 @@ export default function DecentralandDeatil({
       label = op.traffic.month;
     }
     const condition = op.timeRangeSale?.mana
-      ? `${op.timeRangeSale.mana} MANA(${op.timeRangeSale.usd} U)`
+      ? `${op.timeRangeSale.mana} MANA(${op.timeRangeSale.usd} USD)`
       : '';
     if (type === 'all') {
       preffix = 'All-Time Sales：';
@@ -156,7 +156,7 @@ export default function DecentralandDeatil({
                   <span className="text-white">{`${formatNum(ite.mana, false)} MANA(${formatNum(
                     ite.usd,
                     false,
-                  )} U)`}</span>
+                  )} USD)`}</span>
                 </li>
               );
             })}

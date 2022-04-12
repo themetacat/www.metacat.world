@@ -14,6 +14,10 @@
   height: 135px;
 }
 
+.somnium{
+  width: 150px !important;
+}
+
 .popup::after{
   position: absolute;
   content: '';
@@ -58,7 +62,7 @@
   max-width: 90%;
 }
 
-.titleContainer{
+.titleContainer, .row{
   max-width: 90%;
 }
 
