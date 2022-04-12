@@ -1,32 +1,33 @@
-.signBack{
+.signBack {
   height: 230px;
 }
 
-.anPage{
+.anPage {
   min-width: 1440px;
   overflow-x: scroll;
   overflow-y: hidden;
 }
 
-.sign{
+.sign {
   width: 1087px;
   height: 125px;
   margin-bottom: 67px;
 }
-.info{
-  color: #fff
+.info {
+  color: #fff;
 }
-.content{
+.content {
   min-height: 650px;
   padding: 30px;
 }
 
-.table, .chartList{
+.table,
+.chartList {
   max-width: 1860px;
   min-width: 1380px;
 }
 
-.chartList{
+.chartList {
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   box-sizing: border-box;
   box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);

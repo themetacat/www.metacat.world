@@ -28,7 +28,7 @@ export default function Switch({ onActive, options, defaultValue }: Props) {
   );
 
   return (
-    <div className="flex justify-center items-center mt-2">
+    <div className={cn('flex justify-center items-center mt-2', style.container)}>
       {options.map((item, idx) => {
         return (
           <div
@@ -47,7 +47,7 @@ export default function Switch({ onActive, options, defaultValue }: Props) {
                 className={cn('bg-contain mr-2', style.tabIcon)}
                 style={{ backgroundImage: `url('${item.icon}')` }}
               ></div>
-              <div>{item.label}</div>
+              <div className={style.n}>{item.label}</div>
             </div>
           </div>
         );
