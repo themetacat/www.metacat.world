@@ -444,6 +444,48 @@ class API {
 
     return json;
   }
+
+  // 6.18 获取 NFTWorlds 地块成交均价统计信息接口
+
+  public async req_ntfworlds_avg_price_stats(): Promise<any> {
+    const url = `${this.url}/get_nftworlds_parcel_avg_price_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.19 获取 NFTWorlds 地块成交总数量统计信息接口
+
+  public async req_ntfworlds_sold_total_stats(): Promise<any> {
+    const url = `${this.url}/get_nftworlds_parcel_sold_total_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.20 获取 NFTWorlds 地块销售总额统计信息接口
+
+  public async req_ntfworlds_sold_sum_stats(): Promise<any> {
+    const url = `${this.url}/get_nftworlds_parcel_sold_sum_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

@@ -20,13 +20,13 @@
 .filterNav {
   width: 1200px;
   margin: 30px auto 0;
-  padding: 20px 10px 20px;
+  padding: 20px;
   background: #0c1416;
 }
 .dclFilterNav {
   width: 1200px;
   margin: 30px auto 0;
-  padding: 1px 10px 20px;
+  padding: 1px 20px 20px;
   background: #0c1416;
 }
 .navItem .title {
@@ -210,8 +210,8 @@
   font-style: normal;
 }
 .right {
-  margin-left: 20px;
   position: relative;
+  margin-left: 20px;
 }
 .right h2 {
   position: relative;
@@ -285,10 +285,10 @@
   line-height: 22px;
 }
 .contact1 {
-  display: flex;
   position: absolute;
-  bottom: 9px;
   right: -22px;
+  bottom: 9px;
+  display: flex;
 }
 .contact1 div {
   display: flex;
@@ -309,10 +309,10 @@
   margin-left: 5px;
 }
 .contact2 {
-  display: flex;
   position: absolute;
-  bottom: 9px;
   right: -22px;
+  bottom: 9px;
+  display: flex;
 }
 .contact2 div {
   display: flex;
