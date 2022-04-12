@@ -34,9 +34,15 @@ export default function Switch({ onActive, options, defaultValue }: Props) {
           <div
             key={idx}
             className={cn(
-              'flex justify-center items-center text-white',
+              'text-white',
               style.base,
               item.value === active ? style.active : '',
+              item.value === 'sandbox' ? style.p1 : null,
+              item.value === 'nftworlds' ? style.p2 : null,
+              item.value === 'decentraland' ? style.p3 : null,
+              item.value === 'cryptovoxels' ? style.p3 : null,
+              item.value === 'worldwidewebb' ? style.p4 : null,
+              item.value === 'somniumspace' ? style.p5 : null,
             )}
             onClick={() => {
               changeActive(item);
