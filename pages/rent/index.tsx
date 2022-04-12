@@ -166,7 +166,7 @@ export default function Rent() {
   const [cardInfoList, setCardInfoList] = React.useState([]);
   const [page, setPage] = React.useState(1);
   const [totalPage, setTotalPage] = React.useState(0);
-  const [pageCount, setPageCount] = React.useState(20);
+  const [pageCount, setPageCount] = React.useState(21);
   const [idsQuery, setIdsQuery] = React.useState('all');
   const [areaQuery, setAreaQuery] = React.useState([]);
   const [heightQuery, setHeightQuery] = React.useState([]);

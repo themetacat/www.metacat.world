@@ -29,6 +29,12 @@ import {
   req_sandbox_avg_price_stats,
   req_sandbox_sold_total_stats,
   req_sandbox_sold_sun_stats,
+  req_somniumspace__avg_price_stats,
+  req_somniumspace_sold_total_stats,
+  req_somniumspace_sold_sum_stats,
+  req_ntfworlds_avg_price_stats,
+  req_ntfworlds_sold_total_stats,
+  req_ntfworlds_sold_sum_stats,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -36,6 +42,7 @@ import style from './index.module.css';
 import BaseBar from '../../components/base-bar';
 import ChartLine from '../../components/chart-line';
 import StackBar from '../../components/stack-bar';
+import StackBarZ from '../../components/stack-bar-z';
 import ChartLineSimple from '../../components/chart-line-simple';
 import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
 import ChartLineSandBox from '../../components/chart-line-sandbox';
@@ -56,6 +63,16 @@ const types = [
     label: 'The Sandbox',
     icon: '/images/home-icon.svg',
     value: 'sandbox',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    value: 'somniumspace',
+  },
+  {
+    label: 'NFT Worlds',
+    icon: '/images/worlds.svg',
+    value: 'nftworlds',
   },
 ];
 
@@ -255,7 +272,6 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
-
     if (showType === 'sandbox') {
       return (
         <>
@@ -304,7 +320,7 @@ export default function AnalyticsIndex(props) {
               },
             ]}
           ></ChartLineToolTipSimpleSandbox>
-          <StackBar
+          <StackBarZ
             id={'stackbar1'}
             className="mt-5"
             labelText={'MONTHLY PARCEL SALES AMOUNT'}
@@ -324,7 +340,153 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
-          ></StackBar>
+          ></StackBarZ>
+        </>
+      );
+    }
+    if (showType === 'somniumspace') {
+      return (
+        <>
+          <>
+            <ChartLineSandBox
+              id={'chartline1'}
+              labelText={'AVERAGE PARCEL PRICE'}
+              className="mt-5"
+              dataHandlder={req_somniumspace__avg_price_stats}
+              options={[
+                {
+                  label: 'Daily price',
+                  value: 'daily',
+                },
+                {
+                  label: 'Monthly price',
+                  value: 'monthly',
+                },
+              ]}
+              priceOptions={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
+                },
+              ]}
+            ></ChartLineSandBox>
+            <ChartLineToolTipSimpleSandbox
+              id={'dcl-chartline-2'}
+              className="mt-5"
+              labelText={'NUMBER OF PARCEL SALES'}
+              dataHandlder={req_somniumspace_sold_total_stats}
+              legend1={{ label: 'Land', color: [33, 212, 115] }}
+              legend2={{ label: 'Estate', color: [255, 172, 95] }}
+              keyTypes={['land', 'estate']}
+              options={[
+                {
+                  label: 'Daily',
+                  value: 'daily',
+                },
+                {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+              ]}
+            ></ChartLineToolTipSimpleSandbox>
+            <StackBarZ
+              id={'stackbar1'}
+              className="mt-5"
+              labelText={'MONTHLY PARCEL SALES AMOUNT'}
+              dataHandler={req_somniumspace_sold_sum_stats}
+              legend1={{ label: 'Land', color: [255, 207, 95] }}
+              keyTypes={['land', 'estate']}
+              barWidth={18}
+              isEth={true}
+              showMarkerType="sandbox"
+              options={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
+                },
+              ]}
+            ></StackBarZ>
+          </>
+        </>
+      );
+    }
+    if (showType === 'nftworlds') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'chartline1'}
+            labelText={'AVERAGE PARCEL PRICE'}
+            className="mt-5"
+            dataHandlder={req_ntfworlds_avg_price_stats}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'dcl-chartline-2'}
+            className="mt-5"
+            labelText={'NUMBER OF PARCEL SALES'}
+            dataHandlder={req_ntfworlds_sold_total_stats}
+            legend1={{ label: 'Land', color: [33, 212, 115] }}
+            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            keyTypes={['land', 'estate']}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+            ]}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBarZ
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            dataHandler={req_ntfworlds_sold_sum_stats}
+            legend1={{ label: 'Land', color: [255, 207, 95] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            options={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+          ></StackBarZ>
         </>
       );
     }
