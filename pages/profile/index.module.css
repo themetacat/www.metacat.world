@@ -244,12 +244,7 @@
   font-style: normal;
   font-weight: 600;
 }
-.succeedOrCancel > div > .succeed:hover {
-  color: #fff;
-}
-.succeedOrCancel > div > .cancel:hover {
-  color: #fff;
-}
+
 .succeedOrCancel > div > .succeed {
   background-color: #000;
   color: #00d0ec;
