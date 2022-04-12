@@ -53,24 +53,9 @@ import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-s
 
 const types = [
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
-    value: 'cryptovoxels',
-  },
-  {
-    label: 'Decentraland',
-    icon: '/images/Decentraland.jpg',
-    value: 'decentraland',
-  },
-  {
     label: 'The Sandbox',
     icon: '/images/home-icon.svg',
     value: 'sandbox',
-  },
-  {
-    label: 'Somnium Space',
-    icon: '/images/somniumspace.png',
-    value: 'somniumspace',
   },
   {
     label: 'NFT Worlds',
@@ -78,9 +63,25 @@ const types = [
     value: 'nftworlds',
   },
   {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    value: 'decentraland',
+  },
+
+  {
     label: 'Worldwide Webb',
     icon: '/images/unnamed.svg',
     value: 'worldwidewebb',
+  },
+  {
+    label: 'Cryptovoxels',
+    icon: '/images/Crypto Voxel.jpg',
+    value: 'cryptovoxels',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    value: 'somniumspace',
   },
 ];
 
