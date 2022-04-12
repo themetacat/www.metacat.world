@@ -35,6 +35,9 @@ import {
   req_ntfworlds_avg_price_stats,
   req_ntfworlds_sold_total_stats,
   req_ntfworlds_sold_sum_stats,
+  req_webb_parcel_avg_price_stats,
+  req_webb_sold_total_stats,
+  req_webb_sold_sum_stats,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -50,29 +53,35 @@ import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-s
 
 const types = [
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
-    value: 'cryptovoxels',
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    value: 'sandbox',
+  },
+  {
+    label: 'NFT Worlds',
+    icon: '/images/worlds.svg',
+    value: 'nftworlds',
   },
   {
     label: 'Decentraland',
     icon: '/images/Decentraland.jpg',
     value: 'decentraland',
   },
+
   {
-    label: 'The Sandbox',
-    icon: '/images/home-icon.svg',
-    value: 'sandbox',
+    label: 'Worldwide Webb',
+    icon: '/images/unnamed.svg',
+    value: 'worldwidewebb',
+  },
+  {
+    label: 'Cryptovoxels',
+    icon: '/images/Crypto Voxel.jpg',
+    value: 'cryptovoxels',
   },
   {
     label: 'Somnium Space',
     icon: '/images/somniumspace.png',
     value: 'somniumspace',
-  },
-  {
-    label: 'NFT Worlds',
-    icon: '/images/worlds.svg',
-    value: 'nftworlds',
   },
 ];
 
@@ -490,6 +499,78 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
+    if (showType === 'worldwidewebb') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'chartline1'}
+            labelText={'AVERAGE PARCEL PRICE'}
+            className="mt-5"
+            dataHandlder={req_webb_parcel_avg_price_stats}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'dcl-chartline-2'}
+            className="mt-5"
+            labelText={'NUMBER OF PARCEL SALES'}
+            dataHandlder={req_webb_sold_total_stats}
+            legend1={{ label: 'Land', color: [33, 212, 115] }}
+            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            keyTypes={['land', 'estate']}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+            ]}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBarZ
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            dataHandler={req_webb_sold_sum_stats}
+            legend1={{ label: 'Land', color: [255, 207, 95] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            options={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+          ></StackBarZ>
+        </>
+      );
+    }
   }, [showType]);
 
   return (
@@ -508,7 +589,7 @@ export default function AnalyticsIndex(props) {
       </div>
       <div className={cn('flex flex-col justify-center items-center', style.content)}>
         <div className={cn('w-full h-auto', style.table)}>
-          <AnalyticsInfo></AnalyticsInfo>
+          <AnalyticsInfo options={types}></AnalyticsInfo>
         </div>
         <div
           className={cn(

@@ -482,3 +482,45 @@ export const req_ntfworlds_sold_sum_stats = async () => {
 
   return json;
 };
+
+// 6.21 获取 Webb 地块成交均价统计信息接口
+
+export const req_webb_parcel_avg_price_stats = async () => {
+  const url = '/api/get_webb_parcel_avg_price_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 6.22 获取 Webb 地块成交总数量统计信息接口
+
+export const req_webb_sold_total_stats = async () => {
+  const url = '/api/get_webb_parcel_sold_total_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 6.23 获取 Webb 地块销售总额统计信息接口
+
+export const req_webb_sold_sum_stats = async () => {
+  const url = '/api/get_webb_parcel_sold_sum_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};

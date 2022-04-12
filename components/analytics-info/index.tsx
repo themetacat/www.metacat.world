@@ -7,7 +7,16 @@ import { convert, formatNum } from '../../common/utils';
 
 import style from './index.module.css';
 
-export default function AnalyticsInfo() {
+type optionItem = {
+  label?: string;
+  value?: string;
+  icon?: string;
+};
+type Props = {
+  options?: Array<optionItem>;
+};
+
+export default function AnalyticsInfo(options: Props) {
   const [dataSource, setDataSource] = React.useState([]);
 
   const requestData = React.useCallback(async () => {
