@@ -490,7 +490,7 @@ export default function Index(props) {
                 zoomLimit={[6, 6]}
                 initZoom={6}
                 clickToJump={true}
-                changeTypeControl={false}
+                changeTypeControl={true}
                 dragging={false}
                 loadFinish={null}
               ></SomniumMap>
