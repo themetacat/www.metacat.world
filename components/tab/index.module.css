@@ -6,22 +6,18 @@
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   border-bottom: transparent;
 }
-
 .miniNormal {
   color: #aaa;
   font-size: 16px;
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
-
 .miniBase {
   min-width: 200px;
   padding: 0 10px;
 }
-
 .miniActive > .miniCanHover,
 .miniCanHover:hover {
   color: #fff;
-  //transform: scale(1.1);
   font-size: 16px;
   cursor: pointer;
 }
@@ -29,13 +25,11 @@
 .miniCanHover:hover > .miniTabIcon {
   transform: scale(1.1);
 }
-
 .miniTabIcon {
   width: 25px;
   height: 25px;
   border-radius: 16px;
 }
-
 .active {
   color: #fff;
   font-size: 30px;
@@ -43,22 +37,18 @@
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   border-bottom: transparent;
 }
-
 .normal {
   color: #aaa;
   font-size: 26px;
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
-
 .base {
   min-width: 300px;
   padding: 0 30px;
 }
-
 .active > .canHover,
 .canHover:hover {
   color: #fff;
-  //transform: scale(1.1);
   font-size: 30px;
   cursor: pointer;
 }
@@ -67,7 +57,6 @@
   width: 44px;
   height: 44px;
 }
-
 .tabIcon {
   width: 34px;
   height: 34px;

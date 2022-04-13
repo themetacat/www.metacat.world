@@ -27,7 +27,9 @@ import BaseBar from '../components/base-bar';
 import StackBar from '../components/stack-bar';
 import ChartLine from '../components/chart-line';
 import ChartLineToolTipSimple from '../components/chart-line-tooltip-simple';
-
+import ChartLineSandBox from '../components/chart-line-sandbox';
+import StackBarZ from '../components/stack-bar-z';
+import ChartLineToolTipSimpleSandbox from '../components/chart-line-tooltip-simple-sandbox';
 import { useWalletProvider } from '../components/web3modal';
 
 import { state } from '../components/wallet-btn';
@@ -47,6 +49,21 @@ import {
   refreshToken,
   getBaseInfo,
 } from '../service';
+
+import {
+  req_sandbox_avg_price_stats,
+  req_sandbox_sold_total_stats,
+  req_sandbox_sold_sun_stats,
+  req_somniumspace__avg_price_stats,
+  req_somniumspace_sold_total_stats,
+  req_somniumspace_sold_sum_stats,
+  req_ntfworlds_avg_price_stats,
+  req_ntfworlds_sold_total_stats,
+  req_ntfworlds_sold_sum_stats,
+  req_webb_parcel_avg_price_stats,
+  req_webb_sold_total_stats,
+  req_webb_sold_sum_stats,
+} from '../service/z_api';
 
 import style from './index.module.less';
 
@@ -69,6 +86,26 @@ const TAB = [
     icon: '/images/Decentraland.jpg',
     type: 'decentraland',
   },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    type: 'sandbox',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+  },
+  {
+    label: 'NFT Worlds',
+    icon: '/images/worlds.svg',
+    type: 'nftworlds',
+  },
+  {
+    label: 'Worldwide Webb',
+    icon: '/images/unnamed.svg',
+    type: 'worldwidewebb',
+  },
 ];
 
 const SUBTAB = [
@@ -87,6 +124,12 @@ const SUBTAB = [
   {
     label: 'Events',
     type: 'event',
+  },
+];
+const SUBTABZ = [
+  {
+    label: 'Analytics',
+    type: 'analytics',
   },
 ];
 
@@ -199,7 +242,13 @@ export default function Index(props) {
 
   const onTabChange = async (tab) => {
     setTabState(tab);
-    const sub = subTabState;
+    let sub = '';
+    if (tab === 'cryptovoxels' || tab === 'decentraland') {
+      sub = subTabState;
+    } else {
+      sub = SUBTABZ[0].type;
+      setSubTabState(SUBTABZ[0].type);
+    }
     // if (subTabState === 'map') {
     //   sub = 'parcel';
     //   setSubTabState(sub);
@@ -208,7 +257,6 @@ export default function Index(props) {
     setTypeState('all');
 
     nextCursor.current = 1;
-
     const data = await requestData({
       tab,
       subTab: sub,
@@ -403,130 +451,89 @@ export default function Index(props) {
       );
     }
     if (subTabState === 'analytics') {
-      return tabState === 'cryptovoxels' ? (
-        <div className={cn('main-content')}>
-          <BaseChart className=" my-5">
-            <BaseBar
-              id={'basebar1'}
-              labelText={'MONTHLY TRAFFIC'}
-              dataHandlder={getCvTrafficStats}
-              limit={15}
-              barWidth={25}
-            ></BaseBar>
-          </BaseChart>
-          <BaseChart className=" mb-5">
-            <ChartLine
-              id={'chartline1'}
-              labelText={'AVERAGE PARCEL PRICE'}
-              dataHandlder={getCvParcelAvgPriceStats}
-              options={[
-                {
-                  label: 'Daily price',
-                  value: 'daily',
-                },
-                {
-                  label: 'Monthly price',
-                  value: 'monthly',
-                },
-              ]}
-              priceOptions={[
-                {
-                  label: 'ETH',
-                  value: 'eth',
-                },
-                {
-                  label: 'USD',
-                  value: 'usd',
-                },
-              ]}
-              limit={15}
-            ></ChartLine>
-          </BaseChart>
-          <BaseChart className=" mb-5">
-            <StackBar
-              id={'stackbar'}
-              labelText={'NUMBER OF PARCEL SALES'}
-              dataHandler={getCvParcelSoldTotalStats}
-              limit={15}
-              options={[
-                {
-                  label: 'Daily',
-                  value: 'daily',
-                },
-                {
-                  label: 'Monthly',
-                  value: 'monthly',
-                },
-              ]}
-            ></StackBar>
-          </BaseChart>
-        </div>
-      ) : (
-        <div className={cn('main-content')}>
-          <BaseChart className=" my-5">
-            <ChartLine
-              id={'dcl-chartline-1'}
-              labelText={'AVERAGE PARCEL PRICE'}
-              dataHandlder={getDclParcelAvgPriceStats}
-              legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
-              legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
-              keyTypes={['land', 'estate']}
-              options={[
-                {
-                  label: 'Daily price',
-                  value: 'daily',
-                },
-                {
-                  label: 'Monthly price',
-                  value: 'monthly',
-                },
-              ]}
-              priceOptions={[
-                {
-                  label: 'USD',
-                  value: 'usd',
-                },
-                {
-                  label: 'MANA',
-                  value: 'mana',
-                },
-              ]}
-              limit={15}
-            ></ChartLine>
-          </BaseChart>
-          <BaseChart className=" my-5">
-            <ChartLineToolTipSimple
-              id={'dcl-chartline-2'}
-              labelText={'NUMBER OF PARCEL SALES'}
-              dataHandlder={getDclParcelSoldTotalStats}
-              legend1={{ label: 'Land', color: [33, 212, 115] }}
-              legend2={{ label: 'Estate', color: [255, 172, 95] }}
-              keyTypes={['land', 'estate']}
-              options={[
-                {
-                  label: 'Daily',
-                  value: 'daily',
-                },
-                {
-                  label: 'Monthly',
-                  value: 'monthly',
-                },
-              ]}
-              limit={15}
-            ></ChartLineToolTipSimple>
-          </BaseChart>
-          <BaseChart className=" mb-5">
-            <>
-              <span className="hidden"></span>
-              <StackBar
-                id={'stackbar1'}
-                labelText={'MONTHLY PARCEL SALES AMOUNT'}
-                dataHandler={getDclParcelSoldSumStats}
+      if (tabState === 'cryptovoxels') {
+        return (
+          <div className={cn('main-content')}>
+            <BaseChart className=" my-5">
+              <BaseBar
+                id={'basebar1'}
+                labelText={'MONTHLY TRAFFIC'}
+                dataHandlder={getCvTrafficStats}
                 limit={15}
-                legend1={{ label: 'Land', color: [33, 212, 115] }}
-                legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                barWidth={25}
+              ></BaseBar>
+            </BaseChart>
+            <BaseChart className=" mb-5">
+              <ChartLine
+                id={'chartline1'}
+                labelText={'AVERAGE PARCEL PRICE'}
+                dataHandlder={getCvParcelAvgPriceStats}
+                options={[
+                  {
+                    label: 'Daily price',
+                    value: 'daily',
+                  },
+                  {
+                    label: 'Monthly price',
+                    value: 'monthly',
+                  },
+                ]}
+                priceOptions={[
+                  {
+                    label: 'ETH',
+                    value: 'eth',
+                  },
+                  {
+                    label: 'USD',
+                    value: 'usd',
+                  },
+                ]}
+                limit={15}
+              ></ChartLine>
+            </BaseChart>
+            <BaseChart className=" mb-5">
+              <StackBar
+                id={'stackbar'}
+                labelText={'NUMBER OF PARCEL SALES'}
+                dataHandler={getCvParcelSoldTotalStats}
+                limit={15}
+                options={[
+                  {
+                    label: 'Daily',
+                    value: 'daily',
+                  },
+                  {
+                    label: 'Monthly',
+                    value: 'monthly',
+                  },
+                ]}
+              ></StackBar>
+            </BaseChart>
+          </div>
+        );
+      }
+      if (tabState === 'decentraland') {
+        return (
+          <div className={cn('main-content')}>
+            <BaseChart className=" my-5">
+              <ChartLine
+                id={'dcl-chartline-1'}
+                labelText={'AVERAGE PARCEL PRICE'}
+                dataHandlder={getDclParcelAvgPriceStats}
+                legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
+                legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
                 keyTypes={['land', 'estate']}
                 options={[
+                  {
+                    label: 'Daily price',
+                    value: 'daily',
+                  },
+                  {
+                    label: 'Monthly price',
+                    value: 'monthly',
+                  },
+                ]}
+                priceOptions={[
                   {
                     label: 'USD',
                     value: 'usd',
@@ -536,11 +543,377 @@ export default function Index(props) {
                     value: 'mana',
                   },
                 ]}
-              ></StackBar>
+                limit={15}
+              ></ChartLine>
+            </BaseChart>
+            <BaseChart className=" my-5">
+              <ChartLineToolTipSimple
+                id={'dcl-chartline-2'}
+                labelText={'NUMBER OF PARCEL SALES'}
+                dataHandlder={getDclParcelSoldTotalStats}
+                legend1={{ label: 'Land', color: [33, 212, 115] }}
+                legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                keyTypes={['land', 'estate']}
+                options={[
+                  {
+                    label: 'Daily',
+                    value: 'daily',
+                  },
+                  {
+                    label: 'Monthly',
+                    value: 'monthly',
+                  },
+                ]}
+                limit={15}
+              ></ChartLineToolTipSimple>
+            </BaseChart>
+            <BaseChart className=" mb-5">
+              <>
+                <span className="hidden"></span>
+                <StackBar
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={getDclParcelSoldSumStats}
+                  limit={15}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  options={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'MANA',
+                      value: 'mana',
+                    },
+                  ]}
+                ></StackBar>
+              </>
+            </BaseChart>
+          </div>
+        );
+      }
+      if (tabState === 'sandbox') {
+        return (
+          <div className={cn('main-content')}>
+            <>
+              <BaseChart className=" my-5">
+                <ChartLineSandBox
+                  id={'chartline1'}
+                  labelText={'AVERAGE PARCEL PRICE'}
+                  dataHandlder={req_sandbox_avg_price_stats}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily price',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly price',
+                      value: 'monthly',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></ChartLineSandBox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <ChartLineToolTipSimpleSandbox
+                  id={'dcl-chartline-2'}
+                  labelText={'NUMBER OF PARCEL SALES'}
+                  dataHandlder={req_sandbox_sold_total_stats}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                  ]}
+                ></ChartLineToolTipSimpleSandbox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <StackBarZ
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={req_sandbox_sold_sun_stats}
+                  legend1={{ label: 'Land', color: [255, 207, 95] }}
+                  keyTypes={['land', 'estate']}
+                  barWidth={18}
+                  isEth={true}
+                  showMarkerType="sandbox"
+                  limit={15}
+                  options={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></StackBarZ>
+              </BaseChart>
             </>
-          </BaseChart>
-        </div>
-      );
+          </div>
+        );
+      }
+      if (tabState === 'nftworlds') {
+        return (
+          <div className={cn('main-content')}>
+            <>
+              <BaseChart className=" my-5">
+                <ChartLineSandBox
+                  id={'chartline1'}
+                  labelText={'AVERAGE PARCEL PRICE'}
+                  dataHandlder={req_ntfworlds_avg_price_stats}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily price',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly price',
+                      value: 'monthly',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></ChartLineSandBox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <ChartLineToolTipSimpleSandbox
+                  id={'dcl-chartline-2'}
+                  labelText={'NUMBER OF PARCEL SALES'}
+                  dataHandlder={req_ntfworlds_sold_total_stats}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                  ]}
+                ></ChartLineToolTipSimpleSandbox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <StackBarZ
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={req_ntfworlds_sold_sum_stats}
+                  legend1={{ label: 'Land', color: [255, 207, 95] }}
+                  keyTypes={['land', 'estate']}
+                  barWidth={18}
+                  isEth={true}
+                  showMarkerType="sandbox"
+                  limit={15}
+                  options={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></StackBarZ>
+              </BaseChart>
+            </>
+          </div>
+        );
+      }
+      if (tabState === 'worldwidewebb') {
+        return (
+          <div className={cn('main-content')}>
+            <>
+              <BaseChart className=" my-5">
+                <ChartLineSandBox
+                  id={'chartline1'}
+                  labelText={'AVERAGE PARCEL PRICE'}
+                  dataHandlder={req_webb_parcel_avg_price_stats}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily price',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly price',
+                      value: 'monthly',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></ChartLineSandBox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <ChartLineToolTipSimpleSandbox
+                  id={'dcl-chartline-2'}
+                  labelText={'NUMBER OF PARCEL SALES'}
+                  dataHandlder={req_webb_sold_total_stats}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                  ]}
+                ></ChartLineToolTipSimpleSandbox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <StackBarZ
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={req_webb_sold_sum_stats}
+                  legend1={{ label: 'Land', color: [255, 207, 95] }}
+                  keyTypes={['land', 'estate']}
+                  barWidth={18}
+                  isEth={true}
+                  showMarkerType="sandbox"
+                  limit={15}
+                  options={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></StackBarZ>
+              </BaseChart>
+            </>
+          </div>
+        );
+      }
+      if (tabState === 'somniumspace') {
+        return (
+          <div className={cn('main-content')}>
+            <>
+              <BaseChart className=" my-5">
+                <ChartLineSandBox
+                  id={'chartline1'}
+                  labelText={'AVERAGE PARCEL PRICE'}
+                  dataHandlder={req_somniumspace__avg_price_stats}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily price',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly price',
+                      value: 'monthly',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></ChartLineSandBox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <ChartLineToolTipSimpleSandbox
+                  id={'dcl-chartline-2'}
+                  labelText={'NUMBER OF PARCEL SALES'}
+                  dataHandlder={req_somniumspace_sold_total_stats}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                  ]}
+                ></ChartLineToolTipSimpleSandbox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <StackBarZ
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={req_somniumspace_sold_sum_stats}
+                  legend1={{ label: 'Land', color: [255, 207, 95] }}
+                  keyTypes={['land', 'estate']}
+                  barWidth={18}
+                  isEth={true}
+                  showMarkerType="sandbox"
+                  limit={15}
+                  options={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></StackBarZ>
+              </BaseChart>
+            </>
+          </div>
+        );
+      }
     }
   }, [
     tabState,
@@ -682,7 +1055,7 @@ export default function Index(props) {
                   key={item.label}
                   label={item.label}
                   icon={item.icon}
-                  isMini={false}
+                  isMini={true}
                   onClick={() => {
                     onTabChange(item.type);
                   }}
@@ -696,21 +1069,60 @@ export default function Index(props) {
         <div className="main-content">
           <div className={cn('flex justify-between items-center pt-5', style.contentHeader)}>
             <div className="flex">
-              {SUBTAB.map((item, index) => {
-                if (item) {
-                  return (
-                    <SecondTab
-                      label={item.label}
-                      key={item.label}
-                      onClick={() => {
-                        onSubTabChange(item.type);
-                      }}
-                      active={subTabState === item.type}
-                    />
-                  );
-                }
-                return null;
-              })}
+              {tabState === 'cryptovoxels'
+                ? SUBTAB.map((item, index) => {
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                : null}
+              {tabState === 'decentraland'
+                ? SUBTAB.map((item, index) => {
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                : null}
+              {tabState === 'sandbox' ||
+              tabState === 'nftworlds' ||
+              tabState === 'worldwidewebb' ||
+              tabState === 'somniumspace'
+                ? SUBTABZ.map((item, index) => {
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                : null}
             </div>
             {subTabState === 'parcel' ? (
               <Search text={searchText} onSearch={onSearchHandler}></Search>

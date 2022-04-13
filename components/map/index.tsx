@@ -27,8 +27,8 @@ import {
 } from '../../service';
 
 const mapT = [
-  { value: 'TRAFFIC', label: 'TRAFFIC' },
   { value: 'PRICE', label: 'PRICE' },
+  { value: 'TRAFFIC', label: 'TRAFFIC' },
 ];
 
 const options = {
@@ -290,8 +290,8 @@ function Map({
     },
   });
   const popDetail = React.useRef();
-  const mapType = React.useRef('TRAFFIC');
-  const staticType = React.useRef('MONTHLY');
+  const mapType = React.useRef('PRICE');
+  const staticType = React.useRef('ALL');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[1]);
   const trafficRef = React.useRef(null);
@@ -613,6 +613,7 @@ function Map({
       if (!Number.isNaN(count) && legends.current) {
         count = count < 0 ? 0 : count;
         const index = legends.current.findIndex((x) => {
+          console.log(x, staticType.current);
           return count <= x[staticType.current].start && count >= x[staticType.current].end;
         });
         if (index > -1) {
