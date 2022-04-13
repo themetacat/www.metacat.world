@@ -75,6 +75,14 @@ const DCLMapWithNoSSR = dynamic(() => import('../components/decentraland-map'), 
   ssr: false,
 });
 
+const SandboxMap = dynamic(() => import('../components/sandbox-map'), {
+  ssr: false,
+});
+
+const SomniumMap = dynamic(() => import('../components/somnium-map'), {
+  ssr: false,
+});
+
 const TAB = [
   {
     label: 'Cryptovoxels',
@@ -127,6 +135,16 @@ const SUBTAB = [
   },
 ];
 const SUBTABZ = [
+  {
+    label: 'Analytics',
+    type: 'analytics',
+  },
+];
+const SUBTABZ2 = [
+  {
+    label: 'Map',
+    type: 'map',
+  },
   {
     label: 'Analytics',
     type: 'analytics',
@@ -245,9 +263,19 @@ export default function Index(props) {
     let sub = '';
     if (tab === 'cryptovoxels' || tab === 'decentraland') {
       sub = subTabState;
-    } else {
+    } else if (tab === 'nftworlds' || tab === 'worldwidewebb') {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
+    } else if (tab === 'sandbox' || tab === 'somniumspace') {
+      if (SUBTABZ2.find((item) => item.type === subTabState)) {
+        sub = SUBTABZ2.find((item) => item.type === subTabState).type;
+        setSubTabState(sub);
+      } else if (SUBTABZ2.find((item) => item.type !== subTabState)) {
+        sub = SUBTABZ2[0].type;
+        setSubTabState(SUBTABZ2[0].type);
+      }
+    } else {
+      return;
     }
     // if (subTabState === 'map') {
     //   sub = 'parcel';
@@ -255,7 +283,6 @@ export default function Index(props) {
     // }
     setSearchText('');
     setTypeState('all');
-
     nextCursor.current = 1;
     const data = await requestData({
       tab,
@@ -267,7 +294,6 @@ export default function Index(props) {
     });
     setDataSource(data);
   };
-
   const onSubTabChange = React.useCallback(
     async (subTab) => {
       setSubTabState(subTab);
@@ -435,7 +461,8 @@ export default function Index(props) {
                 dragging={false}
                 loadFinish={null}
               ></MapWithNoSSR>
-            ) : (
+            ) : null}
+            {tabState === 'decentraland' ? (
               <DCLMapWithNoSSR
                 zoomControl={false}
                 zoomLimit={[6, 6]}
@@ -445,7 +472,29 @@ export default function Index(props) {
                 dragging={false}
                 loadFinish={null}
               ></DCLMapWithNoSSR>
-            )}
+            ) : null}
+            {tabState === 'sandbox' ? (
+              <SandboxMap
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                changeTypeControl={false}
+                dragging={false}
+                loadFinish={null}
+              ></SandboxMap>
+            ) : null}
+            {tabState === 'somniumspace' ? (
+              <SomniumMap
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                changeTypeControl={true}
+                dragging={false}
+                loadFinish={null}
+              ></SomniumMap>
+            ) : null}
           </div>
         </div>
       );
@@ -1103,11 +1152,26 @@ export default function Index(props) {
                     return null;
                   })
                 : null}
-              {tabState === 'sandbox' ||
-              tabState === 'nftworlds' ||
-              tabState === 'worldwidewebb' ||
-              tabState === 'somniumspace'
+              {tabState === 'nftworlds' || tabState === 'worldwidewebb'
                 ? SUBTABZ.map((item, index) => {
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                : null}
+
+              {tabState === 'sandbox' || tabState === 'somniumspace'
+                ? SUBTABZ2.map((item, index) => {
                     if (item) {
                       return (
                         <SecondTab

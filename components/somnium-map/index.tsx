@@ -614,7 +614,7 @@ function SomniumMap({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        Router.push('/map?type=somnium');
+        Router.push('/map?type=somniumspace');
       });
     }
 
@@ -630,10 +630,7 @@ function SomniumMap({
     ];
 
     layerManager.current = dataLayer;
-
-    if (zoomControl) {
-      requestPriceMapThreeData(map, parcelsPriceLayerThree);
-    }
+    requestPriceMapThreeData(map, parcelsPriceLayerThree);
 
     return () => {
       map.off('zoom');

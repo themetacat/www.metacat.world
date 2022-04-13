@@ -613,7 +613,6 @@ function Map({
       if (!Number.isNaN(count) && legends.current) {
         count = count < 0 ? 0 : count;
         const index = legends.current.findIndex((x) => {
-          console.log(x, staticType.current);
           return count <= x[staticType.current].start && count >= x[staticType.current].end;
         });
         if (index > -1) {
