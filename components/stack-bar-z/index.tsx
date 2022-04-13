@@ -65,7 +65,7 @@ export default function StackBar({
       const result = [];
       if (limit && data.length > limit) {
         const l = data.length;
-        const d = l - limit * 2;
+        const d = l - limit;
         const last = data.slice(d);
         last.forEach((element) => {
           result.push({

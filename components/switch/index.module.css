@@ -16,7 +16,6 @@
 
 .active > .canHover,
 .canHover:hover {
-  filter: brightness(150%);
   cursor: pointer;
 }
 
@@ -42,4 +41,7 @@
 }
 .n{
   white-space: nowrap;
+}
+.n:hover{
+  color: #fff;
 }

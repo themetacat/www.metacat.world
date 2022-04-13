@@ -58,7 +58,7 @@ export default function ChartLine({
       const result = [];
       if (limit) {
         const l = data.length;
-        const d = l - limit * 2;
+        const d = l - limit;
         const last = data.slice(d);
         last.forEach((element) => {
           result.push({
