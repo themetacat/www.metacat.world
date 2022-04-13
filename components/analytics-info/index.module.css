@@ -1,4 +1,4 @@
-.table>tbody >tr> th{
+.table > tbody > tr > th {
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   box-sizing: border-box;
   box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
@@ -9,7 +9,7 @@
   font-weight: 500;
 }
 
-.table >tbody >tr> th>div{
+.table > tbody > tr > th > div {
   background-color: rgba(0, 0, 0, 0.2);
   padding: 3px 20px;
   height: 100%;
@@ -18,27 +18,33 @@
   align-items: center;
 }
 
-.title{
-  color:#AAAAAA
+.title {
+  color: #aaaaaa;
 }
-.cell{
+.cell {
   color: #fff;
   font-size: 28px !important;
   font-weight: 500 !important;
 }
 
-.info{
+.info {
   height: 70px;
 }
 
-.type{
+.type {
   font-size: 20px !important;
   font-weight: 500 !important;
 }
-
 
 .tabIcon {
   width: 28px;
   height: 28px;
   border-radius: 20px;
+}
+
+.table > tbody > .title > th > div {
+  justify-content: center;
+}
+.table > tbody > .title > th:first-child > div {
+  justify-content: left;
 }
