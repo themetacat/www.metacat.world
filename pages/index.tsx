@@ -266,12 +266,16 @@ export default function Index(props) {
     } else if (tab === 'nftworlds' || tab === 'worldwidewebb') {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
-    } else {
+    } else if (tab === 'sandbox' || tab === 'somniumspace') {
       if (SUBTABZ2.find((item) => item.type === subTabState)) {
         sub = SUBTABZ2.find((item) => item.type === subTabState).type;
+        setSubTabState(sub);
+      } else if (SUBTABZ2.find((item) => item.type !== subTabState)) {
+        sub = SUBTABZ2[0].type;
+        setSubTabState(SUBTABZ2[0].type);
       }
-      sub = SUBTABZ2[0].type;
-      setSubTabState(SUBTABZ2[0].type);
+    } else {
+      return;
     }
     // if (subTabState === 'map') {
     //   sub = 'parcel';
