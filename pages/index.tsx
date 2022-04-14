@@ -483,8 +483,8 @@ export default function Index(props) {
             {tabState === 'somniumspace' ? (
               <SomniumMap
                 zoomControl={false}
-                zoomLimit={[6, 6]}
-                initZoom={6}
+                zoomLimit={[3, 9]}
+                initZoom={4}
                 clickToJump={true}
                 changeTypeControl={true}
                 dragging={false}
