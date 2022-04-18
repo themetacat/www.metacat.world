@@ -17,8 +17,11 @@ import ParcelsTab from '../../components/parcels-tab';
 import RentSet from '../../components/parcels_rent_set';
 import Popup from '../../components/popup';
 import store from '../../store/profile';
-
+import BaseChart from '../../components/base-chart';
+import PieChart from '../../components/pie-chart';
+import ProfileDetail from '../../components/profiledetail';
 import { state } from '../../components/wallet-btn';
+import BaseBar from '../../components/parcel-base-bar';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -33,6 +36,9 @@ import {
   req_dcl_parcel_list,
   req_dcl_cancel,
   req_dcl_leased,
+  req_cv_parcel_traffic,
+  req_cv_parcel_traffic_daily,
+  req_cv_parcel_month_traffic_detail,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -49,21 +55,25 @@ const TAB = [
     type: 'decentraland',
   },
 ];
+const REPORTTAB = [
+  {
+    label: 'Cryptovoxels',
+    icon: '/images/Crypto Voxel.jpg',
+    type: 'cryptovoxels',
+  },
+];
 
-// const TAB3 = [
-//   {
-//     label: 'PARCEL LIST',
-//     active: true,
-//   },
-//   {
-//     label: 'TRAFFIC REPORT',
-//     active: false,
-//   },
-//   {
-//     label: 'SALES REPORT',
-//     active: false,
-//   },
-// ];
+const TAB3 = [
+  {
+    label: 'PARCEL LIST',
+  },
+  {
+    label: 'TRAFFIC REPORT',
+  },
+  {
+    label: 'SALES REPORT',
+  },
+];
 export default function ProfilePage() {
   const nav_Label = React.useRef(null);
   const meta = {
@@ -91,6 +101,9 @@ export default function ProfilePage() {
   const [status, set_status] = React.useState('');
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
+
+  const [showTab, setShowTab] = React.useState(TAB3[0].label);
+  const [tabStateTR, setTabStateTR] = React.useState('cryptovoxels');
 
   const [navLabel, setNavLabel] = React.useState('All');
 
@@ -172,8 +185,17 @@ export default function ProfilePage() {
     return null;
   }, [null]);
 
+  const changeTab3 = React.useCallback(
+    async (l) => {
+      if (l === showTab) return;
+      setShowTab(l);
+    },
+    [showTab],
+  );
+
   const onTabChange = React.useCallback(
     async (tab) => {
+      if (tabState === tab) return;
       setLoading(true);
       setTabState(tab);
       setParcelsIds([]);
@@ -191,6 +213,10 @@ export default function ProfilePage() {
     },
     [orginData],
   );
+
+  const onTabChangeTR = React.useCallback((i) => {
+    setTabStateTR(i);
+  }, []);
 
   const resultHandler = React.useCallback(
     (res, callback) => {
@@ -261,7 +287,7 @@ export default function ProfilePage() {
       try {
         const res = await getParcelList2(token);
         const data = resultHandler(res, requestData);
-
+        setLoading(false);
         if (!data) {
           return;
         }
@@ -271,7 +297,6 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
-      setLoading(false);
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -281,6 +306,7 @@ export default function ProfilePage() {
       try {
         const res = await req_dcl_parcel_list(token);
         const data = resultHandler(res, reqDclData);
+        setLoading(false);
         if (!data) {
           return;
         }
@@ -290,7 +316,6 @@ export default function ProfilePage() {
       } catch {
         setError(true);
       }
-      setLoading(false);
     },
     [resultHandler, tabState, nav_Label],
   );
@@ -643,6 +668,195 @@ export default function ProfilePage() {
     return <div></div>;
   };
 
+  const randerCardList = React.useMemo(() => {
+    if (showTab === 'PARCEL LIST') {
+      return (
+        <>
+          <div className={cn('tab-list flex mt-5', style.allHeight)}>
+            <div className={cls}></div>
+            <div className="main-content flex px-0">
+              {TAB.map((item) => {
+                return (
+                  <Tab
+                    active={tabState === item.type}
+                    isMini={true}
+                    key={item.label}
+                    label={item.label}
+                    icon={item.icon}
+                    onClick={() => {
+                      onTabChange(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+          {/* 导航 */}
+          <div className={style.nav}>
+            <div className={style.nav_left}>
+              {nav.map((item, index) => {
+                return (
+                  <ParcelsTab
+                    dataSource={dataSource}
+                    label={item.label}
+                    state={item.state}
+                    num={item.num}
+                    key={item.label}
+                    onClick={() => {
+                      changeNavTab(item.label, index);
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <div className={style.nav_right}>
+              <div
+                className={style.nav_right_item}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  manySet(manySetState);
+                  setSelectedIds([]);
+                }}
+              >
+                <img src="/images/Settings.png" />
+                <div>Batch setting</div>
+                {manySetState ? (
+                  <div className={style.container}>
+                    <div className={style.manySetList}>
+                      {manySetLabel.map((item) => {
+                        return (
+                          <div
+                            className={style.setItem}
+                            key={item.label}
+                            onClick={() => {
+                              manyChange(item.label, cartData);
+                              setSelectedIds([]);
+                              store.setState(() => ({ parcels_cardState: true }));
+                            }}
+                          >
+                            {item.label}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+
+              {/* <div className={style.nav_right_item}>
+              <img src="/images/icon/kapian.png" className={style.left} />
+              <div className={style.shuxian}></div>
+              <img src="/images/icon/liebiao.png" className={style.right} />
+            </div> */}
+            </div>
+          </div>
+          {/* 导航结束 */}
+          {/* 卡片开始 */}
+          <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
+
+          {/* 卡片结束 */}
+          {tag2()}
+          <RentSet
+            state={rent_set_state}
+            onClick={(current_state) => {
+              close_rent_set(current_state);
+            }}
+            selectedIds={selectedIds}
+          />
+          <Popup status={status} type={type} value={value} />
+        </>
+      );
+    }
+    // if (showTab === 'TRAFFIC REPORT') {
+    //   return (
+    //     <>
+    //       <div className={cn('tab-list flex mt-5', style.allHeight)}>
+    //         <div className={cls}></div>
+    //         <div className="main-content flex px-0">
+    //           {REPORTTAB.map((item) => {
+    //             return (
+    //               <Tab
+    //                 active={tabState === item.type}
+    //                 isMini={true}
+    //                 key={item.label}
+    //                 label={item.label}
+    //                 icon={item.icon}
+    //                 onClick={() => {
+    //                   onTabChangeTR(item.type);
+    //                 }}
+    //               />
+    //             );
+    //           })}
+    //           <div className={cls} />
+    //         </div>
+    //         <div className={cls} />
+    //       </div>
+    //       <div className={cn(style.content)}>
+    //         <BaseChart className=" my-5">
+    //           <BaseBar
+    //             id={'parcel1'}
+    //             labelText={'MONTHLY TRAFFIC'}
+    //             dataHandlder={req_cv_parcel_traffic}
+    //             barWidth={28}
+    //             limit={15}
+    //             token={refreshTK()}
+    //           ></BaseBar>
+    //         </BaseChart>
+    //         <BaseChart className=" my-5" type={true}>
+    //           <PieChart
+    //             id='piechart1'
+    //             labelText={'DAILY TRAFFIC OF MY PARCELS-GENERAL '}
+    //             dataHandlder={req_cv_parcel_traffic_daily}
+    //             token={refreshTK()}
+    //             options={[
+    //               {
+    //                 label: 'Day',
+    //                 value: 'day',
+    //               },
+    //               {
+    //                 label: 'Week',
+    //                 value: 'week',
+    //               },
+    //               {
+    //                 label: 'Month',
+    //                 value: 'month',
+    //               },
+    //             ]}
+    //           >
+    //           </PieChart>
+    //         </BaseChart>
+    //         <BaseChart className=" my-5" type={true}>
+    //           <ProfileDetail
+    //             label={"DETAILED TRAFFIC INFORMATION LIST OF PARCELS"}
+    //             dataHandlder={req_cv_parcel_month_traffic_detail}
+    //             token={refreshTK()}
+    //           >
+
+    //           </ProfileDetail>
+    //         </BaseChart>
+    //       </div>
+    //     </>
+    //   )
+    // }
+  }, [
+    showTab,
+    status,
+    type,
+    value,
+    selectedIds,
+    rent_set_state,
+    s,
+    cartData,
+    manySetLabel,
+    renderContent,
+    dataSource,
+    tabState,
+  ]);
+
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div
@@ -664,109 +878,23 @@ export default function ProfilePage() {
             classname="main-content"
           ></Profile>
         </div>
-        {/* <div className={cn(style.tablebg)}>
+        <div className={cn(style.tablebg)}>
           <div className={cn(style.tableList)}>
             {TAB3.map((item) => {
-              return <Tab3 label={item.label} key={item.label} active={item.active} />;
-            })}
-          </div>
-        </div> */}
-        <div className={cn('tab-list flex mt-5', style.allHeight)}>
-          <div className={cls}></div>
-          <div className="main-content flex px-0">
-            {TAB.map((item) => {
               return (
-                <Tab
-                  active={tabState === item.type}
-                  isMini={true}
-                  key={item.label}
+                <Tab3
                   label={item.label}
-                  icon={item.icon}
-                  onClick={() => {
-                    onTabChange(item.type);
-                  }}
-                />
-              );
-            })}
-            <div className={cls} />
-          </div>
-          <div className={cls} />
-        </div>
-        {/* 导航 */}
-        <div className={style.nav}>
-          <div className={style.nav_left}>
-            {nav.map((item, index) => {
-              return (
-                <ParcelsTab
-                  dataSource={dataSource}
-                  label={item.label}
-                  state={item.state}
-                  num={item.num}
                   key={item.label}
+                  active={showTab === item.label}
                   onClick={() => {
-                    changeNavTab(item.label, index);
+                    changeTab3(item.label);
                   }}
                 />
               );
             })}
           </div>
-          <div className={style.nav_right}>
-            <div
-              className={style.nav_right_item}
-              onClick={(event) => {
-                event.stopPropagation();
-                manySet(manySetState);
-                setSelectedIds([]);
-              }}
-            >
-              <img src="/images/Settings.png" />
-              <div>Batch setting</div>
-              {manySetState ? (
-                <div className={style.container}>
-                  <div className={style.manySetList}>
-                    {manySetLabel.map((item) => {
-                      return (
-                        <div
-                          className={style.setItem}
-                          key={item.label}
-                          onClick={() => {
-                            manyChange(item.label, cartData);
-                            setSelectedIds([]);
-                            store.setState(() => ({ parcels_cardState: true }));
-                          }}
-                        >
-                          {item.label}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
-
-            {/* <div className={style.nav_right_item}>
-              <img src="/images/icon/kapian.png" className={style.left} />
-              <div className={style.shuxian}></div>
-              <img src="/images/icon/liebiao.png" className={style.right} />
-            </div> */}
-          </div>
         </div>
-        {/* 导航结束 */}
-        {/* 卡片开始 */}
-        <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
-
-        {/* 卡片结束 */}
-        {tag2()}
-        <RentSet
-          state={rent_set_state}
-          onClick={(current_state) => {
-            close_rent_set(current_state);
-          }}
-          selectedIds={selectedIds}
-        />
-        <Popup status={status} type={type} value={value} />
+        {randerCardList}
         <Footer />
       </div>
     </Page>

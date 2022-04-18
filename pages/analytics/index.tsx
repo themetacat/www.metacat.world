@@ -309,6 +309,7 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
+            tabState={showType}
           ></ChartLineSandBox>
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
@@ -328,6 +329,7 @@ export default function AnalyticsIndex(props) {
                 value: 'monthly',
               },
             ]}
+            tabState={showType}
           ></ChartLineToolTipSimpleSandbox>
           <StackBarZ
             id={'stackbar1'}
@@ -349,6 +351,7 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
+            tabState={showType}
           ></StackBarZ>
         </>
       );
@@ -382,6 +385,7 @@ export default function AnalyticsIndex(props) {
                   value: 'eth',
                 },
               ]}
+              tabState={showType}
             ></ChartLineSandBox>
             <ChartLineToolTipSimpleSandbox
               id={'dcl-chartline-2'}
@@ -401,6 +405,7 @@ export default function AnalyticsIndex(props) {
                   value: 'monthly',
                 },
               ]}
+              tabState={showType}
             ></ChartLineToolTipSimpleSandbox>
             <StackBarZ
               id={'stackbar1'}
@@ -422,6 +427,7 @@ export default function AnalyticsIndex(props) {
                   value: 'eth',
                 },
               ]}
+              tabState={showType}
             ></StackBarZ>
           </>
         </>
@@ -455,6 +461,7 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
+            tabState={showType}
           ></ChartLineSandBox>
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
@@ -474,6 +481,7 @@ export default function AnalyticsIndex(props) {
                 value: 'monthly',
               },
             ]}
+            tabState={showType}
           ></ChartLineToolTipSimpleSandbox>
           <StackBarZ
             id={'stackbar1'}
@@ -495,6 +503,7 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
+            tabState={showType}
           ></StackBarZ>
         </>
       );
@@ -527,6 +536,7 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
+            tabState={showType}
           ></ChartLineSandBox>
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
@@ -546,6 +556,7 @@ export default function AnalyticsIndex(props) {
                 value: 'monthly',
               },
             ]}
+            tabState={showType}
           ></ChartLineToolTipSimpleSandbox>
           <StackBarZ
             id={'stackbar1'}
@@ -567,6 +578,7 @@ export default function AnalyticsIndex(props) {
                 value: 'eth',
               },
             ]}
+            tabState={showType}
           ></StackBarZ>
         </>
       );

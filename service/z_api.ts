@@ -524,3 +524,53 @@ export const req_webb_sold_sum_stats = async () => {
 
   return json;
 };
+
+// 14.1 获取当前登录者 Cryptovoxels 地块每日流量总数接口
+
+export const req_cv_parcel_traffic = async (token: string) => {
+  const url = 'api/get_cv_parcel_traffic_daily_stats';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 14.2 获取当前登录者 Cryptovoxels 地块每日/每周/每月流量占比接口
+export const req_cv_parcel_traffic_daily = async (token: string) => {
+  const url = 'api/get_cv_parcel_traffic_percentage';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 14.3 获取当前登录者 Cryptovoxels 地块每日流量统计接口
+
+export const req_cv_parcel_month_traffic_detail = async (token: string) => {
+  const url = 'api/get_cv_parcel_traffic_detail';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
