@@ -32,6 +32,7 @@ type Props = {
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
   simpleTooltip?: boolean;
+  tabState?: string;
 };
 
 export default function ChartLineToolTipSimple({
@@ -45,9 +46,11 @@ export default function ChartLineToolTipSimple({
   priceOptions,
   className,
   keyTypes = ['primary', 'secondary'],
+  tabState,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [dataSource, setDataSource] = React.useState(null);
+  const [tab_state, set_tab_state] = React.useState(tabState);
   const chart = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -105,7 +108,7 @@ export default function ChartLineToolTipSimple({
   };
 
   const initChart = React.useCallback(
-    (data) => {
+    (data, t1, t2) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -115,8 +118,13 @@ export default function ChartLineToolTipSimple({
         autoFit: true,
         height: 210,
       });
-
-      chart.current.data(transfromData(data[staticType].data, staticType));
+      if (data) {
+        if (t1 !== t2) {
+          chart.current.data(transfromData(data[options[0].value].data, options[0].value));
+        } else {
+          chart.current.data(transfromData(data[staticType].data, staticType));
+        }
+      }
       chart.current.scale('time', {
         range: [0.01, 0.99],
         type: 'cat',
@@ -249,7 +257,7 @@ export default function ChartLineToolTipSimple({
     }
     setLoading(false);
     if (result) {
-      initChart(result);
+      initChart(result, tabState, tab_state);
     }
     return result;
   }, [dataHandlder]);
@@ -289,6 +297,13 @@ export default function ChartLineToolTipSimple({
     [dataSource, limit, updateData],
   );
 
+  const init = React.useCallback(() => {
+    changeStatic(options[0].value);
+    setStaticType(options[0].value);
+    set_tab_state(tabState);
+    initChart(dataSource, tabState, tab_state);
+  }, [tabState]);
+
   const getSelect = React.useMemo(() => {
     return (
       <ChartSelecter
@@ -303,12 +318,13 @@ export default function ChartLineToolTipSimple({
 
   React.useEffect(() => {
     requestData();
+    init();
     return () => {
       if (chart.current) {
         chart.current.destroy();
       }
     };
-  }, [requestData]);
+  }, [requestData, init]);
 
   return (
     <div className={cn('w-full p-5', style.content, className)}>

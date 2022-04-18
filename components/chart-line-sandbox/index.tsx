@@ -31,6 +31,7 @@ type Props = {
   options?: Array<optionItem>;
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
+  tabState?: string;
 };
 
 export default function ChartLine({
@@ -44,9 +45,11 @@ export default function ChartLine({
   priceOptions,
   className,
   keyTypes = ['land'],
+  tabState,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
+  const [tab_state, set_tab_state] = React.useState(tabState);
   const [dataSource, setDataSource] = React.useState(null);
   const chart = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
@@ -82,7 +85,7 @@ export default function ChartLine({
   );
 
   const initChart = React.useCallback(
-    (data) => {
+    (data, t1, t2) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -92,10 +95,22 @@ export default function ChartLine({
         autoFit: true,
         height: 210,
       });
+      if (data) {
+        if (t1 !== t2) {
+          chart.current.data(
+            transfromData(
+              data[options[0].value].data[priceOptions[0].value],
+              options[0].value,
+              priceOptions[0].value,
+            ),
+          );
+        } else {
+          chart.current.data(
+            transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
+          );
+        }
+      }
 
-      chart.current.data(
-        transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
-      );
       chart.current.scale('time', {
         range: [0.01, 0.99],
         type: 'cat',
@@ -291,7 +306,7 @@ export default function ChartLine({
     }
     setLoading(false);
     if (result) {
-      initChart(result);
+      initChart(result, tabState, tab_state);
     }
     return result;
   }, [dataHandlder]);
@@ -342,7 +357,14 @@ export default function ChartLine({
     },
     [dataSource, staticType, limit, updateData],
   );
-
+  const init = React.useCallback(() => {
+    changeStatic(options[0].value);
+    changePriceStatic(priceOptions[0].value);
+    setStaticType(options[0].value);
+    setPriceStaticType(priceOptions[0].value);
+    set_tab_state(tabState);
+    initChart(dataSource, tabState, tab_state);
+  }, [tabState]);
   const getSelect = React.useMemo(() => {
     return (
       <div
@@ -383,6 +405,7 @@ export default function ChartLine({
 
   React.useEffect(() => {
     requestData();
+    init();
     return () => {
       if (chart.current) {
         chart.current.destroy();

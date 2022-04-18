@@ -487,8 +487,8 @@ export default function Index(props) {
             {tabState === 'somniumspace' ? (
               <SomniumMap
                 zoomControl={false}
-                zoomLimit={[3, 9]}
-                initZoom={4}
+                zoomLimit={[6, 6]}
+                initZoom={6}
                 clickToJump={true}
                 changeTypeControl={true}
                 dragging={false}
@@ -538,6 +538,7 @@ export default function Index(props) {
                   },
                 ]}
                 limit={15}
+                tabState={tabState}
               ></ChartLine>
             </BaseChart>
             <BaseChart className=" mb-5">
@@ -673,6 +674,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineSandBox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -694,6 +696,7 @@ export default function Index(props) {
                       value: 'monthly',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineToolTipSimpleSandbox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -717,6 +720,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></StackBarZ>
               </BaseChart>
             </>
@@ -753,6 +757,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineSandBox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -774,6 +779,7 @@ export default function Index(props) {
                       value: 'monthly',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineToolTipSimpleSandbox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -797,6 +803,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></StackBarZ>
               </BaseChart>
             </>
@@ -833,6 +840,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineSandBox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -854,6 +862,7 @@ export default function Index(props) {
                       value: 'monthly',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineToolTipSimpleSandbox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -877,6 +886,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></StackBarZ>
               </BaseChart>
             </>
@@ -913,6 +923,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineSandBox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -934,6 +945,7 @@ export default function Index(props) {
                       value: 'monthly',
                     },
                   ]}
+                  tabState={tabState}
                 ></ChartLineToolTipSimpleSandbox>
               </BaseChart>
               <BaseChart className=" my-5">
@@ -957,6 +969,7 @@ export default function Index(props) {
                       value: 'eth',
                     },
                   ]}
+                  tabState={tabState}
                 ></StackBarZ>
               </BaseChart>
             </>

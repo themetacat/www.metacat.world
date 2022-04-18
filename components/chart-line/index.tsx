@@ -31,6 +31,7 @@ type Props = {
   options?: Array<optionItem>;
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
+  tabState?: string;
 };
 
 export default function ChartLine({
@@ -44,6 +45,7 @@ export default function ChartLine({
   priceOptions,
   className,
   keyTypes = ['primary', 'secondary'],
+  tabState,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
@@ -357,7 +359,11 @@ export default function ChartLine({
     },
     [dataSource, staticType, priceStaticType, limit],
   );
-
+  const init = React.useCallback(() => {
+    setStaticType(options[0].value);
+    setPriceStaticType(priceOptions[0].value);
+    updateData(options[0].value, priceOptions[0].value);
+  }, [tabState]);
   const changeStatic = React.useCallback(
     (val) => {
       setStaticType(val);
@@ -418,12 +424,13 @@ export default function ChartLine({
 
   React.useEffect(() => {
     requestData();
+    init();
     return () => {
       if (chart.current) {
         chart.current.destroy();
       }
     };
-  }, [requestData]);
+  }, [requestData, init]);
 
   return (
     <div className={cn('w-full p-5', style.content, className)}>
