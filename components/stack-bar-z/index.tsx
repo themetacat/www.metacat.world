@@ -36,6 +36,8 @@ type Props = {
   limit?: number;
   barWidth?: number;
   keyTypes?: Array<string>;
+  token?: string;
+  tabState?: string;
 };
 
 export default function StackBar({
@@ -52,8 +54,11 @@ export default function StackBar({
   limit,
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
+  token,
+  tabState,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
+  const [tab_state, set_tab_state] = React.useState(tabState);
   const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -87,7 +92,7 @@ export default function StackBar({
   );
 
   const initChart = React.useCallback(
-    (data) => {
+    (data, t1, t2) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -97,8 +102,13 @@ export default function StackBar({
         autoFit: true,
         height: 210,
       });
-      const tempData = transfromData(data[staticType].data, staticType);
-      chart.current.data(tempData);
+      if (data) {
+        if (t1 !== t2) {
+          chart.current.data(transfromData(data[options[0].value].data, options[0].value));
+        } else {
+          chart.current.data(transfromData(data[staticType].data, staticType));
+        }
+      }
       // 设置弹窗
       chart.current.tooltip({
         shared: true,
@@ -279,7 +289,7 @@ export default function StackBar({
     }
     setLoading(false);
     if (result) {
-      initChart(result);
+      initChart(result, tabState, tab_state);
     }
     return result;
   }, [dataHandler]);
@@ -288,16 +298,14 @@ export default function StackBar({
     requestData();
   }, [requestData]);
 
-  React.useEffect(() => {
-    requestData();
-
-    return () => {
-      if (chart.current) {
-        chart.current.destroy();
+  const updateData = React.useCallback(
+    (staticT) => {
+      if (chart.current && dataSource) {
+        chart.current.changeData(transfromData(dataSource[staticT].data, staticT));
       }
-    };
-  }, [requestData]);
-
+    },
+    [dataSource, staticType, limit],
+  );
   const changeStatic = React.useCallback(
     (val) => {
       setStaticType(val);
@@ -307,6 +315,23 @@ export default function StackBar({
     },
     [dataSource, limit],
   );
+
+  const init = React.useCallback(() => {
+    changeStatic(options[0].value);
+    setStaticType(options[0].value);
+    set_tab_state(tabState);
+    initChart(dataSource, tabState, tab_state);
+  }, [tabState]);
+
+  React.useEffect(() => {
+    requestData();
+    init();
+    return () => {
+      if (chart.current) {
+        chart.current.destroy();
+      }
+    };
+  }, [requestData, init]);
 
   const getLenged = React.useMemo(() => {
     if (showMarkerType !== 'sandbox') {

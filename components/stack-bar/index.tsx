@@ -88,6 +88,7 @@ export default function StackBar({
 
   const initChart = React.useCallback(
     (data) => {
+      console.log(data);
       const dom = document.getElementById(id);
       if (!dom) {
         return;

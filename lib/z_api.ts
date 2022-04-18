@@ -525,6 +525,57 @@ class API {
 
     return json;
   }
+
+  // 14.1 获取当前登录者 Cryptovoxels 地块每日流量总数接口
+
+  public async req_cv_parcel_traffic(token: string): Promise<any> {
+    const url = `${this.url}/user/get_cv_parcel_traffic_daily_stats`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 14.2 获取当前登录者 Cryptovoxels 地块每日/每周/每月流量占比接口
+
+  public async req_cv_parcel_traffic_daily(token): Promise<any> {
+    const url = `${this.url}/user/get_cv_parcel_traffic_percentage`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 14.3 获取当前登录者 Cryptovoxels 地块每日流量统计接口
+
+  public async req_cv_parcel_month_traffic_detail(token: string): Promise<any> {
+    const url = `${this.url}/user/get_cv_parcel_traffic_detail`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');
