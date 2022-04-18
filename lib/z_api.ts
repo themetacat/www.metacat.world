@@ -576,6 +576,45 @@ class API {
 
     return json;
   }
+
+  // 14.4 获取当前登录者 Cryptovoxels 地块id 列表接口
+
+  public async req_cv_parcel_id_list(token: string): Promise<any> {
+    const url = `${this.url}/user/get_cv_parcel_id_list`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 14.5 获取当前登录者 Cryptovoxels 单个地块一段时间内的每日流量统计接口
+
+  public async req_cv_parcel_traffic_list(
+    token: string,
+    parcel_id: number,
+    day_total: number,
+  ): Promise<any> {
+    const search = qs.stringify({ parcel_id, day_total }, { addQueryPrefix: true });
+    const url = `${this.url}/user/get_cv_parcel_traffic_list${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

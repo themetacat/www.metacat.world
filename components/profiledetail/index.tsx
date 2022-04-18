@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-
+import { v4 as uuid } from 'uuid';
 import style from './index.module.css';
 
 import ChartTitle from '../chart-title';
@@ -8,7 +8,7 @@ import Status from '../status';
 
 type Props = {
   label?: string;
-  dataHandlder?: (token) => void;
+  dataHandlder?: (token) => { data };
   token?: Promise<any>;
 };
 
@@ -81,12 +81,14 @@ const dd = [
 export default function ProfileDetail({ label, dataHandlder, token }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [data, setData] = React.useState(d);
-  const [datas, setDatas] = React.useState(dd);
+  const [data, setData] = React.useState([]);
+  const [datas, setDatas] = React.useState([]);
 
   const requestData = React.useCallback(async (tok) => {
     const tk = await tok;
-    const result = dataHandlder(tk);
+    const result = await dataHandlder(tk);
+    setData(result.data.date_list);
+    setDatas(result.data.traffic_data_list);
   }, []);
 
   const onRetry = React.useCallback(() => {
@@ -128,74 +130,24 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
           </tr>
           {datas.map((item) => {
             return (
-              <tr>
-                <th className={style.item}>
+              <tr key={uuid()}>
+                <td className={style.item}>
                   <div>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
-                </th>
+                </td>
                 <th className={style.item}>
                   <div>{item.island}</div>
                 </th>
-                <th className={style.item}>
+                <td className={style.item}>
                   <div>{item.suburb}</div>
-                </th>
-                <th className={style.item}>
+                </td>
+                <td className={style.item}>
                   <div>{item.total_traffic}</div>
-                </th>
+                </td>
                 {item.traffic_detail.map((i) => {
                   return (
-                    <th className={style.item}>
+                    <td className={style.item}>
                       <div>{i}</div>
-                    </th>
-                  );
-                })}
-              </tr>
-            );
-          })}
-          {datas.map((item) => {
-            return (
-              <tr>
-                <th className={style.item}>
-                  <div>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
-                </th>
-                <th className={style.item}>
-                  <div>{item.island}</div>
-                </th>
-                <th className={style.item}>
-                  <div>{item.suburb}</div>
-                </th>
-                <th className={style.item}>
-                  <div>{item.total_traffic}</div>
-                </th>
-                {item.traffic_detail.map((i) => {
-                  return (
-                    <th className={style.item}>
-                      <div>{i}</div>
-                    </th>
-                  );
-                })}
-              </tr>
-            );
-          })}
-          {datas.map((item) => {
-            return (
-              <tr>
-                <th className={style.item}>
-                  <div>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
-                </th>
-                <th className={style.item}>
-                  <div>{item.island}</div>
-                </th>
-                <th className={style.item}>
-                  <div>{item.suburb}</div>
-                </th>
-                <th className={style.item}>
-                  <div>{item.total_traffic}</div>
-                </th>
-                {item.traffic_detail.map((i) => {
-                  return (
-                    <th className={style.item}>
-                      <div>{i}</div>
-                    </th>
+                    </td>
                   );
                 })}
               </tr>
@@ -204,11 +156,11 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
         </tbody>
       </table>
     );
-  }, [loading, error, onRetry]);
+  }, [loading, error, onRetry, data, datas]);
 
   React.useEffect(() => {
     requestData(token);
-  }, []);
+  }, [requestData]);
 
   return (
     <div>

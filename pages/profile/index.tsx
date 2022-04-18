@@ -22,6 +22,7 @@ import PieChart from '../../components/pie-chart';
 import ProfileDetail from '../../components/profiledetail';
 import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
+import TrafficBar from '../../components/parcel-traffic_bar';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -39,6 +40,7 @@ import {
   req_cv_parcel_traffic,
   req_cv_parcel_traffic_daily,
   req_cv_parcel_month_traffic_detail,
+  req_cv_parcel_traffic_list,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -771,77 +773,84 @@ export default function ProfilePage() {
         </>
       );
     }
-    // if (showTab === 'TRAFFIC REPORT') {
-    //   return (
-    //     <>
-    //       <div className={cn('tab-list flex mt-5', style.allHeight)}>
-    //         <div className={cls}></div>
-    //         <div className="main-content flex px-0">
-    //           {REPORTTAB.map((item) => {
-    //             return (
-    //               <Tab
-    //                 active={tabState === item.type}
-    //                 isMini={true}
-    //                 key={item.label}
-    //                 label={item.label}
-    //                 icon={item.icon}
-    //                 onClick={() => {
-    //                   onTabChangeTR(item.type);
-    //                 }}
-    //               />
-    //             );
-    //           })}
-    //           <div className={cls} />
-    //         </div>
-    //         <div className={cls} />
-    //       </div>
-    //       <div className={cn(style.content)}>
-    //         <BaseChart className=" my-5">
-    //           <BaseBar
-    //             id={'parcel1'}
-    //             labelText={'MONTHLY TRAFFIC'}
-    //             dataHandlder={req_cv_parcel_traffic}
-    //             barWidth={28}
-    //             limit={15}
-    //             token={refreshTK()}
-    //           ></BaseBar>
-    //         </BaseChart>
-    //         <BaseChart className=" my-5" type={true}>
-    //           <PieChart
-    //             id='piechart1'
-    //             labelText={'DAILY TRAFFIC OF MY PARCELS-GENERAL '}
-    //             dataHandlder={req_cv_parcel_traffic_daily}
-    //             token={refreshTK()}
-    //             options={[
-    //               {
-    //                 label: 'Day',
-    //                 value: 'day',
-    //               },
-    //               {
-    //                 label: 'Week',
-    //                 value: 'week',
-    //               },
-    //               {
-    //                 label: 'Month',
-    //                 value: 'month',
-    //               },
-    //             ]}
-    //           >
-    //           </PieChart>
-    //         </BaseChart>
-    //         <BaseChart className=" my-5" type={true}>
-    //           <ProfileDetail
-    //             label={"DETAILED TRAFFIC INFORMATION LIST OF PARCELS"}
-    //             dataHandlder={req_cv_parcel_month_traffic_detail}
-    //             token={refreshTK()}
-    //           >
-
-    //           </ProfileDetail>
-    //         </BaseChart>
-    //       </div>
-    //     </>
-    //   )
-    // }
+    if (showTab === 'TRAFFIC REPORT') {
+      return (
+        <>
+          <div className={cn('tab-list flex mt-5', style.allHeight)}>
+            <div className={cls}></div>
+            <div className="main-content flex px-0">
+              {REPORTTAB.map((item) => {
+                return (
+                  <Tab
+                    active={tabState === item.type}
+                    isMini={true}
+                    key={item.label}
+                    label={item.label}
+                    icon={item.icon}
+                    onClick={() => {
+                      onTabChangeTR(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+          <div className={cn(style.content)}>
+            <BaseChart className=" my-5">
+              <BaseBar
+                id={'parcel1'}
+                labelText={'DAILY TRAFFIC OF MY PARCELS-GENERAL '}
+                dataHandlder={req_cv_parcel_traffic}
+                barWidth={28}
+                limit={15}
+                token={refreshTK()}
+              ></BaseBar>
+            </BaseChart>
+            <BaseChart className=" my-5">
+              <TrafficBar
+                id={'parcel3'}
+                labelText={'DAILY TRAFFIC'}
+                dataHandlder={req_cv_parcel_traffic_list}
+                barWidth={20}
+                limit={30}
+                token={refreshTK()}
+              ></TrafficBar>
+            </BaseChart>
+            <BaseChart className=" my-5" type={true}>
+              <PieChart
+                id="piechart2"
+                labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+                dataHandlder={req_cv_parcel_traffic_daily}
+                token={refreshTK()}
+                options={[
+                  {
+                    label: 'Day',
+                    value: 'day',
+                  },
+                  {
+                    label: 'Week',
+                    value: 'week',
+                  },
+                  {
+                    label: 'Month',
+                    value: 'month',
+                  },
+                ]}
+              ></PieChart>
+            </BaseChart>
+            <BaseChart className=" my-5" type={true}>
+              <ProfileDetail
+                label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+                dataHandlder={req_cv_parcel_month_traffic_detail}
+                token={refreshTK()}
+              ></ProfileDetail>
+            </BaseChart>
+          </div>
+        </>
+      );
+    }
   }, [
     showTab,
     status,
