@@ -17,7 +17,7 @@ type Props = {
   id?: string;
   options?: Array<optionItem>;
   labelText?: string;
-  dataHandlder: (tok) => { data };
+  dataHandlder?;
   token: Promise<any>;
 };
 
