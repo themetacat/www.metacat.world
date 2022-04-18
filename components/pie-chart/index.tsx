@@ -17,130 +17,17 @@ type Props = {
   id?: string;
   options?: Array<optionItem>;
   labelText?: string;
-  dataHandlder: (token) => void;
+  dataHandlder: (tok) => { data };
+  token: Promise<any>;
 };
 
-const d = {
-  day: [
-    {
-      parcel_id: 2808,
-      name: 'Pranksyland',
-      percent: 0.38,
-    },
-    {
-      parcel_id: 747,
-      name: '',
-      percent: 0.12,
-    },
-    {
-      parcel_id: 932,
-      name: 'Metapurse HQ',
-      percent: 0.12,
-    },
-    {
-      parcel_id: 2954,
-      name: '',
-      percent: 0.12,
-    },
-    {
-      parcel_id: 2987,
-      name: '',
-      percent: 0.12,
-    },
-    {
-      parcel_id: 2999,
-      name: '',
-      percent: 0.12,
-    },
-    {
-      parcel_id: 0,
-      name: 'Other',
-      percent: 0,
-    },
-  ],
-  week: [
-    {
-      parcel_id: 932,
-      name: 'Metapurse HQ',
-      percent: 0.17,
-    },
-    {
-      parcel_id: 2808,
-      name: 'Pranksyland',
-      percent: 0.1,
-    },
-    {
-      parcel_id: 2873,
-      name: '',
-      percent: 0.07,
-    },
-    {
-      parcel_id: 3024,
-      name: '',
-      percent: 0.07,
-    },
-    {
-      parcel_id: 2152,
-      name: 'Pranksyland',
-      percent: 0.05,
-    },
-    {
-      parcel_id: 747,
-      name: '',
-      percent: 0.05,
-    },
-    {
-      parcel_id: 0,
-      name: 'Other',
-      percent: 0.49,
-    },
-  ],
-  month: [
-    {
-      parcel_id: 932,
-      name: 'Metapurse HQ',
-      percent: 0.14,
-    },
-    {
-      parcel_id: 2883,
-      name: '',
-      percent: 0.05,
-    },
-    {
-      parcel_id: 3005,
-      name: '',
-      percent: 0.04,
-    },
-    {
-      parcel_id: 3019,
-      name: '',
-      percent: 0.04,
-    },
-    {
-      parcel_id: 3024,
-      name: '',
-      percent: 0.04,
-    },
-    {
-      parcel_id: 1847,
-      name: '',
-      percent: 0.04,
-    },
-    {
-      parcel_id: 0,
-      name: 'Other',
-      percent: 0.66,
-    },
-  ],
-};
-
-export default function PieChartZ({ id, options, labelText }: Props) {
+export default function PieChartZ({ id, options, labelText, dataHandlder, token }: Props) {
   const visible1 = React.useRef();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [showType, setShowType] = React.useState('day');
-  const [dataSource, setDataSource] = React.useState(d);
-  const [data, setData] = React.useState(d[showType]);
+  const [dataSource, setDataSource] = React.useState({});
+  const [data, setData] = React.useState(dataSource[showType]);
   const chart = React.useRef(null);
   const initChart = React.useCallback(
     (dd) => {
@@ -181,6 +68,27 @@ export default function PieChartZ({ id, options, labelText }: Props) {
     },
     [data],
   );
+  const requestData = React.useCallback(
+    async (tok) => {
+      setLoading(true);
+      let result = {};
+      try {
+        const tk = await tok;
+        const res = await dataHandlder(tk);
+        result = res.data;
+        setDataSource(result);
+        setData(result[showType]);
+      } catch (ex) {
+        setError(true);
+      }
+      setLoading(false);
+      if (result) {
+        initChart(result[showType]);
+      }
+      return result;
+    },
+    [showType],
+  );
   const update = React.useCallback((v) => {
     setData(dataSource[v]);
   }, []);
@@ -194,7 +102,7 @@ export default function PieChartZ({ id, options, labelText }: Props) {
     [update],
   );
   const onRetry = React.useCallback(() => {
-    // requestData();
+    requestData(token);
   }, []);
   const render = React.useMemo(() => {
     if (loading) {
@@ -228,8 +136,8 @@ export default function PieChartZ({ id, options, labelText }: Props) {
   }, []);
 
   React.useEffect(() => {
-    initChart(data);
-  }, [initChart, update]);
+    requestData(token);
+  }, [requestData]);
 
   return (
     <div>

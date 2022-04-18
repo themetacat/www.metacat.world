@@ -528,7 +528,7 @@ export const req_webb_sold_sum_stats = async () => {
 // 14.1 获取当前登录者 Cryptovoxels 地块每日流量总数接口
 
 export const req_cv_parcel_traffic = async (token: string) => {
-  const url = 'api/get_cv_parcel_traffic_daily_stats';
+  const url = '/api/get_cv_parcel_traffic_daily_stats';
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
@@ -544,7 +544,7 @@ export const req_cv_parcel_traffic = async (token: string) => {
 
 // 14.2 获取当前登录者 Cryptovoxels 地块每日/每周/每月流量占比接口
 export const req_cv_parcel_traffic_daily = async (token: string) => {
-  const url = 'api/get_cv_parcel_traffic_percentage';
+  const url = '/api/get_cv_parcel_traffic_percentage';
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
@@ -561,7 +561,46 @@ export const req_cv_parcel_traffic_daily = async (token: string) => {
 // 14.3 获取当前登录者 Cryptovoxels 地块每日流量统计接口
 
 export const req_cv_parcel_month_traffic_detail = async (token: string) => {
-  const url = 'api/get_cv_parcel_traffic_detail';
+  const url = '/api/get_cv_parcel_traffic_detail';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 14.4 获取当前登录者 Cryptovoxels 地块id 列表接口
+
+export const req_cv_parcel_id_list = async (token: string) => {
+  const url = '/api/get_cv_parcel_id_list';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 14.5 获取当前登录者 Cryptovoxels 单个地块一段时间内的每日流量统计接口
+
+export const req_cv_parcel_traffic_list = async (
+  token: string,
+  parcel_id: number,
+  day_total: number,
+) => {
+  const search = qs.stringify({ parcel_id, day_total }, { addQueryPrefix: true });
+  const url = `/api/get_cv_parcel_traffic_list${search}`;
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',

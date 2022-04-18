@@ -5,14 +5,13 @@ import cn from 'classnames';
 import ChartTitle from '../chart-title';
 import Status from '../status';
 import { formatNum } from '../../common/utils';
-
-import { req_cv_parcel_traffic } from '../../service/z_api';
+import SelecterTraffic from '../chart-select-traffic';
 
 import style from './index.module.css';
 
 type Props = {
   id?: string;
-  dataHandlder?: (token: string) => any;
+  dataHandlder?: (token: string, id: number, day_total: number) => any;
   defaultColor?: Array<number>;
   gradient?: boolean;
   className?: string;
@@ -25,18 +24,20 @@ type Props = {
 export default function BaseBar({
   id,
   dataHandlder,
-  defaultColor = [34, 118, 252],
+  defaultColor = [255, 207, 95],
   gradient = true,
   className,
   labelText,
   limit,
-  barWidth = 45,
+  barWidth = 35,
   token,
 }: Props) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const chart = React.useRef(null);
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState([]);
+  const [showType, setShowType] = React.useState({ parcel_id: null, name: '' });
+  const visible1 = React.useRef();
 
   const initChart = React.useCallback(
     (dt) => {
@@ -181,17 +182,18 @@ export default function BaseBar({
   );
 
   const requestData = React.useCallback(
-    async (tok) => {
+    async (tok, i) => {
       setLoading(true);
       let result = null;
       try {
         const tk = await tok;
-        const res = await dataHandlder(tk);
-        result = res.data.reverse();
-        setData(result);
+        const res = await dataHandlder(tk, i, 30);
+        setData(res.data);
+        result = res.data;
       } catch (ex) {
         setError(true);
       }
+
       setLoading(false);
       if (result) {
         initChart(result);
@@ -202,7 +204,7 @@ export default function BaseBar({
   );
 
   const onRetry = React.useCallback(() => {
-    requestData(token);
+    requestData(token, showType.parcel_id);
   }, [requestData]);
 
   const render = React.useMemo(() => {
@@ -217,8 +219,39 @@ export default function BaseBar({
     return <div id={id}></div>;
   }, [loading, error, onRetry]);
 
+  // const update = React.useCallback((v) => {
+  //   setShowType(data[v]);
+  // }, []);
+
+  const changeStatic = React.useCallback((val) => {
+    if (val) {
+      setShowType(val);
+      requestData(token, val.parcel_id);
+    }
+    // if (data) {
+    // update(val);
+    // }
+  }, []);
+
+  const getSelect = React.useMemo(() => {
+    return (
+      <div
+        className={cn('flex items-center', style.border)}
+        style={{ color: 'rgba(255,255,255, 0.3)' }}
+      >
+        <SelecterTraffic
+          showArrow={true}
+          onClick={changeStatic}
+          className={style.selecterLong}
+          hasBorder={false}
+          useRef={visible1}
+          token={token}
+        ></SelecterTraffic>
+      </div>
+    );
+  }, [data, visible1, changeStatic]);
+
   React.useEffect(() => {
-    requestData(token);
     return () => {
       if (chart.current) {
         chart.current.destroy();
@@ -231,9 +264,7 @@ export default function BaseBar({
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
           <ChartTitle text={labelText}></ChartTitle>
-          <div className="flex items-center">
-            <div className="flex items-center mr-7"></div>
-          </div>
+          <div className="flex items-center">{getSelect}</div>
         </div>
         {render}
       </div>
