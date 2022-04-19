@@ -1,23 +1,22 @@
-.search{
-
+.search {
 }
-.search>input{
+.search > input {
   width: 100%;
   height: 100%;
   background: rgba(0, 208, 236, 0.1);
-  border: 0.5px solid #00D0EC;
+  border: 0.5px solid #00d0ec;
   box-sizing: border-box;
-  caret-color: #00D0EC;
+  caret-color: #00d0ec;
   outline: black;
   color: #fff;
   padding: 0 10px;
 }
-.searchContainer{
+.searchContainer {
   display: block;
   width: 320px;
   height: 44px;
   animation-name: ani2;
-  animation-duration: .2s;
+  animation-duration: 0.2s;
 }
 
 /* 向此元素应用动画效果 */
@@ -25,21 +24,31 @@
   width: 0px !important;
   display: none;
   animation-name: ani1;
-  animation-duration: .2s;
+  animation-duration: 0.2s;
 }
 
 @keyframes ani1 {
-  from {width: 320px;}
-  to {width: 0px; display: none}
+  from {
+    width: 320px;
+  }
+  to {
+    width: 0px;
+    display: none;
+  }
 }
 
 @keyframes ani2 {
-  from {width: 0px;}
-  to {display: block; width: 320px}
+  from {
+    width: 0px;
+  }
+  to {
+    display: block;
+    width: 320px;
+  }
 }
 
-.close{
-  position:absolute;
+.close {
+  position: absolute;
   right: 10px;
   top: 12px;
   width: 20px;
@@ -47,45 +56,55 @@
   cursor: pointer;
 }
 
-.close:hover{
+.close:hover {
   filter: brightness(125%);
 }
-.close:active{
+.close:active {
   filter: brightness(75%);
 }
 
-.search>input::-webkit-search-cancel-button{
+.search > input::-webkit-search-cancel-button {
   display: none;
 }
 
-.searchbtn{
+.searchbtn {
   width: 110px;
   height: 44px;
   color: rgba(153, 153, 153, 1);
-  background: rgba(0, 208, 236, .1);
+  background: rgba(0, 208, 236, 0.1);
   cursor: pointer;
 }
 
-.searchbtn:hover{
+.searchbtn:hover {
   color: rgba(17, 26, 27, 1);
   background: rgba(27, 241, 255, 1);
 }
-.active{
+.active {
   color: rgba(17, 26, 27, 1);
-  background: rgba(0, 208, 236, 1)
+  background: rgba(0, 208, 236, 1);
 }
-.searchbtn:active{
-  background: #00ABC2;
+.searchbtn:active {
+  background: #00abc2;
 }
 
-.searchIcon{
+.searchIcon {
   width: 30px;
   height: 30px;
-  filter: contrast(0.0);
+  filter: contrast(0);
 }
 
-.active>.searchIcon ,
-.searchbtn:hover>.searchIcon,
-.searchbtn:active>.searchIcon{
+.active > .searchIcon,
+.searchbtn:hover > .searchIcon,
+.searchbtn:active > .searchIcon {
   filter: none;
+}
+
+.z {
+  position: absolute;
+  right: 450px;
+  top: -2px;
+}
+
+.font{
+  font-size: 14px;
 }

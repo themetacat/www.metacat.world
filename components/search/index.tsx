@@ -6,9 +6,10 @@ import style from './index.module.css';
 type Props = {
   text?: string;
   onSearch?: (value) => void;
+  type?: string;
 };
 
-export default function Search({ text, onSearch }: Props) {
+export default function Search({ text, onSearch, type }: Props) {
   const [value, setValue] = useState(text);
   const [show, setShow] = useState(false);
 
@@ -29,7 +30,7 @@ export default function Search({ text, onSearch }: Props) {
   }, [text]);
 
   return (
-    <div className="flex w-auto items-center">
+    <div className={cn('flex w-auto items-center', type === 'z' ? style.z : '')}>
       <div className={cn('relative', show ? style.searchContainer : style.toggle)}>
         <SearchInput
           placeholder=" "
@@ -42,7 +43,11 @@ export default function Search({ text, onSearch }: Props) {
               search();
             }
           }}
-          className={cn('relative search-input w-full h-full font-normal text-lg', style.search)}
+          className={cn(
+            'relative search-input w-full h-full font-normal text-lg',
+            style.search,
+            type === 'z' ? style.font : null,
+          )}
         ></SearchInput>
         {value ? (
           <img
@@ -60,7 +65,7 @@ export default function Search({ text, onSearch }: Props) {
         )}
         onClick={search}
       >
-        <img className={style.searchIcon} src="/images/search.png"></img>
+        <img className={cn(style.searchIcon)} src="/images/search.png"></img>
         Search
       </div>
     </div>

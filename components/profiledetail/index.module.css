@@ -14,7 +14,8 @@
   /* 滚动条滑块 */
 }
 .content .ov {
-  height: 385px;
+  min-height: 48px;
+  max-height: 385px;
   overflow: scroll;
 }
 .content .ov::-webkit-scrollbar {
@@ -46,9 +47,9 @@
   margin-top: -20px;
 }
 .container {
+  position: relative;
   width: 1120px;
   max-height: 385px;
-  position: relative;
 }
 .container tbody {
   max-height: 385px;
@@ -88,22 +89,22 @@
   text-overflow: ellipsis;
 }
 .container tr .th1 {
-  max-width: 170px;
   min-width: 170px;
+  max-width: 170px;
   min-height: 48px;
 }
 .container tr .th2 {
-  max-width: 150px;
   min-width: 150px;
+  max-width: 150px;
   min-height: 48px;
 }
 .container tr .th3 {
-  max-width: 150px;
   min-width: 150px;
+  max-width: 150px;
   min-height: 48px;
 }
 .container tr .th4 {
-  max-width: 110px;
   min-width: 110px;
+  max-width: 110px;
   min-height: 48px;
 }
