@@ -74,12 +74,12 @@ export default function ChartSelecter({
   }, [show]);
 
   React.useEffect(() => {
-    const s = options.find((x) => {
-      return x.value === defaultLabel;
-    });
-    if (s) {
-      setSelectedOption(s.label);
-    }
+    // const s = options.find((x) => {
+    //   return x.value === defaultLabel;
+    // });
+    // if (s) {
+    //   setSelectedOption(s.label);
+    // }
   }, [options, defaultLabel]);
 
   React.useEffect(() => {

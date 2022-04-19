@@ -21,8 +21,10 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
   const requestData = React.useCallback(async (tok) => {
     const tk = await tok;
     const result = await dataHandlder(tk);
-    setData(result.data.date_list);
-    setDatas(result.data.traffic_data_list);
+    if (result.data.date_list) {
+      setData(result.data.date_list);
+      setDatas(result.data.traffic_data_list);
+    }
   }, []);
 
   const onRetry = React.useCallback(() => {
@@ -75,12 +77,12 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
                   <div>{item.suburb}</div>
                 </td>
                 <td className={style.item}>
-                  <div>{item.total_traffic}</div>
+                  <div className={cn('flex justify-center items-center')}>{item.total_traffic}</div>
                 </td>
                 {item.traffic_detail.map((i) => {
                   return (
-                    <td className={style.item}>
-                      <div>{i}</div>
+                    <td className={style.item} key={uuid()}>
+                      <div className={cn('flex justify-center items-center')}>{i}</div>
                     </td>
                   );
                 })}

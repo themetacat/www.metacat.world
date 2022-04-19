@@ -33,13 +33,16 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
     (dd) => {
       const chartDom = document.getElementById(id)!;
       const myChart = echarts.init(chartDom);
-      const chartData = dd.map((item) => {
-        return {
-          name: item.name,
-          parcel_id: item.parcel_id,
-          percent: Math.round(item.percent * 100),
-        };
-      });
+      let chartData = null;
+      if (dd) {
+        chartData = dd.map((item) => {
+          return {
+            name: item.name,
+            parcel_id: item.parcel_id,
+            percent: Math.round(item.percent * 100),
+          };
+        });
+      }
       chart.current = {
         dataset: {
           dimensions: ['name', 'parcel_id', 'percent'],
@@ -64,7 +67,9 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
           },
         ],
       };
-      myChart.setOption(chart.current);
+      if (myChart) {
+        myChart.setOption(chart.current);
+      }
     },
     [data],
   );

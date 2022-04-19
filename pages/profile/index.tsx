@@ -72,9 +72,9 @@ const TAB3 = [
   {
     label: 'TRAFFIC REPORT',
   },
-  {
-    label: 'SALES REPORT',
-  },
+  // {
+  //   label: 'SALES REPORT',
+  // },
 ];
 export default function ProfilePage() {
   const nav_Label = React.useRef(null);
@@ -801,7 +801,7 @@ export default function ProfilePage() {
             <BaseChart className=" my-5">
               <BaseBar
                 id={'parcel1'}
-                labelText={'DAILY TRAFFIC OF MY PARCELS-GENERAL '}
+                labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
                 dataHandlder={req_cv_parcel_traffic}
                 barWidth={28}
                 limit={15}

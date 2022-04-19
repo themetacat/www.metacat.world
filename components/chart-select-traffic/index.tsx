@@ -27,7 +27,7 @@ export default function ChartSelecter({
 }: Props) {
   const cls = cn(className);
   const [selectList, setSelectList] = React.useState([{ parcel_id: null, name: '' }]);
-  const [selectedOption, setSelectedOption] = React.useState({ parcel_id: null, name: '' });
+  const [selectedOption, setSelectedOption] = React.useState({ parcel_id: 0, name: '' });
   const [show, setShow] = React.useState(false);
 
   const itemOnClick = React.useCallback(
@@ -46,10 +46,13 @@ export default function ChartSelecter({
   const requestData = React.useCallback(async () => {
     const tk = await token;
     const result = await req_cv_parcel_id_list(tk);
-    setSelectList(result.data);
-    setSelectedOption(result.data[0]);
+    console.log(typeof result.data);
+    if (result.data[0]) {
+      setSelectList(result.data);
+      setSelectedOption(result.data[0]);
+    }
     onClick(result.data[0]);
-  }, []);
+  }, [onClick, token]);
 
   const changeShow = React.useCallback(() => {
     if (!showArrow) {
@@ -87,6 +90,25 @@ export default function ChartSelecter({
     // }
   }, [requestData]);
 
+  const rander = React.useMemo(() => {
+    return selectList.map((x) => {
+      return (
+        <li
+          className={cn('flex justify-center items-center', style.option)}
+          key={x.parcel_id}
+          onClick={(e) => {
+            e.stopPropagation();
+            itemOnClick(x);
+          }}
+        >
+          <span
+            className={selectedOption.parcel_id === x.parcel_id ? style.active : style.hd}
+          >{`#${x.parcel_id} ${x.name}`}</span>
+        </li>
+      );
+    });
+  }, [selectList, selectedOption]);
+
   React.useEffect(() => {
     document.addEventListener('click', close);
     return () => {
@@ -115,24 +137,7 @@ export default function ChartSelecter({
         ) : null}
       </div>
       <ul className={cn('absolute list-none ml-5 right-0 mt-2', show ? style.ov : style.show)}>
-        {selectList
-          ? selectList.map((x) => {
-              return (
-                <li
-                  className={cn('flex justify-center items-center', style.option)}
-                  key={x.parcel_id}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    itemOnClick(x);
-                  }}
-                >
-                  <span
-                    className={selectedOption.parcel_id === x.parcel_id ? style.active : style.hd}
-                  >{`#${x.parcel_id} ${x.name}`}</span>
-                </li>
-              );
-            })
-          : null}
+        {rander}
       </ul>
     </div>
   );
