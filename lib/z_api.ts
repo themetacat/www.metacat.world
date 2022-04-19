@@ -615,6 +615,20 @@ class API {
 
     return json;
   }
+
+  // 15.1 获取 Metaverse Learn 文章列表接口
+
+  public async req_learn_article_list(page: number, count: number, type: string): Promise<any> {
+    const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
+    const url = `${this.url}/learn/get_article_list${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

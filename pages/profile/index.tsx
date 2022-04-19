@@ -190,6 +190,9 @@ export default function ProfilePage() {
   const changeTab3 = React.useCallback(
     async (l) => {
       if (l === showTab) return;
+
+      setTabStateTR('cryptovoxels');
+      setTabState('cryptovoxels');
       setShowTab(l);
     },
     [showTab],
@@ -286,6 +289,7 @@ export default function ProfilePage() {
 
   const requestData = React.useCallback(
     async (token: string) => {
+      setLoading(true);
       try {
         const res = await getParcelList2(token);
         const data = resultHandler(res, requestData);

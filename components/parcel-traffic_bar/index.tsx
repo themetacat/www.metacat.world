@@ -32,11 +32,12 @@ export default function BaseBar({
   barWidth = 35,
   token,
 }: Props) {
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const chart = React.useRef(null);
   const [data, setData] = React.useState([]);
   const [showType, setShowType] = React.useState({ parcel_id: null, name: '' });
+  const [selectType, setSelectType] = React.useState(false);
   const visible1 = React.useRef();
 
   const initChart = React.useCallback(
@@ -188,9 +189,15 @@ export default function BaseBar({
       try {
         const tk = await tok;
         const res = await dataHandlder(tk, i, 30);
-        setData(res.data);
-        result = res.data;
+        if (res.code === 100000 && res.data[0]) {
+          setData(res.data);
+          result = res.data;
+        } else {
+          setSelectType(true);
+        }
+        setLoading(false);
       } catch (ex) {
+        setLoading(false);
         setError(true);
       }
 
@@ -211,13 +218,15 @@ export default function BaseBar({
     if (loading) {
       return <Status mini={true} status="loading" />;
     }
-
-    if (error) {
-      return <Status mini={true} retry={onRetry} status="error" />;
+    if (data.length === 0) {
+      return (
+        <div className={style.totop}>
+          <Status status="empty" />;
+        </div>
+      );
     }
-
     return <div id={id}></div>;
-  }, [loading, error, onRetry]);
+  }, [loading, error, onRetry, data]);
 
   // const update = React.useCallback((v) => {
   //   setShowType(data[v]);
@@ -234,26 +243,28 @@ export default function BaseBar({
   }, []);
 
   const getSelect = React.useMemo(() => {
-    return (
-      <div
-        className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(255,255,255, 0.3)' }}
-      >
-        <SelecterTraffic
-          showArrow={true}
-          onClick={changeStatic}
-          className={style.selecterLong}
-          hasBorder={false}
-          useRef={visible1}
-          token={token}
-        ></SelecterTraffic>
-      </div>
-    );
-  }, [data, visible1, changeStatic]);
+    if (!selectType) {
+      return (
+        <div
+          className={cn('flex items-center', style.border)}
+          style={{ color: 'rgba(255,255,255, 0.3)' }}
+        >
+          <SelecterTraffic
+            showArrow={true}
+            onClick={changeStatic}
+            className={style.selecterLong}
+            hasBorder={false}
+            useRef={visible1}
+            token={token}
+          ></SelecterTraffic>
+        </div>
+      );
+    }
+  }, [data, visible1, changeStatic, selectType]);
 
   React.useEffect(() => {
     return () => {
-      if (chart.current) {
+      if (chart.current && data[0]) {
         chart.current.destroy();
       }
     };

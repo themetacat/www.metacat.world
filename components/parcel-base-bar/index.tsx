@@ -36,7 +36,7 @@ export default function BaseBar({
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const chart = React.useRef(null);
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState([]);
 
   const initChart = React.useCallback(
     (dt) => {
@@ -210,6 +210,13 @@ export default function BaseBar({
       return <Status mini={true} status="loading" />;
     }
 
+    if (data.length === 0) {
+      return (
+        <div className={style.totop}>
+          <Status status="empty" />;
+        </div>
+      );
+    }
     if (error) {
       return <Status mini={true} retry={onRetry} status="error" />;
     }

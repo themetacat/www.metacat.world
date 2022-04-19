@@ -19,11 +19,18 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
   const [datas, setDatas] = React.useState([]);
 
   const requestData = React.useCallback(async (tok) => {
-    const tk = await tok;
-    const result = await dataHandlder(tk);
-    if (result.data.date_list) {
-      setData(result.data.date_list);
-      setDatas(result.data.traffic_data_list);
+    setLoading(true);
+    try {
+      const tk = await tok;
+      const result = await dataHandlder(tk);
+      if (result.data.date_list) {
+        setData(result.data.date_list);
+        setDatas(result.data.traffic_data_list);
+      }
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      setError(true);
     }
   }, []);
 
@@ -39,7 +46,13 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
     if (error) {
       return <Status mini={true} retry={onRetry} status="error" />;
     }
-
+    if (datas.length === 0) {
+      return (
+        <div>
+          <Status status="empty" />;
+        </div>
+      );
+    }
     return (
       <table className={cn(style.container)}>
         <tbody>
@@ -105,7 +118,14 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
           <div className={cn('w-full flex justify-between item-center', style.header)}>
             <ChartTitle text={label}></ChartTitle>
           </div>
-          <div className={cn(style.ov, style.totop)}>{render}</div>
+          <div
+            className={cn(
+              datas.length !== 0 ? style.totop : style.tobottom,
+              datas.length !== 0 ? style.ov : null,
+            )}
+          >
+            {render}
+          </div>
         </div>
       </div>
     </div>

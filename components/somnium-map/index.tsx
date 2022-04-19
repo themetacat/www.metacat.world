@@ -614,7 +614,7 @@ function SomniumMap({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        Router.push('/map?type=somniumspace');
+        Router.push('/heatmap?type=somniumspace');
       });
     }
 

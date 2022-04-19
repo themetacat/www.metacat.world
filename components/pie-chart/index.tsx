@@ -27,7 +27,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
   const [error, setError] = React.useState(false);
   const [showType, setShowType] = React.useState('day');
   const [dataSource, setDataSource] = React.useState({});
-  const [data, setData] = React.useState(dataSource[showType]);
+  const [data, setData] = React.useState([]);
   const chart = React.useRef(null);
   const initChart = React.useCallback(
     (dd) => {
@@ -81,12 +81,15 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
         const tk = await tok;
         const res = await dataHandlder(tk);
         result = res.data;
-        setDataSource(result);
-        setData(result[showType]);
+        if (result[showType]) {
+          setDataSource(result);
+          setData(result[showType]);
+        }
+        setLoading(false);
       } catch (ex) {
+        setLoading(false);
         setError(true);
       }
-      setLoading(false);
       if (result) {
         initChart(result[showType]);
       }
@@ -94,9 +97,12 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
     },
     [showType],
   );
-  const update = React.useCallback((v) => {
-    setData(dataSource[v]);
-  }, []);
+  const update = React.useCallback(
+    (v) => {
+      setData(dataSource[v]);
+    },
+    [dataSource],
+  );
   const changeStatic = React.useCallback(
     (val) => {
       setShowType(val);
@@ -113,32 +119,41 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
     if (loading) {
       return <Status mini={true} status="loading" />;
     }
-
     if (error) {
       return <Status mini={true} retry={onRetry} status="error" />;
     }
 
+    if (data.length === 0) {
+      return (
+        <div>
+          <Status status="empty" />;
+        </div>
+      );
+    }
     return <div id={id} className={style.totop}></div>;
-  }, [loading, error, onRetry]);
+  }, [loading, error, onRetry, data]);
 
   const getSelect = React.useMemo(() => {
-    return (
-      <div
-        className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(255,255,255, 0.3)' }}
-      >
-        <ChartSelecter
-          options={options}
-          showArrow={true}
-          onClick={changeStatic}
-          className={style.selecterLong}
-          defaultLabel={options[0].value}
-          hasBorder={false}
-          useRef={visible1}
-        ></ChartSelecter>
-      </div>
-    );
-  }, []);
+    if (data.length !== 0) {
+      return (
+        <div
+          className={cn('flex items-center', style.border)}
+          style={{ color: 'rgba(255,255,255, 0.3)' }}
+        >
+          <ChartSelecter
+            options={options}
+            showArrow={true}
+            onClick={changeStatic}
+            className={style.selecterLong}
+            defaultLabel={options[0].value}
+            hasBorder={false}
+            useRef={visible1}
+          ></ChartSelecter>
+        </div>
+      );
+    }
+    return null;
+  }, [data]);
 
   React.useEffect(() => {
     requestData(token);
@@ -152,7 +167,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
             <ChartTitle text={labelText}></ChartTitle>
             <div className="flex items-center">{getSelect}</div>
           </div>
-          {render}
+          <div className={cn(data.length === 0 ? style.tobottom : null)}>{render}</div>
         </div>
       </div>
     </div>
