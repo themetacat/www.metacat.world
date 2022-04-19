@@ -31,11 +31,11 @@ const meta = {
 const ps = [
   {
     label: 'English',
-    value: 'english',
+    value: 'en',
   },
   {
     label: 'Chinese',
-    value: 'chinese',
+    value: 'zh',
   },
 ];
 
@@ -50,7 +50,6 @@ export default function Learn() {
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
-      console.log(text);
       setSearchText(text);
       // const data = await requestData({
       //     tab: tabState,
@@ -72,6 +71,10 @@ export default function Learn() {
     // update(val);
     // }
   }, []);
+
+  // const reander = React.useCallback(() => {
+
+  // }, [])
 
   const cls = cn('flex-1', style.bottomLine);
   return (

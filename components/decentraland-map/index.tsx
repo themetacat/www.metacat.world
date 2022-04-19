@@ -591,7 +591,7 @@ function DecentralandMap({
   }, [null]);
 
   const jumpToMap = () => {
-    Router.push('/map?type=decentraland');
+    Router.push('/heatmap?type=decentraland');
     // window.location.href = '/map?type=decentraland';
   };
 

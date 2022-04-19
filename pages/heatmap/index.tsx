@@ -164,7 +164,7 @@ export default function MapPage(props) {
       {fullScreen ? null : (
         <>
           <div className="bg-black relative">
-            <PageHeader className="relative z-10" active={'map'} />
+            <PageHeader className="relative z-10" active={'heatmap'} />
           </div>
 
           <div className={cn('tab-list flex mt-5', style.allHeight)}>
@@ -180,7 +180,7 @@ export default function MapPage(props) {
                     icon={item.icon}
                     onClick={(val) => {
                       setMapType(item.type);
-                      router.replace(`/map?type=${item.type}`);
+                      router.replace(`/heatmap?type=${item.type}`);
                     }}
                   />
                 );

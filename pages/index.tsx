@@ -526,6 +526,10 @@ export default function Index(props) {
                     label: 'Monthly price',
                     value: 'monthly',
                   },
+                  {
+                    label: 'Quarterly price',
+                    value: 'quarterly',
+                  },
                 ]}
                 priceOptions={[
                   {
@@ -581,6 +585,10 @@ export default function Index(props) {
                   {
                     label: 'Monthly price',
                     value: 'monthly',
+                  },
+                  {
+                    label: 'Quarterly price',
+                    value: 'quarterly',
                   },
                 ]}
                 priceOptions={[
@@ -662,6 +670,10 @@ export default function Index(props) {
                     {
                       label: 'Monthly price',
                       value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly price',
+                      value: 'quarterly',
                     },
                   ]}
                   priceOptions={[
@@ -746,6 +758,10 @@ export default function Index(props) {
                       label: 'Monthly price',
                       value: 'monthly',
                     },
+                    {
+                      label: 'Quarterly price',
+                      value: 'quarterly',
+                    },
                   ]}
                   priceOptions={[
                     {
@@ -829,6 +845,10 @@ export default function Index(props) {
                       label: 'Monthly price',
                       value: 'monthly',
                     },
+                    {
+                      label: 'Quarterly price',
+                      value: 'quarterly',
+                    },
                   ]}
                   priceOptions={[
                     {
@@ -911,6 +931,10 @@ export default function Index(props) {
                     {
                       label: 'Monthly price',
                       value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly price',
+                      value: 'quarterly',
                     },
                   ]}
                   priceOptions={[

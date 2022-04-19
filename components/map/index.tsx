@@ -1085,7 +1085,7 @@ function Map({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        Router.push('/map?type=cryptovoxels');
+        Router.push('/heatmap?type=cryptovoxels');
         // window.location.href = '/map?type=voxel';
       });
     }

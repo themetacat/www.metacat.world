@@ -128,6 +128,10 @@ export default function AnalyticsIndex(props) {
                 label: 'Monthly price',
                 value: 'monthly',
               },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
             ]}
             priceOptions={[
               {
@@ -154,6 +158,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
               },
             ]}
           ></StackBar>
@@ -213,6 +221,10 @@ export default function AnalyticsIndex(props) {
                 label: 'Monthly price',
                 value: 'monthly',
               },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
             ]}
             priceOptions={[
               {
@@ -241,6 +253,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
               },
             ]}
           ></ChartLineToolTipSimple>
@@ -298,6 +314,10 @@ export default function AnalyticsIndex(props) {
                 label: 'Monthly price',
                 value: 'monthly',
               },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
             ]}
             priceOptions={[
               {
@@ -327,6 +347,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
               },
             ]}
             tabState={showType}
@@ -374,6 +398,10 @@ export default function AnalyticsIndex(props) {
                   label: 'Monthly price',
                   value: 'monthly',
                 },
+                {
+                  label: 'Quarterly price',
+                  value: 'quarterly',
+                },
               ]}
               priceOptions={[
                 {
@@ -403,6 +431,10 @@ export default function AnalyticsIndex(props) {
                 {
                   label: 'Monthly',
                   value: 'monthly',
+                },
+                {
+                  label: 'Quarterly',
+                  value: 'quarterly',
                 },
               ]}
               tabState={showType}
@@ -450,6 +482,10 @@ export default function AnalyticsIndex(props) {
                 label: 'Monthly price',
                 value: 'monthly',
               },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
             ]}
             priceOptions={[
               {
@@ -479,6 +515,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
               },
             ]}
             tabState={showType}
@@ -525,6 +565,10 @@ export default function AnalyticsIndex(props) {
                 label: 'Monthly price',
                 value: 'monthly',
               },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
             ]}
             priceOptions={[
               {
@@ -554,6 +598,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
               },
             ]}
             tabState={showType}

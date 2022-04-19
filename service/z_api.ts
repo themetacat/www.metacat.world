@@ -613,3 +613,17 @@ export const req_cv_parcel_traffic_list = async (
 
   return json;
 };
+
+// 15.1 获取 Metaverse Learn 文章列表接口
+
+export const req_learn_article_list = async (page: number, count: number, type: string) => {
+  const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
+  const url = `/api/get_article_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};

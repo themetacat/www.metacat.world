@@ -59,10 +59,10 @@ export default function PageHeader({ active, className }: Props) {
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
-            active === 'map' ? style.active : null,
+            active === 'heatmap' ? style.active : null,
           )}
         >
-          <Link href={'/map?type=cryptovoxels'}>Map</Link>
+          <Link href={'/heatmap?type=cryptovoxels'}>Map</Link>
         </div>
 
         <div

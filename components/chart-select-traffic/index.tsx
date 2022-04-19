@@ -46,7 +46,6 @@ export default function ChartSelecter({
   const requestData = React.useCallback(async () => {
     const tk = await token;
     const result = await req_cv_parcel_id_list(tk);
-    console.log(typeof result.data);
     if (result.data[0]) {
       setSelectList(result.data);
       setSelectedOption(result.data[0]);

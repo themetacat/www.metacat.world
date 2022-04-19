@@ -65,7 +65,10 @@ export default function Search({ text, onSearch, type }: Props) {
         )}
         onClick={search}
       >
-        <img className={cn(style.searchIcon)} src="/images/search.png"></img>
+        <img
+          className={cn(style.searchIcon, type === 'z' ? style.font : null)}
+          src="/images/search.png"
+        ></img>
         Search
       </div>
     </div>
