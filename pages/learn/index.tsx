@@ -12,6 +12,8 @@ import Search from '../../components/search';
 import SelectLearn from '../../components/chart-select-learn';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
+import { req_learn_article_list } from '../../service/z_api';
+
 const REPORTTAB = [
   {
     label: 'Articles',
@@ -44,9 +46,26 @@ export default function Learn() {
   const [tabStateTR, setTabStateTR] = React.useState('articles');
   const [searchText, setSearchText] = React.useState('');
   const [options, setOptions] = React.useState(ps);
+  const [showType, setShowType] = React.useState(ps[0].value);
+  const [page, setPage] = React.useState(1);
+  const [count, setCount] = React.useState(20);
+  const [totalPage, setTotalPage] = React.useState(null);
+  const [dataSource, setDataSource] = React.useState([]);
   const onTabChange = React.useCallback((i) => {
     setTabState(i);
   }, []);
+
+  const requestData = React.useCallback(
+    async (p, c, t) => {
+      const result = await req_learn_article_list(p, c, t);
+      if (result.code === 100000 && result.data.list.length !== 0) {
+        setDataSource(result.data.list);
+        setTotalPage(result.data.total_page);
+        console.log(result);
+      }
+    },
+    [page, count, showType],
+  );
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
@@ -66,7 +85,8 @@ export default function Learn() {
   );
 
   const changeStatic = React.useCallback((val) => {
-    // setShowType(val);
+    console.log(val);
+    setShowType(val);
     // if (dataSource) {
     // update(val);
     // }
@@ -75,6 +95,10 @@ export default function Learn() {
   // const reander = React.useCallback(() => {
 
   // }, [])
+
+  React.useEffect(() => {
+    requestData(page, count, showType);
+  }, [requestData]);
 
   const cls = cn('flex-1', style.bottomLine);
   return (
@@ -114,7 +138,7 @@ export default function Learn() {
             showArrow={true}
             onClick={changeStatic}
             className={style.selecterLong}
-            defaultLabel={options[0].value}
+            defaultLabel={options[0].label}
             hasBorder={false}
           ></SelectLearn>
         </div>

@@ -62,7 +62,7 @@ export default function PageHeader({ active, className }: Props) {
             active === 'heatmap' ? style.active : null,
           )}
         >
-          <Link href={'/heatmap?type=cryptovoxels'}>Map</Link>
+          <Link href={'/heatmap?type=cryptovoxels'}>Heatmap</Link>
         </div>
 
         <div
@@ -82,14 +82,14 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href={'/wearables?type=wearables'}>WearableDao</Link>
         </div>
-        {/* <div
+        <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'learn' ? style.active : null,
           )}
         >
           <Link href={'/learn'}>Learn</Link>
-        </div> */}
+        </div>
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',

@@ -50,6 +50,7 @@ import ChartLineSimple from '../../components/chart-line-simple';
 import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
 import ChartLineSandBox from '../../components/chart-line-sandbox';
 import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
+import StackBarZ2 from '../../components/stack-bar-z2';
 
 const types = [
   {
@@ -165,7 +166,7 @@ export default function AnalyticsIndex(props) {
               },
             ]}
           ></StackBar>
-          <StackBar
+          <StackBarZ2
             id={'stackbar1'}
             className="mt-5"
             labelText={'MONTHLY PARCEL SALES AMOUNT'}
@@ -173,6 +174,16 @@ export default function AnalyticsIndex(props) {
             isEth={true}
             barWidth={18}
             options={[
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
               {
                 label: 'ETH',
                 value: 'eth',
@@ -182,7 +193,7 @@ export default function AnalyticsIndex(props) {
                 value: 'usd',
               },
             ]}
-          ></StackBar>
+          ></StackBarZ2>
           <BaseBar
             id={'basebar2'}
             className="mt-5"
@@ -262,7 +273,7 @@ export default function AnalyticsIndex(props) {
           ></ChartLineToolTipSimple>
           <>
             <span className="hidden"></span>
-            <StackBar
+            <StackBarZ2
               id={'stackbar1'}
               className="mt-5"
               labelText={'MONTHLY PARCEL SALES AMOUNT'}
@@ -274,6 +285,16 @@ export default function AnalyticsIndex(props) {
               isEth={true}
               options={[
                 {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+                {
+                  label: 'Quarterly',
+                  value: 'quarterly',
+                },
+              ]}
+              optionsPrice={[
+                {
                   label: 'USD',
                   value: 'usd',
                 },
@@ -282,7 +303,7 @@ export default function AnalyticsIndex(props) {
                   value: 'mana',
                 },
               ]}
-            ></StackBar>
+            ></StackBarZ2>
           </>
           <>
             <span className="hidden"></span>
@@ -366,6 +387,16 @@ export default function AnalyticsIndex(props) {
             isEth={true}
             showMarkerType="sandbox"
             options={[
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
               {
                 label: 'USD',
                 value: 'usd',
@@ -451,6 +482,16 @@ export default function AnalyticsIndex(props) {
               showMarkerType="sandbox"
               options={[
                 {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+                {
+                  label: 'Quarterly',
+                  value: 'quarterly',
+                },
+              ]}
+              optionsPrice={[
+                {
                   label: 'USD',
                   value: 'usd',
                 },
@@ -535,6 +576,16 @@ export default function AnalyticsIndex(props) {
             showMarkerType="sandbox"
             options={[
               {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
+              {
                 label: 'USD',
                 value: 'usd',
               },
@@ -617,6 +668,16 @@ export default function AnalyticsIndex(props) {
             isEth={true}
             showMarkerType="sandbox"
             options={[
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
               {
                 label: 'USD',
                 value: 'usd',

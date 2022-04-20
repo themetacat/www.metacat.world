@@ -36,8 +36,6 @@ type Props = {
   limit?: number;
   barWidth?: number;
   keyTypes?: Array<string>;
-  token?: string;
-  tabState?: string;
   optionsPrice?: Array<optionItem>;
 };
 
@@ -55,13 +53,10 @@ export default function StackBar({
   limit,
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
-  token,
-  tabState,
   optionsPrice,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceType, setPriceType] = React.useState(optionsPrice[0].value);
-  const [tab_state, set_tab_state] = React.useState(tabState);
   const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -97,7 +92,7 @@ export default function StackBar({
   );
 
   const initChart = React.useCallback(
-    (data, t1, t2) => {
+    (data) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -107,21 +102,9 @@ export default function StackBar({
         autoFit: true,
         height: 210,
       });
-      if (data) {
-        if (t1 !== t2) {
-          chart.current.data(
-            transfromData(
-              data[options[0].value].data[optionsPrice[0].value],
-              options[0].value,
-              optionsPrice[0].value,
-            ),
-          );
-        } else {
-          chart.current.data(
-            transfromData(data[staticType].data[priceType], staticType, priceType),
-          );
-        }
-      }
+
+      const tempData = transfromData(data[staticType].data[priceType], staticType, priceType);
+      chart.current.data(tempData);
       // 设置弹窗
       chart.current.tooltip({
         shared: true,
@@ -296,13 +279,14 @@ export default function StackBar({
     try {
       const res = await dataHandler();
       result = res.data;
+      console.log(result);
       setDataSource(result);
     } catch (ex) {
       setError(true);
     }
     setLoading(false);
     if (result) {
-      initChart(result, tabState, tab_state);
+      initChart(result);
     }
     return result;
   }, [dataHandler]);
@@ -311,14 +295,26 @@ export default function StackBar({
     requestData();
   }, [requestData]);
 
-  // const updateData = React.useCallback(
-  //   (staticT) => {
+  // const changeStatic = React.useCallback(
+  //   (val) => {
+  //     console.log(val, priceType)
+  //     setStaticType(val);
   //     if (chart.current && dataSource) {
-  //       chart.current.changeData(transfromData(dataSource[staticT].data, staticT));
+  //       chart.current.changeData(transfromData(dataSource[val].data[priceType], val, priceType));
   //     }
   //   },
-  //   [dataSource, staticType, limit],
+  //   [dataSource, limit, priceType],
   // );
+  // const changePriceStatic = React.useCallback(
+  //   (val) => {
+  //     console.log(staticType, val)
+  //     setPriceType(val)
+  //     if (chart.current && dataSource) {
+  //       chart.current.changeData(transfromData(dataSource[staticType].data[val], staticType, val));
+  //     }
+  //   }, [dataSource, limit, staticType]
+  // )
+
   const updateData = React.useCallback(
     (staticT, priceT) => {
       if (chart.current && dataSource) {
@@ -348,23 +344,15 @@ export default function StackBar({
     [dataSource, staticType, limit, updateData],
   );
 
-  const init = React.useCallback(() => {
-    changeStatic(options[0].value);
-    setStaticType(options[0].value);
-    set_tab_state(tabState);
-    initChart(dataSource, tabState, tab_state);
-  }, [tabState]);
-
   React.useEffect(() => {
     requestData();
-    init();
+
     return () => {
       if (chart.current) {
         chart.current.destroy();
       }
     };
-  }, [requestData, init]);
-
+  }, [requestData]);
   const getLenged = React.useMemo(() => {
     if (showMarkerType !== 'sandbox') {
       return (
@@ -398,14 +386,16 @@ export default function StackBar({
           defaultLabel={options[0].value}
           hasBorder={false}
         ></ChartSelecter>
-        丨
-        <ChartSelecter
-          hasBorder={false}
-          options={optionsPrice}
-          showArrow={true}
-          onClick={changePriceStatic}
-          defaultLabel={optionsPrice[0].value}
-        ></ChartSelecter>
+        {priceType ? '丨' : null}
+        {priceType ? (
+          <ChartSelecter
+            options={optionsPrice}
+            showArrow={true}
+            onClick={changePriceStatic}
+            defaultLabel={optionsPrice[0].value}
+            hasBorder={false}
+          ></ChartSelecter>
+        ) : null}
       </div>
     );
   }, [options, changeStatic]);

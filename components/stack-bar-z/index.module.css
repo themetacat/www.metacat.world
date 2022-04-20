@@ -1,4 +1,4 @@
-.stackBar{
+.stackBar {
   height: 350px;
   width: 100%;
   background: rgba(0, 236, 222, 0.05);
@@ -8,12 +8,22 @@
   padding: 20px;
 }
 
-.content{
+.content {
   height: 310px;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-.header{
+.header {
   height: 30px;
   margin-bottom: 30px;
+}
+
+.border {
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.6);
+  box-sizing: border-box;
+}
+
+.selecterLong {
+  width: 134px;
 }
