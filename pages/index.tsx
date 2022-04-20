@@ -31,6 +31,7 @@ import ChartLineSandBox from '../components/chart-line-sandbox';
 import StackBarZ from '../components/stack-bar-z';
 import ChartLineToolTipSimpleSandbox from '../components/chart-line-tooltip-simple-sandbox';
 import { useWalletProvider } from '../components/web3modal';
+import StackBarZ2 from '../components/stack-bar-z2';
 
 import { state } from '../components/wallet-btn';
 
@@ -548,8 +549,10 @@ export default function Index(props) {
             <BaseChart className=" mb-5">
               <StackBar
                 id={'stackbar'}
+                className="mt-5"
                 labelText={'NUMBER OF PARCEL SALES'}
                 dataHandler={getCvParcelSoldTotalStats}
+                barWidth={18}
                 limit={15}
                 options={[
                   {
@@ -559,6 +562,10 @@ export default function Index(props) {
                   {
                     label: 'Monthly',
                     value: 'monthly',
+                  },
+                  {
+                    label: 'Quarterly',
+                    value: 'quarterly',
                   },
                 ]}
               ></StackBar>
@@ -628,7 +635,7 @@ export default function Index(props) {
             <BaseChart className=" mb-5">
               <>
                 <span className="hidden"></span>
-                <StackBar
+                <StackBarZ2
                   id={'stackbar1'}
                   labelText={'MONTHLY PARCEL SALES AMOUNT'}
                   dataHandler={getDclParcelSoldSumStats}
@@ -638,6 +645,16 @@ export default function Index(props) {
                   keyTypes={['land', 'estate']}
                   options={[
                     {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
+                    {
                       label: 'USD',
                       value: 'usd',
                     },
@@ -646,7 +663,7 @@ export default function Index(props) {
                       value: 'mana',
                     },
                   ]}
-                ></StackBar>
+                ></StackBarZ2>
               </>
             </BaseChart>
           </div>
@@ -723,6 +740,16 @@ export default function Index(props) {
                   showMarkerType="sandbox"
                   limit={15}
                   options={[
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
                     {
                       label: 'USD',
                       value: 'usd',
@@ -811,6 +838,16 @@ export default function Index(props) {
                   limit={15}
                   options={[
                     {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
+                    {
                       label: 'USD',
                       value: 'usd',
                     },
@@ -898,6 +935,16 @@ export default function Index(props) {
                   limit={15}
                   options={[
                     {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
+                    {
                       label: 'USD',
                       value: 'usd',
                     },
@@ -984,6 +1031,16 @@ export default function Index(props) {
                   showMarkerType="sandbox"
                   limit={15}
                   options={[
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
                     {
                       label: 'USD',
                       value: 'usd',

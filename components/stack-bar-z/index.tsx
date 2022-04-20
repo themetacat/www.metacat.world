@@ -74,7 +74,13 @@ export default function StackBar({
       if (limit) {
         const l = data.length;
         const d = l - limit * 2;
-        const last = data.slice(d);
+        let last = [];
+        if (type === 'quarterly') {
+          last = data.slice(d);
+        } else {
+          last = data.slice(limit);
+        }
+        console.log(last);
         last.forEach((element) => {
           result.push({
             ...element,
@@ -84,6 +90,7 @@ export default function StackBar({
         });
         return result;
       }
+
       data.forEach((element) => {
         result.push({
           ...element,
