@@ -80,7 +80,6 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
       try {
         const tk = await tok;
         const res = await dataHandlder(tk);
-        console.log(res);
         result = res.data;
         if (result[showType]) {
           setDataSource(result);

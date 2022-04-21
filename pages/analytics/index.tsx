@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -95,7 +96,6 @@ export default function AnalyticsIndex(props) {
   const router = useRouter();
 
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
-  const Dtop = React.useRef(0);
   const [fixedState, setFixedState] = React.useState(false);
   const changeType = React.useCallback(
     (newType) => {
@@ -710,7 +710,7 @@ export default function AnalyticsIndex(props) {
   React.useEffect(() => {
     const listener = () => {
       if (
-        document.getElementById('switch').getBoundingClientRect().top <= 0 &&
+        document.getElementById('switch').getBoundingClientRect().top <= 10 &&
         window.scrollY > 810
       ) {
         setFixedState(true);
@@ -745,15 +745,17 @@ export default function AnalyticsIndex(props) {
             style.chartList,
           )}
         >
-          <div className={cn(style.bg, fixedState ? style.fixed : null)}>
-            <Switch
-              onActive={changeType}
-              options={types}
-              defaultValue={showType}
-              id="switch"
-              className={style.fixed}
-              fixedS={fixedState}
-            ></Switch>
+          <div className={cn(style.tmbg, fixedState ? style.fixed : null)}>
+            <div className={cn(style.bg)}>
+              <Switch
+                onActive={changeType}
+                options={types}
+                defaultValue={showType}
+                id="switch"
+                className={style.aboslute}
+                fixedS={fixedState}
+              ></Switch>
+            </div>
           </div>
           {renderChartList}
         </div>

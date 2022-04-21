@@ -627,3 +627,17 @@ export const req_learn_article_list = async (page: number, count: number, type: 
 
   return json;
 };
+
+// 15.2 获取 Metaverse Report 文章列表接口
+
+export const req_learn_report_list = async (page: number, count: number, type: string) => {
+  const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
+  const url = `/api/get_metaverse_report_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};

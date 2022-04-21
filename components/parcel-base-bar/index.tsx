@@ -188,7 +188,6 @@ export default function BaseBar({
       try {
         const tk = await tok;
         const res = await dataHandlder(tk);
-        console.log(res);
         result = res.data.reverse();
         setData(result);
       } catch (ex) {

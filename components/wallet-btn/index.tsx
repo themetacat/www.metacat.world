@@ -52,7 +52,7 @@ const MENU = [
   {
     label: 'My Parcels',
     icon: '/images/v5/MyParcels.png',
-    value: '/profile',
+    value: '/profile?type=parcellist',
     type: 'operation',
   },
   {
@@ -109,7 +109,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         setToken('atk', data.accessToken);
         setToken('rtk', data.refreshToken);
-        Router.push('/profile');
+        Router.push({
+          pathname: '/profile',
+          query: {
+            type: 'parcellist',
+          },
+        });
       }
       setShowMenu(false);
       setLoading(false);

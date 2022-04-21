@@ -4,6 +4,8 @@ import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
 
+import { useRouter, withRouter } from 'next/router';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -68,20 +70,24 @@ const REPORTTAB = [
 const TAB3 = [
   {
     label: 'PARCEL LIST',
+    type: 'parcellist',
   },
   {
     label: 'TRAFFIC REPORT',
+    type: 'trafficreport',
   },
   // {
   //   label: 'SALES REPORT',
   // },
 ];
-export default function ProfilePage() {
+function ProfilePage(r) {
   const nav_Label = React.useRef(null);
   const meta = {
     title: `Profile - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
+
+  const router = useRouter();
   const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -103,6 +109,9 @@ export default function ProfilePage() {
   const [status, set_status] = React.useState('');
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
+  const [routeTab, setRouteTab] = React.useState(
+    r.router.query.type ? r.router.query.type : null || 'parcellist',
+  );
 
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
   const [tabStateTR, setTabStateTR] = React.useState('cryptovoxels');
@@ -188,12 +197,11 @@ export default function ProfilePage() {
   }, [null]);
 
   const changeTab3 = React.useCallback(
-    async (l) => {
-      if (l === showTab) return;
-
-      setTabStateTR('cryptovoxels');
+    async (l, t) => {
       setTabState('cryptovoxels');
       setShowTab(l);
+      setRouteTab(t);
+      router.replace(`/profile?type=${t}`);
     },
     [showTab],
   );
@@ -602,7 +610,7 @@ export default function ProfilePage() {
   }, [s.parcels_cardState]);
   React.useEffect(() => {
     const accessToken = getToken('atk');
-    if (accessToken) {
+    if (accessToken && r.router.query.type === 'parcellist' && r.router.query.type) {
       if (tabState === 'cryptovoxels') {
         requestData(accessToken);
       }
@@ -613,9 +621,16 @@ export default function ProfilePage() {
       watcher_store();
       watcher_store_status();
       watcher_cardState();
+      setRouteTab('parcellist');
       return;
     }
-    window.location.href = '/';
+    if (accessToken && r.router.query.type === 'trafficreport' && r.router.query.type) {
+      setRouteTab(r.router.query.type);
+      return;
+    }
+    if (!accessToken) {
+      window.location.href = '/';
+    }
   }, [
     getToken,
     requestData,
@@ -624,6 +639,7 @@ export default function ProfilePage() {
     nav_Label.current,
     reqDclData,
     tabState,
+    r.router.query.type,
   ]);
 
   const tag1 = () => {
@@ -675,7 +691,7 @@ export default function ProfilePage() {
   };
 
   const randerCardList = React.useMemo(() => {
-    if (showTab === 'PARCEL LIST') {
+    if (routeTab === 'parcellist') {
       return (
         <>
           <div className={cn('tab-list flex mt-5', style.allHeight)}>
@@ -777,7 +793,7 @@ export default function ProfilePage() {
         </>
       );
     }
-    if (showTab === 'TRAFFIC REPORT') {
+    if (routeTab === 'trafficreport') {
       return (
         <>
           <div className={cn('tab-list flex mt-5', style.allHeight)}>
@@ -898,9 +914,9 @@ export default function ProfilePage() {
                 <Tab3
                   label={item.label}
                   key={item.label}
-                  active={showTab === item.label}
+                  active={routeTab === item.type}
                   onClick={() => {
-                    changeTab3(item.label);
+                    changeTab3(item.label, item.type);
                   }}
                 />
               );
@@ -913,3 +929,5 @@ export default function ProfilePage() {
     </Page>
   );
 }
+
+export default withRouter(ProfilePage);

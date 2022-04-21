@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter, withRouter } from 'next/router';
 
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
@@ -16,7 +17,7 @@ import Status from '../../components/status';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import EventCardLearn from '../../components/EventCard-learn';
 
-import { req_learn_article_list } from '../../service/z_api';
+import { req_learn_article_list, req_learn_report_list } from '../../service/z_api';
 
 const REPORTTAB = [
   {
@@ -25,7 +26,7 @@ const REPORTTAB = [
   },
   {
     label: 'MetaCat Report',
-    type: 'metacat report',
+    type: 'report',
   },
 ];
 
@@ -45,10 +46,10 @@ const ps = [
   },
 ];
 
-export default function Learn() {
+function Learn(r) {
+  const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [tabState, setTabState] = React.useState('articles');
   const [tabStateTR, setTabStateTR] = React.useState('articles');
   const [searchText, setSearchText] = React.useState('');
   const [options, setOptions] = React.useState(ps);
@@ -57,23 +58,40 @@ export default function Learn() {
   const [count, setCount] = React.useState(50);
   const [totalPage, setTotalPage] = React.useState(null);
   const [dataSource, setDataSource] = React.useState([]);
-  const onTabChange = React.useCallback((i) => {
-    setTabState(i);
-  }, []);
+  const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'articles');
+  const onTabChange = React.useCallback(
+    (i) => {
+      if (i === routeTab) return;
+      router.replace({
+        pathname: '/learn',
+        query: {
+          type: i,
+        },
+      });
+      setRouteTab(i);
+    },
+    [router],
+  );
 
   const requestData = React.useCallback(
-    async (p, c, t) => {
+    async (p, c, t, type) => {
       setLoading(true);
-      const result = await req_learn_article_list(p, c, t);
+      let result = null;
+      if (type === 'articles' && type) {
+        result = await req_learn_article_list(p, c, t);
+      }
+      if (type === 'report' && type) {
+        result = await req_learn_report_list(p, c, t);
+      }
       setLoading(false);
-      if (result.code === 100000 && result.data.list.length !== 0) {
+      if (result?.code === 100000 && result.data.list.length !== 0) {
         setDataSource(result.data.list);
         setTotalPage(result.data.total_page);
       } else {
         setError(true);
       }
     },
-    [page, count, showType],
+    [page, count, showType, routeTab],
   );
 
   const onSearchHandler = React.useCallback(
@@ -87,7 +105,7 @@ export default function Learn() {
         });
         setDataSource(d);
       } else {
-        requestData(page, count, showType);
+        requestData(page, count, showType, r.router.query.type);
       }
       setSearchText(text);
       // const data = await requestData({
@@ -101,7 +119,7 @@ export default function Learn() {
 
       // setDataSource(data);
     },
-    [dataSource, requestData],
+    [page, count, showType, dataSource, requestData],
   );
 
   const changeStatic = React.useCallback((val) => {
@@ -111,13 +129,13 @@ export default function Learn() {
     // }
   }, []);
   const onRetry = React.useCallback(() => {
-    requestData(page, count, showType);
+    requestData(page, count, showType, r.router.query.type);
   }, [page, count, showType, requestData]);
 
   const onPageChangeHandler = React.useCallback(
     (number: number) => {
       const requestNumber = number + 1;
-      requestData(requestNumber, count, showType);
+      requestData(requestNumber, count, showType, r.router.query.type);
     },
     [requestData, count, showType],
   );
@@ -142,8 +160,10 @@ export default function Learn() {
   }, [dataSource, error, loading, onRetry]);
 
   React.useEffect(() => {
-    requestData(page, count, showType);
-  }, [requestData]);
+    if (r.router.query.type) {
+      requestData(page, count, showType, r.router.query.type);
+    }
+  }, [requestData, r.router.query.type, page, count, showType]);
 
   const cls = cn('flex-1', style.bottomLine);
   return (
@@ -156,11 +176,11 @@ export default function Learn() {
       </div>
       <div className={cn('tab-list flex mt-5', style.allHeight)}>
         <div className={cls}></div>
-        <div className="main-content flex px-0">
+        <div className={cn('main-content flex px-0', style.r)}>
           {REPORTTAB.map((item) => {
             return (
               <Tab
-                active={tabState === item.type}
+                active={r.router.query.type === item.type}
                 isMini={true}
                 key={item.label}
                 label={item.label}
@@ -172,21 +192,26 @@ export default function Learn() {
           })}
 
           <div className={cls} />
+          <div className={style.searchOrlangue}>
+            <div className={'flex'}>
+              <Search text={searchText} onSearch={onSearchHandler} type={'z'}></Search>
+              <div
+                className={cn('flex items-center', style.border)}
+                style={{ color: 'rgba(255,255,255, 0.3)' }}
+              >
+                <SelectLearn
+                  options={options}
+                  showArrow={true}
+                  onClick={changeStatic}
+                  className={style.selecterLong}
+                  defaultLabel={options[0].label}
+                  hasBorder={false}
+                ></SelectLearn>
+              </div>
+            </div>
+          </div>
         </div>
-        <Search text={searchText} onSearch={onSearchHandler} type={'z'}></Search>
-        <div
-          className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)' }}
-        >
-          <SelectLearn
-            options={options}
-            showArrow={true}
-            onClick={changeStatic}
-            className={style.selecterLong}
-            defaultLabel={options[0].label}
-            hasBorder={false}
-          ></SelectLearn>
-        </div>
+
         <div className={cls} />
       </div>
       {reander}
@@ -204,3 +229,5 @@ export default function Learn() {
     </Page>
   );
 }
+
+export default withRouter(Learn);
