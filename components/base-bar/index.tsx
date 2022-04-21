@@ -56,6 +56,7 @@ export default function BaseBar({
       });
       chart.current.tooltip({
         showCrosshairs: true,
+        shared: true,
         crosshairs: {
           line: {
             style: {
