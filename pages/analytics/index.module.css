@@ -33,3 +33,19 @@
   box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
   min-height: 650px;
 }
+
+.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0 auto;
+  z-index: 9999999999999;
+  background-color: #111a1b;
+}
+
+.bg {
+  width: 100%;
+  height: 62px;
+  background-color: #111a1b;
+}

@@ -5,13 +5,13 @@
   box-sizing: border-box;
   font-weight: 500;
   color: rgba(153, 153, 153, 1);
-  line-height:60px
+  line-height: 60px;
 }
 
-.active{
-  background-color: #00D0EC;
+.active {
+  background-color: #00d0ec;
   font-weight: 600;
-  color: black
+  color: black;
 }
 
 .active > .canHover,
@@ -23,25 +23,33 @@
   width: 28px;
   height: 28px;
   border-radius: 20px;
-}
+} 
 
-.p1{
+.p1 {
   padding: 0 45px;
 }
 
-
-.p3{
+.p3 {
   padding: 0 40px;
 }
-.p4{
+.p4 {
   padding: 0 25px;
 }
-.p5{
+.p5 {
   padding: 0 25px;
 }
-.n{
+.n {
   white-space: nowrap;
 }
-.n:hover{
+.n:hover {
   color: #fff;
+}
+
+.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0 auto;
+  z-index: index !important;
 }

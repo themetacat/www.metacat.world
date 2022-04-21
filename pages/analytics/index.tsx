@@ -95,7 +95,8 @@ export default function AnalyticsIndex(props) {
   const router = useRouter();
 
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
-
+  const Dtop = React.useRef(0);
+  const [fixedState, setFixedState] = React.useState(false);
   const changeType = React.useCallback(
     (newType) => {
       setShowType(newType);
@@ -694,6 +695,32 @@ export default function AnalyticsIndex(props) {
     }
   }, [showType]);
 
+  // const Top = React.useCallback(() => {
+  //   Dtop.current =
+  //   return Dtop.current
+  // }, [Dtop])
+
+  // React.useEffect(() => {
+  //   if (Top() <= 0) {
+  //     setFixedState(true)
+  //   } else {
+  //     setFixedState(false)
+  //   }
+  // }, [Top, Dtop.current])
+  React.useEffect(() => {
+    const listener = () => {
+      if (
+        document.getElementById('switch').getBoundingClientRect().top <= 0 &&
+        window.scrollY > 810
+      ) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -718,7 +745,16 @@ export default function AnalyticsIndex(props) {
             style.chartList,
           )}
         >
-          <Switch onActive={changeType} options={types} defaultValue={showType}></Switch>
+          <div className={cn(style.bg, fixedState ? style.fixed : null)}>
+            <Switch
+              onActive={changeType}
+              options={types}
+              defaultValue={showType}
+              id="switch"
+              className={style.fixed}
+              fixedS={fixedState}
+            ></Switch>
+          </div>
           {renderChartList}
         </div>
       </div>

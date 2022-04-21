@@ -1,8 +1,10 @@
 import React from 'react';
 
 import cn from 'classnames';
-
+import { v4 as uuid } from 'uuid';
 import style from './index.module.css';
+
+import PagiNation from '../../components/pagination';
 
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
@@ -10,7 +12,9 @@ import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Search from '../../components/search';
 import SelectLearn from '../../components/chart-select-learn';
+import Status from '../../components/status';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
+import EventCardLearn from '../../components/EventCard-learn';
 
 import { req_learn_article_list } from '../../service/z_api';
 
@@ -42,13 +46,15 @@ const ps = [
 ];
 
 export default function Learn() {
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
   const [tabState, setTabState] = React.useState('articles');
   const [tabStateTR, setTabStateTR] = React.useState('articles');
   const [searchText, setSearchText] = React.useState('');
   const [options, setOptions] = React.useState(ps);
   const [showType, setShowType] = React.useState(ps[0].value);
   const [page, setPage] = React.useState(1);
-  const [count, setCount] = React.useState(20);
+  const [count, setCount] = React.useState(50);
   const [totalPage, setTotalPage] = React.useState(null);
   const [dataSource, setDataSource] = React.useState([]);
   const onTabChange = React.useCallback((i) => {
@@ -57,11 +63,14 @@ export default function Learn() {
 
   const requestData = React.useCallback(
     async (p, c, t) => {
+      setLoading(true);
       const result = await req_learn_article_list(p, c, t);
+      setLoading(false);
       if (result.code === 100000 && result.data.list.length !== 0) {
         setDataSource(result.data.list);
         setTotalPage(result.data.total_page);
-        console.log(result);
+      } else {
+        setError(true);
       }
     },
     [page, count, showType],
@@ -69,6 +78,17 @@ export default function Learn() {
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
+      if (text) {
+        const d = dataSource.filter((item) => {
+          return (
+            item.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) ||
+            item.desc.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+          );
+        });
+        setDataSource(d);
+      } else {
+        requestData(page, count, showType);
+      }
       setSearchText(text);
       // const data = await requestData({
       //     tab: tabState,
@@ -81,20 +101,45 @@ export default function Learn() {
 
       // setDataSource(data);
     },
-    [tabState],
+    [dataSource, requestData],
   );
 
   const changeStatic = React.useCallback((val) => {
-    console.log(val);
     setShowType(val);
     // if (dataSource) {
     // update(val);
     // }
   }, []);
+  const onRetry = React.useCallback(() => {
+    requestData(page, count, showType);
+  }, [page, count, showType, requestData]);
 
-  // const reander = React.useCallback(() => {
+  const onPageChangeHandler = React.useCallback(
+    (number: number) => {
+      const requestNumber = number + 1;
+      requestData(requestNumber, count, showType);
+    },
+    [requestData, count, showType],
+  );
 
-  // }, [])
+  const reander = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (dataSource.length === 0) {
+      return <Status status="search" />;
+    }
+    return (
+      <div className={style.container}>
+        {dataSource.map((item) => {
+          return <EventCardLearn className="mt-7" {...item} key={uuid()} />;
+        })}
+      </div>
+    );
+  }, [dataSource, error, loading, onRetry]);
 
   React.useEffect(() => {
     requestData(page, count, showType);
@@ -144,6 +189,17 @@ export default function Learn() {
         </div>
         <div className={cls} />
       </div>
+      {reander}
+      {dataSource.length !== 0 ? (
+        <div className="mt-7 mb-10">
+          <PagiNation
+            total={totalPage}
+            pageNumber={page - 1}
+            pageSize={20}
+            pageChange={onPageChangeHandler}
+          />
+        </div>
+      ) : null}
       <Footer />
     </Page>
   );

@@ -4,7 +4,7 @@ import cn from 'classnames';
 import style from './index.module.css';
 
 interface Props {
-  status: 'loading' | 'error' | 'success' | 'coming' | 'empty';
+  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search';
   mini?: boolean;
   retry?: () => void;
 }
@@ -57,6 +57,15 @@ export default function Status({ status, retry, mini = false }: Props) {
       <div className={cn(commonCls)}>
         <img src="/images/default-image.png" className={style.baseImg} />
         <span className="mt-4 text-xl font-semibold">NO DATA</span>
+      </div>
+    );
+  }
+
+  if (status === 'search') {
+    return (
+      <div className={cn(commonCls)}>
+        <img src="/images/default-image.png" className={style.baseImg} />
+        <span className="mt-4 text-xl font-semibold">NO SEARCH RESULTS</span>
       </div>
     );
   }

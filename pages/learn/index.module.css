@@ -1,18 +1,22 @@
 .allHeight {
-  height: 48px;
   position: relative;
+  height: 48px;
 }
 .bottomLine {
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .border {
+  position: absolute;
+  top: -2px;
+  right: 320px;
   box-sizing: border-box;
   width: 110px;
   height: 44px;
   color: #999999;
   background: rgba(0, 208, 236, 0.1);
   cursor: pointer;
-  position: absolute;
-  right: 320px;
-  top: -2px;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
 }

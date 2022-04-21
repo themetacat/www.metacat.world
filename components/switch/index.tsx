@@ -13,8 +13,11 @@ type Props = {
   onActive?: (x) => void;
   options?: Array<optionItem>;
   defaultValue?: string;
+  id?: string;
+  className?;
+  fixedS?;
 };
-export default function Switch({ onActive, options, defaultValue }: Props) {
+export default function Switch({ onActive, options, defaultValue, id, className, fixedS }: Props) {
   const [active, setActive] = React.useState(defaultValue || options[0].value);
 
   const changeActive = React.useCallback(
@@ -28,7 +31,14 @@ export default function Switch({ onActive, options, defaultValue }: Props) {
   );
 
   return (
-    <div className={cn('flex justify-center items-center mt-2', style.container)}>
+    <div
+      className={cn(
+        'flex justify-center items-center mt-2',
+        style.container,
+        fixedS ? className : null,
+      )}
+      id={id}
+    >
       {options.map((item, idx) => {
         return (
           <div

@@ -807,8 +807,8 @@ export default function ProfilePage() {
                 id={'parcel1'}
                 labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
                 dataHandlder={req_cv_parcel_traffic}
-                barWidth={28}
-                limit={15}
+                barWidth={20}
+                limit={21}
                 token={refreshTK()}
               ></BaseBar>
             </BaseChart>
@@ -818,7 +818,7 @@ export default function ProfilePage() {
                 labelText={'DAILY TRAFFIC'}
                 dataHandlder={req_cv_parcel_traffic_list}
                 barWidth={20}
-                limit={30}
+                limit={21}
                 token={refreshTK()}
               ></TrafficBar>
             </BaseChart>
