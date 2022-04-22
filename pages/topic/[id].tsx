@@ -197,10 +197,12 @@ export default function Topic({ base_info, parcel_list, traffic_list }) {
         <div className={style.parcel}>
           {parcelList.length > 0 ? (
             <div>
-              <div className={style.title}>
-                <div></div>
-                <p>Buildings</p>
-              </div>
+              {trafficList.length !== 0 ? (
+                <div className={style.title}>
+                  <div></div>
+                  <p>Buildings</p>
+                </div>
+              ) : null}
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
                 {parcelList.map((card, idx) => {
                   return <Card {...card} key={idx} hasTypeTag={false}></Card>;
