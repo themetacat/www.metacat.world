@@ -24,7 +24,7 @@ export default function Footer() {
           <a
             href="https://twitter.com/Metacat007"
             target="_blank"
-            data-tip="twitter"
+            data-tip="Twitter"
             className="w-10 h-10 mr-14"
           >
             <img src="/images/twitter.png" />
@@ -33,7 +33,7 @@ export default function Footer() {
           <a
             href="https://discord.gg/yRt6be237P"
             target="_blank"
-            data-tip="discord"
+            data-tip="Discord"
             className="w-10 h-10 mr-14"
           >
             <img src="/images/discord.png" />
@@ -42,7 +42,7 @@ export default function Footer() {
           <a
             href="https://medium.com/@themetacat"
             target="_blank"
-            data-tip="medium"
+            data-tip="Medium"
             className="w-10 h-10  rounded-full mr-14 justify-center items-center flex bg-transparent"
           >
             <img src="/images/medium.png" />

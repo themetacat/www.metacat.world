@@ -123,7 +123,7 @@ const SUBTAB = [
     type: 'parcel',
   },
   {
-    label: 'Map',
+    label: 'Heatmap',
     type: 'map',
   },
   {
@@ -143,7 +143,7 @@ const SUBTABZ = [
 ];
 const SUBTABZ2 = [
   {
-    label: 'Map',
+    label: 'Heatmap',
     type: 'map',
   },
   {
