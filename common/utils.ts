@@ -43,6 +43,25 @@ export const removeToken = (type) => {
   return accessToken;
 };
 
+let timer = null;
+export const throttle = (fun, wait = 1000) => {
+  return function (...args) {
+    const now = !timer;
+    if (timer) {
+      clearTimeout(timer);
+    } else {
+      timer = setTimeout(function () {
+        timer = null;
+      }, wait);
+      console.log(timer);
+
+      if (now) {
+        fun.apply(this, args);
+      }
+    }
+  };
+};
+
 export const client = () => {
   // 后端提供数据
   return new OSS({
