@@ -80,19 +80,6 @@ function Learn(r) {
   //     }
   //   }, [timer])
 
-  const onTabChange = React.useCallback(
-    (i) => {
-      router.replace({
-        pathname: '/learn',
-        query: {
-          type: i,
-        },
-      });
-      setRouteTab(i);
-    },
-    [router],
-  );
-
   const requestData = React.useCallback(
     async (p, c, t, type) => {
       setLoading(true);
@@ -111,12 +98,17 @@ function Learn(r) {
         setError(true);
       }
     },
-    [page, count, showType, routeTab],
+    [page, count, showType],
   );
-
+  const onTabChange = React.useCallback(
+    (i) => {
+      setRouteTab(i);
+      router.replace(`/learn?type=${i}`);
+    },
+    [router],
+  );
   const onSearchHandler = React.useCallback(
     async (text: string) => {
-      console.log(text);
       if (text) {
         const d = dataSource.filter((item) => {
           return (
@@ -181,8 +173,11 @@ function Learn(r) {
   }, [dataSource, error, loading, onRetry]);
 
   React.useEffect(() => {
-    if (r.router.query.type) {
-      requestData(page, count, showType, r.router.query.type);
+    if (r.router.query.type && r.router.query.type === 'articles') {
+      requestData(page, count, showType, 'articles');
+    }
+    if (r.router.query.type && r.router.query.type === 'report') {
+      requestData(page, count, showType, 'report');
     }
   }, [requestData, r.router.query.type, page, count, showType]);
 

@@ -55,7 +55,10 @@ export default function EventCard({
   const hasEntry = inTimeLine();
   return (
     <div className={cn('p-5 flex', className, style.card)} onClick={jumpToDetail}>
-      <img className={style.cover} src={cover_img_url || '/images/default.png'} />
+      <img
+        className={cover_img_url ? style.cover2 : style.cover}
+        src={cover_img_url || '/images/default.png'}
+      />
       <div className={cn('flex-1 ', style.content)}>
         <div className={cn('flex h-auto justify-between items-center text-white')}>
           <div className={hasEntry ? 'w-11/12' : 'w-full'}>
