@@ -2,6 +2,7 @@ import React from 'react';
 import { Chart } from '@antv/g2';
 import cn from 'classnames';
 
+import ReactTooltip from 'react-tooltip';
 import ChartTitle from '../chart-title';
 import Status from '../status';
 import { formatNum } from '../../common/utils';
@@ -200,6 +201,28 @@ export default function BaseBar({
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
           <ChartTitle text={labelText}></ChartTitle>
+          <div className={cn('flex justify-center items-center', style.helper)}>
+            <div
+              data-tip
+              data-for="info"
+              data-place="bottom"
+              className={cn('relative flex justify-center items-center', style.helperInfo)}
+            >
+              <img src="/images/helper.png"></img>
+            </div>
+            <ReactTooltip
+              id="info"
+              effect="solid"
+              textColor="#AAAAAA"
+              // className={style.pop}
+              backgroundColor="#0F191B"
+              border={false}
+            >
+              <div className={style.info}>
+                List the total daily traffic of all buildings of this page.
+              </div>
+            </ReactTooltip>
+          </div>
           <div className="flex items-center">
             <div className="flex items-center mr-7"></div>
           </div>
