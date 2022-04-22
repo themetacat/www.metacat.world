@@ -187,7 +187,7 @@ export default function Topic({ base_info, parcel_list, traffic_list }) {
                   labelText={'MONTHLY TRAFFIC'}
                   barWidth={20}
                   limit={14}
-                  teaffic={trafficList}
+                  teaffic={trafficList.reverse()}
                 ></BaseBar>
               </BaseChart>
             </div>
