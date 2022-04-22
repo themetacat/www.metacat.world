@@ -2,7 +2,6 @@ import React from 'react';
 import { useRouter, withRouter } from 'next/router';
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
-import { throttle } from '../../common/utils';
 import style from './index.module.css';
 
 import PagiNation from '../../components/pagination';
@@ -16,6 +15,7 @@ import SelectLearn from '../../components/chart-select-learn';
 import Status from '../../components/status';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import EventCardLearn from '../../components/EventCard-learn';
+import TopJumper from '../../components/jump-to-top';
 
 import { req_learn_article_list, req_learn_report_list } from '../../service/z_api';
 
@@ -49,8 +49,6 @@ const ps = [
 function Learn(r) {
   const router = useRouter();
 
-  const timer = React.useRef(null);
-
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [tabStateTR, setTabStateTR] = React.useState('articles');
@@ -62,9 +60,28 @@ function Learn(r) {
   const [totalPage, setTotalPage] = React.useState(null);
   const [dataSource, setDataSource] = React.useState([]);
   const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'articles');
+  // const [timer, setTimer] = React.useState(null)
+
+  // const throttle = React.useCallback(
+  //   (fun, wait = 1000) => {
+  //     return function (...args) {
+  //       console.log(timer)
+  //       const now = !timer
+  //       if (timer) {
+  //         clearTimeout(timer)
+  //       } else {
+  //         setTimer(setTimeout(function () {
+  //           setTimer(null)
+  //         }, wait))
+  //       }
+  //       if (now) {
+  //         fun.apply(this, args)
+  //       }
+  //     }
+  //   }, [timer])
+
   const onTabChange = React.useCallback(
     (i) => {
-      if (i === routeTab) return;
       router.replace({
         pathname: '/learn',
         query: {
@@ -99,6 +116,7 @@ function Learn(r) {
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
+      console.log(text);
       if (text) {
         const d = dataSource.filter((item) => {
           return (
@@ -197,13 +215,7 @@ function Learn(r) {
           <div className={cls} />
           <div className={style.searchOrlangue}>
             <div className={style.right}>
-              <Search
-                text={searchText}
-                onSearch={(text) => {
-                  throttle(onSearchHandler, 1000)(text);
-                }}
-                type={'z'}
-              ></Search>
+              <Search text={searchText} onSearch={onSearchHandler} type={'z'}></Search>
               <div
                 className={cn('flex items-center', style.border)}
                 style={{ color: 'rgba(255,255,255, 0.3)' }}
@@ -234,6 +246,7 @@ function Learn(r) {
           />
         </div>
       ) : null}
+      <TopJumper></TopJumper>
       <Footer />
     </Page>
   );
