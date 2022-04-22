@@ -62,11 +62,12 @@ export default function Search({ text, onSearch, type }: Props) {
           'flex justify-center items-center font-medium text-lg',
           style.searchbtn,
           show ? style.active : '',
+          type === 'z' ? style.font : null,
         )}
         onClick={search}
       >
         <img
-          className={cn(style.searchIcon, type === 'z' ? style.font : null)}
+          className={cn(style.searchIcon, type === 'z' ? style.lessen : null)}
           src="/images/search.png"
         ></img>
         Search
