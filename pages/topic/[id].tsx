@@ -10,6 +10,8 @@ import BaseInfo from '../../components/base-info';
 import Card from '../../components/card';
 import Status from '../../components/status';
 import Footer from '../../components/footer';
+import BaseBar from '../../components/topic-base-bar';
+import BaseChart from '../../components/base-chart';
 
 import { state } from '../../components/wallet-btn';
 
@@ -26,7 +28,7 @@ import api from '../../lib/api';
 
 import style from './index.module.css';
 
-export default function Topic({ base_info, parcel_list }) {
+export default function Topic({ base_info, parcel_list, traffic_list }) {
   const meta = {
     title: `${base_info.name} - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -41,6 +43,7 @@ export default function Topic({ base_info, parcel_list }) {
   const [error, setError] = React.useState(false);
   const [baseInfo, setBaseInfo] = React.useState(convert(base_info));
   const [parcelList, setParcelList] = React.useState(convert(parcel_list));
+  const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
 
   const web3 = useWalletProvider();
 
@@ -55,9 +58,14 @@ export default function Topic({ base_info, parcel_list }) {
         }
         const topic = Number(topicId);
         const res = await getTopicDetail(topic);
-        const { base_info: baseInfoRes, parcel_list: parcelListRes } = res.data;
+        const {
+          base_info: baseInfoRes,
+          parcel_list: parcelListRes,
+          traffic_list: trafficLists,
+        } = res.data;
         setBaseInfo(convert(baseInfoRes));
         setParcelList(convert(parcelListRes));
+        setTrafficList(convert(trafficLists));
         setLoading(false);
       } catch (err) {
         setError(true);
@@ -165,13 +173,42 @@ export default function Topic({ base_info, parcel_list }) {
       </div>
       <div className={cn('main-content')}>
         <BaseInfo {...baseInfo} />
-        {parcelList.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
-            {parcelList.map((card, idx) => {
-              return <Card {...card} key={idx} hasTypeTag={false}></Card>;
-            })}
-          </div>
-        ) : null}
+
+        <div className={style.teaffic}>
+          {trafficList.length !== 0 ? (
+            <div>
+              <div className={cn(style.title, style.tb)}>
+                <div></div>
+                <p>Traffic</p>
+              </div>
+              <BaseChart>
+                <BaseBar
+                  id={'topic'}
+                  labelText={'MONTHLY TRAFFIC'}
+                  barWidth={20}
+                  limit={14}
+                  teaffic={trafficList}
+                ></BaseBar>
+              </BaseChart>
+            </div>
+          ) : null}
+        </div>
+
+        <div className={style.parcel}>
+          {parcelList.length > 0 ? (
+            <div>
+              <div className={style.title}>
+                <div></div>
+                <p>Buildings</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
+                {parcelList.map((card, idx) => {
+                  return <Card {...card} key={idx} hasTypeTag={false}></Card>;
+                })}
+              </div>
+            </div>
+          ) : null}
+        </div>
         {renderStatus}
       </div>
       <Footer />
@@ -182,11 +219,13 @@ export default function Topic({ base_info, parcel_list }) {
 export async function getServerSideProps(context) {
   const topic = Number(context.params.id);
   const res = await api.getTopicDetail(topic);
-  const { base_info, parcel_list } = res.data;
+  console.log(res.data);
+  const { base_info, parcel_list, traffic_list } = res.data;
   return {
     props: {
       base_info,
       parcel_list,
+      traffic_list,
     }, // will be passed to the page component as props
   };
 }

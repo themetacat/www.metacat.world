@@ -1,11 +1,39 @@
-.signBack{
+.signBack {
   height: 230px;
 }
-.sign{
+.sign {
   width: 1087px;
   height: 125px;
   margin-bottom: 67px;
 }
-.info{
-  color: #fff
+.info {
+  color: #fff;
+}
+
+.title {
+  display: flex;
+}
+
+.title > div {
+  width: 6px;
+  height: 20px;
+  background-color: #00d0ec;
+  margin-top: 4px;
+  margin-right: 10px;
+}
+
+.title > p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.tb {
+  margin: 28px 0;
+}
+
+
+.teaffic{
+  margin-bottom: 50px;
 }
