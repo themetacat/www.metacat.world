@@ -643,6 +643,45 @@ class API {
 
     return json;
   }
+
+  // 16.1 获取六个平台最近一月/季度/年和所有时间销售总额占比
+
+  public async req_sales_amount_percent() {
+    const url = `${this.url}/analytics/get_sales_amount_percent`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 16.2 获取六个平台每 月/季度 平均价
+
+  public async req_avg_parcel_price() {
+    const url = `${this.url}/analytics/get_avg_parcel_price`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 16.3 获取六个平台每 月/季度/年 各个总量
+
+  public async req_sales_amount_stack() {
+    const url = `${this.url}/analytics/get_sales_amount_stack`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

@@ -39,6 +39,9 @@ import {
   req_webb_parcel_avg_price_stats,
   req_webb_sold_total_stats,
   req_webb_sold_sum_stats,
+  req_sales_amount_percent,
+  req_avg_parcel_price,
+  req_sales_amount_stack,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -52,6 +55,10 @@ import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
 import ChartLineSandBox from '../../components/chart-line-sandbox';
 import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
 import StackBarZ2 from '../../components/stack-bar-z2';
+import Annular from '../../components/analytics_annular';
+import Miniline from '../../components/mini_line';
+import Allline from '../../components/all_line';
+import AllPillar from '../../components/all_pillar';
 
 const types = [
   {
@@ -87,6 +94,17 @@ const types = [
   },
 ];
 
+const hNav = [
+  {
+    type: 'all',
+    value: 'All Worlds',
+  },
+  {
+    type: 'single',
+    value: 'Single world',
+  },
+];
+
 export default function AnalyticsIndex(props) {
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
@@ -97,12 +115,28 @@ export default function AnalyticsIndex(props) {
 
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
+  const [headerNav, setHeaderNav] = React.useState(hNav[0].type);
+
   const changeType = React.useCallback(
     (newType) => {
       setShowType(newType);
       router.replace(`/analytics?type=${newType}`);
     },
     [types],
+  );
+
+  const changeHeaderNav = React.useCallback(
+    (nav) => {
+      setHeaderNav(nav);
+
+      if (nav === 'single') {
+        router.replace(`/analytics?type=${showType}`);
+      }
+      if (nav === 'all') {
+        router.replace(`/analytics?type=allworlds`);
+      }
+    },
+    [headerNav],
   );
 
   const renderChartList = React.useMemo(() => {
@@ -695,6 +729,168 @@ export default function AnalyticsIndex(props) {
     }
   }, [showType]);
 
+  const reander = React.useMemo(() => {
+    if (headerNav === 'all') {
+      return (
+        <>
+          <div className={cn('flex flex-col justify-center items-center', style.content)}>
+            <div
+              className={cn('w-full mt-7 p-5 flex flex-col justify-start items-center', style.list)}
+            >
+              <div className={style.topContainer}>
+                <Annular
+                  id="annular1"
+                  labelText={'PARCEL SALES AMOUNT'}
+                  dataHandlder={req_sales_amount_percent}
+                  options={[
+                    {
+                      label: 'Month',
+                      value: 'month',
+                    },
+                    {
+                      label: 'Quarter',
+                      value: 'quarter',
+                    },
+                    {
+                      label: 'Year',
+                      value: 'year',
+                    },
+                    {
+                      label: 'All time',
+                      value: 'all_time',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    // {
+                    //   label: 'ETH',
+                    //   value: 'eth',
+                    // },
+                  ]}
+                ></Annular>
+                <Miniline
+                  id="miniline1"
+                  labelText="Meta Index vs. ETH Price"
+                  // dataHandlder={ }
+                  legend1={{ label: 'Meta Index', color: [35, 208, 234] }}
+                  legend2={{ label: 'ETH', color: [157, 125, 252] }}
+                ></Miniline>
+              </div>
+              <div className={style.allLine}>
+                <Allline
+                  id="allline1"
+                  labelText="AVERAGE PACEL PRICE"
+                  dataHandlder={req_avg_parcel_price}
+                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
+                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
+                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
+                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
+                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend6={{ label: 'Somnium Spance ', color: [250, 216, 23] }}
+                  options={[
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                    // {
+                    //   label: 'Year',
+                    //   value: 'year',
+                    // },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    // {
+                    //   label: 'ETH',
+                    //   value: 'eth',
+                    // },
+                  ]}
+                ></Allline>
+              </div>
+              <div className={style.allLine}>
+                <AllPillar
+                  id="allline1"
+                  labelText="PRICE SALES AMOUNT"
+                  dataHandlder={req_sales_amount_stack}
+                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
+                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
+                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
+                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
+                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend6={{ label: 'Somnium Spance ', color: [250, 216, 23] }}
+                  options={[
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                    {
+                      label: 'Year',
+                      value: 'year',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    // {
+                    //   label: 'ETH',
+                    //   value: 'eth',
+                    // },
+                  ]}
+                ></AllPillar>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    }
+    if (headerNav === 'single') {
+      return (
+        <>
+          <div className={cn('flex flex-col justify-center items-center', style.content)}>
+            <div className={cn('w-full h-auto', style.table)}>
+              <AnalyticsInfo options={types}></AnalyticsInfo>
+            </div>
+            <div
+              className={cn(
+                'w-full mt-7 p-5 flex flex-col justify-start items-center',
+                style.chartList,
+              )}
+            >
+              <div className={cn(style.tmbg, fixedState ? style.fixed : null)}>
+                <div className={cn(style.bg)}>
+                  <Switch
+                    onActive={changeType}
+                    options={types}
+                    defaultValue={showType}
+                    id="switch"
+                    className={style.aboslute}
+                    fixedS={fixedState}
+                  ></Switch>
+                </div>
+              </div>
+              {renderChartList}
+            </div>
+          </div>
+        </>
+      );
+    }
+  }, [headerNav]);
+
   // const Top = React.useCallback(() => {
   //   Dtop.current =
   //   return Dtop.current
@@ -710,6 +906,7 @@ export default function AnalyticsIndex(props) {
   React.useEffect(() => {
     const listener = () => {
       if (
+        document.getElementById('switch') &&
         document.getElementById('switch').getBoundingClientRect().top <= 10 &&
         window.scrollY > 810
       ) {
@@ -733,33 +930,25 @@ export default function AnalyticsIndex(props) {
         >
           <img src="/images/analyticsBack.png" className={style.sign}></img>
         </div>
+        <div className={style.headerNav}>
+          <div className={style.navContainer}>
+            {hNav.map((nav) => {
+              return (
+                <div
+                  className={cn(headerNav === nav.type ? style.nav : style.n)}
+                  onClick={() => {
+                    changeHeaderNav(nav.type);
+                  }}
+                >
+                  {nav.value}
+                </div>
+              );
+            })}
+          </div>
+        </div>
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
-      <div className={cn('flex flex-col justify-center items-center', style.content)}>
-        <div className={cn('w-full h-auto', style.table)}>
-          <AnalyticsInfo options={types}></AnalyticsInfo>
-        </div>
-        <div
-          className={cn(
-            'w-full mt-7 p-5 flex flex-col justify-start items-center',
-            style.chartList,
-          )}
-        >
-          <div className={cn(style.tmbg, fixedState ? style.fixed : null)}>
-            <div className={cn(style.bg)}>
-              <Switch
-                onActive={changeType}
-                options={types}
-                defaultValue={showType}
-                id="switch"
-                className={style.aboslute}
-                fixedS={fixedState}
-              ></Switch>
-            </div>
-          </div>
-          {renderChartList}
-        </div>
-      </div>
+      {reander}
       <Footer />
     </Page>
   );

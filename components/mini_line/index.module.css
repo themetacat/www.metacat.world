@@ -1,0 +1,10 @@
+.container {
+  width: 660px;
+  height: 417px;
+  background: #081616;
+  padding: 20px;
+}
+.header {
+  height: 30px;
+  margin-bottom: 30px;
+}

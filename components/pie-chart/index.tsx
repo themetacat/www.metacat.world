@@ -67,6 +67,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
           },
         ],
       };
+      console.log(chart.current);
       if (myChart) {
         myChart.setOption(chart.current);
       }

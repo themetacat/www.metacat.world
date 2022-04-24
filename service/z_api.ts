@@ -641,3 +641,42 @@ export const req_learn_report_list = async (page: number, count: number, type: s
 
   return json;
 };
+
+// 16.1 获取六个平台最近一月/季度/年和所有时间销售总额占比
+
+export const req_sales_amount_percent = async () => {
+  const url = '/api/get_sales_amount_percent';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 16.2 获取六个平台每 月/季度 平均价
+
+export const req_avg_parcel_price = async () => {
+  const url = '/api/get_avg_parcel_price';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 16.3 获取六个平台每 月/季度/年 各个总量
+
+export const req_sales_amount_stack = async () => {
+  const url = '/api/get_sales_amount_stack';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
