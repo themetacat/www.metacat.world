@@ -892,7 +892,7 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
-  }, [headerNav, changeType, renderChartList]);
+  }, [headerNav, changeType, renderChartList, fixedState]);
 
   // const Top = React.useCallback(() => {
   //   Dtop.current =
@@ -911,7 +911,7 @@ export default function AnalyticsIndex(props) {
       if (
         document.getElementById('switch') &&
         document.getElementById('switch').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 905
+        window.scrollY > 432
       ) {
         setFixedState(true);
       } else {
