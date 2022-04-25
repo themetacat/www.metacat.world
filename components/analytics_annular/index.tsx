@@ -4,6 +4,7 @@ import cn from 'classnames';
 import style from './index.module.css';
 
 import ChartTitle from '../chart-title';
+import Status from '../status';
 import ChartSelecter from '../chart-select';
 
 type optionItem = {
@@ -76,20 +77,33 @@ export default function Annular({ id, labelText, dataHandlder, options, priceOpt
   const requestData = React.useCallback(async () => {
     setLoading(true);
     const result = await dataHandlder();
-    setLoading(false);
 
     if (result.code === 100000 && result.data) {
+      setLoading(false);
       setData(result.data);
       setShowData(result.data[showType][priceShowType]);
       initChart(result.data[showType][priceShowType]);
     } else {
+      setLoading(false);
       setError(true);
     }
   }, [showType, priceShowType]);
 
+  const onRetry = React.useCallback(() => {
+    requestData();
+  }, [requestData]);
+
   const rander = React.useMemo(() => {
+    if (loading) {
+      return <Status mini={true} status="loading" />;
+    }
+
+    if (error) {
+      return <Status mini={true} retry={onRetry} status="error" />;
+    }
+
     return <div id={id} className={style.totop}></div>;
-  }, []);
+  }, [loading, error, onRetry]);
 
   const updata = React.useCallback(
     (st, pt) => {

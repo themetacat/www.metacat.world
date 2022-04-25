@@ -39,7 +39,7 @@ const keyTypes = [
   'decentraland',
   'worldwidewebb',
   'cryptovoxels',
-  'somniumspance',
+  'somniumspace',
 ];
 
 const showKeyTypes = [
@@ -48,7 +48,7 @@ const showKeyTypes = [
   'Decentraland',
   'Worldwide Webb',
   'Cryptovoxels',
-  'Somnium Spance',
+  'Somnium Space',
 ];
 
 export default function AllLine({
@@ -102,16 +102,15 @@ export default function AllLine({
 
   const initChart = React.useCallback(
     (data) => {
-      const dom = document.getElementById('allline1');
+      const dom = document.getElementById(id);
       if (!dom) {
         return;
       }
       chart.current = new Chart({
-        container: 'allline1',
+        container: id,
         autoFit: true,
         height: 400,
       });
-      console.log(data);
       chart.current.data(transfromData(data[showType][priceShowType], showType, priceShowType));
       chart.current.scale('time', {
         range: [0.01, 0.99],
@@ -122,6 +121,7 @@ export default function AllLine({
       chart.current.scale('value', {
         nice: true,
       });
+      // console.log(chart.current.options.data.filter((item) => item.name === "Cryptovoxels"))
       chart.current.tooltip({
         // showMarkers: false,
         showCrosshairs: true,
@@ -149,7 +149,7 @@ export default function AllLine({
             return;
           }
           items.forEach((item, index) => {
-            result[keyTypes[index]] = item;
+            result[item.name] = item;
           });
 
           const staticItem = `
@@ -159,8 +159,8 @@ export default function AllLine({
                   <span style="color:#fff;">
                     <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${
             legend1.color[1]
-          }, ${legend1.color[2]}, 1);">${formatNum(result[keyTypes[0]]?.value)}</span>
-                    <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          }, ${legend1.color[2]}, 1);">${formatNum(result[showKeyTypes[0]]?.value)}</span>
+                    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                   </span>
                 </span>
               </div>
@@ -171,8 +171,8 @@ export default function AllLine({
                   <span style="color:#fff;">
                     <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${
             legend2.color[1]
-          }, ${legend2.color[2]}, 1);">${formatNum(result[keyTypes[1]]?.value)}</span>
-                    <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          }, ${legend2.color[2]}, 1);">${formatNum(result[showKeyTypes[1]]?.value)}</span>
+                    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                   </span>
                 </span>
               </div>
@@ -183,8 +183,8 @@ export default function AllLine({
                 <span style="color:#fff;">
                   <span style="margin:0px 5px; color:rgba(${legend3.color[0]}, ${
             legend3.color[1]
-          }, ${legend3.color[2]}, 1);">${formatNum(result[keyTypes[2]]?.value)}</span>
-                  <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          }, ${legend3.color[2]}, 1);">${formatNum(result[showKeyTypes[2]]?.value)}</span>
+                  <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                 </span>
               </span>
             </div>
@@ -195,8 +195,8 @@ export default function AllLine({
               <span style="color:#fff;">
                 <span style="margin:0px 5px; color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
             legend4.color[2]
-          }, 1);">${formatNum(result[keyTypes[3]]?.value)}</span>
-                <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          }, 1);">${formatNum(result[showKeyTypes[3]]?.value)}</span>
+                <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
               </span>
             </span>
           </div>
@@ -207,8 +207,8 @@ export default function AllLine({
             <span style="color:#fff;">
               <span style="margin:0px 5px; color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${
             legend5.color[2]
-          }, 1);">${formatNum(result[keyTypes[4]]?.value)}</span>
-              <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          }, 1);">${formatNum(result[showKeyTypes[4]]?.value)}</span>
+              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -219,8 +219,8 @@ export default function AllLine({
           <span style="color:#fff;">
             <span style="margin:0px 5px; color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${
             legend6.color[2]
-          }, 1);">${formatNum(result[keyTypes[5]]?.value)}</span>
-            <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          }, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
+            <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
           </span>
         </span>
       </div>
@@ -298,32 +298,32 @@ export default function AllLine({
         .style({
           fields: ['name'],
           callback: (tVal) => {
-            if (tVal === showKeyTypes[0]) {
+            if (tVal === 'The Sandbox') {
               return {
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
             }
-            if (tVal === showKeyTypes[1]) {
+            if (tVal === 'NFT Worlds') {
               return {
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
-            if (tVal === showKeyTypes[2]) {
+            if (tVal === 'Decentraland') {
               return {
                 fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };
             }
-            if (tVal === showKeyTypes[3]) {
+            if (tVal === 'Worldwide Webb') {
               return {
                 fill: `l(270) 0:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
             }
-            if (tVal === showKeyTypes[4]) {
+            if (tVal === 'Cryptovoxels') {
               return {
                 fill: `l(270) 0:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
               };
             }
-            if (tVal === showKeyTypes[5]) {
+            if (tVal === 'Somnium Space') {
               return {
                 fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
               };
@@ -347,14 +347,44 @@ export default function AllLine({
         .position('time*value')
         .size(2)
         .tooltip(false)
-        .color('name', [
-          `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
-          `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-          `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
-          `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
-          `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
-          `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
-        ]);
+        .color('name', (tVal) => {
+          if (tVal === 'The Sandbox') {
+            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (tVal === 'NFT Worlds') {
+            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (tVal === 'Decentraland') {
+            return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (tVal === 'Worldwide Webb') {
+            return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (tVal === 'Cryptovoxels') {
+            return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (tVal === 'Somnium Space') {
+            return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+        });
+      /**
+             * const showKeyTypes = [
+'The Sandbox',
+'NFT Worlds',
+'Decentraland',
+'Worldwide Webb',
+'Cryptovoxels',
+'Somnium Space',
+];
+             */
+      // [
+      //     `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+      //     `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+      //     `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
+      //     `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
+      //     `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
+      //     `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+      // ]
       chart.current.render();
     },
     [showType, priceShowType],
@@ -368,6 +398,8 @@ export default function AllLine({
         const res = await dataHandlder();
         result = res.data;
         setDataSource(result);
+        // console.log(result)
+        // console.log(result[showType][priceShowType].filter((item) => item.name === "Cryptovoxels"))
       }
     } catch (ex) {
       setError(true);

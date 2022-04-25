@@ -94,7 +94,6 @@ export default function ChartLine({
         autoFit: true,
         height: 210,
       });
-
       chart.current.data(
         transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
       );

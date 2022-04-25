@@ -109,7 +109,9 @@
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   box-sizing: border-box;
   box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  border-bottom: none;
   min-height: 650px;
+  padding-bottom: 0;
 }
 
 .topContainer {

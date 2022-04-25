@@ -42,6 +42,7 @@ import {
   req_sales_amount_percent,
   req_avg_parcel_price,
   req_sales_amount_stack,
+  req_metaindex_ethprice,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -110,30 +111,26 @@ export default function AnalyticsIndex(props) {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-
   const router = useRouter();
-
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
-  const [headerNav, setHeaderNav] = React.useState(hNav[0].type);
+  const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
 
-  const changeType = React.useCallback(
-    (newType) => {
-      setShowType(newType);
-      router.replace(`/analytics?type=${newType}`);
-    },
-    [types],
-  );
+  const changeType = React.useCallback((newType) => {
+    setShowType(newType);
+    router.replace(`/analytics?type=${newType}`);
+  }, []);
 
   const changeHeaderNav = React.useCallback(
     (nav) => {
-      setHeaderNav(nav);
-
+      console.log(nav);
       if (nav === 'single') {
         router.replace(`/analytics?type=${showType}`);
+        setHeaderNav(nav);
       }
       if (nav === 'all') {
-        router.replace(`/analytics?type=allworlds`);
+        router.replace(`/analytics`);
+        setHeaderNav(nav);
       }
     },
     [headerNav],
@@ -773,8 +770,8 @@ export default function AnalyticsIndex(props) {
                 ></Annular>
                 <Miniline
                   id="miniline1"
-                  labelText="Meta Index vs. ETH Price"
-                  // dataHandlder={ }
+                  labelText={'Meta Index vs. ETH Price'}
+                  dataHandlder={req_metaindex_ethprice}
                   legend1={{ label: 'Meta Index', color: [35, 208, 234] }}
                   legend2={{ label: 'ETH', color: [157, 125, 252] }}
                 ></Miniline>
@@ -818,7 +815,7 @@ export default function AnalyticsIndex(props) {
               </div>
               <div className={style.allLine}>
                 <AllPillar
-                  id="allline1"
+                  id="allpillar1"
                   labelText="PRICE SALES AMOUNT"
                   dataHandlder={req_sales_amount_stack}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
@@ -826,7 +823,7 @@ export default function AnalyticsIndex(props) {
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
                   legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Spance ', color: [250, 216, 23] }}
+                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -837,8 +834,8 @@ export default function AnalyticsIndex(props) {
                       value: 'quarterly',
                     },
                     {
-                      label: 'Year',
-                      value: 'year',
+                      label: 'Yearly',
+                      value: 'yearly',
                     },
                   ]}
                   priceOptions={[
@@ -852,6 +849,9 @@ export default function AnalyticsIndex(props) {
                     // },
                   ]}
                 ></AllPillar>
+              </div>
+              <div className={cn('w-full h-auto mt-7', style.table)}>
+                <AnalyticsInfo options={types}></AnalyticsInfo>
               </div>
             </div>
           </div>
@@ -889,7 +889,7 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
-  }, [headerNav]);
+  }, [headerNav, changeType, renderChartList]);
 
   // const Top = React.useCallback(() => {
   //   Dtop.current =
@@ -908,7 +908,7 @@ export default function AnalyticsIndex(props) {
       if (
         document.getElementById('switch') &&
         document.getElementById('switch').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 810
+        window.scrollY > 905
       ) {
         setFixedState(true);
       } else {
@@ -918,6 +918,7 @@ export default function AnalyticsIndex(props) {
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
+
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">

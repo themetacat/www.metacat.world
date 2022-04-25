@@ -682,6 +682,19 @@ class API {
 
     return json;
   }
+
+  // 16.4 获取MetaIndex和ETH Price
+
+  public async req_metaindex_ethprice() {
+    const url = `${this.url}/analytics/get_metaindex_ethprice`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

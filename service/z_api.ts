@@ -680,3 +680,16 @@ export const req_sales_amount_stack = async () => {
 
   return json;
 };
+
+// 16.4 获取MetaIndex和ETH Price
+
+export const req_metaindex_ethprice = async () => {
+  const url = '/api/get_metaindex_ethprice';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
