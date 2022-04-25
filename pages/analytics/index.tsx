@@ -115,7 +115,6 @@ export default function AnalyticsIndex(props) {
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
-
   const changeType = React.useCallback((newType) => {
     setShowType(newType);
     router.replace(`/analytics?type=${newType}`);
@@ -123,7 +122,6 @@ export default function AnalyticsIndex(props) {
 
   const changeHeaderNav = React.useCallback(
     (nav) => {
-      console.log(nav);
       if (nav === 'single') {
         router.replace(`/analytics?type=${showType}`);
         setHeaderNav(nav);
@@ -143,13 +141,13 @@ export default function AnalyticsIndex(props) {
           <BaseBar
             id={'basebar1'}
             className="mt-5"
-            labelText={'MONTHLY TRAFFIC'}
+            labelText={'Monthly Traffic'}
             dataHandlder={getCvTrafficStats}
             barWidth={18}
           ></BaseBar>
           <ChartLine
             id={'chartline1'}
-            labelText={'AVERAGE PARCEL PRICE'}
+            labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={getCvParcelAvgPriceStats}
             options={[
@@ -180,7 +178,7 @@ export default function AnalyticsIndex(props) {
           <StackBar
             id={'stackbar'}
             className="mt-5"
-            labelText={'NUMBER OF PARCEL SALES'}
+            labelText={'Number Of Parcel Sales'}
             dataHandler={getCvParcelSoldTotalStats}
             barWidth={18}
             options={[
@@ -201,7 +199,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ2
             id={'stackbar1'}
             className="mt-5"
-            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            labelText={'Monthly Parcel Sales Amount'}
             dataHandler={getCvParcelSoldSumStats}
             isEth={true}
             barWidth={18}
@@ -229,7 +227,7 @@ export default function AnalyticsIndex(props) {
           <BaseBar
             id={'basebar2'}
             className="mt-5"
-            labelText={'MONTHLY PARCEL MINTED'}
+            labelText={'Monthly Parcel Minted'}
             dataHandlder={getCvMintStats}
             defaultColor={[33, 212, 115]}
             barWidth={18}
@@ -237,7 +235,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineSimple
             id={'chartlinesimple'}
             className="mt-5"
-            labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
+            labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getCvParcelOwnerStats}
             defaultColor={[246, 147, 55]}
           ></ChartLineSimple>
@@ -250,7 +248,7 @@ export default function AnalyticsIndex(props) {
           <ChartLine
             id={'dcl-chartline-1'}
             className="mt-5"
-            labelText={'AVERAGE PARCEL PRICE'}
+            labelText={'Average Parcel Price'}
             dataHandlder={getDclParcelAvgPriceStats}
             legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
             legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
@@ -283,7 +281,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimple
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'NUMBER OF PARCEL SALES'}
+            labelText={'Number Of Parcel Sales'}
             dataHandlder={getDclParcelSoldTotalStats}
             legend1={{ label: 'Land', color: [33, 212, 115] }}
             legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -308,7 +306,7 @@ export default function AnalyticsIndex(props) {
             <StackBarZ2
               id={'stackbar1'}
               className="mt-5"
-              labelText={'MONTHLY PARCEL SALES AMOUNT'}
+              labelText={'Monthly Parcel Sales Amount'}
               dataHandler={getDclParcelSoldSumStats}
               legend1={{ label: 'Land', color: [33, 212, 115] }}
               legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -342,7 +340,7 @@ export default function AnalyticsIndex(props) {
             <ChartLineSimple
               id={'chartlinesimple2'}
               className="mt-5"
-              labelText={'TOTAL NUMBER OF LANDLORDS AT THE END OF EACH MONTH'}
+              labelText={'Total Number Of Landlords At The End Of Each Month'}
               dataHandlder={getDclParcelOwnerStats}
               defaultColor={[34, 118, 252]}
             ></ChartLineSimple>
@@ -355,7 +353,7 @@ export default function AnalyticsIndex(props) {
         <>
           <ChartLineSandBox
             id={'chartline1'}
-            labelText={'AVERAGE PARCEL PRICE'}
+            labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_sandbox_avg_price_stats}
             options={[
@@ -387,7 +385,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'NUMBER OF PARCEL SALES'}
+            labelText={'Number Of Parcel Sales'}
             dataHandlder={req_sandbox_sold_total_stats}
             legend1={{ label: 'Land', color: [33, 212, 115] }}
             legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -411,7 +409,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ
             id={'stackbar1'}
             className="mt-5"
-            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            labelText={'Monthly Parcel Sales Amount'}
             dataHandler={req_sandbox_sold_sun_stats}
             legend1={{ label: 'Land', color: [255, 207, 95] }}
             keyTypes={['land', 'estate']}
@@ -449,7 +447,7 @@ export default function AnalyticsIndex(props) {
           <>
             <ChartLineSandBox
               id={'chartline1'}
-              labelText={'AVERAGE PARCEL PRICE'}
+              labelText={'Average Parcel Price'}
               className="mt-5"
               dataHandlder={req_somniumspace__avg_price_stats}
               options={[
@@ -481,7 +479,7 @@ export default function AnalyticsIndex(props) {
             <ChartLineToolTipSimpleSandbox
               id={'dcl-chartline-2'}
               className="mt-5"
-              labelText={'NUMBER OF PARCEL SALES'}
+              labelText={'Number Of Parcel Sales'}
               dataHandlder={req_somniumspace_sold_total_stats}
               legend1={{ label: 'Land', color: [33, 212, 115] }}
               legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -505,7 +503,7 @@ export default function AnalyticsIndex(props) {
             <StackBarZ
               id={'stackbar1'}
               className="mt-5"
-              labelText={'MONTHLY PARCEL SALES AMOUNT'}
+              labelText={'Monthly Parcel Sales Amount'}
               dataHandler={req_somniumspace_sold_sum_stats}
               legend1={{ label: 'Land', color: [255, 207, 95] }}
               keyTypes={['land', 'estate']}
@@ -543,7 +541,7 @@ export default function AnalyticsIndex(props) {
         <>
           <ChartLineSandBox
             id={'chartline1'}
-            labelText={'AVERAGE PARCEL PRICE'}
+            labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_ntfworlds_avg_price_stats}
             options={[
@@ -575,7 +573,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'NUMBER OF PARCEL SALES'}
+            labelText={'Number Of Parcel Sales'}
             dataHandlder={req_ntfworlds_sold_total_stats}
             legend1={{ label: 'Land', color: [33, 212, 115] }}
             legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -599,7 +597,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ
             id={'stackbar1'}
             className="mt-5"
-            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            labelText={'Monthly Parcel Sales Amount'}
             dataHandler={req_ntfworlds_sold_sum_stats}
             legend1={{ label: 'Land', color: [255, 207, 95] }}
             keyTypes={['land', 'estate']}
@@ -636,7 +634,7 @@ export default function AnalyticsIndex(props) {
         <>
           <ChartLineSandBox
             id={'chartline1'}
-            labelText={'AVERAGE PARCEL PRICE'}
+            labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_webb_parcel_avg_price_stats}
             options={[
@@ -668,7 +666,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'NUMBER OF PARCEL SALES'}
+            labelText={'Aumber Of Parcel Sales'}
             dataHandlder={req_webb_sold_total_stats}
             legend1={{ label: 'Land', color: [33, 212, 115] }}
             legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -692,7 +690,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ
             id={'stackbar1'}
             className="mt-5"
-            labelText={'MONTHLY PARCEL SALES AMOUNT'}
+            labelText={'Monthly Parcel Sales Amount'}
             dataHandler={req_webb_sold_sum_stats}
             legend1={{ label: 'Land', color: [255, 207, 95] }}
             keyTypes={['land', 'estate']}
@@ -737,8 +735,14 @@ export default function AnalyticsIndex(props) {
               <div className={style.topContainer}>
                 <Annular
                   id="annular1"
-                  labelText={'PARCEL SALES AMOUNT'}
+                  labelText={'Parcel Sales Amount'}
                   dataHandlder={req_sales_amount_percent}
+                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
+                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
+                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
+                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
+                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
                       label: 'Month',
@@ -779,14 +783,14 @@ export default function AnalyticsIndex(props) {
               <div className={style.allLine}>
                 <Allline
                   id="allline1"
-                  labelText="AVERAGE PACEL PRICE"
+                  labelText="Average Pacel Price"
                   dataHandlder={req_avg_parcel_price}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
                   legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Spance ', color: [250, 216, 23] }}
+                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -816,7 +820,7 @@ export default function AnalyticsIndex(props) {
               <div className={style.allLine}>
                 <AllPillar
                   id="allpillar1"
-                  labelText="PRICE SALES AMOUNT"
+                  labelText="Price Sales Amount"
                   dataHandlder={req_sales_amount_stack}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
@@ -851,7 +855,9 @@ export default function AnalyticsIndex(props) {
                 ></AllPillar>
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>
-                <AnalyticsInfo options={types}></AnalyticsInfo>
+                <div className={style.tabContainer}>
+                  <AnalyticsInfo options={types} labelText={'Coprehensive Data'}></AnalyticsInfo>
+                </div>
               </div>
             </div>
           </div>
@@ -862,9 +868,6 @@ export default function AnalyticsIndex(props) {
       return (
         <>
           <div className={cn('flex flex-col justify-center items-center', style.content)}>
-            <div className={cn('w-full h-auto', style.table)}>
-              <AnalyticsInfo options={types}></AnalyticsInfo>
-            </div>
             <div
               className={cn(
                 'w-full mt-7 p-5 flex flex-col justify-start items-center',
@@ -919,6 +922,13 @@ export default function AnalyticsIndex(props) {
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
+  React.useEffect(() => {
+    if (props.query.type) {
+      setHeaderNav(hNav[1].type);
+    } else {
+      setHeaderNav(hNav[0].type);
+    }
+  }, [props.query.type]);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">

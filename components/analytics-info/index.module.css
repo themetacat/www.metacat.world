@@ -48,3 +48,8 @@
 .table > tbody > .title > th:first-child > div {
   justify-content: left;
 }
+
+
+.tobottom{
+  margin-bottom: 20px;
+}

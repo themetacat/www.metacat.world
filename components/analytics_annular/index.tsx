@@ -17,9 +17,27 @@ type Props = {
   dataHandlder?;
   options?: Array<optionItem>;
   priceOptions?: Array<optionItem>;
+  legend1?;
+  legend2?;
+  legend3?;
+  legend4?;
+  legend5?;
+  legend6?;
 };
 
-export default function Annular({ id, labelText, dataHandlder, options, priceOptions }: Props) {
+export default function Annular({
+  id,
+  labelText,
+  dataHandlder,
+  options,
+  priceOptions,
+  legend1,
+  legend2,
+  legend3,
+  legend4,
+  legend5,
+  legend6,
+}: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [data, setData] = React.useState({});
@@ -55,10 +73,34 @@ export default function Annular({ id, labelText, dataHandlder, options, priceOpt
               x: 'name', // 指定x轴对应的值
             },
             label: {
-              color: '#aaa',
+              color: '#ccc',
               fontSize: 12,
               alignTo: 'labelLine',
               formatter: ` {@name} - {@value}%`,
+            },
+            itemStyle: {
+              normal: {
+                color: (tVal) => {
+                  if (tVal.data.name === 'The Sandbox') {
+                    return `rgba(24, 147, 247,1)`;
+                  }
+                  if (tVal.data.name === 'NFT Worlds') {
+                    return `rgba(132, 193, 14,1)`;
+                  }
+                  if (tVal.data.name === 'Decentraland') {
+                    return `rgba(255, 107, 84,1)`;
+                  }
+                  if (tVal.data.name === 'Worldwide Webb') {
+                    return `rgba(229, 68, 155,1)`;
+                  }
+                  if (tVal.data.name === 'Cryptovoxels') {
+                    return `rgba(244, 210, 191,1)`;
+                  }
+                  if (tVal.data.name === 'Somnium Space') {
+                    return `rgba(250, 216, 23,1)`;
+                  }
+                },
+              },
             },
           },
         ],
@@ -95,7 +137,11 @@ export default function Annular({ id, labelText, dataHandlder, options, priceOpt
 
   const rander = React.useMemo(() => {
     if (loading) {
-      return <Status mini={true} status="loading" />;
+      return (
+        <nav className={style.mt}>
+          <Status mini={true} status="loading" />
+        </nav>
+      );
     }
 
     if (error) {
@@ -107,7 +153,7 @@ export default function Annular({ id, labelText, dataHandlder, options, priceOpt
 
   const updata = React.useCallback(
     (st, pt) => {
-      setShowData(data[st][pt]);
+      initChart(data[st][pt]);
     },
     [data],
   );

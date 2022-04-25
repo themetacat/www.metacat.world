@@ -3,9 +3,9 @@
   margin-bottom: 30px;
 }
 .border {
+  box-sizing: border-box;
   background: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.6);
-  box-sizing: border-box;
 }
 .selecterLong {
   width: 134px;
@@ -16,4 +16,7 @@
 }
 .toright {
   margin-left: 214px;
+}
+.mt {
+  margin-top: 200px;
 }

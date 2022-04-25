@@ -24,7 +24,7 @@
 .table,
 .chartList {
   max-width: 1860px;
-  min-width: 1380px;
+  min-width: 1200px;
 }
 
 .chartList {
@@ -44,8 +44,6 @@
   background-color: #111a1b;
 }
 
-.bg {
-}
 
 .tmbg {
   width: 100%;
@@ -111,7 +109,6 @@
   box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
   border-bottom: none;
   min-height: 650px;
-  padding-bottom: 0;
 }
 
 .topContainer {
@@ -124,4 +121,9 @@
   background: #081616;
   margin-top: 20px;
   padding: 20px;
+}
+
+.tabContainer {
+  padding: 20px;
+  background: #081616;
 }

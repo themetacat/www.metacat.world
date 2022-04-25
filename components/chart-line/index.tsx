@@ -292,7 +292,6 @@ export default function ChartLine({
           `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
           `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
         ]);
-      console.log(chart.current);
       chart.current.render();
     },
     [staticType, priceStaticType, limit],

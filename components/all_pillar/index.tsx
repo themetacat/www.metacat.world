@@ -148,77 +148,91 @@ export default function AllPillar({
           ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
-              <div style="color:#fff;margin-bottom:12px">
-                <span style="color:#999999;">
-                ${showKeyTypes[0]}:
-                  <span style="color:#fff;">
-                    <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${
-            legend1.color[1]
-          }, ${legend1.color[2]}, 1);">${formatNum(result[showKeyTypes[0]]?.value)}</span>
-                    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-                  </span>
-                </span>
-              </div>
-
-              <div style="color:#fff;margin-bottom:12px">
-                <span style="color:#999999;">
-                ${showKeyTypes[1]}:
-                  <span style="color:#fff;">
-                    <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${
-            legend2.color[1]
-          }, ${legend2.color[2]}, 1);">${formatNum(result[showKeyTypes[1]]?.value)}</span>
-                    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-                  </span>
-                </span>
-              </div>
-
-              <div style="color:#fff;margin-bottom:12px">
-              <span style="color:#999999;">
-              ${showKeyTypes[2]}:
-                <span style="color:#fff;">
-                  <span style="margin:0px 5px; color:rgba(${legend3.color[0]}, ${
-            legend3.color[1]
-          }, ${legend3.color[2]}, 1);">${formatNum(result[showKeyTypes[2]]?.value)}</span>
-                  <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-                </span>
-              </span>
-            </div>
-
-            <div style="color:#fff;margin-bottom:12px">
-            <span style="color:#999999;">
-            ${showKeyTypes[3]}:
-              <span style="color:#fff;">
-                <span style="margin:0px 5px; color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
-            legend4.color[2]
-          }, 1);">${formatNum(result[showKeyTypes[3]]?.value)}</span>
-                <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-              </span>
-            </span>
-          </div>
-
           <div style="color:#fff;margin-bottom:12px">
-          <span style="color:#999999;">
-          ${showKeyTypes[4]}:
+          <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
+            legend1.color[2]
+          }, 1);">
+          ${showKeyTypes[0]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px; color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${
-            legend5.color[2]
-          }, 1);">${formatNum(result[showKeyTypes[4]]?.value)}</span>
+              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                legend1.color[0]
+              }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[0]]?.value,
+          )}</span>
               <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
 
         <div style="color:#fff;margin-bottom:12px">
-        <span style="color:#999999;">
-        ${showKeyTypes[5]}:
+          <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
+            legend2.color[2]
+          }, 1);">
+          ${showKeyTypes[1]}:
+            <span style="color:#fff;">
+              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                legend2.color[0]
+              }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[1]]?.value,
+          )}</span>
+              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            </span>
+          </span>
+        </div>
+
+        <div style="color:#fff;margin-bottom:12px">
+        <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1);">
+        ${showKeyTypes[2]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px; color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${
-            legend6.color[2]
-          }, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend3.color[0]
+            }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[2]]?.value,
+          )}</span>
             <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
           </span>
         </span>
       </div>
+
+      <div style="color:#fff;margin-bottom:12px">
+      <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1);">
+      ${showKeyTypes[3]}:
+        <span style="color:#fff;">
+          <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+            legend4.color[0]
+          }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[3]]?.value,
+          )}</span>
+          <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+        </span>
+      </span>
+    </div>
+
+    <div style="color:#fff;margin-bottom:12px">
+    <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1);">
+    ${showKeyTypes[4]}:
+      <span style="color:#fff;">
+        <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+          legend5.color[0]
+        }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[4]]?.value,
+          )}</span>
+        <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      </span>
+    </span>
+  </div>
+
+  <div style="color:#fff;margin-bottom:12px">
+  <span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
+  ${showKeyTypes[5]}:
+    <span style="color:#fff;">
+      <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${
+            legend6.color[1]
+          }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
+      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+    </span>
+  </span>
+</div>
               `;
           container.innerHTML = title + title1 + staticItem;
           return container;
@@ -294,43 +308,82 @@ export default function AllPillar({
         type: 'cat',
         mask: 'YYYY.MM.DD',
       });
+      /**
+       *   `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+          `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+          `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
+          `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
+          `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
+          `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+       */
       chart.current
         .interval()
         .position('time*value')
         .size(showType === 'yearly' ? 70 : 20)
-        .color('name')
+        .color('name', (tVal) => {
+          if (tVal === 'The Sandbox') {
+            return {
+              fill: `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'NFT Worlds') {
+            return {
+              fill: `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Decentraland') {
+            return {
+              fill: `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Worldwide Webb') {
+            return {
+              fill: `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Cryptovoxels') {
+            return {
+              fill: `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Somnium Space') {
+            return {
+              fill: `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+            };
+          }
+        })
         .style({
           fields: ['name'],
           callback: (tVal) => {
             if (tVal === 'The Sandbox') {
               return {
-                fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
-                // `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`
+                fill: `l(270) 0: rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1: rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+                // `l(270) 0: rgba(${ legend1.color[0] }, ${ legend1.color[1] }, ${ legend1.color[2] }, 0.2) 1: rgba(${ legend1.color[0] }, ${ legend1.color[1] }, ${ legend1.color[2] }, 1)`
               };
             }
             if (tVal === 'NFT Worlds') {
               return {
-                fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1: rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
             if (tVal === 'Decentraland') {
               return {
-                fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1: rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };
             }
             if (tVal === 'Worldwide Webb') {
               return {
-                fill: `l(270) 0:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1: rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
             }
             if (tVal === 'Cryptovoxels') {
               return {
-                fill: `l(270) 0:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1: rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
               };
             }
             if (tVal === 'Somnium Space') {
               return {
-                fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
               };
             }
           },
@@ -468,7 +521,11 @@ export default function AllPillar({
   }, [requestData]);
   const rander = React.useMemo(() => {
     if (loading) {
-      return <Status mini={true} status="loading" />;
+      return (
+        <div className={style.mt}>
+          <Status mini={true} status="loading" />;
+        </div>
+      );
     }
 
     if (error) {

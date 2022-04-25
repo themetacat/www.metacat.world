@@ -40,7 +40,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         autoFit: true,
         height: 330,
       });
-      chart.current.data([...d1, ...d2]);
+      chart.current.data([...d1, ...d2].reverse());
       chart.current.scale('time', {
         range: [0.01, 0.99],
         type: 'cat',
@@ -190,10 +190,14 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         .position('time*value')
         .size(2)
         .tooltip(false)
-        .color('name', [
-          `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
-          `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-        ]);
+        .color('name', (tVal) => {
+          if (tVal === 'ETH') {
+            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (tVal === 'MetaIndex') {
+            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+        });
       chart.current.render();
     },
     [limit],
@@ -207,7 +211,6 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         const res = await dataHandlder();
         result = convert(res.data);
         setDataSource(result);
-        console.log(result);
       }
     } catch (ex) {
       setError(true);
@@ -241,7 +244,11 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
 
   const render = React.useMemo(() => {
     if (loading) {
-      return <Status mini={true} status="loading" />;
+      return (
+        <div className={style.mt}>
+          <Status mini={true} status="loading" />;
+        </div>
+      );
     }
 
     if (error) {

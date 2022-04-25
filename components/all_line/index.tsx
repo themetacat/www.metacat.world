@@ -121,7 +121,6 @@ export default function AllLine({
       chart.current.scale('value', {
         nice: true,
       });
-      // console.log(chart.current.options.data.filter((item) => item.name === "Cryptovoxels"))
       chart.current.tooltip({
         // showMarkers: false,
         showCrosshairs: true,
@@ -154,72 +153,94 @@ export default function AllLine({
 
           const staticItem = `
               <div style="color:#fff;margin-bottom:12px">
-                <span style="color:#999999;">
+                <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
+            legend1.color[2]
+          }, 1);">
                 ${showKeyTypes[0]}:
                   <span style="color:#fff;">
-                    <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${
-            legend1.color[1]
-          }, ${legend1.color[2]}, 1);">${formatNum(result[showKeyTypes[0]]?.value)}</span>
+                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                      legend1.color[0]
+                    }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[0]]?.value,
+          )}</span>
                     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                   </span>
                 </span>
               </div>
 
               <div style="color:#fff;margin-bottom:12px">
-                <span style="color:#999999;">
+                <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
+            legend2.color[2]
+          }, 1);">
                 ${showKeyTypes[1]}:
                   <span style="color:#fff;">
-                    <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${
-            legend2.color[1]
-          }, ${legend2.color[2]}, 1);">${formatNum(result[showKeyTypes[1]]?.value)}</span>
+                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                      legend2.color[0]
+                    }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[1]]?.value,
+          )}</span>
                     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                   </span>
                 </span>
               </div>
 
               <div style="color:#fff;margin-bottom:12px">
-              <span style="color:#999999;">
+              <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${
+            legend3.color[2]
+          }, 1);">
               ${showKeyTypes[2]}:
                 <span style="color:#fff;">
-                  <span style="margin:0px 5px; color:rgba(${legend3.color[0]}, ${
-            legend3.color[1]
-          }, ${legend3.color[2]}, 1);">${formatNum(result[showKeyTypes[2]]?.value)}</span>
+                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                    legend3.color[0]
+                  }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[2]]?.value,
+          )}</span>
                   <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                 </span>
               </span>
             </div>
 
             <div style="color:#fff;margin-bottom:12px">
-            <span style="color:#999999;">
+            <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
+            legend4.color[2]
+          }, 1);">
             ${showKeyTypes[3]}:
               <span style="color:#fff;">
-                <span style="margin:0px 5px; color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
-            legend4.color[2]
-          }, 1);">${formatNum(result[showKeyTypes[3]]?.value)}</span>
+                <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                  legend4.color[0]
+                }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[3]]?.value,
+          )}</span>
                 <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
               </span>
             </span>
           </div>
 
           <div style="color:#fff;margin-bottom:12px">
-          <span style="color:#999999;">
+          <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${
+            legend5.color[2]
+          }, 1);">
           ${showKeyTypes[4]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px; color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${
-            legend5.color[2]
-          }, 1);">${formatNum(result[showKeyTypes[4]]?.value)}</span>
+              <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                legend5.color[0]
+              }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[4]]?.value,
+          )}</span>
               <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
 
         <div style="color:#fff;margin-bottom:12px">
-        <span style="color:#999999;">
+        <span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
         ${showKeyTypes[5]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px; color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${
-            legend6.color[2]
-          }, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend6.color[0]
+            }, ${legend6.color[1]}, ${legend6.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[5]]?.value,
+          )}</span>
             <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
           </span>
         </span>
@@ -398,8 +419,6 @@ export default function AllLine({
         const res = await dataHandlder();
         result = res.data;
         setDataSource(result);
-        // console.log(result)
-        // console.log(result[showType][priceShowType].filter((item) => item.name === "Cryptovoxels"))
       }
     } catch (ex) {
       setError(true);
@@ -473,7 +492,11 @@ export default function AllLine({
   }, [requestData]);
   const rander = React.useMemo(() => {
     if (loading) {
-      return <Status mini={true} status="loading" />;
+      return (
+        <div className={style.mt}>
+          <Status mini={true} status="loading" />;
+        </div>
+      );
     }
 
     if (error) {

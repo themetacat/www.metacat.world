@@ -1,18 +1,18 @@
 .container {
   width: 660px;
   height: 417px;
-  background: #081616;
-  padding: 20px;
   margin-right: 20px;
+  padding: 20px;
+  background: #081616;
 }
 .header {
   height: 30px;
   margin-bottom: 30px;
 }
 .border {
+  box-sizing: border-box;
   background: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.6);
-  box-sizing: border-box;
 }
 .selecterLong {
   width: 134px;
@@ -20,4 +20,7 @@
 .totop {
   width: 500px;
   height: 300px;
+}
+.mt {
+  margin-top: 150px;
 }
