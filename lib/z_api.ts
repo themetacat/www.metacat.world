@@ -695,6 +695,19 @@ class API {
 
     return json;
   }
+
+  // 16.5 获取六个平台每 月/季度/年 各个销售总量
+
+  public async req_all_number_sales() {
+    const url = `${this.url}/analytics/get_all_number_of_sales`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

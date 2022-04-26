@@ -693,3 +693,16 @@ export const req_metaindex_ethprice = async () => {
 
   return json;
 };
+
+// 16.5 获取六个平台每 月/季度/年 各个销售总量
+
+export const req_all_number_sales = async () => {
+  const url = '/api/get_all_number_of_sales';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
