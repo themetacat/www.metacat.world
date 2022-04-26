@@ -194,7 +194,7 @@ export default function AllLine({
                   <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
                     legend3.color[0]
                   }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[2]]?.value.toFixed(0),
+            parseInt(result[showKeyTypes[2]]?.value, 10),
           )}</span>
                   <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                 </span>
@@ -296,11 +296,19 @@ export default function AllLine({
         },
       });
       chart.current.axis('time', {
-        tickLine: null,
-        line: {
-          style: {
-            lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, 0.15)',
+        grid: {
+          line: {
+            type: 'line',
+            style: (x, y) => {
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
+            },
           },
         },
         label: {

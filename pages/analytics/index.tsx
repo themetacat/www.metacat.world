@@ -227,7 +227,7 @@ export default function AnalyticsIndex(props) {
           <BaseBar
             id={'basebar2'}
             className="mt-5"
-            labelText={'Parcel Minted'}
+            labelText={'Monthly Parcel Minted'}
             dataHandlder={getCvMintStats}
             defaultColor={[33, 212, 115]}
             barWidth={18}
