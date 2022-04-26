@@ -9,6 +9,7 @@ import Router, { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 
 import { useWalletProvider } from '../web3modal';
+// import WalletConnectProvider from "@walletconnect/web3-provider";
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 
@@ -79,6 +80,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [loading, setLoading] = React.useState(false);
   const profileData = state.useState('accessToken', 'refreshToken', 'profile');
   const { accessToken, refreshToken, profile } = profileData;
+  // const provider = new WalletConnectProvider({
+  //   infuraId: "f9d7d835ed864a299a13e841a1b654f8",
+  // });
+
+  // const [p1, setp1] = React.useState(provider)
+
   const web3 = useWalletProvider();
 
   const router = useRouter();
@@ -213,6 +220,27 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     },
     [profile, connectToChain],
   );
+
+  // const demo = React.useCallback(async () => {
+  //   console.log(await p1.enable())
+  //   const i = await p1.enable();
+
+  //
+  // provider.on("accountsChanged", (accounts: string[]) => {
+  //   console.log(accounts);
+  // });
+
+  // // Subscribe to chainId change
+  // provider.on("chainChanged", (chainId: number) => {
+  //   console.log(chainId);
+  // });
+
+  // // Subscribe to session disconnection
+  // provider.on("disconnect", (code: number, reason: string) => {
+  //   console.log(code, reason);
+  // });
+  //   return await i
+  // }, [p1])
 
   const clickOperationItem = React.useCallback(
     (item) => {

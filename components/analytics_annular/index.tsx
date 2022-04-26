@@ -106,7 +106,7 @@ export default function Annular({
         ],
       };
       myChart.resize({
-        width: 600,
+        width: 650,
         height: 350,
       });
       if (myChart) {
@@ -168,16 +168,6 @@ export default function Annular({
     [priceShowType, updata],
   );
 
-  const changePriceStatic = React.useCallback(
-    (val) => {
-      setPriceShowType(val);
-      if (val) {
-        updata(showType, val);
-      }
-    },
-    [showType, updata],
-  );
-
   const getSelect = React.useMemo(() => {
     if (showData.length !== 0) {
       return (
@@ -191,14 +181,6 @@ export default function Annular({
             onClick={changeStatic}
             className={style.selecterLong}
             defaultLabel={options[0].value}
-            hasBorder={false}
-          ></ChartSelecter>
-          丨
-          <ChartSelecter
-            options={priceOptions}
-            showArrow={true}
-            onClick={changePriceStatic}
-            defaultLabel={priceOptions[0].value}
             hasBorder={false}
           ></ChartSelecter>
         </div>

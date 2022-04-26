@@ -102,7 +102,7 @@ const hNav = [
   },
   {
     type: 'single',
-    value: 'Single world',
+    value: 'Individual',
   },
 ];
 
@@ -141,7 +141,7 @@ export default function AnalyticsIndex(props) {
           <BaseBar
             id={'basebar1'}
             className="mt-5"
-            labelText={'Monthly Traffic'}
+            labelText={'Traffic'}
             dataHandlder={getCvTrafficStats}
             barWidth={18}
           ></BaseBar>
@@ -199,7 +199,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ2
             id={'stackbar1'}
             className="mt-5"
-            labelText={'Monthly Parcel Sales Amount'}
+            labelText={'Parcel Sales Amount'}
             dataHandler={getCvParcelSoldSumStats}
             isEth={true}
             barWidth={18}
@@ -227,7 +227,7 @@ export default function AnalyticsIndex(props) {
           <BaseBar
             id={'basebar2'}
             className="mt-5"
-            labelText={'Monthly Parcel Minted'}
+            labelText={'Parcel Minted'}
             dataHandlder={getCvMintStats}
             defaultColor={[33, 212, 115]}
             barWidth={18}
@@ -306,7 +306,7 @@ export default function AnalyticsIndex(props) {
             <StackBarZ2
               id={'stackbar1'}
               className="mt-5"
-              labelText={'Monthly Parcel Sales Amount'}
+              labelText={'Parcel Sales Amount'}
               dataHandler={getDclParcelSoldSumStats}
               legend1={{ label: 'Land', color: [33, 212, 115] }}
               legend2={{ label: 'Estate', color: [255, 172, 95] }}
@@ -409,7 +409,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ
             id={'stackbar1'}
             className="mt-5"
-            labelText={'Monthly Parcel Sales Amount'}
+            labelText={'Parcel Sales Amount'}
             dataHandler={req_sandbox_sold_sun_stats}
             legend1={{ label: 'Land', color: [255, 207, 95] }}
             keyTypes={['land', 'estate']}
@@ -503,7 +503,7 @@ export default function AnalyticsIndex(props) {
             <StackBarZ
               id={'stackbar1'}
               className="mt-5"
-              labelText={'Monthly Parcel Sales Amount'}
+              labelText={'Parcel Sales Amount'}
               dataHandler={req_somniumspace_sold_sum_stats}
               legend1={{ label: 'Land', color: [255, 207, 95] }}
               keyTypes={['land', 'estate']}
@@ -597,7 +597,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ
             id={'stackbar1'}
             className="mt-5"
-            labelText={'Monthly Parcel Sales Amount'}
+            labelText={'Parcel Sales Amount'}
             dataHandler={req_ntfworlds_sold_sum_stats}
             legend1={{ label: 'Land', color: [255, 207, 95] }}
             keyTypes={['land', 'estate']}
@@ -690,7 +690,7 @@ export default function AnalyticsIndex(props) {
           <StackBarZ
             id={'stackbar1'}
             className="mt-5"
-            labelText={'Monthly Parcel Sales Amount'}
+            labelText={'Parcel Sales Amount'}
             dataHandler={req_webb_sold_sum_stats}
             legend1={{ label: 'Land', color: [255, 207, 95] }}
             keyTypes={['land', 'estate']}
@@ -735,7 +735,7 @@ export default function AnalyticsIndex(props) {
               <div className={style.topContainer}>
                 <Annular
                   id="annular1"
-                  labelText={'Parcel Sales Amount'}
+                  labelText={'Parcel Sales Amount (USD)'}
                   dataHandlder={req_sales_amount_percent}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}

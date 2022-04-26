@@ -102,6 +102,7 @@ export default function AllLine({
 
   const initChart = React.useCallback(
     (data) => {
+      console.log(data);
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -193,13 +194,12 @@ export default function AllLine({
                   <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
                     legend3.color[0]
                   }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[2]]?.value,
+            result[showKeyTypes[2]]?.value.toFixed(0),
           )}</span>
                   <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                 </span>
               </span>
             </div>
-
             <div style="color:#fff;margin-bottom:12px">
             <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
             legend4.color[2]
