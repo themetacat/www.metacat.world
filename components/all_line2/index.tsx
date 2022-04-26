@@ -269,14 +269,11 @@ export default function AllLine({
           line: {
             type: 'line',
             style: (x, y) => {
-              if (y !== 0) {
-                return {
-                  lineDash: [5, 5],
-                  lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
-                };
-              }
-              return null;
+              return {
+                lineDash: [5, 5],
+                lineWidth: 1,
+                stroke: 'rgba(255, 255, 255, 0.15)',
+              };
             },
           },
         },
@@ -291,14 +288,11 @@ export default function AllLine({
           line: {
             type: 'line',
             style: (x, y) => {
-              if (y !== 0) {
-                return {
-                  lineDash: [5, 5],
-                  lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
-                };
-              }
-              return null;
+              return {
+                lineDash: [5, 5],
+                lineWidth: 0.5,
+                stroke: 'rgba(255, 255, 255, 0.15)',
+              };
             },
           },
         },

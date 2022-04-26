@@ -127,14 +127,12 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
           line: {
             type: 'line',
             style: (x, y) => {
-              if (y !== 0) {
-                return {
-                  lineDash: [5, 5],
-                  lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
-                };
-              }
-              return null;
+              console.log(x, y);
+              return {
+                lineDash: [5, 5],
+                lineWidth: 1,
+                stroke: 'rgba(255, 255, 255, 0.15)',
+              };
             },
           },
         },
@@ -149,14 +147,11 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
           line: {
             type: 'line',
             style: (x, y) => {
-              if (y !== 0) {
-                return {
-                  lineDash: [5, 5],
-                  lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
-                };
-              }
-              return null;
+              return {
+                lineDash: [5, 5],
+                lineWidth: 1,
+                stroke: 'rgba(255, 255, 255, 0.15)',
+              };
             },
           },
         },
