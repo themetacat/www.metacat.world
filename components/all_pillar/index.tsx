@@ -278,7 +278,7 @@ export default function AllPillar({
           },
         },
         label: {
-          offsetX: 50 / 2,
+          offsetX: 2 / 2,
           formatter: (text) => {
             return formatNum(parseFloat(text));
           },
@@ -294,9 +294,9 @@ export default function AllPillar({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          offsetX: 25,
+          offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
-          rotate: 1,
+          rotate: showType === 'yearly' ? 0 : 1,
         },
       });
       // 设置纵轴值

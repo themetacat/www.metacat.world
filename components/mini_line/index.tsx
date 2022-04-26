@@ -81,16 +81,16 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
               <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
           }, 1); font-size: 20px; font-weight:700;">
-              ${formatNum(result[keyTypes[1]]?.value)}
-              <span style="font-size: 12px;color:#fff;font-weight:400;">USD Avg</span>
+              ${formatNum(result[keyTypes[0]]?.value)}
+              <span style="font-size: 12px;color:#fff;font-weight:400;">USD</span>
               </span>
             </div>
             <div style="color:#fff;margin-bottom:12px">
               <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
             legend2.color[2]
           }, 1); font-size: 20px; font-weight:700;">
-              ${formatNum(result[keyTypes[0]]?.value)}
-              <span style="font-size: 12px;color:#fff;font-weight:400;">USD Avg</span>
+              ${formatNum(result[keyTypes[1]]?.value)}
+              <span style="font-size: 12px;color:#fff;font-weight:400;">USD</span>
               </span>
             </div>`;
 
@@ -144,11 +144,19 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         },
       });
       chart.current.axis('time', {
-        tickLine: null,
-        line: {
-          style: {
-            lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, .15)',
+        grid: {
+          line: {
+            type: 'line',
+            style: (x, y) => {
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
+            },
           },
         },
         label: {
@@ -167,7 +175,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         .style({
           fields: ['name'],
           callback: (tVal) => {
-            if (tVal === keyTypes[0]) {
+            if (tVal === keyTypes[1]) {
               return {
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
@@ -192,10 +200,10 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         .tooltip(false)
         .color('name', (tVal) => {
           if (tVal === 'ETH') {
-            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
           if (tVal === 'MetaIndex') {
-            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
           }
         });
       chart.current.render();
