@@ -176,7 +176,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         .style({
           fields: ['name'],
           callback: (tVal) => {
-            if (tVal === keyTypes[1]) {
+            if (tVal === keyTypes[0]) {
               return {
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
