@@ -29,7 +29,6 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
 
   const initChart = React.useCallback(
     (data) => {
-      console.log(data);
       const d1 = data[keyTypes[0]].map((item) => ({ ...item, name: 'ETH' }));
       const d2 = data[keyTypes[1]].map((item) => ({ ...item, name: 'MetaIndex' }));
       const dom = document.getElementById(id);
@@ -127,7 +126,6 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
           line: {
             type: 'line',
             style: (x, y) => {
-              console.log(x, y);
               return {
                 lineDash: [5, 5],
                 lineWidth: 1,
