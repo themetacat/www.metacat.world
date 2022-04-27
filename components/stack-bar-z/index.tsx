@@ -150,23 +150,16 @@ export default function StackBar({
           items.forEach((item) => {
             listItem += `
           <li class="g2-tooltip-list-item" data-index={index}>
-            <span class="g2-tooltip-name">${item.type}</span>
-            :
-            <span class="g2-tooltip-value" style="color:${item.color}">
-              <span>${formatNum(item.value)}</span>
-              <span ${isEth ? 'style="margin-left:5px"' : ''}>${
-              isEth ? item.staticT.toLocaleUpperCase() : ''
-            }</span>
-            </span>
+            
           </li>`;
             sum += item.value * 1000;
-            type = item.staticT;
+            type = item.data.priceStaticT;
           });
           const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${formatNum(
             sum / 1000,
           )}</span><span ${isEth ? 'style="margin-left:5px"' : ''}>${
             isEth ? type.toLocaleUpperCase() : ''
-          }</span><span style="margin-left:5px">Total</span></div>`;
+          }</span><span style="margin-left:5px"></span></div>`;
           container.innerHTML = title + staticItem + listItem;
           return container;
         },

@@ -19,7 +19,7 @@ type Props = {
   limit?;
 };
 
-const keyTypes = ['ETH', 'MetaIndex'];
+const keyTypes = ['ETH', 'MREI'];
 
 export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2, limit }: Props) {
   const [loading, setLoading] = React.useState(true);
@@ -30,7 +30,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
   const initChart = React.useCallback(
     (data) => {
       const d1 = data[keyTypes[0]].map((item) => ({ ...item, name: 'ETH' }));
-      const d2 = data[keyTypes[1]].map((item) => ({ ...item, name: 'MetaIndex' }));
+      const d2 = data.MetaIndex.map((item) => ({ ...item, name: 'MREI' }));
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -67,7 +67,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
           const result = {
             ETH: null,
-            MetaIndex: null,
+            MREI: null,
           };
           if (items.length <= 0) {
             return;
@@ -196,7 +196,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
           if (tVal === 'ETH') {
             return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (tVal === 'MetaIndex') {
+          if (tVal === 'MREI') {
             return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
           }
         });

@@ -776,9 +776,9 @@ export default function AnalyticsIndex(props) {
                 ></Annular>
                 <Miniline
                   id="miniline1"
-                  labelText={'Meta Index vs. ETH Price'}
+                  labelText={'Metaverse Real Estate Index（MREI) vs. ETH Price'}
                   dataHandlder={req_metaindex_ethprice}
-                  legend1={{ label: 'Meta Index', color: [35, 208, 234] }}
+                  legend1={{ label: 'MREI', color: [35, 208, 234] }}
                   legend2={{ label: 'ETH', color: [157, 125, 252] }}
                 ></Miniline>
               </div>

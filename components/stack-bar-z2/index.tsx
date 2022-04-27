@@ -131,12 +131,13 @@ export default function StackBar({
             <span class="g2-tooltip-value" style="color:${item.color}">
               <span>${formatNum(item.value)}</span>
               <span ${isEth ? 'style="margin-left:5px"' : ''}>${
-              isEth ? item.staticT.toLocaleUpperCase() : ''
-            }</span>
+              isEth ? item.data.priceStaticT.toLocaleUpperCase() : ''
+            }
+            </span>
             </span>
           </li>`;
             sum += item.value * 1000;
-            type = item.staticT;
+            type = item.data.priceStaticT;
           });
           const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${formatNum(
             sum / 1000,
