@@ -60,7 +60,7 @@ import StackBarZ2 from '../../components/stack-bar-z2';
 import Annular from '../../components/analytics_annular';
 import Miniline from '../../components/mini_line';
 import Allline from '../../components/all_line';
-import Allline2 from '../../components/all_line2';
+import AllPillar2 from '../../components/all_pillar2';
 import AllPillar from '../../components/all_pillar';
 
 const types = [
@@ -857,8 +857,8 @@ export default function AnalyticsIndex(props) {
                 ></AllPillar>
               </div>
               <div className={style.allLine}>
-                <Allline2
-                  id="allline2"
+                <AllPillar2
+                  id="allpillar2"
                   labelText="Number Of Parcel Sales"
                   dataHandlder={req_all_number_sales}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
@@ -881,7 +881,7 @@ export default function AnalyticsIndex(props) {
                       value: 'yearly',
                     },
                   ]}
-                ></Allline2>
+                ></AllPillar2>
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>
                 <div className={style.tabContainer}>

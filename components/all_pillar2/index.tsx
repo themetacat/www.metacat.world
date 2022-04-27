@@ -21,7 +21,6 @@ type Props = {
   legend5?;
   legend6?;
   options?;
-  priceOptions?;
   limit?: number;
 };
 /**
@@ -62,7 +61,6 @@ export default function AllLine({
   legend5,
   legend6,
   options,
-  priceOptions,
   limit,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
@@ -99,7 +97,6 @@ export default function AllLine({
 
   const initChart = React.useCallback(
     (data) => {
-      console.log(data);
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -110,15 +107,7 @@ export default function AllLine({
         height: 400,
       });
       chart.current.data(transfromData(data[showType], showType));
-      chart.current.scale('time', {
-        range: [0.01, 0.99],
-        type: 'cat',
-        mask: 'YYYY.MM.DD',
-      });
 
-      chart.current.scale('value', {
-        nice: true,
-      });
       chart.current.tooltip({
         // showMarkers: false,
         showCrosshairs: true,
@@ -264,82 +253,122 @@ export default function AllLine({
       chart.current.legend(false);
 
       // 设置横纵轴
+      // 设置横纵轴
       chart.current.axis('value', {
         grid: {
           line: {
             type: 'line',
             style: (x, y) => {
-              return {
-                lineDash: [5, 5],
-                lineWidth: 1,
-                stroke: 'rgba(255, 255, 255, 0.15)',
-              };
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: 'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
             },
           },
         },
         label: {
-          formatter: (text, item, index) => {
+          offsetX: 2 / 2,
+          formatter: (text) => {
             return formatNum(parseFloat(text));
           },
         },
       });
       chart.current.axis('time', {
-        grid: {
-          line: {
-            type: 'line',
-            style: (x, y) => {
-              return {
-                lineDash: [5, 5],
-                lineWidth: 0.5,
-                stroke: 'rgba(255, 255, 255, 0.15)',
-              };
-            },
+        tickLine: null,
+        line: {
+          style: {
+            lineWidth: 1,
+            stroke: 'rgba(255, 255, 255, .15)',
           },
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          // offset: 25,
           offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
           rotate: showType === 'yearly' ? 0 : 1,
         },
       });
+      // 设置纵轴值
+      chart.current.scale('value', {
+        nice: true,
+      });
 
+      chart.current.scale('time', {
+        type: 'cat',
+        mask: 'YYYY.MM.DD',
+      });
       chart.current
-        .area()
+        .interval()
         .position('time*value')
-        .color('name')
+        .size(showType === 'yearly' ? 70 : 20)
+        .color('name', (tVal) => {
+          if (tVal === 'The Sandbox') {
+            return {
+              fill: `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'NFT Worlds') {
+            return {
+              fill: `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Decentraland') {
+            return {
+              fill: `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Worldwide Webb') {
+            return {
+              fill: `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Cryptovoxels') {
+            return {
+              fill: `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
+            };
+          }
+          if (tVal === 'Somnium Space') {
+            return {
+              fill: `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+            };
+          }
+        })
         .style({
           fields: ['name'],
           callback: (tVal) => {
             if (tVal === 'The Sandbox') {
               return {
-                fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1: rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+                // `l(270) 0: rgba(${ legend1.color[0] }, ${ legend1.color[1] }, ${ legend1.color[2] }, 0.2) 1: rgba(${ legend1.color[0] }, ${ legend1.color[1] }, ${ legend1.color[2] }, 1)`
               };
             }
             if (tVal === 'NFT Worlds') {
               return {
-                fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1: rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
             if (tVal === 'Decentraland') {
               return {
-                fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1: rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };
             }
             if (tVal === 'Worldwide Webb') {
               return {
-                fill: `l(270) 0:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1: rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
             }
             if (tVal === 'Cryptovoxels') {
               return {
-                fill: `l(270) 0:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1: rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
               };
             }
             if (tVal === 'Somnium Space') {
               return {
-                fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+                fill: `l(270) 0: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
               };
             }
           },
@@ -355,50 +384,12 @@ export default function AllLine({
               priceStaticT,
             };
           },
-        );
-      chart.current
-        .line()
-        .position('time*value')
-        .size(2)
-        .tooltip(false)
-        .color('name', (tVal) => {
-          if (tVal === 'The Sandbox') {
-            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
-          }
-          if (tVal === 'NFT Worlds') {
-            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
-          }
-          if (tVal === 'Decentraland') {
-            return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
-          }
-          if (tVal === 'Worldwide Webb') {
-            return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
-          }
-          if (tVal === 'Cryptovoxels') {
-            return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
-          }
-          if (tVal === 'Somnium Space') {
-            return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
-          }
+        )
+        .adjust({
+          type: 'stack',
+          reverseOrder: false,
         });
-      /**
-             * const showKeyTypes = [
-'The Sandbox',
-'NFT Worlds',
-'Decentraland',
-'Worldwide Webb',
-'Cryptovoxels',
-'Somnium Space',
-];
-             */
-      // [
-      //     `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
-      //     `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-      //     `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
-      //     `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
-      //     `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
-      //     `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
-      // ]
+
       chart.current.render();
     },
     [showType],
