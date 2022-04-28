@@ -58,11 +58,36 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
               x: 'name', // 指定x轴对应的值
               y: 'parcel_id', // 指定y轴对应的值
             },
+
+            emphasis: {
+              lineStyle: {
+                width: 3,
+              },
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffset: 20,
+                borderWidth: 1,
+                borderColor: '#fff',
+                fontSize: 20,
+              },
+              label: {
+                show: true,
+                fontSize: '20',
+                fontWeight: 'bold',
+              },
+            },
             label: {
               color: '#aaa',
               fontSize: 16,
               alignTo: 'labelLine',
               formatter: `#{@parcel_id}  {@name} - {@percent}%`,
+            },
+            itemStyle: {
+              // 此配置
+              normal: {
+                borderWidth: 0.5,
+                borderColor: '#fff',
+              },
             },
           },
         ],

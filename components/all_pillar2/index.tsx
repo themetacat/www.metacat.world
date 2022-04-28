@@ -307,34 +307,22 @@ export default function AllLine({
         .size(showType === 'yearly' ? 70 : 20)
         .color('name', (tVal) => {
           if (tVal === 'The Sandbox') {
-            return {
-              fill: `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
-            };
+            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
           }
           if (tVal === 'NFT Worlds') {
-            return {
-              fill: `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-            };
+            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
           if (tVal === 'Decentraland') {
-            return {
-              fill: `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
-            };
+            return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
           if (tVal === 'Worldwide Webb') {
-            return {
-              fill: `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
-            };
+            return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
           }
           if (tVal === 'Cryptovoxels') {
-            return {
-              fill: `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
-            };
+            return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
           }
           if (tVal === 'Somnium Space') {
-            return {
-              fill: `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
-            };
+            return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
           }
         })
         .style({
