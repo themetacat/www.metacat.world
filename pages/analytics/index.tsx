@@ -668,7 +668,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'Aumber Of Parcel Sales'}
+            labelText={'Number Of Parcel Sales'}
             dataHandlder={req_webb_sold_total_stats}
             legend1={{ label: 'Land', color: [33, 212, 115] }}
             legend2={{ label: 'Estate', color: [255, 172, 95] }}
