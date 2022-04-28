@@ -53,7 +53,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
             name: 'Access From',
             type: 'pie',
             radius: '50%',
-
+            hoverAnimated: true,
             encode: {
               x: 'name', // 指定x轴对应的值
               y: 'parcel_id', // 指定y轴对应的值
@@ -67,7 +67,6 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
           },
         ],
       };
-      console.log(chart.current);
       if (myChart) {
         myChart.setOption(chart.current);
       }
@@ -149,6 +148,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
             defaultLabel={options[0].value}
             hasBorder={false}
             useRef={visible1}
+            cl={style.bg}
           ></ChartSelecter>
         </div>
       );

@@ -182,6 +182,7 @@ export default function Annular({
             className={style.selecterLong}
             defaultLabel={options[0].value}
             hasBorder={false}
+            cl={style.bg}
           ></ChartSelecter>
         </div>
       );

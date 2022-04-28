@@ -143,7 +143,7 @@ export default function StackBar({
 
         domStyles: {
           'g2-tooltip': {
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.5)',
             color: '#ffffff',
             boxShadow: null,
           },

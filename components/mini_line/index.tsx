@@ -101,7 +101,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
         },
         domStyles: {
           'g2-tooltip': {
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.5)',
             color: '#ffffff',
             boxShadow: null,
           },

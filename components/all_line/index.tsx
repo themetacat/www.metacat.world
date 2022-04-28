@@ -251,7 +251,7 @@ export default function AllLine({
         },
         domStyles: {
           'g2-tooltip': {
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.5)',
             color: '#ffffff',
             boxShadow: null,
           },
@@ -475,6 +475,7 @@ export default function AllLine({
           className={style.selecterLong}
           defaultLabel={options[0].value}
           hasBorder={false}
+          cl={style.bg}
         ></ChartSelecter>
         丨
         <ChartSelecter
@@ -483,6 +484,7 @@ export default function AllLine({
           onClick={changePriceStatic}
           defaultLabel={priceOptions[0].value}
           hasBorder={false}
+          cl={style.bg}
         ></ChartSelecter>
       </div>
     );

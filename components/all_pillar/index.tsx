@@ -239,7 +239,7 @@ export default function AllPillar({
         },
         domStyles: {
           'g2-tooltip': {
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.5)',
             color: '#ffffff',
             boxShadow: null,
           },
@@ -388,6 +388,7 @@ export default function AllPillar({
             }
           },
         })
+
         .tooltip(
           'time*value*name*staticT*priceStaticT',
           (time, value, name, staticT, priceStaticT) => {
@@ -465,6 +466,7 @@ export default function AllPillar({
           className={style.selecterLong}
           defaultLabel={options[0].value}
           hasBorder={false}
+          cl={style.bg}
         ></ChartSelecter>
         丨
         <ChartSelecter
@@ -473,6 +475,7 @@ export default function AllPillar({
           onClick={changePriceStatic}
           defaultLabel={priceOptions[0].value}
           hasBorder={false}
+          cl={style.bg}
         ></ChartSelecter>
       </div>
     );
