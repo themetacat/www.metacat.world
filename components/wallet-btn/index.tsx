@@ -9,9 +9,11 @@ import Router, { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 
 import { useWalletProvider } from '../web3modal';
-// import WalletConnectProvider from "@walletconnect/web3-provider";
+// import WalletConnectProvider from '@walletconnect/web3-provider';
+// import Web3Modal from 'web3modal';
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
+import { req_user_logout } from '../../service/z_api';
 
 import { convert, getToken, removeToken, setToken } from '../../common/utils';
 
@@ -71,6 +73,12 @@ const WALLET = [
     value: 'metamask',
     type: 'wallet',
   },
+  // {
+  //   label: 'Wallet Connect',
+  //   icon: '/images/walletconnect.png',
+  //   value: 'walletconnect',
+  //   type: 'wallet',
+  // },
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
@@ -80,6 +88,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [loading, setLoading] = React.useState(false);
   const profileData = state.useState('accessToken', 'refreshToken', 'profile');
   const { accessToken, refreshToken, profile } = profileData;
+
+  const [showWall, setShowWall] = React.useState(null);
+
+  // const [w3, setw3] = React.useState(null)
+
   // const provider = new WalletConnectProvider({
   //   infuraId: "f9d7d835ed864a299a13e841a1b654f8",
   // });
@@ -87,7 +100,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   // const [p1, setp1] = React.useState(provider)
 
   const web3 = useWalletProvider();
-
   const router = useRouter();
 
   const { pathname } = router;
@@ -210,17 +222,94 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler],
   );
 
+  // const closeApp = async (newWeb3) => {
+  //   if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.close) {
+  //     await newWeb3.currentProvider.close();
+  //   }
+  //   await newWeb3.clearCachedProvider();
+  // };
+
+  // const subscribeProvider = React.useCallback(async (provider, newWeb3, modal) => {
+  //   const { nonce, address: add } = await requireNonce(provider.accounts[0]);
+  //   provider.request({ method: 'personal_sign', params: [nonce, add] }).then((res) => {
+  //     loginSignature(add, res).then((res) => {
+  //       checkLoginStatu(res);
+  //     }, () => { })
+  //   }, (error) => {
+  //     if (w3) {
+  //       w3.resetApp()
+  //     }
+  //   })
+
+  //   if (!provider.on) {
+  //     return;
+  //   }
+
+  //   //断开连接
+  //   provider.on('close', async () => {
+  //     removeToken('atk');
+  //     removeToken('rtk');
+  //     state.setState({
+  //       accessToken: '',
+  //       refreshToken: '',
+  //       profile: { address: null, nickName: null, avatar: null },
+  //     });
+  //     window.location.href = '/';
+  //     newWeb3.resetApp()
+  //     await provider.killSession()
+  //     // await provider.clearCachedProvider();
+  //   });
+
+  //   //切换账号
+  //   // provider.on('accountsChanged', async (accounts) => {
+  //   //   let address = await accounts[0];
+  //   //   console.log('切换账号')
+  //   // });
+  // }, [w3])
+
+  // const walletconnect = React.useCallback(async () => {
+
+  //   const providerOptions = {
+  //     walletconnect: {
+  //       package: WalletConnectProvider,
+  //       options: {
+  //         infuraId: '7b9fdfd5be844ea3b9f2988619123ced',//以太坊连接必填
+  //         // rpc: {
+  //         //   56: 'https://mainnet.infura.io/v3',
+  //         // },
+  //         // network: 56,
+  //       },
+  //     },
+  //   };
+  //   const web3Modal = new Web3Modal({
+  //     network: 'mainnet',
+  //     cacheProvider: true,
+  //     providerOptions,
+  //   });
+  //   const provider = await web3Modal.connect()
+  //   await web3Modal.toggleModal()
+  //   const web_3 = new WalletConnectProvider(provider)
+
+  //   setw3(web_3)
+  //   await subscribeProvider(provider, web_3, web3Modal)
+  //   return web_3
+  // }, [subscribeProvider])
+
   const clickItem = React.useCallback(
     (item) => {
+      setShowWall(item.value);
       if (item.type === 'wallet') {
         if (!profile.address && item.value === 'metamask') {
           connectToChain();
         }
+        if (!profile.address && item.value === 'walletconnect') {
+          // walletconnect()
+        }
       }
     },
     [profile, connectToChain],
+    // walletconnect
   );
-
   // const demo = React.useCallback(async () => {
   //   console.log(await p1.enable())
   //   const i = await p1.enable();
@@ -247,19 +336,26 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (item.value === 'resetApp') {
         removeToken('atk');
         removeToken('rtk');
-        web3.resetApp();
+        // if (w3) {
+        //   w3.resetApp()
+        // }
+        if (web3) {
+          web3.resetApp();
+        }
         state.setState({
           accessToken: '',
           refreshToken: '',
           profile: { address: null, nickName: null, avatar: null },
         });
+        req_user_logout(accessToken);
         if (pathname !== '/') {
           window.location.href = '/';
         }
       }
       setShowMenu(false);
     },
-    [pathname, web3, profile, state],
+    [pathname, web3, profile, state, accessToken],
+    // w3
   );
 
   const render = React.useMemo(() => {
@@ -320,7 +416,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             </div>
             <img
               src="/images/loading.png"
-              className={cn('animate-spin', style.loading, loading ? null : ' hidden')}
+              className={cn(
+                'animate-spin',
+                style.loading,
+                loading && item.value === showWall ? null : ' hidden',
+              )}
             />
             <img
               src="/images/v5/arrow.png"
@@ -335,7 +435,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         </li>
       );
     });
-  }, [profile, clickItem, clickOperationItem, loading]);
+  }, [profile, clickItem, clickOperationItem, loading, showWall]);
 
   const getText = React.useMemo(() => {
     let text = 'Connect';

@@ -3,7 +3,6 @@
 }
 .cell {
   color: #fff;
-  font-size: 28px !important;
   font-weight: 500 !important;
 }
 
@@ -42,17 +41,56 @@
 }
 
 .h3 {
-  width: 220px;
+  width: 200px;
 }
-
+.h4{
+  width: 280px;
+}
 .bg {
   height: 48px;
   background: #1c2929;
-  border: 1px solid #333E3E;
+  border: 1px solid #333e3e;
 }
 
 .bg2 {
   background: rgba(255, 255, 255, 0.04);
   box-shadow: -0.5px 0px 0px rgba(255, 255, 255, 0.1);
-  border: 1px solid #333E3E;
+  border: 1px solid #333e3e;
+}
+
+.biaotou {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.left {
+  float: left;
+  margin-left: 16px;
+}
+
+.right {
+  float: right;
+  margin-right: 16px;
+}
+
+.font1 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.font2 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.font3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
 }

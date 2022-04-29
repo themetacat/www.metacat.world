@@ -80,10 +80,11 @@ export default function Annular({
             },
             emphasis: {
               itemStyle: {
-                shadowBlur: 10,
-                shadowOffset: 20,
+                shadowBlur: 3,
+                shadowOffset: 5,
                 borderWidth: 1,
                 borderColor: '#fff',
+                fontSize: 20,
               },
               label: {
                 show: true,

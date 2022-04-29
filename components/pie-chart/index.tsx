@@ -60,12 +60,14 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
             },
 
             emphasis: {
-              lineStyle: {
-                width: 3,
+              labelLine: {
+                lineStyle: {
+                  width: 3,
+                },
               },
               itemStyle: {
-                shadowBlur: 10,
-                shadowOffset: 20,
+                shadowBlur: 5,
+                shadowOffset: 10,
                 borderWidth: 1,
                 borderColor: '#fff',
                 fontSize: 20,
@@ -88,6 +90,29 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
               normal: {
                 borderWidth: 0.5,
                 borderColor: '#fff',
+                color: (tval) => {
+                  if (tval.dataIndex === 0) {
+                    return `#FF7575`;
+                  }
+                  if (tval.dataIndex === 1) {
+                    return `#F06AF2`;
+                  }
+                  if (tval.dataIndex === 2) {
+                    return `#FFCE1F`;
+                  }
+                  if (tval.dataIndex === 3) {
+                    return `#21D473`;
+                  }
+                  if (tval.dataIndex === 4) {
+                    return `#2276FC`;
+                  }
+                  if (tval.dataIndex === 5) {
+                    return `#00D0EC`;
+                  }
+                  if (tval.dataIndex === 6) {
+                    return `#ADADAD`;
+                  }
+                },
               },
             },
           },
