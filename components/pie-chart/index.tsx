@@ -72,8 +72,9 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
               },
               label: {
                 show: true,
-                fontSize: '20',
+                fontSize: '18',
                 fontWeight: 'bold',
+                color: {},
               },
             },
             label: {

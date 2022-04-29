@@ -84,7 +84,17 @@ export default function Annular({
                 shadowOffset: 20,
                 borderWidth: 1,
                 borderColor: '#fff',
-                fontSize: 20,
+              },
+              label: {
+                show: true,
+                fontSize: '14',
+                fontWeight: 'bold',
+                color: {},
+              },
+              labelLine: {
+                lineStyle: {
+                  width: 3,
+                },
               },
             },
             itemStyle: {
