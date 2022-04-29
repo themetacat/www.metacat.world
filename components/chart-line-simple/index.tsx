@@ -86,7 +86,7 @@ export default function ChartLineSimple({
         },
         domStyles: {
           'g2-tooltip': {
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.5)',
             color: '#ffffff',
             boxShadow: null,
           },

@@ -18,6 +18,7 @@ interface Props {
   hasBorder?: boolean;
   trigger?: (x: boolean) => void;
   useRef?: React.Ref<any>;
+  cl?;
 }
 
 export default function ChartSelecter({
@@ -29,6 +30,7 @@ export default function ChartSelecter({
   hasBorder = true,
   trigger,
   useRef,
+  cl,
 }: Props) {
   const cls = cn(className);
   const [selectedOption, setSelectedOption] = React.useState(defaultLabel);
@@ -118,7 +120,7 @@ export default function ChartSelecter({
                 itemOnClick(x);
               }}
             >
-              <span className={selectedOption === x.label ? style.active : ''}>{x.label}</span>
+              <span className={cn(selectedOption === x.label ? style.active : '')}>{x.label}</span>
             </li>
           );
         })}

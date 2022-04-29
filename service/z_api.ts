@@ -706,3 +706,18 @@ export const req_all_number_sales = async () => {
 
   return json;
 };
+
+export const req_user_logout = async (token) => {
+  const url = '/api/logout';
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};

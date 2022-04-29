@@ -1,10 +1,11 @@
-// **7.3 用户登出接口 **
+// 设置单个或批量已出租
 
 import api from '../../lib/z_api';
 
 export default async (req, res) => {
   const token = req.headers.authorization;
-  const data = await api.req_user_logout(token);
+  const { parcel_ids } = req.body;
+  const data = await api.req_parcels_leased(token, parcel_ids);
 
   res.statusCode = 200;
 

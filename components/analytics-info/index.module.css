@@ -1,29 +1,8 @@
-.table > tbody > tr > th {
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
-  box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
-  min-width: 195px;
-  height: 50px;
-  padding: 10px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.table > tbody > tr > th > div {
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 3px 20px;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
 .title {
   color: #aaaaaa;
 }
 .cell {
   color: #fff;
-  font-size: 28px !important;
   font-weight: 500 !important;
 }
 
@@ -49,7 +28,69 @@
   justify-content: left;
 }
 
-
-.tobottom{
+.tobottom {
   margin-bottom: 20px;
+}
+
+.h1 {
+  width: 170px;
+}
+
+.h2 {
+  width: 250px;
+}
+
+.h3 {
+  width: 200px;
+}
+.h4{
+  width: 280px;
+}
+.bg {
+  height: 48px;
+  background: #1c2929;
+  border: 1px solid #333e3e;
+}
+
+.bg2 {
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: -0.5px 0px 0px rgba(255, 255, 255, 0.1);
+  border: 1px solid #333e3e;
+}
+
+.biaotou {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.left {
+  float: left;
+  margin-left: 16px;
+}
+
+.right {
+  float: right;
+  margin-right: 16px;
+}
+
+.font1 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.font2 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.font3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
 }

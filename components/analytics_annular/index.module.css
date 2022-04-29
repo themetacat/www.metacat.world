@@ -3,7 +3,7 @@
   height: 417px;
   margin-right: 20px;
   padding: 20px;
-  background: #081616;
+  background: #041111;
 }
 .header {
   height: 30px;
@@ -23,4 +23,8 @@
 }
 .mt {
   margin-top: 150px;
+}
+.bg {
+  background-color: #010202;
+  border-bottom: #333 solid 1px;
 }

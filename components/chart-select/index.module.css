@@ -1,28 +1,28 @@
-.option{
-  background-color:rgba(15, 25, 27, 1); 
-  color: #AAAAAA;
+.option {
+  color: #aaaaaa;
   font-weight: 400;
   font-size: 12px;
   min-width: 69px;
   padding: 0 10px;
   height: 41px;
-  border-bottom: #000000 solid 1px;
+  background-color: #010202;
+  border-bottom: #333333 solid 1px;
 }
-.option:hover{
+.option:hover {
   color: #fff;
   font-weight: 500;
 }
-.option:active{
-  color:  #999999;
+.option:active {
+  color: #999999;
   font-weight: 500;
 }
-.selectDiv{
+.selectDiv {
   z-index: 1005;
   cursor: pointer;
   position: relative;
   min-width: 80px;
 }
-.selecter{
+.selecter {
   height: 30px;
   /* width: 80px; */
   padding: 0 10px;
@@ -33,28 +33,29 @@
   font-weight: 400;
 }
 
-.border{
+.border {
   background: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.6);
   box-sizing: border-box;
 }
 
-.show{
+.show {
   display: none;
 }
 
-.frame{
+.frame {
   width: 10px;
   height: 10px;
 }
 
-.frame:hover{
+.frame:hover {
   filter: brightness(150%);
 }
-.frame:active{
+.frame:active {
   filter: brightness(75%);
 }
 
-.active{
+.active {
   filter: brightness(150%);
 }
+

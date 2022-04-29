@@ -78,6 +78,24 @@ export default function Annular({
               alignTo: 'labelLine',
               formatter: ` {@name} - {@value}%`,
             },
+            emphasis: {
+              itemStyle: {
+                borderWidth: 1,
+                borderColor: '#fff',
+                fontSize: 20,
+              },
+              label: {
+                show: true,
+                fontSize: '14',
+                fontWeight: 'bold',
+                color: {},
+              },
+              labelLine: {
+                lineStyle: {
+                  width: 3,
+                },
+              },
+            },
             itemStyle: {
               normal: {
                 color: (tVal) => {
@@ -100,6 +118,8 @@ export default function Annular({
                     return `rgba(250, 216, 23,1)`;
                   }
                 },
+                borderWidth: 0.5,
+                borderColor: '#fff',
               },
             },
           },
@@ -182,6 +202,7 @@ export default function Annular({
             className={style.selecterLong}
             defaultLabel={options[0].value}
             hasBorder={false}
+            cl={style.bg}
           ></ChartSelecter>
         </div>
       );

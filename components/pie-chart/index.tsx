@@ -53,10 +53,29 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
             name: 'Access From',
             type: 'pie',
             radius: '50%',
-
+            hoverAnimated: true,
             encode: {
               x: 'name', // 指定x轴对应的值
               y: 'parcel_id', // 指定y轴对应的值
+            },
+
+            emphasis: {
+              labelLine: {
+                lineStyle: {
+                  width: 3,
+                },
+              },
+              itemStyle: {
+                borderWidth: 1,
+                borderColor: '#fff',
+                fontSize: 20,
+              },
+              label: {
+                show: true,
+                fontSize: '18',
+                fontWeight: 'bold',
+                color: {},
+              },
             },
             label: {
               color: '#aaa',
@@ -64,10 +83,39 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
               alignTo: 'labelLine',
               formatter: `#{@parcel_id}  {@name} - {@percent}%`,
             },
+            itemStyle: {
+              // 此配置
+              normal: {
+                borderWidth: 0.5,
+                borderColor: '#fff',
+                color: (tval) => {
+                  if (tval.dataIndex === 0) {
+                    return `#FF7575`;
+                  }
+                  if (tval.dataIndex === 1) {
+                    return `#F06AF2`;
+                  }
+                  if (tval.dataIndex === 2) {
+                    return `#FFCE1F`;
+                  }
+                  if (tval.dataIndex === 3) {
+                    return `#21D473`;
+                  }
+                  if (tval.dataIndex === 4) {
+                    return `#2276FC`;
+                  }
+                  if (tval.dataIndex === 5) {
+                    return `#00D0EC`;
+                  }
+                  if (tval.dataIndex === 6) {
+                    return `#ADADAD`;
+                  }
+                },
+              },
+            },
           },
         ],
       };
-      console.log(chart.current);
       if (myChart) {
         myChart.setOption(chart.current);
       }
@@ -149,6 +197,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
             defaultLabel={options[0].value}
             hasBorder={false}
             useRef={visible1}
+            cl={style.bg}
           ></ChartSelecter>
         </div>
       );

@@ -708,6 +708,23 @@ class API {
 
     return json;
   }
+
+  // **7.3 用户登出接口 **
+
+  public async req_user_logout(token) {
+    const url = `${this.url}/user/logout`;
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');
