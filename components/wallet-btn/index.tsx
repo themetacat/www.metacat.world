@@ -332,7 +332,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   // }, [p1])
 
   const clickOperationItem = React.useCallback(
-    (item) => {
+    async (item) => {
       if (item.value === 'resetApp') {
         removeToken('atk');
         removeToken('rtk');
@@ -347,7 +347,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           refreshToken: '',
           profile: { address: null, nickName: null, avatar: null },
         });
-        req_user_logout(accessToken);
+        // const res = await req_user_logout(accessToken);
+        // console.log(res)
         if (pathname !== '/') {
           window.location.href = '/';
         }

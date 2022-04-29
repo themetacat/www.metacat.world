@@ -80,8 +80,6 @@ export default function Annular({
             },
             emphasis: {
               itemStyle: {
-                shadowBlur: 3,
-                shadowOffset: 5,
                 borderWidth: 1,
                 borderColor: '#fff',
                 fontSize: 20,

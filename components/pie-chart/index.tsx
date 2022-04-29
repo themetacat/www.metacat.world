@@ -66,8 +66,6 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
                 },
               },
               itemStyle: {
-                shadowBlur: 5,
-                shadowOffset: 10,
                 borderWidth: 1,
                 borderColor: '#fff',
                 fontSize: 20,
