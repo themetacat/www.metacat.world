@@ -47,7 +47,7 @@ export default function Annular({
   const chart = React.useRef(null);
 
   const initChart = React.useCallback(
-    (dd) => {
+    (dd, st) => {
       const chartDom = document.getElementById(id)!;
       const myChart = echarts.init(chartDom);
       let chartData = null;
@@ -126,7 +126,7 @@ export default function Annular({
         ],
       };
       myChart.resize({
-        width: 650,
+        width: st === 'all_time' ? 660 : 580,
         height: 350,
       });
       if (myChart) {
@@ -144,7 +144,7 @@ export default function Annular({
       setLoading(false);
       setData(result.data);
       setShowData(result.data[showType][priceShowType]);
-      initChart(result.data[showType][priceShowType]);
+      initChart(result.data[showType][priceShowType], showType);
     } else {
       setLoading(false);
       setError(true);
@@ -173,7 +173,7 @@ export default function Annular({
 
   const updata = React.useCallback(
     (st, pt) => {
-      initChart(data[st][pt]);
+      initChart(data[st][pt], st);
     },
     [data],
   );
