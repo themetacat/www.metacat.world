@@ -4,6 +4,7 @@
   margin-right: 20px;
   padding: 20px;
   background: #041111;
+  position: relative;
 }
 .header {
   height: 30px;
@@ -27,4 +28,14 @@
 .bg {
   background-color: #010202;
   border-bottom: #333 solid 1px;
+}
+.mr {
+  position: absolute;
+  left: -17px;
+  top: 60px;
+}
+.ml {
+  position: absolute;
+  left: 10px;
+  top: 60px;
 }
