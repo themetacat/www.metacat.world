@@ -126,7 +126,7 @@ export default function Annular({
         ],
       };
       myChart.resize({
-        width: st === 'all_time' ? 660 : 580,
+        width: 660,
         height: 350,
       });
       if (myChart) {
@@ -168,8 +168,10 @@ export default function Annular({
       return <Status mini={true} retry={onRetry} status="error" />;
     }
 
-    return <div id={id} className={style.totop}></div>;
-  }, [loading, error, onRetry]);
+    return (
+      <div id={id} className={cn(style.totop, showType === 'all_time' ? style.ml : style.mr)}></div>
+    );
+  }, [loading, error, onRetry, showType]);
 
   const updata = React.useCallback(
     (st, pt) => {
