@@ -785,7 +785,7 @@ export default function AnalyticsIndex(props) {
               <div className={style.allLine}>
                 <Allline
                   id="allline1"
-                  labelText="Average Pacel Price"
+                  labelText="Average Parcel Price"
                   dataHandlder={req_avg_parcel_price}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
@@ -822,7 +822,7 @@ export default function AnalyticsIndex(props) {
               <div className={style.allLine}>
                 <AllPillar
                   id="allpillar1"
-                  labelText="Price Sales Amount"
+                  labelText="Parcel Sales Amount"
                   dataHandlder={req_sales_amount_stack}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
