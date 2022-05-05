@@ -231,7 +231,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Monthly Parcel Minted'}
             dataHandlder={getCvMintStats}
-            defaultColor={[33, 212, 115]}
+            defaultColor={[130, 137, 195]}
             barWidth={18}
           ></BaseBar>
           <ChartLineSimple
@@ -239,7 +239,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getCvParcelOwnerStats}
-            defaultColor={[246, 147, 55]}
+            defaultColor={[194, 157, 135]}
           ></ChartLineSimple>
         </>
       );
@@ -252,8 +252,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Average Parcel Price'}
             dataHandlder={getDclParcelAvgPriceStats}
-            legend1={{ label: 'Separate Land', color: [33, 212, 115] }}
-            legend2={{ label: 'Land in Estate', color: [255, 172, 95] }}
+            legend1={{ label: 'Separate Land', color: [255, 107, 84] }}
+            legend2={{ label: 'Land in Estate', color: [255, 207, 84] }}
             keyTypes={['land', 'estate']}
             options={[
               {
@@ -285,8 +285,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={getDclParcelSoldTotalStats}
-            legend1={{ label: 'Land', color: [33, 212, 115] }}
-            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            legend1={{ label: 'Land', color: [255, 79, 163] }}
+            legend2={{ label: 'Estate', color: [225, 255, 40] }}
             keyTypes={['land', 'estate']}
             options={[
               {
@@ -310,8 +310,8 @@ export default function AnalyticsIndex(props) {
               className="mt-5"
               labelText={'Parcel Sales Amount'}
               dataHandler={getDclParcelSoldSumStats}
-              legend1={{ label: 'Land', color: [33, 212, 115] }}
-              legend2={{ label: 'Estate', color: [255, 172, 95] }}
+              legend1={{ label: 'Land', color: [255, 207, 84] }}
+              legend2={{ label: 'Estate', color: [255, 107, 84] }}
               keyTypes={['land', 'estate']}
               barWidth={18}
               isEth={true}
@@ -344,7 +344,7 @@ export default function AnalyticsIndex(props) {
               className="mt-5"
               labelText={'Total Number Of Landlords At The End Of Each Month'}
               dataHandlder={getDclParcelOwnerStats}
-              defaultColor={[34, 118, 252]}
+              defaultColor={[255, 105, 40]}
             ></ChartLineSimple>
           </>
         </>
@@ -358,6 +358,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_sandbox_avg_price_stats}
+            legend1={{ label: 'Primary', color: [24, 147, 247] }}
             options={[
               {
                 label: 'Daily price',
@@ -389,8 +390,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_sandbox_sold_total_stats}
-            legend1={{ label: 'Land', color: [33, 212, 115] }}
-            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            legend1={{ label: 'Land', color: [24, 60, 247] }}
             keyTypes={['land', 'estate']}
             options={[
               {
@@ -413,7 +413,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_sandbox_sold_sun_stats}
-            legend1={{ label: 'Land', color: [255, 207, 95] }}
+            legend1={{ label: 'Land', color: [0, 117, 255] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
@@ -452,6 +452,7 @@ export default function AnalyticsIndex(props) {
               labelText={'Average Parcel Price'}
               className="mt-5"
               dataHandlder={req_somniumspace__avg_price_stats}
+              legend1={{ label: 'Primary', color: [250, 216, 23] }}
               options={[
                 {
                   label: 'Daily price',
@@ -483,8 +484,7 @@ export default function AnalyticsIndex(props) {
               className="mt-5"
               labelText={'Number Of Parcel Sales'}
               dataHandlder={req_somniumspace_sold_total_stats}
-              legend1={{ label: 'Land', color: [33, 212, 115] }}
-              legend2={{ label: 'Estate', color: [255, 172, 95] }}
+              legend1={{ label: 'Land', color: [250, 159, 23] }}
               keyTypes={['land', 'estate']}
               options={[
                 {
@@ -507,7 +507,7 @@ export default function AnalyticsIndex(props) {
               className="mt-5"
               labelText={'Parcel Sales Amount'}
               dataHandler={req_somniumspace_sold_sum_stats}
-              legend1={{ label: 'Land', color: [255, 207, 95] }}
+              legend1={{ label: 'Land', color: [250, 216, 23] }}
               keyTypes={['land', 'estate']}
               barWidth={18}
               isEth={true}
@@ -546,6 +546,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_ntfworlds_avg_price_stats}
+            legend1={{ label: 'Primary', color: [132, 193, 14] }}
             options={[
               {
                 label: 'Daily price',
@@ -577,8 +578,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_ntfworlds_sold_total_stats}
-            legend1={{ label: 'Land', color: [33, 212, 115] }}
-            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            legend1={{ label: 'Land', color: [0, 191, 8] }}
             keyTypes={['land', 'estate']}
             options={[
               {
@@ -601,7 +601,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_ntfworlds_sold_sum_stats}
-            legend1={{ label: 'Land', color: [255, 207, 95] }}
+            legend1={{ label: 'Land', color: [132, 193, 14] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
@@ -638,6 +638,7 @@ export default function AnalyticsIndex(props) {
             id={'chartline1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
+            legend1={{ label: 'Primary', color: [229, 68, 155] }}
             dataHandlder={req_webb_parcel_avg_price_stats}
             options={[
               {
@@ -670,8 +671,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_webb_sold_total_stats}
-            legend1={{ label: 'Land', color: [33, 212, 115] }}
-            legend2={{ label: 'Estate', color: [255, 172, 95] }}
+            legend1={{ label: 'Land', color: [177, 51, 255] }}
             keyTypes={['land', 'estate']}
             options={[
               {
@@ -694,7 +694,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_webb_sold_sum_stats}
-            legend1={{ label: 'Land', color: [255, 207, 95] }}
+            legend1={{ label: 'Land', color: [229, 68, 155] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}

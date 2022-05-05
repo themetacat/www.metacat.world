@@ -22,7 +22,7 @@ type Props = {
 export default function BaseBar({
   id,
   dataHandlder,
-  defaultColor = [34, 118, 252],
+  defaultColor = [194, 157, 135],
   gradient = true,
   className,
   labelText,

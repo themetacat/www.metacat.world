@@ -8,9 +8,9 @@ import Router, { useRouter } from 'next/router';
 
 import { toast } from 'react-hot-toast';
 
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import Web3Modal from 'web3modal';
 import { useWalletProvider } from '../web3modal';
-// import WalletConnectProvider from '@walletconnect/web3-provider';
-// import Web3Modal from 'web3modal';
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 import { req_user_logout } from '../../service/z_api';
@@ -73,12 +73,12 @@ const WALLET = [
     value: 'metamask',
     type: 'wallet',
   },
-  // {
-  //   label: 'Wallet Connect',
-  //   icon: '/images/walletconnect.png',
-  //   value: 'walletconnect',
-  //   type: 'wallet',
-  // },
+  {
+    label: 'Wallet Connect',
+    icon: '/images/walletconnect.png',
+    value: 'walletconnect',
+    type: 'wallet',
+  },
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
@@ -91,13 +91,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const [showWall, setShowWall] = React.useState(null);
 
-  // const [w3, setw3] = React.useState(null)
-
-  // const provider = new WalletConnectProvider({
-  //   infuraId: "f9d7d835ed864a299a13e841a1b654f8",
-  // });
-
-  // const [p1, setp1] = React.useState(provider)
+  const w3 = React.useRef(null);
 
   const web3 = useWalletProvider();
   const router = useRouter();
@@ -177,14 +171,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       return;
     }
     try {
-      // removeToken(profile.address, 'atk');
-      // removeToken(profile.address, 'rtk');
-      // state.setState({
-      //   accessToken: '',
-      //   refreshToken: '',
-      //   profile: { address: null, nickName: null, avatar: null },
-      // });
-
       web3.connect().then(
         async (res) => {
           const { address: addr, provider } = res;
@@ -222,78 +208,72 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler],
   );
 
-  // const closeApp = async (newWeb3) => {
-  //   if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.close) {
-  //     await newWeb3.currentProvider.close();
-  //   }
-  //   await newWeb3.clearCachedProvider();
-  // };
+  const closeApp = React.useCallback(
+    async (newWeb3) => {
+      if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.disconnect) {
+        await newWeb3.currentProvider.disconnect();
+      }
+      await w3.current.clearCachedProvider();
+    },
+    [w3],
+  );
 
-  // const subscribeProvider = React.useCallback(async (provider, newWeb3, modal) => {
-  //   const { nonce, address: add } = await requireNonce(provider.accounts[0]);
-  //   provider.request({ method: 'personal_sign', params: [nonce, add] }).then((res) => {
-  //     loginSignature(add, res).then((res) => {
-  //       checkLoginStatu(res);
-  //     }, () => { })
-  //   }, (error) => {
-  //     if (w3) {
-  //       w3.resetApp()
-  //     }
-  //   })
+  const subscribeProvider = React.useCallback(
+    async (provider, newWeb3, modal) => {
+      const { nonce, address: add } = await requireNonce(provider.accounts[0]);
+      provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+        (res) => {
+          loginSignature(add, res).then((r) => {
+            checkLoginStatu(r);
+          });
+        },
+        (error) => {
+          closeApp(newWeb3);
+        },
+      );
+      if (!provider.on) {
+        return;
+      }
 
-  //   if (!provider.on) {
-  //     return;
-  //   }
+      provider.on('close', async () => {
+        closeApp(newWeb3);
+        removeToken('atk');
+        removeToken('rtk');
+        state.setState({
+          accessToken: '',
+          refreshToken: '',
+          profile: { address: null, nickName: null, avatar: null },
+        });
+        window.location.href = '/';
+      });
+    },
+    [w3],
+  );
 
-  //   //断开连接
-  //   provider.on('close', async () => {
-  //     removeToken('atk');
-  //     removeToken('rtk');
-  //     state.setState({
-  //       accessToken: '',
-  //       refreshToken: '',
-  //       profile: { address: null, nickName: null, avatar: null },
-  //     });
-  //     window.location.href = '/';
-  //     newWeb3.resetApp()
-  //     await provider.killSession()
-  //     // await provider.clearCachedProvider();
-  //   });
-
-  //   //切换账号
-  //   // provider.on('accountsChanged', async (accounts) => {
-  //   //   let address = await accounts[0];
-  //   //   console.log('切换账号')
-  //   // });
-  // }, [w3])
-
-  // const walletconnect = React.useCallback(async () => {
-
-  //   const providerOptions = {
-  //     walletconnect: {
-  //       package: WalletConnectProvider,
-  //       options: {
-  //         infuraId: '7b9fdfd5be844ea3b9f2988619123ced',//以太坊连接必填
-  //         // rpc: {
-  //         //   56: 'https://mainnet.infura.io/v3',
-  //         // },
-  //         // network: 56,
-  //       },
-  //     },
-  //   };
-  //   const web3Modal = new Web3Modal({
-  //     network: 'mainnet',
-  //     cacheProvider: true,
-  //     providerOptions,
-  //   });
-  //   const provider = await web3Modal.connect()
-  //   await web3Modal.toggleModal()
-  //   const web_3 = new WalletConnectProvider(provider)
-
-  //   setw3(web_3)
-  //   await subscribeProvider(provider, web_3, web3Modal)
-  //   return web_3
-  // }, [subscribeProvider])
+  const walletconnect = React.useCallback(async () => {
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+        },
+      },
+    };
+    const web3Modal = new Web3Modal({
+      network: 'mainnet',
+      cacheProvider: true,
+      providerOptions,
+    });
+    w3.current = web3Modal;
+    const provider = await web3Modal.connect();
+    if (provider.infuraId) {
+      await web3Modal.toggleModal();
+      const web_3 = new WalletConnectProvider(provider);
+      await subscribeProvider(provider, web_3, web3Modal);
+      return web_3;
+    }
+    connectToChain();
+  }, [subscribeProvider, connectToChain, w3]);
 
   const clickItem = React.useCallback(
     (item) => {
@@ -303,31 +283,29 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           connectToChain();
         }
         if (!profile.address && item.value === 'walletconnect') {
-          // walletconnect()
+          walletconnect();
         }
       }
     },
-    [profile, connectToChain],
-    // walletconnect
+    [profile, connectToChain, walletconnect],
   );
   // const demo = React.useCallback(async () => {
   //   console.log(await p1.enable())
   //   const i = await p1.enable();
 
-  //
-  // provider.on("accountsChanged", (accounts: string[]) => {
-  //   console.log(accounts);
-  // });
+  //   provider.on("accountsChanged", (accounts: string[]) => {
+  //     console.log(accounts);
+  //   });
 
-  // // Subscribe to chainId change
-  // provider.on("chainChanged", (chainId: number) => {
-  //   console.log(chainId);
-  // });
+  //   // Subscribe to chainId change
+  //   provider.on("chainChanged", (chainId: number) => {
+  //     console.log(chainId);
+  //   });
 
-  // // Subscribe to session disconnection
-  // provider.on("disconnect", (code: number, reason: string) => {
-  //   console.log(code, reason);
-  // });
+  //   // Subscribe to session disconnection
+  //   provider.on("disconnect", (code: number, reason: string) => {
+  //     console.log(code, reason);
+  //   });
   //   return await i
   // }, [p1])
 
@@ -336,9 +314,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (item.value === 'resetApp') {
         removeToken('atk');
         removeToken('rtk');
-        // if (w3) {
-        //   w3.resetApp()
-        // }
+        if (w3) {
+          closeApp(w3);
+        }
         if (web3) {
           web3.resetApp();
         }
@@ -355,8 +333,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       }
       setShowMenu(false);
     },
-    [pathname, web3, profile, state, accessToken],
-    // w3
+    [pathname, web3, profile, state, accessToken, w3],
   );
 
   const render = React.useMemo(() => {
@@ -468,16 +445,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     );
   }, [profile, clipName]);
 
-  const requireBaseData = React.useCallback(
-    async (tk) => {
-      const res = await getBaseInfo(tk);
-      const { data } = res;
-      const { address: addr, avatar } = data;
-      const newProfile = Object.assign({ address: addr, avatar }, profile);
-      state.setState({ profile: newProfile });
-    },
-    [profile],
-  );
+  // const requireBaseData = React.useCallback(
+  //   async (tk) => {
+  //     const res = await getBaseInfo(tk);
+  //     const { data } = res;
+  //     const { address: addr, avatar } = data;
+  //     const newProfile = Object.assign({ address: addr, avatar }, profile);
+  //     state.setState({ profile: newProfile });
+  //   },
+  //   [profile],
+  // );
 
   // React.useEffect(() => {
   //   if (web3.data.address && !profile.address) {

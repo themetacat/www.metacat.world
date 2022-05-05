@@ -220,14 +220,13 @@ export default function Web3ModalProvider({
       {
         network: getNetwork(), // optional
         cacheProvider: true, // optional
-        // providerOptions: {
-        //   walletconnect: {
-        //     package: WalletConnectProvider,
-        //     options: {
-        //       infuraId: process.env.REACT_APP_INFURA_ID,
-        //     },
-        //   },
-        // },
+        providerOptions: {
+          walletconnect: {
+            options: {
+              infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+            },
+          },
+        },
       },
       options,
     );

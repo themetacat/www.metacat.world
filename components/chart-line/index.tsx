@@ -37,8 +37,8 @@ type Props = {
 export default function ChartLine({
   id,
   dataHandlder,
-  legend1 = { label: 'Primary', color: [95, 213, 236] },
-  legend2 = { label: 'Secondary', color: [255, 207, 95] },
+  legend1 = { label: 'Primary', color: [194, 157, 135] },
+  legend2 = { label: 'Secondary', color: [130, 137, 195] },
   labelText,
   limit,
   options,

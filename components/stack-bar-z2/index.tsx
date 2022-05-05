@@ -42,8 +42,8 @@ type Props = {
 export default function StackBar({
   id,
   dataHandler,
-  legend1 = { label: 'Primary', color: [95, 213, 236] },
-  legend2 = { label: 'Secondary', color: [255, 207, 95] },
+  legend1 = { label: 'Primary', color: [176, 168, 91] },
+  legend2 = { label: 'Secondary', color: [139, 116, 188] },
   gradient = true,
   className,
   options,
@@ -380,20 +380,20 @@ export default function StackBar({
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
-          options={options}
+          options={optionsPrice}
           showArrow={true}
-          onClick={changeStatic}
-          className={style.selecterLong}
-          defaultLabel={options[0].value}
+          onClick={changePriceStatic}
+          defaultLabel={optionsPrice[0].value}
           hasBorder={false}
         ></ChartSelecter>
         {priceType ? '丨' : null}
         {priceType ? (
           <ChartSelecter
-            options={optionsPrice}
+            options={options}
             showArrow={true}
-            onClick={changePriceStatic}
-            defaultLabel={optionsPrice[0].value}
+            onClick={changeStatic}
+            className={style.selecterLong}
+            defaultLabel={options[0].value}
             hasBorder={false}
           ></ChartSelecter>
         ) : null}
