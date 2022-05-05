@@ -22,6 +22,8 @@
 }
 
 .table,
+.dclColor {
+}
 .chartList {
   max-width: 1860px;
   min-width: 1200px;
@@ -43,7 +45,6 @@
   z-index: 9999999999999;
   background-color: #111a1b;
 }
-
 
 .tmbg {
   width: 100%;
@@ -126,4 +127,28 @@
 .tabContainer {
   padding: 20px;
   background: #081616;
+}
+
+.cvColor {
+  background-color: rgba(194, 157, 135, 1);
+}
+
+.dclColor {
+  background-color: rgba(255, 107, 84, 1);
+}
+
+.sandboxColor {
+  background-color: rgba(0, 117, 255, 1);
+}
+
+.spaceColor {
+  background-color: rgba(250, 216, 23, 1);
+}
+
+.nftColor {
+  background-color: rgba(132, 193, 14, 1);
+}
+
+.webbColor {
+  background-color: rgba(229, 68, 155, 1);
 }

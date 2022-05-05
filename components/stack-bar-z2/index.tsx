@@ -37,6 +37,7 @@ type Props = {
   barWidth?: number;
   keyTypes?: Array<string>;
   optionsPrice?: Array<optionItem>;
+  textColor?;
 };
 
 export default function StackBar({
@@ -54,6 +55,7 @@ export default function StackBar({
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
   optionsPrice,
+  textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceType, setPriceType] = React.useState(optionsPrice[0].value);
@@ -417,7 +419,7 @@ export default function StackBar({
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText}></ChartTitle>
+          <ChartTitle text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
             <div className="flex items-center mr-7">{getLenged}</div>
             {getSelect}

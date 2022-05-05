@@ -146,12 +146,14 @@ export default function AnalyticsIndex(props) {
             labelText={'Traffic'}
             dataHandlder={getCvTrafficStats}
             barWidth={18}
+            textColor={style.cvColor}
           ></BaseBar>
           <ChartLine
             id={'chartline1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={getCvParcelAvgPriceStats}
+            textColor={style.cvColor}
             options={[
               {
                 label: 'Daily price',
@@ -183,6 +185,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Number Of Parcel Sales'}
             dataHandler={getCvParcelSoldTotalStats}
             barWidth={18}
+            textColor={style.cvColor}
             options={[
               {
                 label: 'Daily',
@@ -205,6 +208,7 @@ export default function AnalyticsIndex(props) {
             dataHandler={getCvParcelSoldSumStats}
             isEth={true}
             barWidth={18}
+            textColor={style.cvColor}
             options={[
               {
                 label: 'Monthly',
@@ -233,6 +237,7 @@ export default function AnalyticsIndex(props) {
             dataHandlder={getCvMintStats}
             defaultColor={[130, 137, 195]}
             barWidth={18}
+            textColor={style.cvColor}
           ></BaseBar>
           <ChartLineSimple
             id={'chartlinesimple'}
@@ -240,6 +245,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getCvParcelOwnerStats}
             defaultColor={[194, 157, 135]}
+            textColor={style.cvColor}
           ></ChartLineSimple>
         </>
       );
@@ -255,6 +261,7 @@ export default function AnalyticsIndex(props) {
             legend1={{ label: 'Separate Land', color: [255, 107, 84] }}
             legend2={{ label: 'Land in Estate', color: [255, 207, 84] }}
             keyTypes={['land', 'estate']}
+            textColor={style.dclColor}
             options={[
               {
                 label: 'Daily price',
@@ -288,6 +295,7 @@ export default function AnalyticsIndex(props) {
             legend1={{ label: 'Land', color: [255, 79, 163] }}
             legend2={{ label: 'Estate', color: [225, 255, 40] }}
             keyTypes={['land', 'estate']}
+            textColor={style.dclColor}
             options={[
               {
                 label: 'Daily',
@@ -315,6 +323,7 @@ export default function AnalyticsIndex(props) {
               keyTypes={['land', 'estate']}
               barWidth={18}
               isEth={true}
+              textColor={style.dclColor}
               options={[
                 {
                   label: 'Monthly',
@@ -345,6 +354,7 @@ export default function AnalyticsIndex(props) {
               labelText={'Total Number Of Landlords At The End Of Each Month'}
               dataHandlder={getDclParcelOwnerStats}
               defaultColor={[255, 105, 40]}
+              textColor={style.dclColor}
             ></ChartLineSimple>
           </>
         </>
@@ -359,6 +369,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             dataHandlder={req_sandbox_avg_price_stats}
             legend1={{ label: 'Primary', color: [24, 147, 247] }}
+            textColor={style.sandboxColor}
             options={[
               {
                 label: 'Daily price',
@@ -392,6 +403,7 @@ export default function AnalyticsIndex(props) {
             dataHandlder={req_sandbox_sold_total_stats}
             legend1={{ label: 'Land', color: [24, 60, 247] }}
             keyTypes={['land', 'estate']}
+            textColor={style.sandboxColor}
             options={[
               {
                 label: 'Daily',
@@ -418,6 +430,7 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
+            textColor={style.sandboxColor}
             options={[
               {
                 label: 'Monthly',
@@ -453,6 +466,7 @@ export default function AnalyticsIndex(props) {
               className="mt-5"
               dataHandlder={req_somniumspace__avg_price_stats}
               legend1={{ label: 'Primary', color: [250, 216, 23] }}
+              textColor={style.spaceColor}
               options={[
                 {
                   label: 'Daily price',
@@ -486,6 +500,7 @@ export default function AnalyticsIndex(props) {
               dataHandlder={req_somniumspace_sold_total_stats}
               legend1={{ label: 'Land', color: [250, 159, 23] }}
               keyTypes={['land', 'estate']}
+              textColor={style.spaceColor}
               options={[
                 {
                   label: 'Daily',
@@ -503,6 +518,7 @@ export default function AnalyticsIndex(props) {
               tabState={showType}
             ></ChartLineToolTipSimpleSandbox>
             <StackBarZ
+              textColor={style.spaceColor}
               id={'stackbar1'}
               className="mt-5"
               labelText={'Parcel Sales Amount'}
@@ -547,6 +563,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             dataHandlder={req_ntfworlds_avg_price_stats}
             legend1={{ label: 'Primary', color: [132, 193, 14] }}
+            textColor={style.nftColor}
             options={[
               {
                 label: 'Daily price',
@@ -580,6 +597,7 @@ export default function AnalyticsIndex(props) {
             dataHandlder={req_ntfworlds_sold_total_stats}
             legend1={{ label: 'Land', color: [0, 191, 8] }}
             keyTypes={['land', 'estate']}
+            textColor={style.nftColor}
             options={[
               {
                 label: 'Daily',
@@ -606,6 +624,7 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
+            textColor={style.nftColor}
             options={[
               {
                 label: 'Monthly',
@@ -640,6 +659,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             legend1={{ label: 'Primary', color: [229, 68, 155] }}
             dataHandlder={req_webb_parcel_avg_price_stats}
+            textColor={style.webbColor}
             options={[
               {
                 label: 'Daily price',
@@ -673,6 +693,7 @@ export default function AnalyticsIndex(props) {
             dataHandlder={req_webb_sold_total_stats}
             legend1={{ label: 'Land', color: [177, 51, 255] }}
             keyTypes={['land', 'estate']}
+            textColor={style.webbColor}
             options={[
               {
                 label: 'Daily',
@@ -699,6 +720,7 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
+            textColor={style.webbColor}
             options={[
               {
                 label: 'Monthly',

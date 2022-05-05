@@ -6,12 +6,13 @@ import style from './index.module.css';
 type Props = {
   text?: string;
   className?: string;
+  color?: string;
 };
 
-export default function ChartTitle({ text, className }: Props) {
+export default function ChartTitle({ text, className, color }: Props) {
   return (
     <div className={cn('flex items-center justify-start', className, style.chartTitle)}>
-      <div className={style.icon}></div>
+      <div className={cn(style.icon, color)}></div>
       <div className={cn(' text-white font-medium text-sm', style.title)}>{text}</div>
     </div>
   );

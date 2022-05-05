@@ -33,6 +33,7 @@ type Props = {
   keyTypes?: Array<string>;
   simpleTooltip?: boolean;
   tabState?: string;
+  textColor?;
 };
 
 export default function ChartLineToolTipSimple({
@@ -47,6 +48,7 @@ export default function ChartLineToolTipSimple({
   className,
   keyTypes = ['primary', 'secondary'],
   tabState,
+  textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [dataSource, setDataSource] = React.useState(null);
@@ -240,7 +242,7 @@ export default function ChartLineToolTipSimple({
         .color('type', [`rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`]);
       chart.current.render();
     },
-    [staticType, limit],
+    [staticType, limit, id, options],
   );
 
   const requestData = React.useCallback(async () => {
@@ -330,7 +332,7 @@ export default function ChartLineToolTipSimple({
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText}></ChartTitle>
+          <ChartTitle text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">{getSelect}</div>
         </div>
         {render}

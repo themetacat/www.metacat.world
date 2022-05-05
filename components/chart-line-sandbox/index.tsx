@@ -32,6 +32,7 @@ type Props = {
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
   tabState?: string;
+  textColor?;
 };
 
 export default function ChartLine({
@@ -46,6 +47,7 @@ export default function ChartLine({
   className,
   keyTypes = ['land'],
   tabState,
+  textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
@@ -289,7 +291,7 @@ export default function ChartLine({
         .color('type', [`rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`]);
       chart.current.render();
     },
-    [staticType, priceStaticType, limit],
+    [staticType, priceStaticType, limit, id, options],
   );
 
   const requestData = React.useCallback(async () => {
@@ -417,7 +419,7 @@ export default function ChartLine({
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText}></ChartTitle>
+          <ChartTitle text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">{getSelect}</div>
         </div>
         {render}

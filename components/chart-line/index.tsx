@@ -32,6 +32,7 @@ type Props = {
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
   tabState?: string;
+  textColor?;
 };
 
 export default function ChartLine({
@@ -46,6 +47,7 @@ export default function ChartLine({
   className,
   keyTypes = ['primary', 'secondary'],
   tabState,
+  textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceStaticType, setPriceStaticType] = React.useState(priceOptions[0].value);
@@ -435,7 +437,7 @@ export default function ChartLine({
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText}></ChartTitle>
+          <ChartTitle text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
             <div className="flex items-center mr-7">{getLenged}</div>
             {getSelect}
