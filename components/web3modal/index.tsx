@@ -1,6 +1,5 @@
 import React from 'react';
 import Web3Modal, { IProviderControllerOptions } from 'web3modal';
-import WalletConnectProvider from '@walletconnect/web3-provider';
 import Rekv from 'rekv';
 import Web3 from 'web3';
 // import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -8,7 +7,6 @@ import Web3 from 'web3';
 import { getChainData } from './utils';
 import { IAssetData } from './interface';
 import { apiGetAccountAssets } from './api';
-import { INFURA_ID } from '../../common/const';
 
 interface ChainData {
   chianId: number;
@@ -184,7 +182,6 @@ export default function Web3ModalProvider({
       const provider = await web3ModalRef.current?.connect();
       await subscribeProvider(provider);
 
-      web3ModalRef.current.toggleModal();
       const w3 = initWeb3(provider);
 
       const accounts = await w3.eth.getAccounts();
@@ -223,20 +220,20 @@ export default function Web3ModalProvider({
       {
         network: getNetwork(), // optional
         cacheProvider: true, // optional
-        providerOptions: {
-          walletconnect: {
-            package: WalletConnectProvider,
-            options: {
-              infuraId: INFURA_ID,
-            },
-          },
-        },
+        // providerOptions: {
+        //   walletconnect: {
+        //     package: WalletConnectProvider,
+        //     options: {
+        //       infuraId: process.env.REACT_APP_INFURA_ID,
+        //     },
+        //   },
+        // },
       },
       options,
     );
+
     const w3Modal = new Web3Modal(params);
     // @ts-ignore
-
     web3ModalRef.current = w3Modal;
 
     if (w3Modal.cachedProvider) {
