@@ -12,10 +12,10 @@
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .miniBase {
+  position: relative;
+  z-index: 1;
   min-width: 200px;
   padding: 0 10px;
-  position: relative;
-  z-index: 10;
 }
 .miniActive > .miniCanHover,
 .miniCanHover:hover {
