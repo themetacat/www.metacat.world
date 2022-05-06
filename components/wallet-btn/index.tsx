@@ -12,6 +12,8 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
 import { useWalletProvider } from '../web3modal';
 
+import { INFURA_ID } from '../../common/const';
+
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 import { req_user_logout } from '../../service/z_api';
 
@@ -66,20 +68,20 @@ const MENU = [
   },
 ];
 
-const WALLET = [
-  {
-    label: 'MetaMask',
-    icon: '/images/v5/Maskgroup.png',
-    value: 'metamask',
-    type: 'wallet',
-  },
-  {
-    label: 'Wallet Connect',
-    icon: '/images/walletconnect.png',
-    value: 'walletconnect',
-    type: 'wallet',
-  },
-];
+// const WALLET = [
+//   {
+//     label: 'MetaMask',
+//     icon: '/images/v5/Maskgroup.png',
+//     value: 'metamask',
+//     type: 'wallet',
+//   },
+//   {
+//     label: 'Wallet Connect',
+//     icon: '/images/walletconnect.png',
+//     value: 'walletconnect',
+//     type: 'wallet',
+//   },
+// ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
 
@@ -255,7 +257,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+          infuraId: INFURA_ID,
         },
       },
     };
@@ -276,18 +278,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   }, [subscribeProvider, connectToChain, w3]);
 
   const clickItem = React.useCallback(
-    (item) => {
-      setShowWall(item.value);
-      if (item.type === 'wallet') {
-        if (!profile.address && item.value === 'metamask') {
-          connectToChain();
-        }
-        if (!profile.address && item.value === 'walletconnect') {
-          walletconnect();
-        }
-      }
+    (add) => {
+      if (add) return;
+      walletconnect();
     },
-    [profile, connectToChain, walletconnect],
+    [walletconnect],
   );
   // const demo = React.useCallback(async () => {
   //   console.log(await p1.enable())
@@ -376,43 +371,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         );
       });
     }
-    return WALLET.map((item, idx) => {
-      return (
-        <li
-          className={cn('flex justify-around items-center text-xs', style.walletItem)}
-          key={idx}
-          onClick={() => {
-            clickItem(item);
-          }}
-        >
-          <div
-            className={cn('flex justify-between items-center w-full h-full', style.walletContent)}
-          >
-            <div className="flex items-center justify-around">
-              <img src={item.icon} className={cn('mr-2', style.walletLogo)}></img>
-              <span>{item.label}</span>
-            </div>
-            <img
-              src="/images/loading.png"
-              className={cn(
-                'animate-spin',
-                style.loading,
-                loading && item.value === showWall ? null : ' hidden',
-              )}
-            />
-            <img
-              src="/images/v5/arrow.png"
-              className={cn(style.activeWallet, loading ? ' hidden' : null)}
-            ></img>
-            {/* {loading ? (
-              <img src="/images/loading.png" className={cn('animate-spin', style.loading)} />
-            ) : (
-              <img src="/images/v5/arrow.png" className={style.activeWallet}></img>
-            )} */}
-          </div>
-        </li>
-      );
-    });
   }, [profile, clickItem, clickOperationItem, loading, showWall]);
 
   const getText = React.useMemo(() => {
@@ -481,10 +439,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   return (
     <div className={cn('cursor-pointer', style.btn)}>
       <div
-        className={cn('flex justify-center items-center w-full h-full text-xs', style.btnDiv)}
-        onClick={onClick}
+        onClick={() => {
+          clickItem(profile?.address);
+        }}
       >
-        {getText}
+        <div
+          className={cn('flex justify-center items-center w-full h-full text-xs', style.btnDiv)}
+          onClick={onClick}
+        >
+          {getText}
+        </div>
       </div>
       <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
     </div>
