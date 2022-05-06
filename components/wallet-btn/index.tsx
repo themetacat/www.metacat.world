@@ -113,6 +113,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [null],
   );
 
+  const closeApp = React.useCallback(
+    async (newWeb3) => {
+      if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.disconnect) {
+        await newWeb3.currentProvider.disconnect();
+      }
+      await w3.current.clearCachedProvider();
+    },
+    [w3],
+  );
+
   const checkLoginStatu = React.useCallback(
     (res) => {
       const data = resultHandler(res);
@@ -157,6 +167,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           },
           (error: any) => {
             setLoading(false);
+            if (web3) {
+              web3.resetApp();
+              closeApp(w3.current);
+            }
           },
         );
       }
@@ -210,16 +224,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler],
   );
 
-  const closeApp = React.useCallback(
-    async (newWeb3) => {
-      if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.disconnect) {
-        await newWeb3.currentProvider.disconnect();
-      }
-      await w3.current.clearCachedProvider();
-    },
-    [w3],
-  );
-
   const subscribeProvider = React.useCallback(
     async (provider, newWeb3, modal) => {
       const { nonce, address: add } = await requireNonce(provider.accounts[0]);
@@ -266,11 +270,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       cacheProvider: true,
       providerOptions,
     });
-    w3.current = web3Modal;
+
     const provider = await web3Modal.connect();
     if (provider.infuraId) {
       await web3Modal.toggleModal();
       const web_3 = new WalletConnectProvider(provider);
+      w3.current = web_3;
       await subscribeProvider(provider, web_3, web3Modal);
       return web_3;
     }
@@ -309,9 +314,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (item.value === 'resetApp') {
         removeToken('atk');
         removeToken('rtk');
-        if (w3) {
-          closeApp(w3);
-        }
+
         if (web3) {
           web3.resetApp();
         }
