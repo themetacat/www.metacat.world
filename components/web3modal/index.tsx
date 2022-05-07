@@ -3,12 +3,14 @@ import Web3Modal, { IProviderControllerOptions } from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Rekv from 'rekv';
 import Web3 from 'web3';
+
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 
 import { getChainData } from './utils';
 import { IAssetData } from './interface';
 import { apiGetAccountAssets } from './api';
 import { INFURA_ID } from '../../common/const';
+import { convert, getToken, removeToken, setToken } from '../../common/utils';
 
 interface ChainData {
   chianId: number;
@@ -125,7 +127,8 @@ export default function Web3ModalProvider({
       // @ts-ignore
       await web3.currentProvider.disconnect();
     }
-
+    removeToken('atk');
+    removeToken('rtk');
     await web3ModalRef.current?.clearCachedProvider();
     state.setState({ ...INITIAL_STATE });
     return INITIAL_STATE;
@@ -174,6 +177,40 @@ export default function Web3ModalProvider({
     //   await getAccountAssets(address, id);
     // });
   };
+
+  // const subscribeProvider = React.useCallback(
+  // async (provider, newWeb3, modal) => {
+  // const { nonce, address: add } = await requireNonce(provider.accounts[0]);
+  // provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+  //   (res) => {
+  //     loginSignature(add, res).then((r) => {
+  // checkLoginStatu(r);
+  //     });
+  //   },
+  //   (error) => {
+  //     web3.resetApp();
+  //     closeApp(newWeb3);
+  //   },
+  // );
+  // if (!provider.on) {
+  // return;
+  // }
+
+  //     provider.on('close', async () => {
+  //       web3.resetApp();
+  //       closeApp(newWeb3);
+  //       removeToken('atk');
+  //       removeToken('rtk');
+  //       state.setState({
+  //         accessToken: '',
+  //         refreshToken: '',
+  //         profile: { address: null, nickName: null, avatar: null },
+  //       });
+  //       window.location.href = '/';
+  //     });
+  //   },
+  //   [w3],
+  // );
 
   const onConnect = async () => {
     if (!window.web3 || !window.ethereum || !window.ethereum.isMetaMask) {
@@ -225,7 +262,7 @@ export default function Web3ModalProvider({
         cacheProvider: true, // optional
         providerOptions: {
           walletconnect: {
-            // package: WalletConnectProvider,
+            package: WalletConnectProvider,
             options: {
               infuraId: INFURA_ID,
             },
