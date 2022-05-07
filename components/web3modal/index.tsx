@@ -225,7 +225,7 @@ export default function Web3ModalProvider({
         cacheProvider: true, // optional
         providerOptions: {
           walletconnect: {
-            package: WalletConnectProvider,
+            // package: WalletConnectProvider,
             options: {
               infuraId: INFURA_ID,
             },
