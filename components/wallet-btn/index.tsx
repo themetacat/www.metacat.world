@@ -257,28 +257,28 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const walletconnect = React.useCallback(async () => {
-    // const providerOptions = {
-    //   walletconnect: {
-    //     package: WalletConnectProvider,
-    //     options: {
-    //       infuraId: INFURA_ID,
-    //     },
-    //   },
-    // };
-    // const web3Modal = new Web3Modal({
-    //   network: 'mainnet',
-    //   cacheProvider: true,
-    //   providerOptions,
-    // });
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: INFURA_ID,
+        },
+      },
+    };
+    const web3Modal = new Web3Modal({
+      network: 'mainnet',
+      cacheProvider: true,
+      providerOptions,
+    });
 
-    // const provider = await web3Modal.connect();
-    // if (provider.infuraId) {
-    //   await web3Modal.toggleModal();
-    //   const web_3 = new WalletConnectProvider(provider);
-    //   w3.current = web_3;
-    //   await subscribeProvider(provider, web_3, web3Modal);
-    //   return web_3;
-    // }
+    const provider = await web3Modal.connect();
+    if (provider.infuraId) {
+      await web3Modal.toggleModal();
+      const web_3 = new WalletConnectProvider(provider);
+      w3.current = web_3;
+      await subscribeProvider(provider, web_3, web3Modal);
+      return web_3;
+    }
     connectToChain();
   }, [subscribeProvider, connectToChain, w3]);
   const clickItem = React.useCallback(
