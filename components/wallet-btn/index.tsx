@@ -113,15 +113,14 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [null],
   );
 
-  const closeApp = React.useCallback(
-    async (newWeb3) => {
-      if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.disconnect) {
-        await newWeb3.currentProvider.disconnect();
-      }
-      await w3.current.clearCachedProvider();
-    },
-    [w3],
-  );
+  // const closeApp = React.useCallback(
+  //   async (newWeb3) => {
+  //     if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.disconnect) {
+  //       await newWeb3.currentProvider.disconnect();
+  //     }
+  //   },
+  //   [w3],
+  // );
 
   const checkLoginStatu = React.useCallback(
     (res) => {
@@ -169,7 +168,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             setLoading(false);
             if (web3) {
               web3.resetApp();
-              closeApp(w3.current);
             }
           },
         );
@@ -224,39 +222,39 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler],
   );
 
-  const subscribeProvider = React.useCallback(
-    async (provider, newWeb3, modal) => {
-      const { nonce, address: add } = await requireNonce(provider.accounts[0]);
-      provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
-        (res) => {
-          loginSignature(add, res).then((r) => {
-            checkLoginStatu(r);
-          });
-        },
-        (error) => {
-          web3.resetApp();
-          closeApp(newWeb3);
-        },
-      );
-      if (!provider.on) {
-        return;
-      }
+  // const subscribeProvider = React.useCallback(
+  //   async (provider, newWeb3, modal) => {
+  //     const { nonce, address: add } = await requireNonce(provider.accounts[0]);
+  //     provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+  //       (res) => {
+  //         loginSignature(add, res).then((r) => {
+  //           checkLoginStatu(r);
+  //         });
+  //       },
+  //       (error) => {
+  //         web3.resetApp();
+  //         closeApp(newWeb3);
+  //       },
+  //     );
+  //     if (!provider.on) {
+  //       return;
+  //     }
 
-      provider.on('close', async () => {
-        web3.resetApp();
-        closeApp(newWeb3);
-        removeToken('atk');
-        removeToken('rtk');
-        state.setState({
-          accessToken: '',
-          refreshToken: '',
-          profile: { address: null, nickName: null, avatar: null },
-        });
-        window.location.href = '/';
-      });
-    },
-    [w3],
-  );
+  //     provider.on('close', async () => {
+  //       web3.resetApp();
+  //       closeApp(newWeb3);
+  //       removeToken('atk');
+  //       removeToken('rtk');
+  //       state.setState({
+  //         accessToken: '',
+  //         refreshToken: '',
+  //         profile: { address: null, nickName: null, avatar: null },
+  //       });
+  //       window.location.href = '/';
+  //     });
+  //   },
+  //   [w3],
+  // );
 
   const walletconnect = React.useCallback(async () => {
     // const providerOptions = {
@@ -283,7 +281,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     //   return web_3;
     // }
     connectToChain();
-  }, [subscribeProvider, connectToChain, w3]);
+  }, [connectToChain]);
   const clickItem = React.useCallback(
     (add) => {
       if (add) return;

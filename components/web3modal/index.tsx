@@ -127,8 +127,8 @@ export default function Web3ModalProvider({
       // @ts-ignore
       await web3.currentProvider.disconnect();
     }
-    removeToken('atk');
-    removeToken('rtk');
+    // removeToken('atk');
+    // removeToken('rtk');
     await web3ModalRef.current?.clearCachedProvider();
     state.setState({ ...INITIAL_STATE });
     return INITIAL_STATE;
