@@ -220,7 +220,6 @@ export default function Web3ModalProvider({
     try {
       const provider = await web3ModalRef.current?.connect();
       await subscribeProvider(provider);
-
       web3ModalRef.current.toggleModal();
       const w3 = initWeb3(provider);
 
@@ -253,6 +252,7 @@ export default function Web3ModalProvider({
 
   React.useEffect(() => {
     // eslint-disable-next-line prefer-object-spread
+    console.log(options);
     const params = Object.assign(
       {
         disableInjectedProvider: false,
@@ -269,11 +269,10 @@ export default function Web3ModalProvider({
           },
         },
       },
-      options,
     );
     const w3Modal = new Web3Modal(params);
     // @ts-ignore
-
+    console.log(w3Modal);
     web3ModalRef.current = w3Modal;
 
     if (w3Modal.cachedProvider) {
