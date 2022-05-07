@@ -178,12 +178,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
-    // if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
-    //   setLoading(false);
-    //   setShowMenu(false);
-    //   window.open('https://metamask.io/');
-    //   return;
-    // }
+    if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
+      setLoading(false);
+      setShowMenu(false);
+      window.open('https://metamask.io/');
+      return;
+    }
     try {
       web3.connect().then(
         async (res) => {
