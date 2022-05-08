@@ -176,13 +176,66 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [requireNonce, checkLoginStatu],
   );
 
+  const subscribeProvider = React.useCallback(
+    async (provider, newWeb3, modal) => {
+      const { nonce, address: add } = await requireNonce(provider.accounts[0]);
+      provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+        (res) => {
+          loginSignature(add, res).then((r) => {
+            checkLoginStatu(r);
+          });
+        },
+        (error) => {
+          web3.resetApp();
+        },
+      );
+      if (!provider.on) {
+        return;
+      }
+
+      provider.on('close', async () => {
+        web3.resetApp();
+        removeToken('atk');
+        removeToken('rtk');
+        state.setState({
+          accessToken: '',
+          refreshToken: '',
+          profile: { address: null, nickName: null, avatar: null },
+        });
+        window.location.href = '/';
+      });
+    },
+    [w3],
+  );
+
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
     if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
       setLoading(false);
       setShowMenu(false);
-      window.open('https://metamask.io/');
-      return;
+
+      const providerOptions = {
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            infuraId: INFURA_ID,
+          },
+        },
+      };
+      const web3Modal = new Web3Modal({
+        network: 'mainnet',
+        cacheProvider: true,
+        providerOptions,
+      });
+
+      const provider = await web3Modal.connect();
+      await web3Modal.toggleModal();
+
+      const web_3 = new WalletConnectProvider(provider);
+      w3.current = web_3;
+      await subscribeProvider(provider, web_3, web3Modal);
+      return web_3;
+      // window.open('https://metamask.io/');
     }
     try {
       web3.connect().then(
@@ -222,64 +275,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler],
   );
 
-  // const subscribeProvider = React.useCallback(
-  //   async (provider, newWeb3, modal) => {
-  //     const { nonce, address: add } = await requireNonce(provider.accounts[0]);
-  //     provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
-  //       (res) => {
-  //         loginSignature(add, res).then((r) => {
-  //           checkLoginStatu(r);
-  //         });
-  //       },
-  //       (error) => {
-  //         web3.resetApp();
-  //         closeApp(newWeb3);
-  //       },
-  //     );
-  //     if (!provider.on) {
-  //       return;
-  //     }
-
-  //     provider.on('close', async () => {
-  //       web3.resetApp();
-  //       closeApp(newWeb3);
-  //       removeToken('atk');
-  //       removeToken('rtk');
-  //       state.setState({
-  //         accessToken: '',
-  //         refreshToken: '',
-  //         profile: { address: null, nickName: null, avatar: null },
-  //       });
-  //       window.location.href = '/';
-  //     });
-  //   },
-  //   [w3],
-  // );
-
   const walletconnect = React.useCallback(async () => {
-    // const providerOptions = {
-    //   walletconnect: {
-    //     package: WalletConnectProvider,
-    //     options: {
-    //       infuraId: INFURA_ID,
-    //     },
-    //   },
-    // };
-    // const web3Modal = new Web3Modal({
-    //   network: 'mainnet',
-    //   cacheProvider: true,
-    //   providerOptions,
-    // });
-
-    // const provider = await web3Modal.connect();
-    // if (provider.infuraId) {
-    //   await web3Modal.toggleModal();
-
-    //   const web_3 = new WalletConnectProvider(provider);
-    //   w3.current = web_3;
-    //   await subscribeProvider(provider, web_3, web3Modal);
-    //   return web_3;
-    // }
     connectToChain();
   }, [connectToChain]);
   const clickItem = React.useCallback(
