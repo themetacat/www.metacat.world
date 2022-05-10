@@ -111,7 +111,7 @@ export default function Annular({
                   if (tVal.data.name === 'Worldwide Webb') {
                     return `rgba(229, 68, 155,1)`;
                   }
-                  if (tVal.data.name === 'Cryptovoxels') {
+                  if (tVal.data.name === 'Voxels') {
                     return `rgba(244, 210, 191,1)`;
                   }
                   if (tVal.data.name === 'Somnium Space') {
