@@ -46,7 +46,7 @@ const showKeyTypes = [
   'NFT Worlds',
   'Decentraland',
   'Worldwide Webb',
-  'Cryptovoxels',
+  'Voxels',
   'Somnium Space',
 ];
 
@@ -128,7 +128,7 @@ export default function AllLine({
             nftworlds: null,
             decentraland: null,
             worldwidewebb: null,
-            cryptovoxels: null,
+            voxels: null,
             somniumspance: null,
           };
           if (items.length <= 0) {
@@ -318,7 +318,7 @@ export default function AllLine({
           if (tVal === 'Worldwide Webb') {
             return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
           }
-          if (tVal === 'Cryptovoxels') {
+          if (tVal === 'Voxels') {
             return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
           }
           if (tVal === 'Somnium Space') {
@@ -349,7 +349,7 @@ export default function AllLine({
                 fill: `l(270) 0: rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1: rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Cryptovoxels') {
+            if (tVal === 'Voxels') {
               return {
                 fill: `l(270) 0: rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1: rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
               };

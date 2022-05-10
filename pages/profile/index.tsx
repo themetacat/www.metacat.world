@@ -49,8 +49,8 @@ import style from './index.module.css';
 
 const TAB = [
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
     type: 'cryptovoxels',
   },
   {
@@ -61,8 +61,8 @@ const TAB = [
 ];
 const REPORTTAB = [
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
     type: 'cryptovoxels',
   },
 ];

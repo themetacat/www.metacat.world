@@ -86,8 +86,8 @@ const types = [
     value: 'worldwidewebb',
   },
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
     value: 'cryptovoxels',
   },
   {
@@ -765,7 +765,7 @@ export default function AnalyticsIndex(props) {
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
@@ -813,7 +813,7 @@ export default function AnalyticsIndex(props) {
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
@@ -850,7 +850,7 @@ export default function AnalyticsIndex(props) {
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
@@ -887,7 +887,7 @@ export default function AnalyticsIndex(props) {
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Cryptovoxels ', color: [244, 210, 191] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {

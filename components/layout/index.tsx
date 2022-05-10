@@ -67,14 +67,14 @@ export default function Layout({
                 <div
                   className={cn('text-2xl mt-5 font-light', style.littleText)}
                 >{`Metaverse Data Analytics & Content Navigation.`}</div>
-                <div
+                {/* <div
                   className={cn(
                     'text-xl font-semibold mt-7 flex justify-center items-center pointer-events-auto cursor-pointer',
                     style.gomap,
                   )}
                 >
                   <Link href="/map?type=cryptovoxels">GO MAP</Link>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className={cn('image-round pointer-events-auto', style.roundImage)}>
