@@ -32,14 +32,14 @@ const SomniumMap = dynamic(() => import('../../components/somnium-map'), {
 });
 
 const meta = {
-  title: `Map - ${SITE_NAME}`,
+  title: `Heatmap - ${SITE_NAME}`,
   description: META_DESCRIPTION,
 };
 
 const TAB = [
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
     type: 'cryptovoxels',
   },
   {

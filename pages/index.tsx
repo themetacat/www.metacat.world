@@ -86,8 +86,8 @@ const SomniumMap = dynamic(() => import('../components/somnium-map'), {
 
 const TAB = [
   {
-    label: 'Cryptovoxels',
-    icon: '/images/Crypto Voxel.jpg',
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
     type: 'cryptovoxels',
   },
   {
