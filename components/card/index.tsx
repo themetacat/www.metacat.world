@@ -33,7 +33,6 @@ export default function Card({
     },
     [openseaUrl],
   );
-
   const jumpToParcel = React.useCallback(() => {
     window.open(parcelPageUrl);
   }, [parcelPageUrl]);
@@ -60,7 +59,7 @@ export default function Card({
           <div className="text-xl font-semibold truncate flex-1 mr-3" title={name}>
             {name}
           </div>
-          {parcelPageUrl ? (
+          {openseaUrl ? (
             <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
           ) : null}
         </div>
