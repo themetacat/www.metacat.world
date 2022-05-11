@@ -400,7 +400,6 @@ function ProfilePage(r) {
                 parcelsIds={parcelsIds}
                 state={cardState}
                 key={uuid()}
-                y
                 selectedIds={selectedIds}
                 onClick={(id, ids) => {
                   select(id, ids);

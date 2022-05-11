@@ -13,6 +13,7 @@ type Props = {
   parcelPageUrl?: string;
   openseaUrl?: string;
   hasTypeTag?: boolean;
+  world?: string;
 };
 
 export default function Card({
@@ -23,6 +24,7 @@ export default function Card({
   openseaUrl,
   parcelPageUrl,
   hasTypeTag = true,
+  world,
 }: Props) {
   const jumpToOpenC = React.useCallback(
     (event) => {
@@ -42,9 +44,9 @@ export default function Card({
       onClick={jumpToParcel}
     >
       <div className={style.imgContanier}>
-        {hasTypeTag && type ? (
+        {world ? (
           <div className={cn('flex items-center justify-center text-sm font-medium', style.tag)}>
-            {type}
+            {world}
           </div>
         ) : null}
         <CoverImg
@@ -58,7 +60,9 @@ export default function Card({
           <div className="text-xl font-semibold truncate flex-1 mr-3" title={name}>
             {name}
           </div>
-          <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
+          {parcelPageUrl ? (
+            <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
+          ) : null}
         </div>
         <div className={cn('text-xs my-3', style.description)}>{description}</div>
       </div>

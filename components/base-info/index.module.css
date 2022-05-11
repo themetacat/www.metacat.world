@@ -1,19 +1,19 @@
-.signBack{
+.signBack {
   height: 230px;
 }
-.sign{
+.sign {
   width: 1087px;
   height: 125px;
 }
 
-.name{
+.name {
   margin-top: 10px;
 }
 
-.info{
+.info {
   color: #fff;
 }
-.avater{
+.avater {
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -25,18 +25,22 @@
   color: rgba(170, 170, 170, 1);
 }
 
-.infoItem > img{
+.infoItem > img {
   width: 18px;
   height: 17px;
   margin-right: 6px;
 }
 
-.infoItem:hover{
+.infoItem:hover {
   cursor: pointer;
   filter: brightness(125%);
   text-decoration: underline #fff;
 }
-.infoItem:active{
+.infoItem:active {
   filter: brightness(75%);
   text-decoration: underline #fff;
+}
+.cup {
+  cursor: pointer;
+  color: #1f67d9;
 }

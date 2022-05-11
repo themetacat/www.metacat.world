@@ -160,7 +160,7 @@ export default function Topic({ base_info, parcel_list, traffic_list }) {
   return (
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={pathname} />
+        <PageHeader className="relative z-10" active={'builders'} />
         <div
           className={cn(
             'main-content flex justify-center items-end relative z-10 pointer-events-none',

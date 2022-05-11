@@ -14,13 +14,37 @@ type Props = {
 };
 
 export default function BaseInfo({ logoUrl, name, description, discord, twitter, website }: Props) {
+  const [wangzhi, setWangZhi] = React.useState('');
+  const [text, setText] = React.useState('');
   const jumpToUrl = React.useCallback(
     (uri) => {
       window.open(uri);
     },
     [null],
   );
+  React.useEffect(() => {
+    if (description.indexOf('http') !== -1) {
+      setWangZhi(description.slice(description.indexOf('http', -1)));
+      setText(description.slice(0, description.indexOf('http', -1)));
+    }
+  }, [description]);
 
+  const toDetail = React.useCallback(() => {
+    window.open(wangzhi);
+  }, [wangzhi]);
+  const rander = React.useMemo(() => {
+    if (text) {
+      return (
+        <div>
+          {text}
+          <a onClick={toDetail} className={style.cup}>
+            {wangzhi}
+          </a>
+        </div>
+      );
+    }
+    return <div>{description}</div>;
+  }, [text, toDetail, description]);
   return (
     <div className={cn('flex flex-col justify-center items-center', style.info)}>
       <CoverImg
@@ -65,9 +89,7 @@ export default function BaseInfo({ logoUrl, name, description, discord, twitter,
           </div>
         ) : null}
       </div>
-      <div className={cn('text-sm font-normal mt-4 text-center', style.description)}>
-        {description}
-      </div>
+      <div className={cn('text-sm font-normal mt-4 text-center', style.description)}>{rander}</div>
     </div>
   );
 }
