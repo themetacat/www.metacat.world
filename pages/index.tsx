@@ -1167,7 +1167,7 @@ export default function Index(props) {
       )
     ) {
       // window.location.href="移动端url";
-      console.log('sj');
+      alert('sj');
     } else {
       // window.location.href="pc端url";
       console.log('pc');
