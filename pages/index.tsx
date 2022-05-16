@@ -1167,10 +1167,10 @@ export default function Index(props) {
       )
     ) {
       // window.location.href="移动端url";
-      alert('sj');
     } else {
       // window.location.href="pc端url";
-      console.log('pc');
+      // console.log('pc');
+      // window.location.href = "http://www.taobao.com";
     }
     initTopic();
     init();
