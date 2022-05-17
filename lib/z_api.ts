@@ -725,6 +725,40 @@ class API {
 
     return json;
   }
+
+  // 6.27 获取 otherside 地块成交均价统计信息接口
+
+  public async req_otherside_avg_price() {
+    const url = `${this.url}/get_otherside_avg_price_stats`;
+    const result = await fetch(url);
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.28 获取 otherside 地块成交总数量统计信息接口
+
+  public async req_otherside_sales_num() {
+    const url = `${this.url}/get_otherside_sales_num`;
+    const result = await fetch(url);
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  // 6.29 获取 otherside 地块销售总额统计信息接口
+
+  public async req_otherside_sales_amount() {
+    const url = `${this.url}/get_otherside_sales_amount`;
+
+    const result = await fetch(url);
+
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

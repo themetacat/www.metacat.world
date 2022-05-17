@@ -721,3 +721,35 @@ export const req_user_logout = async (token) => {
 
   return json;
 };
+
+// 6.27 获取 otherside 地块成交均价统计信息接口
+
+export const req_otherside_avg_price = async () => {
+  const url = '/api/get_otherside_avg_price_stats';
+  const result = await fetch(url);
+
+  const json = await result.json();
+
+  return json;
+};
+
+// 6.28 获取 otherside 地块成交总数量统计信息接口
+
+export const req_otherside_sales_num = async () => {
+  const url = '/api//get_otherside_sales_num';
+  const result = await fetch(url);
+
+  const json = await result.json();
+
+  return json;
+};
+
+// 6.29 获取 otherside 地块销售总额统计信息接口
+
+export const req_otherside_sales_amount = async () => {
+  const url = '/api/get_otherside_sales_amount';
+  const result = await fetch(url);
+  const json = await result.json();
+
+  return json;
+};

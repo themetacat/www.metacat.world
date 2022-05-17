@@ -221,7 +221,6 @@ export default function Topic({ base_info, parcel_list, traffic_list }) {
 export async function getServerSideProps(context) {
   const topic = Number(context.params.id);
   const res = await api.getTopicDetail(topic);
-  console.log(res.data);
   const { base_info, parcel_list, traffic_list } = res.data;
   return {
     props: {
