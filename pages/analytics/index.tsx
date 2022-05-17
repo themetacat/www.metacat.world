@@ -763,7 +763,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             legend1={{ label: 'Primary', color: [255, 248, 187] }}
             dataHandlder={req_otherside_avg_price}
-            textColor={style.webbColor}
+            textColor={style.osdColor}
             options={[
               {
                 label: 'Daily price',
@@ -797,7 +797,7 @@ export default function AnalyticsIndex(props) {
             dataHandlder={req_otherside_sales_num}
             legend1={{ label: 'Land', color: [255, 248, 187] }}
             keyTypes={['land', 'estate']}
-            textColor={style.webbColor}
+            textColor={style.osdColor}
             options={[
               {
                 label: 'Daily',
@@ -824,7 +824,7 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
-            textColor={style.webbColor}
+            textColor={style.osdColor}
             options={[
               {
                 label: 'Monthly',
