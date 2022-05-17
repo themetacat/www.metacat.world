@@ -87,7 +87,7 @@ export default function AnalyticsInfo({ options, labelText }: Props) {
                 </th>
                 <th className={cn('', style.cell, style.h3, style.bg2)}>
                   <div className={cn('justify-end', style.right, style.font3)}>
-                    {formatNum(Math.round(item.total10Percent * 100), false)}%
+                    {Math.round(item.total10Percent * 100)}%
                   </div>
                 </th>
               </tr>
