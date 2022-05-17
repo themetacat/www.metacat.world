@@ -93,6 +93,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
       // add one random mesh to each scene
       const loader = new VOXLoader();
+
       loader.load(artworkData.voxUrl, function (chunks) {
         for (let i = 0; i < chunks.length; i += 1) {
           const chunk = chunks[i];

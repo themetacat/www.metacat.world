@@ -64,6 +64,9 @@ import {
   req_webb_parcel_avg_price_stats,
   req_webb_sold_total_stats,
   req_webb_sold_sum_stats,
+  req_otherside_avg_price,
+  req_otherside_sales_num,
+  req_otherside_sales_amount,
 } from '../service/z_api';
 
 import style from './index.module.less';
@@ -114,6 +117,11 @@ const TAB = [
     label: 'Worldwide Webb',
     icon: '/images/unnamed.svg',
     type: 'worldwidewebb',
+  },
+  {
+    label: 'Otherside',
+    icon: '/images/osd.png',
+    type: 'otherside',
   },
 ];
 
@@ -1057,6 +1065,103 @@ export default function Index(props) {
           </div>
         );
       }
+      if (tabState === 'otherside') {
+        return (
+          <div className={cn('main-content')}>
+            <>
+              <BaseChart className=" my-5">
+                <ChartLineSandBox
+                  id={'chartline1'}
+                  labelText={'AVERAGE PARCEL PRICE'}
+                  dataHandlder={req_otherside_avg_price}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily price',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly price',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly price',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                  tabState={tabState}
+                ></ChartLineSandBox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <ChartLineToolTipSimpleSandbox
+                  id={'dcl-chartline-2'}
+                  labelText={'NUMBER OF PARCEL SALES'}
+                  dataHandlder={req_otherside_sales_num}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                  ]}
+                  tabState={tabState}
+                ></ChartLineToolTipSimpleSandbox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <StackBarZ
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={req_otherside_sales_amount}
+                  legend1={{ label: 'Land', color: [255, 207, 95] }}
+                  keyTypes={['land', 'estate']}
+                  barWidth={18}
+                  isEth={true}
+                  showMarkerType="sandbox"
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                  tabState={tabState}
+                ></StackBarZ>
+              </BaseChart>
+            </>
+          </div>
+        );
+      }
     }
   }, [
     tabState,
@@ -1257,7 +1362,7 @@ export default function Index(props) {
                     return null;
                   })
                 : null}
-              {tabState === 'nftworlds' || tabState === 'worldwidewebb'
+              {tabState === 'nftworlds' || tabState === 'worldwidewebb' || tabState === 'otherside'
                 ? SUBTABZ.map((item, index) => {
                     if (item) {
                       return (

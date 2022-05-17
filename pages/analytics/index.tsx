@@ -44,6 +44,9 @@ import {
   req_sales_amount_stack,
   req_metaindex_ethprice,
   req_all_number_sales,
+  req_otherside_avg_price,
+  req_otherside_sales_num,
+  req_otherside_sales_amount,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -64,6 +67,11 @@ import AllPillar2 from '../../components/all_pillar2';
 import AllPillar from '../../components/all_pillar';
 
 const types = [
+  {
+    label: 'Otherside',
+    icon: '/images/osd.png',
+    value: 'otherside',
+  },
   {
     label: 'The Sandbox',
     icon: '/images/home-icon.svg',
@@ -746,6 +754,102 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
+    if (showType === 'otherside') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'chartline1'}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            legend1={{ label: 'Primary', color: [255, 248, 187] }}
+            dataHandlder={req_otherside_avg_price}
+            textColor={style.webbColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'dcl-chartline-2'}
+            className="mt-5"
+            labelText={'Number Of Parcel Sales'}
+            dataHandlder={req_otherside_sales_num}
+            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.webbColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBarZ
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_otherside_sales_amount}
+            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.webbColor}
+            options={[
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>
+        </>
+      );
+    }
   }, [showType]);
 
   const reander = React.useMemo(() => {
@@ -815,6 +919,7 @@ export default function AnalyticsIndex(props) {
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -852,6 +957,7 @@ export default function AnalyticsIndex(props) {
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -889,6 +995,7 @@ export default function AnalyticsIndex(props) {
                   legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
                   options={[
                     {
                       label: 'Monthly',

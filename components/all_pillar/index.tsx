@@ -21,6 +21,7 @@ type Props = {
   legend5?;
   legend6?;
   options?;
+  legend7?;
   priceOptions?;
   limit?: number;
 };
@@ -49,6 +50,7 @@ const showKeyTypes = [
   'Worldwide Webb',
   'Voxels',
   'Somnium Space',
+  'Otherside',
 ];
 
 export default function AllPillar({
@@ -61,6 +63,7 @@ export default function AllPillar({
   legend4,
   legend5,
   legend6,
+  legend7,
   options,
   priceOptions,
   limit,
@@ -148,6 +151,21 @@ export default function AllPillar({
           ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
+          <div style="color:#fff;margin-bottom:12px">
+          <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${
+            legend7.color[2]
+          }, 1);">
+          ${showKeyTypes[6]}:
+            <span style="color:#fff;">
+              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                legend7.color[0]
+              }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[6]]?.value,
+          )}</span>
+              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            </span>
+          </span>
+        </div>
           <div style="color:#fff;margin-bottom:12px">
           <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
@@ -339,6 +357,9 @@ export default function AllPillar({
           if (tVal === 'Somnium Space') {
             return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
           }
+          if (tVal === 'Otherside') {
+            return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
         })
         .style({
           fields: ['name'],
@@ -371,6 +392,11 @@ export default function AllPillar({
             if (tVal === 'Somnium Space') {
               return {
                 fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+              };
+            }
+            if (tVal === 'Otherside') {
+              return {
+                fill: `l(270) 0:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
               };
             }
           },
@@ -473,6 +499,11 @@ export default function AllPillar({
     return (
       <>
         <IconLabel
+          text={legend7.label}
+          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
           className="mr-5"
@@ -503,7 +534,7 @@ export default function AllPillar({
         ></IconLabel>
       </>
     );
-  }, [legend1, legend2, legend3, legend4, legend5, legend6]);
+  }, [legend1, legend2, legend3, legend4, legend5, legend6, legend7]);
 
   const onRetry = React.useCallback(() => {
     requestData();

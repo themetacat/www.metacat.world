@@ -117,6 +117,9 @@ export default function Annular({
                   if (tVal.data.name === 'Somnium Space') {
                     return `rgba(250, 216, 23,1)`;
                   }
+                  if (tVal.data.name === 'Otherside') {
+                    return `rgba(255, 248, 187,1)`;
+                  }
                 },
                 borderWidth: 0.5,
                 borderColor: '#fff',
