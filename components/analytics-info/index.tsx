@@ -23,6 +23,7 @@ export default function AnalyticsInfo({ options, labelText }: Props) {
   const requestData = React.useCallback(async () => {
     const res = await getWorldsStats();
     const result = convert(res.data);
+    console.log(result);
     setDataSource(result);
   }, [null]);
 

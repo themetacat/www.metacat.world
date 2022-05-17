@@ -151,21 +151,7 @@ export default function AllPillar({
           ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
-          <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${
-            legend7.color[2]
-          }, 1);">
-          ${showKeyTypes[6]}:
-            <span style="color:#fff;">
-              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
-                legend7.color[0]
-              }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[6]]?.value,
-          )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-            </span>
-          </span>
-        </div>
+         
           <div style="color:#fff;margin-bottom:12px">
           <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
@@ -250,6 +236,18 @@ export default function AllPillar({
       <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
     </span>
   </span>
+</div>
+
+<div style="color:#fff;margin-bottom:12px">
+<span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
+${showKeyTypes[6]}:
+  <span style="color:#fff;">
+    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${
+            legend7.color[1]
+          }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
+    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+  </span>
+</span>
 </div>
               `;
           container.innerHTML = title + title1 + staticItem;
@@ -499,11 +497,6 @@ export default function AllPillar({
     return (
       <>
         <IconLabel
-          text={legend7.label}
-          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
-          className="mr-5"
-        ></IconLabel>
-        <IconLabel
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
           className="mr-5"
@@ -531,6 +524,12 @@ export default function AllPillar({
         <IconLabel
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
+          text={legend7.label}
+          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
+          className="mr-5"
         ></IconLabel>
       </>
     );

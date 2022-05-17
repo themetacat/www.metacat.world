@@ -66,7 +66,6 @@ export default function Annular({
         },
         series: [
           {
-            name: 'Access From',
             type: 'pie',
             radius: ['40%', '70%'],
             encode: {
@@ -75,7 +74,6 @@ export default function Annular({
             label: {
               color: '#ccc',
               fontSize: 12,
-              alignTo: 'labelLine',
               formatter: ` {@name} - {@value}%`,
             },
             emphasis: {
@@ -142,7 +140,6 @@ export default function Annular({
   const requestData = React.useCallback(async () => {
     setLoading(true);
     const result = await dataHandlder();
-
     if (result.code === 100000 && result.data) {
       setLoading(false);
       setData(result.data);

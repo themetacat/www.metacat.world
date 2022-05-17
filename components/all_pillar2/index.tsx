@@ -142,20 +142,7 @@ export default function AllLine({
           });
 
           const staticItem = `
-              <div style="color:#fff;margin-bottom:12px">
-                <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${
-            legend7.color[2]
-          }, 1);">
-                ${showKeyTypes[6]}:
-                  <span style="color:#fff;">
-                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
-                      legend7.color[0]
-                    }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[6]]?.value,
-          )}</span>
-                  </span>
-                </span>
-              </div>
+
               
               <div style="color:#fff;margin-bottom:12px">
                 <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
@@ -243,6 +230,19 @@ export default function AllLine({
           </span>
         </span>
       </div>
+
+      <div style="color:#fff;margin-bottom:12px">
+      <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
+      ${showKeyTypes[6]}:
+        <span style="color:#fff;">
+          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+            legend7.color[0]
+          }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[6]]?.value,
+          )}</span>
+        </span>
+      </span>
+    </div>
               `;
           container.innerHTML = title + staticItem;
           return container;
@@ -342,6 +342,9 @@ export default function AllLine({
           if (tVal === 'Somnium Space') {
             return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
           }
+          if (tVal === 'Otherside') {
+            return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
         })
         .style({
           fields: ['name'],
@@ -375,6 +378,11 @@ export default function AllLine({
             if (tVal === 'Somnium Space') {
               return {
                 fill: `l(270) 0: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+              };
+            }
+            if (tVal === 'Otherside') {
+              return {
+                fill: `l(270) 0: rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1: rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
               };
             }
           },
@@ -509,6 +517,12 @@ export default function AllLine({
         <IconLabel
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
+          text={legend7.label}
+          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
+          className="mr-5"
         ></IconLabel>
       </>
     );
