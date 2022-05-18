@@ -19,6 +19,7 @@ import PageHeader from '../../../components/page-header';
 import Footer from '../../../components/footer';
 
 import api from '../../../lib/api';
+import z_api from '../../../lib/z_api';
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
 import { convert } from '../../../common/utils';
@@ -33,7 +34,6 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
   const artworkData = convert(artwork);
   const artistData = convert(artist);
-  console.log(artistData);
 
   const sceneRef = React.useRef(null);
   const renderer = React.useRef(null);
@@ -237,7 +237,12 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-  const res = await api.getDaoWearableDetail(id);
+  let res = null;
+  if (context.query.type === 'pfp') {
+    res = await z_api.req_pfp_detail(id);
+  } else {
+    res = await api.getDaoWearableDetail(id);
+  }
   const { artwork, artist } = res.data[0];
   return {
     props: {

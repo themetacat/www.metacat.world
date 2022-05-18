@@ -32,9 +32,10 @@ type Contact = {
 
 interface Props {
   models: Array<DaoCard>;
+  tabState?;
 }
 
-export default function DaoModelList({ models }: Props) {
+export default function DaoModelList({ models, tabState }: Props) {
   const [allScene, setAllScene] = React.useState([]);
   const renderer = React.useRef(null);
   const canvaRef = React.useRef(null);
@@ -134,6 +135,7 @@ export default function DaoModelList({ models }: Props) {
           model={model}
           key={idx}
           graphicId={`dao-${idx.toString()}`}
+          tabState={tabState}
           initFinish={(se) => {
             scenes.push(se);
           }}

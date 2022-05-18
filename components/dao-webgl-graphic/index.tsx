@@ -37,6 +37,7 @@ interface Props {
   graphicId?: string;
   initFinish?: (se) => void;
   model?: DaoCard;
+  tabState?;
 }
 
 // {
@@ -57,11 +58,12 @@ interface Props {
 //   "id": 100
 // },
 
-export default function DaoWebglCard({ graphicId, initFinish, model }: Props) {
+export default function DaoWebglCard({ graphicId, initFinish, model, tabState }: Props) {
   const sceneRef = React.useRef(null);
   const goToDetail = React.useCallback(() => {
-    console.log(process.env.NEXT_PUBLIC_HOST_ADDRESS);
-    window.open(`${process.env.NEXT_PUBLIC_HOST_ADDRESS}wearables/detail/${model.id}`);
+    window.open(
+      `${process.env.NEXT_PUBLIC_HOST_ADDRESS}wearables/detail/${model.id}?type=${tabState}`,
+    );
     // Router.push(`/wearables/detail/${model.id}`);
   }, [model]);
 

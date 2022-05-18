@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
     if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
       // 移动端
-      document.location.href = 'https://m-metacat-world-metacat.vercel.app/';
+      document.location.href = `https://m.metacat.world/${router.asPath}`;
     } else {
       // PC端
     }
@@ -82,3 +82,11 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      query,
+    }, // will be passed to the page component as props
+  };
+}
