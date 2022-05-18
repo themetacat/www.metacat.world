@@ -24,8 +24,8 @@ import { convert } from '../../common/utils';
 
 const TAB = [
   {
-    label: 'Wearables',
-    type: 'wearables',
+    label: 'WearableDao',
+    type: 'wearabledao',
   },
   {
     label: 'PFP',
@@ -39,7 +39,7 @@ export default function Wearables(props) {
     description: META_DESCRIPTION,
   };
 
-  const [tabState, setTabState] = React.useState(props.query.type || 'wearables');
+  const [tabState, setTabState] = React.useState(props.query.type || 'wearabledao');
   const [orginData, setOrigData] = React.useState(null);
   const [dataSource, setDataSource] = React.useState(null);
   const [searchText, setSearchText] = React.useState('');
@@ -56,7 +56,7 @@ export default function Wearables(props) {
       if (tabState === 'okx') {
         res = await getOkxWearableList();
       }
-      if (tabState === 'wearables') {
+      if (tabState === 'wearabledao') {
         res = await getDaoWearableList();
       }
       if (tabState === 'pfp') {
@@ -130,7 +130,7 @@ export default function Wearables(props) {
       return <ModelList models={dataSource}></ModelList>;
     }
 
-    if (tabState === 'wearables') {
+    if (tabState === 'wearabledao') {
       return <DaoModelList models={dataSource} tabState={tabState}></DaoModelList>;
     }
 
@@ -214,7 +214,7 @@ export default function Wearables(props) {
                 ></UserAvatar>
               </>
             ) : null}
-            {tabState === 'wearables' ? (
+            {tabState === 'wearabledao' ? (
               <UserAvatar
                 avatar="/images/v5/WearableDao.png"
                 name="WearableDao"
@@ -256,7 +256,7 @@ export default function Wearables(props) {
               ? `For a new product launch held by OKX in metaverse, wearableDao customized a variety of
               3D wearables for invited KOLs.`
               : null}
-            {tabState === 'wearables'
+            {tabState === 'wearabledao'
               ? `WearableDao was co-founded by MetaCat, MetaEstate and MetaLandscape to design and produce Wearables in Metaverse.`
               : null}
             {tabState === 'pfp'
