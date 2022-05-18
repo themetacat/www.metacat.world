@@ -80,7 +80,7 @@ export default function PageHeader({ active, className }: Props) {
             active === 'wearables' ? style.active : null,
           )}
         >
-          <Link href={'/wearables?type=wearables'}>Wearables</Link>
+          <Link href={'/wearables?type=wearabledao'}>Wearables</Link>
         </div>
         <div
           className={cn(
