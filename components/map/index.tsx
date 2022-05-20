@@ -586,6 +586,7 @@ function Map({
   const requestPriceMapOneData = React.useCallback(
     async (parcelL) => {
       const res = await getCvPriceMapLevelOne();
+      // console.log(res)
       const { parcels, stats } = res.data;
 
       // parcels.current = data;

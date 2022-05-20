@@ -31,6 +31,10 @@ const SomniumMap = dynamic(() => import('../../components/somnium-map'), {
   ssr: false,
 });
 
+const SubStrataMap = dynamic(() => import('../../components/substrata-map'), {
+  ssr: false,
+});
+
 const meta = {
   title: `Heatmap - ${SITE_NAME}`,
   description: META_DESCRIPTION,
@@ -57,6 +61,11 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
+  // {
+  //   label: 'SubStrata',
+  //   icon: '/images/somniumspace.png',
+  //   type: 'substrata',
+  // },
 ];
 
 export default function MapPage(props) {
@@ -143,6 +152,11 @@ export default function MapPage(props) {
         ></SomniumMap>
       );
     }
+    // if (mapType === "substrata") {
+    //   return <SubStrataMap>
+
+    //   </SubStrataMap>
+    // }
 
     return (
       <Map
