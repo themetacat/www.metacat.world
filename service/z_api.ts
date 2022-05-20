@@ -779,3 +779,15 @@ export const req_pfp_detail = async (id: string) => {
 
   return json;
 };
+
+export const req_substrata_level_three = async () => {
+  const url = '/api/get_substrata_price_map_level_three';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};

@@ -272,7 +272,7 @@ export default function Index(props) {
     let sub = '';
     if (tab === 'cryptovoxels' || tab === 'decentraland') {
       sub = subTabState;
-    } else if (tab === 'nftworlds' || tab === 'worldwidewebb') {
+    } else if (tab === 'nftworlds' || tab === 'worldwidewebb' || tab === 'otherside') {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
     } else if (tab === 'sandbox' || tab === 'somniumspace') {

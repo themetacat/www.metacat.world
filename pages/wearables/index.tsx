@@ -61,7 +61,6 @@ export default function Wearables(props) {
       }
       if (tabState === 'pfp') {
         res = await req_pfp_list();
-        console.log(res);
       }
       const { code, data, msg } = res;
       setOrigData(convert(data));

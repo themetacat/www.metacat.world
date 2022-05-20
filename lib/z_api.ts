@@ -784,6 +784,18 @@ class API {
 
     return json;
   }
+
+  public async req_substrata_level_three() {
+    const url = `${this.url}/get_substrata_price_map_level_three`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');
