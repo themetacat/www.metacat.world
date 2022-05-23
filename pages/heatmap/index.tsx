@@ -63,7 +63,6 @@ const TAB = [
   },
   {
     label: 'SubStrata',
-    icon: '/images/somniumspace.png',
     type: 'substrata',
   },
 ];
