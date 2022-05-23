@@ -61,11 +61,11 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
-  // {
-  //   label: 'SubStrata',
-  //   icon: '/images/somniumspace.png',
-  //   type: 'substrata',
-  // },
+  {
+    label: 'SubStrata',
+    icon: '/images/somniumspace.png',
+    type: 'substrata',
+  },
 ];
 
 export default function MapPage(props) {
@@ -152,11 +152,9 @@ export default function MapPage(props) {
         ></SomniumMap>
       );
     }
-    // if (mapType === "substrata") {
-    //   return <SubStrataMap>
-
-    //   </SubStrataMap>
-    // }
+    if (mapType === 'substrata') {
+      return <SubStrataMap zoomLimit={[5, 9]} initZoom={5} dragging={true}></SubStrataMap>;
+    }
 
     return (
       <Map

@@ -864,6 +864,7 @@ function Map({
     mapRef.current = map;
     markers.current = L.layerGroup([]);
     // map.addLayer(markers.current);
+
     const isLandLayer = L.geoJSON(null, {
       style: () => {
         return {
