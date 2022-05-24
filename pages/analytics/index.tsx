@@ -52,37 +52,64 @@ import {
 
 import style from './index.module.css';
 
-const BaseBar = dynamic(() => import('../../components/base-bar'), {
+const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
   ssr: false,
 });
-const ChartLine = dynamic(() => import('../../components/chart-line'), {
+const ChartLine = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-line'), {
   ssr: false,
 });
-const StackBar = dynamic(() => import('../../components/stack-bar'), {
+const StackBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/stack-bar'), {
   ssr: false,
 });
-const StackBarZ = dynamic(() => import('../../components/stack-bar-z'), {
-  ssr: false,
-});
-const ChartLineSimple = dynamic(() => import('../../components/chart-line-simple'), {
-  ssr: false,
-});
-const ChartLineToolTipSimple = dynamic(() => import('../../components/chart-line-tooltip-simple'), {
-  ssr: false,
-});
-const ChartLineSandBox = dynamic(() => import('../../components/chart-line-sandbox'), {
-  ssr: false,
-});
+const StackBarZ = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineSimple = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-simple'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineToolTipSimple = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineSandBox = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-sandbox'),
+  {
+    ssr: false,
+  },
+);
 const ChartLineToolTipSimpleSandbox = dynamic(
-  () => import('../../components/chart-line-tooltip-simple-sandbox'),
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox'),
   { ssr: false },
 );
-const StackBarZ2 = dynamic(() => import('../../components/stack-bar-z2'), { ssr: false });
-const Annular = dynamic(() => import('../../components/analytics_annular'), { ssr: false });
-const Miniline = dynamic(() => import('../../components/mini_line'), { ssr: false });
-const Allline = dynamic(() => import('../../components/all_line'), { ssr: false });
-const AllPillar2 = dynamic(() => import('../../components/all_pillar2'), { ssr: false });
-const AllPillar = dynamic(() => import('../../components/all_pillar'), { ssr: false });
+const StackBarZ2 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z2'),
+  { ssr: false },
+);
+const Annular = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/analytics_annular'),
+  { ssr: false },
+);
+const Miniline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/mini_line'), {
+  ssr: false,
+});
+const Allline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line'), {
+  ssr: false,
+});
+const AllPillar2 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/all_pillar2'),
+  { ssr: false },
+);
+const AllPillar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillar'), {
+  ssr: false,
+});
 // import BaseBar from '../../components/base-bar';
 // import ChartLine from '../../components/chart-line';
 // import StackBar from '../../components/stack-bar';
