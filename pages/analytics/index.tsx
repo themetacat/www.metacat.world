@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
@@ -51,20 +52,51 @@ import {
 
 import style from './index.module.css';
 
-import BaseBar from '../../components/base-bar';
-import ChartLine from '../../components/chart-line';
-import StackBar from '../../components/stack-bar';
-import StackBarZ from '../../components/stack-bar-z';
-import ChartLineSimple from '../../components/chart-line-simple';
-import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
-import ChartLineSandBox from '../../components/chart-line-sandbox';
-import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
-import StackBarZ2 from '../../components/stack-bar-z2';
-import Annular from '../../components/analytics_annular';
-import Miniline from '../../components/mini_line';
-import Allline from '../../components/all_line';
-import AllPillar2 from '../../components/all_pillar2';
-import AllPillar from '../../components/all_pillar';
+const BaseBar = dynamic(() => import('../../components/base-bar'), {
+  ssr: false,
+});
+const ChartLine = dynamic(() => import('../../components/chart-line'), {
+  ssr: false,
+});
+const StackBar = dynamic(() => import('../../components/stack-bar'), {
+  ssr: false,
+});
+const StackBarZ = dynamic(() => import('../../components/stack-bar-z'), {
+  ssr: false,
+});
+const ChartLineSimple = dynamic(() => import('../../components/chart-line-simple'), {
+  ssr: false,
+});
+const ChartLineToolTipSimple = dynamic(() => import('../../components/chart-line-tooltip-simple'), {
+  ssr: false,
+});
+const ChartLineSandBox = dynamic(() => import('../../components/chart-line-sandbox'), {
+  ssr: false,
+});
+const ChartLineToolTipSimpleSandbox = dynamic(
+  () => import('../../components/chart-line-tooltip-simple-sandbox'),
+  { ssr: false },
+);
+const StackBarZ2 = dynamic(() => import('../../components/stack-bar-z2'), { ssr: false });
+const Annular = dynamic(() => import('../../components/analytics_annular'), { ssr: false });
+const Miniline = dynamic(() => import('../../components/mini_line'), { ssr: false });
+const Allline = dynamic(() => import('../../components/all_line'), { ssr: false });
+const AllPillar2 = dynamic(() => import('../../components/all_pillar2'), { ssr: false });
+const AllPillar = dynamic(() => import('../../components/all_pillar'), { ssr: false });
+// import BaseBar from '../../components/base-bar';
+// import ChartLine from '../../components/chart-line';
+// import StackBar from '../../components/stack-bar';
+// import StackBarZ from '../../components/stack-bar-z';
+// import ChartLineSimple from '../../components/chart-line-simple';
+// import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
+// import ChartLineSandBox from '../../components/chart-line-sandbox';
+// import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
+// import StackBarZ2 from '../../components/stack-bar-z2';
+// import Annular from '../../components/analytics_annular';
+// import Miniline from '../../components/mini_line';
+// import Allline from '../../components/all_line';
+// import AllPillar2 from '../../components/all_pillar2';
+// import AllPillar from '../../components/all_pillar';
 
 const types = [
   {

@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import Link from 'next/link';
-
+import { v4 as uuid } from 'uuid';
 import dynamic from 'next/dynamic';
 
 import toast from 'react-hot-toast';
@@ -423,7 +423,7 @@ export default function Index(props) {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
             {dataSource.map((card, idx) => {
-              return <Card {...card} key={idx}></Card>;
+              return <Card {...card} key={uuid()}></Card>;
             })}
           </div>
           <PagiNation

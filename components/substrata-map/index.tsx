@@ -11,6 +11,17 @@ type Props = {
   dragging?: boolean;
 };
 
+const mapT = [{ value: 'price', label: 'PRICE' }];
+
+const options = {
+  price: [
+    { label: 'MONTHLY', value: 'month' },
+    { label: 'QUARTERLY', value: 'quarter' },
+    { label: 'YEARLY', value: 'year' },
+    { label: 'All-Time', value: 'all' },
+  ],
+};
+
 export default function subStrataMap({
   zoomLimit,
   initZoom = zoomLimit[0],
