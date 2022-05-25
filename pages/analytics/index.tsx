@@ -1084,6 +1084,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [255, 248, 187] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -1122,6 +1123,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [255, 248, 187] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -1160,6 +1162,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [255, 248, 187] }}
                   options={[
                     {
                       label: 'Monthly',

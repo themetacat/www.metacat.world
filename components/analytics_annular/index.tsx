@@ -118,6 +118,9 @@ export default function Annular({
                   if (tVal.data.name === 'Otherside') {
                     return `rgba(255, 248, 187,1)`;
                   }
+                  if (tVal.data.name === 'Netvrk') {
+                    return `rgba(255, 248, 187,1)`;
+                  }
                 },
                 borderWidth: 0.5,
                 borderColor: '#fff',

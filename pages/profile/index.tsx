@@ -449,18 +449,10 @@ function ProfilePage(r) {
       setManySetState(!current_manySetState);
       nav.forEach((item) => {
         if (item.state === 1) {
-          if (item.label === 'All') {
-            setManySetLabel(all_many_set);
-          }
-          if (item.label === 'For rent') {
-            setManySetLabel(for_rent_many_set);
-          }
-          if (item.label === 'Leased') {
-            setManySetLabel(leased);
-          }
-          if (item.label === 'Not for rent') {
-            setManySetLabel(not_for_rent_many_set);
-          }
+          if (item.label === 'All') setManySetLabel(all_many_set);
+          if (item.label === 'For rent') setManySetLabel(for_rent_many_set);
+          if (item.label === 'Leased') setManySetLabel(leased);
+          if (item.label === 'Not for rent') setManySetLabel(not_for_rent_many_set);
         }
       });
     },
@@ -470,20 +462,14 @@ function ProfilePage(r) {
   const manyChange = React.useCallback(
     (many_label, data, sta = true) => {
       const ids = [];
-      if (many_label === 'Rent out several') {
+      if (many_label === 'Rent out several')
         data.forEach((item) => {
-          if (item.status === 'not_for_rent') {
-            ids.push(item.parcelId);
-          }
+          if (item.status === 'not_for_rent') ids.push(item.parcelId);
         });
-      }
-      if (many_label === 'Cancel lease for multiple' || many_label === 'Mark several as leased') {
+      if (many_label === 'Cancel lease for multiple' || many_label === 'Mark several as leased')
         data.forEach((item) => {
-          if (item.status === 'for_rent') {
-            ids.push(item.parcelId);
-          }
+          if (item.status === 'for_rent') ids.push(item.parcelId);
         });
-      }
       setParcelsIds(ids);
       setCardState(sta);
       setLabel(many_label);
@@ -532,11 +518,10 @@ function ProfilePage(r) {
       if (label === 'Cancel lease for multiple') {
         const token = await refreshTK();
         const result = await req_parcels_cancel(token, selectedIds.join(','));
-        if (result.code === 100000) {
+        if (result.code === 100000)
           store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
-        } else {
-          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
-        }
+        else store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+
         set_rent_set_state(true);
         setManySetState(false);
         setCardState(false);
@@ -562,11 +547,9 @@ function ProfilePage(r) {
       if (label === 'Cancel lease for multiple') {
         const token = await refreshTK();
         const result = await req_dcl_cancel(token, selectedIds.join(','));
-        if (result.code === 100000) {
+        if (result.code === 100000)
           store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
-        } else {
-          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
-        }
+        else store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
         set_rent_set_state(true);
         setManySetState(false);
         setCardState(false);
@@ -610,12 +593,8 @@ function ProfilePage(r) {
   React.useEffect(() => {
     const accessToken = getToken('atk');
     if (accessToken && r.router.query.type === 'parcellist' && r.router.query.type) {
-      if (tabState === 'cryptovoxels') {
-        requestData(accessToken);
-      }
-      if (tabState === 'decentraland') {
-        reqDclData(accessToken);
-      }
+      if (tabState === 'cryptovoxels') requestData(accessToken);
+      if (tabState === 'decentraland') reqDclData(accessToken);
       requestPersonal(accessToken);
       watcher_store();
       watcher_store_status();
@@ -627,9 +606,7 @@ function ProfilePage(r) {
       setRouteTab(r.router.query.type);
       return;
     }
-    if (!accessToken) {
-      window.location.href = '/';
-    }
+    if (!accessToken) window.location.href = '/';
   }, [
     getToken,
     requestData,
@@ -642,9 +619,7 @@ function ProfilePage(r) {
   ]);
 
   const tag1 = () => {
-    if (label === 'Cancel lease for multiple') {
-      return 'Cancel leased';
-    }
+    if (label === 'Cancel lease for multiple') return 'Cancel leased';
     return 'Mark as leased';
   };
   const tag2 = () => {

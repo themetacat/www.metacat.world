@@ -50,6 +50,7 @@
     "autoprefixer": "^10.2.6",
     "axios": "^0.24.0",
     "babel-plugin-import": "^1.13.3",
+    "babylonjs": "^5.7.0",
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
     "echarts": "^5.3.2",

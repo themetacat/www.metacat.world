@@ -104,6 +104,16 @@ export default function PageHeader({ active, className }: Props) {
             Learn
           </Link>
         </div>
+        {/* <div
+          className={cn(
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            active === 'learn' ? style.active : null,
+          )}
+        >
+          <Link href={'/demo'} prefetch>
+            demo
+          </Link>
+        </div> */}
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
