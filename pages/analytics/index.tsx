@@ -48,6 +48,9 @@ import {
   req_otherside_avg_price,
   req_otherside_sales_num,
   req_otherside_sales_amount,
+  req_netvrk_avg_price,
+  req_netvrk_sales_num,
+  req_netvrk_sales_amount,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -110,6 +113,7 @@ const AllPillar2 = dynamic(
 const AllPillar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillar'), {
   ssr: false,
 });
+
 // import BaseBar from '../../components/base-bar';
 // import ChartLine from '../../components/chart-line';
 // import StackBar from '../../components/stack-bar';
@@ -161,6 +165,11 @@ const types = [
     label: 'Somnium Space',
     icon: '/images/somniumspace.png',
     value: 'somniumspace',
+  },
+  {
+    label: 'Netvrk',
+    icon: '/images/netvrk_logomark.svg',
+    value: 'netvrk',
   },
 ];
 
@@ -878,6 +887,102 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_otherside_sales_amount}
+            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>
+        </>
+      );
+    }
+    if (showType === 'netvrk') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'netvrk1'}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            legend1={{ label: 'Primary', color: [255, 248, 187] }}
+            dataHandlder={req_netvrk_avg_price}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'netvrk2'}
+            className="mt-5"
+            labelText={'Number Of Parcel Sales'}
+            dataHandlder={req_netvrk_sales_num}
+            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBarZ
+            id={'netvrk3'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_netvrk_sales_amount}
             legend1={{ label: 'Land', color: [255, 248, 187] }}
             keyTypes={['land', 'estate']}
             barWidth={18}

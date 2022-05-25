@@ -434,7 +434,6 @@ export default function Index(props) {
         </>
       );
     }
-
     if (subTabState === 'event') {
       if (error) {
         return (
