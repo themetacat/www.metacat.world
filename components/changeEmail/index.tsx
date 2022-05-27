@@ -2,17 +2,17 @@ import React from 'react';
 import cn from 'classnames';
 import { toast } from 'react-hot-toast';
 import style from './index.module.css';
-
+import { getToken } from '../../common/utils';
 import {
-  req_send_email,
-  req_ver_email_code,
+  req_bind_send_email,
+  req_bind_ver_email_code,
   req_modify_send_email,
   req_modify_old_email_ver_code,
 } from '../../service/z_api';
 
 type Props = {
   state: boolean;
-  closeEmail: () => void;
+  closeEmail?;
   value?: string;
   modifyEmail?: boolean;
 };
@@ -23,11 +23,14 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
   const [codeClear, setCodeClear] = React.useState(false);
   const time = React.useRef(60);
   const [codeState, setCodeState] = React.useState('getCode');
+  const [token, setToken] = React.useState('');
 
   const timeId = React.useRef(null);
 
   React.useEffect(() => {
     setEmail(value);
+    const t = getToken('atk');
+    setToken(t);
   }, [value]);
 
   const setEmailValue = React.useCallback((e) => {
@@ -82,11 +85,9 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
     const t = timeOut();
     timeId.current = t;
     if (modifyEmail) {
-      const result = await req_modify_send_email();
-      console.log(result);
+      await req_modify_send_email(token);
     } else {
-      const result = await req_send_email(email);
-      console.log(result);
+      await req_bind_send_email(email, token);
     }
   }, [time, email, modifyEmail, timeOut]);
 
@@ -111,14 +112,31 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
   const bindOrChangeEmail = React.useCallback(async () => {
     if (!email && !code) return;
     let result = null;
+
+    if (modifyEmail) {
+      result = await req_modify_old_email_ver_code(code.toString(), token);
+      if (result.code === 100000) {
+        closeEmail('modify');
+      } else if (result.code === 100013) {
+        toast.error('Invalid verification code');
+      } else {
+        toast.error('Verification code error');
+      }
+    } else {
+      result = await req_bind_ver_email_code(code.toString(), token);
+      if (result.code === 100000) {
+        closeEmail('bind');
+      } else if (result.code === 100013) {
+        toast.error('Invalid verification code');
+      } else {
+        toast.error('Verification code error');
+      }
+    }
     setCode('');
     setCodeClear(false);
     setCodeState('getCode');
-    if (modifyEmail) {
-      result = await req_modify_old_email_ver_code(code);
-    } else {
-      result = await req_ver_email_code(code);
-    }
+    clearInterval(timeId.current);
+    time.current = 60;
   }, [email, code, modifyEmail]);
 
   if (state && !modifyEmail) {

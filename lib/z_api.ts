@@ -836,14 +836,18 @@ class API {
 
     return json;
   }
+
   // 17.1 发送邮箱验证码
 
-  public async req_send_email(email: string) {
-    const url = `${this.url} /bind_send_email?email=${email}`;
-
+  public async req_bind_send_email(email: string, token: string) {
+    const url = `${this.url}/bind_send_email?email=${email}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
     const json = await result.json();
 
@@ -852,14 +856,16 @@ class API {
 
   // 17.2 验证邮箱验证码以及绑定邮箱
 
-  public async req_ver_email_code(code: string) {
+  public async req_bind_ver_email_code(code: string, token: string) {
     const search = qs.stringify({ code }, { addQueryPrefix: true });
-
     const url = `${this.url}/bind_ver_email_code${search}`;
-
     const result = await fetch(url, {
-      method: 'post',
+      method: 'get',
       mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
     const json = await result.json();
 
@@ -868,11 +874,15 @@ class API {
 
   // 17.3 更换邮箱之给旧邮箱发送验证码
 
-  public async req_modify_send_email() {
+  public async req_modify_send_email(token: string) {
     const url = `${this.url}/modify_send_email`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
     const json = await result.json();
 
@@ -881,31 +891,21 @@ class API {
 
   // 17.4 更换邮箱之对旧邮箱验证码验证
 
-  public async req_modify_old_email_ver_code(code: string) {
+  public async req_modify_old_email_ver_code(code: string, token: string) {
     const search = qs.stringify({ code }, { addQueryPrefix: true });
-
     const url = `${this.url}/modify_old_email_ver_code${search}`;
-
     const result = await fetch(url, {
-      method: 'post',
+      method: 'get',
       mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
     const json = await result.json();
 
     return json;
   }
-
-  // public async req_send_email(email: string) {
-  //   const url = `${this.url}/bind_send_email?email=${email}`;
-  //   const result = await fetch(url, {
-  //     method: 'get',
-  //     mode: 'cors',
-  //   });
-  //   const json = await result.json();
-
-  //   return json;
-
-  // }
 }
 
 export default new API('https://api.metacat.world/api/v1');

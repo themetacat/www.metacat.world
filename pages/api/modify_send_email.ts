@@ -1,10 +1,9 @@
-// 17.2 验证邮箱验证码以及绑定邮箱
+// 17.3 更换邮箱之给旧邮箱发送验证码
 import api from '../../lib/z_api';
 
 export default async (req, res) => {
-  const { code } = req.query;
   const token = req.headers.authorization;
-  const data = await api.req_bind_ver_email_code(code, token);
+  const data = await api.req_modify_send_email(token);
 
   res.statusCode = 200;
 

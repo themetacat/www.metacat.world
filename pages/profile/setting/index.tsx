@@ -41,7 +41,8 @@ export default function Settings() {
   const [canSave, setCanSave] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
 
-  const [email, setEmail] = React.useState('z1723055173@126.com');
+  const [email, setEmail] = React.useState('');
+  const [initEmail, setInitEmail] = React.useState('');
   const [emailState, setEmailState] = React.useState(false);
   const [showClear, setShowClear] = React.useState(false);
   const [modifyEmail, setModifyEmail] = React.useState(false);
@@ -99,9 +100,13 @@ export default function Settings() {
       const data = resultHandler(res, requireData);
       if (data) {
         const profile = convert(data.profile);
-        const { address: addr, nickName: name, avatar, links } = profile;
+        const { address: addr, nickName: name, avatar, links, email: e } = profile;
         const { twitterName, websiteUrl } = links;
         setAvatarUrl(avatar);
+        setInitEmail(e);
+        if (e) {
+          setEmail(e);
+        }
         setAddress(addr);
         setNickName(name);
         setOrginName(name);
@@ -230,8 +235,21 @@ export default function Settings() {
     setEmailState(true);
   }, []);
 
-  const closeEmail = React.useCallback(() => {
+  const closeEmail = React.useCallback((t) => {
     setEmailState(false);
+    const accessToken = getToken('atk');
+
+    if (t === 'bind') {
+      toast.success('Binding succeeded');
+    }
+    if (t === 'modify') {
+      setModifyEmail(false);
+      setEmailState(true);
+    }
+
+    if (accessToken) {
+      requireData(accessToken);
+    }
   }, []);
 
   const clearEmail = React.useCallback(() => {
@@ -324,27 +342,34 @@ export default function Settings() {
                         />
                       </span>
                     </div>
-                    <input
-                      type="text"
-                      placeholder="Email address"
-                      className={cn(style.input)}
-                      onInput={changeEmail}
-                      value={email}
-                      onFocus={() => {
-                        if (email) {
-                          setShowClear(true);
-                        }
-                      }}
-                      onBlur={emailBlue}
-                    />
-                    {/* <div className={style.fixedEmail}>
-                      z1723055173@126.com
-                    </div> */}
-                    <div className={cn(style.button, style.modify)}>
-                      <div className={style.binding} onClick={bindingEmail}>
-                        Binding
-                      </div>
-                      {/* <div className={cn(style.binding)} onClick={ModifyEmail}>Modify email</div> */}
+                    {!initEmail ? (
+                      <input
+                        type="text"
+                        placeholder="Email address"
+                        className={cn(style.input)}
+                        onInput={changeEmail}
+                        value={email}
+                        onFocus={() => {
+                          if (email) {
+                            setShowClear(true);
+                          }
+                        }}
+                        onBlur={emailBlue}
+                      />
+                    ) : (
+                      <div className={style.fixedEmail}>{initEmail}</div>
+                    )}
+
+                    <div className={cn(style.button, !initEmail ? null : style.modify)}>
+                      {!initEmail ? (
+                        <div className={style.binding} onClick={bindingEmail}>
+                          Binding
+                        </div>
+                      ) : (
+                        <div className={cn(style.binding)} onClick={ModifyEmail}>
+                          Modify email
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
