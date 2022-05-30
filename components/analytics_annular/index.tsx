@@ -119,7 +119,7 @@ export default function Annular({
                     return `rgba(255, 248, 187,1)`;
                   }
                   if (tVal.data.name === 'Netvrk') {
-                    return `rgba(255, 248, 187,1)`;
+                    return `rgba(196, 148, 254,1)`;
                   }
                 },
                 borderWidth: 0.5,

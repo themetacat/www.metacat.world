@@ -63,3 +63,43 @@
 .analyticsMore:active {
   filter: brightness(75%);
 }
+.swiper {
+  margin: 0px !important;
+  display: flex;
+  width: 100%;
+}
+.base {
+  width: 20% !important;
+  min-height: 60px;
+  padding: 0 30px;
+  box-sizing: border-box;
+  font-weight: 500;
+  color: #999999;
+  line-height: 60px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+.active {
+  color: #fff;
+  font-size: 30px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+.per {
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(90deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  left: 0px;
+  cursor: pointer;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+}
+.next {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(270deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  right: 0px;
+  cursor: pointer;
+}

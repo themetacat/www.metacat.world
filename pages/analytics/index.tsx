@@ -925,7 +925,7 @@ export default function AnalyticsIndex(props) {
             id={'netvrk1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
-            legend1={{ label: 'Primary', color: [255, 248, 187] }}
+            legend1={{ label: 'Primary', color: [196, 148, 254] }}
             dataHandlder={req_netvrk_avg_price}
             textColor={style.osdColor}
             options={[
@@ -959,7 +959,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_netvrk_sales_num}
-            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            legend1={{ label: 'Land', color: [148, 159, 254] }}
             keyTypes={['land', 'estate']}
             textColor={style.osdColor}
             options={[
@@ -983,7 +983,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_netvrk_sales_amount}
-            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            legend1={{ label: 'Land', color: [196, 148, 254] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
@@ -1029,12 +1029,6 @@ export default function AnalyticsIndex(props) {
                   id="annular1"
                   labelText={'Parcel Sales Amount (USD)'}
                   dataHandlder={req_sales_amount_percent}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
                       label: 'Month',
@@ -1084,7 +1078,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -1123,7 +1117,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -1162,7 +1156,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
                       label: 'Monthly',

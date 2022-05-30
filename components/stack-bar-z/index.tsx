@@ -82,7 +82,6 @@ export default function StackBar({
         } else {
           last = data.slice(limit);
         }
-        console.log(last);
         last.forEach((element) => {
           result.push({
             ...element,

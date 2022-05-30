@@ -61,10 +61,10 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
-  {
-    label: 'SubStrata',
-    type: 'substrata',
-  },
+  // {
+  //   label: 'SubStrata',
+  //   type: 'substrata',
+  // },
 ];
 
 export default function MapPage(props) {
