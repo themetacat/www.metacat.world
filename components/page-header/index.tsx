@@ -90,7 +90,6 @@ export default function PageHeader({ active, className }: Props) {
             active === 'wearables' ? style.active : null,
           )}
         >
-          <Link href={'/wearables?type=wearabledao'}>Wearables</Link>
           <Link href={'/wearables?type=wearabledao'} prefetch>
             Wearables
           </Link>
