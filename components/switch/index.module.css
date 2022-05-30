@@ -1,4 +1,9 @@
+
+.container{
+  position: relative;
+}
 .base {
+  width: 15% !important;
   min-height: 60px;
   padding: 0 50px;
   border: 1px solid #086975;
@@ -20,10 +25,10 @@
 }
 
 .tabIcon {
-  width: 28px;
-  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
   border-radius: 20px;
-} 
+}
 
 .p1 {
   padding: 0 45px;
@@ -52,4 +57,29 @@
   top: 0;
   margin: 0 auto;
   z-index: index !important;
+}
+
+.swiper {
+  margin: 0px !important;
+  display: flex;
+}
+
+.per {
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(90deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  left: 0px;
+  cursor: pointer;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.next {
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(270deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  right: 0px;
+  cursor: pointer;
 }

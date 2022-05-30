@@ -22,6 +22,7 @@ type Props = {
   legend6?;
   options?;
   legend7?;
+  legend8?;
   priceOptions?;
   limit?: number;
 };
@@ -51,6 +52,7 @@ const showKeyTypes = [
   'Voxels',
   'Somnium Space',
   'Otherside',
+  'Netvrk',
 ];
 
 export default function AllLine({
@@ -65,6 +67,7 @@ export default function AllLine({
   legend6,
   options,
   legend7,
+  legend8,
   priceOptions,
   limit,
 }: Props) {
@@ -263,6 +266,20 @@ export default function AllLine({
         </span>
       </div>
 
+        <div style="color:#fff;margin-bottom:12px">
+        <span style="color:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1);">
+        ${showKeyTypes[7]}:
+          <span style="color:#fff;">
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend8.color[0]
+            }, ${legend8.color[1]}, ${legend8.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[7]]?.value,
+          )}</span>
+            <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          </span>
+        </span>
+      </div>
+
               `;
           container.innerHTML = title + staticItem;
           return container;
@@ -374,6 +391,11 @@ export default function AllLine({
                 fill: `l(270) 0:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
               };
             }
+            if (tVal === 'Netvrk') {
+              return {
+                fill: `l(270) 0:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 0.2) 1:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`,
+              };
+            }
           },
         })
         .tooltip(
@@ -414,6 +436,9 @@ export default function AllLine({
           }
           if (tVal === 'Otherside') {
             return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+          if (tVal === 'Netvrk') {
+            return `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
           }
         });
       /**
@@ -571,6 +596,11 @@ export default function AllLine({
         <IconLabel
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
+          text={legend8.label}
+          color={`rgb(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]})`}
           className="mr-5"
         ></IconLabel>
       </>

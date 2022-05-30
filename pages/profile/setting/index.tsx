@@ -11,6 +11,7 @@ import PageHeader from '../../../components/page-header';
 import Footer from '../../../components/footer';
 import MeteInput from '../../../components/meta-input';
 import { state } from '../../../components/wallet-btn';
+import ChangeEmail from '../../../components/changeEmail';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
@@ -39,6 +40,13 @@ export default function Settings() {
   const [avatarUrl, setAvatarUrl] = React.useState('/images/icon.png');
   const [canSave, setCanSave] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
+
+  const [email, setEmail] = React.useState('');
+  const [initEmail, setInitEmail] = React.useState('');
+  const [emailState, setEmailState] = React.useState(false);
+  const [showClear, setShowClear] = React.useState(false);
+  const [modifyEmail, setModifyEmail] = React.useState(false);
+
   const web3 = useWalletProvider();
 
   const refreshTK = React.useCallback(async () => {
@@ -92,9 +100,13 @@ export default function Settings() {
       const data = resultHandler(res, requireData);
       if (data) {
         const profile = convert(data.profile);
-        const { address: addr, nickName: name, avatar, links } = profile;
+        const { address: addr, nickName: name, avatar, links, email: e } = profile;
         const { twitterName, websiteUrl } = links;
         setAvatarUrl(avatar);
+        setInitEmail(e);
+        if (e) {
+          setEmail(e);
+        }
         setAddress(addr);
         setNickName(name);
         setOrginName(name);
@@ -210,6 +222,48 @@ export default function Settings() {
     setCanSave(false);
   }, [null]);
 
+  const changeEmail = React.useCallback((e) => {
+    setEmail(e.target.value);
+    if (e.target.value) {
+      setShowClear(true);
+    } else {
+      setShowClear(false);
+    }
+  }, []);
+
+  const bindingEmail = React.useCallback(() => {
+    setEmailState(true);
+  }, []);
+
+  const closeEmail = React.useCallback((t) => {
+    setEmailState(false);
+    const accessToken = getToken('atk');
+
+    if (t === 'bind') {
+      toast.success('Binding succeeded');
+    }
+    if (t === 'modify') {
+      setModifyEmail(false);
+      setEmailState(true);
+    }
+
+    if (accessToken) {
+      requireData(accessToken);
+    }
+  }, []);
+
+  const clearEmail = React.useCallback(() => {
+    setEmail('');
+  }, []);
+
+  const ModifyEmail = React.useCallback(() => {
+    setEmailState(true);
+    setModifyEmail(true);
+  }, []);
+
+  const emailBlue = React.useCallback(() => {
+    setShowClear(false);
+  }, []);
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -269,6 +323,56 @@ export default function Settings() {
                   ) : null}
                 </div>
 
+                <div className={style.email}>
+                  <div className={style.title}>Email</div>
+                  <div className={cn(style.inputContainer, showClear ? style.hover : null)}>
+                    <div className={style.emailIcon}>
+                      <img src="/images/emailIcon.png" />
+                    </div>
+                    <div className={style.clearIcon}>
+                      <span
+                        className={cn('inline-flex items-center', style.icon)}
+                        onMouseDown={() => {
+                          setEmail('');
+                        }}
+                      >
+                        <img
+                          src="/images/close.png"
+                          className={cn(showClear ? 'inline-flex' : ' hidden', style.icon)}
+                        />
+                      </span>
+                    </div>
+                    {!initEmail ? (
+                      <input
+                        type="text"
+                        placeholder="Email address"
+                        className={cn(style.input)}
+                        onInput={changeEmail}
+                        value={email}
+                        onFocus={() => {
+                          if (email) {
+                            setShowClear(true);
+                          }
+                        }}
+                        onBlur={emailBlue}
+                      />
+                    ) : (
+                      <div className={style.fixedEmail}>{initEmail}</div>
+                    )}
+
+                    <div className={cn(style.button, !initEmail ? null : style.modify)}>
+                      {!initEmail ? (
+                        <div className={style.binding} onClick={bindingEmail}>
+                          Binding
+                        </div>
+                      ) : (
+                        <div className={cn(style.binding)} onClick={ModifyEmail}>
+                          Modify email
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 <MeteInputLimit
                   value={twitterAddress}
                   name={'twitter'}
@@ -354,6 +458,12 @@ export default function Settings() {
           </div>
         </div>
       </div>
+      <ChangeEmail
+        value={email}
+        state={emailState}
+        closeEmail={closeEmail}
+        modifyEmail={modifyEmail}
+      ></ChangeEmail>
       <Footer />
     </Page>
   );

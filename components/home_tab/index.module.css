@@ -2,20 +2,14 @@
   color: #fff;
   font-weight: 600;
   font-size: 16px;
-  background-color: rgba(0, 236, 222, 0.05);
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
-  border-bottom: transparent;
 }
 .miniNormal {
   color: #aaa;
   font-size: 14px;
-  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .miniBase {
   position: relative;
   z-index: 1;
-  min-width: 171px;
-  padding: 0 10px;
   height: 100%;
 }
 .miniActive > .miniCanHover,

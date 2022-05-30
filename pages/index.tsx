@@ -1,17 +1,19 @@
 import React from 'react';
 import cn from 'classnames';
 import Link from 'next/link';
-
+import { v4 as uuid } from 'uuid';
 import dynamic from 'next/dynamic';
 
 import toast from 'react-hot-toast';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 
 import Page from '../components/page';
 import Layout from '../components/layout';
 import { SITE_NAME, META_DESCRIPTION } from '../common/const';
 import { convert, getToken, setToken } from '../common/utils';
 
-import Tab from '../components/tab';
+import Tab from '../components/home_tab';
 import SecondTab from '../components/tab2';
 import Card from '../components/card';
 import SwiperTag from '../components/swiper-tag';
@@ -67,6 +69,9 @@ import {
   req_otherside_avg_price,
   req_otherside_sales_num,
   req_otherside_sales_amount,
+  req_netvrk_avg_price,
+  req_netvrk_sales_num,
+  req_netvrk_sales_amount,
 } from '../service/z_api';
 
 import style from './index.module.less';
@@ -122,6 +127,11 @@ const TAB = [
     label: 'Otherside',
     icon: '/images/osd.png',
     type: 'otherside',
+  },
+  {
+    label: 'Netvrk',
+    icon: '/images/netvrk_logomark.svg',
+    type: 'netvrk',
   },
 ];
 
@@ -182,6 +192,9 @@ export default function Index(props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
+
+  const [percent, setPercent] = React.useState(0);
+  const [tabPercent, setTabPercent] = React.useState(0);
 
   const web3 = useWalletProvider();
 
@@ -272,7 +285,12 @@ export default function Index(props) {
     let sub = '';
     if (tab === 'cryptovoxels' || tab === 'decentraland') {
       sub = subTabState;
-    } else if (tab === 'nftworlds' || tab === 'worldwidewebb' || tab === 'otherside') {
+    } else if (
+      tab === 'nftworlds' ||
+      tab === 'worldwidewebb' ||
+      tab === 'otherside' ||
+      tab === 'netvrk'
+    ) {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
     } else if (tab === 'sandbox' || tab === 'somniumspace') {
@@ -418,12 +436,11 @@ export default function Index(props) {
       if (dataSource.length === 0) {
         return <Status status="empty" />;
       }
-
       return (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
             {dataSource.map((card, idx) => {
-              return <Card {...card} key={idx}></Card>;
+              return <Card {...card} key={uuid()}></Card>;
             })}
           </div>
           <PagiNation
@@ -435,7 +452,6 @@ export default function Index(props) {
         </>
       );
     }
-
     if (subTabState === 'event') {
       if (error) {
         return (
@@ -1162,10 +1178,105 @@ export default function Index(props) {
           </div>
         );
       }
+      if (tabState === 'netvrk') {
+        return (
+          <div className={cn('main-content')}>
+            <>
+              <BaseChart className=" my-5">
+                <ChartLineSandBox
+                  id={'chartline1'}
+                  labelText={'AVERAGE PARCEL PRICE'}
+                  dataHandlder={req_netvrk_avg_price}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily price',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly price',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly price',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                  tabState={tabState}
+                ></ChartLineSandBox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <ChartLineToolTipSimpleSandbox
+                  id={'dcl-chartline-2'}
+                  labelText={'NUMBER OF PARCEL SALES'}
+                  dataHandlder={req_netvrk_sales_num}
+                  legend1={{ label: 'Land', color: [33, 212, 115] }}
+                  legend2={{ label: 'Estate', color: [255, 172, 95] }}
+                  keyTypes={['land', 'estate']}
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                  ]}
+                  tabState={tabState}
+                ></ChartLineToolTipSimpleSandbox>
+              </BaseChart>
+              <BaseChart className=" my-5">
+                <StackBarZ
+                  id={'stackbar1'}
+                  labelText={'MONTHLY PARCEL SALES AMOUNT'}
+                  dataHandler={req_netvrk_sales_amount}
+                  legend1={{ label: 'Land', color: [255, 207, 95] }}
+                  keyTypes={['land', 'estate']}
+                  barWidth={18}
+                  isEth={true}
+                  showMarkerType="sandbox"
+                  limit={15}
+                  options={[
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    {
+                      label: 'Quarterly',
+                      value: 'quarterly',
+                    },
+                  ]}
+                  optionsPrice={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                  tabState={tabState}
+                ></StackBarZ>
+              </BaseChart>
+            </>
+          </div>
+        );
+      }
     }
   }, [
-    tabState,
-    subTabState,
     error,
     dataSource,
     hasMore,
@@ -1306,21 +1417,66 @@ export default function Index(props) {
         ) : null}
         <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
-          <div className="main-content flex px-0">
-            {TAB.map((item, index) => {
-              return (
-                <Tab
-                  active={tabState === item.type}
-                  key={item.label}
-                  label={item.label}
-                  icon={item.icon}
-                  isMini={true}
-                  onClick={() => {
-                    onTabChange(item.type);
-                  }}
-                />
-              );
-            })}
+          <div className="main-content flex px-0 relative">
+            <div
+              className={cn(
+                'p absolute z-50 flex justify-start items-center',
+                {
+                  hidden: tabPercent <= 0,
+                },
+                style.per,
+              )}
+            >
+              <img className={style.icon} src="/images/tab-left.png"></img>
+            </div>
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={1}
+              slidesPerView="auto"
+              className={cn('w-full', style.swiper)}
+              navigation={{
+                prevEl: '.p',
+                nextEl: '.n',
+              }}
+              onProgress={(swiper, progress) => {
+                setTabPercent(progress);
+              }}
+            >
+              {TAB.map((item, index) => {
+                return (
+                  <SwiperSlide
+                    className={cn(
+                      'box-border w-12 py-2 px-4 font-semibold text-white',
+                      style.base,
+                      tabState === item.type ? style.active : null,
+                    )}
+                    key={index}
+                    onClick={() => {
+                      onTabChange(item.type);
+                    }}
+                  >
+                    <Tab
+                      active={tabState === item.type}
+                      key={item.label}
+                      label={item.label}
+                      icon={item.icon}
+                      isMini={true}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+            <div
+              className={cn(
+                'n absolute z-50  flex justify-end items-center',
+                {
+                  hidden: tabPercent >= 1,
+                },
+                style.next,
+              )}
+            >
+              <img className={style.icon} src="/images/tab-right.png"></img>
+            </div>
             <div className={cls} />
           </div>
           <div className={cls} />
@@ -1362,7 +1518,10 @@ export default function Index(props) {
                     return null;
                   })
                 : null}
-              {tabState === 'nftworlds' || tabState === 'worldwidewebb' || tabState === 'otherside'
+              {tabState === 'nftworlds' ||
+              tabState === 'worldwidewebb' ||
+              tabState === 'otherside' ||
+              tabState === 'netvrk'
                 ? SUBTABZ.map((item, index) => {
                     if (item) {
                       return (

@@ -791,3 +791,126 @@ export const req_substrata_level_three = async () => {
 
   return json;
 };
+
+// 6.30 获取 netvrk 地块成交均价统计信息接口
+
+export const req_netvrk_avg_price = async () => {
+  const url = 'api/get_netvrk_avg_price_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 6.31 获取 netvrk 地块成交总数量统计信息接口
+
+export const req_netvrk_sales_num = async () => {
+  const url = '/api/get_netvrk_sales_num';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 6.32 获取 netvrk 地块销售总额统计信息接口
+
+export const req_netvrk_sales_amount = async () => {
+  const url = 'api/get_netvrk_sales_amount';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// export const req_send_email = async (email: string) => {
+//   const url = `api/bind_send_email?email=${email}`
+//   const result = await fetch(url, {
+//     method: 'get',
+//     mode: 'cors',
+//   });
+//   const json = await result.json();
+
+//   return json;
+// }
+
+// 17.1 发送邮箱验证码
+
+export const req_bind_send_email = async (email: string, token: string) => {
+  const url = `../api/bind_send_email?email=${email}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 17.2 验证邮箱验证码以及绑定邮箱
+
+export const req_bind_ver_email_code = async (code: string, token: string) => {
+  const search = qs.stringify({ code }, { addQueryPrefix: true });
+  const url = `../api/bind_ver_email_code${search}`;
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 17.3 更换邮箱之给旧邮箱发送验证码
+
+export const req_modify_send_email = async (token: string) => {
+  const url = `../api/modify_send_email`;
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 17.4 更换邮箱之对旧邮箱验证码验证
+
+export const req_modify_old_email_ver_code = async (code: string, token: string) => {
+  const search = qs.stringify({ code }, { addQueryPrefix: true });
+  const url = `../api/modify_old_email_ver_code${search}`;
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};

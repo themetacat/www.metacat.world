@@ -1,0 +1,172 @@
+.container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  z-index: 99999999;
+}
+.container .bg {
+  width: 100%;
+  height: 150%;
+  background: #ffffff;
+  opacity: 0.3;
+}
+.container .popup {
+  width: 450px;
+  height: 352px;
+  background: #000000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  z-index: 999999999;
+}
+.container .popup .header {
+  width: 100%;
+  height: 58px;
+  padding: 20px 30px 0;
+  border-bottom: 1px solid #003a42;
+}
+.container .popup .header img {
+  float: right;
+  cursor: pointer;
+}
+.container .popup .header .title {
+  font-weight: 500;
+  font-size: 20px;
+  color: #ffffff;
+}
+.container .popup .body {
+  padding: 20px 30px;
+}
+.container .popup .body .email {
+  width: 100%;
+  height: 74px;
+  margin-bottom: 20px;
+}
+.container .popup .body .email .title {
+  font-weight: 500;
+  font-size: 16px;
+  color: #999999;
+  margin-bottom: 10px;
+}
+.container .popup .body .email .emailInput {
+  position: relative;
+}
+.container .popup .body .email .emailInput input {
+  width: 100%;
+  height: 45px;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 0 20px;
+  caret-color: #00d0ec;
+  background: #001518;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+.container .popup .body .email .emailInput input:hover,
+.container .popup .body .email .emailInput input:focus-within {
+  border: 1px solid #003a42;
+}
+.container .popup .body .email .emailInput .modifyEmailInput {
+  color: #999999;
+}
+.container .popup .body .email .emailInput img {
+  position: absolute;
+  right: 20px;
+  top: 13px;
+  width: 19px;
+  height: 19px;
+  cursor: pointer;
+}
+.container .popup .body .code {
+  width: 100%;
+  height: 74px;
+  margin-bottom: 20px;
+}
+.container .popup .body .code .title {
+  font-weight: 500;
+  font-size: 16px;
+  color: #999999;
+  margin-bottom: 10px;
+}
+.container .popup .body .code .inputContainer {
+  width: 100%;
+  height: 45px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: #001518;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.container .popup .body .code .inputContainer img {
+  position: absolute;
+  right: 100px;
+  bottom: 11px;
+  width: 19px;
+  height: 19px;
+  cursor: pointer;
+}
+.container .popup .body .code .inputContainer input {
+  width: 300px;
+  height: 24px;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 0 20px;
+  caret-color: #00d0ec;
+  border-right: 1px solid #003a42;
+  background: #001518;
+}
+.container .popup .body .code .inputContainer .getCode {
+  font-weight: 400;
+  font-size: 12px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.container .popup .body .code .inputContainer .getCode2 {
+  font-weight: 400;
+  font-size: 12px;
+  color: #999;
+}
+.container .popup .body .code .inputContainer .reacquire {
+  font-weight: 400;
+  font-size: 12px;
+  color: #ffffff;
+  cursor: pointer;
+}
+.container .popup .body .code .inputContainer .time {
+  font-weight: 400;
+  font-size: 12px;
+  color: #ffffff;
+  margin-left: 15px;
+}
+.container .popup .body .inputContainer:hover,
+.container .popup .body .inputContainer:focus-within {
+  border: 1px solid #003a42;
+}
+.container .popup .body .save {
+  width: 117px;
+  height: 42px;
+  background-color: #00d0ec;
+  text-align: center;
+  line-height: 42px;
+  color: #0f191b;
+  opacity: 0.4;
+  cursor: pointer;
+}
+.container .popup .body .high {
+  color: #0f191b;
+  opacity: 1;
+}
+.dn {
+  display: none;
+}
+.icon {
+  width: 19px;
+  height: 19px;
+}

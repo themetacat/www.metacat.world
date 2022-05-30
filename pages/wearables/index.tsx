@@ -183,12 +183,12 @@ export default function Wearables(props) {
                   name="WearableDao"
                   contact={[
                     {
-                      icon: '/images/v5/Twitter.png',
+                      icon: '/images/twitter.svg',
                       label: 'Twitter',
                       address: 'https://twitter.com/WearableDao',
                     },
                     {
-                      icon: '/images/icon/discord.png',
+                      icon: '/images/discord.svg',
                       label: 'Discord',
                       address: 'https://discord.gg/t3Wrb4JvDF',
                     },
@@ -200,12 +200,12 @@ export default function Wearables(props) {
                   name="OKX"
                   contact={[
                     {
-                      icon: '/images/icon/home.png',
+                      icon: '/images/home.svg',
                       label: 'Home',
                       address: 'https://www.okx.com/',
                     },
                     {
-                      icon: '/images/v5/Twitter.png',
+                      icon: '/images/twitter.svg',
                       label: 'Twitter',
                       address: 'https://twitter.com/okx',
                     },

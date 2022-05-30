@@ -30,7 +30,6 @@ function MyApp({ Component, pageProps }) {
       // PC端
     }
   }, []);
-
   return (
     <>
       {/* Global Site Tag (gtag.js) - Google Analytics */}

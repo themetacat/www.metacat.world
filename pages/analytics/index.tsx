@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
@@ -47,24 +48,86 @@ import {
   req_otherside_avg_price,
   req_otherside_sales_num,
   req_otherside_sales_amount,
+  req_netvrk_avg_price,
+  req_netvrk_sales_num,
+  req_netvrk_sales_amount,
 } from '../../service/z_api';
 
 import style from './index.module.css';
 
-import BaseBar from '../../components/base-bar';
-import ChartLine from '../../components/chart-line';
-import StackBar from '../../components/stack-bar';
-import StackBarZ from '../../components/stack-bar-z';
-import ChartLineSimple from '../../components/chart-line-simple';
-import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
-import ChartLineSandBox from '../../components/chart-line-sandbox';
-import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
-import StackBarZ2 from '../../components/stack-bar-z2';
-import Annular from '../../components/analytics_annular';
-import Miniline from '../../components/mini_line';
-import Allline from '../../components/all_line';
-import AllPillar2 from '../../components/all_pillar2';
-import AllPillar from '../../components/all_pillar';
+const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
+  ssr: false,
+});
+const ChartLine = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-line'), {
+  ssr: false,
+});
+const StackBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/stack-bar'), {
+  ssr: false,
+});
+const StackBarZ = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineSimple = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-simple'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineToolTipSimple = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineSandBox = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-sandbox'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineToolTipSimpleSandbox = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox'),
+  { ssr: false },
+);
+const StackBarZ2 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z2'),
+  { ssr: false },
+);
+const Annular = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/analytics_annular'),
+  { ssr: false },
+);
+const Miniline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/mini_line'), {
+  ssr: false,
+});
+const Allline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line'), {
+  ssr: false,
+});
+const AllPillar2 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/all_pillar2'),
+  { ssr: false },
+);
+const AllPillar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillar'), {
+  ssr: false,
+});
+
+// import BaseBar from '../../components/base-bar';
+// import ChartLine from '../../components/chart-line';
+// import StackBar from '../../components/stack-bar';
+// import StackBarZ from '../../components/stack-bar-z';
+// import ChartLineSimple from '../../components/chart-line-simple';
+// import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
+// import ChartLineSandBox from '../../components/chart-line-sandbox';
+// import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
+// import StackBarZ2 from '../../components/stack-bar-z2';
+// import Annular from '../../components/analytics_annular';
+// import Miniline from '../../components/mini_line';
+// import Allline from '../../components/all_line';
+// import AllPillar2 from '../../components/all_pillar2';
+// import AllPillar from '../../components/all_pillar';
 
 const types = [
   {
@@ -102,6 +165,11 @@ const types = [
     label: 'Somnium Space',
     icon: '/images/somniumspace.png',
     value: 'somniumspace',
+  },
+  {
+    label: 'Netvrk',
+    icon: '/images/netvrk_logomark.svg',
+    value: 'netvrk',
   },
 ];
 
@@ -850,6 +918,102 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
+    if (showType === 'netvrk') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'netvrk1'}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            legend1={{ label: 'Primary', color: [196, 148, 254] }}
+            dataHandlder={req_netvrk_avg_price}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'netvrk2'}
+            className="mt-5"
+            labelText={'Number Of Parcel Sales'}
+            dataHandlder={req_netvrk_sales_num}
+            legend1={{ label: 'Land', color: [148, 159, 254] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBarZ
+            id={'netvrk3'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_netvrk_sales_amount}
+            legend1={{ label: 'Land', color: [196, 148, 254] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>
+        </>
+      );
+    }
   }, [showType]);
 
   const reander = React.useMemo(() => {
@@ -865,12 +1029,6 @@ export default function AnalyticsIndex(props) {
                   id="annular1"
                   labelText={'Parcel Sales Amount (USD)'}
                   dataHandlder={req_sales_amount_percent}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   options={[
                     {
                       label: 'Month',
@@ -920,6 +1078,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -958,6 +1117,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
                       label: 'Monthly',
@@ -996,6 +1156,7 @@ export default function AnalyticsIndex(props) {
                   legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
                   legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
                       label: 'Monthly',

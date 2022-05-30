@@ -28,7 +28,9 @@ export default function PageHeader({ active, className }: Props) {
     >
       <div className="flex flex-grow items-center text-white font-bold text-3xl pointer-events-auto">
         <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
-        <Link href="/">METACAT</Link>
+        <Link href="/" prefetch>
+          METACAT
+        </Link>
       </div>
       <div className="flex flex-grow justify-end">
         <div
@@ -37,7 +39,9 @@ export default function PageHeader({ active, className }: Props) {
             active === '/' ? style.active : null,
           )}
         >
-          <Link href="/">Home</Link>
+          <Link href="/" prefetch>
+            Home
+          </Link>
         </div>
         {/* <div
           className={cn(
@@ -54,7 +58,9 @@ export default function PageHeader({ active, className }: Props) {
           )}
           // onClick={jumpToData}
         >
-          <Link href={'/analytics'}>Analytics</Link>
+          <Link href={'/analytics'} prefetch>
+            Analytics
+          </Link>
         </div>
         <div
           className={cn(
@@ -62,7 +68,9 @@ export default function PageHeader({ active, className }: Props) {
             active === 'heatmap' ? style.active : null,
           )}
         >
-          <Link href={'/heatmap?type=cryptovoxels'}>Heatmap</Link>
+          <Link href={'/heatmap?type=cryptovoxels'} prefetch>
+            Heatmap
+          </Link>
         </div>
 
         <div
@@ -71,7 +79,9 @@ export default function PageHeader({ active, className }: Props) {
             active === 'builders' ? style.active : null,
           )}
         >
-          <Link href={'/builders'}>Builders</Link>
+          <Link href={'/builders'} prefetch>
+            Builders
+          </Link>
         </div>
 
         <div
@@ -81,6 +91,9 @@ export default function PageHeader({ active, className }: Props) {
           )}
         >
           <Link href={'/wearables?type=wearabledao'}>Wearables</Link>
+          <Link href={'/wearables?type=wearabledao'} prefetch>
+            Wearables
+          </Link>
         </div>
         <div
           className={cn(
@@ -88,8 +101,30 @@ export default function PageHeader({ active, className }: Props) {
             active === 'learn' ? style.active : null,
           )}
         >
-          <Link href={'/learn?type=articles'}>Learn</Link>
+          <Link href={'/learn?type=articles'} prefetch>
+            Learn
+          </Link>
         </div>
+        {/* <div
+          className={cn(
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            active === 'learn' ? style.active : null,
+          )}
+        >
+          <Link href={'/demo'} prefetch>
+            demo
+          </Link>
+        </div> */}
+        {/* <div
+          className={cn(
+            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            active === 'learn' ? style.active : null,
+          )}
+        >
+          <Link href={'/demo'} prefetch>
+            demo
+          </Link>
+        </div> */}
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
