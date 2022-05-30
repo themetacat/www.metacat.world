@@ -1,0 +1,63 @@
+.container {
+  width: 390px;
+  height: 338px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: #0e2425;
+  border: 0.5px solid rgba(24, 255, 241, 0.3);
+  box-shadow: inset 0 0 15px rgba(24, 255, 241, 0.3);
+  .topDetail {
+    width: 100%;
+    height: 267px;
+    padding-top: 30px;
+    background: #0b1d1e;
+    div {
+      img {
+        border-radius: 50%;
+      }
+    }
+    .name {
+      margin-top: 20px;
+      margin-bottom: 4px;
+      color: #fff;
+      font-weight: 500;
+      font-size: 24px;
+      text-align: center;
+    }
+    .area {
+      color: #999;
+      font-weight: 400;
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    .item {
+      display: flex;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      img {
+        width: 14px;
+        height: 14px;
+        margin-top: 3px;
+        margin-right: 3px;
+      }
+    }
+    .shuxian {
+      width: 1px;
+      height: 10px;
+      margin: 0 25px;
+      background: #6c6c6c;
+    }
+  }
+}
+
+.container:nth-child(3n) {
+  margin-right: 0;
+}

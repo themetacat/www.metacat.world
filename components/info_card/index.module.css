@@ -1,0 +1,60 @@
+.container {
+  width: 390px;
+  height: 338px;
+  background: #0e2425;
+  padding: 15px;
+  border: 0.5px solid rgba(24, 255, 241, 0.3);
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.container .topDetail {
+  width: 100%;
+  height: 267px;
+  padding-top: 30px;
+  background: #0b1d1e;
+}
+.container .topDetail div img {
+  border-radius: 50%;
+}
+.container .topDetail .name {
+  margin-top: 20px;
+  margin-bottom: 4px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+  color: #fff;
+}
+.container .topDetail .area {
+  font-weight: 400;
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+}
+.container .bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+}
+.container .bottom .item {
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+}
+.container .bottom .item img {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 3px;
+}
+.container .bottom .shuxian {
+  width: 1px;
+  height: 10px;
+  margin: 0 25px;
+  background: #6c6c6c;
+}
+.container:nth-child(3n) {
+  margin-right: 0;
+}

@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
-
+import TwoNavigation from '../two_navigation';
 import style from './index.module.css';
 
 type Props = {
@@ -13,7 +13,21 @@ type Props = {
   className?: string;
 };
 
+const build = [
+  {
+    label: 'Buliders',
+    type: 'buliders',
+    link: '/build/buliders',
+  },
+  {
+    label: 'Bulidings',
+    type: 'bulidings',
+    link: '/build/bulidings',
+  },
+];
+
 export default function PageHeader({ active, className }: Props) {
+  const [buildState, setBuildState] = React.useState(false);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -75,13 +89,15 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
+          onClick={() => {
+            setBuildState(!buildState);
+          }}
         >
-          <Link href={'/builders'} prefetch>
-            Builders
-          </Link>
+          Build
+          {buildState ? <TwoNavigation options={build}></TwoNavigation> : null}
         </div>
 
         <div

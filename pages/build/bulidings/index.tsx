@@ -2,20 +2,21 @@ import React from 'react';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
-import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
-import Status from '../../components/status';
-import Footer from '../../components/footer';
-import TopicDetailCard from '../../components/topic-detail-card';
-import PagiNation from '../../components/pagination';
+import Page from '../../../components/page';
+import PageHeader from '../../../components/page-header';
+import Status from '../../../components/status';
+import Footer from '../../../components/footer';
+import TopicDetailCard from '../../../components/topic-detail-card';
+import PagiNation from '../../../components/pagination';
+import Tab from '../../../components/tab';
 
-import AnimationBack from '../../components/animation-back';
+import AnimationBack from '../../../components/animation-back';
 
-import { convert } from '../../common/utils';
+import { convert } from '../../../common/utils';
 
-import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
+import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { getBuilderList } from '../../service';
+import { getBuilderList } from '../../../service';
 
 import style from './index.module.css';
 
@@ -29,12 +30,29 @@ export default function TopicIndex() {
 
   const { pathname } = router;
 
+  const TAB = [
+    {
+      label: 'Buliders',
+      type: 'buliders',
+    },
+    {
+      label: 'Bulidings',
+      type: 'bulidings',
+    },
+  ];
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
   const [pageCount, setPageCount] = React.useState(50);
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageNumber, setPageNumber] = React.useState(1);
+  const [tabState, setTabState] = React.useState('bulidings');
+
+  const cls = cn('flex-1', style.bottomLine);
+  const onTabChange = React.useCallback((t) => {
+    setTabState(t);
+    router.replace(`/build/${t}`);
+  }, []);
 
   const requestData = React.useCallback(async (page: number, count: number) => {
     setLoading(true);
@@ -89,6 +107,27 @@ export default function TopicIndex() {
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'builders'} />
+        <div className={cn('tab-list flex', style.allHeight)}>
+          <div className={cls}></div>
+          <div className="main-content flex px-0">
+            {TAB.map((item, index) => {
+              return (
+                <Tab
+                  active={tabState === item.type}
+                  key={item.label}
+                  icon={null}
+                  label={item.label}
+                  isMini={true}
+                  onClick={() => {
+                    onTabChange(item.type);
+                  }}
+                />
+              );
+            })}
+            <div className={cls} />
+          </div>
+          <div className={cls} />
+        </div>
         <div
           className={cn(
             'main-content flex justify-center items-end relative z-10 pointer-events-none',
@@ -99,6 +138,7 @@ export default function TopicIndex() {
         </div>
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
+
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
