@@ -43,11 +43,13 @@
   top: 0;
   margin: 0 auto;
   z-index: 9999999999999;
+  padding: 0 30px;
+  width: 96%;
   background-color: #111a1b;
 }
 
 .tmbg {
-  width: 100%;
+  width: 96%;
   height: 75px;
   background-color: #111a1b;
 }
