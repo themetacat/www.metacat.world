@@ -1,10 +1,17 @@
-.userAvatar{
+.userAvatar {
   width: 110px;
   height: 110px;
-  border-radius:50%
+  border-radius: 50%;
 }
-.divide{
+.divide {
   width: 1px;
   height: 10px;
   background-color: rgba(196, 196, 196, 1);
+}
+
+.country {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 17px;
+  color: #999;
 }

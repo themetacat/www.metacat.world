@@ -14,16 +14,21 @@
     background: #0b1d1e;
     div {
       img {
+        width: 140px;
+        height: 140px;
         border-radius: 50%;
       }
     }
     .name {
       margin-top: 20px;
       margin-bottom: 4px;
+      overflow: hidden;
       color: #fff;
       font-weight: 500;
       font-size: 24px;
+      white-space: nowrap;
       text-align: center;
+      text-overflow: ellipsis;
     }
     .area {
       color: #999;
@@ -56,6 +61,11 @@
       background: #6c6c6c;
     }
   }
+}
+.container:hover {
+  box-shadow: 0 6px 25px rgba(0, 236, 222, 0.35), inset 0 0 15px rgba(24, 255, 241, 0.3);
+  transform: translateY(-2px);
+  cursor: pointer;
 }
 
 .container:nth-child(3n) {

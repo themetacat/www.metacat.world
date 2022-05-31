@@ -145,7 +145,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              Router.push('/wearables?type=wearables');
+              Router.push('/wearables/wearabledao');
             }}
           >
             Wearables

@@ -1,24 +1,22 @@
 .container {
-  width: 93px;
-  background-color: #0f191b;
   position: absolute;
-  right: 0px;
+  right: 0;
   bottom: -90px;
+  background-color: #0f191b;
 }
 .container .item {
-  width: 93px;
-  height: 50px;
   box-sizing: border-box;
+  height: 50px;
   color: #ccc;
   font-size: 12px;
   line-height: 50px;
-  text-align: center;
-  cursor: pointer;
+  padding: 0 20px;
   border-bottom: 1px solid #0c3d45;
+  cursor: pointer;
 }
 .container .item:hover {
   color: #fff;
 }
 .container .item:last-child {
-  border: 0px;
+  border: 0;
 }

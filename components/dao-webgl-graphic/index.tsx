@@ -23,8 +23,8 @@ type Contact = {
 type Artwork = {
   name?: string;
   desc?: string;
-  voxUrl?: string;
-  openseaUrl?: string;
+  vox_url?: string;
+  opensea_url?: string;
 };
 
 type DaoCard = {
@@ -93,7 +93,7 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState }:
     scene.add(light);
     sceneRef.current = scene;
 
-    if (!model.artwork.voxUrl) {
+    if (!model.artwork.vox_url) {
       if (initFinish) {
         initFinish(scene);
       }
@@ -102,7 +102,7 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState }:
 
     // add one random mesh to each scene
     const loader = new VOXLoader();
-    loader.load(model.artwork.voxUrl, function (chunks) {
+    loader.load(model.artwork.vox_url, function (chunks) {
       for (let i = 0; i < chunks.length; i += 1) {
         const chunk = chunks[i];
         // displayPalette( chunk.palette );
@@ -153,12 +153,12 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState }:
     >
       <div className="relative">
         <div id={`webgl${graphicId}`} className={styles.graphic}></div>
-        {model.artwork?.openseaUrl ? (
+        {model.artwork?.opensea_url ? (
           <img
             src="/images/Nomal.png"
             className={cn('absolute z-20', styles.opese)}
             onClick={() => {
-              window.open(model.artwork.openseaUrl);
+              window.open(model.artwork.opensea_url);
             }}
           ></img>
         ) : null}

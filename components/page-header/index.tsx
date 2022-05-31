@@ -25,9 +25,22 @@ const build = [
     link: '/build/bulidings',
   },
 ];
+const wearable = [
+  {
+    label: 'Creators',
+    type: 'creators',
+    link: '/wearables',
+  },
+  {
+    label: 'WearableDao',
+    type: 'wearabledao',
+    link: '/wearables/wearabledao',
+  },
+];
 
 export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
+  const [wearableState, setWearableState] = React.useState(false);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -92,23 +105,36 @@ export default function PageHeader({ active, className }: Props) {
             'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
-          onClick={() => {
-            setBuildState(!buildState);
+          // onClick={() => {
+          //   setBuildState(!buildState);
+          // }}
+          onMouseEnter={() => {
+            setBuildState(true);
+          }}
+          onMouseLeave={() => {
+            setBuildState(false);
           }}
         >
           Build
-          {buildState ? <TwoNavigation options={build}></TwoNavigation> : null}
+          {buildState ? <TwoNavigation options={build} className={style.cn}></TwoNavigation> : null}
         </div>
 
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'wearables' ? style.active : null,
           )}
+          onMouseEnter={() => {
+            setWearableState(true);
+          }}
+          onMouseLeave={() => {
+            setWearableState(false);
+          }}
         >
-          <Link href={'/wearables?type=wearabledao'} prefetch>
-            Wearables
-          </Link>
+          Wearables
+          {wearableState ? (
+            <TwoNavigation options={wearable} className={style.cn2}></TwoNavigation>
+          ) : null}
         </div>
         <div
           className={cn(

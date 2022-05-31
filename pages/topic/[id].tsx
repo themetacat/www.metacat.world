@@ -12,6 +12,8 @@ import Status from '../../components/status';
 import Footer from '../../components/footer';
 import BaseBar from '../../components/topic-base-bar';
 import BaseChart from '../../components/base-chart';
+import UserAvatar from '../../components/user-avatar';
+import MeteInput from '../../components/meta-input-search';
 
 import { state } from '../../components/wallet-btn';
 
@@ -20,30 +22,42 @@ import AnimationBack from '../../components/animation-back';
 import { convert, getToken, setToken } from '../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
-
+import DaoModelList from '../../components/dao-model-list';
 import { useWalletProvider } from '../../components/web3modal';
 
 import { getTopicDetail, refreshToken, getBaseInfo } from '../../service';
-import api from '../../lib/api';
+import api from '../../lib/test';
 
 import style from './index.module.css';
 
-export default function Topic({ base_info, parcel_list, traffic_list }) {
+const nav = [
+  {
+    label: 'Buildings',
+    type: 'buildings',
+  },
+  {
+    label: 'Wearable',
+    type: 'wearable',
+  },
+];
+
+export default function Topic({ base_info, parcel_list, traffic_list, wearable }) {
   const meta = {
     title: `${base_info.name} - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
   const router = useRouter();
-
+  const [navState, setNavState] = React.useState('buildings');
   const { pathname } = router;
   const { id } = router.query;
-
+  const [searchText, setSearchText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [baseInfo, setBaseInfo] = React.useState(convert(base_info));
   const [parcelList, setParcelList] = React.useState(convert(parcel_list));
   const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
+  const [wearables, setWearables] = React.useState(wearable);
 
   const web3 = useWalletProvider();
 
@@ -150,6 +164,10 @@ export default function Topic({ base_info, parcel_list, traffic_list }) {
     [resultHandler],
   );
 
+  const changeNav = React.useCallback((t) => {
+    setNavState(t);
+  }, []);
+
   React.useEffect(() => {
     const accessToken = getToken('atk');
     if (accessToken) {
@@ -157,76 +175,198 @@ export default function Topic({ base_info, parcel_list, traffic_list }) {
     }
   }, [requestPersonal]);
 
+  const onSearchHandler = React.useCallback(
+    (text: string) => {
+      setSearchText(text);
+    },
+    [null],
+  );
+
+  const search = React.useCallback(() => {
+    if (navState === 'buildings') {
+      if (parcelList) {
+        if (searchText === '' || searchText === null) {
+          setParcelList(parcelList);
+          return;
+        }
+        const dataToShow = parcelList.filter((x) => {
+          return (
+            x.description.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+            x.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+          );
+        });
+        setParcelList(dataToShow);
+      }
+    }
+    if (navState === 'wearable') {
+      if (parcelList) {
+        if (searchText === '' || searchText === null) {
+          setParcelList(parcelList);
+          return;
+        }
+        const dataToShow = parcelList.filter((x) => {
+          return (
+            x.description.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+            x.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+          );
+        });
+        setParcelList(dataToShow);
+      }
+    }
+  }, [searchText, parcelList, navState]);
+
+  const rander = React.useMemo(() => {
+    if (navState === 'buildings') {
+      return (
+        <div className={cn('main-content')}>
+          <div className={style.teaffic}>
+            {trafficList.length !== 0 ? (
+              <div>
+                <div className={cn(style.title, style.tb)}>
+                  <div></div>
+                  <p>Traffic</p>
+                </div>
+                <BaseChart>
+                  <BaseBar
+                    id={'topic'}
+                    labelText={'DAILY TRAFFIC'}
+                    barWidth={20}
+                    limit={14}
+                    teaffic={trafficList.reverse()}
+                  ></BaseBar>
+                </BaseChart>
+              </div>
+            ) : null}
+          </div>
+
+          <div className={style.parcel}>
+            {parcelList.length > 0 ? (
+              <div>
+                {trafficList.length !== 0 ? (
+                  <div className={style.title}>
+                    <div></div>
+                    <p>Buildings</p>
+                  </div>
+                ) : null}
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
+                  {parcelList.map((card, idx) => {
+                    return <Card {...card} key={idx} hasTypeTag={false}></Card>;
+                  })}
+                </div>
+              </div>
+            ) : null}
+          </div>
+          {renderStatus}
+        </div>
+      );
+    }
+    if (navState === 'wearable') {
+      return (
+        <div className={style.wearable}>
+          <DaoModelList models={wearable}></DaoModelList>
+        </div>
+      );
+    }
+  }, [navState, wearable, parcelList, trafficList, search]);
+
   return (
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'builders'} />
         <div
-          className={cn(
-            'main-content flex justify-center items-end relative z-10 pointer-events-none',
-            style.signBack,
-          )}
+          className={cn('main-content flex justify-center flex-col  relative z-10', style.signBack)}
         >
-          <img src="/images/back.png" className={style.sign}></img>
+          <UserAvatar
+            avatar={base_info.logo_url}
+            name={base_info.name}
+            country={base_info.discord}
+            contact={[
+              {
+                icon: '/images/home.svg',
+                label: 'Home',
+                address: `${base_info.website}`,
+              },
+              {
+                icon: '/images/twitter.svg',
+                label: 'Twitter',
+                address: `${base_info.twitter}`,
+              },
+              {
+                icon: '/images/discord.svg',
+                label: 'Discord',
+                address: `${base_info.discord}`,
+              },
+            ]}
+          ></UserAvatar>
+          <div className={cn(' text-center mt-4 mb-7', style.desc)}>{base_info.description}</div>
         </div>
-        <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
-      <div className={cn('main-content')}>
-        <BaseInfo {...baseInfo} />
-
-        <div className={style.teaffic}>
-          {trafficList.length !== 0 ? (
-            <div>
-              <div className={cn(style.title, style.tb)}>
-                <div></div>
-                <p>Traffic</p>
-              </div>
-              <BaseChart>
-                <BaseBar
-                  id={'topic'}
-                  labelText={'DAILY TRAFFIC'}
-                  barWidth={20}
-                  limit={14}
-                  teaffic={trafficList.reverse()}
-                ></BaseBar>
-              </BaseChart>
+      {parcel_list && wearable ? (
+        <div className={style.nav}>
+          <div className={style.navCOntainer}>
+            <div className={style.nav}>
+              {nav.map((item, idx) => {
+                return (
+                  <div
+                    className={cn(style.item, navState === item.type ? style.action : null)}
+                    key={idx}
+                    onClick={() => {
+                      changeNav(item.type);
+                    }}
+                  >
+                    {item.label}
+                  </div>
+                );
+              })}
             </div>
-          ) : null}
+          </div>
         </div>
-
-        <div className={style.parcel}>
-          {parcelList.length > 0 ? (
-            <div>
-              {trafficList.length !== 0 ? (
-                <div className={style.title}>
-                  <div></div>
-                  <p>Buildings</p>
-                </div>
-              ) : null}
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
-                {parcelList.map((card, idx) => {
-                  return <Card {...card} key={idx} hasTypeTag={false}></Card>;
-                })}
-              </div>
-            </div>
-          ) : null}
+      ) : null}
+      <div className={cn('flex justify-center items-center mb-5', style.t)}>
+        <MeteInput
+          require={false}
+          name={'username'}
+          bold={true}
+          value={searchText}
+          requirePrefix={false}
+          onChangeHandler={(val) => {
+            onSearchHandler(val);
+          }}
+          onEnter={search}
+          placeholder="Search"
+          prefix="/images/Frame.png"
+        ></MeteInput>
+        <div
+          className={cn(
+            'flex justify-center items-center font-medium text-lg cursor-pointer',
+            style.searchbtn,
+          )}
+          onClick={search}
+        >
+          Search
         </div>
-        {renderStatus}
       </div>
+      {rander}
       <Footer />
     </Page>
   );
 }
 
 export async function getServerSideProps(context) {
-  const topic = Number(context.params.id);
-  const res = await api.getTopicDetail(topic);
-  const { base_info, parcel_list, traffic_list } = res.data;
+  let res = null;
+  if (Number(context.params.id)) {
+    const topic = Number(context.params.id);
+    res = await api.req_topic_detail(topic, undefined);
+  } else {
+    res = await api.req_topic_detail(undefined, context.params.id);
+  }
+  const { base_info, parcel_list, traffic_list, wearable } = res.data;
   return {
     props: {
       base_info,
       parcel_list,
       traffic_list,
+      wearable,
     }, // will be passed to the page component as props
   };
 }
