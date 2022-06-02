@@ -7,6 +7,7 @@ import PageHeader from '../../components/page-header';
 import Tab from '../../components/tab';
 import InfoCard from '../../components/info_card';
 import Footer from '../../components/footer';
+import Status from '../../components/status';
 
 import { req_wearable_creators } from '../../service/z_api';
 
@@ -31,12 +32,15 @@ export default function Wearables() {
   const router = useRouter();
   const [tabState, setTabState] = React.useState('creators');
   const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   const requestData = React.useCallback(async () => {
+    setLoading(true);
     const result = await req_wearable_creators();
     if (result.code === 100000) {
       setData(result.data);
     }
+    setLoading(false);
   }, []);
 
   const onTabChange = React.useCallback((t) => {
@@ -55,6 +59,19 @@ export default function Wearables() {
   const toTopic = React.useCallback((id, c) => {
     window.open(`/topic/${c}`);
   }, []);
+
+  const reander = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    return (
+      <>
+        {data.map((item, idx) => {
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
+        })}
+      </>
+    );
+  }, [data, toTopic, loading]);
 
   const cls = cn('flex-1', style.bottomLine);
   return (
@@ -89,11 +106,7 @@ export default function Wearables() {
         <img src="/images/wearableBanner.png" />
       </div>
 
-      <div className={style.cardList}>
-        {data.map((item, idx) => {
-          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
-        })}
-      </div>
+      <div className={style.cardList}>{reander}</div>
       <Footer></Footer>
     </Page>
   );

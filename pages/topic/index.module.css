@@ -70,7 +70,7 @@
 .wearable {
   width: 1200px;
   margin: 0 auto;
-  padding: 100px 0 30px 0;
+  padding: 20px 0 30px 0;
 }
 
 .searchbtn {
@@ -80,6 +80,6 @@
   background: rgba(27, 241, 255, 1);
   color: rgba(17, 26, 27, 1);
 }
-.t{
+.t {
   margin-top: 40px;
 }

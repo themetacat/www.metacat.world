@@ -61,9 +61,7 @@ interface Props {
 export default function DaoWebglCard({ graphicId, initFinish, model, tabState }: Props) {
   const sceneRef = React.useRef(null);
   const goToDetail = React.useCallback(() => {
-    window.open(
-      `${process.env.NEXT_PUBLIC_HOST_ADDRESS}wearables/detail/${model.id}?type=${tabState}`,
-    );
+    window.open(`/wearables/detail/${model.id}`);
     // Router.push(`/wearables/detail/${model.id}`);
   }, [model]);
 

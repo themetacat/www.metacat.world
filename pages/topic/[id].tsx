@@ -47,6 +47,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     description: META_DESCRIPTION,
   };
 
+  console.log(base_info);
   const router = useRouter();
   const [navState, setNavState] = React.useState(parcel_list ? 'buildings' : 'wearable');
   const { pathname } = router;
@@ -279,6 +280,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           <UserAvatar
             avatar={base_info.logo_url}
             name={base_info.name}
+            country={base_info.country}
             contact={[
               {
                 icon: '/images/home.svg',

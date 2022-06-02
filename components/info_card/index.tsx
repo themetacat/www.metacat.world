@@ -37,7 +37,7 @@ export default function InfoCard({
           <img src={logo_url} />
         </div>
         <div className={style.name}>{name}</div>
-        {country ? <div className={style.area}>Country:{country}</div> : null}
+        {country ? <div className={style.area}>Country : {country}</div> : null}
       </div>
       <div className={style.bottom}>
         {website ? (
