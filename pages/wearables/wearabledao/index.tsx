@@ -158,6 +158,10 @@ export default function Wearables(props) {
 
   React.useEffect(() => {
     requestData();
+    // if (router.query.type) {
+    //   const t = router.query.type
+    //   setNavState(t.toString())
+    // }
   }, [requestData]);
 
   const cls = cn('flex-1', style.bottomLine);

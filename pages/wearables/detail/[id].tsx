@@ -1,7 +1,7 @@
 import React from 'react';
 
 import cn from 'classnames';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import {
   Scene,
@@ -27,6 +27,7 @@ import { convert } from '../../../common/utils';
 import style from './index.module.css';
 
 export default function WearablesDetail({ artwork, artist, id }) {
+  const router = useRouter();
   const meta = {
     title: `WearablesDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -145,10 +146,10 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              Router.push('/wearables/wearabledao');
+              Router.push(`/wearables`);
             }}
           >
-            Wearables
+            wearables
           </span>
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
           <span className=" text-white">{artworkData.name}</span>

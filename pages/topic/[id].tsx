@@ -48,7 +48,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   };
 
   const router = useRouter();
-  const [navState, setNavState] = React.useState('buildings');
+  const [navState, setNavState] = React.useState(parcel_list ? 'buildings' : 'wearable');
   const { pathname } = router;
   const { id } = router.query;
   const [searchText, setSearchText] = React.useState('');
@@ -279,7 +279,6 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           <UserAvatar
             avatar={base_info.logo_url}
             name={base_info.name}
-            country={base_info.discord}
             contact={[
               {
                 icon: '/images/home.svg',

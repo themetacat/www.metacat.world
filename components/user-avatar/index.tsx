@@ -15,10 +15,9 @@ interface Props {
   avatar?: string;
   name?: string;
   contact?;
-  country?: string;
 }
 
-export default function UserAvatar({ avatar, name, contact, country }: Props) {
+export default function UserAvatar({ avatar, name, contact }: Props) {
   const [C, setC] = React.useState([]);
 
   React.useEffect(() => {
@@ -29,7 +28,6 @@ export default function UserAvatar({ avatar, name, contact, country }: Props) {
     <div className="flex flex-col justify-center items-center">
       <img className={cn('mt-1', style.userAvatar)} src={avatar}></img>
       <div className=" mt-1 text-white text-xl">{name}</div>
-      {country ? <div className={style.country}>Country:{country}</div> : null}
       <div className={cn('mt-1 flex justify-start items-center', style.links)}>
         {C.map((ele, idx) => {
           if (idx !== 0) {

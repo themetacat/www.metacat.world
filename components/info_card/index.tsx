@@ -29,7 +29,7 @@ export default function InfoCard({
     <div
       className={cn(style.container, cls)}
       onClick={() => {
-        onClick(topic_id, country);
+        onClick(topic_id, name);
       }}
     >
       <div className={style.topDetail}>
@@ -40,35 +40,41 @@ export default function InfoCard({
         {country ? <div className={style.area}>Country:{country}</div> : null}
       </div>
       <div className={style.bottom}>
-        <div
-          className={style.item}
-          onClick={() => {
-            window.open(website);
-          }}
-        >
-          <img src="/images/icon/home.png" />
-          Home
-        </div>
-        <div className={style.shuxian}></div>
-        <div
-          className={style.item}
-          onClick={() => {
-            window.open(twitter);
-          }}
-        >
-          <img src="/images/icon/twitter.png" />
-          Twitter
-        </div>
-        <div className={style.shuxian}></div>
-        <div
-          className={style.item}
-          onClick={() => {
-            window.open(discord);
-          }}
-        >
-          <img src="/images/icon/discord.png" />
-          Discord
-        </div>
+        {website ? (
+          <div
+            className={style.item}
+            onClick={() => {
+              window.open(website);
+            }}
+          >
+            <img src="/images/icon/home.png" />
+            Home
+          </div>
+        ) : null}
+        {/* <div className={style.shuxian}></div> */}
+        {twitter ? (
+          <div
+            className={style.item}
+            onClick={() => {
+              window.open(twitter);
+            }}
+          >
+            <img src="/images/icon/twitter.png" />
+            Twitter
+          </div>
+        ) : null}
+        {/* <div className={style.shuxian}></div> */}
+        {discord ? (
+          <div
+            className={style.item}
+            onClick={() => {
+              window.open(discord);
+            }}
+          >
+            <img src="/images/icon/discord.png" />
+            Discord
+          </div>
+        ) : null}
       </div>
     </div>
   );
