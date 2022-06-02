@@ -5,4 +5,5 @@ export default function Builders() {
   React.useEffect(() => {
     Router.push('/build/builders');
   }, []);
+  return <div></div>;
 }
