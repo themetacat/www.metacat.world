@@ -76,6 +76,7 @@ export default function BaseInfo({ logoUrl, name, description, discord, twitter,
             Twitter
           </div>
         ) : null}
+        {discord && website && !twitter ? <div className="mx-5">|</div> : null}
         {twitter && discord ? <div className="mx-5">|</div> : null}
         {discord ? (
           <div
