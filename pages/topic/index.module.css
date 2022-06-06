@@ -80,6 +80,9 @@
   background: rgba(27, 241, 255, 1);
   color: rgba(17, 26, 27, 1);
 }
+.searchbtn:hover {
+  opacity: 0.8;
+}
 .t {
   margin-top: 40px;
 }
