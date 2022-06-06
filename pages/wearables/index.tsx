@@ -33,6 +33,7 @@ export default function Wearables() {
   const [tabState, setTabState] = React.useState('creators');
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [fixedState, setFixedState] = React.useState(false);
 
   const requestData = React.useCallback(async () => {
     setLoading(true);
@@ -73,13 +74,25 @@ export default function Wearables() {
     );
   }, [data, toTopic, loading]);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (document.getElementById('switch') && window.scrollY > 90) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
+
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className="min-h-screen" meta={meta}>
-      <div className={'bg-black relative'}>
+      <div className={cn('bg-black relative', fixedState ? style.fix1 : null)}>
         <PageHeader className="relative z-10" active={'wearables'} />
       </div>
-      <div className={'bg-black relative'}>
+      <div className={cn('bg-black relative', fixedState ? style.fix2 : null)} id="switch">
         <div className={cn('tab-list flex', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
@@ -103,7 +116,12 @@ export default function Wearables() {
         </div>
       </div>
       <div className={style.imgContanier}>
-        <img src="/images/wearableBanner.png" />
+        <div className={style.title}>Wearable Creators</div>
+        <div className={style.text}>
+          <div className={style.hengxian}></div>
+          <div className={style.t}>IN METAVERSE WE BUILD</div>
+          <div className={style.hengxian}></div>
+        </div>
       </div>
 
       <div className={style.cardList}>{reander}</div>

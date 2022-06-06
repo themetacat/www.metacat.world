@@ -32,12 +32,12 @@ export default function TopicIndex() {
 
   const TAB = [
     {
-      label: 'Buliders',
-      type: 'buliders',
+      label: 'Builders',
+      type: 'builders',
     },
     {
-      label: 'Bulidings',
-      type: 'bulidings',
+      label: 'Buildings',
+      type: 'buildings',
     },
   ];
   const [loading, setLoading] = React.useState(false);
@@ -46,7 +46,8 @@ export default function TopicIndex() {
   const [pageCount, setPageCount] = React.useState(50);
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [tabState, setTabState] = React.useState('bulidings');
+  const [tabState, setTabState] = React.useState('buildings');
+  const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
   const onTabChange = React.useCallback((t) => {
@@ -103,11 +104,28 @@ export default function TopicIndex() {
     }
   }, [loading, error, builders]);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (document.getElementById('switch') && window.scrollY > 90) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
+
   return (
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'builders'} />
-        <div className={cn('tab-list flex', style.allHeight)}>
+        <div className={fixedState ? style.fix1 : null}>
+          <PageHeader className={cn('relative z-20')} active={'builders'} />
+        </div>
+        <div
+          className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
+          id="switch"
+        >
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item, index) => {
@@ -129,14 +147,10 @@ export default function TopicIndex() {
           <div className={cls} />
         </div>
         <div
-          className={cn(
-            'main-content flex justify-center items-end relative z-10 pointer-events-none',
-            style.signBack,
-          )}
+          className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
           <img src="/images/buildingsBanner.png" className={style.sign}></img>
         </div>
-        <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
 
       <div className={cn('main-content', style.content)}>

@@ -10,10 +10,33 @@
 
 .imgContanier {
   width: 100%;
+  height: 216px;
+  overflow: hidden;
   background-color: #000;
-  img {
-    display: block;
+  .title {
+    margin-top: 50px;
+    color: #ddd;
+    font-weight: 900;
+    font-size: 60px;
+    text-align: center;
+  }
+  .text {
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
+    margin-top: 20px;
+    .t {
+      margin: 0 50px;
+      color: #999;
+      font-weight: 400;
+      font-size: 14px;
+    }
+    .hengxian {
+      width: 300px;
+      height: 1px;
+      margin-top: 10px;
+      background-color: #999;
+    }
   }
 }
 
@@ -30,4 +53,24 @@
 }
 .cls:nth-child(3n) {
   margin-right: 0;
+}
+
+.fix1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  width: 100%;
+  margin: 0 auto;
+  background: #000;
+  opacity: 1;
+}
+.fix2 {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+  margin: 0 auto;
+  background: #000;
 }

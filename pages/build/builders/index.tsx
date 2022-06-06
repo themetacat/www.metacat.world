@@ -16,12 +16,12 @@ import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
 const TAB = [
   {
-    label: 'Buliders',
-    type: 'buliders',
+    label: 'Builders',
+    type: 'builders',
   },
   {
-    label: 'Bulidings',
-    type: 'bulidings',
+    label: 'Buildings',
+    type: 'buildings',
   },
 ];
 
@@ -36,11 +36,12 @@ const anchorNav = [
 
 export default function Builders() {
   const router = useRouter();
-  const [tabState, setTabState] = React.useState('buliders');
+  const [tabState, setTabState] = React.useState('builders');
   const [navState, setNavState] = React.useState('Institutions');
   const [institutions, setInstitutions] = React.useState([]);
   const [individuals, setIndividuals] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [fixedState, setFixedState] = React.useState(false);
   const meta = {
     title: `Build - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -94,14 +95,26 @@ export default function Builders() {
     );
   }, [loading, individuals, toTopic]);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (document.getElementById('switch') && window.scrollY > 90) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
+
   const cls = cn('flex-1', style.bottomLine);
   return (
     <>
       <Page className="min-h-screen" meta={meta}>
-        <div className={'bg-black relative'}>
-          <PageHeader className="relative z-10" active={'builders'} />
+        <div className={cn('bg-black z-10', fixedState ? style.fix1 : null)}>
+          <PageHeader className="relative z-20" active={'builders'} />
         </div>
-        <div className={'bg-black'}>
+        <div className={cn('bg-black', fixedState ? style.fix2 : null)} id="switch">
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
             <div className="main-content flex px-0">
@@ -127,7 +140,7 @@ export default function Builders() {
         <div className={style.bannerContainer}>
           <img src="/images/buildersBanner.png" />
         </div>
-        <div className={style.nav}>
+        <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
           <div className={style.navcontainer}>
             {anchorNav.map((i, idx) => {
               return (

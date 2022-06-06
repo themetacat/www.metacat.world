@@ -36,8 +36,8 @@ const nav = [
     type: 'buildings',
   },
   {
-    label: 'Wearable',
-    type: 'wearable',
+    label: 'Wearables',
+    type: 'wearables',
   },
 ];
 
@@ -47,9 +47,8 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     description: META_DESCRIPTION,
   };
 
-  console.log(base_info);
   const router = useRouter();
-  const [navState, setNavState] = React.useState(parcel_list ? 'buildings' : 'wearable');
+  const [navState, setNavState] = React.useState(parcel_list ? 'buildings' : 'wearables');
   const { pathname } = router;
   const { id } = router.query;
   const [searchText, setSearchText] = React.useState('');
@@ -57,10 +56,15 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   const [error, setError] = React.useState(false);
   const [baseInfo, setBaseInfo] = React.useState(convert(base_info));
   const [parcelList, setParcelList] = React.useState(convert(parcel_list));
+  const [originParcelList, setOriginParcelList] = React.useState(convert(parcel_list));
   const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
   const [wearables, setWearables] = React.useState(wearable);
+  const [originWearables, setOriginWearables] = React.useState(wearable);
+  const [fixedState, setFixedState] = React.useState(false);
 
   const web3 = useWalletProvider();
+
+  const f1 = parcelList && wearables ? style.fix3 : style.fix2;
 
   const requestData = React.useCallback(
     async (topicId: string | string[]) => {
@@ -187,7 +191,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     if (navState === 'buildings') {
       if (parcelList) {
         if (searchText === '' || searchText === null) {
-          setParcelList(parcelList);
+          setParcelList(originParcelList);
           return;
         }
         const dataToShow = parcelList.filter((x) => {
@@ -199,22 +203,22 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         setParcelList(dataToShow);
       }
     }
-    if (navState === 'wearable') {
-      if (parcelList) {
+    if (navState === 'wearables') {
+      if (wearable) {
         if (searchText === '' || searchText === null) {
-          setParcelList(parcelList);
+          setWearables(originWearables);
           return;
         }
-        const dataToShow = parcelList.filter((x) => {
+        const dataToShow = wearables.filter((x) => {
           return (
-            x.description.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
-            x.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+            x.artist.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+            x.artwork.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
           );
         });
-        setParcelList(dataToShow);
+        setWearables(dataToShow);
       }
     }
-  }, [searchText, parcelList, navState]);
+  }, [searchText, parcelList, navState, originWearables]);
 
   const rander = React.useMemo(() => {
     if (navState === 'buildings') {
@@ -261,19 +265,33 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         </div>
       );
     }
-    if (navState === 'wearable') {
+    if (navState === 'wearables') {
       return (
         <div className={style.wearable}>
-          <DaoModelList models={wearable}></DaoModelList>
+          <DaoModelList models={wearables}></DaoModelList>
         </div>
       );
     }
-  }, [navState, wearable, parcelList, trafficList, search]);
+  }, [navState, wearables, parcelList, trafficList, search]);
+
+  React.useEffect(() => {
+    const listener = () => {
+      if (document.getElementById('switch') && window.scrollY > 180) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
 
   return (
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'builders'} />
+        <div className={fixedState ? style.fix1 : null}>
+          <PageHeader className="relative z-10" active={'Build'} />
+        </div>
         <div
           className={cn('main-content flex justify-center flex-col  relative z-10', style.signBack)}
         >
@@ -303,7 +321,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         </div>
       </div>
       {parcel_list && wearable ? (
-        <div className={style.nav}>
+        <div className={cn(style.nav, fixedState ? style.fix2 : null)}>
           <div className={style.navCOntainer}>
             <div className={style.nav}>
               {nav.map((item, idx) => {
@@ -323,7 +341,10 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           </div>
         </div>
       ) : null}
-      <div className={cn('flex justify-center items-center mb-5', style.t)}>
+      <div
+        id="switch"
+        className={cn('flex justify-center items-center', style.search, fixedState ? f1 : null)}
+      >
         <MeteInput
           require={false}
           name={'username'}

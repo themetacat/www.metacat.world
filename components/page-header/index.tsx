@@ -15,14 +15,14 @@ type Props = {
 
 const build = [
   {
-    label: 'Buliders',
-    type: 'buliders',
-    link: '/build/buliders',
+    label: 'Builders',
+    type: 'builders',
+    link: '/build/builders',
   },
   {
-    label: 'Bulidings',
-    type: 'bulidings',
-    link: '/build/bulidings',
+    label: 'Buildings',
+    type: 'buildings',
+    link: '/build/buildings',
   },
 ];
 const wearable = [
@@ -104,6 +104,7 @@ export default function PageHeader({ active, className }: Props) {
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
+            style.z,
           )}
           // onClick={() => {
           //   setBuildState(!buildState);
@@ -123,6 +124,7 @@ export default function PageHeader({ active, className }: Props) {
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'wearables' ? style.active : null,
+            style.z,
           )}
           onMouseEnter={() => {
             setWearableState(true);

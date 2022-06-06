@@ -59,6 +59,8 @@ export default function Wearables(props) {
   const [error, setError] = React.useState(false);
   const [navState, setNavState] = React.useState('chinesered');
 
+  const [fixedState, setFixedState] = React.useState(false);
+
   const router = useRouter();
 
   const requestData = React.useCallback(async () => {
@@ -166,11 +168,28 @@ export default function Wearables(props) {
 
   const cls = cn('flex-1', style.bottomLine);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (document.getElementById('switch') && window.scrollY > 90) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
+
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'wearables'} />
-        <div className={cn('tab-list flex mt-5', style.allHeight)}>
+        <div className={fixedState ? style.fix1 : null}>
+          <PageHeader className="relative z-10" active={'wearables'} />
+        </div>
+        <div
+          className={cn('tab-list flex mt-5', style.allHeight, fixedState ? style.fix2 : null)}
+          id="switch"
+        >
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item, index) => {
@@ -286,7 +305,7 @@ export default function Wearables(props) {
           </div>
         </div>
       </div>
-      <div className={style.navCOntainer}>
+      <div className={cn(style.navCOntainer, fixedState ? style.fix3 : null)}>
         <div className={style.nav}>
           {nav.map((item, idx) => {
             return (
@@ -304,7 +323,13 @@ export default function Wearables(props) {
         </div>
       </div>
       <div className={cn('main-content flex flex-col justify-start items-center', style.content)}>
-        <div className="flex justify-center items-center mb-5">
+        <div
+          className={cn(
+            'flex justify-center items-center',
+            style.search,
+            fixedState ? style.fix4 : null,
+          )}
+        >
           <MeteInput
             require={false}
             name={'username'}

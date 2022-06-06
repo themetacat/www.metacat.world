@@ -8,17 +8,40 @@
 }
 .imgContanier {
   width: 100%;
+  height: 216px;
   background-color: #000;
+  overflow: hidden;
 }
-.imgContanier img {
-  display: block;
+.imgContanier .title {
+  font-weight: 900;
+  font-size: 60px;
+  color: #ddd;
+  text-align: center;
+  margin-top: 50px;
+}
+.imgContanier .text {
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.imgContanier .text .t {
+  font-weight: 400;
+  font-size: 14px;
+  color: #999;
+  margin: 0 50px;
+}
+.imgContanier .text .hengxian {
+  width: 300px;
+  height: 1px;
+  background-color: #999;
+  margin-top: 10px;
 }
 .cardList {
-  width: 1200px;
-  margin: 50px auto 30px;
   display: flex;
   flex-wrap: wrap;
+  width: 1200px;
+  margin: 50px auto 30px;
 }
 .cls {
   margin-right: 15px;
@@ -26,4 +49,23 @@
 }
 .cls:nth-child(3n) {
   margin-right: 0;
+}
+.fix1 {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 0 auto;
+  width: 100%;
+  background: #000;
+  z-index: 11;
+  opacity: 1;
+}
+.fix2 {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 100%;
+  background: #000;
+  margin: 0 auto;
+  z-index: 9;
 }
