@@ -1,6 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-
+import cn from 'classnames';
 import style from './index.module.css';
 
 const ReactTooltip = dynamic(() => import('react-tooltip'), {
@@ -54,6 +54,23 @@ export default function Footer() {
           >
             <img src="/images/wx.png" />
           </div>
+          <a
+            href=" https://mirror.xyz/0xE069160b21d23fB8Edad4F8B42f6b91f7b77F22A"
+            data-tip="Mirror"
+            className="w-10 h-10  rounded-full mr-14 justify-center items-center flex bg-transparent"
+          >
+            <img src="/images/mirror.png" />
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UCeZkqQ-CsIxjKeQJx3zOSGA"
+            data-tip="YouTube"
+            className={cn(
+              'w-15 h-15  rounded-full mr-14 justify-center items-center flex bg-transparent',
+              style.mt,
+            )}
+          >
+            <img src="/images/YouTube.png" />
+          </a>
           <a
             href="mailto:metacat@tutanota.com"
             data-tip="metacat@tutanota.com"
