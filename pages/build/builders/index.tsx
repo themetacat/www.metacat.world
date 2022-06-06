@@ -112,7 +112,7 @@ export default function Builders() {
     <>
       <Page className="min-h-screen" meta={meta}>
         <div className={cn('bg-black z-10', fixedState ? style.fix1 : null)}>
-          <PageHeader className="relative z-20" active={'builders'} />
+          <PageHeader className="relative z-20" active={'Build'} />
         </div>
         <div className={cn('bg-black', fixedState ? style.fix2 : null)} id="switch">
           <div className={cn('tab-list flex ', style.allHeight)}>
