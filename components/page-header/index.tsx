@@ -103,7 +103,7 @@ export default function PageHeader({ active, className }: Props) {
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
-            active === 'builders' ? style.active : null,
+            active === 'Build' ? style.active : null,
             style.z,
           )}
           // onClick={() => {

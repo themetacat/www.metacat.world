@@ -120,7 +120,7 @@ export default function TopicIndex() {
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
         <div className={fixedState ? style.fix1 : null}>
-          <PageHeader className={cn('relative z-20')} active={'builders'} />
+          <PageHeader className={cn('relative z-20')} active={'Build'} />
         </div>
         <div
           className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
