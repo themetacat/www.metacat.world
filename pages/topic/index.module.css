@@ -1,5 +1,5 @@
 .signBack {
-  height: 230px;
+  height: 332px;
 }
 .sign {
   width: 1087px;
@@ -33,8 +33,86 @@
   margin: 28px 0;
 }
 
-
-.teaffic{
+.teaffic {
   margin-bottom: 50px;
 }
 
+.desc {
+  color: rgba(170, 170, 170, 1);
+}
+
+.nav {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  background-color: #0e2b30;
+}
+.navCOntainer {
+  width: 1200px;
+  margin: 0 auto;
+  background: #0e2b30;
+}
+.item {
+  margin-right: 70px;
+  line-height: 60px;
+  box-sizing: border-box;
+  color: #999;
+  cursor: pointer;
+}
+.item :hover {
+  color: #fff;
+}
+.action {
+  border-bottom: 4px solid #00abc2;
+  color: #fff;
+}
+
+.wearable {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0 30px 0;
+}
+
+.searchbtn {
+  width: 110px;
+  height: 44px;
+  color: rgba(153, 153, 153, 1);
+  background: rgba(27, 241, 255, 1);
+  color: rgba(17, 26, 27, 1);
+}
+.searchbtn:hover {
+  opacity: 0.8;
+}
+.t {
+  margin-top: 40px;
+}
+.fix1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  margin: 0 auto;
+  z-index: 21;
+}
+.fix2 {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 20;
+}
+.fix3 {
+  position: fixed;
+  top: 136px;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 20;
+}
+
+.search {
+  padding: 40px 0 0 0;
+  background: #111a1b;
+}

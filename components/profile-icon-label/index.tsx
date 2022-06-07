@@ -50,7 +50,6 @@ export default function ProfileIconLabel({
     },
     [null],
   );
-
   const renderSuffix = React.useMemo(() => {
     if (!prefix && hasIcon) {
       return suffixCopy ? (
@@ -70,7 +69,7 @@ export default function ProfileIconLabel({
         <img className="mr-2 cursor-pointer" src={icon} onClick={iconClick}></img>
       ) : null}
       {isLink ? (
-        <a href={link} target="_blank" title={link}>
+        <a href={link} target="_blank" title={link} className={style.a}>
           {label || clipName(address)}
         </a>
       ) : (

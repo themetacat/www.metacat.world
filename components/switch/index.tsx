@@ -59,6 +59,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
         modules={[Navigation]}
         spaceBetween={1}
         slidesPerView="auto"
+        loop={true}
         className={cn('w-full', style.swiper)}
         navigation={{
           prevEl: '.per',

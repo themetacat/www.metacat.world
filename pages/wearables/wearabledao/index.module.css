@@ -1,0 +1,146 @@
+.signBack {
+  height: 286px;
+  background-color: black;
+}
+
+.anPage {
+  min-width: 1440px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.sign {
+  width: 1087px;
+  height: 125px;
+  margin-bottom: 67px;
+}
+.info {
+  color: #fff;
+}
+.content {
+  min-height: 650px;
+  padding: 20px 0;
+  flex: 1 auto;
+}
+
+.table,
+.chartList {
+  max-width: 1860px;
+  min-width: 1380px;
+}
+
+.chartList {
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  min-height: 650px;
+}
+
+.desc {
+  color: rgba(170, 170, 170, 1);
+}
+
+.searchbtn {
+  width: 110px;
+  height: 44px;
+  color: rgba(153, 153, 153, 1);
+  background: rgba(27, 241, 255, 1);
+  color: rgba(17, 26, 27, 1);
+}
+.active {
+  color: rgba(17, 26, 27, 1);
+  background: rgba(0, 208, 236, 1);
+}
+.searchbtn:active {
+  background: #00abc2;
+}
+
+.searchIcon {
+  width: 30px;
+  height: 30px;
+  filter: contrast(0);
+}
+
+.active > .searchIcon,
+.searchbtn:hover > .searchIcon,
+.searchbtn:active > .searchIcon {
+  filter: none;
+}
+
+.jumper {
+  right: 50px;
+  bottom: 25%;
+}
+
+.bottomLine {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+
+.allHeight {
+  height: 48px;
+}
+
+.navCOntainer {
+  width: 100%;
+  height: 60px;
+  background: #0e2b30;
+}
+.nav {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.item {
+  margin-right: 70px;
+  line-height: 60px;
+  box-sizing: border-box;
+  color: #999;
+  cursor: pointer;
+}
+.item :hover {
+  color: #fff;
+}
+.action {
+  border-bottom: 4px solid #00abc2;
+  color: #fff;
+}
+.fix1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  z-index: 21;
+  margin: 0 auto;
+}
+.fix2 {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  width: 100%;
+  background: #000;
+  margin: 0 auto;
+  z-index: 20;
+}
+.fix3 {
+  position: fixed;
+  top: 124px;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 21;
+}
+.fix4 {
+  position: fixed;
+  top: 184px;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 20;
+}
+.search {
+  width: 100%;
+  padding: 20px 0;
+  background: #111a1b;
+}

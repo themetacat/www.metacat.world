@@ -5,25 +5,34 @@ import ProfileIconLabel from '../profile-icon-label';
 
 import style from './index.module.css';
 
-type Contact = {
-  icon?: string;
-  label?: string;
-  address?: string;
-};
+// type Contact = {
+//   icon?: string;
+//   label?: string;
+//   address?: string;
+// };
 
 interface Props {
   avatar?: string;
   name?: string;
-  contact?: Array<Contact>;
+  contact?;
+  country?: string;
 }
 
-export default function UserAvatar({ avatar, name, contact }: Props) {
+export default function UserAvatar({ avatar, name, contact, country }: Props) {
+  const [C, setC] = React.useState([]);
+
+  React.useEffect(() => {
+    const c = contact.filter((i) => i.address);
+    setC(c);
+  }, [contact]);
   return (
     <div className="flex flex-col justify-center items-center">
       <img className={cn('mt-1', style.userAvatar)} src={avatar}></img>
       <div className=" mt-1 text-white text-xl">{name}</div>
+
+      {country ? <div className={style.country}>Country : {country}</div> : null}
       <div className={cn('mt-1 flex justify-start items-center', style.links)}>
-        {contact.map((ele, idx) => {
+        {C.map((ele, idx) => {
           if (idx !== 0) {
             return (
               <div key={idx} className="flex items-center">

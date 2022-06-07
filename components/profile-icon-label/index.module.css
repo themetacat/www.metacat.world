@@ -1,7 +1,13 @@
 .iconLabel{
   color: #fff;
+  cursor: pointer;
 }
 .iconLabel>img{
+  cursor: pointer;
   width: 22px;
   height: 22px;
+}
+
+.a{
+  cursor: pointer;
 }

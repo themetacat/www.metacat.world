@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
-
+import TwoNavigation from '../two_navigation';
 import style from './index.module.css';
 
 type Props = {
@@ -13,7 +13,34 @@ type Props = {
   className?: string;
 };
 
+const build = [
+  {
+    label: 'Builders',
+    type: 'builders',
+    link: '/build/builders',
+  },
+  {
+    label: 'Buildings',
+    type: 'buildings',
+    link: '/build/buildings',
+  },
+];
+const wearable = [
+  {
+    label: 'Creators',
+    type: 'creators',
+    link: '/wearables',
+  },
+  {
+    label: 'WearableDao',
+    type: 'wearabledao',
+    link: '/wearables/wearabledao?type=chinesered',
+  },
+];
+
 export default function PageHeader({ active, className }: Props) {
+  const [buildState, setBuildState] = React.useState(false);
+  const [wearableState, setWearableState] = React.useState(false);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -75,24 +102,41 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
-            active === 'builders' ? style.active : null,
+            'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            active === 'Build' ? style.active : null,
+            style.z,
           )}
+          // onClick={() => {
+          //   setBuildState(!buildState);
+          // }}
+          onMouseEnter={() => {
+            setBuildState(true);
+          }}
+          onMouseLeave={() => {
+            setBuildState(false);
+          }}
         >
-          <Link href={'/builders'} prefetch>
-            Builders
-          </Link>
+          Build
+          {buildState ? <TwoNavigation options={build} className={style.cn}></TwoNavigation> : null}
         </div>
 
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'wearables' ? style.active : null,
+            style.z,
           )}
+          onMouseEnter={() => {
+            setWearableState(true);
+          }}
+          onMouseLeave={() => {
+            setWearableState(false);
+          }}
         >
-          <Link href={'/wearables?type=wearabledao'} prefetch>
-            Wearables
-          </Link>
+          Wearables
+          {wearableState ? (
+            <TwoNavigation options={wearable} className={style.cn2}></TwoNavigation>
+          ) : null}
         </div>
         <div
           className={cn(

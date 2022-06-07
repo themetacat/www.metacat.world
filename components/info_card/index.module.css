@@ -1,0 +1,79 @@
+.container {
+  width: 390px;
+  height: 338px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: #0e2425;
+  border: 0.5px solid rgba(24, 255, 241, 0.3);
+  box-shadow: inset 0 0 15px rgba(24, 255, 241, 0.3);
+}
+.container .topDetail {
+  width: 100%;
+  height: 267px;
+  padding-top: 30px;
+  background: #0b1d1e;
+}
+.container .topDetail div img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+.container .topDetail .name {
+  margin-top: 20px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  color: #fff;
+  font-weight: 500;
+  font-size: 24px;
+  white-space: nowrap;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+.container .topDetail .area {
+  color: #999;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+}
+.container .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+}
+.container .bottom .item {
+  display: flex;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  border-right: 1px solid #6c6c6c;
+  padding-right: 25px;
+  margin-right: 25px;
+  height: 20px;
+}
+.container .bottom .item img {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  margin-right: 3px;
+}
+.container .bottom .item:last-child {
+  border-right: 0;
+  padding-right: 0;
+  margin-right: 0;
+}
+.container .bottom .shuxian {
+  width: 1px;
+  height: 10px;
+  margin: 0 25px;
+  background: #6c6c6c;
+}
+.container:hover {
+  box-shadow: 0 6px 25px rgba(0, 236, 222, 0.35), inset 0 0 15px rgba(24, 255, 241, 0.3);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+.container:nth-child(3n) {
+  margin-right: 0;
+}

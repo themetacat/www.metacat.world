@@ -1,7 +1,7 @@
 import React from 'react';
 
 import cn from 'classnames';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import {
   Scene,
@@ -27,6 +27,7 @@ import { convert } from '../../../common/utils';
 import style from './index.module.css';
 
 export default function WearablesDetail({ artwork, artist, id }) {
+  const router = useRouter();
   const meta = {
     title: `WearablesDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -133,6 +134,14 @@ export default function WearablesDetail({ artwork, artist, id }) {
     };
   }, [animation, artworkData]);
 
+  const toWearableDao = React.useCallback(() => {
+    if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
+      router.replace(`/wearables/wearabledao?type=${router.query.type}`);
+    } else {
+      router.replace(`/topic/${router.query.type}?type=wearables`);
+    }
+  }, [router.query.type]);
+
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -145,10 +154,14 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              Router.push('/wearables?type=wearables');
+              toWearableDao();
             }}
           >
-            Wearables
+            {router.query.type === 'chinesered' ? 'Chinese Red' : null}
+            {router.query.type === 'pfp' ? 'PFP' : null}
+            {router.query.type !== 'chinesered' && router.query.type !== 'pfp'
+              ? router.query.type
+              : null}
           </span>
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
           <span className=" text-white">{artworkData.name}</span>
@@ -238,7 +251,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
 export async function getServerSideProps(context) {
   const { id } = context.params;
   let res = null;
-  if (context.query.type === 'pfp') {
+  if (context.query.type === 'pfp' || context.query.form === 'pfp_wearable') {
     res = await z_api.req_pfp_detail(id);
   } else {
     res = await api.getDaoWearableDetail(id);

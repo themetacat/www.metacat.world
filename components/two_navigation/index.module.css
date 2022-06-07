@@ -1,0 +1,23 @@
+.container {
+  position: absolute;
+  right: 0;
+  bottom: -90px;
+  z-index: 99;
+  background-color: #0f191b;
+}
+.container .item {
+  box-sizing: border-box;
+  height: 50px;
+  padding: 0 20px;
+  color: #ccc;
+  font-size: 12px;
+  line-height: 50px;
+  border-bottom: 1px solid #0c3d45;
+  cursor: pointer;
+}
+.container .item:hover {
+  color: #fff;
+}
+.container .item:last-child {
+  border: 0;
+}

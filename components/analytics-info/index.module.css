@@ -43,7 +43,7 @@
 .h3 {
   width: 200px;
 }
-.h4{
+.h4 {
   width: 280px;
 }
 .bg {
@@ -57,7 +57,9 @@
   box-shadow: -0.5px 0px 0px rgba(255, 255, 255, 0.1);
   border: 1px solid #333e3e;
 }
-
+.hoverBg {
+  background-color: #2f3939;
+}
 .biaotou {
   font-style: normal;
   font-weight: 600;
