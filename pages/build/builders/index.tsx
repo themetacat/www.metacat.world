@@ -42,6 +42,7 @@ export default function Builders() {
   const [individuals, setIndividuals] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [fixedState, setFixedState] = React.useState(false);
+  const [anchor, setAnchor] = React.useState(false);
   const meta = {
     title: `Build - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -56,9 +57,20 @@ export default function Builders() {
     }
     setLoading(false);
   }, []);
+  const getTop = React.useCallback(() => {
+    const Institutions = document.getElementById('Individuals');
+    document.addEventListener('scroll', () => {
+      if (window.scrollY >= Institutions.getBoundingClientRect().top) {
+        setNavState('Individuals');
+      } else {
+        setNavState('Institutions');
+      }
+    });
+  }, []);
   React.useEffect(() => {
+    getTop();
     requestData();
-  }, [requestData]);
+  }, [requestData, getTop]);
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
@@ -98,14 +110,18 @@ export default function Builders() {
   React.useEffect(() => {
     const listener = () => {
       if (document.getElementById('switch') && window.scrollY > 90) {
-        setFixedState(true);
+        if (!anchor) {
+          setFixedState(true);
+        } else {
+          setAnchor(false);
+        }
       } else {
         setFixedState(false);
       }
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedState]);
+  }, [fixedState, anchor]);
 
   const cls = cn('flex-1', style.bottomLine);
   return (
@@ -150,6 +166,8 @@ export default function Builders() {
                     key={idx}
                     onClick={() => {
                       setNavState(i.type);
+                      setFixedState(false);
+                      setAnchor(true);
                     }}
                   >
                     {i.type}

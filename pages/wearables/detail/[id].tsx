@@ -157,7 +157,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
               toWearableDao();
             }}
           >
-            {router.query.type === 'chinesered' ? 'Chinesered' : null}
+            {router.query.type === 'chinesered' ? 'Chinese Red' : null}
             {router.query.type === 'pfp' ? 'PFP' : null}
             {router.query.type !== 'chinesered' && router.query.type !== 'pfp'
               ? router.query.type
