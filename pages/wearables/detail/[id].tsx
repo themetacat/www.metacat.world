@@ -251,7 +251,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
 export async function getServerSideProps(context) {
   const { id } = context.params;
   let res = null;
-  if (context.query.type === 'pfp') {
+  if (context.query.type === 'pfp' || context.query.form === 'pfp_wearable') {
     res = await z_api.req_pfp_detail(id);
   } else {
     res = await api.getDaoWearableDetail(id);

@@ -34,9 +34,10 @@ interface Props {
   models: Array<DaoCard>;
   tabState?;
   id?;
+  name?;
 }
 
-export default function DaoModelList({ models, tabState, id }: Props) {
+export default function DaoModelList({ models, tabState, id, name }: Props) {
   const [allScene, setAllScene] = React.useState([]);
   const renderer = React.useRef(null);
   const canvaRef = React.useRef(null);
@@ -135,6 +136,7 @@ export default function DaoModelList({ models, tabState, id }: Props) {
         <DaoWebglCard
           id={id}
           model={model}
+          name={name}
           key={idx}
           graphicId={`dao-${idx.toString()}`}
           tabState={tabState}

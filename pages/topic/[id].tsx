@@ -266,9 +266,10 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
       );
     }
     if (navState === 'wearables') {
+      console.log(baseInfo.name);
       return (
         <div className={style.wearable}>
-          <DaoModelList models={wearables} id={router.query.id}></DaoModelList>
+          <DaoModelList models={wearables} id={router.query.id} name={baseInfo.name}></DaoModelList>
         </div>
       );
     }

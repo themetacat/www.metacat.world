@@ -39,6 +39,7 @@ interface Props {
   model?: DaoCard;
   tabState?;
   id?;
+  name?;
 }
 
 // {
@@ -59,14 +60,15 @@ interface Props {
 //   "id": 100
 // },
 
-export default function DaoWebglCard({ graphicId, initFinish, model, tabState, id }: Props) {
+export default function DaoWebglCard({ graphicId, initFinish, model, tabState, id, name }: Props) {
+  console.log(name);
   const router = useRouter();
   const sceneRef = React.useRef(null);
   const goToDetail = React.useCallback(() => {
     if (tabState === 'chinesered' || tabState === 'pfp') {
       router.replace(`/wearables/detail/${model.id}?type=${tabState}`);
     } else {
-      router.replace(`/wearables/detail/${model.id}?type=${id}`);
+      router.replace(`/wearables/detail/${model.id}?type=${id}&name=${name}&form=${model.type}`);
     }
   }, [tabState, id]);
 
