@@ -57,8 +57,8 @@ export default function Wearables() {
     requestData();
   }, [requestData]);
 
-  const toTopic = React.useCallback((id, c) => {
-    window.open(`/topic/${c}`);
+  const toTopic = React.useCallback((id, c, b) => {
+    window.open(`/topic/${c}?type=${b === 1 ? 'buildings' : 'wearables'}`);
   }, []);
 
   const reander = React.useMemo(() => {
@@ -68,6 +68,7 @@ export default function Wearables() {
     return (
       <>
         {data.map((item, idx) => {
+          console.log(item);
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
         })}
       </>

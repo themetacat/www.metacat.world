@@ -134,6 +134,14 @@ export default function WearablesDetail({ artwork, artist, id }) {
     };
   }, [animation, artworkData]);
 
+  const toWearableDao = React.useCallback(() => {
+    if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
+      router.replace(`/wearables/wearabledao?type=${router.query.type}`);
+    } else {
+      router.replace(`/topic/${router.query.type}?type=wearables`);
+    }
+  }, [router.query.type]);
+
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -146,10 +154,14 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              Router.push(`/wearables`);
+              toWearableDao();
             }}
           >
-            wearables
+            {router.query.type === 'chinesered' ? 'Chinesered' : null}
+            {router.query.type === 'pfp' ? 'PFP' : null}
+            {router.query.type !== 'chinesered' && router.query.type !== 'pfp'
+              ? router.query.type
+              : null}
           </span>
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
           <span className=" text-white">{artworkData.name}</span>

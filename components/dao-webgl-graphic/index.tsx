@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import cn from 'classnames';
 import { Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper } from 'three';
 
@@ -38,6 +38,7 @@ interface Props {
   initFinish?: (se) => void;
   model?: DaoCard;
   tabState?;
+  id?;
 }
 
 // {
@@ -58,12 +59,16 @@ interface Props {
 //   "id": 100
 // },
 
-export default function DaoWebglCard({ graphicId, initFinish, model, tabState }: Props) {
+export default function DaoWebglCard({ graphicId, initFinish, model, tabState, id }: Props) {
+  const router = useRouter();
   const sceneRef = React.useRef(null);
   const goToDetail = React.useCallback(() => {
-    window.open(`/wearables/detail/${model.id}`);
-    // Router.push(`/wearables/detail/${model.id}`);
-  }, [model]);
+    if (tabState === 'chinesered' || tabState === 'pfp') {
+      router.replace(`/wearables/detail/${model.id}?type=${tabState}`);
+    } else {
+      router.replace(`/wearables/detail/${model.id}?type=${id}`);
+    }
+  }, [tabState, id]);
 
   const init = React.useCallback(() => {
     const scene = new Scene();

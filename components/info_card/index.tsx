@@ -12,6 +12,7 @@ type Props = {
   twitter?: string;
   website?: string;
   onClick?;
+  is_buildings?: number;
 };
 
 export default function InfoCard({
@@ -24,12 +25,13 @@ export default function InfoCard({
   twitter,
   website,
   onClick,
+  is_buildings,
 }: Props) {
   return (
     <div
       className={cn(style.container, cls)}
       onClick={() => {
-        onClick(topic_id, name);
+        onClick(topic_id, name, is_buildings);
       }}
     >
       <div className={style.topDetail}>

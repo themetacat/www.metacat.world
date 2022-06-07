@@ -48,7 +48,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   };
 
   const router = useRouter();
-  const [navState, setNavState] = React.useState(parcel_list ? 'buildings' : 'wearables');
+  const [navState, setNavState] = React.useState(router.query.type || 'buildings');
   const { pathname } = router;
   const { id } = router.query;
   const [searchText, setSearchText] = React.useState('');
@@ -268,7 +268,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     if (navState === 'wearables') {
       return (
         <div className={style.wearable}>
-          <DaoModelList models={wearables}></DaoModelList>
+          <DaoModelList models={wearables} id={router.query.id}></DaoModelList>
         </div>
       );
     }
@@ -276,7 +276,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 180) {
+      if (document.getElementById('switch') && window.scrollY > 350) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -331,6 +331,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
                     key={idx}
                     onClick={() => {
                       changeNav(item.type);
+                      router.replace(`/topic/${router.query.id}?type=${item.type}`);
                     }}
                   >
                     {item.label}

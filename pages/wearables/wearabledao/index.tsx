@@ -50,18 +50,16 @@ export default function Wearables(props) {
     title: `Wearables - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-
+  const router = useRouter();
   const [tabState, setTabState] = React.useState('wearabledao');
   const [orginData, setOrigData] = React.useState(null);
   const [dataSource, setDataSource] = React.useState(null);
   const [searchText, setSearchText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [navState, setNavState] = React.useState('chinesered');
+  const [navState, setNavState] = React.useState(router.query.type || 'chinesered');
 
   const [fixedState, setFixedState] = React.useState(false);
-
-  const router = useRouter();
 
   const requestData = React.useCallback(async () => {
     setLoading(true);

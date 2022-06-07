@@ -34,7 +34,7 @@ const wearable = [
   {
     label: 'WearableDao',
     type: 'wearabledao',
-    link: '/wearables/wearabledao',
+    link: '/wearables/wearabledao?type=chinesered',
   },
 ];
 

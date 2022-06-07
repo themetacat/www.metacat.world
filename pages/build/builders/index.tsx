@@ -66,7 +66,7 @@ export default function Builders() {
   }, []);
 
   const toTopic = React.useCallback((id, c) => {
-    window.open(`/topic/${id}`);
+    window.open(`/topic/${id}?type=buildings`);
   }, []);
 
   const reander1 = React.useMemo(() => {
