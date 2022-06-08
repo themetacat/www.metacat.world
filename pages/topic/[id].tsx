@@ -26,7 +26,7 @@ import DaoModelList from '../../components/dao-model-list';
 import { useWalletProvider } from '../../components/web3modal';
 
 import { getTopicDetail, refreshToken, getBaseInfo } from '../../service';
-import api from '../../lib/test';
+import api from '../../lib/z_api';
 
 import style from './index.module.css';
 

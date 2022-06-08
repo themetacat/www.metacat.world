@@ -917,13 +917,13 @@ class API {
       mode: 'cors',
     });
     const json = await result.json();
+
     return json;
   }
 
   // 9.7 获取 Wearable creator 数据接口
   public async req_wearable_creators() {
     const url = `${this.url}/wearable/get_wearable_creators`;
-
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',

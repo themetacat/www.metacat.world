@@ -952,6 +952,7 @@ export const req_topic_detail = async (id: number, creator: string) => {
     search = qs.stringify({ creator }, { addQueryPrefix: true });
   }
   const url = `/api/get_topic_detail${search}`;
+
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
