@@ -953,4 +953,4 @@ class API {
   }
 }
 
-export default new API('http://8.130.23.16/api/v1');
+export default new API('https://api.metacat.world/api/v1');
