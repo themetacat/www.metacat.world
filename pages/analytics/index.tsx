@@ -236,6 +236,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -268,6 +272,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -286,6 +294,10 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             textColor={style.cvColor}
             options={[
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
               {
                 label: 'Monthly',
                 value: 'monthly',
@@ -344,6 +356,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -356,6 +372,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'USD',
                 value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
               },
               {
                 label: 'MANA',
@@ -376,6 +396,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Daily',
                 value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Monthly',
@@ -402,6 +426,10 @@ export default function AnalyticsIndex(props) {
               textColor={style.dclColor}
               options={[
                 {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
                   label: 'Monthly',
                   value: 'monthly',
                 },
@@ -414,6 +442,10 @@ export default function AnalyticsIndex(props) {
                 {
                   label: 'USD',
                   value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
                 },
                 {
                   label: 'MANA',
@@ -452,6 +484,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -486,6 +522,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -508,6 +548,10 @@ export default function AnalyticsIndex(props) {
             showMarkerType="sandbox"
             textColor={style.sandboxColor}
             options={[
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
               {
                 label: 'Monthly',
                 value: 'monthly',
@@ -549,6 +593,10 @@ export default function AnalyticsIndex(props) {
                   value: 'daily',
                 },
                 {
+                  label: 'Weekly price',
+                  value: 'weekly',
+                },
+                {
                   label: 'Monthly price',
                   value: 'monthly',
                 },
@@ -583,6 +631,10 @@ export default function AnalyticsIndex(props) {
                   value: 'daily',
                 },
                 {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
                   label: 'Monthly',
                   value: 'monthly',
                 },
@@ -605,6 +657,10 @@ export default function AnalyticsIndex(props) {
               isEth={true}
               showMarkerType="sandbox"
               options={[
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
                 {
                   label: 'Monthly',
                   value: 'monthly',
@@ -646,6 +702,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -680,6 +740,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -702,6 +766,10 @@ export default function AnalyticsIndex(props) {
             showMarkerType="sandbox"
             textColor={style.nftColor}
             options={[
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
               {
                 label: 'Monthly',
                 value: 'monthly',
@@ -742,6 +810,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -776,6 +848,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -798,6 +874,10 @@ export default function AnalyticsIndex(props) {
             showMarkerType="sandbox"
             textColor={style.webbColor}
             options={[
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
               {
                 label: 'Monthly',
                 value: 'monthly',
@@ -838,6 +918,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -872,6 +956,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -894,6 +982,10 @@ export default function AnalyticsIndex(props) {
             showMarkerType="sandbox"
             textColor={style.osdColor}
             options={[
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
               {
                 label: 'Monthly',
                 value: 'monthly',
@@ -934,6 +1026,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -968,6 +1064,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -990,6 +1090,10 @@ export default function AnalyticsIndex(props) {
             showMarkerType="sandbox"
             textColor={style.osdColor}
             options={[
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
               {
                 label: 'Monthly',
                 value: 'monthly',
