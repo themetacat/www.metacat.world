@@ -236,6 +236,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -268,6 +272,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -289,6 +297,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -344,6 +356,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -356,6 +372,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'USD',
                 value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
               },
               {
                 label: 'MANA',
@@ -376,6 +396,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Daily',
                 value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Monthly',
@@ -406,6 +430,10 @@ export default function AnalyticsIndex(props) {
                   value: 'monthly',
                 },
                 {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
                   label: 'Quarterly',
                   value: 'quarterly',
                 },
@@ -414,6 +442,10 @@ export default function AnalyticsIndex(props) {
                 {
                   label: 'USD',
                   value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
                 },
                 {
                   label: 'MANA',
@@ -452,6 +484,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -486,6 +522,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -511,6 +551,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -549,6 +593,10 @@ export default function AnalyticsIndex(props) {
                   value: 'daily',
                 },
                 {
+                  label: 'Weekly price',
+                  value: 'weekly',
+                },
+                {
                   label: 'Monthly price',
                   value: 'monthly',
                 },
@@ -583,6 +631,10 @@ export default function AnalyticsIndex(props) {
                   value: 'daily',
                 },
                 {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
                   label: 'Monthly',
                   value: 'monthly',
                 },
@@ -608,6 +660,10 @@ export default function AnalyticsIndex(props) {
                 {
                   label: 'Monthly',
                   value: 'monthly',
+                },
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
                 },
                 {
                   label: 'Quarterly',
@@ -646,6 +702,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -680,6 +740,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -705,6 +769,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -742,6 +810,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -776,6 +848,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -801,6 +877,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -838,6 +918,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -872,6 +956,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -897,6 +985,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -934,6 +1026,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly price',
                 value: 'monthly',
               },
@@ -968,6 +1064,10 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
                 label: 'Monthly',
                 value: 'monthly',
               },
@@ -993,6 +1093,10 @@ export default function AnalyticsIndex(props) {
               {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -1085,6 +1189,10 @@ export default function AnalyticsIndex(props) {
                       value: 'monthly',
                     },
                     {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
                       label: 'Quarterly',
                       value: 'quarterly',
                     },
@@ -1098,10 +1206,10 @@ export default function AnalyticsIndex(props) {
                       label: 'USD',
                       value: 'usd',
                     },
-                    // {
-                    //   label: 'ETH',
-                    //   value: 'eth',
-                    // },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
                   ]}
                 ></Allline>
               </div>
@@ -1124,6 +1232,10 @@ export default function AnalyticsIndex(props) {
                       value: 'monthly',
                     },
                     {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
                       label: 'Quarterly',
                       value: 'quarterly',
                     },
@@ -1137,10 +1249,10 @@ export default function AnalyticsIndex(props) {
                       label: 'USD',
                       value: 'usd',
                     },
-                    // {
-                    //   label: 'ETH',
-                    //   value: 'eth',
-                    // },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
                   ]}
                 ></AllPillar>
               </div>
@@ -1161,6 +1273,10 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
+                    },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
                     },
                     {
                       label: 'Quarterly',

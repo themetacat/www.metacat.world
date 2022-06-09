@@ -10,6 +10,7 @@ import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Status from '../../components/status';
+// import TestMap from "../../components/testmap"
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
@@ -61,6 +62,10 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
+  // {
+  //   label: "Otherside",
+  //   type: "otherside"
+  // }
   // {
   //   label: 'SubStrata',
   //   type: 'substrata',
@@ -150,6 +155,9 @@ export default function MapPage(props) {
           backColor="#15282C"
         ></SomniumMap>
       );
+    }
+    if (mapType === 'otherside') {
+      // return <TestMap id="map" ></TestMap>
     }
     if (mapType === 'substrata') {
       return <SubStrataMap zoomLimit={[5, 9]} initZoom={5} dragging={true}></SubStrataMap>;
