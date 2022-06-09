@@ -65,8 +65,11 @@ export default function Demo2() {
           top: 0,
           right: 0,
           bottom: 0,
+          backgroundColor: 'rgb(8 17 19)',
         }}
-      ></div>
+      >
+        111
+      </div>
     </>
   );
 }
