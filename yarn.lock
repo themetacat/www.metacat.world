@@ -217,7 +217,7 @@
     eventemitter3 "^4.0.4"
     lodash "^4.17.15"
 
-"@antv/l7-maps@2.8.42":
+"@antv/l7-maps@2.8.42", "@antv/l7-maps@^2.8.42":
   version "2.8.42"
   resolved "https://registry.npmmirror.com/@antv/l7-maps/-/l7-maps-2.8.42.tgz#5aed2f27bb8f0cff2dd63c9a9b4c271904c04f16"
   integrity sha512-Tj1oDrqGF25nCfkcTV+yJMx2CCniCf4JgwQXPYbZdtX0RCRBA1EnVbkwLhikX5B9qYDAzc9kDATgkH0MQlQORQ==
