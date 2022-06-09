@@ -1249,10 +1249,10 @@ export default function AnalyticsIndex(props) {
                       label: 'USD',
                       value: 'usd',
                     },
-                    // {
-                    //   label: 'ETH',
-                    //   value: 'eth',
-                    // },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
                   ]}
                 ></AllPillar>
               </div>
