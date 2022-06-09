@@ -295,12 +295,12 @@ export default function AnalyticsIndex(props) {
             textColor={style.cvColor}
             options={[
               {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -426,12 +426,12 @@ export default function AnalyticsIndex(props) {
               textColor={style.dclColor}
               options={[
                 {
-                  label: 'Weekly',
-                  value: 'weekly',
-                },
-                {
                   label: 'Monthly',
                   value: 'monthly',
+                },
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
                 },
                 {
                   label: 'Quarterly',
@@ -549,12 +549,12 @@ export default function AnalyticsIndex(props) {
             textColor={style.sandboxColor}
             options={[
               {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -658,12 +658,12 @@ export default function AnalyticsIndex(props) {
               showMarkerType="sandbox"
               options={[
                 {
-                  label: 'Weekly',
-                  value: 'weekly',
-                },
-                {
                   label: 'Monthly',
                   value: 'monthly',
+                },
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
                 },
                 {
                   label: 'Quarterly',
@@ -767,12 +767,12 @@ export default function AnalyticsIndex(props) {
             textColor={style.nftColor}
             options={[
               {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -875,12 +875,12 @@ export default function AnalyticsIndex(props) {
             textColor={style.webbColor}
             options={[
               {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -983,12 +983,12 @@ export default function AnalyticsIndex(props) {
             textColor={style.osdColor}
             options={[
               {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -1026,7 +1026,7 @@ export default function AnalyticsIndex(props) {
                 value: 'daily',
               },
               {
-                label: 'Weekly',
+                label: 'Weekly price',
                 value: 'weekly',
               },
               {
@@ -1091,12 +1091,12 @@ export default function AnalyticsIndex(props) {
             textColor={style.osdColor}
             options={[
               {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
                 label: 'Monthly',
                 value: 'monthly',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
               },
               {
                 label: 'Quarterly',
@@ -1189,6 +1189,10 @@ export default function AnalyticsIndex(props) {
                       value: 'monthly',
                     },
                     {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
                       label: 'Quarterly',
                       value: 'quarterly',
                     },
@@ -1228,6 +1232,10 @@ export default function AnalyticsIndex(props) {
                       value: 'monthly',
                     },
                     {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
                       label: 'Quarterly',
                       value: 'quarterly',
                     },
@@ -1265,6 +1273,10 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
+                    },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
                     },
                     {
                       label: 'Quarterly',
