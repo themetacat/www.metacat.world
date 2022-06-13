@@ -221,7 +221,7 @@ export default function MapPage(props) {
       >
         {renderMap}
       </div>
-      {fullScreen ? null : <Footer />}
+      {/* {fullScreen ? null : <Footer />} */}
     </Page>
   );
 }

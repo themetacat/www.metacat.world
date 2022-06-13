@@ -14,11 +14,11 @@
   min-height: 650px;
 }
 
-.mapContanier{
+.mapContanier {
   z-index: 1001;
-  height: calc(100vh - 172px - 68px - 76px);
+  /* height: calc(100vh - 172px - 68px - 76px); */
+  height: calc(100vh - 165px);
 }
-.full{
+.full {
   height: 100vh;
 }
-

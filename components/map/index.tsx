@@ -11,6 +11,7 @@ import style from './index.module.css';
 import Selecter from '../select';
 import Legend from '../legend';
 import ParcelDeatil from '../parcel-detail';
+import TopParcel from '../top_parcel';
 
 import { convert } from '../../common/utils';
 
@@ -25,6 +26,7 @@ import {
   getCvIsland,
   getCvSuburbs,
 } from '../../service';
+import { req_cv_top20_parcel } from '../../service/z_api';
 
 const mapT = [
   { value: 'PRICE', label: 'PRICE' },
@@ -292,6 +294,7 @@ function Map({
   const popDetail = React.useRef();
   const mapType = React.useRef('PRICE');
   const staticType = React.useRef('ALL');
+  const [stc, setStc] = React.useState('MONTHLY');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[1]);
   const trafficRef = React.useRef(null);
@@ -302,6 +305,11 @@ function Map({
   const heighFeature = React.useRef(null);
   const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
+  const [arrowsState, setArrowsState] = React.useState(false);
+
+  const [priceTop, setPriceTop] = React.useState({});
+  const [trafficTop, setTrafficTop] = React.useState({});
+  const [topData, setTopData] = React.useState([]);
 
   const setLoading = React.useCallback(() => {
     if (loadFinish) {
@@ -597,6 +605,13 @@ function Map({
     },
     [null],
   );
+  const reqTop20 = React.useCallback(async () => {
+    const result = await req_cv_top20_parcel();
+    const { price_top, traffic_top } = result.data;
+    setPriceTop(price_top);
+    setTrafficTop(traffic_top);
+    setTopData(price_top.price_all);
+  }, [null]);
 
   const closePop = React.useCallback(() => {
     if (popDetail.current) {
@@ -733,6 +748,7 @@ function Map({
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
+      setStc(newType);
       // layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
       closePop();
@@ -744,6 +760,8 @@ function Map({
     (newType) => {
       mapType.current = newType;
       setStaticList(options[newType]);
+      setStc('MONTHLY');
+      console.log(priceTop);
       staticType.current = options[newType][1].value;
       // layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
@@ -752,6 +770,7 @@ function Map({
     [minZoomLevel],
   );
 
+  console.log(priceTop);
   const getZoomChangeNumber = React.useCallback(
     (zoom) => {
       let result = zoom - minZoomLevel < 0 ? 0 : zoom - minZoomLevel;
@@ -1144,7 +1163,7 @@ function Map({
     requestSub(map, suburbsLayer);
     requestMapTwoData(null, parcelsLayerTwo);
     requestPriceMapTwoData(parcelsPriceLayerTwo);
-
+    reqTop20();
     if (zoomControl) {
       requestMapOneData(null, parcelsLayerOne);
       requestMapThreeData(streetLayer, parcelsLayerThree);
@@ -1159,52 +1178,85 @@ function Map({
     // requestSube(map);
   }, [null]);
 
+  const rander = React.useMemo(() => {
+    return (
+      <>
+        {/* {topData.map((item, idx) => {
+        return <TopParcel
+          idx={idx}
+          key={idx}
+          {...item}
+          mapType={mapType.current}
+          staticType={stc}
+        ></TopParcel>
+      })} */}
+      </>
+    );
+  }, [mapType.current, stc, topData]);
+
   return (
     <div className={style.mapContainer} onClick={onClick}>
-      <div className={cn('flex justify-between items-center', style.picker)}>
-        {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
-        <Selecter
-          options={mapT}
-          onClick={changeMapType}
-          showArrow={changeTypeControl}
-          defaultLabel={mapType.current}
-        ></Selecter>
-        <div className={style.dividing}></div>
-        <Selecter
-          options={staticList}
-          onClick={changeStaticType}
-          showArrow={changeTypeControl}
-          defaultLabel={staticType.current}
-        ></Selecter>
-      </div>
-      {mapType.current === 'PRICE' ? (
-        <div className={cn('flex justify-center items-center', style.helper)}>
-          <div
-            data-tip
-            data-for="info"
-            data-place="bottom"
-            className={cn('relative flex justify-center items-center', style.helperInfo)}
-          >
-            <img src="/images/helper.png"></img>
-          </div>
-          <ReactTooltip
-            id="info"
-            effect="solid"
-            textColor="#AAAAAA"
-            // className={style.pop}
-            backgroundColor="#0F191B"
-            border={false}
-          >
-            <div className={style.info}>
-              The brighter the area, the higher the average price in the selected time frame.The
-              first/second level show the average parcel sale USD in island/suburb, the third level
-              (and above) show the cumulative sale USD of the parcel.
-            </div>
-          </ReactTooltip>
+      <div className={style.container}>
+        <div className={style.bg}></div>
+        <div className={cn('flex justify-between items-center', style.picker)}>
+          {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
+          <Selecter
+            mini={style.change}
+            options={mapT}
+            onClick={changeMapType}
+            showArrow={changeTypeControl}
+            defaultLabel={mapType.current}
+          ></Selecter>
+          <div className={style.dividing}></div>
+          <Selecter
+            mini={style.change}
+            options={staticList}
+            onClick={changeStaticType}
+            showArrow={changeTypeControl}
+            defaultLabel={staticType.current}
+          ></Selecter>
         </div>
-      ) : (
-        <></>
-      )}
+        {mapType.current === 'PRICE' ? (
+          <div className={cn('flex justify-center items-center', style.helper)}>
+            <div
+              data-tip
+              data-for="info"
+              data-place="bottom"
+              className={cn('relative flex justify-center items-center', style.helperInfo)}
+            >
+              <img src="/images/helper.png"></img>
+            </div>
+            <ReactTooltip
+              id="info"
+              effect="solid"
+              textColor="#AAAAAA"
+              // className={style.pop}
+              backgroundColor="#0F191B"
+              border={false}
+            >
+              <div className={style.info}>
+                The brighter the area, the higher the average price in the selected time frame.The
+                first/second level show the average parcel sale USD in island/suburb, the third
+                level (and above) show the cumulative sale USD of the parcel.
+              </div>
+            </ReactTooltip>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div
+          className={style.arrows}
+          onClick={() => {
+            setArrowsState(!arrowsState);
+          }}
+        >
+          <img src={`/images/${arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`} />
+        </div>
+      </div>
+      <div className={cn(style.topList, arrowsState ? style.dn : null)}>
+        <div className={style.title}>TOP 20 Parcel</div>
+        {rander}
+      </div>
       {zoomControl ? (
         <>
           <div className={cn('flex flex-col', style.zoom)}>
