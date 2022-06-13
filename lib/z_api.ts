@@ -955,7 +955,9 @@ class API {
   //
 
   public async req_cv_top20_parcel() {
-    const url = `${this.url}/get_cv_top20_parcel`;
+    const url1 = `${this.url}/get_cv_top20_parcel`;
+    console.log(url1);
+    const url = `http://8.130.23.16/api/v1/get_cv_top20_parcel`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -967,6 +969,6 @@ class API {
   }
 }
 
-export default new API('http://8.130.23.16/api/v1');
+export default new API('https://api.metacat.world/api/v1');
 // http://8.130.23.16/
 // https://api.metacat.world

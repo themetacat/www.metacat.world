@@ -305,11 +305,11 @@ function Map({
   const heighFeature = React.useRef(null);
   const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
-  const [arrowsState, setArrowsState] = React.useState(false);
+  const [arrowsState, setArrowsState] = React.useState(true);
 
-  const [priceTop, setPriceTop] = React.useState({});
-  const [trafficTop, setTrafficTop] = React.useState({});
-  const [topData, setTopData] = React.useState([]);
+  const priceTop = React.useRef(null);
+  const trafficTop = React.useRef(null);
+  const topData = React.useRef(null);
 
   const setLoading = React.useCallback(() => {
     if (loadFinish) {
@@ -608,9 +608,9 @@ function Map({
   const reqTop20 = React.useCallback(async () => {
     const result = await req_cv_top20_parcel();
     const { price_top, traffic_top } = result.data;
-    setPriceTop(price_top);
-    setTrafficTop(traffic_top);
-    setTopData(price_top.price_all);
+    priceTop.current = price_top;
+    trafficTop.current = traffic_top;
+    topData.current = price_top.price_all;
   }, [null]);
 
   const closePop = React.useCallback(() => {
@@ -748,6 +748,31 @@ function Map({
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
+      if (mapType.current === 'PRICE') {
+        if (newType === 'MONTH') {
+          topData.current = priceTop.current.price_monthly;
+        }
+        if (newType === 'QUARTER') {
+          topData.current = priceTop.current.price_quarterly;
+        }
+        if (newType === 'YEAR') {
+          topData.current = priceTop.current.price_yearly;
+        }
+        if (newType === 'ALL') {
+          topData.current = priceTop.current.price_all;
+        }
+      }
+      if (mapType.current === 'TRAFFIC') {
+        if (newType === 'WEEKLY') {
+          topData.current = trafficTop.current.traffic_weekly;
+        }
+        if (newType === 'MONTHLY') {
+          topData.current = trafficTop.current.traffic_monthly;
+        }
+        if (newType === 'TOTAL') {
+          topData.current = trafficTop.current.traffic_all;
+        }
+      }
       setStc(newType);
       // layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
@@ -755,13 +780,17 @@ function Map({
     },
     [minZoomLevel],
   );
-
   const changeMapType = React.useCallback(
     (newType) => {
       mapType.current = newType;
       setStaticList(options[newType]);
       setStc('MONTHLY');
-      console.log(priceTop);
+      if (newType === 'PRICE') {
+        topData.current = priceTop.current.price_quarterly;
+      }
+      if (newType === 'TRAFFIC') {
+        topData.current = trafficTop.current.traffic_monthly;
+      }
       staticType.current = options[newType][1].value;
       // layerManager.current[2].layer.setStyle(parcelStyle);
       switchLayer(mapRef.current.getZoom() - minZoomLevel + 1);
@@ -770,7 +799,6 @@ function Map({
     [minZoomLevel],
   );
 
-  console.log(priceTop);
   const getZoomChangeNumber = React.useCallback(
     (zoom) => {
       let result = zoom - minZoomLevel < 0 ? 0 : zoom - minZoomLevel;
@@ -1176,46 +1204,56 @@ function Map({
       map.remove();
     };
     // requestSube(map);
-  }, [null]);
+  }, []);
 
   const rander = React.useMemo(() => {
     return (
       <>
-        {/* {topData.map((item, idx) => {
-        return <TopParcel
-          idx={idx}
-          key={idx}
-          {...item}
-          mapType={mapType.current}
-          staticType={stc}
-        ></TopParcel>
-      })} */}
+        {topData.current
+          ? topData.current.map((item, idx) => {
+              return (
+                <TopParcel
+                  idx={idx}
+                  key={idx}
+                  {...item}
+                  mapType={mapType.current}
+                  staticType={stc}
+                ></TopParcel>
+              );
+            })
+          : null}
       </>
     );
-  }, [mapType.current, stc, topData]);
+  }, [stc, changeStaticType, changeMapType, staticList, arrowsState]);
+
+  const selecterRander = React.useMemo(() => {
+    return (
+      <div className={cn('flex justify-between items-center', style.picker)}>
+        {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
+        <Selecter
+          mini={style.change}
+          options={mapT}
+          onClick={changeMapType}
+          showArrow={changeTypeControl}
+          defaultLabel={mapType.current}
+        ></Selecter>
+        <div className={style.dividing}></div>
+        <Selecter
+          mini={style.change}
+          options={staticList}
+          onClick={changeStaticType}
+          showArrow={changeTypeControl}
+          defaultLabel={staticType.current}
+        ></Selecter>
+      </div>
+    );
+  }, [changeMapType, changeStaticType, staticList, changeTypeControl]);
 
   return (
     <div className={style.mapContainer} onClick={onClick}>
       <div className={style.container}>
         <div className={style.bg}></div>
-        <div className={cn('flex justify-between items-center', style.picker)}>
-          {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
-          <Selecter
-            mini={style.change}
-            options={mapT}
-            onClick={changeMapType}
-            showArrow={changeTypeControl}
-            defaultLabel={mapType.current}
-          ></Selecter>
-          <div className={style.dividing}></div>
-          <Selecter
-            mini={style.change}
-            options={staticList}
-            onClick={changeStaticType}
-            showArrow={changeTypeControl}
-            defaultLabel={staticType.current}
-          ></Selecter>
-        </div>
+        {selecterRander}
         {mapType.current === 'PRICE' ? (
           <div className={cn('flex justify-center items-center', style.helper)}>
             <div
