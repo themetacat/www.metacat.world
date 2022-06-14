@@ -38,22 +38,70 @@ export default function AnalyticsInfo({ options, labelText }: Props) {
       <table className={cn('w-full', style.table)}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
-            <th className={cn(style.h1, style.bg, style.biaotou)}>
+            <th
+              className={cn(style.h1, style.bg, style.biaotou)}
+              onMouseEnter={() => {
+                setBgState('world');
+              }}
+              onMouseLeave={() => {
+                setIndex(null);
+              }}
+            >
               <div className={style.left}>World</div>
             </th>
-            <th className={cn(style.h2, style.bg, style.biaotou)}>
+            <th
+              className={cn(style.h2, style.bg, style.biaotou)}
+              onMouseEnter={() => {
+                setBgState('sales');
+              }}
+              onMouseLeave={() => {
+                setIndex(null);
+              }}
+            >
               <div className={style.right}>Total Parcel Sales Volume</div>
             </th>
-            <th className={cn(style.h3, style.bg, style.biaotou)}>
+            <th
+              className={cn(style.h3, style.bg, style.biaotou)}
+              onMouseEnter={() => {
+                setBgState('sold');
+              }}
+              onMouseLeave={() => {
+                setIndex(null);
+              }}
+            >
               <div className={style.right}>Number Of Parcels Sold</div>
             </th>
-            <th className={cn(style.h3, style.bg, style.biaotou)}>
+            <th
+              className={cn(style.h3, style.bg, style.biaotou)}
+              onMouseEnter={() => {
+                setBgState('supply');
+              }}
+              onMouseLeave={() => {
+                setIndex(null);
+              }}
+            >
               <div className={style.right}>Total Parcel Supply</div>
             </th>
-            <th className={cn(style.h3, style.bg, style.biaotou)}>
+            <th
+              className={cn(style.h3, style.bg, style.biaotou)}
+              onMouseEnter={() => {
+                setBgState('owners');
+              }}
+              onMouseLeave={() => {
+                setIndex(null);
+              }}
+            >
               <div className={style.right}>Total Number Of Owners</div>
             </th>
-            <th className={cn(style.h4, style.bg, style.biaotou)}>
+            <th
+              className={cn(style.h4, style.bg, style.biaotou)}
+              onMouseEnter={() => {
+                setBgState('whales');
+              }}
+              onMouseLeave={() => {
+                setIndex(null);
+              }}
+            >
               <div className={style.right}>% Parcels Owned By Top 10 Whales</div>
             </th>
           </tr>

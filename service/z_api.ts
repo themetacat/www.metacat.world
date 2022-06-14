@@ -960,3 +960,18 @@ export const req_topic_detail = async (id: number, creator: string) => {
 
   return json;
 };
+
+//
+
+export const req_cv_top20_parcel = async () => {
+  const url = '/api/get_cv_top20_parcel';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};

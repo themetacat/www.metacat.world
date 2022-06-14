@@ -19,14 +19,14 @@ const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
 const options = {
   PRICE: [
-    { label: 'MONTHLY', value: 'MONTH' },
-    { label: 'QUARTERLY', value: 'QUARTER' },
-    { label: 'YEARLY', value: 'YEAR' },
+    { label: 'MONTH', value: 'MONTH' },
+    { label: 'QUARTER', value: 'QUARTER' },
+    { label: 'YEAR', value: 'YEAR' },
     { label: 'All-Time', value: 'ALL' },
   ],
   TRAFFIC: [
-    { label: 'WEEKLY', value: 'WEEKLY' },
-    { label: 'MONTHLY', value: 'MONTHLY' },
+    { label: 'WEEK', value: 'WEEKLY' },
+    { label: 'MONTH', value: 'MONTHLY' },
     { label: 'All-Time', value: 'TOTAL' },
   ],
 };

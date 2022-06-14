@@ -15,6 +15,7 @@ interface Props {
   className?: string;
   showArrow?: boolean;
   defaultLabel?: string;
+  mini?: string;
 }
 
 export default function Selecter({
@@ -23,6 +24,7 @@ export default function Selecter({
   className,
   showArrow = false,
   defaultLabel = 'MONTHLY',
+  mini,
 }: Props) {
   const cls = cn(className);
   const [selectedOption, setSelectedOption] = React.useState(defaultLabel);
@@ -68,7 +70,10 @@ export default function Selecter({
 
   return (
     <div className={cn(style.selectDiv, cls)}>
-      <div className={cn('flex justify-center items-center', style.selecter)} onClick={changeShow}>
+      <div
+        className={cn('flex justify-center items-center', style.selecter, mini)}
+        onClick={changeShow}
+      >
         <div>{selectedOption}</div>
         {showArrow ? (
           <img

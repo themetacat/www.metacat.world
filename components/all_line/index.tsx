@@ -74,7 +74,7 @@ export default function AllLine({
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState(null);
-  const [showType, setShowType] = React.useState(options[0].value);
+  const [showType, setShowType] = React.useState(options[1].value);
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const chart = React.useRef(null);
 
@@ -214,7 +214,7 @@ export default function AllLine({
                   <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
                     legend3.color[0]
                   }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-            parseInt(result[showKeyTypes[2]]?.value, 10),
+            result[showKeyTypes[2]]?.value,
           )}</span>
                   <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
                 </span>
@@ -524,7 +524,7 @@ export default function AllLine({
           showArrow={true}
           onClick={changeStatic}
           className={style.selecterLong}
-          defaultLabel={options[0].value}
+          defaultLabel={options[1].value}
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
