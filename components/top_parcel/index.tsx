@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { formatNum } from '../../common/utils';
 import CoverImg from '../cover-img';
 import style from './index.module.css';
 
@@ -42,11 +42,16 @@ export default function TopParcel({
       </div>
       <div className={style.detail}>
         <div className={style.name}>{name}</div>
-        <div className={style.parcelId}>Parcel ID: {parcel_id}</div>
+        <div className={mapType === 'PRICE' ? style.parcelId : style.traffic}>
+          Parcel ID: {parcel_id}
+        </div>
         {mapType === 'PRICE' ? (
-          <div className={style.info}>
-            Sale price: {bought_time} / {bought_price_eth}ETH({bought_price_usd}USD)
-          </div>
+          <>
+            <div className={style.info}>Sale price:</div>
+            <div className={style.info}>
+              {bought_time} / {bought_price_eth} ETH({formatNum(bought_price_usd)} USD)
+            </div>
+          </>
         ) : (
           <div className={style.info}>
             {staticType === 'WEEKLY' ? 'Weekly ' : null}

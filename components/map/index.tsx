@@ -1292,7 +1292,7 @@ function Map({
         </div>
       </div>
       <div className={cn(style.topList, arrowsState ? style.dn : null)}>
-        <div className={style.title}>TOP 20 Parcel</div>
+        <div className={style.title}>TOP 20 Parcels</div>
         {rander}
       </div>
       {zoomControl ? (

@@ -1,16 +1,16 @@
 .container {
+  position: relative;
+  display: flex;
   width: 350px;
   height: 104px;
-  background-color: #0f191b;
-  display: flex;
-  padding: 12px;
   margin-bottom: 10px;
-  position: relative;
+  padding: 12px;
+  background-color: #0f191b;
 }
 .container .imgContainer {
+  position: relative;
   width: 80px;
   height: 80px;
-  position: relative;
 }
 .container .imgContainer .img {
   width: 100%;
@@ -18,45 +18,55 @@
 }
 .container .imgContainer .desc {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 20px;
   height: 20px;
-  background-color: #00d0ec;
-  color: #000000;
+  color: #000;
   font-size: 12px;
-  text-align: center;
   line-height: 20px;
+  text-align: center;
+  background-color: #00d0ec;
 }
 .container .detail {
   flex: 1;
   margin-left: 7px;
 }
 .container .detail .name {
-  color: #ffffff;
-  font-size: 14px;
   width: 185px;
   overflow: hidden;
+  color: #fff;
+  font-size: 14px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .container .detail .parcelId {
+  margin: 3px 0;
+  color: #fff;
   font-weight: 400;
   font-size: 12px;
-  color: #ccc;
+}
+.container .detail .traffic {
   margin: 10px 0;
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
 }
 .container .detail .info {
+  color: #bbb;
   font-weight: 400;
   font-size: 12px;
-  color: #ccc;
+  margin-top: 1px;
+}
+.container .detail .info:last-child {
+  color: #fff;
 }
 .container .icon {
   position: absolute;
+  top: 10px;
+  right: 18px;
   width: 21px;
   height: 21px;
   border-radius: 50%;
-  right: 18px;
-  top: 10px;
   cursor: pointer;
 }
