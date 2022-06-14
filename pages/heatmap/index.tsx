@@ -18,7 +18,7 @@ import style from './index.module.css';
 const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
-const OthersideMap = dynamic(() => import('../../components/otherside_map'), {
+const OthersideMap = dynamic(() => import('../../components/otherside-map'), {
   ssr: false,
 });
 
@@ -68,10 +68,10 @@ const TAB = [
     label: 'Otherside',
     type: 'otherside',
   },
-  // {
-  //   label: 'SubStrata',
-  //   type: 'substrata',
-  // },
+  {
+    label: 'SubStrata',
+    type: 'substrata',
+  },
 ];
 
 export default function MapPage(props) {
@@ -159,10 +159,35 @@ export default function MapPage(props) {
       );
     }
     if (mapType === 'otherside') {
-      return <OthersideMap id={'othersidemap'}></OthersideMap>;
+      return (
+        <OthersideMap
+          id={'othersidemap'}
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="rgb(8 17 19)"
+        ></OthersideMap>
+      );
     }
     if (mapType === 'substrata') {
-      return <SubStrataMap zoomLimit={[5, 9]} initZoom={5} dragging={true}></SubStrataMap>;
+      return (
+        <SubStrataMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="#15282C"
+        ></SubStrataMap>
+      );
     }
 
     return (
