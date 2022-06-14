@@ -43,7 +43,7 @@ export default function TopicIndex() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
-  const [pageCount, setPageCount] = React.useState(50);
+  const [pageCount, setPageCount] = React.useState(80);
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('buildings');
@@ -76,7 +76,7 @@ export default function TopicIndex() {
 
   const onRetry = React.useCallback(() => {
     requestData(pageNumber, pageCount);
-  }, []);
+  }, [pageNumber, pageCount]);
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {

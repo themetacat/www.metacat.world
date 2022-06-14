@@ -16,6 +16,7 @@ export default function OthersideMap({ id }: Props) {
       zoom: 8,
       minZoom: 3,
       maxZoom: 12,
+      autoFit: true,
     });
 
     const scene = new Scene({

@@ -38,9 +38,9 @@ const mapT = [{ value: 'price', label: 'PRICE' }];
 
 const options = {
   price: [
-    { label: 'MONTHLY', value: 'month' },
-    { label: 'QUARTERLY', value: 'quarter' },
-    { label: 'YEARLY', value: 'year' },
+    { label: 'MONTH', value: 'month' },
+    { label: 'QUARTER', value: 'quarter' },
+    { label: 'YEAR', value: 'year' },
     { label: 'All-Time', value: 'all' },
   ],
 };

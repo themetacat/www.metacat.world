@@ -6,6 +6,7 @@
   margin-bottom: 10px;
   padding: 12px;
   background-color: #0f191b;
+  cursor: pointer;
 }
 .container .imgContainer {
   position: relative;
@@ -53,10 +54,10 @@
   font-size: 12px;
 }
 .container .detail .info {
+  margin-top: 1px;
   color: #bbb;
   font-weight: 400;
   font-size: 12px;
-  margin-top: 1px;
 }
 .container .detail .info:last-child {
   color: #fff;

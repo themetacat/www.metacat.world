@@ -15,6 +15,7 @@ type Props = {
   traffic?: string;
   idx?: number;
   opensea_url?: string;
+  parcel_url?: string;
 };
 
 export default function TopParcel({
@@ -29,9 +30,15 @@ export default function TopParcel({
   traffic,
   idx,
   opensea_url,
+  parcel_url,
 }: Props) {
   return (
-    <div className={style.container}>
+    <div
+      className={style.container}
+      onClick={() => {
+        window.open(parcel_url);
+      }}
+    >
       <div className={style.imgContainer}>
         <div className={style.desc}>{idx + 1}</div>
         <CoverImg
@@ -54,8 +61,8 @@ export default function TopParcel({
           </>
         ) : (
           <div className={style.info}>
-            {staticType === 'WEEKLY' ? 'Weekly ' : null}
-            {staticType === 'MONTHLY' ? 'Monthly ' : null}
+            {staticType === 'WEEKLY' ? 'Week ' : null}
+            {staticType === 'MONTHLY' ? 'Month ' : null}
             {staticType === 'TOTAL' ? 'Total ' : null}
             Traffic: {traffic}
           </div>

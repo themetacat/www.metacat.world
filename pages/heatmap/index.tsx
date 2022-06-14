@@ -18,9 +18,9 @@ import style from './index.module.css';
 const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
-const OthersideMap = dynamic(() => import('../../components/otherside_map'), {
-  ssr: false,
-});
+// const OthersideMap = dynamic(() => import('../../components/otherside_map'), {
+//   ssr: false,
+// });
 
 const DecentralandMap = dynamic(() => import('../../components/decentraland-map'), {
   ssr: false,
@@ -64,10 +64,10 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
-  {
-    label: 'Otherside',
-    type: 'otherside',
-  },
+  // {
+  //   label: 'Otherside',
+  //   type: 'otherside',
+  // },
   // {
   //   label: 'SubStrata',
   //   type: 'substrata',
@@ -159,7 +159,7 @@ export default function MapPage(props) {
       );
     }
     if (mapType === 'otherside') {
-      return <OthersideMap id={'othersidemap'}></OthersideMap>;
+      // return <OthersideMap id={'othersidemap'}></OthersideMap>;
     }
     if (mapType === 'substrata') {
       return <SubStrataMap zoomLimit={[5, 9]} initZoom={5} dragging={true}></SubStrataMap>;
