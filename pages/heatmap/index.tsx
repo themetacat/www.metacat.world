@@ -10,7 +10,6 @@ import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Status from '../../components/status';
-// import TestMap from "../../components/testmap"
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
@@ -19,6 +18,9 @@ import style from './index.module.css';
 const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
+// const OthersideMap = dynamic(() => import('../../components/otherside_map'), {
+//   ssr: false,
+// });
 
 const DecentralandMap = dynamic(() => import('../../components/decentraland-map'), {
   ssr: false,
@@ -63,9 +65,9 @@ const TAB = [
     type: 'somniumspace',
   },
   // {
-  //   label: "Otherside",
-  //   type: "otherside"
-  // }
+  //   label: 'Otherside',
+  //   type: 'otherside',
+  // },
   // {
   //   label: 'SubStrata',
   //   type: 'substrata',
@@ -157,7 +159,7 @@ export default function MapPage(props) {
       );
     }
     if (mapType === 'otherside') {
-      // return <TestMap id="map" ></TestMap>
+      // return <OthersideMap id={'othersidemap'}></OthersideMap>;
     }
     if (mapType === 'substrata') {
       return <SubStrataMap zoomLimit={[5, 9]} initZoom={5} dragging={true}></SubStrataMap>;
@@ -219,7 +221,7 @@ export default function MapPage(props) {
       >
         {renderMap}
       </div>
-      {fullScreen ? null : <Footer />}
+      {/* {fullScreen ? null : <Footer />} */}
     </Page>
   );
 }
