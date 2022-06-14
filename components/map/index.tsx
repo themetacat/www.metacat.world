@@ -294,7 +294,7 @@ function Map({
   const popDetail = React.useRef();
   const mapType = React.useRef('PRICE');
   const staticType = React.useRef('ALL');
-  const [stc, setStc] = React.useState('MONTHLY');
+  const [stc, setStc] = React.useState('MONTH');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[1]);
   const trafficRef = React.useRef(null);
@@ -628,6 +628,7 @@ function Map({
       let count = fe.properties[staticType.current];
       if (!Number.isNaN(count) && legends.current) {
         count = count < 0 ? 0 : count;
+        console.log(legends.current, staticType.current);
         const index = legends.current.findIndex((x) => {
           return count <= x[staticType.current].start && count >= x[staticType.current].end;
         });
@@ -747,15 +748,16 @@ function Map({
 
   const changeStaticType = React.useCallback(
     (newType) => {
+      console.log(newType);
       staticType.current = newType;
       if (mapType.current === 'PRICE') {
-        if (newType === 'MONTH') {
+        if (newType === 'MONTHLY') {
           topData.current = priceTop.current.price_monthly;
         }
-        if (newType === 'QUARTER') {
+        if (newType === 'QUARTERLY') {
           topData.current = priceTop.current.price_quarterly;
         }
-        if (newType === 'YEAR') {
+        if (newType === 'YEARLY') {
           topData.current = priceTop.current.price_yearly;
         }
         if (newType === 'ALL') {
@@ -784,7 +786,7 @@ function Map({
     (newType) => {
       mapType.current = newType;
       setStaticList(options[newType]);
-      setStc('MONTHLY');
+      setStc('MONTH');
       if (newType === 'PRICE') {
         topData.current = priceTop.current.price_quarterly;
       }
