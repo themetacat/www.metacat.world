@@ -1,9 +1,20 @@
 import React from 'react';
 import cn from 'classnames';
-import L from 'leaflet';
-import MiniMap from 'leaflet-minimap';
 
-import Router from 'next/router';
+import {
+  Scene,
+  PerspectiveCamera,
+  InstancedMesh,
+  CircleGeometry,
+  DoubleSide,
+  WebGLRenderer,
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  Object3D,
+  Color,
+} from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import style from './index.module.css';
 
@@ -13,9 +24,7 @@ import ParcelDeatil from '../parcel-detail';
 
 import { convert } from '../../common/utils';
 
-import { req_substrata_level_three } from '../../service/z_api';
-
-import { getSomniumSpacePriceMapLevelThreeData, getSomniumSpaceParcelDeatil } from '../../service';
+import { getOtherSidePriceMap } from '../../service';
 
 const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
@@ -44,6 +53,7 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
+  id: string;
 }
 
 const colors = {
@@ -253,7 +263,7 @@ const colors = {
   ],
 };
 
-function SubstrataMap({
+function OtherSideMap({
   zoomLimit,
   zoomControl,
   initZoom = zoomLimit[0],
@@ -264,6 +274,7 @@ function SubstrataMap({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
+  id,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -291,167 +302,61 @@ function SubstrataMap({
   const [activeColor, setActiveColor] = React.useState(null);
   // const clickToJumpRef = React.useRef(clickToJump);
 
+  const sceneRef = React.useRef(null);
+  const renderer = React.useRef(null);
+  const animationRef = React.useRef(null);
+  const mapMesh = React.useRef(null);
+
   const setLoading = React.useCallback(() => {
     if (loadFinish) {
       loadFinish();
     }
   }, [loadFinish]);
 
-  const drawPriceGeoJsonToLayer = (pageMap, data, price, parcelL) => {
-    if (data) {
-      parcelL?.clearLayers();
-      const margin = 0.01;
-      const minIsLandLayer = L.geoJSON(null, {
-        style: (fe) => {
-          return {
-            fill: true,
-            fillColor: `rgba(101, 128, 134, 1)`,
-            weight: 1,
-            fillOpacity: 1,
-            color: '#444444',
-          };
-        },
-      });
-
-      if (price.levelOne) {
-        colors[2].forEach(function (x, index) {
-          Object.assign(x.ALL, price.levelOne[index].all);
-          Object.assign(x.MONTH, price.levelOne[index].month);
-          Object.assign(x.QUARTER, price.levelOne[index].quarter);
-          Object.assign(x.YEAR, price.levelOne[index].year);
-        });
-      }
-
-      for (let i = 0; i < data.length; i += 1) {
-        const all = data[i];
-        if (all) {
-          if (all.geometry) {
-            let polygon;
-            if (all.properties.type === 'polygon') {
-              polygon = {
-                type: 'Feature',
-                geometry: {
-                  type: 'Polygon',
-                  coordinates: [all.geometry.coordinates],
-                },
-                properties: all.properties,
-              };
-            } else {
-              const { coordinates } = all.geometry;
-              polygon = {
-                type: 'Feature',
-                geometry: {
-                  type: 'Polygon',
-                  coordinates: [
-                    [
-                      [coordinates[0] + margin, coordinates[1] + margin],
-                      [coordinates[2] - margin, coordinates[1] + margin],
-                      [coordinates[2] - margin, coordinates[3] - margin],
-                      [coordinates[0] + margin, coordinates[3] - margin],
-                    ],
-                  ],
-                },
-                properties: all.properties,
-              };
-            }
-
-            polygon.properties.ALL = all.price.all;
-            polygon.properties.MONTH = all.price.month;
-            polygon.properties.QUARTER = all.price.quarter;
-            polygon.properties.YEAR = all.price.year;
-            parcelL.addData(polygon);
-            minIsLandLayer.addData(polygon);
-          }
-        }
-      }
-
-      const params = {
-        position: 'topright',
-        width: 250,
-        heigth: 100,
-        zoomLevelFixed: 0,
-        mapOptions: {
-          preferCanvas: true,
-        },
-      };
-      if (clickToJump) {
-        (params as any).centerFixed = { lat: 0, lng: 0 };
-      }
-      const min = new MiniMap(minIsLandLayer, params);
-      if (min) {
-        min.addTo(pageMap);
-      }
-    }
-  };
-
-  const requestPriceMapThreeData = React.useCallback(
-    async (pageMap, parcelL) => {
-      const res = await req_substrata_level_three();
-      const { parcels, stats } = res.data;
-
-      // parcels.current = data;
-      priceRef.current = stats?.price;
-
-      drawPriceGeoJsonToLayer(pageMap, parcels, convert(stats?.price), parcelL);
-
-      setLoading();
-    },
-    [null],
-  );
-
-  const clearHeightLight = React.useCallback(() => {
-    if (heighFeature.current) {
-      layerManager.current[1].layer.clearLayers();
-      heighFeature.current = null;
-    }
-  }, []);
-
   const closePop = React.useCallback(() => {
     if (popDetail.current) {
       (popDetail.current as any).style.display = 'none';
     }
     setActiveColor(null);
-    clearHeightLight();
-  }, [popDetail.current, clearHeightLight]);
+  }, [popDetail.current]);
 
-  // parcel style function
-  const parcelStyle = React.useCallback(
-    (fe) => {
-      let color = 'rgba(101, 128, 134, 1)';
-      let count = fe.properties[staticType.current];
-      if (!Number.isNaN(count) && legends.current) {
-        count = count < 0 ? 0 : count;
-        const index = legends.current.findIndex((x) => {
-          return count <= x[staticType.current].start && count >= x[staticType.current].end;
-        });
-        if (index > -1) {
-          const allColor = legends.current[index];
-          /* eslint no-underscore-dangle: 0 */
-          fe.properties.colorIndex = index; // eslint-disable-line
-          color = allColor.color;
-        }
+  const setColor = React.useCallback(
+    (insMesh) => {
+      if (!insMesh) {
+        return;
       }
-      // if(color == 'rgba(101, 128, 134, 1)'){
-      //   console.log(fe.properties)
-      // }
-      return {
-        fill: true,
-        fillColor: color,
-        weight: 1,
-        color: 'rgb(0,0,0)',
-        fillOpacity: 1,
-      };
+      const { attrs } = insMesh.userData;
+      let color = 'rgba(101, 128, 134, 1)';
+      for (let i = 0; i < attrs.length; i += 1) {
+        const fe = attrs[i];
+        let count = fe.attr[staticType.current.toLocaleLowerCase()];
+        if (!Number.isNaN(count) && legends.current) {
+          count = count < 0 ? 0 : count;
+          const index = legends.current.findIndex((x) => {
+            return count <= x[staticType.current].start && count >= x[staticType.current].end;
+          });
+          if (index > -1) {
+            const allColor = legends.current[index];
+            /* eslint no-underscore-dangle: 0 */
+            fe.attr.colorIndex = index; // eslint-disable-line
+            color = allColor.color;
+          }
+        }
+
+        insMesh.setColorAt(i, new Color(color));
+      }
+      insMesh.instanceColor.needsUpdate = true; // eslint-disable-line
     },
-    [staticType],
+    [colors],
   );
 
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
-      layerManager.current[0].layer.setStyle(parcelStyle);
+      setColor(mapMesh.current);
       closePop();
     },
-    [minZoomLevel],
+    [minZoomLevel, setColor],
   );
 
   const changeMapType = React.useCallback(
@@ -464,12 +369,6 @@ function SubstrataMap({
     [minZoomLevel],
   );
 
-  const zoomChange = (e) => {
-    /* eslint no-underscore-dangle: 0 */
-    setZoomLevel(e.target._zoom);
-    closePop();
-  };
-
   const zoomButtonClick = React.useCallback(
     (type) => {
       if (mapRef.current) {
@@ -479,48 +378,6 @@ function SubstrataMap({
           mapRef.current.zoomOut();
         }
       }
-    },
-    [null],
-  );
-
-  const getCanvas = React.useCallback(
-    (text) => {
-      const canvas = document.createElement('canvas');
-
-      const ctx = canvas.getContext('2d');
-
-      ctx.font = `12px Arial`;
-
-      const fontSize = 13;
-      const cdiv = ctx.measureText(text).width;
-
-      const width = cdiv * 1.3;
-      const height = 28;
-
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // ctx.fillStyle = 'rgba(100,200,0, 0.7)';
-      // ctx.fillRect(0, 0, width, height);
-      ctx.font = `${fontSize}px bold`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.strokeStyle = '#000';
-      ctx.strokeText(text, width / 2, height / 2);
-      ctx.lineWidth = 3;
-      ctx.fillStyle = '#fff';
-      ctx.fillText(text, width / 2, height / 2);
-      return canvas;
-    },
-    [null],
-  );
-
-  const requestDeatil = React.useCallback(
-    async (id) => {
-      const res = await getSomniumSpaceParcelDeatil(id);
-      const parcel = convert(res.data);
-      setDeatil(parcel);
     },
     [null],
   );
@@ -537,115 +394,122 @@ function SubstrataMap({
     }
   }, [fullScreen, fullScreenOnClick]);
 
-  React.useEffect(() => {
-    const map = L.map('map', {
-      preferCanvas: true,
-      minZoom: minZoomLevel,
-      maxZoom: maxZoomLevel,
-      zoomControl: false,
-      dragging,
-    }).setView([0, 0], zoomLevel);
-    map.on('zoom', zoomChange);
-    legends.current = colors['2'];
+  const requestData = React.useCallback(
+    async (sc) => {
+      const res = await getOtherSidePriceMap();
 
-    mapRef.current = map;
-    markers.current = L.layerGroup([]);
+      const { parcels, stats } = res.data;
+      const price = convert(stats?.price);
 
-    const parcelsPriceLayerThree = L.geoJSON(null, {
-      style: parcelStyle,
-      onEachFeature: (feature, layer) => {
-        if (feature.properties.coordinates && zoomControl) {
-          layer.bindTooltip(feature.properties.coordinates, {
-            direction: 'top',
-            className: style.leafletLabel,
+      if (price.levelOne) {
+        colors[2].forEach(function (item, index) {
+          Object.assign(item.ALL, price.levelOne[index].all);
+          Object.assign(item.MONTH, price.levelOne[index].month);
+          Object.assign(item.QUARTER, price.levelOne[index].quarter);
+          Object.assign(item.YEAR, price.levelOne[index].year);
+        });
+      }
+
+      if (parcels) {
+        const org = parcels[0];
+        const orgCenter = org.properties.coordinates;
+
+        const insGeometry = new CircleGeometry(0.2, 32);
+
+        const pointsMaterial = new MeshBasicMaterial({ color: 0xffffff, side: DoubleSide });
+        insGeometry.center();
+
+        const insMesh = new InstancedMesh(insGeometry, pointsMaterial, parcels.length);
+        const transform = new Object3D();
+        const allAttr = [];
+        for (let i = 0; i < parcels.length; i += 1) {
+          const x = parcels[i].properties.coordinates[0] - orgCenter[0];
+          const y = parcels[i].properties.coordinates[1] - orgCenter[1];
+          const z = 0;
+          transform.position.set(x, y, z);
+          transform.updateMatrix();
+          insMesh.setMatrixAt(i, transform.matrix);
+          const d = Math.random();
+          const d2 = Math.random();
+          const d3 = Math.random();
+          insMesh.setColorAt(i, new Color(d, d2, d3));
+          allAttr.push({
+            id: parcels[i].token_id,
+            attr: parcels[i].price,
           });
         }
-      },
-    }).addTo(map);
+        insMesh.userData.attrs = allAttr;
+        mapMesh.current = insMesh;
+        setColor(insMesh);
+        sc.add(insMesh);
+      }
+    },
+    [setColor],
+  );
 
-    const heighLayer = L.geoJSON(null, {
-      style: {
-        fill: true,
-        fillColor: 'rgb(255,0,0)',
-        weight: 1,
-        color: 'rgb(255,0,0)',
-        fillOpacity: 0.6,
-      },
-    }).addTo(map);
-
-    if (zoomControl) {
-      parcelsPriceLayerThree.on('click', function (e) {
-        if (e.sourceTarget && e.sourceTarget.feature) {
-          const id = e.sourceTarget.feature.properties.token_id;
-          const { colorIndex } = e.sourceTarget.feature.properties;
-
-          clearHeightLight();
-
-          const polygon = JSON.parse(JSON.stringify(e.sourceTarget.feature));
-          polygon.properties.active = true;
-          heighFeature.current = polygon;
-          layerManager.current[1].layer.addData(heighFeature.current);
-
-          if (colorIndex !== null || colorIndex !== undefined) {
-            setActiveColor(colorIndex);
-          }
-          if (popDetail.current) {
-            (popDetail.current as any).style.display = 'block';
-            (popDetail.current as any).style.top = `${(e as any).containerPoint.y}px`;
-            (popDetail.current as any).style.left = `${(e as any).containerPoint.x}px`;
-            (popDetail.current as any).source = (e as any).latlng;
-          }
-          requestDeatil(id);
-        }
-      });
-
-      map.on('movestart', (e) => {
-        if (popDetail && popDetail.current) {
-          updatePop.current.need = true;
-        }
-      });
-
-      map.on('move', (e) => {
-        if (updatePop.current.need && popDetail.current && (popDetail.current as any).source) {
-          const containerPoint = map.latLngToContainerPoint((popDetail.current as any).source);
-          (popDetail.current as any).style.top = `${containerPoint.y}px`;
-          (popDetail.current as any).style.left = `${containerPoint.x}px`;
-        }
-      });
-
-      map.on('moveend', () => {
-        if (updatePop.current.need) {
-          updatePop.current.need = false;
-        }
-      });
+  const render = React.useCallback(() => {
+    if (!renderer.current || !sceneRef.current) {
+      return;
     }
-
-    if (clickToJump) {
-      map.on('click', function (e) {
-        Router.push('/heatmap?type=somniumspace');
-      });
+    // const { targetMesh } = sceneRef.current.userData;
+    // if (targetMesh) {
+    //   targetMesh.rotation.y = Date.now() * 0.001;
+    // }
+    const { camera } = sceneRef.current.userData;
+    renderer.current.render(sceneRef.current, camera);
+    if (mapMesh.current) {
+      mapMesh.current.rotateZ(0.0005);
     }
+  }, [null]);
 
-    const dataLayer = [
-      {
-        layer: parcelsPriceLayerThree,
-        name: 'price3',
-      },
-      {
-        layer: heighLayer,
-        name: 'heighLayer',
-      },
-    ];
+  const animation = React.useCallback(() => {
+    render();
+    animationRef.current = requestAnimationFrame(animation);
+  }, [render]);
 
-    layerManager.current = dataLayer;
-    requestPriceMapThreeData(map, parcelsPriceLayerThree);
+  React.useEffect(() => {
+    if (!renderer.current) {
+      const re = new WebGLRenderer({ antialias: true });
+      re.setClearColor(0xffffff, 0);
+      re.setPixelRatio(window.devicePixelRatio);
+      renderer.current = re;
+      const scene = new Scene();
+      const sceneElement = document.getElementById(`map`);
+
+      const camera = new PerspectiveCamera(
+        60,
+        sceneElement.clientWidth / sceneElement.clientHeight,
+        0.1,
+        20000,
+      );
+      camera.position.z = 500;
+      scene.userData.camera = camera;
+
+      const controls = new OrbitControls(scene.userData.camera, re.domElement);
+      scene.userData.controls = controls;
+
+      sceneRef.current = scene;
+
+      re.setSize(sceneElement.clientWidth, sceneElement.clientHeight, true);
+      sceneElement.appendChild(re.domElement);
+      requestData(scene);
+    }
+    animation();
 
     return () => {
-      map.off('zoom');
-      map.remove();
+      if (renderer.current) {
+        // renderer.current.dispose();
+        // renderer.current.forceContextLoss();
+        // renderer.current.context = null;
+        // renderer.current.domElement = null;
+        // renderer.current = null;
+      }
+
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
-    // requestSube(map);
-  }, [clearHeightLight]);
+  }, [animation, requestData]);
 
   return (
     <div className={style.mapContainer} onClick={onClick}>
@@ -720,4 +584,4 @@ function SubstrataMap({
   );
 }
 
-export default SubstrataMap;
+export default OtherSideMap;

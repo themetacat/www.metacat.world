@@ -56,6 +56,19 @@ class API {
 
     return json;
   }
+
+  // 获取otherside价格热力图数据
+  public async getOtherSidePriceMap() {
+    const url = `${this.url}/get_otherside_price_map`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('http://8.130.23.16/api/v1');
