@@ -24,11 +24,11 @@ const build = [
     type: 'buildings',
     link: '/build/buildings',
   },
-  // {
-  //   label: "Space Buildings",
-  //   type: "spacebuildings",
-  //   link: "/build/spacebuildings"
-  // }
+  {
+    label: 'Space Buildings',
+    type: 'spacebuildings',
+    link: '/build/spacebuildings',
+  },
 ];
 const wearable = [
   {
@@ -122,7 +122,13 @@ export default function PageHeader({ active, className }: Props) {
           }}
         >
           Build
-          {buildState ? <TwoNavigation options={build} className={style.cn}></TwoNavigation> : null}
+          {buildState ? (
+            <TwoNavigation
+              options={build}
+              className={style.cn}
+              location={style.location}
+            ></TwoNavigation>
+          ) : null}
         </div>
 
         <div
@@ -140,7 +146,11 @@ export default function PageHeader({ active, className }: Props) {
         >
           Wearables
           {wearableState ? (
-            <TwoNavigation options={wearable} className={style.cn2}></TwoNavigation>
+            <TwoNavigation
+              options={wearable}
+              className={style.cn2}
+              location={style.location2}
+            ></TwoNavigation>
           ) : null}
         </div>
         <div

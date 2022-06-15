@@ -12,12 +12,19 @@
 .location {
   position: absolute;
   right: -35px;
-  bottom: -145px;
+  bottom: -141px;
+  z-index: 99;
+  background-color: #0f191b;
+}
+.location2 {
+  position: absolute;
+  right: 0;
+  bottom: -90px;
   z-index: 99;
   background-color: #0f191b;
 }
 .cn {
-  width: 93px;
+  width: 135px;
 }
 
 .cn2 {

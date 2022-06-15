@@ -50,7 +50,7 @@ export default function TopicIndex() {
   const [pageCount, setPageCount] = React.useState(80);
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [tabState, setTabState] = React.useState('buildings');
+  const [tabState, setTabState] = React.useState('spacebuildings');
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -153,7 +153,7 @@ export default function TopicIndex() {
         <div
           className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
-          <img src="/images/buildingsBanner.png" className={style.sign}></img>
+          <img src="/images/banner/spacebuildings.png" className={style.sign}></img>
         </div>
       </div>
 

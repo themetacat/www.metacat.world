@@ -6,11 +6,12 @@ import style from './index.module.css';
 type Props = {
   options?;
   className?: string;
+  location?: string;
 };
 
-export default function TwoNavigation({ options, className }: Props) {
+export default function TwoNavigation({ options, className, location }: Props) {
   return (
-    <div className={style.container}>
+    <div className={cn(location)}>
       {options.map((item, index) => {
         return (
           <div key={index} className={cn(style.item, className)}>

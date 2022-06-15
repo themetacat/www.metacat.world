@@ -58,7 +58,7 @@ export default function Wearables() {
   }, [requestData]);
 
   const toTopic = React.useCallback((id, c, b) => {
-    window.open(`/topic/${c}?type=${b === 1 ? 'buildings' : 'wearables'}`);
+    window.open(`/topic/${c}?type=${'wearables'}`);
   }, []);
 
   const reander = React.useMemo(() => {

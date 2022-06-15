@@ -291,7 +291,10 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     <Page className="min-h-screen" meta={meta}>
       <div className="bg-black relative">
         <div className={fixedState ? style.fix1 : null}>
-          <PageHeader className="relative z-10" active={'Build'} />
+          <PageHeader
+            className="relative z-10"
+            active={navState === 'buildings' ? 'Build' : 'Wearables'}
+          />
         </div>
         <div
           className={cn('main-content flex justify-center flex-col  relative z-10', style.signBack)}
