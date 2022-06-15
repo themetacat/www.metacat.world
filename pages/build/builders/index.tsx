@@ -23,6 +23,10 @@ const TAB = [
     label: 'Buildings',
     type: 'buildings',
   },
+  // {
+  //   label: 'Space Buildings',
+  //   type: 'spacebuildings',
+  // },
 ];
 
 const anchorNav = [
