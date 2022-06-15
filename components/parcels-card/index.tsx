@@ -105,7 +105,7 @@ export default function Card({
           <span>.</span>
           {` ${suburb}`}
         </h2>
-        <ParcelsState status={status} price={price} id={parcelId} is_state={state} />
+        {/* <ParcelsState status={status} price={price} id={parcelId} is_state={state} /> */}
         <div className={style.detail}>
           <div className={cn('flex', style.coord)}>
             <img src="/images/icon/traffic.png" />

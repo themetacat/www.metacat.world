@@ -24,6 +24,11 @@ const build = [
     type: 'buildings',
     link: '/build/buildings',
   },
+  // {
+  //   label: "Space Buildings",
+  //   type: "spacebuildings",
+  //   link: "/build/spacebuildings"
+  // }
 ];
 const wearable = [
   {

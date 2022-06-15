@@ -2,21 +2,27 @@
   width: 36px;
   height: 30px;
 }
-.active{
+.active {
   color: #fff;
 }
-.base{
+.base {
   z-index: 10002;
   width: 1400px;
 }
-
-.cn{
+.location {
+  position: absolute;
+  right: -35px;
+  bottom: -145px;
+  z-index: 99;
+  background-color: #0f191b;
+}
+.cn {
   width: 93px;
 }
 
-.cn2{
+.cn2 {
   width: 116px;
 }
-.z{
+.z {
   z-index: 99;
 }
