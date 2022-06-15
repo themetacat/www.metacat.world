@@ -293,7 +293,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         <div className={fixedState ? style.fix1 : null}>
           <PageHeader
             className="relative z-10"
-            active={navState === 'buildings' ? 'Build' : 'Wearables'}
+            active={navState === 'buildings' ? 'Build' : 'wearables'}
           />
         </div>
         <div
