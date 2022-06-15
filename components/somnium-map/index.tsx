@@ -311,6 +311,15 @@ function SomniumMap({
         },
       });
 
+      if (price.levelOne) {
+        colors[2].forEach(function (x, index) {
+          Object.assign(x.ALL, price.levelOne[index].all);
+          Object.assign(x.MONTH, price.levelOne[index].month);
+          Object.assign(x.QUARTER, price.levelOne[index].quarter);
+          Object.assign(x.YEAR, price.levelOne[index].year);
+        });
+      }
+
       for (let i = 0; i < data.length; i += 1) {
         const all = data[i];
         if (all) {
@@ -319,15 +328,6 @@ function SomniumMap({
               type: 'Feature',
               ...all,
             };
-
-            if (price.levelOne) {
-              colors[2].forEach(function (x, index) {
-                Object.assign(x.ALL, price.levelOne[index].all);
-                Object.assign(x.MONTH, price.levelOne[index].month);
-                Object.assign(x.QUARTER, price.levelOne[index].quarter);
-                Object.assign(x.YEAR, price.levelOne[index].year);
-              });
-            }
 
             // if (price.levelTwo) {
             //   colors[1].forEach(function (x, index) {
@@ -356,6 +356,8 @@ function SomniumMap({
           }
         }
       }
+
+      console.log(colors[2]);
 
       const params = {
         position: 'topright',
@@ -423,7 +425,7 @@ function SomniumMap({
           color = allColor.color;
         }
       }
-      // if(color == 'rgba(101, 128, 134, 1)'){
+      // if(color === 'rgba(101, 128, 134, 1)'){
       //   console.log(fe.properties)
       // }
       return {
