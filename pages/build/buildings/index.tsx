@@ -39,10 +39,10 @@ export default function TopicIndex() {
       label: 'Buildings',
       type: 'buildings',
     },
-    // {
-    //   label: 'Space Buildings',
-    //   type: 'spacebuildings',
-    // },
+    {
+      label: 'Space Buildings',
+      type: 'spacebuildings',
+    },
   ];
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);

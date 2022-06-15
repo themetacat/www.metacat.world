@@ -12,8 +12,8 @@
 .location {
   position: absolute;
   right: -35px;
-  /* bottom: -141px; */
-  bottom: -90px;
+  bottom: -141px;
+  /* bottom: -90px; */
   z-index: 99;
   background-color: #0f191b;
 }
