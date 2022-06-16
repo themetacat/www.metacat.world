@@ -797,6 +797,19 @@ class API {
     return json;
   }
 
+  public async req_substrata_detail(tokenId: string) {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_substrata_parcel_detail${search}`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 6.30 获取 netvrk 地块成交均价统计信息接口
 
   public async req_netvrk_avg_price() {

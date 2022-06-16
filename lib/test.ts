@@ -69,6 +69,15 @@ class API {
 
     return json;
   }
+
+  public async getOtherSideParcelDetail(tokenId: string): Promise<any> {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_otherside_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('http://8.130.23.16/api/v1');
