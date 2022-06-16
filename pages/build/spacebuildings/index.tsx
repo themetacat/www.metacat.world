@@ -16,7 +16,7 @@ import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { getBuilderList } from '../../../service';
+import { req_space_buildings_list } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -50,7 +50,7 @@ export default function TopicIndex() {
   const [pageCount, setPageCount] = React.useState(80);
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [tabState, setTabState] = React.useState('buildings');
+  const [tabState, setTabState] = React.useState('spacebuildings');
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -67,9 +67,9 @@ export default function TopicIndex() {
         setLoading(false);
         return;
       }
-      const res = await getBuilderList(page, count);
-      const { list, total_page } = res.data;
-      setBuilders(convert(list));
+      const res = await req_space_buildings_list(page, count);
+      const { data, total_page } = res;
+      setBuilders(convert(data));
       setTotalPage(total_page);
       setPageNumber(page);
       setLoading(false);
@@ -153,7 +153,7 @@ export default function TopicIndex() {
         <div
           className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
-          <img src="/images/buildingsBanner.png" className={style.sign}></img>
+          <img src="/images/banner/spacebuildings.png" className={style.sign}></img>
         </div>
       </div>
 

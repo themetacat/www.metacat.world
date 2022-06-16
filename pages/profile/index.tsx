@@ -124,22 +124,66 @@ function ProfilePage(r) {
       state: 1,
       num: 0,
     },
-    {
-      label: 'For rent',
-      state: 0,
-      num: 0,
-    },
-    {
-      label: 'Leased',
-      state: 0,
-      num: 0,
-    },
-    {
-      label: 'Not for rent',
-      state: 0,
-      num: 0,
-    },
   ];
+
+  // {
+  //   label: 'For rent',
+  //   state: 0,
+  //   num: 0,
+  // },
+  // {
+  //   label: 'Leased',
+  //   state: 0,
+  //   num: 0,
+  // },
+  // {
+  //   label: 'Not for rent',
+  //   state: 0,
+  //   num: 0,
+  // },
+
+  // <div className={style.nav_right}>
+  //             <div
+  //               className={style.nav_right_item}
+  //               onClick={(event) => {
+  //                 event.stopPropagation();
+  //                 manySet(manySetState);
+  //                 setSelectedIds([]);
+  //               }}
+  //             >
+  //               <img src="/images/Settings.png" />
+  //               <div>Batch setting</div>
+  //               {manySetState ? (
+  //                 <div className={style.container}>
+  //                   <div className={style.manySetList}>
+  //                     {manySetLabel.map((item) => {
+  //                       return (
+  //                         <div
+  //                           className={style.setItem}
+  //                           key={item.label}
+  //                           onClick={() => {
+  //                             manyChange(item.label, cartData);
+  //                             setSelectedIds([]);
+  //                             store.setState(() => ({ parcels_cardState: true }));
+  //                           }}
+  //                         >
+  //                           {item.label}
+  //                         </div>
+  //                       );
+  //                     })}
+  //                   </div>
+  //                 </div>
+  //               ) : (
+  //                 <div></div>
+  //               )}
+  //             </div>
+  //              <div className={style.nav_right_item}>
+  //             <img src="/images/icon/kapian.png" className={style.left} />
+  //             <div className={style.shuxian}></div>
+  //             <img src="/images/icon/liebiao.png" className={style.right} />
+  //           </div>
+  //         </div>
+
   const [nav, setNav] = React.useState(Nav);
   const web3 = useWalletProvider();
 
@@ -706,48 +750,6 @@ function ProfilePage(r) {
                   />
                 );
               })}
-            </div>
-            <div className={style.nav_right}>
-              <div
-                className={style.nav_right_item}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  manySet(manySetState);
-                  setSelectedIds([]);
-                }}
-              >
-                <img src="/images/Settings.png" />
-                <div>Batch setting</div>
-                {manySetState ? (
-                  <div className={style.container}>
-                    <div className={style.manySetList}>
-                      {manySetLabel.map((item) => {
-                        return (
-                          <div
-                            className={style.setItem}
-                            key={item.label}
-                            onClick={() => {
-                              manyChange(item.label, cartData);
-                              setSelectedIds([]);
-                              store.setState(() => ({ parcels_cardState: true }));
-                            }}
-                          >
-                            {item.label}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-
-              {/* <div className={style.nav_right_item}>
-              <img src="/images/icon/kapian.png" className={style.left} />
-              <div className={style.shuxian}></div>
-              <img src="/images/icon/liebiao.png" className={style.right} />
-            </div> */}
             </div>
           </div>
           {/* 导航结束 */}
