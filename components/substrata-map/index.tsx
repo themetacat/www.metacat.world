@@ -391,7 +391,6 @@ function SubstrataMap({
       priceRef.current = stats?.price;
 
       drawPriceGeoJsonToLayer(pageMap, parcels, convert(stats?.price), parcelL);
-
       setLoading();
     },
     [null],

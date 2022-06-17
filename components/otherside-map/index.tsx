@@ -492,8 +492,12 @@ function OtherSideMap({
         sc.add(insMesh);
         setLoading(false);
       }
+
+      if (loadFinish) {
+        loadFinish();
+      }
     },
-    [setColor, onWindowResize],
+    [setColor, onWindowResize, loadFinish],
   );
 
   const onActive = React.useCallback(

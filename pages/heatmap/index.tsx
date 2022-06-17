@@ -225,7 +225,6 @@ export default function MapPage(props) {
                     icon={item.icon}
                     onClick={(val) => {
                       setMapType(item.type);
-                      setLoading(true);
                       router.replace(`/heatmap?type=${item.type}`);
                     }}
                   />
