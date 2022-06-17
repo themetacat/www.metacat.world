@@ -16,7 +16,7 @@ import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { getBuilderList } from '../../../service';
+import { req_space_buildings_list } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -67,9 +67,9 @@ export default function TopicIndex() {
         setLoading(false);
         return;
       }
-      const res = await getBuilderList(page, count);
-      const { list, total_page } = res.data;
-      setBuilders(convert(list));
+      const res = await req_space_buildings_list(page, count);
+      const { data, total_page } = res;
+      setBuilders(convert(data));
       setTotalPage(total_page);
       setPageNumber(page);
       setLoading(false);

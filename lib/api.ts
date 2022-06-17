@@ -450,6 +450,28 @@ class API {
 
     return json;
   }
+
+  // 获取otherside价格热力图数据
+  public async getOtherSidePriceMap() {
+    const url = `${this.url}/get_otherside_price_map`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async getOtherSideParcelDetail(tokenId: string): Promise<any> {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_otherside_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

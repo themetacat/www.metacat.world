@@ -9,11 +9,22 @@ type Props = {
   topicId?: string;
   name?: string;
   imgUrlList?: Array<string>;
+  coverImg?: string;
+  detailUrl?: string;
 };
 
-export default function TopicDetailCard({ topicId, name, imgUrlList }: Props) {
+export default function TopicDetailCard({ topicId, name, imgUrlList, coverImg, detailUrl }: Props) {
   return (
-    <a href={`/topic/${topicId}`} target="_blank">
+    <a
+      onClick={() => {
+        if (topicId) {
+          window.open(`/topic/${topicId}`);
+        } else {
+          window.open(detailUrl);
+        }
+      }}
+      target="_blank"
+    >
       <div className={cn('relative', style.topicCard)}>
         {/* <div
           className={cn(
@@ -24,18 +35,22 @@ export default function TopicDetailCard({ topicId, name, imgUrlList }: Props) {
           {type}
         </div> */}
         <div className={cn('w-full flex flex-wrap')}>
-          {imgUrlList.map((img, idx) => {
-            return (
-              <img
-                className={cn('w-1/2 h-1/2', style.cover)}
-                src={img}
-                onError={() => {
-                  this.src = '/images/logo.png';
-                }}
-                key={idx}
-              ></img>
-            );
-          })}
+          {imgUrlList && imgUrlList.length !== 0 ? (
+            imgUrlList.map((img, idx) => {
+              return (
+                <img
+                  className={cn('w-1/2 h-1/2', style.cover)}
+                  src={img}
+                  onError={() => {
+                    this.src = '/images/logo.png';
+                  }}
+                  key={idx}
+                ></img>
+              );
+            })
+          ) : (
+            <img className={style.oneImg} src={coverImg} />
+          )}
         </div>
         <div
           className={cn(

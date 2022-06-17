@@ -797,6 +797,19 @@ class API {
     return json;
   }
 
+  public async req_substrata_detail(tokenId: string) {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_substrata_parcel_detail${search}`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 6.30 获取 netvrk 地块成交均价统计信息接口
 
   public async req_netvrk_avg_price() {
@@ -956,6 +969,21 @@ class API {
 
   public async req_cv_top20_parcel() {
     const url = `${this.url}/get_cv_top20_parcel`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_space_buildings_list(page: number, count: number) {
+    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+    const url = `${this.url}/get_cv_space_buildings${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    // console.log(url)
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',

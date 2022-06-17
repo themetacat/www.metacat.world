@@ -13,6 +13,9 @@ import {
   MeshBasicMaterial,
   Object3D,
   Color,
+  Raycaster,
+  Vector2,
+  Vector3,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
@@ -21,10 +24,11 @@ import style from './index.module.css';
 import Selecter from '../select';
 import Legend from '../legend';
 import ParcelDeatil from '../parcel-detail';
+import Popup from '../otherside-popup';
 
 import { convert } from '../../common/utils';
 
-import { getOtherSidePriceMap } from '../../service';
+import { getOtherSidePriceMap, getOtherSideParcelDetail } from '../../service';
 
 const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
@@ -55,6 +59,8 @@ interface Props {
   loadFinish?: () => void;
   id: string;
 }
+
+const defalutColor = 'rgba(101, 128, 134, 1)';
 
 const colors = {
   0: [
@@ -298,14 +304,29 @@ function OtherSideMap({
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
   const mapRef = React.useRef(null);
-  const heighFeature = React.useRef(null);
   const [activeColor, setActiveColor] = React.useState(null);
-  // const clickToJumpRef = React.useRef(clickToJump);
 
   const sceneRef = React.useRef(null);
   const renderer = React.useRef(null);
   const animationRef = React.useRef(null);
   const mapMesh = React.useRef(null);
+  const pointerHandler = React.useRef({ x: null, y: null });
+  const domRef = React.useRef(null);
+  const raycasterRef = React.useRef(null);
+  const activeParcel = React.useRef({
+    index: null,
+    id: null,
+    point: null,
+  });
+  const parcelsAttr = React.useRef(null);
+  const [popupPosition, setPopupPosition] = React.useState({ x: null, y: null });
+  const [showDetail, setShowDetail] = React.useState(false);
+  const detailPosition = React.useRef({
+    index: null,
+    x: null,
+    y: null,
+    z: null,
+  });
 
   const setLoading = React.useCallback(() => {
     if (loadFinish) {
@@ -313,47 +334,68 @@ function OtherSideMap({
     }
   }, [loadFinish]);
 
+  const getSingleColor = React.useCallback(
+    (fe) => {
+      let color = defalutColor;
+      let count = fe.attr[staticType.current.toLocaleLowerCase()];
+      let index = -1;
+      if (!Number.isNaN(count) && legends.current) {
+        count = count < 0 ? 0 : count;
+        index = legends.current.findIndex((x) => {
+          return count <= x[staticType.current].start && count >= x[staticType.current].end;
+        });
+        if (index > -1) {
+          const allColor = legends.current[index];
+          /* eslint no-underscore-dangle: 0 */
+          fe.attr.colorIndex = index; // eslint-disable-line
+          color = allColor.color;
+        }
+      }
+      return {
+        color,
+        index,
+      };
+    },
+    [null],
+  );
+
+  const clearHeightLight = () => {
+    if (detailPosition.current.index) {
+      const { color } = getSingleColor(parcelsAttr.current[detailPosition.current.index]);
+      mapMesh.current.setColorAt(detailPosition.current.index, new Color(color));
+      mapMesh.current.instanceColor.needsUpdate = true; // eslint-disable-line
+      detailPosition.current.index = null;
+    }
+  };
+
   const closePop = React.useCallback(() => {
     if (popDetail.current) {
       (popDetail.current as any).style.display = 'none';
     }
     setActiveColor(null);
-  }, [popDetail.current]);
+    clearHeightLight();
+  }, [popDetail.current, clearHeightLight]);
 
   const setColor = React.useCallback(
-    (insMesh) => {
+    (insMesh, attrs) => {
       if (!insMesh) {
         return;
       }
-      const { attrs } = insMesh.userData;
-      let color = 'rgba(101, 128, 134, 1)';
+
       for (let i = 0; i < attrs.length; i += 1) {
         const fe = attrs[i];
-        let count = fe.attr[staticType.current.toLocaleLowerCase()];
-        if (!Number.isNaN(count) && legends.current) {
-          count = count < 0 ? 0 : count;
-          const index = legends.current.findIndex((x) => {
-            return count <= x[staticType.current].start && count >= x[staticType.current].end;
-          });
-          if (index > -1) {
-            const allColor = legends.current[index];
-            /* eslint no-underscore-dangle: 0 */
-            fe.attr.colorIndex = index; // eslint-disable-line
-            color = allColor.color;
-          }
-        }
-
+        const { color } = getSingleColor(fe);
         insMesh.setColorAt(i, new Color(color));
       }
       insMesh.instanceColor.needsUpdate = true; // eslint-disable-line
     },
-    [colors],
+    [colors, getSingleColor],
   );
 
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
-      setColor(mapMesh.current);
+      setColor(mapMesh.current, parcelsAttr.current);
       closePop();
     },
     [minZoomLevel, setColor],
@@ -371,28 +413,36 @@ function OtherSideMap({
 
   const zoomButtonClick = React.useCallback(
     (type) => {
-      if (mapRef.current) {
+      if (sceneRef.current) {
+        const { camera } = sceneRef.current.userData;
+        const oldZ = camera.position.z;
         if (type === 'zoomIn') {
-          mapRef.current.zoomIn();
+          const nextOne = oldZ * 0.8;
+          camera.position.setZ(nextOne < 10 ? 10 : nextOne);
         } else {
-          mapRef.current.zoomOut();
+          const nextOne = oldZ / 0.8;
+          camera.position.setZ(nextOne > 600 ? 600 : nextOne);
         }
       }
     },
     [null],
   );
 
+  const onWindowResize = () => {
+    const { camera } = sceneRef.current.userData;
+
+    camera.aspect = domRef.current.clientWidth / domRef.current.clientHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.current.setSize(domRef.current.clientWidth, domRef.current.clientHeight);
+  };
+
   const full = React.useCallback(async () => {
     const isFull = !fullScreen;
     const s = await fullScreenOnClick(isFull);
     setFullScreen(isFull);
-    if (mapRef.current) {
-      mapRef.current.invalidateSize(true);
-      // setTimeout(() => {
-
-      // }, 1000);
-    }
-  }, [fullScreen, fullScreenOnClick]);
+    onWindowResize();
+  }, [fullScreen, fullScreenOnClick, onWindowResize]);
 
   const requestData = React.useCallback(
     async (sc) => {
@@ -429,41 +479,115 @@ function OtherSideMap({
           transform.position.set(x, y, z);
           transform.updateMatrix();
           insMesh.setMatrixAt(i, transform.matrix);
-          const d = Math.random();
-          const d2 = Math.random();
-          const d3 = Math.random();
-          insMesh.setColorAt(i, new Color(d, d2, d3));
           allAttr.push({
-            id: parcels[i].token_id,
+            id: parcels[i].properties.token_id,
             attr: parcels[i].price,
           });
         }
-        insMesh.userData.attrs = allAttr;
+        parcelsAttr.current = allAttr;
+        // insMesh.userData.attrs = allAttr;
         mapMesh.current = insMesh;
-        setColor(insMesh);
+        insMesh.rotateY(Math.PI);
+        setColor(insMesh, allAttr);
         sc.add(insMesh);
       }
     },
     [setColor],
   );
 
+  const onActive = React.useCallback(
+    async (event) => {
+      if (activeParcel.current.id) {
+        clearHeightLight();
+        const res = await getOtherSideParcelDetail(activeParcel.current.id);
+        const { data } = res;
+        setShowDetail(true);
+        setDeatil(convert(data));
+        if (!activeParcel.current.point) {
+          return;
+        }
+        (popDetail.current as any).style.display = 'block';
+        const vector = activeParcel.current.point;
+        detailPosition.current.x = vector.x;
+        detailPosition.current.y = vector.y;
+        detailPosition.current.z = vector.z;
+        detailPosition.current.index = activeParcel.current.index;
+        mapMesh.current.setColorAt(activeParcel.current.index, new Color(0xff0000));
+        const { index } = getSingleColor(parcelsAttr.current[detailPosition.current.index]);
+        if (index > -1) {
+          setActiveColor(index);
+        }
+        mapMesh.current.instanceColor.needsUpdate = true; // eslint-disable-line
+      }
+    },
+    [clearHeightLight],
+  );
+
+  const onPointerMove = React.useCallback(
+    (event) => {
+      // calculate pointer position in normalized device coordinates
+      // (-1 to +1) for both components
+      setPopupPosition({
+        x: event.offsetX,
+        y: event.offsetY,
+      });
+      pointerHandler.current.x = (event.offsetX / domRef.current.clientWidth) * 2 - 1;
+      pointerHandler.current.y = -(event.offsetY / domRef.current.clientHeight) * 2 + 1;
+    },
+    [null],
+  );
+
   const render = React.useCallback(() => {
     if (!renderer.current || !sceneRef.current) {
       return;
     }
-    // const { targetMesh } = sceneRef.current.userData;
-    // if (targetMesh) {
-    //   targetMesh.rotation.y = Date.now() * 0.001;
-    // }
     const { camera } = sceneRef.current.userData;
     renderer.current.render(sceneRef.current, camera);
-    if (mapMesh.current) {
-      mapMesh.current.rotateZ(0.0005);
+    // if (mapMesh.current) {
+    //   mapMesh.current.rotateZ(0.0005);
+    // }
+    if (pointerHandler.current.x) {
+      // update the picking ray with the camera and pointer position
+      raycasterRef.current.setFromCamera(pointerHandler.current, camera);
+
+      // calculate objects intersecting the picking ray
+      const intersects = raycasterRef.current.intersectObjects(sceneRef.current.children);
+      if (intersects.length > 0) {
+        for (let i = 0; i < intersects.length; i += 1) {
+          const intersect = intersects[i];
+          const { instanceId } = intersect;
+          activeParcel.current.index = instanceId;
+          activeParcel.current.id = parcelsAttr.current[instanceId].id;
+          activeParcel.current.point = intersect.point;
+        }
+      } else if (activeParcel.current.id) {
+        activeParcel.current.index = null;
+        activeParcel.current.id = null;
+        activeParcel.current.point = null;
+      }
+
+      if (showDetail && popDetail.current) {
+        const projector = new Vector3(
+          detailPosition.current.x,
+          detailPosition.current.y,
+          detailPosition.current.z,
+        );
+        const vector = projector.project(camera);
+        const centerX = domRef.current.clientWidth / 2;
+        const centerY = domRef.current.clientHeight / 2;
+        const dX = Math.round(vector.x * centerX + centerX);
+        const dY = Math.round(-vector.y * centerY + centerY);
+        (popDetail.current as any).style.top = `${dY}px`;
+        (popDetail.current as any).style.left = `${dX}px`;
+      }
     }
-  }, [null]);
+  }, [clearHeightLight, showDetail]);
 
   const animation = React.useCallback(() => {
     render();
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
     animationRef.current = requestAnimationFrame(animation);
   }, [render]);
 
@@ -475,7 +599,7 @@ function OtherSideMap({
       renderer.current = re;
       const scene = new Scene();
       const sceneElement = document.getElementById(`map`);
-
+      domRef.current = sceneElement;
       const camera = new PerspectiveCamera(
         60,
         sceneElement.clientWidth / sceneElement.clientHeight,
@@ -486,13 +610,35 @@ function OtherSideMap({
       scene.userData.camera = camera;
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
+
+      // controls.minDistance = 2;
+      // controls.maxDistance = 5;
+      controls.enablePan = true;
+      controls.enableRotate = false;
+      controls.enableZoom = true;
+
       scene.userData.controls = controls;
+
+      raycasterRef.current = new Raycaster();
+      pointerHandler.current = new Vector2();
 
       sceneRef.current = scene;
 
       re.setSize(sceneElement.clientWidth, sceneElement.clientHeight, true);
       sceneElement.appendChild(re.domElement);
+
+      sceneElement.addEventListener('pointermove', onPointerMove);
+      sceneElement.addEventListener('click', onActive);
+
+      window.addEventListener('resize', onWindowResize);
       requestData(scene);
+
+      return () => {
+        window.removeEventListener('resize', onWindowResize);
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+      };
     }
     animation();
 
@@ -509,7 +655,7 @@ function OtherSideMap({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animation, requestData]);
+  }, [animation, requestData, onPointerMove, onActive]);
 
   return (
     <div className={style.mapContainer} onClick={onClick}>
@@ -564,15 +710,16 @@ function OtherSideMap({
         </>
       ) : null}
       <div id="map" className={style.map} style={{ backgroundColor: backColor }}>
-        <div className={cn('absolute', style.pop)} ref={popDetail}>
-          <ParcelDeatil
-            options={detail}
-            trafficType={staticType.current}
-            mapType={mapType.current}
-            close={closePop}
-            isSomnium={true}
-          ></ParcelDeatil>
-        </div>
+        <Popup position={popupPosition} id={activeParcel.current.id}></Popup>
+      </div>
+      <div className={cn('absolute', style.pop)} ref={popDetail}>
+        <ParcelDeatil
+          options={detail}
+          trafficType={staticType.current}
+          mapType={mapType.current}
+          close={closePop}
+          isSomnium={true}
+        ></ParcelDeatil>
       </div>
       <Legend
         className={style.legend}

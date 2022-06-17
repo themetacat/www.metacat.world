@@ -13,9 +13,7 @@ import ParcelDeatil from '../parcel-detail';
 
 import { convert } from '../../common/utils';
 
-import { req_substrata_level_three } from '../../service/z_api';
-
-import { getSomniumSpacePriceMapLevelThreeData, getSomniumSpaceParcelDeatil } from '../../service';
+import { req_substrata_level_three, req_substrata_detail } from '../../service/z_api';
 
 const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
@@ -518,7 +516,7 @@ function SubstrataMap({
 
   const requestDeatil = React.useCallback(
     async (id) => {
-      const res = await getSomniumSpaceParcelDeatil(id);
+      const res = await req_substrata_detail(id);
       const parcel = convert(res.data);
       setDeatil(parcel);
     },
@@ -554,8 +552,8 @@ function SubstrataMap({
     const parcelsPriceLayerThree = L.geoJSON(null, {
       style: parcelStyle,
       onEachFeature: (feature, layer) => {
-        if (feature.properties.coordinates && zoomControl) {
-          layer.bindTooltip(feature.properties.coordinates, {
+        if (feature.properties.token_id && zoomControl) {
+          layer.bindTooltip(feature.properties.token_id.toString(), {
             direction: 'top',
             className: style.leafletLabel,
           });
