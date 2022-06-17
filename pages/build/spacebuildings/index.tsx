@@ -106,6 +106,21 @@ export default function TopicIndex() {
     if (builders.length === 0) {
       return <Status status="empty" />;
     }
+    return (
+      <>
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
+          {builders.map((card, idx) => {
+            return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
+          })}
+        </div>
+        <PagiNation
+          total={totalPage}
+          pageNumber={pageNumber - 1}
+          pageSize={9}
+          pageChange={onPageChangeHandler}
+        />
+      </>
+    );
   }, [loading, error, builders]);
 
   React.useEffect(() => {
@@ -156,25 +171,8 @@ export default function TopicIndex() {
           <img src="/images/banner/spacebuildings.png" className={style.sign}></img>
         </div>
       </div>
+      <div className={cn('main-content', style.content)}>{renderStatus}</div>
 
-      <div className={cn('main-content', style.content)}>
-        {builders.length > 0 ? (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
-              {builders.map((card, idx) => {
-                return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
-              })}
-            </div>
-            <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-          </>
-        ) : null}
-        {renderStatus}
-      </div>
       <Footer />
     </Page>
   );

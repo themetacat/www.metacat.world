@@ -980,10 +980,10 @@ class API {
   }
 
   public async req_space_buildings_list(page: number, count: number) {
-    const url1 = `${this.url}/get_cv_space_buildings`;
-    console.log(url1);
     const search = qs.stringify({ page, count }, { addQueryPrefix: true });
-    const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    const url = `${this.url}/get_cv_space_buildings${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    // console.log(url)
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
