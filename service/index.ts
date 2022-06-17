@@ -421,3 +421,12 @@ export const getOtherSidePriceMap = async () => {
   const json = await res.json();
   return json;
 };
+
+export const getOtherSideParcelDetail = async (tokenId: string) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/otherside_parcel_detail${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
