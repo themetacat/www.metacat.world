@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
+import Router from 'next/router';
 import {
   Scene,
   PerspectiveCamera,
@@ -25,6 +26,7 @@ import Selecter from '../select';
 import Legend from '../legend';
 import ParcelDeatil from '../parcel-detail';
 import Popup from '../otherside-popup';
+import Status from '../status';
 
 import { convert } from '../../common/utils';
 
@@ -57,7 +59,6 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
-  id: string;
 }
 
 const defalutColor = 'rgba(101, 128, 134, 1)';
@@ -280,7 +281,6 @@ function OtherSideMap({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
-  id,
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -303,7 +303,7 @@ function OtherSideMap({
   const priceRef = React.useRef(null);
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
-  const mapRef = React.useRef(null);
+  const [loading, setLoading] = React.useState(false);
   const [activeColor, setActiveColor] = React.useState(null);
 
   const sceneRef = React.useRef(null);
@@ -327,12 +327,6 @@ function OtherSideMap({
     y: null,
     z: null,
   });
-
-  const setLoading = React.useCallback(() => {
-    if (loadFinish) {
-      loadFinish();
-    }
-  }, [loadFinish]);
 
   const getSingleColor = React.useCallback(
     (fe) => {
@@ -411,6 +405,10 @@ function OtherSideMap({
     [minZoomLevel],
   );
 
+  const jumpToMap = () => {
+    Router.push('/heatmap?type=otherside');
+  };
+
   const zoomButtonClick = React.useCallback(
     (type) => {
       if (sceneRef.current) {
@@ -446,8 +444,10 @@ function OtherSideMap({
 
   const requestData = React.useCallback(
     async (sc) => {
+      setLoading(true);
       const res = await getOtherSidePriceMap();
 
+      // const { parcels, stats } = JSON.parse(res).data;
       const { parcels, stats } = res.data;
       const price = convert(stats?.price);
 
@@ -490,14 +490,15 @@ function OtherSideMap({
         insMesh.rotateY(Math.PI);
         setColor(insMesh, allAttr);
         sc.add(insMesh);
+        setLoading(false);
       }
     },
-    [setColor],
+    [setColor, onWindowResize],
   );
 
   const onActive = React.useCallback(
     async (event) => {
-      if (activeParcel.current.id) {
+      if (!clickToJump && activeParcel.current.id) {
         clearHeightLight();
         const res = await getOtherSideParcelDetail(activeParcel.current.id);
         const { data } = res;
@@ -593,12 +594,13 @@ function OtherSideMap({
 
   React.useEffect(() => {
     if (!renderer.current) {
+      const sceneElement = document.getElementById(`map`);
       const re = new WebGLRenderer({ antialias: true });
       re.setClearColor(0xffffff, 0);
       re.setPixelRatio(window.devicePixelRatio);
       renderer.current = re;
       const scene = new Scene();
-      const sceneElement = document.getElementById(`map`);
+
       domRef.current = sceneElement;
       const camera = new PerspectiveCamera(
         60,
@@ -611,8 +613,8 @@ function OtherSideMap({
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
 
-      // controls.minDistance = 2;
-      // controls.maxDistance = 5;
+      controls.minDistance = 10;
+      controls.maxDistance = 600;
       controls.enablePan = true;
       controls.enableRotate = false;
       controls.enableZoom = true;
@@ -658,7 +660,17 @@ function OtherSideMap({
   }, [animation, requestData, onPointerMove, onActive]);
 
   return (
-    <div className={style.mapContainer} onClick={onClick}>
+    <div className={style.mapContainer} onClick={clickToJump ? jumpToMap : null}>
+      {loading ? (
+        <div
+          className={cn(
+            ' absolute h-full w-full z-50 flex items-center justify-center',
+            style.state,
+          )}
+        >
+          <Status status="loading" />
+        </div>
+      ) : null}
       <div className={cn('flex justify-between items-center', style.picker)}>
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter

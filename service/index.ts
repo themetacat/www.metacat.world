@@ -415,7 +415,7 @@ export const getSomniumSpaceParcelDeatil = async (tokenId: string) => {
 };
 
 export const getOtherSidePriceMap = async () => {
-  const url = `/api/otherside_price_map`;
+  const url = `https://api.metacat.world/api/v1/get_otherside_price_map`;
   const res = await fetch(url);
 
   const json = await res.json();

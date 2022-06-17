@@ -161,7 +161,6 @@ export default function MapPage(props) {
     if (mapType === 'otherside') {
       return (
         <OthersideMap
-          id={'othersidemap'}
           fullScreenOnClick={showFull}
           zoomControl={true}
           zoomLimit={[3, 9]}
@@ -226,6 +225,7 @@ export default function MapPage(props) {
                     icon={item.icon}
                     onClick={(val) => {
                       setMapType(item.type);
+                      setLoading(true);
                       router.replace(`/heatmap?type=${item.type}`);
                     }}
                   />
