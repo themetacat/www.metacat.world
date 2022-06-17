@@ -64,14 +64,14 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
-  {
-    label: 'Otherside',
-    type: 'otherside',
-  },
-  {
-    label: 'SubStrata',
-    type: 'substrata',
-  },
+  // {
+  //   label: 'Otherside',
+  //   type: 'otherside',
+  // },
+  // {
+  //   label: 'SubStrata',
+  //   type: 'substrata',
+  // },
 ];
 
 export default function MapPage(props) {
@@ -158,37 +158,37 @@ export default function MapPage(props) {
         ></SomniumMap>
       );
     }
-    if (mapType === 'otherside') {
-      return (
-        <OthersideMap
-          id={'othersidemap'}
-          fullScreenOnClick={showFull}
-          zoomControl={true}
-          zoomLimit={[3, 9]}
-          dragging={true}
-          initZoom={4}
-          loadFinish={() => {
-            setLoading(false);
-          }}
-          backColor="rgb(8 17 19)"
-        ></OthersideMap>
-      );
-    }
-    if (mapType === 'substrata') {
-      return (
-        <SubStrataMap
-          fullScreenOnClick={showFull}
-          zoomControl={true}
-          zoomLimit={[3, 9]}
-          dragging={true}
-          initZoom={4}
-          loadFinish={() => {
-            setLoading(false);
-          }}
-          backColor="#15282C"
-        ></SubStrataMap>
-      );
-    }
+    // if (mapType === 'otherside') {
+    //   return (
+    //     <OthersideMap
+    //       id={'othersidemap'}
+    //       fullScreenOnClick={showFull}
+    //       zoomControl={true}
+    //       zoomLimit={[3, 9]}
+    //       dragging={true}
+    //       initZoom={4}
+    //       loadFinish={() => {
+    //         setLoading(false);
+    //       }}
+    //       backColor="rgb(8 17 19)"
+    //     ></OthersideMap>
+    //   );
+    // }
+    // if (mapType === 'substrata') {
+    //   return (
+    //     <SubStrataMap
+    //       fullScreenOnClick={showFull}
+    //       zoomControl={true}
+    //       zoomLimit={[3, 9]}
+    //       dragging={true}
+    //       initZoom={4}
+    //       loadFinish={() => {
+    //         setLoading(false);
+    //       }}
+    //       backColor="#15282C"
+    //     ></SubStrataMap>
+    //   );
+    // }
 
     return (
       <Map
