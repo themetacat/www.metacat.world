@@ -107,21 +107,19 @@ export default function TopicIndex() {
       return <Status status="empty" />;
     }
     return (
-      <div className={cn('main-content', style.content)}>
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
-            {builders.map((card, idx) => {
-              return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
-            })}
-          </div>
-          <PagiNation
-            total={totalPage}
-            pageNumber={pageNumber - 1}
-            pageSize={9}
-            pageChange={onPageChangeHandler}
-          />
-        </>
-      </div>
+      <>
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
+          {builders.map((card, idx) => {
+            return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
+          })}
+        </div>
+        <PagiNation
+          total={totalPage}
+          pageNumber={pageNumber - 1}
+          pageSize={9}
+          pageChange={onPageChangeHandler}
+        />
+      </>
     );
   }, [loading, error, builders]);
 
@@ -173,7 +171,7 @@ export default function TopicIndex() {
           <img src="/images/banner/spacebuildings.png" className={style.sign}></img>
         </div>
       </div>
-      {renderStatus}
+      <div className={cn('main-content', style.content)}>{renderStatus}</div>
 
       <Footer />
     </Page>
