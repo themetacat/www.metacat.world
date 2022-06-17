@@ -106,6 +106,13 @@ export default function TopicIndex() {
     if (builders.length === 0) {
       return <Status status="empty" />;
     }
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
+        {builders.map((card, idx) => {
+          return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
+        })}
+      </div>
+    );
   }, [loading, error, builders]);
 
   React.useEffect(() => {
@@ -160,11 +167,7 @@ export default function TopicIndex() {
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
-              {builders.map((card, idx) => {
-                return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
-              })}
-            </div>
+            {renderStatus}
             <PagiNation
               total={totalPage}
               pageNumber={pageNumber - 1}
@@ -173,7 +176,6 @@ export default function TopicIndex() {
             />
           </>
         ) : null}
-        {renderStatus}
       </div>
       <Footer />
     </Page>
