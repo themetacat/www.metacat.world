@@ -9,7 +9,7 @@ import {
   CircleGeometry,
   DoubleSide,
   WebGLRenderer,
-  BoxGeometry,
+  MOUSE,
   Mesh,
   MeshBasicMaterial,
   Object3D,
@@ -622,6 +622,11 @@ function OtherSideMap({
       controls.enablePan = true;
       controls.enableRotate = false;
       controls.enableZoom = true;
+      controls.mouseButtons = {
+        LEFT: MOUSE.PAN,
+        MIDDLE: MOUSE.DOLLY,
+        RIGHT: MOUSE.ROTATE,
+      };
 
       scene.userData.controls = controls;
 
