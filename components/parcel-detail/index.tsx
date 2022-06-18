@@ -50,6 +50,7 @@ interface Prop {
   mapType?: string;
   close?: () => void;
   isSomnium?: boolean;
+  isOtherSide?: boolean;
 }
 
 // parcel_id	int	parcel_id（地块id）
@@ -73,6 +74,7 @@ export default function ParcelDeatil({
   trafficType,
   mapType,
   isSomnium = false,
+  isOtherSide = true,
 }: Prop) {
   // const {parcelId, name, coverImgUrl, openseaUrl, parcelPageUrl, island, suburb, traffic, lastPrice } = detail;
   const jumpToOpenC = (event) => {
@@ -162,7 +164,7 @@ export default function ParcelDeatil({
       onClick={jumpToParcel}
     >
       <div className={cn('flex justify-between items-center', styles.titleContainer)}>
-        {isSomnium ? (
+        {isSomnium || isOtherSide ? (
           <div className={cn('truncate w-full', styles.title)}></div>
         ) : (
           <div
@@ -178,7 +180,7 @@ export default function ParcelDeatil({
           img={options.coverImgUrl}
         />
         <div className="ml-2 w-full">
-          <div className={cn('flex justify-between', isSomnium ? styles.row : null)}>
+          <div className={cn('flex justify-between', isSomnium || isOtherSide ? styles.row : null)}>
             <span
               className={cn('text-white font-semibold text-base truncate', styles.name)}
               title={options.name}

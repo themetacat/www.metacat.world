@@ -36,9 +36,9 @@ const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
 const options = {
   PRICE: [
-    { label: 'MONTHLY', value: 'MONTH' },
-    { label: 'QUARTERLY', value: 'QUARTER' },
-    { label: 'YEARLY', value: 'YEAR' },
+    { label: 'MONTH', value: 'MONTH' },
+    { label: 'QUARTER', value: 'QUARTER' },
+    { label: 'YEAR', value: 'YEAR' },
     { label: 'All-Time', value: 'ALL' },
   ],
   TRAFFIC: [
@@ -282,8 +282,8 @@ function OtherSideMap({
   fullScreenOnClick,
   loadFinish,
 }: Props) {
-  const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
-  const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
+  const [minZoomAble, setMinZoomAble] = React.useState(true);
+  const [maxZoomAble, setMaxZoomAble] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [zoomLevel, setZoomLevel] = React.useState(initZoom);
   const [detail, setDeatil] = React.useState();
@@ -392,7 +392,7 @@ function OtherSideMap({
       setColor(mapMesh.current, parcelsAttr.current);
       closePop();
     },
-    [minZoomLevel, setColor],
+    [setColor],
   );
 
   const changeMapType = React.useCallback(
@@ -402,7 +402,7 @@ function OtherSideMap({
       staticType.current = options[newType][1].value;
       closePop();
     },
-    [minZoomLevel],
+    [null],
   );
 
   const jumpToMap = () => {
@@ -586,7 +586,25 @@ function OtherSideMap({
         (popDetail.current as any).style.left = `${dX}px`;
       }
     }
-  }, [clearHeightLight, showDetail]);
+
+    if (camera) {
+      const old = camera.position.z;
+      // 10 600
+
+      if (old === 10 && minZoomAble) {
+        setMinZoomAble(false);
+      }
+      if (old !== 10 && !minZoomAble) {
+        setMinZoomAble(true);
+      }
+      if (old === 600 && maxZoomAble) {
+        setMaxZoomAble(false);
+      }
+      if (old !== 600 && !maxZoomAble) {
+        setMaxZoomAble(true);
+      }
+    }
+  }, [clearHeightLight, showDetail, minZoomAble, maxZoomAble]);
 
   const animation = React.useCallback(() => {
     render();
@@ -612,7 +630,7 @@ function OtherSideMap({
         0.1,
         20000,
       );
-      camera.position.z = 500;
+      camera.position.z = 300;
       scene.userData.camera = camera;
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
@@ -705,10 +723,7 @@ function OtherSideMap({
                 zoomButtonClick('zoomIn');
               }}
             >
-              <img
-                className={zoomLevel >= maxZoomLevel ? style.disable : null}
-                src="./images/Union.png"
-              ></img>
+              <img className={minZoomAble ? null : style.disable} src="./images/Union.png"></img>
             </div>
             <div
               className={cn('flex justify-center items-center', style.zoomButton)}
@@ -717,7 +732,7 @@ function OtherSideMap({
               }}
             >
               <img
-                className={zoomLevel <= minZoomLevel ? style.disable : null}
+                className={maxZoomAble ? null : style.disable}
                 src="./images/Rectangle.png"
               ></img>
             </div>
@@ -739,7 +754,8 @@ function OtherSideMap({
           trafficType={staticType.current}
           mapType={mapType.current}
           close={closePop}
-          isSomnium={true}
+          isSomnium={false}
+          isOtherSide={true}
         ></ParcelDeatil>
       </div>
       <Legend

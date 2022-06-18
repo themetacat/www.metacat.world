@@ -318,6 +318,7 @@ function DecentralandMap({
   const legends = React.useRef(colors[2]);
   const [mapTiles, setMapTiles] = React.useState(null);
   const orginData = React.useRef(null);
+  const orginDataTraffic = React.useRef(null);
   const mousedownTimestamp = React.useRef(0);
   const lastDragX = React.useRef(-1);
   const lastDragY = React.useRef(-1);
@@ -331,7 +332,6 @@ function DecentralandMap({
   const dealWithParcel = React.useCallback(
     (data, colorsLimit) => {
       const tiles = {};
-
       for (let i = 0; i < data.length; i += 1) {
         let color = NOT_CUSTOME_COLOR[data[i].properties.type];
         let index;
@@ -372,43 +372,50 @@ function DecentralandMap({
     [null],
   );
 
-  const requestLand = React.useCallback(async () => {
-    setLoading(true);
-    const res = await getDecentralandMapLevelThreeData();
-    const { code, data } = res;
-    if (code === 100000 && data) {
-      const { stats, parcels } = convert(data);
+  const setMapData = React.useCallback(
+    (type) => {
+      const data = type === 'price' ? orginData.current : orginDataTraffic.current;
+      const { stats, parcels } = data;
       const limit = stats[mapType.current].levelOne;
       colors[2].forEach((co, index) => {
         Object.assign(co.all, limit[index].all);
         Object.assign(co.month, limit[index].month);
         Object.assign(co.quarter, limit[index].quarter);
+        Object.assign(co.week, limit[index].week);
         Object.assign(co.year, limit[index].year);
       });
-      orginData.current = parcels;
       dealWithParcel(parcels, colors[2]);
+    },
+    [dealWithParcel, colors],
+  );
+
+  const requestLand = React.useCallback(async () => {
+    setLoading(true);
+    const res = await getDecentralandMapLevelThreeData();
+    const { code, data } = res;
+    if (code === 100000 && data) {
+      orginData.current = convert(data);
+      setMapData('price');
     }
     setLoading(false);
-  }, [dealWithParcel, colors]);
+  }, [setMapData]);
 
   const requestDclMap = React.useCallback(async () => {
-    setLoading(true);
     const res = await getDclTrafficMap();
     const { code, data } = res;
-
     if (code === 100000 && data) {
-      const { stats, parcels } = convert(data);
-      const limit = stats[mapType.current].levelOne;
-      colors[2].forEach((co, index) => {
-        Object.assign(co.all, limit[index].all);
-        Object.assign(co.week, limit[index].week);
-        Object.assign(co.month, limit[index].month);
-      });
-      orginData.current = parcels;
-      dealWithParcel(parcels, colors[2]);
+      orginDataTraffic.current = convert(data);
+      // const { stats, parcels } = convert(data);
+      // const limit = stats[mapType.current].levelOne;
+      // colors[2].forEach((co, index) => {
+      //   Object.assign(co.all, limit[index].all);
+      //   Object.assign(co.week, limit[index].week);
+      //   Object.assign(co.month, limit[index].month);
+      // });
+      // orginDataTraffic.current = parcels;
+      // dealWithParcel(parcels, colors[2]);
     }
-    setLoading(false);
-  }, [dealWithParcel, colors]);
+  }, [null]);
 
   const closePop = React.useCallback(() => {
     setShowDetail(false);
@@ -420,8 +427,9 @@ function DecentralandMap({
     (newType) => {
       staticType.current = newType;
       closePop();
-      if (orginData.current) {
-        dealWithParcel(orginData.current, colors[2]);
+      const allData = mapType.current === 'price' ? orginData.current : orginDataTraffic.current;
+      if (allData) {
+        dealWithParcel(allData.parcels, colors[2]);
       }
     },
     [dealWithParcel, colors],
@@ -433,11 +441,7 @@ function DecentralandMap({
       setStaticList(options[newType]);
       staticType.current = options[newType][0].value;
       closePop();
-      if (newType === 'price') {
-        requestLand();
-      } else {
-        requestDclMap();
-      }
+      setMapData(newType);
     },
     [minZoomLevel, requestLand, requestDclMap],
   );
@@ -617,6 +621,7 @@ function DecentralandMap({
 
   React.useEffect(() => {
     requestLand();
+    requestDclMap();
   }, [null]);
 
   const jumpToMap = () => {

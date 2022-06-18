@@ -66,10 +66,12 @@ const TAB = [
   },
   {
     label: 'Otherside',
+    icon: '/images/osd.png',
     type: 'otherside',
   },
   {
     label: 'SubStrata',
+    icon: '/images/substrata.png',
     type: 'substrata',
   },
 ];
