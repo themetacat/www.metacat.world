@@ -176,7 +176,7 @@ export default function ParcelDeatil({
       </div>
       <div className="flex justify-start items-start mt-2">
         <CoverImg
-          className={cn(styles.cover, isSomnium ? styles.somnium : '')}
+          className={cn(styles.cover, isSomnium ? styles.somnium : '', 'object-contain')}
           img={options.coverImgUrl}
         />
         <div className="ml-2 w-full">
