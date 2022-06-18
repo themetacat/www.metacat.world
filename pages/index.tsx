@@ -92,6 +92,10 @@ const SomniumMap = dynamic(() => import('../components/somnium-map'), {
   ssr: false,
 });
 
+const OtherSideMap = dynamic(() => import('../components/otherside-map'), {
+  ssr: false,
+});
+
 const TAB = [
   {
     label: 'Voxels',
@@ -288,12 +292,12 @@ export default function Index(props) {
     } else if (
       tab === 'nftworlds' ||
       tab === 'worldwidewebb' ||
-      tab === 'otherside' ||
+      // tab === 'otherside' ||
       tab === 'netvrk'
     ) {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
-    } else if (tab === 'sandbox' || tab === 'somniumspace') {
+    } else if (tab === 'sandbox' || tab === 'somniumspace' || tab === 'otherside') {
       if (SUBTABZ2.find((item) => item.type === subTabState)) {
         sub = SUBTABZ2.find((item) => item.type === subTabState).type;
         setSubTabState(sub);
@@ -519,6 +523,17 @@ export default function Index(props) {
                 dragging={false}
                 loadFinish={null}
               ></SomniumMap>
+            ) : null}
+            {tabState === 'otherside' ? (
+              <OtherSideMap
+                zoomControl={false}
+                zoomLimit={[6, 6]}
+                initZoom={6}
+                clickToJump={true}
+                changeTypeControl={true}
+                dragging={false}
+                loadFinish={null}
+              ></OtherSideMap>
             ) : null}
           </div>
         </div>
@@ -1521,7 +1536,7 @@ export default function Index(props) {
                 : null}
               {tabState === 'nftworlds' ||
               tabState === 'worldwidewebb' ||
-              tabState === 'otherside' ||
+              // tabState === 'otherside' ||
               tabState === 'netvrk'
                 ? SUBTABZ.map((item, index) => {
                     if (item) {
@@ -1540,7 +1555,7 @@ export default function Index(props) {
                   })
                 : null}
 
-              {tabState === 'sandbox' || tabState === 'somniumspace'
+              {tabState === 'sandbox' || tabState === 'somniumspace' || tabState === 'otherside'
                 ? SUBTABZ2.map((item, index) => {
                     if (item) {
                       return (

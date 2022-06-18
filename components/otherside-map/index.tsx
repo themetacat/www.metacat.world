@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
+import Router from 'next/router';
 import {
   Scene,
   PerspectiveCamera,
@@ -8,7 +9,7 @@ import {
   CircleGeometry,
   DoubleSide,
   WebGLRenderer,
-  BoxGeometry,
+  MOUSE,
   Mesh,
   MeshBasicMaterial,
   Object3D,
@@ -25,6 +26,7 @@ import Selecter from '../select';
 import Legend from '../legend';
 import ParcelDeatil from '../parcel-detail';
 import Popup from '../otherside-popup';
+import Status from '../status';
 
 import { convert } from '../../common/utils';
 
@@ -34,9 +36,9 @@ const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
 const options = {
   PRICE: [
-    { label: 'MONTHLY', value: 'MONTH' },
-    { label: 'QUARTERLY', value: 'QUARTER' },
-    { label: 'YEARLY', value: 'YEAR' },
+    { label: 'MONTH', value: 'MONTH' },
+    { label: 'QUARTER', value: 'QUARTER' },
+    { label: 'YEAR', value: 'YEAR' },
     { label: 'All-Time', value: 'ALL' },
   ],
   TRAFFIC: [
@@ -57,7 +59,6 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
-  id: string;
 }
 
 const defalutColor = 'rgba(101, 128, 134, 1)';
@@ -280,10 +281,9 @@ function OtherSideMap({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
-  id,
 }: Props) {
-  const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
-  const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
+  const [minZoomAble, setMinZoomAble] = React.useState(true);
+  const [maxZoomAble, setMaxZoomAble] = React.useState(true);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [zoomLevel, setZoomLevel] = React.useState(initZoom);
   const [detail, setDeatil] = React.useState();
@@ -303,7 +303,7 @@ function OtherSideMap({
   const priceRef = React.useRef(null);
   const markers = React.useRef(null);
   const layerManager = React.useRef(null);
-  const mapRef = React.useRef(null);
+  const [loading, setLoading] = React.useState(false);
   const [activeColor, setActiveColor] = React.useState(null);
 
   const sceneRef = React.useRef(null);
@@ -327,12 +327,6 @@ function OtherSideMap({
     y: null,
     z: null,
   });
-
-  const setLoading = React.useCallback(() => {
-    if (loadFinish) {
-      loadFinish();
-    }
-  }, [loadFinish]);
 
   const getSingleColor = React.useCallback(
     (fe) => {
@@ -398,7 +392,7 @@ function OtherSideMap({
       setColor(mapMesh.current, parcelsAttr.current);
       closePop();
     },
-    [minZoomLevel, setColor],
+    [setColor],
   );
 
   const changeMapType = React.useCallback(
@@ -408,8 +402,12 @@ function OtherSideMap({
       staticType.current = options[newType][1].value;
       closePop();
     },
-    [minZoomLevel],
+    [null],
   );
+
+  const jumpToMap = () => {
+    Router.push('/heatmap?type=otherside');
+  };
 
   const zoomButtonClick = React.useCallback(
     (type) => {
@@ -446,8 +444,10 @@ function OtherSideMap({
 
   const requestData = React.useCallback(
     async (sc) => {
+      setLoading(true);
       const res = await getOtherSidePriceMap();
 
+      // const { parcels, stats } = JSON.parse(res).data;
       const { parcels, stats } = res.data;
       const price = convert(stats?.price);
 
@@ -490,14 +490,19 @@ function OtherSideMap({
         insMesh.rotateY(Math.PI);
         setColor(insMesh, allAttr);
         sc.add(insMesh);
+        setLoading(false);
+      }
+
+      if (loadFinish) {
+        loadFinish();
       }
     },
-    [setColor],
+    [setColor, onWindowResize, loadFinish],
   );
 
   const onActive = React.useCallback(
     async (event) => {
-      if (activeParcel.current.id) {
+      if (!clickToJump && activeParcel.current.id) {
         clearHeightLight();
         const res = await getOtherSideParcelDetail(activeParcel.current.id);
         const { data } = res;
@@ -581,7 +586,25 @@ function OtherSideMap({
         (popDetail.current as any).style.left = `${dX}px`;
       }
     }
-  }, [clearHeightLight, showDetail]);
+
+    if (camera) {
+      const old = camera.position.z;
+      // 10 600
+
+      if (old === 10 && minZoomAble) {
+        setMinZoomAble(false);
+      }
+      if (old !== 10 && !minZoomAble) {
+        setMinZoomAble(true);
+      }
+      if (old === 600 && maxZoomAble) {
+        setMaxZoomAble(false);
+      }
+      if (old !== 600 && !maxZoomAble) {
+        setMaxZoomAble(true);
+      }
+    }
+  }, [clearHeightLight, showDetail, minZoomAble, maxZoomAble]);
 
   const animation = React.useCallback(() => {
     render();
@@ -593,12 +616,13 @@ function OtherSideMap({
 
   React.useEffect(() => {
     if (!renderer.current) {
+      const sceneElement = document.getElementById(`map`);
       const re = new WebGLRenderer({ antialias: true });
       re.setClearColor(0xffffff, 0);
       re.setPixelRatio(window.devicePixelRatio);
       renderer.current = re;
       const scene = new Scene();
-      const sceneElement = document.getElementById(`map`);
+
       domRef.current = sceneElement;
       const camera = new PerspectiveCamera(
         60,
@@ -606,16 +630,21 @@ function OtherSideMap({
         0.1,
         20000,
       );
-      camera.position.z = 500;
+      camera.position.z = 300;
       scene.userData.camera = camera;
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
 
-      // controls.minDistance = 2;
-      // controls.maxDistance = 5;
+      controls.minDistance = 10;
+      controls.maxDistance = 600;
       controls.enablePan = true;
       controls.enableRotate = false;
       controls.enableZoom = true;
+      controls.mouseButtons = {
+        LEFT: MOUSE.PAN,
+        MIDDLE: MOUSE.DOLLY,
+        RIGHT: MOUSE.ROTATE,
+      };
 
       scene.userData.controls = controls;
 
@@ -658,7 +687,17 @@ function OtherSideMap({
   }, [animation, requestData, onPointerMove, onActive]);
 
   return (
-    <div className={style.mapContainer} onClick={onClick}>
+    <div className={style.mapContainer} onClick={clickToJump ? jumpToMap : null}>
+      {loading ? (
+        <div
+          className={cn(
+            ' absolute h-full w-full z-50 flex items-center justify-center',
+            style.state,
+          )}
+        >
+          <Status status="loading" />
+        </div>
+      ) : null}
       <div className={cn('flex justify-between items-center', style.picker)}>
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter
@@ -684,10 +723,7 @@ function OtherSideMap({
                 zoomButtonClick('zoomIn');
               }}
             >
-              <img
-                className={zoomLevel >= maxZoomLevel ? style.disable : null}
-                src="./images/Union.png"
-              ></img>
+              <img className={minZoomAble ? null : style.disable} src="./images/Union.png"></img>
             </div>
             <div
               className={cn('flex justify-center items-center', style.zoomButton)}
@@ -696,7 +732,7 @@ function OtherSideMap({
               }}
             >
               <img
-                className={zoomLevel <= minZoomLevel ? style.disable : null}
+                className={maxZoomAble ? null : style.disable}
                 src="./images/Rectangle.png"
               ></img>
             </div>
@@ -718,7 +754,8 @@ function OtherSideMap({
           trafficType={staticType.current}
           mapType={mapType.current}
           close={closePop}
-          isSomnium={true}
+          isSomnium={false}
+          isOtherSide={true}
         ></ParcelDeatil>
       </div>
       <Legend
