@@ -13,7 +13,11 @@ import Status from '../status';
 import { convert } from '../../common/utils';
 import Popup from '../decentraland-popup';
 
-import { getDecentralandMapLevelThreeData, getDclParcelDetail } from '../../service';
+import {
+  getDecentralandMapLevelThreeData,
+  getDclParcelDetail,
+  getDclTrafficMap,
+} from '../../service';
 
 // this type is same as https://github.com/decentraland/atlas-server v2 version. There is only 5 types has color
 const COLOR_BY_TYPE = Object.freeze({
@@ -34,13 +38,21 @@ const COLOR_BY_TYPE = Object.freeze({
   14: '#0d0b0e', // loading even
 });
 
-const mapT = [{ value: 'price', label: 'PRICE' }];
+const mapT = [
+  { value: 'traffic', label: 'TRAFFIC' },
+  { value: 'price', label: 'PRICE' },
+];
 
 const options = {
   price: [
     { label: 'MONTH', value: 'month' },
     { label: 'QUARTER', value: 'quarter' },
     { label: 'YEAR', value: 'year' },
+    { label: 'All-Time', value: 'all' },
+  ],
+  traffic: [
+    { label: 'WEEK', value: 'week' },
+    { label: 'MONTH', value: 'month' },
     { label: 'All-Time', value: 'all' },
   ],
 };
@@ -200,6 +212,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '11%-20%',
@@ -208,6 +221,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '21%-30%',
@@ -216,6 +230,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '31%-40%',
@@ -224,6 +239,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '41%-50%',
@@ -232,6 +248,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '51%-65%',
@@ -240,6 +257,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '66%-80%',
@@ -248,6 +266,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
     {
       label: '81%-100%',
@@ -256,6 +275,7 @@ const colors = {
       month: { start: 0, end: 0 },
       year: { start: 0, end: 0 },
       quarter: { start: 0, end: 0 },
+      week: { start: 0, end: 0 },
     },
   ],
 };
@@ -353,21 +373,6 @@ function DecentralandMap({
   );
 
   const requestLand = React.useCallback(async () => {
-    //
-    // fetch("https://poster-phi.vercel.app/dcl/all_price_map_level_three.json").then(res=>{
-    //   return res.json()
-    // }).then(data=>{
-    //   const { stats, parcels } = convert(data);
-    //   const limit = stats[mapType.current].levelOne;
-    //   colors[2].forEach((co, index) => {
-    //     Object.assign(co.all, limit[index].all);
-    //     Object.assign(co.month, limit[index].month);
-    //     Object.assign(co.quarter, limit[index].quarter);
-    //     Object.assign(co.year, limit[index].year);
-    //   });
-    //   orginData.current = parcels;
-    //   dealWithParcel(parcels, colors[2]);
-    // })
     setLoading(true);
     const res = await getDecentralandMapLevelThreeData();
     const { code, data } = res;
@@ -379,6 +384,25 @@ function DecentralandMap({
         Object.assign(co.month, limit[index].month);
         Object.assign(co.quarter, limit[index].quarter);
         Object.assign(co.year, limit[index].year);
+      });
+      orginData.current = parcels;
+      dealWithParcel(parcels, colors[2]);
+    }
+    setLoading(false);
+  }, [dealWithParcel, colors]);
+
+  const requestDclMap = React.useCallback(async () => {
+    setLoading(true);
+    const res = await getDclTrafficMap();
+    const { code, data } = res;
+
+    if (code === 100000 && data) {
+      const { stats, parcels } = convert(data);
+      const limit = stats[mapType.current].levelOne;
+      colors[2].forEach((co, index) => {
+        Object.assign(co.all, limit[index].all);
+        Object.assign(co.week, limit[index].week);
+        Object.assign(co.month, limit[index].month);
       });
       orginData.current = parcels;
       dealWithParcel(parcels, colors[2]);
@@ -407,10 +431,15 @@ function DecentralandMap({
     (newType) => {
       mapType.current = newType;
       setStaticList(options[newType]);
-      staticType.current = options[newType][1].value;
+      staticType.current = options[newType][0].value;
       closePop();
+      if (newType === 'price') {
+        requestLand();
+      } else {
+        requestDclMap();
+      }
     },
-    [minZoomLevel],
+    [minZoomLevel, requestLand, requestDclMap],
   );
 
   const zoomButtonClick = React.useCallback(
@@ -501,7 +530,7 @@ function DecentralandMap({
 
   const requestDetail = React.useCallback(
     async (id: string) => {
-      const d = await getDclParcelDetail(id);
+      const d = await getDclParcelDetail(id, mapType.current);
       const { data } = d;
       setShowDetail(true);
       setDeatil(convert(data));

@@ -123,7 +123,6 @@ export default function MapPage(props) {
           zoomLimit={[1, 9]}
           dragging={true}
           initZoom={5}
-          changeTypeControl={false}
           backColor="rgb(8 17 19)"
         ></DecentralandMap>
       );

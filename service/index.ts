@@ -337,8 +337,8 @@ export const getDecentralandMapLevelThreeData = async () => {
   return json;
 };
 
-export const getDclParcelDetail = async (landId: string) => {
-  const search = qs.stringify({ landId }, { addQueryPrefix: true });
+export const getDclParcelDetail = async (landId: string, mapType = 'price') => {
+  const search = qs.stringify({ landId, mapType }, { addQueryPrefix: true });
   const url = `/api/dcl_parcel_detail${search}`;
   const res = await fetch(url);
 
@@ -425,6 +425,14 @@ export const getOtherSidePriceMap = async () => {
 export const getOtherSideParcelDetail = async (tokenId: string) => {
   const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
   const url = `/api/otherside_parcel_detail${search}`;
+  const res = await fetch(url);
+
+  const json = await res.json();
+  return json;
+};
+
+export const getDclTrafficMap = async () => {
+  const url = `https://api.metacat.world/api/v1/get_dcl_traffic_map`;
   const res = await fetch(url);
 
   const json = await res.json();
