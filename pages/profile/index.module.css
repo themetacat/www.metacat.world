@@ -263,3 +263,15 @@
   width: 1200px;
   margin: 0 auto;
 }
+
+.wearablesContainer {
+  width: 1200px;
+  margin: 0 auto;
+}
+.wearablesContainer > .title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #ffffff;
+  display: flex;
+  margin: 40px 0 20px 0;
+}

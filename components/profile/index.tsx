@@ -14,9 +14,20 @@ type Props = {
   home?: string;
   avater?: string;
   classname?: string;
+  email?: string;
+  onClick?;
 };
 
-export default function Profile({ name, address, twitter, home, avater = '', classname }: Props) {
+export default function Profile({
+  name,
+  address,
+  twitter,
+  home,
+  avater = '',
+  classname,
+  email,
+  onClick,
+}: Props) {
   const copyName = React.useCallback(
     (evt) => {
       toast.success('copied!');
@@ -29,24 +40,29 @@ export default function Profile({ name, address, twitter, home, avater = '', cla
       <div className="flex justify-between items-center">
         <img className={style.avater} src={avater || '/images/logo.png'}></img>
         <div className={cn('ml-8', style.info)}>
-          <ProfileIconLabel
-            label={name}
-            address={address}
-            icon="/images/v5/copy.png"
-            suffixCopy={true}
-            hasIcon={!(name && name !== '')}
-            onClick={copyName}
-            classname={'text-2xl font-semibold mb-4'}
-          ></ProfileIconLabel>
-          {name && name !== '' ? (
+          <div className="flex">
             <ProfileIconLabel
-              label={address}
+              label={name}
+              address={address}
               icon="/images/v5/copy.png"
               suffixCopy={true}
+              hasIcon={!(name && name !== '')}
               onClick={copyName}
-              classname={cn('mb-4 text-sm', style.address)}
+              classname={'text-2xl font-semibold mb-4'}
             ></ProfileIconLabel>
-          ) : null}
+            {name && name !== '' ? (
+              <ProfileIconLabel
+                label={address}
+                icon="/images/v5/copy.png"
+                suffixCopy={true}
+                onClick={copyName}
+                classname={cn('mb-4 text-sm', style.address)}
+              ></ProfileIconLabel>
+            ) : null}
+            {/* <div className={style.cd} onClick={onClick}>
+              {`Creator Display >`}
+            </div> */}
+          </div>
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
               <ProfileIconLabel

@@ -374,8 +374,8 @@ class API {
     return json;
   }
 
-  public async getDclParcelDetail(landId: string): Promise<any> {
-    const search = qs.stringify({ land_id: landId }, { addQueryPrefix: true });
+  public async getDclParcelDetail(landId: string, mapType = 'price'): Promise<any> {
+    const search = qs.stringify({ land_id: landId, map_type: mapType }, { addQueryPrefix: true });
     const url = `${this.url}/get_dcl_parcel_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
@@ -469,6 +469,19 @@ class API {
     const url = `${this.url}/get_otherside_parcel_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
+
+    return json;
+  }
+
+  // 获取otherside价格热力图数据
+  public async getDclTrafficMap() {
+    const url = `${this.url}/get_dcl_traffic_map`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
 
     return json;
   }

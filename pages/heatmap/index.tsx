@@ -72,6 +72,16 @@ const TAB = [
   //   label: 'SubStrata',
   //   type: 'substrata',
   // },
+  {
+    label: 'Otherside',
+    icon: '/images/osd.png',
+    type: 'otherside',
+  },
+  {
+    label: 'SubStrata',
+    icon: '/images/substrata.png',
+    type: 'substrata',
+  },
 ];
 
 export default function MapPage(props) {
@@ -123,7 +133,6 @@ export default function MapPage(props) {
           zoomLimit={[1, 9]}
           dragging={true}
           initZoom={5}
-          changeTypeControl={false}
           backColor="rgb(8 17 19)"
         ></DecentralandMap>
       );
@@ -189,6 +198,36 @@ export default function MapPage(props) {
     //     ></SubStrataMap>
     //   );
     // }
+    if (mapType === 'otherside') {
+      return (
+        <OthersideMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="rgb(8 17 19)"
+        ></OthersideMap>
+      );
+    }
+    if (mapType === 'substrata') {
+      return (
+        <SubStrataMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="#15282C"
+        ></SubStrataMap>
+      );
+    }
 
     return (
       <Map
