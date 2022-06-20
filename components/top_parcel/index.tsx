@@ -16,6 +16,7 @@ type Props = {
   idx?: number;
   opensea_url?: string;
   parcel_url?: string;
+  displayId?: boolean;
 };
 
 export default function TopParcel({
@@ -31,6 +32,7 @@ export default function TopParcel({
   idx,
   opensea_url,
   parcel_url,
+  displayId,
 }: Props) {
   return (
     <div
@@ -49,9 +51,11 @@ export default function TopParcel({
       </div>
       <div className={style.detail}>
         <div className={style.name}>{name}</div>
-        <div className={mapType.toLocaleUpperCase() === 'PRICE' ? style.parcelId : style.traffic}>
-          Parcel ID: {parcel_id}
-        </div>
+        {
+          <div className={mapType.toLocaleUpperCase() === 'PRICE' ? style.parcelId : style.traffic}>
+            Parcel ID: {parcel_id}
+          </div>
+        }
         {mapType.toLocaleUpperCase() === 'PRICE' ? (
           <>
             <div className={style.info}>Sale price:</div>
@@ -61,9 +65,17 @@ export default function TopParcel({
           </>
         ) : (
           <div className={style.info}>
-            {staticType === 'WEEKLY' ? 'Week ' : null}
-            {staticType === 'MONTHLY' ? 'Month ' : null}
-            {staticType === 'TOTAL' ? 'Total ' : null}
+            {staticType.toLocaleUpperCase() === 'WEEKLY' ||
+            staticType.toLocaleUpperCase() === 'WEEK'
+              ? 'Week '
+              : null}
+            {staticType.toLocaleUpperCase() === 'MONTHLY' ||
+            staticType.toLocaleUpperCase() === 'MONTH'
+              ? 'Month '
+              : null}
+            {staticType.toLocaleUpperCase() === 'TOTAL' || staticType.toLocaleUpperCase() === 'ALL'
+              ? 'Total '
+              : null}
             Traffic: {traffic}
           </div>
         )}

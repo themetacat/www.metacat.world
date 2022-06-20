@@ -333,7 +333,7 @@ function DecentralandMap({
   const [arrowsState, setArrowsState] = React.useState(true);
   // const clickToJumpRef = React.useRef(clickToJump);
   const topData = React.useRef(null);
-  const [stc, setStc] = React.useState('MONTHLY');
+  const [stc, setStc] = React.useState('WEEK');
   // const [priceTop, setPriceTop] = React.useState({})
   const priceTop = React.useRef(null);
   // const [trafficTop, setTrafficTop] = React.useState({})
@@ -455,14 +455,17 @@ function DecentralandMap({
           showTopData.current = priceTop.current.price_all;
         }
       }
-      // if (mapType.current === 'TRAFFIC') {
-      //   if (newType === 'WEEKLY') {
-      //   }
-      //   if (newType === 'MONTHLY') {
-      //   }
-      //   if (newType === 'TOTAL') {
-      //   }
-      // }
+      if (mapType.current.toLocaleUpperCase() === 'TRAFFIC') {
+        if (newType.toLocaleUpperCase() === 'WEEK') {
+          showTopData.current = trafficTop.current.traffic_weekly;
+        }
+        if (newType.toLocaleUpperCase() === 'MONTH') {
+          showTopData.current = trafficTop.current.traffic_monthly;
+        }
+        if (newType.toLocaleUpperCase() === 'ALL') {
+          showTopData.current = trafficTop.current.traffic_all;
+        }
+      }
 
       closePop();
       const allData = mapType.current === 'price' ? orginData.current : orginDataTraffic.current;
@@ -476,12 +479,13 @@ function DecentralandMap({
   const changeMapType = React.useCallback(
     (newType) => {
       mapType.current = newType;
-      // if (newType === 'PRICE') {
-
-      // }
-      // if (newType === 'TRAFFIC') {
-
-      // }
+      console.log(newType);
+      if (newType.toLocaleUpperCase() === 'PRICE') {
+        showTopData.current = priceTop.current.price_monthly;
+      }
+      if (newType.toLocaleUpperCase() === 'TRAFFIC') {
+        showTopData.current = trafficTop.current.traffic_weekly;
+      }
       setStaticList(options[newType]);
       staticType.current = options[newType][0].value;
       closePop();
@@ -665,6 +669,7 @@ function DecentralandMap({
 
   const getDclTop20 = React.useCallback(async () => {
     const result = await req_dcl_top20_parcel();
+    console.log(result.data);
     priceTop.current = result.data.price_top;
     trafficTop.current = result.data.traffic_top;
     showTopData.current = result.data.price_top.price_all;
@@ -683,13 +688,13 @@ function DecentralandMap({
   // mouse move
 
   const rander = React.useMemo(() => {
-    console.log(stc);
     return (
       <>
         {showTopData.current
           ? showTopData.current.map((item, idx) => {
               return (
                 <TopParcel
+                  displayId={true}
                   idx={idx}
                   key={uuid()}
                   {...item}
