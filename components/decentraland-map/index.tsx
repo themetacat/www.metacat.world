@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-
+import { v4 as uuid } from 'uuid';
 import Router from 'next/router';
 import { TileMap } from 'react-tile-map';
 import style from './index.module.css';
@@ -12,8 +12,11 @@ import Status from '../status';
 
 import { convert } from '../../common/utils';
 import Popup from '../decentraland-popup';
+import TopParcel from '../top_parcel';
 
 import { getDecentralandMapLevelThreeData, getDclParcelDetail } from '../../service';
+
+import { req_dcl_top20_parcel } from '../../service/z_api';
 
 // this type is same as https://github.com/decentraland/atlas-server v2 version. There is only 5 types has color
 const COLOR_BY_TYPE = Object.freeze({
@@ -306,8 +309,16 @@ function DecentralandMap({
   const [loading, setLoading] = React.useState(false);
   const [versionNumber, setVersionNumber] = React.useState(0);
   const [activeColor, setActiveColor] = React.useState(null);
+  const [arrowsState, setArrowsState] = React.useState(true);
   // const clickToJumpRef = React.useRef(clickToJump);
-
+  const topData = React.useRef(null);
+  const [stc, setStc] = React.useState('MONTHLY');
+  // const [priceTop, setPriceTop] = React.useState({})
+  const priceTop = React.useRef(null);
+  // const [trafficTop, setTrafficTop] = React.useState({})
+  const trafficTop = React.useRef(null);
+  // const [showTopData, setShowTopData] = React.useState([])
+  const showTopData = React.useRef(null);
   const dealWithParcel = React.useCallback(
     (data, colorsLimit) => {
       const tiles = {};
@@ -395,17 +406,50 @@ function DecentralandMap({
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
+      setStc(newType.toLocaleUpperCase());
+      // console.log(mapType.current)
+      if (mapType.current.toLocaleUpperCase() === 'PRICE') {
+        // console.log(priceTop)
+        if (newType.toLocaleUpperCase() === 'MONTH') {
+          // setShowTopData(priceTop?.price_monthly)
+          showTopData.current = priceTop.current.price_monthly;
+        }
+        if (newType.toLocaleUpperCase() === 'QUARTER') {
+          showTopData.current = priceTop.current.price_quarterly;
+        }
+        if (newType.toLocaleUpperCase() === 'YEAR') {
+          showTopData.current = priceTop.current.price_yearly;
+        }
+        if (newType.toLocaleUpperCase() === 'ALL') {
+          showTopData.current = priceTop.current.price_all;
+        }
+      }
+      // if (mapType.current === 'TRAFFIC') {
+      //   if (newType === 'WEEKLY') {
+      //   }
+      //   if (newType === 'MONTHLY') {
+      //   }
+      //   if (newType === 'TOTAL') {
+      //   }
+      // }
+
       closePop();
       if (orginData.current) {
         dealWithParcel(orginData.current, colors[2]);
       }
     },
-    [dealWithParcel, colors],
+    [dealWithParcel, colors, priceTop],
   );
 
   const changeMapType = React.useCallback(
     (newType) => {
       mapType.current = newType;
+      // if (newType === 'PRICE') {
+
+      // }
+      // if (newType === 'TRAFFIC') {
+
+      // }
       setStaticList(options[newType]);
       staticType.current = options[newType][1].value;
       closePop();
@@ -586,7 +630,14 @@ function DecentralandMap({
     [showDetail, handleDraging, handleDragEnd],
   );
 
+  const getDclTop20 = React.useCallback(async () => {
+    const result = await req_dcl_top20_parcel();
+    priceTop.current = result.data.price_top;
+    trafficTop.current = result.data.traffic_top;
+    showTopData.current = result.data.price_top.price_all;
+  }, []);
   React.useEffect(() => {
+    getDclTop20();
     requestLand();
   }, [null]);
 
@@ -596,6 +647,27 @@ function DecentralandMap({
   };
 
   // mouse move
+
+  const rander = React.useMemo(() => {
+    console.log(stc);
+    return (
+      <>
+        {showTopData.current
+          ? showTopData.current.map((item, idx) => {
+              return (
+                <TopParcel
+                  idx={idx}
+                  key={uuid()}
+                  {...item}
+                  mapType={mapType.current}
+                  staticType={stc}
+                ></TopParcel>
+              );
+            })
+          : null}
+      </>
+    );
+  }, [stc, changeStaticType, changeMapType, staticList, arrowsState]);
 
   React.useEffect(() => {
     function handleMouseMove(event: MouseEvent) {
@@ -624,21 +696,38 @@ function DecentralandMap({
     </div>
   ) : (
     <div className={style.mapContainer} onClick={onClick} onMouseLeave={handleHidePopup}>
-      <div className={cn('flex justify-between items-center', style.picker)}>
-        {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
-        <Selecter
-          options={mapT}
-          onClick={changeMapType}
-          showArrow={changeTypeControl}
-          defaultLabel={mapType.current}
-        ></Selecter>
-        <div className={style.dividing}></div>
-        <Selecter
-          options={staticList}
-          onClick={changeStaticType}
-          showArrow={true}
-          defaultLabel={staticType.current}
-        ></Selecter>
+      <div className={style.container}>
+        <div className={style.bg}></div>
+        <div className={cn('flex justify-between items-center', style.picker)}>
+          {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
+          <Selecter
+            mini={style.change}
+            options={mapT}
+            onClick={changeMapType}
+            showArrow={changeTypeControl}
+            defaultLabel={mapType.current}
+          ></Selecter>
+          <div className={style.dividing}></div>
+          <Selecter
+            mini={style.change}
+            options={staticList}
+            onClick={changeStaticType}
+            showArrow={true}
+            defaultLabel={staticType.current}
+          ></Selecter>
+        </div>
+        <div
+          className={style.arrows}
+          onClick={() => {
+            setArrowsState(!arrowsState);
+          }}
+        >
+          <img src={`/images/${arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`} />
+        </div>
+      </div>
+      <div className={cn(style.topList, arrowsState ? style.dn : null)}>
+        <div className={style.title}>TOP 20 Parcels</div>
+        {rander}
       </div>
       {zoomControl ? (
         <>

@@ -25,6 +25,7 @@ import ProfileDetail from '../../components/profiledetail';
 import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
 import TrafficBar from '../../components/parcel-traffic_bar';
+import Creator from '../../components/creator';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -76,6 +77,10 @@ const TAB3 = [
     label: 'TRAFFIC REPORT',
     type: 'trafficreport',
   },
+  {
+    label: 'WEARABLE LIST',
+    type: 'wearablelist',
+  },
   // {
   //   label: 'SALES REPORT',
   // },
@@ -109,12 +114,12 @@ function ProfilePage(r) {
   const [status, set_status] = React.useState('');
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
-  const [routeTab, setRouteTab] = React.useState(
-    r.router.query.type ? r.router.query.type : null || 'parcellist',
-  );
+  const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'parcellist');
+  const [email, setEmail] = React.useState(null);
 
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
   const [tabStateTR, setTabStateTR] = React.useState('cryptovoxels');
+  const [creatorState, setCreatorState] = React.useState(false);
 
   const [navLabel, setNavLabel] = React.useState('All');
 
@@ -268,7 +273,7 @@ function ProfilePage(r) {
         store.setState(() => ({ type: 'dcl' }));
       }
     },
-    [orginData],
+    [orginData, tabState],
   );
 
   const onTabChangeTR = React.useCallback((i) => {
@@ -386,8 +391,9 @@ function ProfilePage(r) {
         return;
       }
       const { profile } = data;
-      const { address: addr, nickName: name, avatar: ava, links } = profile;
+      const { address: addr, nickName: name, avatar: ava, links, email: e } = profile;
       const { twitterName, websiteUrl } = links;
+      setEmail(e);
       setAvatarUrl(ava);
       setAddress(addr);
       setNickName(name);
@@ -708,6 +714,14 @@ function ProfilePage(r) {
     return <div></div>;
   };
 
+  const creatorDisplay = React.useCallback(() => {
+    setCreatorState(true);
+  }, []);
+  const changeCreatorState = React.useCallback(() => {
+    setCreatorState(false);
+    console.log(1);
+  }, []);
+
   const randerCardList = React.useMemo(() => {
     if (routeTab === 'parcellist') {
       return (
@@ -847,6 +861,58 @@ function ProfilePage(r) {
         </>
       );
     }
+    if (routeTab === 'wearablelist') {
+      return (
+        <>
+          <div className={cn('tab-list flex mt-5', style.allHeight)}>
+            <div className={cls}></div>
+            <div className="main-content flex px-0">
+              {TAB.map((item) => {
+                return (
+                  <Tab
+                    active={tabState === item.type}
+                    isMini={true}
+                    key={item.label}
+                    label={item.label}
+                    icon={item.icon}
+                    onClick={() => {
+                      onTabChange(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+          <div className={style.wearablesContainer}>
+            <div className={style.title}>
+              <div
+                style={{
+                  width: '4px',
+                  height: '16px',
+                  backgroundColor: '#00D0EC',
+                  margin: '5px 8px 0 0',
+                }}
+              ></div>
+              <div className={style.text}>Wearables Created</div>
+            </div>
+
+            <div className={style.title}>
+              <div
+                style={{
+                  width: '4px',
+                  height: '16px',
+                  backgroundColor: '#00D0EC',
+                  margin: '5px 8px 0 0',
+                }}
+              ></div>
+              <div className={style.text}>Wearables Owned</div>
+            </div>
+          </div>
+        </>
+      );
+    }
   }, [
     showTab,
     status,
@@ -860,6 +926,7 @@ function ProfilePage(r) {
     renderContent,
     dataSource,
     tabState,
+    routeTab,
   ]);
 
   return (
@@ -880,6 +947,8 @@ function ProfilePage(r) {
             twitter={twitterAddress}
             home={websiteAddress}
             name={nickName}
+            email={email}
+            onClick={creatorDisplay}
             classname="main-content"
           ></Profile>
         </div>
@@ -902,6 +971,7 @@ function ProfilePage(r) {
         {randerCardList}
         <Footer />
       </div>
+      {creatorState ? <Creator onClick={changeCreatorState}></Creator> : null}
     </Page>
   );
 }

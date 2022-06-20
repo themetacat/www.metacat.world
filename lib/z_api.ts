@@ -993,6 +993,20 @@ class API {
 
     return json;
   }
+
+  public async req_dcl_top20_parcel() {
+    const url = `http://8.130.23.16/api/v1/get_dcl_top20_parcel`;
+    const url1 = `${this.url}/get_dcl_top20_parcel`;
+    console.log(url1);
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');

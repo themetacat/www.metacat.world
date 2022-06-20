@@ -49,10 +49,10 @@ export default function TopParcel({
       </div>
       <div className={style.detail}>
         <div className={style.name}>{name}</div>
-        <div className={mapType === 'PRICE' ? style.parcelId : style.traffic}>
+        <div className={mapType.toLocaleUpperCase() === 'PRICE' ? style.parcelId : style.traffic}>
           Parcel ID: {parcel_id}
         </div>
-        {mapType === 'PRICE' ? (
+        {mapType.toLocaleUpperCase() === 'PRICE' ? (
           <>
             <div className={style.info}>Sale price:</div>
             <div className={style.info}>
