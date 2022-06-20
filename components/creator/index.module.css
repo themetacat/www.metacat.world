@@ -13,3 +13,12 @@
   background: #fff;
   opacity: 0.3;
 }
+.container .requestCard {
+  width: 450px;
+  background: #000;
+}
+.container .requestCard .header {
+  height: 58px;
+  width: 100%;
+  padding: 0 30px;
+}

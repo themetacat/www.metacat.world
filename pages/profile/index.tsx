@@ -719,9 +719,7 @@ function ProfilePage(r) {
   }, []);
   const changeCreatorState = React.useCallback(() => {
     setCreatorState(false);
-    console.log(1);
   }, []);
-
   const randerCardList = React.useMemo(() => {
     if (routeTab === 'parcellist') {
       return (
@@ -971,7 +969,7 @@ function ProfilePage(r) {
         {randerCardList}
         <Footer />
       </div>
-      {creatorState ? <Creator onClick={changeCreatorState}></Creator> : null}
+      {creatorState ? <Creator onClick={changeCreatorState} email={email}></Creator> : null}
     </Page>
   );
 }
