@@ -479,7 +479,6 @@ function DecentralandMap({
   const changeMapType = React.useCallback(
     (newType) => {
       mapType.current = newType;
-      console.log(newType);
       if (newType.toLocaleUpperCase() === 'PRICE') {
         showTopData.current = priceTop.current.price_monthly;
       }
@@ -669,7 +668,6 @@ function DecentralandMap({
 
   const getDclTop20 = React.useCallback(async () => {
     const result = await req_dcl_top20_parcel();
-    console.log(result.data);
 
     priceTop.current = result.data.price_top;
     trafficTop.current = result.data.traffic_top;

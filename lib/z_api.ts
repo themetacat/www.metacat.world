@@ -995,9 +995,9 @@ class API {
   }
 
   public async req_dcl_top20_parcel() {
-    const url = `http://8.130.23.16/api/v1/get_dcl_top20_parcel`;
-    const url1 = `${this.url}/get_dcl_top20_parcel`;
-    console.log(url1);
+    // const url = `http://8.130.23.16/api/v1/get_dcl_top20_parcel`;
+    const url = `${this.url}/get_dcl_top20_parcel`;
+    console.log(url);
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
