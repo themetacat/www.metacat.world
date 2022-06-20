@@ -40,7 +40,7 @@
       text-overflow: ellipsis;
     }
     .parcelId {
-      margin: 3px 0;
+      margin: 4px 0;
       overflow: hidden;
       color: #fff;
       font-weight: 400;
@@ -49,6 +49,26 @@
       text-overflow: ellipsis;
     }
     .traffic {
+      margin: 10px 0;
+      overflow: hidden;
+      color: #fff;
+      font-weight: 400;
+      font-size: 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .coord1 {
+      display: flex;
+      margin: 4px 0;
+      overflow: hidden;
+      color: #fff;
+      font-weight: 400;
+      font-size: 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .coord2 {
+      display: flex;
       margin: 10px 0;
       overflow: hidden;
       color: #fff;
@@ -76,4 +96,30 @@
     border-radius: 50%;
     cursor: pointer;
   }
+}
+.site {
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.zb {
+  position: relative;
+  margin-right: 12px;
+}
+.zb::after {
+  position: absolute;
+  right: -6px;
+  bottom: 2px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.zb:last-child::after {
+  width: 0;
+  content: ' ';
 }

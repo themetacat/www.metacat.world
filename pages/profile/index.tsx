@@ -969,7 +969,9 @@ function ProfilePage(r) {
         {randerCardList}
         <Footer />
       </div>
-      {creatorState ? <Creator onClick={changeCreatorState} email={email}></Creator> : null}
+      {creatorState ? (
+        <Creator onClick={changeCreatorState} email={email} address={address}></Creator>
+      ) : null}
     </Page>
   );
 }

@@ -15,10 +15,113 @@
 }
 .container .requestCard {
   width: 450px;
+  height: 350px;
   background: #000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 9999999999;
 }
 .container .requestCard .header {
-  height: 58px;
   width: 100%;
+  height: 58px;
   padding: 0 30px;
+  background: #000;
+  border-bottom: 1px solid rgba(0, 208, 236, 0.2);
+  font-weight: 500;
+  font-size: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container .requestCard .header img {
+  cursor: pointer;
+}
+.container .requestCard .detail {
+  padding: 0 30px;
+}
+.container .requestCard .detail .address {
+  color: #999999;
+  font-weight: 500;
+  font-size: 16px;
+  margin: 23px 0 10px 0;
+}
+.container .requestCard .detail .text {
+  width: 390px;
+  height: 45px;
+  background: #001518;
+  line-height: 45px;
+  padding: 0 20px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #666666;
+  cursor: pointer;
+  border: 1px solid #000;
+}
+.container .requestCard .detail .text:hover {
+  border: 1px solid #00d0ec;
+}
+.container .requestCard .detail .email {
+  color: #999999;
+  font-weight: 500;
+  font-size: 16px;
+  margin: 23px 0 2px 0;
+}
+.container .requestCard .detail .hint {
+  color: #777777;
+  font-weight: 400;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.container .requestCard .detail .emailInput {
+  position: relative;
+  width: 390px;
+  height: 45px;
+  background: #001518;
+  line-height: 45px;
+  padding: 0 20px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #666666;
+  border: 1px solid #000;
+}
+.container .requestCard .detail .emailInput input {
+  width: 340px;
+  height: 22px;
+  background: #001518;
+  border: none;
+  outline: none;
+  color: #fff;
+  caret-color: #00d0ec;
+  flex: 1;
+}
+.container .requestCard .detail .emailInput:hover {
+  border: 1px solid #00d0ec;
+}
+.container .requestCard .detail .submit {
+  color: #0f191b;
+  width: 135px;
+  height: 39px;
+  background: #00d0ec;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 39px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+}
+.dn {
+  display: none;
+}
+.icon {
+  width: 19px;
+  height: 19px;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  cursor: pointer;
 }

@@ -17,6 +17,9 @@ type Props = {
   opensea_url?: string;
   parcel_url?: string;
   displayId?: boolean;
+  coordinate?;
+  type?: string;
+  land_total?: number;
 };
 
 export default function TopParcel({
@@ -33,6 +36,9 @@ export default function TopParcel({
   opensea_url,
   parcel_url,
   displayId,
+  coordinate,
+  type,
+  land_total,
 }: Props) {
   return (
     <div
@@ -51,11 +57,23 @@ export default function TopParcel({
       </div>
       <div className={style.detail}>
         <div className={style.name}>{name}</div>
-        {
+        {!type ? (
           <div className={mapType.toLocaleUpperCase() === 'PRICE' ? style.parcelId : style.traffic}>
             Parcel ID: {parcel_id}
           </div>
-        }
+        ) : (
+          <div className={mapType.toLocaleUpperCase() === 'PRICE' ? style.coord1 : style.coord2}>
+            {type === 'land' ? 'Land ' : `${land_total} Land  `}
+            <img src="/images/icon/dizhi.png" className={style.site} />
+            {coordinate.map((i, index) => {
+              return (
+                <span key={index} className={style.zb}>
+                  {i}
+                </span>
+              );
+            })}
+          </div>
+        )}
         {mapType.toLocaleUpperCase() === 'PRICE' ? (
           <>
             <div className={style.info}>Sale price:</div>

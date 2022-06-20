@@ -670,6 +670,7 @@ function DecentralandMap({
   const getDclTop20 = React.useCallback(async () => {
     const result = await req_dcl_top20_parcel();
     console.log(result.data);
+
     priceTop.current = result.data.price_top;
     trafficTop.current = result.data.traffic_top;
     showTopData.current = result.data.price_top.price_all;
