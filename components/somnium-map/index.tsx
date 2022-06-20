@@ -328,25 +328,6 @@ function SomniumMap({
               type: 'Feature',
               ...all,
             };
-
-            // if (price.levelTwo) {
-            //   colors[1].forEach(function (x, index) {
-            //     Object.assign(x.ALL, price.levelTwo[index].all);
-            //     Object.assign(x.MONTH, price.levelTwo[index].month);
-            //     Object.assign(x.QUARTER, price.levelTwo[index].quarter);
-            //     Object.assign(x.YEAR, price.levelTwo[index].year);
-            //   });
-            // }
-
-            // if (price.levelThree) {
-            //   colors[2].forEach(function (x, index) {
-            //     Object.assign(x.ALL, price.levelThree[index].all);
-            //     Object.assign(x.MONTH, price.levelThree[index].month);
-            //     Object.assign(x.QUARTER, price.levelThree[index].quarter);
-            //     Object.assign(x.YEAR, price.levelThree[index].year);
-            //   });
-            // }
-
             polygon.properties.ALL = all.price.all;
             polygon.properties.MONTH = all.price.month;
             polygon.properties.QUARTER = all.price.quarter;
@@ -356,8 +337,6 @@ function SomniumMap({
           }
         }
       }
-
-      console.log(colors[2]);
 
       const params = {
         position: 'topright',

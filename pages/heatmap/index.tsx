@@ -66,10 +66,12 @@ const TAB = [
   },
   {
     label: 'Otherside',
+    icon: '/images/osd.png',
     type: 'otherside',
   },
   {
     label: 'SubStrata',
+    icon: '/images/substrata.png',
     type: 'substrata',
   },
 ];
@@ -123,7 +125,6 @@ export default function MapPage(props) {
           zoomLimit={[1, 9]}
           dragging={true}
           initZoom={5}
-          changeTypeControl={false}
           backColor="rgb(8 17 19)"
         ></DecentralandMap>
       );
@@ -161,7 +162,6 @@ export default function MapPage(props) {
     if (mapType === 'otherside') {
       return (
         <OthersideMap
-          id={'othersidemap'}
           fullScreenOnClick={showFull}
           zoomControl={true}
           zoomLimit={[3, 9]}

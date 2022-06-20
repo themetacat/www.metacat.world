@@ -19,14 +19,14 @@ const mapT = [{ value: 'PRICE', label: 'PRICE' }];
 
 const options = {
   PRICE: [
-    { label: 'MONTHLY', value: 'MONTH' },
-    { label: 'QUARTERLY', value: 'QUARTER' },
+    { label: 'MONTH', value: 'MONTH' },
+    { label: 'QUARTER', value: 'QUARTER' },
     { label: 'YEARLY', value: 'YEAR' },
     { label: 'All-Time', value: 'ALL' },
   ],
   TRAFFIC: [
-    { label: 'WEEKLY', value: 'WEEKLY' },
-    { label: 'MONTHLY', value: 'MONTHLY' },
+    { label: 'WEEK', value: 'WEEKLY' },
+    { label: 'MONTH', value: 'MONTHLY' },
     { label: 'All-Time', value: 'TOTAL' },
   ],
 };
@@ -391,7 +391,6 @@ function SubstrataMap({
       priceRef.current = stats?.price;
 
       drawPriceGeoJsonToLayer(pageMap, parcels, convert(stats?.price), parcelL);
-
       setLoading();
     },
     [null],
@@ -704,7 +703,7 @@ function SubstrataMap({
             trafficType={staticType.current}
             mapType={mapType.current}
             close={closePop}
-            isSomnium={true}
+            isSomnium={false}
           ></ParcelDeatil>
         </div>
       </div>

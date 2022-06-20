@@ -7,6 +7,11 @@ import { formatNum } from '../../common/utils';
 
 import styles from './index.module.css';
 
+interface Price {
+  mana?: number;
+  usd?: number;
+}
+
 interface timeRangeSale {
   mana?: number;
   usd?: number;
@@ -27,6 +32,7 @@ interface params {
   coverImgUrl?: string;
   openseaUrl?: string;
   parcelPageUrl?: string;
+  lastPrice?: Price;
   lastSaleList?: Array<lastSale>;
   timeRangeSale?: timeRangeSale;
 }
@@ -42,19 +48,6 @@ interface Prop {
   close?: () => void;
   showRef?: boolean;
 }
-
-// "land_id": "115792089237316195423570985008687907802227629627499794519951392893147897921560",
-//     "estate_id": 0,
-//     "name": "Fashion District Parcel (2)",
-//     "description": "Great Location",
-//     "cover_img_url": "https://api.decentraland.org/v2/parcels/-150/24/map.png",
-//     "opensea_url": "https://opensea.io/assets/0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d/115792089237316195423570985008687907802227629627499794519951392893147897921560",
-//     "parcel_page_url": "https://market.decentraland.org/contracts/0xf87e31492faf9a91b02ee0deaad50d51d56d5d4d/tokens/115792089237316195423570985008687907802227629627499794519951392893147897921560",
-// traffic.week	int	地块最近7天流量
-// traffic.month	int	地块最近30天流量
-// traffic.all	int	地块总流量
-// last_price.eth	float	地块最后一次交易金额对应的eth
-// last_price.usd	int	地块最后一次交易金额对应的usd
 
 export default function DecentralandDeatil({
   options,
@@ -128,7 +121,8 @@ export default function DecentralandDeatil({
       label = condition;
     }
 
-    if (label === 'WEEK') {
+    if (type === 'week') {
+      preffix = 'Weekly Traffic：';
       label = op.traffic.week;
     }
 
@@ -192,16 +186,30 @@ export default function DecentralandDeatil({
           </div>
           <div className={cn('mt-1 font-medium', styles.label)}>
             <div className={cn('truncate', styles.description)}>{options.description}</div>
-            <div className="flex justify-between items-center">
+            <div
+              className={
+                mapType === 'price'
+                  ? 'flex justify-between items-center'
+                  : cn('mt-1 font-medium', styles.label)
+              }
+            >
               {getLabel(trafficType, options)}
             </div>
           </div>
         </div>
       </div>
-      <div className={cn('mt-1 font-medium', styles.label)}>
-        Last two sales：
-        <ul className="list-none">{renderUl(options.lastSaleList)}</ul>
-      </div>
+      {options.lastSaleList ? (
+        <div className={cn('mt-1 font-medium', styles.label)}>
+          Last two sales：
+          <ul className="list-none">{renderUl(options.lastSaleList)}</ul>
+        </div>
+      ) : (
+        <div className={cn('mt-1 font-medium', styles.label)}>
+          {`Last Price：${options.lastPrice.mana.toFixed(1)} MANA (${options.lastPrice.usd.toFixed(
+            0,
+          )} USD)`}
+        </div>
+      )}
     </div>
   ) : null;
 }

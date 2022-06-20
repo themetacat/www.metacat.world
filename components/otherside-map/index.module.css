@@ -144,7 +144,6 @@
   z-index: 1001;
   color: #fff;
   width: 28px;
-  height: 48px;
 }
 
 .helperInfo{
@@ -168,4 +167,9 @@
 }
 .info{
   width: 200px;
+}
+
+.state{
+  z-index: 1006;
+  background-color: rgb(8, 17, 19)
 }
