@@ -1002,3 +1002,15 @@ export const req_space_buildings_list = async (page: number, count: number) => {
 
   return json;
 };
+
+export const req_dcl_top20_parcel = async () => {
+  const url = '/api/get_dcl_top20_parcel';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};

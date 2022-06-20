@@ -58,6 +58,12 @@ const MENU = [
     value: '/profile?type=parcellist',
     type: 'operation',
   },
+  // {
+  //   label: 'My Wearables',
+  //   icon: '/images/icon/wearables.png',
+  //   value: '/profile?type=wearablelist',
+  //   type: 'operation',
+  // },
   {
     label: 'Sign Out',
     icon: '/images/v5/Signout.png',

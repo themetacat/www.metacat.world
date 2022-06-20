@@ -64,6 +64,7 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
   },
+
   {
     label: 'Otherside',
     icon: '/images/osd.png',
@@ -159,6 +160,7 @@ export default function MapPage(props) {
         ></SomniumMap>
       );
     }
+
     if (mapType === 'otherside') {
       return (
         <OthersideMap
