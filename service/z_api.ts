@@ -876,7 +876,7 @@ export const req_bind_send_email = async (email: string, token: string) => {
 
 // 17.2 验证邮箱验证码以及绑定邮箱
 
-export const req_bind_ver_email_code = async (code: string, token: string, join_type: string) => {
+export const req_bind_ver_email_code = async (code: string, token: string, join_type = null) => {
   let search = null;
   if (join_type) {
     search = qs.stringify({ code, join_type }, { addQueryPrefix: true });
