@@ -181,7 +181,7 @@ const colors = {
   2: [
     {
       label: 'Top 10%',
-      color: '#72FFE6',
+      color: '#FFFFFF',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -192,7 +192,7 @@ const colors = {
     },
     {
       label: '11%-20%',
-      color: '#00E1EF',
+      color: '#BEFBFF',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -203,7 +203,7 @@ const colors = {
     },
     {
       label: '21%-30%',
-      color: '#009DA7',
+      color: '#54F5FF',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -214,7 +214,7 @@ const colors = {
     },
     {
       label: '31%-40%',
-      color: '#006A78',
+      color: '#0BCEDB',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -225,7 +225,7 @@ const colors = {
     },
     {
       label: '41%-50%',
-      color: '#004149',
+      color: '#0F8B9C',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -236,7 +236,7 @@ const colors = {
     },
     {
       label: '51%-65%',
-      color: '#082C31',
+      color: '#05616D',
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -247,7 +247,7 @@ const colors = {
     },
     {
       label: '66%-80%',
-      color: '#001F23',
+      color: '#004049', // 'rgb(31,84,133)', //
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
@@ -258,7 +258,7 @@ const colors = {
     },
     {
       label: '81%-100%',
-      color: '#001B21',
+      color: '#002F32', // 'rgb(3,46,118)', //
       TOTAL: { start: 0, end: 0 },
       MONTHLY: { start: 0, end: 0 },
       WEEKLY: { start: 0, end: 0 },
