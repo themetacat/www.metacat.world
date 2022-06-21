@@ -172,7 +172,7 @@ export default function MapPage(props) {
           loadFinish={() => {
             setLoading(false);
           }}
-          backColor="rgb(8 17 19)"
+          backColor="#000"
         ></OthersideMap>
       );
     }
