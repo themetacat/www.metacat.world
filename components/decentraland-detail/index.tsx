@@ -83,30 +83,33 @@ export default function DecentralandDeatil({
     [null],
   );
 
-  const getLabel = (type, op) => {
+  const getLabel = (useMapType, type, op) => {
     let preffix = 'Week Traffic：';
     let label = '';
-    if ((mapType === 'price' && !op.timeRangeSale) || (mapType === 'traffic' && !op.traffic)) {
+    if (
+      (useMapType === 'price' && !op.timeRangeSale) ||
+      (useMapType === 'traffic' && !op.traffic)
+    ) {
       return '';
     }
-    if (type === 'total') {
+    if (type === 'all' && useMapType === 'traffic') {
       preffix = 'Total Traffic：';
       label = op.traffic.all;
     }
 
-    if (type === 'monthly') {
+    if (type === 'month' && useMapType === 'traffic') {
       preffix = 'Monthly Traffic：';
       label = op.traffic.month;
     }
     const condition = op.timeRangeSale?.mana
       ? `${op.timeRangeSale.mana} MANA(${op.timeRangeSale.usd} USD)`
       : '';
-    if (type === 'all') {
-      preffix = 'All-Time Sales：';
+    if (type === 'all' && useMapType === 'price') {
+      preffix = 'All-Time Sales';
       label = condition;
     }
 
-    if (type === 'month') {
+    if (type === 'month' && useMapType === 'price') {
       preffix = 'Monthly Sales：';
       label = condition;
     }
@@ -121,7 +124,7 @@ export default function DecentralandDeatil({
       label = condition;
     }
 
-    if (type === 'week') {
+    if (type === 'week' && useMapType === 'traffic') {
       preffix = 'Weekly Traffic：';
       label = op.traffic.week;
     }
@@ -186,7 +189,7 @@ export default function DecentralandDeatil({
           </div>
           <div className={cn('mt-1 font-medium', styles.label)}>
             <div className={cn('truncate', styles.description)}>{options.description}</div>
-            <div
+            {/* <div
               className={
                 mapType === 'price'
                   ? 'flex justify-between items-center'
@@ -194,6 +197,9 @@ export default function DecentralandDeatil({
               }
             >
               {getLabel(trafficType, options)}
+            </div> */}
+            <div className={cn('mt-1 font-medium', styles.label)}>
+              {getLabel(mapType, trafficType, options)}
             </div>
           </div>
         </div>
