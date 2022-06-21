@@ -34,3 +34,11 @@
   margin-left: 72px;
   margin-top: 8px;
 }
+.waiting {
+  color: #ffcf5f;
+  font-weight: 500;
+  font-size: 14px;
+  margin-left: 72px;
+  margin-top: 8px;
+  white-space: nowrap;
+}

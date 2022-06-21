@@ -75,7 +75,8 @@
         font-size: 12px;
       }
       .emailInput {
-        position: relative;
+        display: flex;
+        align-items: center;
         width: 390px;
         height: 45px;
         padding: 0 20px;
@@ -95,6 +96,10 @@
           outline: none;
           caret-color: #00d0ec;
         }
+        .emailClear {
+          width: 19px;
+          height: 19px;
+        }
       }
       .emailInput:hover {
         border: 1px solid rgb(0, 208, 236);
@@ -110,6 +115,69 @@
         text-align: center;
         background: #00d0ec;
         cursor: pointer;
+      }
+      .code {
+        width: 100%;
+        height: 74px;
+        margin-bottom: 20px;
+        .title {
+          margin-bottom: 10px;
+          color: #999;
+          font-weight: 500;
+          font-size: 16px;
+        }
+        .inputContainer {
+          position: relative;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 45px;
+          background-color: #001518;
+          border: 1px solid rgba(255, 255, 255, 0);
+          img {
+            position: absolute;
+            right: 100px;
+            bottom: 11px;
+            width: 19px;
+            height: 19px;
+            cursor: pointer;
+          }
+          input {
+            width: 300px;
+            height: 24px;
+            padding: 0 20px;
+            color: #fff;
+            background: #001518;
+            border: none;
+            border-right: 1px solid #003a42;
+            outline: none;
+            caret-color: #00d0ec;
+          }
+
+          .getCode {
+            color: #fff;
+            font-weight: 400;
+            font-size: 12px;
+            cursor: pointer;
+          }
+          .getCode2 {
+            color: #999;
+            font-weight: 400;
+            font-size: 12px;
+          }
+          .reacquire {
+            color: #fff;
+            font-weight: 400;
+            font-size: 12px;
+            cursor: pointer;
+          }
+          .time {
+            margin-left: 15px;
+            color: #fff;
+            font-weight: 400;
+            font-size: 12px;
+          }
+        }
       }
     }
   }

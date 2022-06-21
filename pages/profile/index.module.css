@@ -275,3 +275,106 @@
   display: flex;
   margin: 40px 0 20px 0;
 }
+.wearablesNav {
+  width: 1200px;
+  height: 44px;
+  background: #0c1416;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.wearablesNav > .right {
+  width: 157px;
+  height: 100%;
+  display: flex;
+  margin: 0;
+  align-items: center;
+  position: relative;
+  margin-right: -20px;
+}
+.wearablesNav > .right::after {
+  content: '';
+  width: 0.5px;
+  height: 16px;
+  background: #333;
+  position: absolute;
+  left: -25px;
+  top: 14px;
+}
+.wearablesNav > .right > img {
+  width: 15px;
+  cursor: pointer;
+  height: 15px;
+  margin-top: -1px;
+}
+.wearablesNav > .right > div {
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 14px;
+  color: #dddddd;
+  margin-left: 6px;
+}
+.wearablesNav > .left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.wearablesNavItem {
+  display: flex;
+  margin: 0 25px;
+  font-size: 12px;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 100%;
+  line-height: 44px;
+}
+
+.wearablesNavItem > div {
+  color: #ddd;
+}
+.wearablesNavItem > span {
+  margin-left: 5px;
+  color: #999;
+}
+.wearablesNavItem:hover > div {
+  color: #fff;
+}
+.wearablesNavItem:hover > span {
+  color: #fff;
+}
+.wearableNavAction {
+  border-bottom: 2px solid#00d0ec;
+}
+.wearableNavAction > span {
+  color: #fff;
+}
+.wearableNavAction > div {
+  color: #fff;
+}
+.showOrHideList {
+  position: absolute;
+  right: 0px;
+  bottom: -83px;
+}
+.showOrHideList1 {
+  position: absolute;
+  right: 0px;
+  bottom: -41.5px;
+}
+.showOrHideItem {
+  width: 98px;
+  height: 41px;
+  background-color: #000;
+  line-height: 41px;
+  padding-left: 12px;
+  color: #999999;
+  font-size: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #0f191b;
+}
+.showOrHideItem:hover {
+  color: #fff;
+}
+.showOrHideItem:last-child {
+  border: 0;
+}

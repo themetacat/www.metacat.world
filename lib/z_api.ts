@@ -853,7 +853,9 @@ class API {
   // 17.1 发送邮箱验证码
 
   public async req_bind_send_email(email: string, token: string) {
-    const url = `${this.url}/bind_send_email?email=${email}`;
+    const url = `http://8.130.23.16/api/v1/bind_send_email?email=${email}`;
+    const url1 = `${this.url}/bind_send_email?email=${email}`;
+    console.log(url1);
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -869,9 +871,16 @@ class API {
 
   // 17.2 验证邮箱验证码以及绑定邮箱
 
-  public async req_bind_ver_email_code(code: string, token: string) {
-    const search = qs.stringify({ code }, { addQueryPrefix: true });
-    const url = `${this.url}/bind_ver_email_code${search}`;
+  public async req_bind_ver_email_code(code: string, token: string, join_type: string) {
+    let search = null;
+    if (join_type) {
+      search = qs.stringify({ code, join_type }, { addQueryPrefix: true });
+    } else {
+      search = qs.stringify({ code }, { addQueryPrefix: true });
+    }
+    const url = `http://8.130.23.16/api/v1/bind_ver_email_code${search}`;
+    const url1 = `${this.url}/bind_ver_email_code?email=${search}`;
+    console.log(url1);
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -997,7 +1006,6 @@ class API {
   public async req_dcl_top20_parcel() {
     // const url = `http://8.130.23.16/api/v1/get_dcl_top20_parcel`;
     const url = `${this.url}/get_dcl_top20_parcel`;
-    console.log(url);
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1007,8 +1015,29 @@ class API {
 
     return json;
   }
+
+  // 7.9 申请成为 creator
+
+  public async req_user_apply_become(join_type: string, token: string) {
+    const search = qs.stringify({ join_type }, { addQueryPrefix: true });
+    const url = `http://8.130.23.16/api/v1/user/user_apply_become${search}`;
+    const url1 = `${this.url}/user/user_apply_become${search}`;
+    console.log(url1);
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');
-// http://8.130.23.16/
+// http://8.130.23.16/api/v1
 // https://api.metacat.world

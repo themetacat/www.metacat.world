@@ -1,10 +1,10 @@
-// 17.2 验证邮箱验证码以及绑定邮箱
+// 7.9 申请成为 creator
 import api from '../../lib/z_api';
 
 export default async (req, res) => {
-  const { code, join_type } = req.query;
+  const { join_type } = req.query;
   const token = req.headers.authorization;
-  const data = await api.req_bind_ver_email_code(code, token, join_type);
+  const data = await api.req_user_apply_become(join_type, token);
 
   res.statusCode = 200;
 

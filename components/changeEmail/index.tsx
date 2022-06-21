@@ -107,7 +107,7 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
         ) : null}
       </>
     );
-  }, [time.current, sendCodeTime, codeState, email]);
+  }, [sendCodeTime, codeState, email]);
 
   const bindOrChangeEmail = React.useCallback(async () => {
     if (!email && !code) return;

@@ -77,14 +77,53 @@ const TAB3 = [
     label: 'TRAFFIC REPORT',
     type: 'trafficreport',
   },
-  // {
-  //   label: 'WEARABLE LIST',
-  //   type: 'wearablelist',
-  // },
+  {
+    label: 'WEARABLE LIST',
+    type: 'wearablelist',
+  },
   // {
   //   label: 'SALES REPORT',
   // },
 ];
+
+const wearablesNav = [
+  {
+    label: 'All',
+    type: 'all',
+  },
+  {
+    label: 'Shown',
+    type: 'shown',
+  },
+  {
+    label: 'Hidden',
+    type: 'hidden',
+  },
+];
+const showOrHide = {
+  all: [
+    {
+      label: 'Show serveral',
+      type: 'showServeral',
+    },
+    {
+      label: 'Hide serveral',
+      type: 'hideserveral',
+    },
+  ],
+  shown: [
+    {
+      label: 'Hide serveral',
+      type: 'hideserveral',
+    },
+  ],
+  hidden: [
+    {
+      label: 'Show serveral',
+      type: 'showServeral',
+    },
+  ],
+};
 function ProfilePage(r) {
   const nav_Label = React.useRef(null);
   const meta = {
@@ -122,7 +161,9 @@ function ProfilePage(r) {
   const [creatorState, setCreatorState] = React.useState(false);
 
   const [navLabel, setNavLabel] = React.useState('All');
-
+  const [wearablesNavState, setWearablesNavState] = React.useState('all');
+  const [showOrHideState, setShowOrHideState] = React.useState(false);
+  const [creatorsState, setCreatorsState] = React.useState(null);
   const Nav = [
     {
       label: 'All',
@@ -391,10 +432,18 @@ function ProfilePage(r) {
         return;
       }
       const { profile } = data;
-      const { address: addr, nickName: name, avatar: ava, links, email: e } = profile;
+      const {
+        address: addr,
+        nickName: name,
+        avatar: ava,
+        links,
+        email: e,
+        creator_status,
+      } = profile;
       const { twitterName, websiteUrl } = links;
       setEmail(e);
       setAvatarUrl(ava);
+      setCreatorsState(creator_status);
       setAddress(addr);
       setNickName(name);
       setTwitterAddress(twitterName);
@@ -642,7 +691,7 @@ function ProfilePage(r) {
   }, [s.parcels_cardState]);
   React.useEffect(() => {
     const accessToken = getToken('atk');
-    if (accessToken && r.router.query.type === 'parcellist' && r.router.query.type) {
+    if (accessToken && r.router.query.type === 'parcellist') {
       if (tabState === 'cryptovoxels') requestData(accessToken);
       if (tabState === 'decentraland') reqDclData(accessToken);
       requestPersonal(accessToken);
@@ -652,7 +701,7 @@ function ProfilePage(r) {
       setRouteTab('parcellist');
       return;
     }
-    if (accessToken && r.router.query.type === 'trafficreport' && r.router.query.type) {
+    if (accessToken && r.router.query.type === 'trafficreport') {
       setRouteTab(r.router.query.type);
       return;
     }
@@ -717,7 +766,10 @@ function ProfilePage(r) {
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
   }, []);
-  const changeCreatorState = React.useCallback(() => {
+  const changeCreatorState = React.useCallback((sta = false) => {
+    // if (sta) {
+
+    // }
     setCreatorState(false);
   }, []);
   const randerCardList = React.useMemo(() => {
@@ -895,6 +947,49 @@ function ProfilePage(r) {
               ></div>
               <div className={style.text}>Wearables Created</div>
             </div>
+            <div className={style.wearablesNav}>
+              <div className={style.left}>
+                {wearablesNav.map((item, index) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        setWearablesNavState(item.type);
+                      }}
+                      className={cn(
+                        style.wearablesNavItem,
+                        wearablesNavState === item.type ? style.wearableNavAction : null,
+                      )}
+                      key={uuid()}
+                    >
+                      <div className="mr-1">{item.label}</div>
+                      <span>6</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div
+                className={style.right}
+                onClick={() => {
+                  setShowOrHideState(!showOrHideState);
+                }}
+              >
+                <img src="/images/Settings.png" />
+                <div>Batch setting</div>
+                <ul
+                  className={
+                    wearablesNavState === 'all' && showOrHideState
+                      ? style.showOrHideList
+                      : style.showOrHideList1
+                  }
+                >
+                  {showOrHideState
+                    ? showOrHide[wearablesNavState].map((item, index) => {
+                        return <li className={style.showOrHideItem}>{item.label}</li>;
+                      })
+                    : null}
+                </ul>
+              </div>
+            </div>
 
             <div className={style.title}>
               <div
@@ -970,7 +1065,12 @@ function ProfilePage(r) {
         <Footer />
       </div>
       {creatorState ? (
-        <Creator onClick={changeCreatorState} email={email} address={address}></Creator>
+        <Creator
+          onClick={changeCreatorState}
+          token={refreshTK()}
+          email={email}
+          address={address}
+        ></Creator>
       ) : null}
     </Page>
   );

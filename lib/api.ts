@@ -289,7 +289,9 @@ class API {
   }
 
   public async getBaseInfo(token: string): Promise<any> {
-    const url = `${this.url}/user/get_base_info`;
+    const url = `http://8.130.23.16/api/v1/user/get_base_info`;
+    const url1 = `${this.url}/user/get_base_info`;
+    console.log(url1);
     const res = await fetch(url, {
       method: 'get',
       headers: {

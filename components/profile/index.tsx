@@ -59,8 +59,14 @@ export default function Profile({
                 classname={cn('mb-4 text-sm', style.address)}
               ></ProfileIconLabel>
             ) : null}
+            <div className={style.cd} onClick={onClick}>
+              {`Join Creators >`}
+            </div>
+            {/* <div className={style.waiting}>
+              Waiting for confirmation to show as a creator……
+            </div> */}
             {/* <div className={style.cd} onClick={onClick}>
-              {`Creator Display >`}
+              {` My creator page >`}
             </div> */}
           </div>
           <div className={cn('flex justify-start items-center', style.links)}>

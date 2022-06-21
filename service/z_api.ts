@@ -876,8 +876,13 @@ export const req_bind_send_email = async (email: string, token: string) => {
 
 // 17.2 验证邮箱验证码以及绑定邮箱
 
-export const req_bind_ver_email_code = async (code: string, token: string) => {
-  const search = qs.stringify({ code }, { addQueryPrefix: true });
+export const req_bind_ver_email_code = async (code: string, token: string, join_type: string) => {
+  let search = null;
+  if (join_type) {
+    search = qs.stringify({ code, join_type }, { addQueryPrefix: true });
+  } else {
+    search = qs.stringify({ code }, { addQueryPrefix: true });
+  }
   const url = `../api/bind_ver_email_code${search}`;
   const result = await fetch(url, {
     method: 'post',
@@ -1009,6 +1014,24 @@ export const req_dcl_top20_parcel = async () => {
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 7.9 申请成为 creator
+
+export const req_user_apply_become = async (join_type: string, token: string) => {
+  const search = qs.stringify({ join_type }, { addQueryPrefix: true });
+  const url = `/api/user_apply_become${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   });
   const json = await result.json();
 
