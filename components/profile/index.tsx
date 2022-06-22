@@ -16,6 +16,7 @@ type Props = {
   classname?: string;
   email?: string;
   onClick?;
+  creatorsState?: number;
 };
 
 export default function Profile({
@@ -27,6 +28,7 @@ export default function Profile({
   classname,
   email,
   onClick,
+  creatorsState,
 }: Props) {
   const copyName = React.useCallback(
     (evt) => {
@@ -34,7 +36,6 @@ export default function Profile({
     },
     [null],
   );
-
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
       <div className="flex justify-between items-center">
@@ -59,15 +60,15 @@ export default function Profile({
                 classname={cn('mb-4 text-sm', style.address)}
               ></ProfileIconLabel>
             ) : null}
-            <div className={style.cd} onClick={onClick}>
-              {`Join Creators >`}
-            </div>
-            {/* <div className={style.waiting}>
-              Waiting for confirmation to show as a creator……
-            </div> */}
-            {/* <div className={style.cd} onClick={onClick}>
-              {` My creator page >`}
-            </div> */}
+            {creatorsState === 1 ? (
+              <div className={style.cd} onClick={onClick}>
+                {`Join Creators >`}
+              </div>
+            ) : null}
+            {creatorsState === 2 ? (
+              <div className={style.waiting}>Waiting for confirmation to show as a creator……</div>
+            ) : null}
+            {creatorsState === 3 ? <div className={style.cd}>{` My creator page >`}</div> : null}
           </div>
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (

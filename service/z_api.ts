@@ -1037,3 +1037,39 @@ export const req_user_apply_become = async (join_type: string, token: string) =>
 
   return json;
 };
+
+export const req_get_user_wearable = async (token: string) => {
+  const url = '/api/get_user_wearable';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_set_wearable_show_status = async (
+  token: string,
+  wearable_id: string,
+  show_status: number,
+) => {
+  const search = qs.stringify({ wearable_id, show_status }, { addQueryPrefix: false });
+  const url = '/api/set_wearable_show_status';
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: search,
+  });
+  const json = await result.json();
+
+  return json;
+};

@@ -353,12 +353,13 @@
 }
 .showOrHideList {
   position: absolute;
-  right: 0px;
+  right: 20px;
   bottom: -83px;
+  z-index: 99;
 }
 .showOrHideList1 {
   position: absolute;
-  right: 0px;
+  right: 20px;
   bottom: -41.5px;
 }
 .showOrHideItem {
@@ -377,4 +378,46 @@
 }
 .showOrHideItem:last-child {
   border: 0;
+}
+
+.settingShowOrHide {
+  position: fixed;
+  bottom: 100px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  background-color: #00d0ec;
+  padding: 0 20px;
+  z-index: 999;
+  width: 282px;
+  height: 49px;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 18px;
+  color: #0f191b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingShowOrHide > .close {
+  border: 1px solid #000;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 2px 8px;
+  margin: 0 5px 0 10px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 20px;
+}
+.settingShowOrHide > .showOrHide {
+  border: 1px solid #000;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 2px 8px;
+  background-color: #000;
+  color: #00d0ec;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
 }

@@ -5,7 +5,6 @@ import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
 
 import { useRouter, withRouter } from 'next/router';
-
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -26,6 +25,8 @@ import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
 import TrafficBar from '../../components/parcel-traffic_bar';
 import Creator from '../../components/creator';
+import DaoModelList2 from '../../components/dao-model-list2';
+import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -44,6 +45,8 @@ import {
   req_cv_parcel_traffic_daily,
   req_cv_parcel_month_traffic_detail,
   req_cv_parcel_traffic_list,
+  req_get_user_wearable,
+  req_set_wearable_show_status,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -164,6 +167,16 @@ function ProfilePage(r) {
   const [wearablesNavState, setWearablesNavState] = React.useState('all');
   const [showOrHideState, setShowOrHideState] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
+  const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
+  const [ownerData, setOwnerData] = React.useState([]);
+  const [wearablesCreatorsOriginData, setWearablesCreatorsOriginData] = React.useState([]);
+  const [wearablesShowData, setWearablesShowData] = React.useState([]);
+  const [wearablesHideData, setWearablesHideData] = React.useState([]);
+
+  const [wearablesShowOrHideState, setWearablesShowOrHideState] = React.useState(false);
+  const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
+  const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
+
   const Nav = [
     {
       label: 'All',
@@ -438,12 +451,13 @@ function ProfilePage(r) {
         avatar: ava,
         links,
         email: e,
-        creator_status,
+        creatorStatus,
       } = profile;
+
       const { twitterName, websiteUrl } = links;
       setEmail(e);
       setAvatarUrl(ava);
-      setCreatorsState(creator_status);
+      setCreatorsState(creatorStatus);
       setAddress(addr);
       setNickName(name);
       setTwitterAddress(twitterName);
@@ -452,6 +466,23 @@ function ProfilePage(r) {
     },
     [resultHandler],
   );
+  const reqWearablesData = React.useCallback(async () => {
+    const result = await req_get_user_wearable(await refreshTK());
+    if (result.code === 100000) {
+      const show = result.data.creator.filter((i) => {
+        return i.show_status === 1;
+      });
+      const hide = result.data.creator.filter((i) => {
+        return i.show_status === 2;
+      });
+      setWearablesCreatorsData(result.data.creator);
+      setOwnerData(result.data.owner);
+      setWearablesCreatorsOriginData(result.data.creator);
+      setWearablesShowData(show);
+      setWearablesHideData(hide);
+    }
+  }, [refreshTK]);
+
   const onRetry = React.useCallback(async () => {
     const accessToken = getToken('atk');
     if (accessToken && tabState === 'cryptovoxels') {
@@ -691,6 +722,7 @@ function ProfilePage(r) {
   }, [s.parcels_cardState]);
   React.useEffect(() => {
     const accessToken = getToken('atk');
+    reqWearablesData();
     if (accessToken && r.router.query.type === 'parcellist') {
       if (tabState === 'cryptovoxels') requestData(accessToken);
       if (tabState === 'decentraland') reqDclData(accessToken);
@@ -711,10 +743,10 @@ function ProfilePage(r) {
     requestData,
     requestPersonal,
     watcher_store,
-    nav_Label.current,
     reqDclData,
     tabState,
     r.router.query.type,
+    reqWearablesData,
   ]);
 
   const tag1 = () => {
@@ -762,6 +794,105 @@ function ProfilePage(r) {
     }
     return <div></div>;
   };
+
+  const settingShowOrHide = React.useCallback((t) => {
+    setWearablesShowOrHideState(true);
+    setWearablesShowOrHide(t === 'showServeral' ? 1 : 2);
+  }, []);
+
+  const batchShowOrHide = React.useCallback(
+    async (id = null, stat = null) => {
+      let result = null;
+      if (id && stat) {
+        result = await req_set_wearable_show_status(await refreshTK(), id, stat);
+      } else {
+        result = await req_set_wearable_show_status(
+          await refreshTK(),
+          wearablesSleceteIdList.join(),
+          wearablesShowOrHide,
+        );
+      }
+      if (result.code === 100000) {
+        if (wearablesShowOrHide === 2 || stat === 2) {
+          toast.success('Successfully hidden!');
+        }
+        if (wearablesShowOrHide === 1 || stat === 1) {
+          toast.success('Successfully shown!');
+        }
+      } else {
+        toast.error('Failed!');
+      }
+      setWearablesShowOrHideState(false);
+      setWearablesShowOrHide(0);
+      setWearablesSleceteIdList([]);
+      reqWearablesData();
+    },
+    [wearablesShowOrHide, wearablesSleceteIdList, reqWearablesData],
+  );
+
+  const setWearablesId = React.useCallback(
+    (id) => {
+      if (wearablesSleceteIdList.findIndex((item) => item === id) === -1) {
+        wearablesSleceteIdList.push(id);
+      } else {
+        wearablesSleceteIdList.splice(
+          wearablesSleceteIdList.findIndex((item) => item === id),
+          1,
+        );
+      }
+      setWearablesSleceteIdList([...wearablesSleceteIdList]);
+    },
+    [wearablesSleceteIdList],
+  );
+  const creatorsReander = React.useMemo(() => {
+    if (wearablesCreatorsData.length === 0) {
+      return (
+        <div className={style.totop}>
+          <Status status="empty" />;
+        </div>
+      );
+    }
+    if (wearablesCreatorsData.length !== 0) {
+      return (
+        <>
+          <DaoModelList2
+            models={wearablesCreatorsData}
+            token={refreshTK()}
+            wearablesShowOrHideState={wearablesShowOrHideState}
+            wearablesShowOrHide={wearablesShowOrHide}
+            length={wearablesCreatorsData.length}
+            onClick={setWearablesId}
+            wearablesSleceteIdList={wearablesSleceteIdList}
+            batchShowOrHide={batchShowOrHide}
+          ></DaoModelList2>
+        </>
+      );
+    }
+  }, [
+    wearablesCreatorsData,
+    wearablesShowOrHideState,
+    wearablesShowOrHide,
+    setWearablesId,
+    wearablesSleceteIdList,
+    batchShowOrHide,
+  ]);
+
+  const ownedRander = React.useMemo(() => {
+    if (ownerData.length === 0) {
+      return (
+        <div className={style.totop}>
+          <Status status="empty" />;
+        </div>
+      );
+    }
+    if (ownerData.length !== 0) {
+      return (
+        <>
+          <DaoModelList2 models={ownerData} type={'owner'}></DaoModelList2>
+        </>
+      );
+    }
+  }, [ownerData]);
 
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
@@ -954,6 +1085,15 @@ function ProfilePage(r) {
                     <div
                       onClick={() => {
                         setWearablesNavState(item.type);
+                        if (item.type === 'all') {
+                          setWearablesCreatorsData(wearablesCreatorsOriginData);
+                        }
+                        if (item.type === 'shown') {
+                          setWearablesCreatorsData(wearablesShowData);
+                        }
+                        if (item.type === 'hidden') {
+                          setWearablesCreatorsData(wearablesHideData);
+                        }
                       }}
                       className={cn(
                         style.wearablesNavItem,
@@ -962,7 +1102,11 @@ function ProfilePage(r) {
                       key={uuid()}
                     >
                       <div className="mr-1">{item.label}</div>
-                      <span>6</span>
+                      <span>
+                        {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+                        {item.type === 'shown' ? wearablesShowData.length : null}
+                        {item.type === 'hidden' ? wearablesHideData.length : null}
+                      </span>
                     </div>
                   );
                 })}
@@ -984,12 +1128,23 @@ function ProfilePage(r) {
                 >
                   {showOrHideState
                     ? showOrHide[wearablesNavState].map((item, index) => {
-                        return <li className={style.showOrHideItem}>{item.label}</li>;
+                        return (
+                          <li
+                            className={style.showOrHideItem}
+                            key={index}
+                            onClick={() => {
+                              settingShowOrHide(item.type);
+                            }}
+                          >
+                            {item.label}
+                          </li>
+                        );
                       })
                     : null}
                 </ul>
               </div>
             </div>
+            <div style={{ marginTop: '26px' }}>{creatorsReander}</div>
 
             <div className={style.title}>
               <div
@@ -1002,6 +1157,7 @@ function ProfilePage(r) {
               ></div>
               <div className={style.text}>Wearables Owned</div>
             </div>
+            <div style={{ marginBottom: '50px' }}>{ownedRander}</div>
           </div>
         </>
       );
@@ -1037,6 +1193,7 @@ function ProfilePage(r) {
           <Profile
             avater={avatar}
             address={address}
+            creatorsState={creatorsState}
             twitter={twitterAddress}
             home={websiteAddress}
             name={nickName}
@@ -1071,6 +1228,32 @@ function ProfilePage(r) {
           email={email}
           address={address}
         ></Creator>
+      ) : null}
+
+      {wearablesShowOrHideState ? (
+        <div className={style.settingShowOrHide}>
+          {`${wearablesSleceteIdList.length}/${
+            wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
+          } selected`}
+          <div
+            onClick={() => {
+              setWearablesShowOrHideState(false);
+              setWearablesShowOrHide(0);
+              setWearablesSleceteIdList([]);
+            }}
+            className={style.close}
+          >
+            Close
+          </div>
+          <div
+            className={style.showOrHide}
+            onClick={() => {
+              batchShowOrHide();
+            }}
+          >
+            {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
+          </div>
+        </div>
       ) : null}
     </Page>
   );

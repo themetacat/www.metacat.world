@@ -1036,6 +1036,49 @@ class API {
 
     return json;
   }
+
+  public async req_get_user_wearable(token: string) {
+    const url = 'http://8.130.23.16/api/v1/wearable/get_user_wearable';
+    const url1 = `${this.url}/wearable/get_user_wearable`;
+    console.log(url1);
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_set_wearable_show_status(
+    token: string,
+    wearable_id: string,
+    show_status: number,
+  ) {
+    const search = qs.stringify({ wearable_id, show_status }, { addQueryPrefix: false });
+    const url = 'http://8.130.23.16/api/v1/wearable/set_wearable_show_status';
+    const url1 = `${this.url}/wearable/set_wearable_show_status`;
+    console.log(url1);
+
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');
