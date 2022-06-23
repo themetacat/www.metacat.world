@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-
+import { useRouter } from 'next/router';
 import ProfileIconLabel from '../profile-icon-label';
 
 import style from './index.module.css';
@@ -16,20 +16,34 @@ interface Props {
   name?: string;
   contact?;
   country?: string;
+  from?;
 }
 
-export default function UserAvatar({ avatar, name, contact, country }: Props) {
+export default function UserAvatar({ avatar, name, contact, country, from }: Props) {
+  const router = useRouter();
   const [C, setC] = React.useState([]);
 
   React.useEffect(() => {
     const c = contact.filter((i) => i.address);
     setC(c);
   }, [contact]);
+  const toMySetting = React.useCallback(() => {
+    router.replace('/profile/setting');
+  }, []);
   return (
     <div className="flex flex-col justify-center items-center">
       <img className={cn('mt-1', style.userAvatar)} src={avatar}></img>
-      <div className=" mt-1 text-white text-xl">{name}</div>
-
+      <div className="flex">
+        <div className=" mt-1 text-white text-xl">{name}</div>
+        {from === 'profile' ? (
+          <img
+            src="/images/icon/bianji.png"
+            className="w-6 h-6 mt-1 ml-1"
+            style={{ cursor: 'pointer' }}
+            onClick={toMySetting}
+          />
+        ) : null}
+      </div>
       {country ? <div className={style.country}>Country : {country}</div> : null}
       <div className={cn('mt-1 flex justify-start items-center', style.links)}>
         {C.map((ele, idx) => {

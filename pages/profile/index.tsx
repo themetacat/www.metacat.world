@@ -168,7 +168,7 @@ function ProfilePage(r) {
   const [showOrHideState, setShowOrHideState] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
   const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
-  const [ownerData, setOwnerData] = React.useState([]);
+  // const [ownerData, setOwnerData] = React.useState([]);
   const [wearablesCreatorsOriginData, setWearablesCreatorsOriginData] = React.useState([]);
   const [wearablesShowData, setWearablesShowData] = React.useState([]);
   const [wearablesHideData, setWearablesHideData] = React.useState([]);
@@ -453,7 +453,6 @@ function ProfilePage(r) {
         email: e,
         creatorStatus,
       } = profile;
-
       const { twitterName, websiteUrl } = links;
       setEmail(e);
       setAvatarUrl(ava);
@@ -469,15 +468,14 @@ function ProfilePage(r) {
   const reqWearablesData = React.useCallback(async () => {
     const result = await req_get_user_wearable(await refreshTK());
     if (result.code === 100000) {
-      const show = result.data.creator.filter((i) => {
+      const show = result.data.filter((i) => {
         return i.show_status === 1;
       });
-      const hide = result.data.creator.filter((i) => {
+      const hide = result.data.filter((i) => {
         return i.show_status === 2;
       });
-      setWearablesCreatorsData(result.data.creator);
-      setOwnerData(result.data.owner);
-      setWearablesCreatorsOriginData(result.data.creator);
+      setWearablesCreatorsData(result.data);
+      setWearablesCreatorsOriginData(result.data);
       setWearablesShowData(show);
       setWearablesHideData(hide);
     }
@@ -723,20 +721,12 @@ function ProfilePage(r) {
   React.useEffect(() => {
     const accessToken = getToken('atk');
     reqWearablesData();
-    if (accessToken && r.router.query.type === 'parcellist') {
-      if (tabState === 'cryptovoxels') requestData(accessToken);
-      if (tabState === 'decentraland') reqDclData(accessToken);
-      requestPersonal(accessToken);
-      watcher_store();
-      watcher_store_status();
-      watcher_cardState();
-      setRouteTab('parcellist');
-      return;
-    }
-    if (accessToken && r.router.query.type === 'trafficreport') {
-      setRouteTab(r.router.query.type);
-      return;
-    }
+    requestPersonal(accessToken);
+    if (tabState === 'cryptovoxels') requestData(accessToken);
+    if (tabState === 'decentraland') reqDclData(accessToken);
+    watcher_store();
+    watcher_store_status();
+    watcher_cardState();
     if (!accessToken) window.location.href = '/';
   }, [
     getToken,
@@ -744,8 +734,8 @@ function ProfilePage(r) {
     requestPersonal,
     watcher_store,
     reqDclData,
+    routeTab,
     tabState,
-    r.router.query.type,
     reqWearablesData,
   ]);
 
@@ -877,22 +867,22 @@ function ProfilePage(r) {
     batchShowOrHide,
   ]);
 
-  const ownedRander = React.useMemo(() => {
-    if (ownerData.length === 0) {
-      return (
-        <div className={style.totop}>
-          <Status status="empty" />;
-        </div>
-      );
-    }
-    if (ownerData.length !== 0) {
-      return (
-        <>
-          <DaoModelList2 models={ownerData} type={'owner'}></DaoModelList2>
-        </>
-      );
-    }
-  }, [ownerData]);
+  // const ownedRander = React.useMemo(() => {
+  //   if (ownerData.length === 0) {
+  //     return (
+  //       <div className={style.totop}>
+  //         <Status status="empty" />;
+  //       </div>
+  //     );
+  //   }
+  //   if (ownerData.length !== 0) {
+  //     return (
+  //       <>
+  //         <DaoModelList2 models={ownerData} type={'owner'}></DaoModelList2>
+  //       </>
+  //     );
+  //   }
+  // }, [ownerData]);
 
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
@@ -1144,20 +1134,7 @@ function ProfilePage(r) {
                 </ul>
               </div>
             </div>
-            <div style={{ marginTop: '26px' }}>{creatorsReander}</div>
-
-            <div className={style.title}>
-              <div
-                style={{
-                  width: '4px',
-                  height: '16px',
-                  backgroundColor: '#00D0EC',
-                  margin: '5px 8px 0 0',
-                }}
-              ></div>
-              <div className={style.text}>Wearables Owned</div>
-            </div>
-            <div style={{ marginBottom: '50px' }}>{ownedRander}</div>
+            <div style={{ marginTop: '26px', marginBottom: '50px' }}>{creatorsReander}</div>
           </div>
         </>
       );

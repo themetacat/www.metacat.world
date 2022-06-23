@@ -34,7 +34,6 @@ export default function Wearables() {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [fixedState, setFixedState] = React.useState(false);
-
   const requestData = React.useCallback(async () => {
     setLoading(true);
     const result = await req_wearable_creators();
@@ -68,7 +67,6 @@ export default function Wearables() {
     return (
       <>
         {data.map((item, idx) => {
-          console.log(item);
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
         })}
       </>

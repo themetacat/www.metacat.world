@@ -22,7 +22,7 @@ import AnimationBack from '../../components/animation-back';
 import { convert, getToken, setToken } from '../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
-import DaoModelList from '../../components/dao-model-list';
+import DaoModelList2 from '../../components/dao-model-list2';
 import { useWalletProvider } from '../../components/web3modal';
 
 import { getTopicDetail, refreshToken, getBaseInfo } from '../../service';
@@ -40,7 +40,6 @@ const nav = [
     type: 'wearables',
   },
 ];
-
 export default function Topic({ base_info, parcel_list, traffic_list, wearable }) {
   const meta = {
     title: `${base_info.name} - ${SITE_NAME}`,
@@ -50,7 +49,8 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   const router = useRouter();
   const [navState, setNavState] = React.useState(router.query.type || 'buildings');
   const { pathname } = router;
-  const { id } = router.query;
+
+  const { id, from } = router.query;
   const [searchText, setSearchText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -266,10 +266,9 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
       );
     }
     if (navState === 'wearables') {
-      console.log(baseInfo.name);
       return (
         <div className={style.wearable}>
-          <DaoModelList models={wearables} id={router.query.id} name={baseInfo.name}></DaoModelList>
+          <DaoModelList2 models={wearables} type={'topic'}></DaoModelList2>
         </div>
       );
     }
@@ -303,6 +302,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
             avatar={base_info.logo_url}
             name={base_info.name}
             country={base_info.country}
+            from={from}
             contact={[
               {
                 icon: '/images/home.svg',
@@ -381,13 +381,14 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
 
 export async function getServerSideProps(context) {
   let res = null;
-  if (Number(context.params.id)) {
+  if (Number(context.params.id) && context.params.id.indexOf('0x') === -1) {
     const topic = Number(context.params.id);
     res = await api.req_topic_detail(topic, undefined);
   } else {
     res = await api.req_topic_detail(undefined, context.params.id);
   }
   const { base_info, parcel_list, traffic_list, wearable } = res.data;
+
   return {
     props: {
       base_info,

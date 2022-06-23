@@ -141,7 +141,7 @@ export default function DaoModelList({
           name={name}
           key={idx}
           token={token}
-          graphicId={`dao-${uuid().toString()}`}
+          graphicId={`dao-${idx}`}
           tabState={tabState}
           type={type}
           initFinish={(se) => {

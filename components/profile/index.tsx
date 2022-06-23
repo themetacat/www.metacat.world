@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 
 import { toast } from 'react-hot-toast';
-
+import { useRouter } from 'next/router';
 import ProfileIconLabel from '../profile-icon-label';
 
 import style from './index.module.css';
@@ -30,12 +30,20 @@ export default function Profile({
   onClick,
   creatorsState,
 }: Props) {
+  const router = useRouter();
   const copyName = React.useCallback(
     (evt) => {
       toast.success('copied!');
     },
     [null],
   );
+
+  const toTopic = React.useCallback(() => {
+    console.log(address);
+    if (address) {
+      router.replace(`/topic/${address}?type=wearables&from=profile`);
+    }
+  }, [address]);
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
       <div className="flex justify-between items-center">
@@ -68,7 +76,9 @@ export default function Profile({
             {creatorsState === 2 ? (
               <div className={style.waiting}>Waiting for confirmation to show as a creator……</div>
             ) : null}
-            {creatorsState === 3 ? <div className={style.cd}>{` My creator page >`}</div> : null}
+            {creatorsState === 4 ? (
+              <div className={style.cd} onClick={toTopic}>{` My creator page >`}</div>
+            ) : null}
           </div>
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (

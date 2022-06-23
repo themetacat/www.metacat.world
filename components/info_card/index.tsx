@@ -13,6 +13,7 @@ type Props = {
   website?: string;
   onClick?;
   is_buildings?: number;
+  address?: string;
 };
 
 export default function InfoCard({
@@ -26,12 +27,13 @@ export default function InfoCard({
   website,
   onClick,
   is_buildings,
+  address,
 }: Props) {
   return (
     <div
       className={cn(style.container, cls)}
       onClick={() => {
-        onClick(topic_id, name, is_buildings);
+        onClick(topic_id, address, is_buildings);
       }}
     >
       <div className={style.topDetail}>

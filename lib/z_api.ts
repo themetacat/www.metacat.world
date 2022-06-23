@@ -946,7 +946,9 @@ class API {
   // 9.7 获取 Wearable creator 数据接口
   public async req_wearable_creators() {
     const url = `${this.url}/wearable/get_wearable_creators`;
-    const result = await fetch(url, {
+    console.log(url);
+    const url1 = 'http://8.130.23.16/api/v1/wearable/get_wearable_creators';
+    const result = await fetch(url1, {
       method: 'get',
       mode: 'cors',
     });
@@ -965,7 +967,9 @@ class API {
       search = qs.stringify({ creator }, { addQueryPrefix: true });
     }
     const url = `${this.url}/get_topic_detail${search}`;
-    const result = await fetch(url, {
+    console.log(url);
+    const url1 = `http://8.130.23.16/api/v1/get_topic_detail${search}`;
+    const result = await fetch(url1, {
       method: 'get',
       mode: 'cors',
     });
@@ -1081,6 +1085,6 @@ class API {
   }
 }
 
-export default new API('https://api.metacat.world/api/v1');
-// http://8.130.23.16/api/v1
+export default new API('https:/http://8.130.23.16/api/v1/api.metacat.world/api/v1');
+//
 // https://api.metacat.world

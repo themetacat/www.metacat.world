@@ -64,10 +64,11 @@ export default function DaoWebglCard({
   const sceneRef = React.useRef(null);
   const [selecete, setSelecete] = React.useState(false);
   const goToDetail = React.useCallback(() => {
-    if (tabState === 'chinesered' || tabState === 'pfp') {
-      router.replace(`/wearables/detail/${model.id}?type=${tabState}`);
+    if (type === 'topic') {
+      router.replace(`/wearables/detail/${model.creator_name}?type=${'topic'}`);
     } else {
-      router.replace(`/wearables/detail/${model.id}?type=${id}&name=${name}&form=${model.type}`);
+      console.log(model.id);
+      router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
     }
   }, [tabState, id]);
 
@@ -213,14 +214,9 @@ export default function DaoWebglCard({
         >
           <div className="flex flex-col justify-start items-start w-full text-lg font-medium">
             <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span>
-            <div
-              className={cn(
-                'flex items-end justify-center text-xs text-right mt-4',
-                styles.goDetail,
-              )}
-            >
-              <div>Voxel Artist：</div>
-              <div> {model ? model.name : null}</div>
+            <div className={cn('flex items-end justify-center text-xs  mt-4', styles.goDetail)}>
+              <div style={{ whiteSpace: 'nowrap' }}>Voxel Artist：</div>
+              <div className={styles.text}> {model ? model.name : null}</div>
             </div>
           </div>
           <div className={styles.container}>

@@ -12,6 +12,7 @@ import Footer from '../../../components/footer';
 import MeteInput from '../../../components/meta-input';
 import { state } from '../../../components/wallet-btn';
 import ChangeEmail from '../../../components/changeEmail';
+import CountryInput from '../../../components/meta-input-country';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
@@ -46,6 +47,7 @@ export default function Settings() {
   const [emailState, setEmailState] = React.useState(false);
   const [showClear, setShowClear] = React.useState(false);
   const [modifyEmail, setModifyEmail] = React.useState(false);
+  const [introduction, setIntroduction] = React.useState('');
 
   const web3 = useWalletProvider();
 
@@ -264,6 +266,10 @@ export default function Settings() {
   const emailBlue = React.useCallback(() => {
     setShowClear(false);
   }, []);
+
+  const changeIntroductionValue = React.useCallback((e) => {
+    setIntroduction(e.target.value);
+  }, []);
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -321,6 +327,28 @@ export default function Settings() {
                       <span className={style.warn}>{infoMsg}</span>
                     </>
                   ) : null}
+                </div>
+
+                <div className={style.country}>
+                  <div className={style.title}>Country</div>
+                </div>
+                <CountryInput
+                  name={'website'}
+                  prefix="/images/icon/dizhi.png"
+                  placeholder={'Select Country'}
+                  classname="mt-3"
+                ></CountryInput>
+
+                <div className={style.Introduction}>
+                  <div className={style.title}>Introduction</div>
+                </div>
+                <div className={style.introductionField}>
+                  <div className={style.left}>
+                    <img src="/images/icon/text.png" />
+                  </div>
+                  <div className={style.right}>
+                    <textarea placeholder="Introduction" onInput={changeIntroductionValue} />
+                  </div>
                 </div>
 
                 <div className={style.email}>

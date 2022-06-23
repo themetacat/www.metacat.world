@@ -151,7 +151,7 @@
   color: #ffffff;
   font-size: 12px;
 }
-.modify{
+.modify {
   margin-right: 15px;
 }
 .clearIcon {
@@ -165,4 +165,54 @@
 .icon {
   width: 19px;
   height: 19px;
+}
+
+.country > .title {
+  font-weight: 400;
+  font-size: 16px;
+  color: #999999;
+}
+
+.Introduction {
+  margin: 30px 0 10px 0;
+}
+
+.Introduction > .title {
+  font-weight: 400;
+  font-size: 16px;
+  color: #999999;
+}
+.introductionField {
+  width: 500px;
+  height: 100px;
+  background-color: #001518;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  display: flex;
+}
+.introductionField:hover,
+.introductionField:focus-within {
+  border: 1px solid #00d0ec;
+}
+.introductionField > .left {
+  height: 100%;
+  width: 60px;
+  overflow: hidden;
+}
+.introductionField > .left > img {
+  margin: 14px 0 0 23px;
+}
+.introductionField > .right {
+  width: auto;
+}
+.introductionField > .right > textarea {
+  resize: none;
+  width: 440px;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  caret-color: #00d0ec;
+  height: 100px;
+  padding: 10px 10px 10px 0;
 }

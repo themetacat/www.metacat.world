@@ -28,6 +28,7 @@ import style from './index.module.css';
 
 export default function WearablesDetail({ artwork, artist, id }) {
   const router = useRouter();
+
   const meta = {
     title: `WearablesDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -137,6 +138,10 @@ export default function WearablesDetail({ artwork, artist, id }) {
   const toWearableDao = React.useCallback(() => {
     if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
       router.replace(`/wearables/wearabledao?type=${router.query.type}`);
+    } else if (router.query.type === 'mywearables') {
+      router.replace(`/profile?type=wearablelist`);
+    } else if (router.query.type === 'topic') {
+      router.replace(`/topic/${router.query.id}?type=wearables`);
     } else {
       router.replace(`/topic/${router.query.type}?type=wearables`);
     }
@@ -159,9 +164,14 @@ export default function WearablesDetail({ artwork, artist, id }) {
           >
             {router.query.type === 'chinesered' ? 'Chinese Red' : null}
             {router.query.type === 'pfp' ? 'PFP' : null}
-            {router.query.type !== 'chinesered' && router.query.type !== 'pfp'
+            {router.query.type !== 'chinesered' &&
+            router.query.type !== 'pfp' &&
+            router.query.type !== 'mywearables' &&
+            router.query.type !== 'topic'
               ? router.query.type
               : null}
+            {router.query.type === 'mywearables' ? 'My wearabels' : null}
+            {router.query.type === 'topic' ? 'Topic' : null}
           </span>
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
           <span className=" text-white">{artworkData.name}</span>
@@ -250,6 +260,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
+  console.log(id);
   let res = null;
   if (context.query.type === 'pfp' || context.query.form === 'pfp_wearable') {
     res = await z_api.req_pfp_detail(id);
