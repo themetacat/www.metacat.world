@@ -25,6 +25,7 @@ interface Props {
   wearablesSleceteIdList?;
   batchShowOrHide?;
   type?;
+  address?;
 }
 
 // {
@@ -59,17 +60,18 @@ export default function DaoWebglCard({
   wearablesSleceteIdList,
   batchShowOrHide,
   type,
+  address,
 }: Props) {
   const router = useRouter();
   const sceneRef = React.useRef(null);
   const [selecete, setSelecete] = React.useState(false);
   const goToDetail = React.useCallback(() => {
     if (type === 'topic') {
-      router.replace(`/wearables/detail/${model.creator_name}?type=${'topic'}`);
+      router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
     } else {
       router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
     }
-  }, [tabState, id]);
+  }, [tabState, id, address]);
 
   const init = React.useCallback(() => {
     const scene = new Scene();

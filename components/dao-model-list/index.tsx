@@ -132,7 +132,6 @@ export default function DaoModelList({ models, tabState, id, name }: Props) {
       return;
     }
     const modelEle = models.map((model, idx) => {
-      console.log(model);
       return (
         <DaoWebglCard
           id={id}

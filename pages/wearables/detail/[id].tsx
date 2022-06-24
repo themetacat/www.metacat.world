@@ -28,7 +28,6 @@ import style from './index.module.css';
 
 export default function WearablesDetail({ artwork, artist, id }) {
   const router = useRouter();
-
   const meta = {
     title: `WearablesDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -141,7 +140,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
     } else if (router.query.type === 'mywearables') {
       router.replace(`/profile?type=wearablelist`);
     } else if (router.query.type === 'topic') {
-      router.replace(`/topic/${router.query.id}?type=wearables`);
+      router.replace(`/topic/${router.query.address}?type=wearables`);
     } else {
       router.replace(`/topic/${router.query.type}?type=wearables`);
     }
@@ -270,7 +269,7 @@ export async function getServerSideProps(context) {
   let res = null;
   if (context.query.type === 'pfp' || context.query.form === 'pfp_wearable') {
     res = await z_api.req_pfp_detail(id);
-  } else if (context.query.type === 'mywearables') {
+  } else if (context.query.type === 'mywearables' || context.query.type === 'topic') {
     res = await z_api.req_get_wearable_detail(id);
   } else {
     res = await api.getDaoWearableDetail(id);

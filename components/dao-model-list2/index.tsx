@@ -19,6 +19,7 @@ type Props = {
   wearablesSleceteIdList?;
   batchShowOrHide?;
   type?;
+  address?;
 };
 
 export default function DaoModelList({
@@ -34,6 +35,7 @@ export default function DaoModelList({
   wearablesSleceteIdList,
   batchShowOrHide,
   type,
+  address,
 }: Props) {
   const [allScene, setAllScene] = React.useState([]);
   const renderer = React.useRef(null);
@@ -144,6 +146,7 @@ export default function DaoModelList({
           graphicId={`dao-${idx}`}
           tabState={tabState}
           type={type}
+          address={address}
           initFinish={(se) => {
             scenes.push(se);
           }}
@@ -152,7 +155,7 @@ export default function DaoModelList({
     });
     setAllScene(scenes);
     return modelEle;
-  }, [models, wearablesShowOrHideState, wearablesShowOrHide, onClick]);
+  }, [models, wearablesShowOrHideState, wearablesShowOrHide, onClick, address]);
 
   const init = React.useCallback(() => {
     const re = new WebGLRenderer({ canvas: canvaRef.current, antialias: true });

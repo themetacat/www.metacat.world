@@ -45,8 +45,8 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     title: `${base_info.name} - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-
   const router = useRouter();
+
   const [navState, setNavState] = React.useState(router.query.type || 'buildings');
   const { pathname } = router;
 
@@ -268,11 +268,15 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     if (navState === 'wearables') {
       return (
         <div className={style.wearable}>
-          <DaoModelList2 models={wearables} type={'topic'}></DaoModelList2>
+          <DaoModelList2
+            models={wearables}
+            type={'topic'}
+            address={router.query.id}
+          ></DaoModelList2>
         </div>
       );
     }
-  }, [navState, wearables, parcelList, trafficList, search]);
+  }, [navState, wearables, parcelList, trafficList, search, router.query.id]);
 
   React.useEffect(() => {
     const listener = () => {
