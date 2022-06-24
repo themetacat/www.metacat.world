@@ -8,7 +8,6 @@ import style from './index.module.css';
 
 type Props = {
   label?: string;
-  placeholder?: string;
   onChangeHandler?: (evt) => void;
   onClearHandler?: () => void;
   value?: string;
@@ -16,15 +15,15 @@ type Props = {
   classname?: string;
   require?: boolean;
   requirePrefix?: boolean;
-  bold?: boolean;
   disable?: boolean;
-  name?: string;
   onBlur?: (valu) => void;
+  data?;
+  onClick?;
+  country?: string;
 };
 
 export default function MeteInput({
   label,
-  placeholder,
   onChangeHandler,
   onClearHandler,
   value,
@@ -32,15 +31,15 @@ export default function MeteInput({
   classname,
   require = false,
   requirePrefix = true,
-  bold = false,
   disable = false,
-  name,
+  data,
   onBlur,
+  onClick,
+  country,
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
   const [arrowsState, setArrowsState] = React.useState(false);
-
   const onChange = React.useCallback(
     (dom) => {
       const temp = dom.target.value;
@@ -69,6 +68,13 @@ export default function MeteInput({
     },
     [null],
   );
+
+  const rander = React.useMemo(() => {
+    if (country) {
+      return <>{country}</>;
+    }
+    return <>{'Select Country'}</>;
+  }, [country]);
 
   const clear = React.useCallback(() => {
     setVal('');
@@ -115,6 +121,7 @@ export default function MeteInput({
             <img className={style.icon} src={prefix}></img>
           </span>
         ) : null}
+        <div>{rander}</div>
       </div>
       <img
         src={`/images/${!arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`}
@@ -123,6 +130,23 @@ export default function MeteInput({
           setArrowsState(!arrowsState);
         }}
       />
+      <ul className={cn(style.list, !arrowsState ? style.dn : null)}>
+        {data.map((i, index) => {
+          return (
+            <li
+              key={index}
+              value={i}
+              onClick={() => {
+                onClick(i);
+                setArrowsState(false);
+              }}
+              className={country === i ? style.co : null}
+            >
+              {i}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

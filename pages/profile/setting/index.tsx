@@ -17,6 +17,7 @@ import CountryInput from '../../../components/meta-input-country';
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
 import { getBaseInfo, updateBaseInfo, nickNameExist, refreshToken } from '../../../service';
+import { req_all_country } from '../../../service/z_api';
 
 import { useWalletProvider } from '../../../components/web3modal';
 
@@ -48,6 +49,8 @@ export default function Settings() {
   const [showClear, setShowClear] = React.useState(false);
   const [modifyEmail, setModifyEmail] = React.useState(false);
   const [introduction, setIntroduction] = React.useState('');
+  const [allCountry, setAllCountry] = React.useState([]);
+  const [country, setCountry] = React.useState('');
 
   const web3 = useWalletProvider();
 
@@ -102,13 +105,23 @@ export default function Settings() {
       const data = resultHandler(res, requireData);
       if (data) {
         const profile = convert(data.profile);
-        const { address: addr, nickName: name, avatar, links, email: e } = profile;
+        const {
+          address: addr,
+          nickName: name,
+          avatar,
+          links,
+          email: e,
+          country: c,
+          introduction: i,
+        } = profile;
         const { twitterName, websiteUrl } = links;
         setAvatarUrl(avatar);
         setInitEmail(e);
         if (e) {
           setEmail(e);
         }
+        setCountry(c);
+        setIntroduction(i);
         setAddress(addr);
         setNickName(name);
         setOrginName(name);
@@ -120,9 +133,15 @@ export default function Settings() {
     [resultHandler],
   );
 
+  const get_all_country = React.useCallback(async () => {
+    const result = await req_all_country();
+    setAllCountry(result.data);
+  }, []);
+
   React.useEffect(() => {
     const accessToken = getToken('atk');
     if (accessToken) {
+      get_all_country();
       requireData(accessToken);
       return;
     }
@@ -184,7 +203,15 @@ export default function Settings() {
       setSaving(true);
       const token = getToken('atk');
       if (token) {
-        updateBaseInfo(token, nickName, twitterAddress, websiteAddress, avatarUrl).then((res) => {
+        updateBaseInfo(
+          token,
+          nickName,
+          twitterAddress,
+          websiteAddress,
+          avatarUrl,
+          introduction,
+          country,
+        ).then((res) => {
           const { code, msg } = res;
           if (code !== 100000) {
             toast.error('Update failed');
@@ -203,7 +230,18 @@ export default function Settings() {
         });
       }
     },
-    [nickName, twitterAddress, websiteAddress, address, avatarUrl, canSave, orginName, checkName],
+    [
+      nickName,
+      twitterAddress,
+      websiteAddress,
+      address,
+      avatarUrl,
+      canSave,
+      orginName,
+      introduction,
+      country,
+      checkName,
+    ],
   );
 
   const uploadImage = React.useCallback(
@@ -270,6 +308,10 @@ export default function Settings() {
   const changeIntroductionValue = React.useCallback((e) => {
     setIntroduction(e.target.value);
   }, []);
+
+  const changeCountry = React.useCallback((c) => {
+    setCountry(c);
+  }, []);
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -333,10 +375,11 @@ export default function Settings() {
                   <div className={style.title}>Country</div>
                 </div>
                 <CountryInput
-                  name={'website'}
                   prefix="/images/icon/dizhi.png"
-                  placeholder={'Select Country'}
                   classname="mt-3"
+                  data={allCountry}
+                  country={country}
+                  onClick={changeCountry}
                 ></CountryInput>
 
                 <div className={style.Introduction}>
@@ -347,7 +390,11 @@ export default function Settings() {
                     <img src="/images/icon/text.png" />
                   </div>
                   <div className={style.right}>
-                    <textarea placeholder="Introduction" onInput={changeIntroductionValue} />
+                    <textarea
+                      placeholder="Introduction"
+                      value={introduction}
+                      onInput={changeIntroductionValue}
+                    />
                   </div>
                 </div>
 

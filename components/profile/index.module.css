@@ -33,6 +33,7 @@
   cursor: pointer;
   margin-left: 72px;
   margin-top: 8px;
+  white-space: nowrap;
 }
 .waiting {
   color: #ffcf5f;

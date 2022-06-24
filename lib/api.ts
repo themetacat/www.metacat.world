@@ -309,13 +309,23 @@ class API {
     twitterName: string,
     websiteUrl: string,
     avatar: string,
+    introduction: string,
+    country: string,
   ): Promise<any> {
     const url = `${this.url}/user/update_base_info`;
+    const url1 = 'http://8.130.23.16/api/v1/user/update_base_info';
     const search = qs.stringify(
-      { nick_name: nickName, twitter_name: twitterName, website_url: websiteUrl, avatar },
+      {
+        nick_name: nickName,
+        twitter_name: twitterName,
+        website_url: websiteUrl,
+        avatar,
+        introduction,
+        country,
+      },
       { addQueryPrefix: false },
     );
-    const res = await fetch(url, {
+    const res = await fetch(url1, {
       method: 'post',
       mode: 'cors',
       headers: {

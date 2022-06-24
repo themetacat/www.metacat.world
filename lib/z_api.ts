@@ -1083,6 +1083,33 @@ class API {
 
     return json;
   }
+
+  public async req_get_wearable_detail(id) {
+    const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: true });
+    const url = `http://8.130.23.16/api/v1/wearable/get_wearable_detail${search}`;
+    const url1 = `${this.url}/wearable/get_wearable_detail${search}`;
+    console.log(url1);
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_all_country() {
+    const url = 'http://8.130.23.16/api/v1/user/get_all_country';
+    const url1 = `${this.url}/user/get_all_country`;
+    console.log(url1);
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
 
 export default new API('https:/http://8.130.23.16/api/v1/api.metacat.world/api/v1');

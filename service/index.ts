@@ -276,10 +276,12 @@ export const updateBaseInfo = async (
   twitterName: string,
   websiteUrl: string,
   avatar: string,
+  introduction: string,
+  country: string,
 ) => {
   const url = `/api/update_base_info`;
   const search = qs.stringify(
-    { nickName, twitterName, websiteUrl, avatar },
+    { nickName, twitterName, websiteUrl, avatar, introduction, country },
     { addQueryPrefix: false },
   );
   const res = await fetch(url, {

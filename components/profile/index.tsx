@@ -39,7 +39,6 @@ export default function Profile({
   );
 
   const toTopic = React.useCallback(() => {
-    console.log(address);
     if (address) {
       router.replace(`/topic/${address}?type=wearables&from=profile`);
     }
@@ -50,16 +49,18 @@ export default function Profile({
         <img className={style.avater} src={avater || '/images/logo.png'}></img>
         <div className={cn('ml-8', style.info)}>
           <div className="flex">
-            <ProfileIconLabel
-              label={name}
-              address={address}
-              icon="/images/v5/copy.png"
-              suffixCopy={true}
-              hasIcon={!(name && name !== '')}
-              onClick={copyName}
-              classname={'text-2xl font-semibold mb-4'}
-            ></ProfileIconLabel>
-            {name && name !== '' ? (
+            {address && address !== '' && name ? (
+              <ProfileIconLabel
+                label={name}
+                address={address}
+                icon="/images/v5/copy.png"
+                suffixCopy={true}
+                hasIcon={!(name && name !== '')}
+                onClick={copyName}
+                classname={'text-2xl font-semibold mb-4'}
+              ></ProfileIconLabel>
+            ) : null}
+            {!name && name === '' ? (
               <ProfileIconLabel
                 label={address}
                 icon="/images/v5/copy.png"

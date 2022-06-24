@@ -208,48 +208,55 @@ export default function WearablesDetail({ artwork, artist, id }) {
               <div>Voxel Artist：</div>
               <div className=" ml-2">
                 <div className=" text-white">{artistData.name}</div>
-                <div
-                  className={cn('mt-2 flex items-center', style.other)}
-                  onClick={() => {
-                    window.open(artistData.website);
-                  }}
-                >
-                  To check other works by the artist
-                  <img className="ml-1 mr-2 cursor-pointer" src="/images/v5/arrow-simple.png"></img>
-                </div>
+                {router.query.type !== 'mywearables' && router.query.type !== 'topic' ? (
+                  <div
+                    className={cn('mt-2 flex items-center', style.other)}
+                    onClick={() => {
+                      window.open(artistData.website);
+                    }}
+                  >
+                    To check other works by the artist
+                    <img
+                      className="ml-1 mr-2 cursor-pointer"
+                      src="/images/v5/arrow-simple.png"
+                    ></img>
+                  </div>
+                ) : null}
               </div>
             </div>
 
-            <div className={cn('mt-7 w-full p-5 flex items-center justify-start', style.infoRow)}>
-              <div>Contact：</div>
-              {artistData.contact.homepage ? (
-                <img
-                  className={cn(' ml-9 cursor-pointer', style.icon)}
-                  src="/images/icon/home.png"
-                  onClick={() => {
-                    window.open(artistData.contact.homepage);
-                  }}
-                ></img>
-              ) : null}
-              {artistData.contact.twitter ? (
-                <img
-                  className={cn(' ml-9 cursor-pointer', style.icon)}
-                  src="/images/twitter.png"
-                  onClick={() => {
-                    window.open(artistData.contact.twitter);
-                  }}
-                ></img>
-              ) : null}
-              {artistData.contact.weibo ? (
-                <img
-                  className={cn(' ml-10 cursor-pointer', style.icon)}
-                  src="/images/weibo.png"
-                  onClick={() => {
-                    window.open(artistData.contact.weibo);
-                  }}
-                ></img>
-              ) : null}
-            </div>
+            {router.query.type !== 'mywearables' ? (
+              <div className={cn('mt-7 w-full p-5 flex items-center justify-start', style.infoRow)}>
+                <div>Contact：</div>
+                {artistData.contact.homepage ? (
+                  <img
+                    className={cn(' ml-9 cursor-pointer', style.icon)}
+                    src="/images/icon/home.png"
+                    onClick={() => {
+                      window.open(artistData.contact.homepage);
+                    }}
+                  ></img>
+                ) : null}
+                {artistData.contact.twitter ? (
+                  <img
+                    className={cn(' ml-9 cursor-pointer', style.icon)}
+                    src="/images/twitter.png"
+                    onClick={() => {
+                      window.open(artistData.contact.twitter);
+                    }}
+                  ></img>
+                ) : null}
+                {artistData.contact.weibo ? (
+                  <img
+                    className={cn(' ml-10 cursor-pointer', style.icon)}
+                    src="/images/weibo.png"
+                    onClick={() => {
+                      window.open(artistData.contact.weibo);
+                    }}
+                  ></img>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -260,10 +267,11 @@ export default function WearablesDetail({ artwork, artist, id }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-  console.log(id);
   let res = null;
   if (context.query.type === 'pfp' || context.query.form === 'pfp_wearable') {
     res = await z_api.req_pfp_detail(id);
+  } else if (context.query.type === 'mywearables') {
+    res = await z_api.req_get_wearable_detail(id);
   } else {
     res = await api.getDaoWearableDetail(id);
   }

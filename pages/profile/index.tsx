@@ -720,6 +720,7 @@ function ProfilePage(r) {
   }, [s.parcels_cardState]);
   React.useEffect(() => {
     const accessToken = getToken('atk');
+    setRouteTab(r.router.query.type);
     reqWearablesData();
     requestPersonal(accessToken);
     if (tabState === 'cryptovoxels') requestData(accessToken);
@@ -734,6 +735,7 @@ function ProfilePage(r) {
     requestPersonal,
     watcher_store,
     reqDclData,
+    r.router.query.type,
     routeTab,
     tabState,
     reqWearablesData,
@@ -887,12 +889,15 @@ function ProfilePage(r) {
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
   }, []);
-  const changeCreatorState = React.useCallback((sta = false) => {
-    // if (sta) {
-
-    // }
-    setCreatorState(false);
-  }, []);
+  const changeCreatorState = React.useCallback(
+    async (sta = false) => {
+      if (sta) {
+        requestPersonal(await refreshTK());
+      }
+      setCreatorState(false);
+    },
+    [requestPersonal],
+  );
   const randerCardList = React.useMemo(() => {
     if (routeTab === 'parcellist') {
       return (
@@ -1035,7 +1040,7 @@ function ProfilePage(r) {
     if (routeTab === 'wearablelist') {
       return (
         <>
-          <div className={cn('tab-list flex mt-5', style.allHeight)}>
+          {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
             <div className={cls}></div>
             <div className="main-content flex px-0">
               {TAB.map((item) => {
@@ -1055,7 +1060,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cls} />
-          </div>
+          </div> */}
           <div className={style.wearablesContainer}>
             <div className={style.title}>
               <div

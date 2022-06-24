@@ -1073,3 +1073,29 @@ export const req_set_wearable_show_status = async (
 
   return json;
 };
+
+export const req_get_wearable_detail = async (id) => {
+  const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: false });
+  const url = `/api/get_wearable_detail${search}`;
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_all_country = async () => {
+  const url = '/api/get_all_country';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
