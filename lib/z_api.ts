@@ -1112,6 +1112,6 @@ class API {
   }
 }
 
-export default new API('https:/http://8.130.23.16/api/v1/api.metacat.world/api/v1');
-//
+export default new API(' https://api.metacat.world/api/v1');
+// https:/http://8.130.23.16
 // https://api.metacat.world

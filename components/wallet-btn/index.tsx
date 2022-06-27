@@ -342,6 +342,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       if (item.value === 'resetApp') {
         removeToken('atk');
         removeToken('rtk');
+        removeToken('address');
         // if (w3) {
         //   w3.resetApp()
         // }

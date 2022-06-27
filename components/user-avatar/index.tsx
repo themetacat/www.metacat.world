@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 import ProfileIconLabel from '../profile-icon-label';
-
+import { getToken } from '../../common/utils';
 import style from './index.module.css';
 
 // type Contact = {
@@ -17,16 +17,24 @@ interface Props {
   contact?;
   country?: string;
   from?;
+  id?;
 }
 
-export default function UserAvatar({ avatar, name, contact, country, from }: Props) {
+export default function UserAvatar({ avatar, name, contact, country, from, id }: Props) {
   const router = useRouter();
   const [C, setC] = React.useState([]);
+  const [address, setAddress] = React.useState('');
 
   React.useEffect(() => {
+    const a = getToken('address');
+    console.log(1, a);
+    console.log(2, id);
+    if (a) {
+      setAddress(a);
+    }
     const c = contact.filter((i) => i.address);
     setC(c);
-  }, [contact]);
+  }, [contact, id]);
   const toMySetting = React.useCallback(() => {
     router.replace('/profile/setting');
   }, []);
@@ -35,7 +43,7 @@ export default function UserAvatar({ avatar, name, contact, country, from }: Pro
       <img className={cn('mt-1', style.userAvatar)} src={avatar}></img>
       <div className="flex">
         <div className=" mt-1 text-white text-xl">{name}</div>
-        {from === 'profile' ? (
+        {from === 'profile' || address === id ? (
           <img
             src="/images/icon/bianji.png"
             className="w-6 h-6 mt-1 ml-1"

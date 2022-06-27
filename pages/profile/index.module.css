@@ -361,6 +361,7 @@
   position: absolute;
   right: 20px;
   bottom: -41.5px;
+  z-index: 99;
 }
 .showOrHideItem {
   width: 98px;

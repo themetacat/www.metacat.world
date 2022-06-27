@@ -307,6 +307,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
             name={base_info.name}
             country={base_info.country}
             from={from}
+            id={id}
             contact={[
               {
                 icon: '/images/home.svg',

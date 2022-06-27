@@ -170,7 +170,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
               ? router.query.type
               : null}
             {router.query.type === 'mywearables' ? 'My wearabels' : null}
-            {router.query.type === 'topic' ? 'Topic' : null}
+            {router.query.type === 'topic' ? artistData.name : null}
           </span>
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
           <span className=" text-white">{artworkData.name}</span>

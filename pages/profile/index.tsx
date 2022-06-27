@@ -139,6 +139,7 @@ function ProfilePage(r) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
+  const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [nickName, setNickName] = React.useState('');
@@ -165,6 +166,7 @@ function ProfilePage(r) {
 
   const [navLabel, setNavLabel] = React.useState('All');
   const [wearablesNavState, setWearablesNavState] = React.useState('all');
+  const wearablesState = React.useRef(null);
   const [showOrHideState, setShowOrHideState] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
   const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
@@ -408,7 +410,6 @@ function ProfilePage(r) {
         if (!data) {
           return;
         }
-        setOrginData(data);
         setDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
       } catch {
@@ -427,8 +428,7 @@ function ProfilePage(r) {
         if (!data) {
           return;
         }
-        setOrginData(data);
-        setDataSource(data.parcelList);
+        setDclDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
       } catch {
         setError(true);
@@ -454,6 +454,7 @@ function ProfilePage(r) {
         creatorStatus,
       } = profile;
       const { twitterName, websiteUrl } = links;
+      setToken('address', addr);
       setEmail(e);
       setAvatarUrl(ava);
       setCreatorsState(creatorStatus);
@@ -474,7 +475,16 @@ function ProfilePage(r) {
       const hide = result.data.filter((i) => {
         return i.show_status === 2;
       });
-      setWearablesCreatorsData(result.data);
+      console.log(wearablesState.current);
+      if (wearablesState.current === 'all') {
+        setWearablesCreatorsData(result.data);
+      } else if (wearablesState.current === 'shown') {
+        setWearablesCreatorsData(show);
+      } else if (wearablesState.current === 'hidden') {
+        setWearablesCreatorsData(hide);
+      } else {
+        setWearablesCreatorsData(result.data);
+      }
       setWearablesCreatorsOriginData(result.data);
       setWearablesShowData(show);
       setWearablesHideData(hide);
@@ -515,13 +525,13 @@ function ProfilePage(r) {
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
-    if (cartData.length === 0) {
-      return <Status status="empty" />;
-    }
+    // if (cartData.length === 0) {
+    //   return <Status status="empty" />;
+    // }
     if (tabState === 'cryptovoxels') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
-          {cartData.map((card) => {
+          {dataSource.map((card) => {
             return (
               <Card
                 {...card}
@@ -541,7 +551,7 @@ function ProfilePage(r) {
     if (tabState === 'decentraland') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
-          {cartData.map((card) => {
+          {dclDataSource.map((card) => {
             return (
               <DclCard
                 {...card}
@@ -929,7 +939,7 @@ function ProfilePage(r) {
               {nav.map((item, index) => {
                 return (
                   <ParcelsTab
-                    dataSource={dataSource}
+                    dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
                     label={item.label}
                     state={item.state}
                     num={item.num}
@@ -1080,6 +1090,8 @@ function ProfilePage(r) {
                     <div
                       onClick={() => {
                         setWearablesNavState(item.type);
+                        wearablesState.current = item.type;
+                        setShowOrHideState(false);
                         if (item.type === 'all') {
                           setWearablesCreatorsData(wearablesCreatorsOriginData);
                         }
@@ -1158,6 +1170,7 @@ function ProfilePage(r) {
     dataSource,
     tabState,
     routeTab,
+    creatorsReander,
   ]);
 
   return (
