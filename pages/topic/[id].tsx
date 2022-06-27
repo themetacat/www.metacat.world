@@ -59,6 +59,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   const [originParcelList, setOriginParcelList] = React.useState(convert(parcel_list));
   const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
   const [wearables, setWearables] = React.useState(wearable);
+  console.log(wearables);
   const [originWearables, setOriginWearables] = React.useState(wearable);
   const [fixedState, setFixedState] = React.useState(false);
 
@@ -211,8 +212,8 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         }
         const dataToShow = wearables.filter((x) => {
           return (
-            x.artist.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
-            x.artwork.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
+            x.creator_name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+            x.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
           );
         });
         setWearables(dataToShow);

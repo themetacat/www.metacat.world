@@ -27,8 +27,6 @@ export default function UserAvatar({ avatar, name, contact, country, from, id }:
 
   React.useEffect(() => {
     const a = getToken('address');
-    console.log(1, a);
-    console.log(2, id);
     if (a) {
       setAddress(a);
     }
