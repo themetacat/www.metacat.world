@@ -211,7 +211,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
                   <div
                     className={cn('mt-2 flex items-center', style.other)}
                     onClick={() => {
-                      window.open(artistData.website);
+                      window.open(`/topic/${artist.address}?type=wearables`);
                     }}
                   >
                     To check other works by the artist

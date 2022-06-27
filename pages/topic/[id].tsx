@@ -59,7 +59,6 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   const [originParcelList, setOriginParcelList] = React.useState(convert(parcel_list));
   const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
   const [wearables, setWearables] = React.useState(wearable);
-  console.log(wearables);
   const [originWearables, setOriginWearables] = React.useState(wearable);
   const [fixedState, setFixedState] = React.useState(false);
 

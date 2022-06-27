@@ -776,7 +776,10 @@ class API {
   public async req_pfp_detail(id: string) {
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/wearable/get_pfp_wearable_detail${search}`;
-    const result = await fetch(url, {
+
+    const url1 = `http://8.130.23.16/api/v1/wearable/get_pfp_wearable_detail${search}`;
+    console.log(url1);
+    const result = await fetch(url1, {
       method: 'get',
       mode: 'cors',
     });
@@ -1112,6 +1115,6 @@ class API {
   }
 }
 
-export default new API(' https://api.metacat.world/api/v1');
-// https:/http://8.130.23.16
+export default new API('https://api.metacat.world/api/v1');
+// /http://8.130.23.16/api/v1
 // https://api.metacat.world

@@ -423,7 +423,9 @@ class API {
   public async getDaoWearableDetail(id: string): Promise<any> {
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/wearable/get_dao_wearable_detail${search}`;
-    const res = await fetch(url);
+    console.log(url);
+    const url1 = `http://8.130.23.16/api/v1/wearable/get_dao_wearable_detail${search}`;
+    const res = await fetch(url1);
     const json = await res.json();
 
     return json;
