@@ -442,7 +442,6 @@ export default function AllLine({
       if (!result) {
         const res = await dataHandlder();
         result = res.data;
-        console.log(result);
         setDataSource(result);
       }
     } catch (ex) {
