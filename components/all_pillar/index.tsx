@@ -149,7 +149,15 @@ export default function AllPillar({
           items.forEach((item, index) => {
             result[item.name] = item;
           });
-          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${name} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
+          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
+            Number(result[showKeyTypes[6]]?.value) +
+              Number(result[showKeyTypes[0]]?.value) +
+              Number(result[showKeyTypes[1]]?.value) +
+              Number(result[showKeyTypes[2]]?.value) +
+              Number(result[showKeyTypes[3]]?.value) +
+              Number(result[showKeyTypes[4]]?.value) +
+              Number(result[showKeyTypes[5]]?.value),
+          )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
             showKeyTypes[1]
           ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
@@ -450,6 +458,7 @@ ${showKeyTypes[6]}:
     setLoading(false);
 
     if (result.code === 100000 && result.data[showType] && result.data[showType][priceShowType]) {
+      console.log(result.data);
       setDataSource(result.data);
       initChart(result.data);
       // initChart(result.data[showType][priceShowType])

@@ -777,9 +777,8 @@ class API {
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/wearable/get_pfp_wearable_detail${search}`;
 
-    const url1 = `http://8.130.23.16/api/v1/wearable/get_pfp_wearable_detail${search}`;
-    console.log(url);
-    const result = await fetch(url1, {
+    // const url1 = `http://8.130.23.16/api/v1/wearable/get_pfp_wearable_detail${search}`;
+    const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
     });
@@ -856,9 +855,8 @@ class API {
   // 17.1 发送邮箱验证码
 
   public async req_bind_send_email(email: string, token: string) {
-    const url = `http://8.130.23.16/api/v1/bind_send_email?email=${email}`;
-    const url1 = `${this.url}/bind_send_email?email=${email}`;
-    console.log(url1);
+    // const url = `http://8.130.23.16/api/v1/bind_send_email?email=${email}`;
+    const url = `${this.url}/bind_send_email?email=${email}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -881,9 +879,9 @@ class API {
     } else {
       search = qs.stringify({ code }, { addQueryPrefix: true });
     }
-    const url = `http://8.130.23.16/api/v1/bind_ver_email_code${search}`;
-    const url1 = `${this.url}/bind_ver_email_code?email=${search}`;
-    console.log(url1);
+    // const url = `http://8.130.23.16/api/v1/bind_ver_email_code${search}`;
+    const url = `${this.url}/bind_ver_email_code?email=${search}`;
+    // console.log(url1);
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -949,9 +947,8 @@ class API {
   // 9.7 获取 Wearable creator 数据接口
   public async req_wearable_creators() {
     const url = `${this.url}/wearable/get_wearable_creators`;
-    console.log(url);
-    const url1 = 'http://8.130.23.16/api/v1/wearable/get_wearable_creators';
-    const result = await fetch(url1, {
+    // const url1 = 'http://8.130.23.16/api/v1/wearable/get_wearable_creators';
+    const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
     });
@@ -970,9 +967,8 @@ class API {
       search = qs.stringify({ creator }, { addQueryPrefix: true });
     }
     const url = `${this.url}/get_topic_detail${search}`;
-    console.log(url);
-    const url1 = `http://8.130.23.16/api/v1/get_topic_detail${search}`;
-    const result = await fetch(url1, {
+    // const url1 = `http://8.130.23.16/api/v1/get_topic_detail${search}`;
+    const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
     });
@@ -1027,9 +1023,8 @@ class API {
 
   public async req_user_apply_become(join_type: string, token: string) {
     const search = qs.stringify({ join_type }, { addQueryPrefix: true });
-    const url = `http://8.130.23.16/api/v1/user/user_apply_become${search}`;
-    const url1 = `${this.url}/user/user_apply_become${search}`;
-    console.log(url1);
+    // const url = `http://8.130.23.16/api/v1/user/user_apply_become${search}`;
+    const url = `${this.url}/user/user_apply_become${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1045,9 +1040,8 @@ class API {
   }
 
   public async req_get_user_wearable(token: string) {
-    const url = 'http://8.130.23.16/api/v1/wearable/get_user_wearable';
-    const url1 = `${this.url}/wearable/get_user_wearable`;
-    console.log(url1);
+    // const url = 'http://8.130.23.16/api/v1/wearable/get_user_wearable';
+    const url = `${this.url}/wearable/get_user_wearable`;
 
     const result = await fetch(url, {
       method: 'get',
@@ -1069,9 +1063,8 @@ class API {
     show_status: number,
   ) {
     const search = qs.stringify({ wearable_id, show_status }, { addQueryPrefix: false });
-    const url = 'http://8.130.23.16/api/v1/wearable/set_wearable_show_status';
-    const url1 = `${this.url}/wearable/set_wearable_show_status`;
-    console.log(url1);
+    // const url = 'http://8.130.23.16/api/v1/wearable/set_wearable_show_status';
+    const url = `${this.url}/wearable/set_wearable_show_status`;
 
     const result = await fetch(url, {
       method: 'post',
@@ -1089,9 +1082,8 @@ class API {
 
   public async req_get_wearable_detail(id) {
     const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: true });
-    const url = `http://8.130.23.16/api/v1/wearable/get_wearable_detail${search}`;
-    const url1 = `${this.url}/wearable/get_wearable_detail${search}`;
-    console.log(url1);
+    // const url = `http://8.130.23.16/api/v1/wearable/get_wearable_detail${search}`;
+    const url = `${this.url}/wearable/get_wearable_detail${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1102,9 +1094,8 @@ class API {
   }
 
   public async req_all_country() {
-    const url = 'http://8.130.23.16/api/v1/user/get_all_country';
-    const url1 = `${this.url}/user/get_all_country`;
-    console.log(url1);
+    // const url = 'http://8.130.23.16/api/v1/user/get_all_country';
+    const url = `${this.url}/user/get_all_country`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1116,5 +1107,5 @@ class API {
 }
 
 export default new API('https://api.metacat.world/api/v1');
-// /http://8.130.23.16/api/v1
+// http://8.130.23.16/api/v1
 // https://api.metacat.world

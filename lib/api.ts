@@ -289,9 +289,8 @@ class API {
   }
 
   public async getBaseInfo(token: string): Promise<any> {
-    const url = `http://8.130.23.16/api/v1/user/get_base_info`;
-    const url1 = `${this.url}/user/get_base_info`;
-    console.log(url1);
+    // const url = `http://8.130.23.16/api/v1/user/get_base_info`;
+    const url = `${this.url}/user/get_base_info`;
     const res = await fetch(url, {
       method: 'get',
       headers: {
@@ -313,7 +312,7 @@ class API {
     country: string,
   ): Promise<any> {
     const url = `${this.url}/user/update_base_info`;
-    const url1 = 'http://8.130.23.16/api/v1/user/update_base_info';
+    // const url1 = 'http://8.130.23.16/api/v1/user/update_base_info';
     const search = qs.stringify(
       {
         nick_name: nickName,
@@ -325,7 +324,7 @@ class API {
       },
       { addQueryPrefix: false },
     );
-    const res = await fetch(url1, {
+    const res = await fetch(url, {
       method: 'post',
       mode: 'cors',
       headers: {
@@ -423,9 +422,8 @@ class API {
   public async getDaoWearableDetail(id: string): Promise<any> {
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/wearable/get_dao_wearable_detail${search}`;
-    console.log(url);
-    const url1 = `http://8.130.23.16/api/v1/wearable/get_dao_wearable_detail${search}`;
-    const res = await fetch(url1);
+    // const url1 = `http://8.130.23.16/api/v1/wearable/get_dao_wearable_detail${search}`;
+    const res = await fetch(url);
     const json = await res.json();
 
     return json;
