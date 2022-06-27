@@ -458,7 +458,6 @@ ${showKeyTypes[6]}:
     setLoading(false);
 
     if (result.code === 100000 && result.data[showType] && result.data[showType][priceShowType]) {
-      console.log(result.data);
       setDataSource(result.data);
       initChart(result.data);
       // initChart(result.data[showType][priceShowType])
