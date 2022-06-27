@@ -141,7 +141,7 @@ export default function DaoModelList({
           model={model}
           batchShowOrHide={batchShowOrHide}
           name={name}
-          key={idx}
+          key={uuid()}
           token={token}
           graphicId={`dao-${idx}`}
           tabState={tabState}

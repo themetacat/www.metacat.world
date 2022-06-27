@@ -778,7 +778,7 @@ class API {
     const url = `${this.url}/wearable/get_pfp_wearable_detail${search}`;
 
     const url1 = `http://8.130.23.16/api/v1/wearable/get_pfp_wearable_detail${search}`;
-    console.log(url1);
+    console.log(url);
     const result = await fetch(url1, {
       method: 'get',
       mode: 'cors',

@@ -814,6 +814,7 @@ function ProfilePage(r) {
           wearablesShowOrHide,
         );
       }
+      console.log(result, wearablesShowOrHide, stat);
       if (result.code === 100000) {
         if (wearablesShowOrHide === 2 || stat === 2) {
           toast.success('Successfully hidden!');
