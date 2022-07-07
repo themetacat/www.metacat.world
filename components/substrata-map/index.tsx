@@ -619,7 +619,7 @@ function SubstrataMap({
 
     if (clickToJump) {
       map.on('click', function (e) {
-        Router.push('/heatmap?type=somniumspace');
+        Router.push('/heatmap?type=substrata');
       });
     }
 

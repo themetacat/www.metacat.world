@@ -842,7 +842,7 @@ function DecentralandMap({
       </div>
       <Legend
         className={style.legend}
-        title={mapType.current === 'TRAFFIC' ? 'Traffic ranking' : 'Price ranking'}
+        title={mapType.current === 'traffic' ? 'Traffic ranking' : 'Price ranking'}
         options={legends.current}
         active={activeColor}
       ></Legend>

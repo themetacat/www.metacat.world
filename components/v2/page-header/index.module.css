@@ -1,0 +1,41 @@
+.logo {
+  width: 36px;
+  height: 30px;
+}
+.active {
+  color: #fff;
+}
+.base {
+  z-index: 10002;
+  width: 1400px;
+}
+.location {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: -160px;
+  /* bottom: -90px; */
+  z-index: 99;
+  background-color: #0f191b;
+}
+.location2 {
+  position: absolute;
+  bottom: -110px;
+  z-index: 99;
+  background-color: #0f191b;
+}
+.cn {
+  min-width: 200px;
+}
+
+.cn2 {
+  min-width: 200px;
+}
+.z {
+  z-index: 99;
+}
+.header{
+  background-image: url("/images/v2/nav.png");
+  background-size:cover;
+  background-repeat: no-repeat;
+}

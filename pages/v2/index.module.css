@@ -1,0 +1,15 @@
+.car{
+  width: 480px;
+  height: 460px;
+}
+.building{
+  background-image: url("/images/v2/buildings.png");
+  background-size:cover;
+  background-repeat: no-repeat;
+}
+
+.learn{
+  background-image: url("/images/v2/learn.png");
+  background-size:cover;
+  background-repeat: no-repeat;
+}

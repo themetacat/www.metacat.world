@@ -1,0 +1,43 @@
+.acitce {
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+
+.normal {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+
+.headText {
+  font-size: 46px;
+}
+
+.delive {
+  width: 40px;
+  height: 8px;
+  background-color: #fff;
+}
+
+.tabIcon {
+  width: 47px;
+  height: 47px;
+  border-radius: 20px;
+}
+
+.roundImage {
+  width: 670px;
+  height: 360px;
+}
+
+.gomap {
+  width: 171px;
+  height: 52px;
+  color: rgba(15, 25, 27, 1);
+  background-color: rgba(0, 208, 236, 1);
+}
+
+.cover{
+  background-image: url("/images/v2/banner.png");
+  background-size:cover;
+  background-repeat: no-repeat;
+}
