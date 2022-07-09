@@ -375,7 +375,7 @@ export default function WalletBtn({
         state.setState({
           accessToken: '',
           refreshToken: '',
-          profile: { address: null, nickName: null, avatar: null },
+          profile: { address: null, nickName: null, avatar: null, email: '', creatorStatus: 1 },
         });
         // const res = await req_user_logout(accessToken);
         // console.log(res)
