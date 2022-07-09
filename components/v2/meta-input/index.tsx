@@ -20,6 +20,8 @@ type Props = {
   name?: string;
   onBlur?: (valu) => void;
   needSuffix?: boolean;
+  suffixClickHandle?: () => void;
+  suffixText?: string;
 };
 
 export default function MeteInput({
@@ -33,6 +35,8 @@ export default function MeteInput({
   name,
   onBlur,
   needSuffix,
+  suffixClickHandle,
+  suffixText,
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
@@ -53,18 +57,11 @@ export default function MeteInput({
     [onChangeHandler, setShowClear],
   );
 
-  const iconClick = React.useCallback(
-    (evt) => {
-      toast.success('copied!', {
-        duration: 2000,
-        style: {
-          background: 'rgba(0, 208, 236, 1)',
-          color: 'black',
-        },
-      });
-    },
-    [null],
-  );
+  const suffixClick = React.useCallback(() => {
+    if (suffixClickHandle) {
+      suffixClickHandle();
+    }
+  }, [suffixClickHandle]);
 
   const clear = React.useCallback(() => {
     setVal('');
@@ -120,22 +117,23 @@ export default function MeteInput({
             disable ? style.disable : null,
           )}
         ></input>
+        <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
+          <img
+            className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
+            src="/images/close.png"
+          ></img>
+        </span>
         {needSuffix ? (
           <span
             className={cn(
-              'inline-flex items-center m-3 pl-4 border-l border-mainDark02 border-solid',
+              'inline-flex justify-center items-center m-3 pl-4 border-l border-mainDark02 border-solid text-white event-hand',
+              style.suffix,
             )}
+            onClick={suffixClick}
           >
-            Get code
+            {suffixText}
           </span>
-        ) : (
-          <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
-            <img
-              className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
-              src="/images/close.png"
-            ></img>
-          </span>
-        )}
+        ) : null}
       </div>
     </div>
   );

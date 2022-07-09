@@ -59,6 +59,7 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
+  defaultStatic?: string;
 }
 
 const defalutColor = 'rgba(101, 128, 134, 1)';
@@ -281,6 +282,7 @@ function OtherSideMap({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
+  defaultStatic = 'price',
 }: Props) {
   const [minZoomAble, setMinZoomAble] = React.useState(true);
   const [maxZoomAble, setMaxZoomAble] = React.useState(true);
@@ -295,7 +297,7 @@ function OtherSideMap({
     },
   });
   const popDetail = React.useRef();
-  const mapType = React.useRef('PRICE');
+  const mapType = React.useRef(defaultStatic.toUpperCase() || 'PRICE');
   const staticType = React.useRef('ALL');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[2]);

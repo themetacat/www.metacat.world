@@ -100,10 +100,51 @@ const analytics = [
   },
 ];
 
+const heatmap = [
+  {
+    label: 'Otherside',
+    icon: '/images/osd.png',
+    type: 'otherside',
+    link: '/heatmap?type=otherside',
+  },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    type: 'sandbox',
+    link: '/heatmap?type=sandbox',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
+    link: '/heatmap?type=decentraland',
+  },
+  {
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
+    type: 'cryptovoxels',
+    link: '/heatmap?type=cryptovoxels',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/heatmap?type=somniumspace',
+  },
+  {
+    label: 'SubStrata',
+    icon: '/images/substrata.png',
+    type: 'substrata',
+    link: '/heatmap?type=substrata',
+  },
+];
+
 export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
   const [analyticsState, setAnalyticsState] = React.useState(false);
+  const [heatmapState, setHeatmapState] = React.useState(false);
+
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -162,13 +203,20 @@ export default function PageHeader({ active, className }: Props) {
           </div>
           <div
             className={cn(
-              'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+              'text-xl font-medium relative text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
               active === 'heatmap' ? style.active : null,
             )}
+            onMouseEnter={() => {
+              setHeatmapState(true);
+            }}
+            onMouseLeave={() => {
+              setHeatmapState(false);
+            }}
           >
-            <Link href={'/heatmap?type=cryptovoxels'} prefetch>
-              Heatmap
-            </Link>
+            Heatmap
+            {heatmapState ? (
+              <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
+            ) : null}
           </div>
 
           <div

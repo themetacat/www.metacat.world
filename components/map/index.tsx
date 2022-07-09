@@ -58,6 +58,7 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
+  defaultStatic?: string;
 }
 
 const colors = {
@@ -278,6 +279,7 @@ function Map({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
+  defaultStatic = 'price',
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -292,7 +294,7 @@ function Map({
     },
   });
   const popDetail = React.useRef();
-  const mapType = React.useRef('PRICE');
+  const mapType = React.useRef(defaultStatic.toUpperCase() || 'PRICE');
   const staticType = React.useRef('ALL');
   const [stc, setStc] = React.useState('MONTHLY');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);

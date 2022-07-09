@@ -736,7 +736,7 @@ export const req_otherside_avg_price = async () => {
 // 6.28 获取 otherside 地块成交总数量统计信息接口
 
 export const req_otherside_sales_num = async () => {
-  const url = '/api//get_otherside_sales_num';
+  const url = '/api/get_otherside_sales_num';
   const result = await fetch(url);
 
   const json = await result.json();

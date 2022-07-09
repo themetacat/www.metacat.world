@@ -42,6 +42,7 @@ interface Props {
   clickToJump?: boolean;
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
+  defaultStatic?: string;
 }
 
 const colors = {
@@ -262,6 +263,7 @@ function SubstrataMap({
   clickToJump = false,
   fullScreenOnClick,
   loadFinish,
+  defaultStatic = 'price',
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -276,7 +278,7 @@ function SubstrataMap({
     },
   });
   const popDetail = React.useRef();
-  const mapType = React.useRef('PRICE');
+  const mapType = React.useRef(defaultStatic.toUpperCase() || 'PRICE');
   const staticType = React.useRef('ALL');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[2]);

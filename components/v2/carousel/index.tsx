@@ -14,9 +14,9 @@ import 'swiper/css/navigation';
 import styles from './index.module.css';
 
 type img = {
-  title?: string;
+  name?: string;
   imgUrl?: string;
-  detailUrl?: string;
+  url?: string;
 };
 
 type Props = {
@@ -67,7 +67,7 @@ export default function Carousel({ imgs }: Props) {
               className={cn('w-full h-full', styles.slide)}
               key={idx}
               onClick={() => {
-                jumpToDetail(slide.detailUrl);
+                jumpToDetail(slide.url);
               }}
             >
               <img
@@ -80,7 +80,7 @@ export default function Carousel({ imgs }: Props) {
                   styles.title,
                 )}
               >
-                <span className=" w-4/5 truncate">{slide.title}</span>
+                <span className=" w-4/5 truncate">{slide.name}</span>
                 <a className=" text-sm text-mainDark font-normal event-hand">{`View Heatmap >`}</a>
               </div>
             </SwiperSlide>

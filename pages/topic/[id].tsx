@@ -17,8 +17,6 @@ import MeteInput from '../../components/meta-input-search';
 
 import { state } from '../../components/wallet-btn';
 
-import AnimationBack from '../../components/animation-back';
-
 import { convert, getToken, setToken } from '../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
@@ -291,7 +289,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   }, [fixedState]);
 
   return (
-    <Page className="min-h-screen" meta={meta}>
+    <Page className="min-h-screen flex flex-col" meta={meta}>
       <div className="bg-black relative">
         <div className={fixedState ? style.fix1 : null}>
           <PageHeader
@@ -353,7 +351,11 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
       ) : null}
       <div
         id="switch"
-        className={cn('flex justify-center items-center', style.search, fixedState ? f1 : null)}
+        className={cn(
+          'flex justify-center items-center flex-1',
+          style.search,
+          fixedState ? f1 : null,
+        )}
       >
         <MeteInput
           require={false}

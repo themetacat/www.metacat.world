@@ -13,14 +13,8 @@ import 'swiper/css/navigation';
 
 import styles from './index.module.css';
 
-type img = {
-  title?: string;
-  imgUrl?: string;
-  detailUrl?: string;
-};
-
 type Props = {
-  imgs: Array<img>;
+  imgs: Array<string>;
 };
 
 export default function CarouseSinglePic({ imgs }: Props) {
@@ -48,16 +42,10 @@ export default function CarouseSinglePic({ imgs }: Props) {
       >
         {imgs.map((slide, idx) => {
           return (
-            <SwiperSlide
-              className={cn('w-full h-full', styles.slide)}
-              key={idx}
-              onClick={() => {
-                jumpToDetail(slide.detailUrl);
-              }}
-            >
+            <SwiperSlide className={cn('w-full h-full', styles.slide)} key={idx}>
               <img
                 className={cn('w-full', styles.img)}
-                src={slide.imgUrl || '/images/default-cover.png'}
+                src={slide || '/images/default-cover.png'}
               />
             </SwiperSlide>
           );

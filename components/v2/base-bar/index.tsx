@@ -239,7 +239,14 @@ export default function BaseBar({
   }, [requestData]);
 
   return (
-    <AnalyticsCard title={labelText} link="/" baseSize={false} backCls="cover4">
+    <AnalyticsCard
+      title={labelText}
+      link={`http://www.metacat.world/analytics?type=${
+        staticType === 'cv' ? 'cryptovoxels' : 'decentraland'
+      }`}
+      baseSize={false}
+      backCls="cover4"
+    >
       <>
         <div className=" flex justify-center items-center mt-5">
           <SimpleSwicth options={switchs} onActive={changeType}></SimpleSwicth>

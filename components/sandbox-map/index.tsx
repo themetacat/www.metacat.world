@@ -57,6 +57,7 @@ interface Props {
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
   withPopup?: boolean;
+  defaultStatic?: string;
 }
 
 export type AtlasTile = {
@@ -278,6 +279,7 @@ function SandBoxMap({
   fullScreenOnClick,
   loadFinish,
   withPopup = true,
+  defaultStatic = 'price',
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -292,7 +294,7 @@ function SandBoxMap({
   const [positionX, setPositionX] = React.useState(0);
   const [positionY, setPositionY] = React.useState(0);
   const [showDetail, setShowDetail] = React.useState(false);
-  const mapType = React.useRef('price');
+  const mapType = React.useRef(defaultStatic || 'price');
   const staticType = React.useRef('all');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[2]);

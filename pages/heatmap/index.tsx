@@ -83,6 +83,7 @@ export default function MapPage(props) {
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [mapType, setMapType] = React.useState(props.query.type || 'cryptovoxels');
+  const [staticType, setStaticType] = React.useState(props.query.static || 'price');
 
   const router = useRouter();
 
@@ -110,6 +111,7 @@ export default function MapPage(props) {
           zoomLimit={[5, 9]}
           dragging={true}
           initZoom={6}
+          defaultStatic={staticType}
           loadFinish={() => {
             setLoading(false);
           }}
@@ -125,6 +127,7 @@ export default function MapPage(props) {
           zoomControl={true}
           zoomLimit={[1, 9]}
           dragging={true}
+          defaultStatic={staticType}
           initZoom={5}
           backColor="rgb(8 17 19)"
         ></DecentralandMap>
@@ -139,6 +142,7 @@ export default function MapPage(props) {
           zoomLimit={[1, 9]}
           dragging={true}
           initZoom={6}
+          defaultStatic={staticType}
           changeTypeControl={false}
           backColor="rgb(8 17 19)"
         ></SandboxMap>
@@ -153,6 +157,7 @@ export default function MapPage(props) {
           zoomLimit={[3, 9]}
           dragging={true}
           initZoom={4}
+          defaultStatic={staticType}
           loadFinish={() => {
             setLoading(false);
           }}
@@ -169,6 +174,7 @@ export default function MapPage(props) {
           zoomLimit={[3, 9]}
           dragging={true}
           initZoom={4}
+          defaultStatic={staticType}
           loadFinish={() => {
             setLoading(false);
           }}
@@ -184,6 +190,7 @@ export default function MapPage(props) {
           zoomLimit={[3, 9]}
           dragging={true}
           initZoom={4}
+          defaultStatic={staticType}
           loadFinish={() => {
             setLoading(false);
           }}
@@ -199,6 +206,7 @@ export default function MapPage(props) {
         zoomLimit={[5, 9]}
         dragging={true}
         initZoom={6}
+        defaultStatic={staticType}
         loadFinish={() => {
           setLoading(false);
         }}

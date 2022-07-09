@@ -231,7 +231,12 @@ export default function Annular({
   }, [requestData]);
 
   return (
-    <AnalyticsCard title={labelText} baseSize={false} link="/" backCls="cover2">
+    <AnalyticsCard
+      title={labelText}
+      baseSize={false}
+      link="https://www.metacat.world/analytics"
+      backCls="cover2"
+    >
       <div className={cn(' relative w-full', style.content)}>
         <div className="flex items-center absolute top-4 right-4">{getSelect}</div>
         {rander}

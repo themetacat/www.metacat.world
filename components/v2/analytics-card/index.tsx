@@ -26,7 +26,7 @@ export default function AnalyticsCard({
   return (
     <div
       className={cn(
-        'base-border rounded-2xl bg-black bg-opacity-90',
+        'base-border rounded-2xl bg-black bg-opacity-90 overflow-hidden',
         baseSize ? style.base : style.big,
         cls,
         className,

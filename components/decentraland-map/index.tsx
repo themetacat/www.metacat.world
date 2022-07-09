@@ -72,6 +72,7 @@ interface Props {
   fullScreenOnClick?: (show) => void;
   loadFinish?: () => void;
   withPopup?: boolean;
+  defaultStatic?: string;
 }
 
 export type AtlasTile = {
@@ -301,6 +302,7 @@ function DecentralandMap({
   fullScreenOnClick,
   loadFinish,
   withPopup = true,
+  defaultStatic = 'price',
 }: Props) {
   const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
@@ -315,7 +317,7 @@ function DecentralandMap({
   const [positionX, setPositionX] = React.useState(0);
   const [positionY, setPositionY] = React.useState(0);
   const [showDetail, setShowDetail] = React.useState(false);
-  const mapType = React.useRef('price');
+  const mapType = React.useRef(defaultStatic || 'price');
   const staticType = React.useRef('all');
   const [staticList, setStaticList] = React.useState(options[mapType.current]);
   const legends = React.useRef(colors[2]);
@@ -400,33 +402,44 @@ function DecentralandMap({
     [dealWithParcel, colors],
   );
 
-  const requestLand = React.useCallback(async () => {
-    setLoading(true);
-    const res = await getDecentralandMapLevelThreeData();
-    const { code, data } = res;
-    if (code === 100000 && data) {
-      orginData.current = convert(data);
-      setMapData('price');
-    }
-    setLoading(false);
-  }, [setMapData]);
+  const requestLand = React.useCallback(
+    async (needSetMap) => {
+      setLoading(true);
+      const res = await getDecentralandMapLevelThreeData();
+      const { code, data } = res;
+      if (code === 100000 && data) {
+        orginData.current = convert(data);
+        if (needSetMap) {
+          setMapData('price');
+        }
+      }
+      setLoading(false);
+    },
+    [setMapData],
+  );
 
-  const requestDclMap = React.useCallback(async () => {
-    const res = await getDclTrafficMap();
-    const { code, data } = res;
-    if (code === 100000 && data) {
-      orginDataTraffic.current = convert(data);
-      // const { stats, parcels } = convert(data);
-      // const limit = stats[mapType.current].levelOne;
-      // colors[2].forEach((co, index) => {
-      //   Object.assign(co.all, limit[index].all);
-      //   Object.assign(co.week, limit[index].week);
-      //   Object.assign(co.month, limit[index].month);
-      // });
-      // orginDataTraffic.current = parcels;
-      // dealWithParcel(parcels, colors[2]);
-    }
-  }, [null]);
+  const requestDclMap = React.useCallback(
+    async (needSetMap) => {
+      const res = await getDclTrafficMap();
+      const { code, data } = res;
+      if (code === 100000 && data) {
+        orginDataTraffic.current = convert(data);
+        if (needSetMap) {
+          setMapData('traffic');
+        }
+        // const { stats, parcels } = convert(data);
+        // const limit = stats[mapType.current].levelOne;
+        // colors[2].forEach((co, index) => {
+        //   Object.assign(co.all, limit[index].all);
+        //   Object.assign(co.week, limit[index].week);
+        //   Object.assign(co.month, limit[index].month);
+        // });
+        // orginDataTraffic.current = parcels;
+        // dealWithParcel(parcels, colors[2]);
+      }
+    },
+    [null],
+  );
 
   const closePop = React.useCallback(() => {
     setShowDetail(false);
@@ -675,8 +688,8 @@ function DecentralandMap({
   }, []);
   React.useEffect(() => {
     getDclTop20();
-    requestLand();
-    requestDclMap();
+    requestLand(mapType.current === 'price');
+    requestDclMap(mapType.current === 'traffic');
   }, [null]);
 
   const jumpToMap = () => {

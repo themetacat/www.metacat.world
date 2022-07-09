@@ -363,7 +363,7 @@ ${showKeyTypes[6]}:
       chart.current
         .interval()
         .position('time*value')
-        .size(20)
+        // .size(showType === 'weekly'? 10:20)
         .color('name', (tVal) => {
           if (tVal === 'The Sandbox') {
             return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
@@ -606,7 +606,7 @@ ${showKeyTypes[6]}:
   }, [requestData]);
 
   return (
-    <AnalyticsCard title={labelText} link="/" backCls="cover3">
+    <AnalyticsCard title={labelText} link="https://www.metacat.world/analytics" backCls="cover3">
       <>
         <div className="flex justify-end">
           <div className="flex items-center mt-4 mr-4">{getSelect}</div>

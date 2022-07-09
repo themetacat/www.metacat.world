@@ -1,6 +1,6 @@
 .btn{
-  width: 120px;
-  height: 36px;
+  min-width: 120px;
+  min-height: 36px;
 }
 
 .btnDiv>img{

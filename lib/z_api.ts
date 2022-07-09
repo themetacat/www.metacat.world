@@ -880,7 +880,8 @@ class API {
       search = qs.stringify({ code }, { addQueryPrefix: true });
     }
     // const url = `http://8.130.23.16/api/v1/bind_ver_email_code${search}`;
-    const url = `${this.url}/bind_ver_email_code?email=${search}`;
+    // const url = `${this.url}/bind_ver_email_code?email=${search}`;
+    const url = `${this.url}/bind_ver_email_code${search}`;
     // console.log(url1);
     const result = await fetch(url, {
       method: 'get',

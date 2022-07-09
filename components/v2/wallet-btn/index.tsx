@@ -23,6 +23,9 @@ type Props = {
   name?: string;
   address?: string;
   onClickHandler?: () => void;
+  className?: string;
+  quickBtn?: boolean;
+  afterConnect?: (x) => void;
 };
 
 interface IProfileData {
@@ -32,6 +35,8 @@ interface IProfileData {
     nickName: string;
     address: string;
     avatar: string;
+    email: string;
+    creatorStatus: number;
   };
 }
 
@@ -42,6 +47,8 @@ const INITIAL_STATE: IProfileData = {
     nickName: null,
     address: null,
     avatar: null,
+    email: null,
+    creatorStatus: 0,
   },
 };
 
@@ -89,7 +96,14 @@ const WALLET = [
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
 
-export default function WalletBtn({ name, address, onClickHandler }: Props) {
+export default function WalletBtn({
+  name,
+  address,
+  onClickHandler,
+  className,
+  quickBtn = false,
+  afterConnect,
+}: Props) {
   const [showMenu, setShowMenu] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const profileData = state.useState('accessToken', 'refreshToken', 'profile');
@@ -134,12 +148,17 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         setToken('atk', data.accessToken);
         setToken('rtk', data.refreshToken);
-        Router.push({
-          pathname: '/profile',
-          query: {
-            type: 'parcellist',
-          },
-        });
+        if (!quickBtn) {
+          Router.push({
+            pathname: '/profile',
+            query: {
+              type: 'parcellist',
+            },
+          });
+        }
+        if (afterConnect) {
+          afterConnect(data.profile);
+        }
       }
       setShowMenu(false);
       setLoading(false);
@@ -220,9 +239,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const onClick = React.useCallback(
     (event) => {
       event.nativeEvent.stopImmediatePropagation();
-      setShowMenu(!showMenu);
-      if (onClickHandler) {
-        onClickHandler();
+      if (quickBtn) {
+        connectToChain();
+      } else {
+        setShowMenu(!showMenu);
+        if (onClickHandler) {
+          onClickHandler();
+        }
       }
     },
     [showMenu, onClickHandler],
@@ -356,9 +379,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         // const res = await req_user_logout(accessToken);
         // console.log(res)
-        if (pathname !== '/') {
-          window.location.href = '/';
-        }
+        window.location.href = '/';
       }
       setShowMenu(false);
     },
@@ -511,8 +532,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   return (
     <div
       className={cn(
-        'event-hand bg-gradient-to-r from-mainDark to-mainLight rounded-lg relative text-black',
+        'event-hand bg-gradient-to-r from-mainDark to-mainLight rounded-lg relative text-black flex justify-center items-center',
         style.btn,
+        className,
       )}
     >
       <div

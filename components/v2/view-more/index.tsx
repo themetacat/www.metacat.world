@@ -17,11 +17,14 @@ export default function ViewMore({
   imgClass = 'w-3 h-3',
 }: Props) {
   return (
-    <Link href={link}>
-      <div className={cn(' flex items-center event-hand', style.base, className)}>
-        View More
-        <img className={cn('ml-2 ', imgClass)} src="/images/carousel-right.png"></img>
-      </div>
-    </Link>
+    <div
+      onClick={() => {
+        window.open(link);
+      }}
+      className={cn(' flex items-center event-hand', style.base, className)}
+    >
+      View More
+      <img className={cn('ml-2 ', imgClass)} src="/images/carousel-right.png"></img>
+    </div>
   );
 }

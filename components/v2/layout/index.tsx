@@ -14,6 +14,8 @@ import Carousel from '../carousel';
 
 import style from './index.module.css';
 
+import { getHeatMapInfo } from '../../../service/v2';
+
 const mediaData = [
   {
     label: 'Otherside',
@@ -90,18 +92,18 @@ export default function Layout({
   const { pathname } = router;
   const t = useTranslations('navigation');
 
-  const jumpToMap = React.useCallback((item) => {
-    Router.push(item.link);
+  const jumpToMap = React.useCallback((item, mapType) => {
+    Router.push(`${item.link}&static=${mapType}`);
+  }, []);
+
+  const requsetHeatMapData = React.useCallback(async () => {
+    const res = await getHeatMapInfo();
+    const { heatmap_img } = res.data;
+    setCarouselList(convert(heatmap_img));
   }, []);
 
   React.useEffect(() => {
-    fetch('/api/carousel').then(async (res) => {
-      const data = await res.json();
-
-      const { list } = data.data || [];
-      setCarouselList(convert(list));
-    });
-
+    requsetHeatMapData();
     const arr1 = [];
     PriceMap.forEach((x) => {
       const m = mediaData.find((item) => item.type === x);
@@ -147,13 +149,17 @@ export default function Layout({
                     tags={priceTags}
                     label={'Price HeatMap'}
                     className={'base-border mb-5'}
-                    onActive={jumpToMap}
+                    onActive={(ty) => {
+                      jumpToMap(ty, 'price');
+                    }}
                   ></HeatMapCard>
                   <HeatMapCard
                     tags={trafficTags}
                     label={'Traffic HeatMap'}
                     className={'base-border'}
-                    onActive={jumpToMap}
+                    onActive={(ty) => {
+                      jumpToMap(ty, 'traffic');
+                    }}
                   ></HeatMapCard>
                 </div>
               </div>
