@@ -379,7 +379,9 @@ export default function WalletBtn({
         });
         // const res = await req_user_logout(accessToken);
         // console.log(res)
-        window.location.href = '/';
+        if (pathname !== '/') {
+          window.location.href = '/';
+        }
       }
       setShowMenu(false);
     },
