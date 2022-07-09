@@ -8,34 +8,34 @@ import toast from 'react-hot-toast';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 
-import Page from '../components/page';
-import Layout from '../components/layout';
-import { SITE_NAME, META_DESCRIPTION } from '../common/const';
-import { convert, getToken, setToken } from '../common/utils';
+import Page from '../../components/page';
+import Layout from '../../components/layout';
+import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
+import { convert, getToken, setToken } from '../../common/utils';
 
-import Tab from '../components/home_tab';
-import SecondTab from '../components/tab2';
-import Card from '../components/card';
-import SwiperTag from '../components/swiper-tag';
-import PagiNation from '../components/pagination';
-import Search from '../components/search';
-import PostGrid from '../components/post-grid';
-import Status from '../components/status';
-import TopJumper from '../components/jump-to-top';
-import TopicCardList from '../components/topic-card-list';
+import Tab from '../../components/home_tab';
+import SecondTab from '../../components/tab2';
+import Card from '../../components/card';
+import SwiperTag from '../../components/swiper-tag';
+import PagiNation from '../../components/pagination';
+import Search from '../../components/search';
+import PostGrid from '../../components/post-grid';
+import Status from '../../components/status';
+import TopJumper from '../../components/jump-to-top';
+import TopicCardList from '../../components/topic-card-list';
 
-import BaseChart from '../components/base-chart';
-import BaseBar from '../components/base-bar';
-import StackBar from '../components/stack-bar';
-import ChartLine from '../components/chart-line';
-import ChartLineToolTipSimple from '../components/chart-line-tooltip-simple';
-import ChartLineSandBox from '../components/chart-line-sandbox';
-import StackBarZ from '../components/stack-bar-z';
-import ChartLineToolTipSimpleSandbox from '../components/chart-line-tooltip-simple-sandbox';
-import { useWalletProvider } from '../components/web3modal';
-import StackBarZ2 from '../components/stack-bar-z2';
+import BaseChart from '../../components/base-chart';
+import BaseBar from '../../components/base-bar';
+import StackBar from '../../components/stack-bar';
+import ChartLine from '../../components/chart-line';
+import ChartLineToolTipSimple from '../../components/chart-line-tooltip-simple';
+import ChartLineSandBox from '../../components/chart-line-sandbox';
+import StackBarZ from '../../components/stack-bar-z';
+import ChartLineToolTipSimpleSandbox from '../../components/chart-line-tooltip-simple-sandbox';
+import { useWalletProvider } from '../../components/web3modal';
+import StackBarZ2 from '../../components/stack-bar-z2';
 
-import { state } from '../components/wallet-btn';
+import { state } from '../../components/wallet-btn';
 
 import {
   getCVEventList,
@@ -51,7 +51,7 @@ import {
   getDclParcelSoldTotalStats,
   refreshToken,
   getBaseInfo,
-} from '../service';
+} from '../../service';
 
 import {
   req_sandbox_avg_price_stats,
@@ -72,27 +72,27 @@ import {
   req_netvrk_avg_price,
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
-} from '../service/z_api';
+} from '../../service/z_api';
 
 import style from './index.module.less';
 
-const MapWithNoSSR = dynamic(() => import('../components/map'), {
+const MapWithNoSSR = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
 
-const DCLMapWithNoSSR = dynamic(() => import('../components/decentraland-map'), {
+const DCLMapWithNoSSR = dynamic(() => import('../../components/decentraland-map'), {
   ssr: false,
 });
 
-const SandboxMap = dynamic(() => import('../components/sandbox-map'), {
+const SandboxMap = dynamic(() => import('../../components/sandbox-map'), {
   ssr: false,
 });
 
-const SomniumMap = dynamic(() => import('../components/somnium-map'), {
+const SomniumMap = dynamic(() => import('../../components/somnium-map'), {
   ssr: false,
 });
 
-const OtherSideMap = dynamic(() => import('../components/otherside-map'), {
+const OtherSideMap = dynamic(() => import('../../components/otherside-map'), {
   ssr: false,
 });
 
@@ -1613,8 +1613,8 @@ export async function getServerSideProps({ locale = 'en-US', query }) {
   return {
     props: {
       messages: {
-        ...require(`../messages/common/${locale}.json`),
-        ...require(`../messages/index/${locale}.json`),
+        ...require(`../../messages/common/${locale}.json`),
+        ...require(`../../messages/index/${locale}.json`),
       },
       now: new Date().getTime(),
       locale,
