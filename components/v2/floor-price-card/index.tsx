@@ -38,7 +38,7 @@ export default function FloorPriceCard({ title, items, className }: Props) {
   }, [items]);
 
   return (
-    <AnalyticsCard link="/" title={title} backCls="cover1">
+    <AnalyticsCard title={title} backCls="cover1">
       <ul
         className={cn(' list-none w-full text-white text-sm py-8 px-5 overflow-hidden', className)}
       >
@@ -74,7 +74,7 @@ export default function FloorPriceCard({ title, items, className }: Props) {
 
               <span
                 className={cn(d >= 0 ? ' text-green-500' : ' text-red-500', ' w-10 text-right')}
-              >{`${d}%`}</span>
+              >{`${d > 0 ? '+' : ''}${d}%`}</span>
             </li>
           ) : null;
         })}

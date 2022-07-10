@@ -35,7 +35,6 @@ export default function Modal({ show, setClose, type }: Props) {
     },
     [setClose],
   );
-
   const [inputAddress, setInputAddress] = useState(profile?.address || '');
   const [connect, setConnect] = useState(profile?.address !== null);
   const [inputEmail, setInputEmail] = useState(profile?.email || '');
@@ -162,13 +161,15 @@ export default function Modal({ show, setClose, type }: Props) {
     requestPersonal(t);
   }, [requestPersonal]);
   useEffect(() => {
+    setConnect(profile?.address !== null);
+
     return () => {
       if (timeId.current) {
         clearInterval(timeId.current);
         timeId.current = null;
       }
     };
-  }, []);
+  }, [profile]);
 
   const cancelButtonRef = useRef(null);
 
@@ -228,7 +229,7 @@ export default function Modal({ show, setClose, type }: Props) {
                     <MeteInput
                       require={true}
                       name={'address'}
-                      disable={profile?.address === null}
+                      disable={profile?.address !== null}
                       bold={true}
                       value={inputAddress || profile?.address || ''}
                       classname={`${connect ? 'w-full' : 'flex-1 mr-3 max-w-sm'}`}
@@ -259,7 +260,7 @@ export default function Modal({ show, setClose, type }: Props) {
                     require={true}
                     name={'email'}
                     bold={true}
-                    disable={profile?.email === null}
+                    disable={profile?.email !== null}
                     value={inputEmail || profile?.email || ''}
                     classname={'mt-2'}
                     onChangeHandler={(val) => {
@@ -269,12 +270,12 @@ export default function Modal({ show, setClose, type }: Props) {
                 </div>
                 {profile?.email ? null : (
                   <div className=" mt-5  text-left">
-                    <div className=" text-base font-medium text-gray-400">验证码</div>
+                    <div className=" text-base font-medium text-gray-400">Code</div>
                     <MeteInput
                       require={true}
                       name={'email'}
                       bold={true}
-                      // disable={true}
+                      disable={profile?.address === null}
                       value={verCode || ''}
                       classname={'mt-2'}
                       needSuffix={true}

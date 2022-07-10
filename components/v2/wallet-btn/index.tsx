@@ -212,8 +212,12 @@ export default function WalletBtn({
 
       web3.connect().then(
         async (res) => {
-          const { address: addr, provider } = res;
-          connect(addr, provider);
+          try {
+            const { address: addr, provider } = res;
+            connect(addr, provider);
+          } catch (ex) {
+            toast.error('Please check you metamask plugin');
+          }
         },
         (err) => {
           setLoading(false);

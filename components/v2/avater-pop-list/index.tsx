@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import cn from 'classnames';
 
@@ -14,6 +14,8 @@ class Avater {
   address?: string;
 
   isBuildings?: string;
+
+  fullUrl?: string;
 }
 
 interface Props {
@@ -23,12 +25,22 @@ interface Props {
 }
 
 export default function AvaterPopList({ avaters, onActive, type }: Props) {
+  const all = avaters.slice(0, 7);
+  all.push({
+    logoUrl: '/images/v2/1.png',
+    fullUrl: `https://www.metacat.world/${type === 'buildings' ? 'build/builders' : 'wearables'}`,
+  });
+
   return (
     <div className="">
-      {avaters.map((item, idx) => {
+      {all.map((item, idx) => {
         return (
           <img
             onClick={() => {
+              if (item.fullUrl) {
+                window.open(item.fullUrl);
+                return;
+              }
               window.open(
                 `https://www.metacat.world/topic/${
                   type === 'buildings' ? item.id : item.address
@@ -36,8 +48,8 @@ export default function AvaterPopList({ avaters, onActive, type }: Props) {
               );
             }}
             className={cn(
-              'float-left w-24 h-24 -mr-3 rounded-full',
-              idx === avaters.length - 1 ? 'float-none' : null,
+              'float-left w-24 h-24 -mr-5 rounded-full cursor-pointer',
+              idx === all.length - 1 ? 'float-none' : null,
               style.avater,
             )}
             key={idx}

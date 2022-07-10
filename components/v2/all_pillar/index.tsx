@@ -84,7 +84,7 @@ export default function AllPillar({
       const result = [];
       if (limit) {
         const l = data.length;
-        const d = l - limit * 2;
+        const d = l - limit * 8;
         const last = data.slice(d);
         last.forEach((element) => {
           result.push({
@@ -136,7 +136,7 @@ export default function AllPillar({
         },
         customContent: (name, items) => {
           const container = document.createElement('div');
-          container.className = 'g2-tooltip';
+          container.className = 'g2-tooltip transform scale-75';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
 
           const result = {

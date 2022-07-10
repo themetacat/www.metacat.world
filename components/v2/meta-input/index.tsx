@@ -126,7 +126,8 @@ export default function MeteInput({
         {needSuffix ? (
           <span
             className={cn(
-              'inline-flex justify-center items-center m-3 pl-4 border-l border-mainDark02 border-solid text-white event-hand',
+              'inline-flex justify-center items-center m-3 pl-4 border-l border-mainDark02 border-solid text-white',
+              disable ? style.disable : ' event-hand',
               style.suffix,
             )}
             onClick={suffixClick}

@@ -229,6 +229,7 @@ export default function Index(props) {
                   id="allpillar1"
                   labelText="Parcel Sales Amount"
                   dataHandlder={req_sales_amount_stack}
+                  limit={5}
                   legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
                   legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
                   legend3={{ label: 'Decentraland', color: [255, 107, 84] }}

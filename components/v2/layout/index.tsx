@@ -93,7 +93,7 @@ export default function Layout({
   const t = useTranslations('navigation');
 
   const jumpToMap = React.useCallback((item, mapType) => {
-    Router.push(`${item.link}&static=${mapType}`);
+    window.open(`https://www.metacat.world${item.link}&static=${mapType}`);
   }, []);
 
   const requsetHeatMapData = React.useCallback(async () => {
@@ -147,7 +147,7 @@ export default function Layout({
                 <div className="">
                   <HeatMapCard
                     tags={priceTags}
-                    label={'Price HeatMap'}
+                    label={'Price Heatmap'}
                     className={'base-border mb-5'}
                     onActive={(ty) => {
                       jumpToMap(ty, 'price');
@@ -155,7 +155,7 @@ export default function Layout({
                   ></HeatMapCard>
                   <HeatMapCard
                     tags={trafficTags}
-                    label={'Traffic HeatMap'}
+                    label={'Traffic Heatmap'}
                     className={'base-border'}
                     onActive={(ty) => {
                       jumpToMap(ty, 'traffic');

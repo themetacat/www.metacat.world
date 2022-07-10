@@ -7,7 +7,6 @@
 }
 .base {
   z-index: 10002;
-  width: 1400px;
 }
 .location {
   position: absolute;

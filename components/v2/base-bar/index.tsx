@@ -6,6 +6,7 @@ import Status from '../../status';
 import { formatNum } from '../../../common/utils';
 import AnalyticsCard from '../analytics-card';
 import SimpleSwicth from '../simple-switch';
+import ChartSelecter from '../chart-select';
 
 import style from './index.module.css';
 
@@ -229,6 +230,28 @@ export default function BaseBar({
     return <div id={id} className="w-full" style={{ height: limitHeight }}></div>;
   }, [loading, error, onRetry]);
 
+  const getSelect = React.useMemo(() => {
+    // if (showData.length !== 0) {
+    return (
+      <div className={cn('flex items-center rounded text-white text-opacity-30', style.border)}>
+        <ChartSelecter
+          options={[
+            {
+              label: 'Week',
+              value: 'week',
+            },
+          ]}
+          showArrow={false}
+          // className={style.selecterLong}
+          defaultLabel={'week'}
+          hasBorder={true}
+        ></ChartSelecter>
+      </div>
+    );
+    // }
+    // return null;
+  }, []);
+
   React.useEffect(() => {
     requestData();
     return () => {
@@ -248,8 +271,9 @@ export default function BaseBar({
       backCls="cover4"
     >
       <>
-        <div className=" flex justify-center items-center mt-5">
+        <div className=" relative flex justify-center items-center mt-5">
           <SimpleSwicth options={switchs} onActive={changeType}></SimpleSwicth>
+          <div className="flex items-center absolute right-0 mr-4">{getSelect}</div>
         </div>
         <div className={cn('w-full p-5', style.content)}>{render}</div>
       </>

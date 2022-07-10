@@ -19,7 +19,9 @@ export default function ViewMore({
   return (
     <div
       onClick={() => {
-        window.open(link);
+        if (link) {
+          window.open(link);
+        }
       }}
       className={cn(' flex items-center event-hand', style.base, className)}
     >
