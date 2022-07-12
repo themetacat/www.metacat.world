@@ -45,7 +45,7 @@ export default function SimpleSwicth({ options, onActive, className }: Props) {
         return (
           <div
             className={cn(
-              'flex justify-center items-center bg-gradient-to-r from-mainDark to-mainLight event-hand',
+              'flex justify-center  items-center bg-gradient-to-r from-mainDark to-mainLight event-hand',
               idx === 0 ? first : null,
               idx === options.length - 1 ? last : null,
               style.swicthbtn,
@@ -57,10 +57,10 @@ export default function SimpleSwicth({ options, onActive, className }: Props) {
           >
             <div
               className={cn(
-                'w-full h-full bg-black flex justify-center items-center',
+                'w-full h-full flex justify-center items-center',
                 idx === 0 ? first : null,
                 idx === options.length - 1 ? last : null,
-                active === idx ? 'bg-opacity-0 text-black' : 'bg-opacity-100 text-mainDark',
+                active === idx ? 'bg-opacity-0 text-black' : 'bg-black bg-opacity-60 text-mainDark',
               )}
             >
               {item.label}

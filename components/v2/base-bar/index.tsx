@@ -14,6 +14,7 @@ type Props = {
   id?: string;
   dataHandlder?: () => any;
   defaultColor?: Array<number>;
+  defaultColor2?: Array<number>;
   gradient?: boolean;
   className?: string;
   labelText?: string;
@@ -21,6 +22,7 @@ type Props = {
   barWidth?: number;
   textColor?;
   limitHeight?: number;
+  onSwicth?: (x) => void;
 };
 const switchs = [
   {
@@ -37,6 +39,7 @@ export default function BaseBar({
   id,
   dataHandlder,
   defaultColor = [194, 157, 135],
+  defaultColor2 = [255, 107, 84],
   gradient = true,
   className,
   labelText,
@@ -44,12 +47,14 @@ export default function BaseBar({
   barWidth = 35,
   textColor,
   limitHeight = 230,
+  onSwicth,
 }: Props) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const chart = React.useRef(null);
   const [staticType, setStaticType] = React.useState(switchs[0].value || 'cv');
   const [orgData, setOrginData] = React.useState(null);
+  const barColor = React.useRef(defaultColor);
 
   const initChart = React.useCallback(
     (monthly) => {
@@ -65,7 +70,20 @@ export default function BaseBar({
       if (limit && monthly?.length > limit) {
         const l = monthly.length;
         const d = l - limit;
-        chart.current.data(monthly.slice(d));
+        const x = monthly.slice(d);
+        const cvArr = x.cv.map((n) => {
+          return {
+            ...n,
+            type: 'cv',
+          };
+        });
+        const dclArr = x.dcl.map((n) => {
+          return {
+            ...n,
+            type: 'dcl',
+          };
+        });
+        chart.current.data({ cv: cvArr, dcl: dclArr });
       } else {
         chart.current.data(monthly);
       }
@@ -104,6 +122,7 @@ export default function BaseBar({
             background: 'rgba(0,0,0,0.5)',
             color: '#ffffff',
             boxShadow: null,
+            borderRadius: '8px',
           },
           'g2-tooltip-title': {
             color: 'rgba(153, 153, 153, 1)',
@@ -168,14 +187,21 @@ export default function BaseBar({
         .position('time*value')
         .color('value')
         .style({
-          fill: gradient
-            ? `l(270) 0:rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 0.2) 1:rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`
-            : `rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`,
+          fields: ['type'],
+          callback: (tVal) => {
+            const c = tVal === 'cv' ? defaultColor : defaultColor2;
+            return {
+              fill: gradient
+                ? `l(270) 0:rgba(${c[0]}, ${c[1]}, ${c[2]}, 0.2) 1:rgba(${c[0]}, ${c[1]}, ${c[2]}, 1)`
+                : `rgba(${c[0]}, ${c[1]}, ${c[2]}, 1)`,
+            };
+          },
         })
-        .tooltip('time*value*type', (time, value) => {
+        .tooltip('time*value*type', (time, value, type) => {
           return {
             value: value * 1,
             time,
+            type,
           };
         });
 
@@ -190,8 +216,24 @@ export default function BaseBar({
     try {
       const res = await dataHandlder();
       const { data } = res;
-      setOrginData(data);
-      result = data.cv;
+      const n = data.cv.map((x) => {
+        return {
+          ...x,
+          type: 'cv',
+        };
+      });
+      const m = data.dcl.map((x) => {
+        return {
+          ...x,
+          type: 'dcl',
+        };
+      });
+      const a = {
+        cv: n,
+        dcl: m,
+      };
+      setOrginData(a);
+      result = a.cv;
     } catch (ex) {
       setError(true);
     }
@@ -209,6 +251,7 @@ export default function BaseBar({
   const changeType = React.useCallback(
     (item) => {
       setStaticType(item.value);
+      // barColor.current = item.value === 'cv'? [194, 157, 135]:[255, 107, 84];
       chart.current.changeData(orgData[item.value]);
     },
     [orgData],

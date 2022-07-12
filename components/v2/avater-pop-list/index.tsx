@@ -49,7 +49,7 @@ export default function AvaterPopList({ avaters, onActive, type }: Props) {
             }}
             className={cn(
               'float-left w-24 h-24 -mr-5 rounded-full cursor-pointer',
-              idx === all.length - 1 ? 'float-none' : null,
+              idx === all.length - 1 ? 'float-none' : style.avaterBorder,
               style.avater,
             )}
             key={idx}

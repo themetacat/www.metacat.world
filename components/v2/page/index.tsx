@@ -30,7 +30,7 @@ export default function Page({ meta, children, className, fullViewport = false }
   const description = meta.description || SITE_NAME;
 
   return (
-    <div className={cn('page-container', style.widthLimit, className, { full: fullViewport })}>
+    <div className={cn('page-container z-0', style.widthLimit, className, { full: fullViewport })}>
       <Head>
         <title>{title}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />

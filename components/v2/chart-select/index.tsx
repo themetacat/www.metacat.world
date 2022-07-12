@@ -117,7 +117,7 @@ export default function ChartSelecter({
                 'flex items-center p-3',
                 style.option,
                 index === 0 ? ' rounded-t' : null,
-                index === options.length - 1 ? ' rounded-b' : null,
+                index === options.length - 1 ? ' rounded-b' : style.bottomBorder,
               )}
               key={x.value}
               onClick={(e) => {

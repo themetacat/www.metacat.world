@@ -4,6 +4,9 @@
   font-size: 12px;
   min-width: 69px;
   background-color: #010202;
+ 
+}
+.bottomBorder{
   border-bottom: #333333 solid 1px;
 }
 .option:hover {

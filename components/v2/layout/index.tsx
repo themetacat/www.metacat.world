@@ -93,7 +93,7 @@ export default function Layout({
   const t = useTranslations('navigation');
 
   const jumpToMap = React.useCallback((item, mapType) => {
-    window.open(`https://www.metacat.world${item.link}&static=${mapType}`);
+    window.open(`http://localhost:3000${item.link}&static=${mapType}`);
   }, []);
 
   const requsetHeatMapData = React.useCallback(async () => {
@@ -125,7 +125,8 @@ export default function Layout({
 
   return (
     <>
-      <div className={cn('min-h-screen', 'w-full')}>
+      {!hideNav && <PageHeader className=" relative z-10" active={pathname} />}
+      <div className={cn('min-h-screen z-0', 'w-full')}>
         <div
           className={cn(
             headerBgCls,
@@ -137,8 +138,7 @@ export default function Layout({
           )}
           style={{ zIndex: 1 }}
         >
-          {!hideNav && <PageHeader className="relative z-10" active={pathname} />}
-          <div className={cn('pt-12')}>
+          <div className={cn(' pt-32')}>
             <div className={cn(' text-white text-2xl font-bold flex main-content justify-start')}>
               Heatmap
             </div>

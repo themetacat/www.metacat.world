@@ -150,32 +150,40 @@ export default function PageHeader({ active, className }: Props) {
   }, []);
 
   return (
-    <header className={cn('w-full h-full flex justify-center items-center')}>
+    <header
+      className={cn('w-full z-10 h-full flex justify-center fixed items-start pointer-events-none')}
+    >
       <div
         className={cn(
-          'main-content  p-5  flex justify-center items-center pointer-events-none ',
-          style.base,
-          className,
+          ' py-5  flex justify-center items-center pointer-events-none w-full',
+          style.header,
         )}
       >
-        <div className="flex flex-grow items-center text-white font-bold text-3xl pointer-events-auto">
-          <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
-          <Link href="/" prefetch>
-            METACAT
-          </Link>
-        </div>
-        <div className="flex flex-grow justify-end">
-          <div
-            className={cn(
-              'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
-              active === '/' ? style.active : null,
-            )}
-          >
+        <div
+          className={cn(
+            'main-content flex justify-center items-center pointer-events-none ',
+            style.base,
+            className,
+          )}
+        >
+          <div className="flex flex-grow items-center text-white font-bold text-3xl pointer-events-auto">
+            <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img>
             <Link href="/" prefetch>
-              Home
+              METACAT
             </Link>
           </div>
-          {/* <div
+          <div className="flex flex-grow justify-end">
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
+                active === '/' ? style.active : null,
+              )}
+            >
+              <Link href="/" prefetch>
+                Home
+              </Link>
+            </div>
+            {/* <div
           className={cn(
             'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === 'rent' ? style.active : null,
@@ -183,91 +191,91 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href="/rent">Rent</Link>
         </div> */}
-          <div
-            className={cn(
-              'text-xl font-medium relative text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
-              active === 'analytics' ? style.active : null,
-            )}
-            // onClick={jumpToData}
-            onMouseEnter={() => {
-              setAnalyticsState(true);
-            }}
-            onMouseLeave={() => {
-              setAnalyticsState(false);
-            }}
-          >
-            Analytics
-            {analyticsState ? (
-              <TwoNavigation options={analytics} widthType={'long'}></TwoNavigation>
-            ) : null}
-          </div>
-          <div
-            className={cn(
-              'text-xl font-medium relative text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
-              active === 'heatmap' ? style.active : null,
-            )}
-            onMouseEnter={() => {
-              setHeatmapState(true);
-            }}
-            onMouseLeave={() => {
-              setHeatmapState(false);
-            }}
-          >
-            Heatmap
-            {heatmapState ? (
-              <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
-            ) : null}
-          </div>
+            <div
+              className={cn(
+                'text-xl font-medium relative text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+                active === 'analytics' ? style.active : null,
+              )}
+              // onClick={jumpToData}
+              onMouseEnter={() => {
+                setAnalyticsState(true);
+              }}
+              onMouseLeave={() => {
+                setAnalyticsState(false);
+              }}
+            >
+              Analytics
+              {analyticsState ? (
+                <TwoNavigation options={analytics} widthType={'long'}></TwoNavigation>
+              ) : null}
+            </div>
+            <div
+              className={cn(
+                'text-xl font-medium relative text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+                active === 'heatmap' ? style.active : null,
+              )}
+              onMouseEnter={() => {
+                setHeatmapState(true);
+              }}
+              onMouseLeave={() => {
+                setHeatmapState(false);
+              }}
+            >
+              Heatmap
+              {heatmapState ? (
+                <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
+              ) : null}
+            </div>
 
-          <div
-            className={cn(
-              'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
-              active === 'Build' ? style.active : null,
-              style.z,
-            )}
-            // onClick={() => {
-            //   setBuildState(!buildState);
-            // }}
-            onMouseEnter={() => {
-              setBuildState(true);
-            }}
-            onMouseLeave={() => {
-              setBuildState(false);
-            }}
-          >
-            Build
-            {buildState ? (
-              <TwoNavigation options={build} widthType={'middle'}></TwoNavigation>
-            ) : null}
-          </div>
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
+                active === 'Build' ? style.active : null,
+                style.z,
+              )}
+              // onClick={() => {
+              //   setBuildState(!buildState);
+              // }}
+              onMouseEnter={() => {
+                setBuildState(true);
+              }}
+              onMouseLeave={() => {
+                setBuildState(false);
+              }}
+            >
+              Build
+              {buildState ? (
+                <TwoNavigation options={build} widthType={'middle'}></TwoNavigation>
+              ) : null}
+            </div>
 
-          <div
-            className={cn(
-              'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
-              active === 'wearables' ? style.active : null,
-              style.z,
-            )}
-            onMouseEnter={() => {
-              setWearableState(true);
-            }}
-            onMouseLeave={() => {
-              setWearableState(false);
-            }}
-          >
-            Wearables
-            {wearableState ? <TwoNavigation options={wearable}></TwoNavigation> : null}
-          </div>
-          <div
-            className={cn(
-              'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
-              active === 'learn' ? style.active : null,
-            )}
-          >
-            <Link href={'/learn?type=articles'} prefetch>
-              Learn
-            </Link>
-          </div>
-          {/* <div
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
+                active === 'wearables' ? style.active : null,
+                style.z,
+              )}
+              onMouseEnter={() => {
+                setWearableState(true);
+              }}
+              onMouseLeave={() => {
+                setWearableState(false);
+              }}
+            >
+              Wearables
+              {wearableState ? <TwoNavigation options={wearable}></TwoNavigation> : null}
+            </div>
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+                active === 'learn' ? style.active : null,
+              )}
+            >
+              <Link href={'/learn?type=articles'} prefetch>
+                Learn
+              </Link>
+            </div>
+            {/* <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'learn' ? style.active : null,
@@ -277,7 +285,7 @@ export default function PageHeader({ active, className }: Props) {
             demo
           </Link>
         </div> */}
-          {/* <div
+            {/* <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'learn' ? style.active : null,
@@ -287,25 +295,26 @@ export default function PageHeader({ active, className }: Props) {
             demo
           </Link>
         </div> */}
-          <div
-            className={cn(
-              'text-xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
-              active === 'builders' ? style.active : null,
-            )}
-          >
-            <WalletBtn></WalletBtn>
-          </div>
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+                active === 'builders' ? style.active : null,
+              )}
+            >
+              <WalletBtn></WalletBtn>
+            </div>
 
-          <Toaster
-            toastOptions={{
-              duration: 2000,
-              style: {
-                background: 'rgba(0, 208, 236, 1)',
-                color: 'black',
-                borderRadius: 0,
-              },
-            }}
-          />
+            <Toaster
+              toastOptions={{
+                duration: 2000,
+                style: {
+                  background: 'linear-gradient(90deg, #00D0EC, #00ECB3)',
+                  color: 'black',
+                  borderRadius: '8px',
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </header>

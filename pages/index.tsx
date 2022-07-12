@@ -58,6 +58,7 @@ export default function Index(props) {
   const [creatorData, setCreatorData] = React.useState([]);
   const [learnData, setLearnData] = React.useState([]);
   const [showModal, setShowModal] = React.useState(false);
+  const [barColor, setBarColor] = React.useState([194, 157, 135]);
 
   const refreshTK = React.useCallback(async () => {
     const rToken = getToken('rtk');
@@ -139,10 +140,11 @@ export default function Index(props) {
   );
 
   const requestLearnData = React.useCallback(async () => {
-    let lang = navigator.language.substring(0, 2); // 获取浏览器配置语言前两位
-    if (lang !== 'zh') {
-      lang = 'en';
-    }
+    // let lang = navigator.language.substring(0, 2); // 获取浏览器配置语言前两位
+    // if (lang !== 'zh') {
+    //   lang = 'en';
+    // }
+    const lang = 'en';
     const result = await req_learn_article_list(1, 3, lang);
     if (result?.code === 100000 && result.data.list.length !== 0) {
       setLearnData(result.data.list.slice(0, 3));
@@ -373,9 +375,9 @@ export default function Index(props) {
           toastOptions={{
             duration: 2000,
             style: {
-              background: 'rgba(0, 208, 236, 1)',
+              background: 'linear-gradient(90deg, #00D0EC, #00ECB3)',
               color: 'black',
-              borderRadius: 0,
+              borderRadius: '8px',
             },
           }}
         />

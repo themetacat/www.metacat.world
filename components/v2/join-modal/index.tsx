@@ -128,12 +128,16 @@ export default function Modal({ show, setClose, type }: Props) {
 
   const submit = useCallback(async () => {
     if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
-    if (!inputAddress) {
+    if (!inputAddress && !profile?.address) {
       toast.error(`wallet address can't be empty`);
       return;
     }
-    if (!inputEmail) {
+    if (!inputEmail && !profile?.email) {
       toast.error(`email address can't be empty`);
+      return;
+    }
+    if (!verCode) {
+      toast.error(`code can't be empty`);
       return;
     }
     const t = getToken('atk');
@@ -154,7 +158,7 @@ export default function Modal({ show, setClose, type }: Props) {
         toast.error('Submitted error');
       }
     }
-  }, [verCode, profile]);
+  }, [verCode, profile, inputEmail, verCode]);
 
   const afterConnectToWallet = useCallback(() => {
     const t = getToken('atk');
@@ -260,7 +264,7 @@ export default function Modal({ show, setClose, type }: Props) {
                     require={true}
                     name={'email'}
                     bold={true}
-                    disable={profile?.email !== null}
+                    disable={profile?.email !== null && profile?.email !== ''}
                     value={inputEmail || profile?.email || ''}
                     classname={'mt-2'}
                     onChangeHandler={(val) => {
@@ -289,10 +293,13 @@ export default function Modal({ show, setClose, type }: Props) {
                 )}
                 <div
                   onClick={submit}
-                  className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand ${
-                    profile?.creatorStatus === 1 || profile?.creatorStatus === 3
-                      ? 'bg-gradient-to-r from-mainDark to-mainLight text-black'
-                      : ' bg-gray-600 text-white'
+                  className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand  bg-gradient-to-r from-mainDark to-mainLight text-black${
+                    (profile?.creatorStatus === 1 || profile?.creatorStatus === 3) &&
+                    inputAddress &&
+                    inputEmail &&
+                    verCode
+                      ? ''
+                      : ' opacity-50'
                   }`}
                 >
                   Submit
