@@ -90,6 +90,12 @@ export default function BaseBar({
       chart.current.scale('value', {
         nice: true,
       });
+
+      chart.current.scale('time', {
+        type: 'cat',
+        mask: 'YYYY.MM.DD',
+      });
+
       chart.current.tooltip({
         showCrosshairs: true,
         shared: true,
@@ -177,7 +183,6 @@ export default function BaseBar({
           offsetX: 0,
           offsetY: 0,
           rotate: 0,
-          mask: 'YYYY.MM.DD',
         },
       });
 
@@ -204,7 +209,6 @@ export default function BaseBar({
             type,
           };
         });
-
       chart.current.render();
     },
     [limit],
