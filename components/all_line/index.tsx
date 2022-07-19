@@ -351,6 +351,7 @@ export default function AllLine({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('name')
         .style({
@@ -412,6 +413,7 @@ export default function AllLine({
         );
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
         .tooltip(false)

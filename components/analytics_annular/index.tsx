@@ -97,30 +97,83 @@ export default function Annular({
             itemStyle: {
               normal: {
                 color: (tVal) => {
+                  // version3
                   if (tVal.data.name === 'The Sandbox') {
-                    return `rgba(24, 147, 247,1)`;
+                    return `rgba(138, 152, 229, 1)`;
                   }
                   if (tVal.data.name === 'NFT Worlds') {
-                    return `rgba(132, 193, 14,1)`;
+                    return `rgba(156, 227, 144, 1)`;
                   }
                   if (tVal.data.name === 'Decentraland') {
-                    return `rgba(255, 107, 84,1)`;
+                    return `rgba(237, 135, 128, 1)`;
                   }
                   if (tVal.data.name === 'Worldwide Webb') {
-                    return `rgba(229, 68, 155,1)`;
+                    return `rgba(255, 167, 241, 1)`;
                   }
                   if (tVal.data.name === 'Voxels') {
-                    return `rgba(244, 210, 191,1)`;
+                    return `rgba(255, 223, 205, 1)`;
                   }
                   if (tVal.data.name === 'Somnium Space') {
-                    return `rgba(250, 216, 23,1)`;
+                    return `rgba(255, 232, 151, 1)`;
                   }
                   if (tVal.data.name === 'Otherside') {
-                    return `rgba(255, 248, 187,1)`;
+                    return `rgba(255, 253, 203,1)`;
                   }
                   if (tVal.data.name === 'Netvrk') {
-                    return `rgba(196, 148, 254,1)`;
+                    return `rgba(191, 161, 254,1)`;
                   }
+
+                  // // version2
+                  // if (tVal.data.name === 'The Sandbox') {
+                  //   return `rgba(119, 152, 238, 1)`
+                  // }
+                  // if (tVal.data.name === 'NFT Worlds') {
+                  //   return `rgba(175, 234, 101, 1)`
+                  // }
+                  // if (tVal.data.name === 'Decentraland') {
+                  //   return `rgba(240, 117, 97, 1)`
+                  // }
+                  // if (tVal.data.name === 'Worldwide Webb') {
+                  //   return `rgba(245, 120, 157, 1)`
+                  // }
+                  // if (tVal.data.name === 'Voxels') {
+                  //   return `rgba(236, 218, 208, 1)`
+                  // }
+                  // if (tVal.data.name === 'Somnium Space') {
+                  //   return `rgba(240, 201, 124, 1)`
+                  // }
+                  // if (tVal.data.name === 'Otherside') {
+                  //   return `rgba(255, 248, 187,1)`;
+                  // }
+                  // if (tVal.data.name === 'Netvrk') {
+                  //   return `rgba(192, 151, 234,1)`;
+                  // }
+
+                  // org
+                  // if (tVal.data.name === 'The Sandbox') {
+                  //   return `rgba(24, 147, 247,1)`;
+                  // }
+                  // if (tVal.data.name === 'NFT Worlds') {
+                  //   return `rgba(132, 193, 14,1)`;
+                  // }
+                  // if (tVal.data.name === 'Decentraland') {
+                  //   return `rgba(255, 107, 84,1)`;
+                  // }
+                  // if (tVal.data.name === 'Worldwide Webb') {
+                  //   return `rgba(229, 68, 155,1)`;
+                  // }
+                  // if (tVal.data.name === 'Voxels') {
+                  //   return `rgba(244, 210, 191,1)`;
+                  // }
+                  // if (tVal.data.name === 'Somnium Space') {
+                  //   return `rgba(250, 216, 23,1)`;
+                  // }
+                  // if (tVal.data.name === 'Otherside') {
+                  //   return `rgba(255, 248, 187,1)`;
+                  // }
+                  // if (tVal.data.name === 'Netvrk') {
+                  //   return `rgba(196, 148, 254,1)`;
+                  // }
                 },
                 borderWidth: 0.5,
                 borderColor: '#fff',
