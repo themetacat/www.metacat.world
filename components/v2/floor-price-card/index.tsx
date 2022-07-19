@@ -43,21 +43,7 @@ export default function FloorPriceCard({ title, items, className }: Props) {
         className={cn(' list-none w-full text-white text-sm py-8 px-5 overflow-hidden', className)}
       >
         {data.map((item, idx) => {
-          let d;
-          if (item) {
-            d = Number(item.precent.toFixed(1));
-          }
-
-          // if(item){
-          //   const s = item.precent.toString();
-          //   const m = s.split('.');
-          //   d = m[0];
-          //   if(m[1]){
-          //     d += `.${m[1].slice(0,1)}`
-          //     d = d * 1
-          //   }
-          // }
-
+          console.log(item);
           return item ? (
             <li key={idx} className="flex justify-between items-center mb-6">
               <div className="flex items-center w-40">
@@ -73,8 +59,11 @@ export default function FloorPriceCard({ title, items, className }: Props) {
               </div>
 
               <span
-                className={cn(d >= 0 ? ' text-green-500' : ' text-red-500', ' w-10 text-right')}
-              >{`${d > 0 ? '+' : ''}${d}%`}</span>
+                className={cn(
+                  item.precent >= 0 ? ' text-green-500' : ' text-red-500',
+                  ' w-10 text-right',
+                )}
+              >{`${item.precent > 0 ? '+' : ''}${item.precent * 100}%`}</span>
             </li>
           ) : null;
         })}

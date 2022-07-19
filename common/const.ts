@@ -16,7 +16,7 @@ export const ICON_DATA = [
     label: 'Otherside',
     icon: '/images/osd.png',
     value: 'otherside',
-    world: 'otherdeed',
+    world: 'otherside',
   },
   {
     label: 'The Sandbox',
