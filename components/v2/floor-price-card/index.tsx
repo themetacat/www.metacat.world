@@ -29,14 +29,12 @@ export default function FloorPriceCard({ title, items, className }: Props) {
     let r1;
     let r2; // 小数位数
     try {
-      const s1 = arg1.toString();
-      r1 = s1.split('.')[1].length;
+      r1 = arg1.toString().split('.')[1].length;
     } catch (e) {
       r1 = 0;
     }
     try {
-      const s2 = arg1.toString();
-      r2 = s2.split('.')[1].length;
+      r2 = arg2.toString().split('.')[1].length;
     } catch (e) {
       r2 = 0;
     }
@@ -86,7 +84,9 @@ export default function FloorPriceCard({ title, items, className }: Props) {
                   item.precent >= 0 ? ' text-green-500' : ' text-red-500',
                   ' w-10 text-right',
                 )}
-              >{`${item.precent > 0 ? '+' : ''}${floatMultiply(item.precent, 100)}%`}</span>
+              >
+                {`${item.precent > 0 ? '+' : ''}${floatMultiply(item.precent, 100)}%`}
+              </span>
             </li>
           ) : null;
         })}
