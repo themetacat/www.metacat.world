@@ -67,26 +67,28 @@ export default function FloorPriceCard({ title, items, className }: Props) {
         {data.map((item, idx) => {
           return item ? (
             <li key={idx} className="flex justify-between items-center mb-6">
-              <div className="flex items-center w-40">
-                <span className=" mr-2">{`${idx + 1}.`}</span>
-                <img className=" w-6 h-6 rounded-xl mr-2" src={item.icon}></img>
-                <span className="truncate" title={item.label}>
-                  {item.label}
-                </span>
-              </div>
-              <div className="flex items-center">
-                <img className=" w-3 h-3 mr-1" src="/images/v2/eth.png"></img>
-                <span>{item.price}</span>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center w-48">
+                  <span className=" mr-2">{`${idx + 1}.`}</span>
+                  <img className=" w-6 h-6 rounded-xl mr-2" src={item.icon}></img>
+                  <span className="truncate" title={item.label}>
+                    {item.label}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <img className=" w-3 h-3 mr-1" src="/images/v2/eth.png"></img>
+                  <span>{item.price}</span>
+                </div>
               </div>
 
-              <span
+              <div
                 className={cn(
                   item.precent >= 0 ? ' text-green-500' : ' text-red-500',
-                  ' w-10 text-right',
+                  ' text-right',
                 )}
               >
                 {`${item.precent > 0 ? '+' : ''}${floatMultiply(item.precent, 100)}%`}
-              </span>
+              </div>
             </li>
           ) : null;
         })}
