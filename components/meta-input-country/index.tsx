@@ -99,7 +99,10 @@ export default function MeteInput({
       setVal(value);
     }
   }, [val, value]);
-
+  // var box1 = document.getElementById('box1');
+  //     box1.onmouseover=function(){
+  //       setArrowsState(arrowsState);
+  //     }
   return (
     <div className={cn('text-base relative', classname, style.metainput)}>
       {label ? (
@@ -121,13 +124,29 @@ export default function MeteInput({
             <img className={style.icon} src={prefix}></img>
           </span>
         ) : null}
-        <div>{rander}</div>
+        <div
+          onClick={() => {
+            setArrowsState(!arrowsState);
+          }}
+          onMouseOut={() => {
+            setTimeout(() => {
+              setArrowsState(false);
+            }, 2000);
+          }}
+        >
+          {rander}
+        </div>
       </div>
       <img
         src={`/images/${!arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`}
         className={style.arrows}
         onClick={() => {
           setArrowsState(!arrowsState);
+        }}
+        onMouseOut={() => {
+          setTimeout(() => {
+            setArrowsState(false);
+          }, 2000);
         }}
       />
       <ul className={cn(style.list, !arrowsState ? style.dn : null)}>

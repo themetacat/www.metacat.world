@@ -1271,12 +1271,12 @@ export default function AnalyticsIndex(props) {
                   legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
-                      label: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
                       label: 'Weekly',
                       value: 'weekly',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
                     },
                     {
                       label: 'Quarterly',

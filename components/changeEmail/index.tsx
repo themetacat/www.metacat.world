@@ -110,6 +110,9 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
   }, [sendCodeTime, codeState, email]);
 
   const bindOrChangeEmail = React.useCallback(async () => {
+    closeEmail();
+    setCodeState('getCode');
+    setCode('');
     if (!email && !code) return;
     let result = null;
 
@@ -216,6 +219,15 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
             <div
               className={cn(style.save, code && email ? style.high : null)}
               onClick={bindOrChangeEmail}
+              style={{
+                width: '120px',
+                textAlign: 'center',
+                height: '42px',
+                lineHeight: '42px',
+                marginLeft: '120px',
+                color: 'black',
+                backgroundColor: 'rgba(0,208,236,1)',
+              }}
             >
               Save
             </div>
