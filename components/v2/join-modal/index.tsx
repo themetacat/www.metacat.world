@@ -293,14 +293,13 @@ export default function Modal({ show, setClose, type }: Props) {
                 )}
                 <div
                   onClick={submit}
-                  className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand  bg-gradient-to-r from-mainDark to-mainLight text-black${
-                    (profile?.creatorStatus === 1 || profile?.creatorStatus === 3) &&
-                    inputAddress &&
-                    inputEmail &&
-                    verCode
+                  className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand  bg-gradient-to-r from-mainDark to-mainLight text-black${(profile?.creatorStatus === 1 || profile?.creatorStatus === 3) &&
+                      inputAddress &&
+                      inputEmail &&
+                      verCode
                       ? ''
                       : ' opacity-50'
-                  }`}
+                    }`}
                 >
                   Submit
                 </div>
