@@ -305,5 +305,5 @@ export default function ChangeEmail({ state, closeEmail, value, modifyEmail }: P
       </div>
     );
   }
-  return null;s
+  return null;
 }
