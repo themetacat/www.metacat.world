@@ -380,6 +380,7 @@ export default function Settings() {
                   data={allCountry}
                   country={country}
                   onClick={changeCountry}
+
                 ></CountryInput>
 
                 <div className={style.Introduction}>

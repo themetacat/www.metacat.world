@@ -1234,6 +1234,7 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
+                      
                     },
                     {
                       label: 'Quarterly',
@@ -1243,6 +1244,7 @@ export default function AnalyticsIndex(props) {
                       label: 'Yearly',
                       value: 'yearly',
                     },
+                    
                   ]}
                   priceOptions={[
                     {

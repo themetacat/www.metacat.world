@@ -128,13 +128,14 @@ export default function MeteInput({
           onClick={() => {
             setArrowsState(!arrowsState);
           }}
+          style={{width:"415px"}}
           onMouseOut={() => {
             setTimeout(() => {
               setArrowsState(false);
             }, 2000);
           }}
         >
-          {rander}
+         {rander}
         </div>
       </div>
       <img
