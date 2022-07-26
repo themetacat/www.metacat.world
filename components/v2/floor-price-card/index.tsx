@@ -21,6 +21,28 @@ interface Props {
 export default function FloorPriceCard({ title, items, className }: Props) {
   const [data, setData] = React.useState([]);
 
+  // 乘
+  const floatMultiply = (arg1, arg2) => {
+    if (arg1 == null || arg2 == null || arg1 === 0) {
+      return 0;
+    }
+    let r1;
+    let r2; // 小数位数
+    try {
+      r1 = arg1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = arg2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    const n1 = Number(arg1.toString().replace('.', ''));
+    const n2 = Number(arg2.toString().replace('.', ''));
+    return (n1 * n2) / 10 ** (r1 + r2);
+  };
+
   React.useEffect(() => {
     const result = items.map((x) => {
       const n = ICON_DATA.find((y) => y.world === x.world);
@@ -43,38 +65,30 @@ export default function FloorPriceCard({ title, items, className }: Props) {
         className={cn(' list-none w-full text-white text-sm py-8 px-5 overflow-hidden', className)}
       >
         {data.map((item, idx) => {
-          let d;
-          if (item) {
-            d = Number(item.precent.toFixed(1));
-          }
-
-          // if(item){
-          //   const s = item.precent.toString();
-          //   const m = s.split('.');
-          //   d = m[0];
-          //   if(m[1]){
-          //     d += `.${m[1].slice(0,1)}`
-          //     d = d * 1
-          //   }
-          // }
-
           return item ? (
             <li key={idx} className="flex justify-between items-center mb-6">
-              <div className="flex items-center w-40">
-                <span className=" mr-2">{`${idx + 1}.`}</span>
-                <img className=" w-6 h-6 rounded-xl mr-2" src={item.icon}></img>
-                <span className="truncate" title={item.label}>
-                  {item.label}
-                </span>
-              </div>
-              <div className="flex items-center">
-                <img className=" w-3 h-3 mr-1" src="/images/v2/eth.png"></img>
-                <span>{item.price}</span>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center w-48">
+                  <span className=" mr-2">{`${idx + 1}.`}</span>
+                  <img className=" w-6 h-6 rounded-xl mr-2" src={item.icon}></img>
+                  <span className="truncate" title={item.label}>
+                    {item.label}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <img className=" w-3 h-3 mr-1" src="/images/v2/eth.png"></img>
+                  <span>{item.price}</span>
+                </div>
               </div>
 
-              <span
-                className={cn(d >= 0 ? ' text-green-500' : ' text-red-500', ' w-10 text-right')}
-              >{`${d > 0 ? '+' : ''}${d}%`}</span>
+              <div
+                className={cn(
+                  item.precent >= 0 ? ' text-green-500' : ' text-red-500',
+                  ' text-right',
+                )}
+              >
+                {`${item.precent > 0 ? '+' : ''}${floatMultiply(item.precent, 100)}%`}
+              </div>
             </li>
           ) : null;
         })}
