@@ -215,7 +215,16 @@ class API {
     return json;
   }
 
+  
   public async getCvParcelOwnerStats(): Promise<any> {
+    const url = `${this.url}/get_cv_parcel_owner_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getVoxelsOwnerStats(): Promise<any> {
     const url = `${this.url}/get_cv_parcel_owner_stats`;
     const res = await fetch(url);
     const json = await res.json();

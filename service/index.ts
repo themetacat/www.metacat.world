@@ -191,6 +191,13 @@ export const getCvParcelOwnerStats = async () => {
   return json;
 };
 
+// export const getVoxelsOwnerStats = async () => {
+//   const url = `/api/cv_parcel_owner_stats`;
+//   const res = await fetch(url);
+//   const json = await res.json();
+//   return json;
+// };
+
 export const getDclParcelAvgPriceStats = async () => {
   const url = `/api/dcl_parcel_avg_price_stats`;
   const res = await fetch(url);

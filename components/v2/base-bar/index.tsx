@@ -7,7 +7,7 @@ import { formatNum } from '../../../common/utils';
 import AnalyticsCard from '../analytics-card';
 import SimpleSwicth from '../simple-switch';
 import ChartSelecter from '../chart-select';
-
+// Analytics中的Traffic
 import style from './index.module.css';
 
 type Props = {
@@ -39,7 +39,7 @@ const switchs = [
 export default function BaseBar({
   id,
   dataHandlder,
-  defaultColor = [194, 157, 135],
+  defaultColor = [255, 224, 206, 0.3],
   defaultColor2 = [255, 107, 84],
   gradient = true,
   className,
