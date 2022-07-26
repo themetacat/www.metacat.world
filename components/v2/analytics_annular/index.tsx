@@ -133,7 +133,7 @@ export default function Annular({
                   }
                 },
                 borderWidth: 0.5,
-                borderColor: '#fff',
+                borderColor: 'black',
               },
             },
           },
