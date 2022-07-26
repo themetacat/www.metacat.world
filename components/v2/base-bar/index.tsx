@@ -23,6 +23,7 @@ type Props = {
   textColor?;
   limitHeight?: number;
   onSwicth?: (x) => void;
+  legend1?,
 };
 const switchs = [
   {
@@ -47,6 +48,7 @@ export default function BaseBar({
   barWidth = 35,
   textColor,
   limitHeight = 230,
+  legend1 = {  color: [95, 213, 236] },
   onSwicth,
 }: Props) {
   const [loading, setLoading] = React.useState(true);

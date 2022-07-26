@@ -127,6 +127,8 @@ export default function Modal({ show, setClose, type }: Props) {
   }, [inputEmail]);
 
   const submit = useCallback(async () => {
+    console.log("是我需要的点击事件ma");
+    
     if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     if (!inputAddress && !profile?.address) {
       toast.error(`wallet address can't be empty`);
@@ -298,7 +300,7 @@ export default function Modal({ show, setClose, type }: Props) {
                       inputEmail &&
                       verCode
                       ? ''
-                      : ' opacity-50'
+                      : ' opacity50'
                     }`}
                 >
                   Submit
