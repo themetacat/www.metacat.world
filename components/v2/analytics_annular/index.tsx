@@ -89,7 +89,7 @@ export default function Annular({
             emphasis: {
               itemStyle: {
                 borderWidth: 1,
-                borderColor: '#fff',
+                borderColor: 'black',
                 fontSize: 20,
               },
               label: {
