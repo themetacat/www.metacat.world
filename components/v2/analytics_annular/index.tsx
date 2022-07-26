@@ -23,6 +23,9 @@ type Props = {
   legend4?;
   legend5?;
   legend6?;
+  legend7?,
+  legend8?,
+  legend9?,
 };
 
 export default function Annular({
@@ -37,6 +40,9 @@ export default function Annular({
   legend4,
   legend5,
   legend6,
+  legend7,
+  legend8,
+  legend9,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);

@@ -127,6 +127,8 @@ export default function Modal({ show, setClose, type }: Props) {
   }, [inputEmail]);
 
   const submit = useCallback(async () => {
+    console.log("是我需要的点击事件ma");
+    
     if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     if (!inputAddress && !profile?.address) {
       toast.error(`wallet address can't be empty`);
@@ -293,14 +295,13 @@ export default function Modal({ show, setClose, type }: Props) {
                 )}
                 <div
                   onClick={submit}
-                  className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand  bg-gradient-to-r from-mainDark to-mainLight text-black${
-                    (profile?.creatorStatus === 1 || profile?.creatorStatus === 3) &&
-                    inputAddress &&
-                    inputEmail &&
-                    verCode
+                  className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand  bg-gradient-to-r from-mainDark to-mainLight text-black${(profile?.creatorStatus === 1 || profile?.creatorStatus === 3) &&
+                      inputAddress &&
+                      inputEmail &&
+                      verCode
                       ? ''
-                      : ' opacity-50'
-                  }`}
+                      : ' opacity50'
+                    }`}
                 >
                   Submit
                 </div>

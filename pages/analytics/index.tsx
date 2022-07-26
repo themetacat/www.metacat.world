@@ -222,6 +222,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Traffic'}
             dataHandlder={getCvTrafficStats}
             barWidth={18}
+            legend1={{  color: [255, 224, 206, 0.3] }}
             textColor={style.cvColor}
           ></BaseBar>
           <ChartLine
@@ -1133,6 +1134,15 @@ export default function AnalyticsIndex(props) {
                   id="annular1"
                   labelText={'Parcel Sales Amount (USD)'}
                   dataHandlder={req_sales_amount_percent}
+                  legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend9={{ label: 'Cryptovoxels ', color: [255, 224, 206] }}
                   options={[
                     {
                       label: 'Month',
@@ -1234,6 +1244,7 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
+                      
                     },
                     {
                       label: 'Quarterly',
@@ -1243,6 +1254,7 @@ export default function AnalyticsIndex(props) {
                       label: 'Yearly',
                       value: 'yearly',
                     },
+                    
                   ]}
                   priceOptions={[
                     {
@@ -1271,12 +1283,12 @@ export default function AnalyticsIndex(props) {
                   legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
                   options={[
                     {
-                      label: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
                       label: 'Weekly',
                       value: 'weekly',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
                     },
                     {
                       label: 'Quarterly',

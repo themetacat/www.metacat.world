@@ -10,7 +10,7 @@ interface Props {
   className?: string;
   imgClass?: string;
 }
-
+// Home首页Parcel Sales Amount (USD)
 export default function ViewMore({
   link,
   className = ' text-sm font-normal',
