@@ -245,10 +245,10 @@ export default function Index(props) {
                   legend2={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                   legend3={{ label: 'Decentraland', color: [240, 117, 97] }}
                   legend4={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191,1] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191, 1] }}
                   legend6={{ label: 'Somnium Space ', color: [240, 201, 124] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [196, 148, 254,1] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254, 1] }}
                   options={[
                     {
                       label: 'Weekly',
@@ -283,7 +283,7 @@ export default function Index(props) {
                   className="mt-5"
                   labelText={'Traffic'}
                   dataHandlder={getTraffic}
-                  legend1={{  color: [255, 224, 206, 0.3] }}
+                  legend1={{ color: [255, 224, 206, 0.3] }}
                   barWidth={18}
                 ></BaseBar>
               </div>

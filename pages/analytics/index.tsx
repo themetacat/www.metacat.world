@@ -222,7 +222,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Traffic'}
             dataHandlder={getCvTrafficStats}
             barWidth={18}
-            legend1={{  color: [255, 224, 206, 0.3] }}
+            legend1={{ color: [255, 224, 206, 0.3] }}
             textColor={style.cvColor}
           ></BaseBar>
           <ChartLine
@@ -1244,7 +1244,7 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
-                      
+
                     },
                     {
                       label: 'Quarterly',
@@ -1254,7 +1254,7 @@ export default function AnalyticsIndex(props) {
                       label: 'Yearly',
                       value: 'yearly',
                     },
-                    
+
                   ]}
                   priceOptions={[
                     {

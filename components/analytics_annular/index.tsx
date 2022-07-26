@@ -102,7 +102,7 @@ export default function Annular({
             },
             itemStyle: {
               normal: {
-                 color: (tVal) => {
+                color: (tVal) => {
                   if (tVal.data.name === 'The Sandbox') {
                     return `rgba(119, 152, 238)`;
                   }
