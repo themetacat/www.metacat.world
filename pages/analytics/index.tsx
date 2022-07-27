@@ -31,8 +31,6 @@ import {
   getchartWebb,
   getDclParcelOwnerStats,
 } from '../../service';
-// Analytics中的Individual下的Voxels
-console.log(getchartOtherside('nft_worlds'), "getChartNftworlds"); //这写什么 你这个接口参数默认值？du
 
 import {
   req_sandbox_avg_price_stats,
