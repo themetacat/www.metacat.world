@@ -11,7 +11,7 @@ import style from './index.module.css';
 
 type Props = {
   id?: string;
-  dataHandlder?: (world:string) => any;
+  dataHandlder?: (world: string) => any;
   defaultColor?: Array<number>;
   gradient?: boolean;
   className?: string;

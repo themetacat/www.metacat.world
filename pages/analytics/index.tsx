@@ -32,7 +32,7 @@ import {
   getDclParcelOwnerStats,
 } from '../../service';
 // Analytics中的Individual下的Voxels
-console.log(getchartOtherside('nft_worlds'),"getChartNftworlds"); //这写什么 你这个接口参数默认值？du
+console.log(getchartOtherside('nft_worlds'), "getChartNftworlds"); //这写什么 你这个接口参数默认值？du
 
 import {
   req_sandbox_avg_price_stats,
@@ -604,7 +604,7 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
-            <ChartSandBox
+          <ChartSandBox
             id={'chartlinesimple'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
@@ -723,14 +723,14 @@ export default function AnalyticsIndex(props) {
               tabState={showType}
             ></StackBarZ>
             <ChartSomniumSpace
-            id={'charnftworlds'}
-            className="mt-5"
-            labelText={'Total Number Of Landlords At The End Of Each Month'}
-            // dataHandlder={getSandboxOwnerStats}
-            dataHandlder={getchartSomniumSpace} //
-            defaultColor={[194, 157, 135]}
-            textColor={style.cvColor}
-          ></ChartSomniumSpace>
+              id={'charnftworlds'}
+              className="mt-5"
+              labelText={'Total Number Of Landlords At The End Of Each Month'}
+              // dataHandlder={getSandboxOwnerStats}
+              dataHandlder={getchartSomniumSpace} //
+              defaultColor={[194, 157, 135]}
+              textColor={style.cvColor}
+            ></ChartSomniumSpace>
           </>
         </>
       );
@@ -840,7 +840,7 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
-           <ChartNftworlds
+          <ChartNftworlds
             id={'charnftworlds'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
@@ -957,7 +957,7 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
-           <ChartWebb
+          <ChartWebb
             id={'chartworldwidewebb'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}

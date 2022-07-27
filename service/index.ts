@@ -135,7 +135,7 @@ export const getCvSuburbs = async () => {
 
 export const getBuilderList = async (page: number, count: number) => {
   const search = qs.stringify({ page, count }, { addQueryPrefix: true });
-  
+
   const url = `/api/builder_list${search}`;
   const res = await fetch(url);
   const json = await res.json();
@@ -193,7 +193,7 @@ export const getCvParcelOwnerStats = async () => {
 
 //   // Individual下Sandbox接口
 
-export const getSandboxOwnerStats = async (world?:string) => {
+export const getSandboxOwnerStats = async (world?: string) => {
   const params = qs.stringify({ world }, { addQueryPrefix: true });
   const url = `/api/cv_sandbox_stats${params}`;
   const res = await fetch(url);
@@ -201,7 +201,7 @@ export const getSandboxOwnerStats = async (world?:string) => {
   console.log(json);
   return json;
 };
-export const getChartNftworlds = async (world?:string) => {
+export const getChartNftworlds = async (world?: string) => {
   const params = qs.stringify({ world }, { addQueryPrefix: true });
   const url = `/api/cv_chartNftworlds_stats${params}`;
   const res = await fetch(url);
@@ -209,7 +209,7 @@ export const getChartNftworlds = async (world?:string) => {
   console.log(json);
   return json;
 };
-export const getchartOtherside = async (world?:string) => {
+export const getchartOtherside = async (world?: string) => {
   const params = qs.stringify({ world }, { addQueryPrefix: true });
   const url = `/api/cv_getchartOtherside_stats${params}`;
   const res = await fetch(url);
@@ -217,7 +217,7 @@ export const getchartOtherside = async (world?:string) => {
   console.log(json);
   return json;
 };
-export const getchartSomniumSpace = async (world?:string) => {
+export const getchartSomniumSpace = async (world?: string) => {
   const params = qs.stringify({ world }, { addQueryPrefix: true });
   const url = `/api/cv_getchartSomniumSpace_stats${params}`;
   const res = await fetch(url);
@@ -225,7 +225,7 @@ export const getchartSomniumSpace = async (world?:string) => {
   console.log(json);
   return json;
 };
-export const getchartWebb = async (world?:string) => {
+export const getchartWebb = async (world?: string) => {
   const params = qs.stringify({ world }, { addQueryPrefix: true });
   const url = `/api/cv_getChartcv_getchartSomnium_stats${params}`;
   const res = await fetch(url);

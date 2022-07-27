@@ -215,18 +215,18 @@ class API {
     return json;
   }
 
-  
+
   public async getCvParcelOwnerStats(): Promise<any> {
     const url = `${this.url}/get_cv_parcel_owner_stats`;
     const res = await fetch(url);
     const json = await res.json();
 
     return json;
-    
+
   }
 
   // Individual下Sandbox接口
-  public async getSandboxOwnerStats(world:string): Promise<any> {
+  public async getSandboxOwnerStats(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
     //地址不对 http://8.130.23.16/api/v1/get_worlds_owner_num 
     // const url = `http://8.130.23.16/api/v1/get_worlds_owner_num${search}`;
@@ -235,7 +235,7 @@ class API {
     const json = await res.json();
     return json;
   }
-  public async getChartNftworlds(world:string): Promise<any> {
+  public async getChartNftworlds(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
     //地址不对 http://8.130.23.16/api/v1/get_worlds_owner_num 
     const url = `${this.url}/get_worlds_owner_num${search}`;
@@ -243,7 +243,7 @@ class API {
     const json = await res.json();
     return json;
   }
-  public async getchartOtherside(world:string): Promise<any> {
+  public async getchartOtherside(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
     //地址不对 http://8.130.23.16/api/v1/get_worlds_owner_num 
     const url = `${this.url}/get_worlds_owner_num${search}`;
@@ -251,7 +251,7 @@ class API {
     const json = await res.json();
     return json;
   }
-  public async getchartWebb(world:string): Promise<any> {
+  public async getchartWebb(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
     //地址不对 http://8.130.23.16/api/v1/get_worlds_owner_num 
     const url = `${this.url}/get_worlds_owner_num${search}`;
@@ -259,7 +259,7 @@ class API {
     const json = await res.json();
     return json;
   }
-  public async getchartSomniumSpace(world:string): Promise<any> {
+  public async getchartSomniumSpace(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
     //地址不对 http://8.130.23.16/api/v1/get_worlds_owner_num 
     const url = `${this.url}/get_worlds_owner_num${search}`;
