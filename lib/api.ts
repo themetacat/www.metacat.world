@@ -250,6 +250,7 @@ class API {
 
     return json;
   }
+
   public async getchartWebb(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
     const url = `${this.url}/get_worlds_owner_num${search}`;
@@ -258,7 +259,6 @@ class API {
 
     return json;
   }
-
 
   public async getchartSomniumSpace(world: string): Promise<any> {
     const search = qs.stringify({ world }, { addQueryPrefix: true });
