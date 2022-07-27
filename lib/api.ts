@@ -222,7 +222,6 @@ class API {
     const json = await res.json();
 
     return json;
-
   }
 
   public async getSandboxOwnerStats(world: string): Promise<any> {
@@ -266,7 +265,7 @@ class API {
     const url = `${this.url}/get_worlds_owner_num${search}`;
     const res = await fetch(url);
     const json = await res.json();
-    
+
     return json;
   }
 
@@ -344,7 +343,6 @@ class API {
   }
 
   public async getBaseInfo(token: string): Promise<any> {
-    // const url = `http://8.130.23.16/api/v1/user/get_base_info`;
     const url = `${this.url}/user/get_base_info`;
     const res = await fetch(url, {
       method: 'get',
@@ -367,7 +365,6 @@ class API {
     country: string,
   ): Promise<any> {
     const url = `${this.url}/user/update_base_info`;
-    // const url1 = 'http://8.130.23.16/api/v1/user/update_base_info';
     const search = qs.stringify(
       {
         nick_name: nickName,

@@ -608,8 +608,7 @@ export default function AnalyticsIndex(props) {
             id={'chartlinesimple'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
-            // dataHandlder={getSandboxOwnerStats}
-            dataHandlder={getSandboxOwnerStats} //
+            dataHandlder={getSandboxOwnerStats}
             defaultColor={[194, 157, 135]}
             textColor={style.cvColor}
           ></ChartSandBox>
@@ -726,8 +725,7 @@ export default function AnalyticsIndex(props) {
               id={'charnftworlds'}
               className="mt-5"
               labelText={'Total Number Of Landlords At The End Of Each Month'}
-              // dataHandlder={getSandboxOwnerStats}
-              dataHandlder={getchartSomniumSpace} //
+              dataHandlder={getchartSomniumSpace}
               defaultColor={[194, 157, 135]}
               textColor={style.cvColor}
             ></ChartSomniumSpace>
@@ -844,8 +842,7 @@ export default function AnalyticsIndex(props) {
             id={'charnftworlds'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
-            // dataHandlder={getSandboxOwnerStats}
-            dataHandlder={getChartNftworlds} //
+            dataHandlder={getChartNftworlds}
             defaultColor={[194, 157, 135]}
             textColor={style.cvColor}
           ></ChartNftworlds>
@@ -961,7 +958,7 @@ export default function AnalyticsIndex(props) {
             id={'chartworldwidewebb'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
-            dataHandlder={getchartWebb} //
+            dataHandlder={getchartWebb}
             defaultColor={[194, 157, 135]}
             textColor={style.cvColor}
           ></ChartWebb>
@@ -1077,8 +1074,7 @@ export default function AnalyticsIndex(props) {
             id={'charnftworlds'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
-            // dataHandlder={getSandboxOwnerStats}
-            dataHandlder={getchartOtherside} //
+            dataHandlder={getchartOtherside}
             defaultColor={[194, 157, 135]}
             textColor={style.cvColor}
           ></ChartOtherside>
