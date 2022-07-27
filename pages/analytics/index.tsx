@@ -961,8 +961,7 @@ export default function AnalyticsIndex(props) {
             id={'chartworldwidewebb'}
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
-            // dataHandlder={getSandboxOwnerStats}
-            dataHandlder={getchartSomniumSpace} //
+            dataHandlder={getchartWebb} //
             defaultColor={[194, 157, 135]}
             textColor={style.cvColor}
           ></ChartWebb>
