@@ -180,8 +180,9 @@ export default function ChartLineSimple({
     let result = null;
     try {
       const res = await dataHandlder("nft_worlds");
-      const { monthly } = res.data;
-      result = monthly;
+      // const { monthly } = res.data;
+      // result = monthly;
+      result = res;
     } catch (ex) {
       setError(true);
     }

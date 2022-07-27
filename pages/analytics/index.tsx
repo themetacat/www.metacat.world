@@ -21,11 +21,18 @@ import {
   getCvParcelSoldSumStats,
   getCvMintStats,
   getCvParcelOwnerStats,
+  getChartNftworlds,
+  getchartSomniumSpace,
+  getSandboxOwnerStats,
   getDclParcelAvgPriceStats,
   getDclParcelSoldSumStats,
+  getchartOtherside,
   getDclParcelSoldTotalStats,
+  getchartWebb,
   getDclParcelOwnerStats,
 } from '../../service';
+// Analytics中的Individual下的Voxels
+console.log(getchartOtherside('nft_worlds'),"getChartNftworlds"); //这写什么 你这个接口参数默认值？du
 
 import {
   req_sandbox_avg_price_stats,
@@ -76,6 +83,12 @@ const ChartLineSimple = dynamic(
     ssr: false,
   },
 );
+const ChartNftworlds = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-ChartNftworlds'),
+  {
+    ssr: false,
+  },
+);
 const ChartLineToolTipSimple = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple'),
   {
@@ -88,8 +101,26 @@ const ChartLineSandBox = dynamic(
     ssr: false,
   },
 );
+const ChartOtherside = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-otherside'),
+  {
+    ssr: false,
+  },
+);
 const ChartLineToolTipSimpleSandbox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox'),
+  { ssr: false },
+);
+const ChartWebb = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-Webb'),
+  { ssr: false },
+);
+const ChartSandBox = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-sandBox'),
+  { ssr: false },
+);
+const ChartSomniumSpace = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-SomniumSpace'),
   { ssr: false },
 );
 const StackBarZ2 = dynamic(
@@ -172,7 +203,6 @@ const types = [
     value: 'netvrk',
   },
 ];
-
 const hNav = [
   {
     type: 'all',
@@ -574,6 +604,15 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
+            <ChartSandBox
+            id={'chartlinesimple'}
+            className="mt-5"
+            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            // dataHandlder={getSandboxOwnerStats}
+            dataHandlder={getSandboxOwnerStats} //
+            defaultColor={[194, 157, 135]}
+            textColor={style.cvColor}
+          ></ChartSandBox>
         </>
       );
     }
@@ -683,6 +722,15 @@ export default function AnalyticsIndex(props) {
               ]}
               tabState={showType}
             ></StackBarZ>
+            <ChartSomniumSpace
+            id={'charnftworlds'}
+            className="mt-5"
+            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            // dataHandlder={getSandboxOwnerStats}
+            dataHandlder={getchartSomniumSpace} //
+            defaultColor={[194, 157, 135]}
+            textColor={style.cvColor}
+          ></ChartSomniumSpace>
           </>
         </>
       );
@@ -792,6 +840,15 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
+           <ChartNftworlds
+            id={'charnftworlds'}
+            className="mt-5"
+            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            // dataHandlder={getSandboxOwnerStats}
+            dataHandlder={getChartNftworlds} //
+            defaultColor={[194, 157, 135]}
+            textColor={style.cvColor}
+          ></ChartNftworlds>
         </>
       );
     }
@@ -900,6 +957,15 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
+           <ChartWebb
+            id={'chartworldwidewebb'}
+            className="mt-5"
+            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            // dataHandlder={getSandboxOwnerStats}
+            dataHandlder={getchartSomniumSpace} //
+            defaultColor={[194, 157, 135]}
+            textColor={style.cvColor}
+          ></ChartWebb>
         </>
       );
     }
@@ -1008,6 +1074,15 @@ export default function AnalyticsIndex(props) {
             ]}
             tabState={showType}
           ></StackBarZ>
+          <ChartOtherside
+            id={'charnftworlds'}
+            className="mt-5"
+            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            // dataHandlder={getSandboxOwnerStats}
+            dataHandlder={getchartOtherside} //
+            defaultColor={[194, 157, 135]}
+            textColor={style.cvColor}
+          ></ChartOtherside>
         </>
       );
     }

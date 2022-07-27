@@ -20,7 +20,7 @@ type Props = {
   textColor?;
 };
 
-export default function ChartLineSimple({
+export default function chartWebb({
   id,
   dataHandlder,
   defaultColor = [34, 118, 252],
@@ -179,9 +179,10 @@ export default function ChartLineSimple({
     setLoading(true);
     let result = null;
     try {
-      const res = await dataHandlder("nft_worlds");
-      const { monthly } = res.data;
-      result = monthly;
+      const res = await dataHandlder("webb");
+      // const { monthly } = res.data;
+      // result = monthly;
+      result = res;
     } catch (ex) {
       setError(true);
     }
