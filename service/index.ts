@@ -227,7 +227,7 @@ export const getchartSomniumSpace = async (world?: string) => {
 };
 export const getchartWebb = async (world?: string) => {
   const params = qs.stringify({ world }, { addQueryPrefix: true });
-  const url = `/api/cv_getChartcv_getchartSomnium_stats${params}`;
+  const url = `/api/cv_getChartcv_getchartWebb_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
   console.log(json);
