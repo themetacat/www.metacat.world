@@ -104,25 +104,25 @@ export default function Annular({
               normal: {
                 color: (tVal) => {
                   if (tVal.data.name === 'The Sandbox') {
-                    return `rgba(24, 147, 247,1)`;
+                    return `rgba(119, 152, 238)`;
                   }
                   if (tVal.data.name === 'NFT Worlds') {
-                    return `rgba(132, 193, 14,1)`;
+                    return `rgba(175, 234, 101)`;
                   }
                   if (tVal.data.name === 'Decentraland') {
-                    return `rgba(255, 107, 84,1)`;
+                    return `rgba(240, 117, 97)`;
                   }
                   if (tVal.data.name === 'Worldwide Webb') {
-                    return `rgba(229, 68, 155,1)`;
+                    return `rgba(245, 120, 157)`;
                   }
                   if (tVal.data.name === 'Voxels') {
                     return `rgba(244, 210, 191,1)`;
                   }
                   if (tVal.data.name === 'Somnium Space') {
-                    return `rgba(250, 216, 23,1)`;
+                    return `rgba(240, 201, 124)`;
                   }
                   if (tVal.data.name === 'Otherside') {
-                    return `rgba(255, 248, 187,1)`;
+                    return `rgba(255, 248, 187)`;
                   }
                   if (tVal.data.name === 'Netvrk') {
                     return `rgba(196, 148, 254,1)`;

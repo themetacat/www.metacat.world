@@ -241,14 +241,14 @@ export default function Index(props) {
                   labelText="Parcel Sales Amount"
                   dataHandlder={req_sales_amount_stack}
                   limit={5}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  legend2={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend3={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend4={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191, 1] }}
+                  legend6={{ label: 'Somnium Space ', color: [240, 201, 124] }}
                   legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254, 1] }}
                   options={[
                     {
                       label: 'Weekly',
@@ -283,7 +283,7 @@ export default function Index(props) {
                   className="mt-5"
                   labelText={'Traffic'}
                   dataHandlder={getTraffic}
-                  legend1={{  color: [255, 224, 206, 0.3] }}
+                  legend1={{ color: [255, 224, 206, 0.3] }}
                   barWidth={18}
                 ></BaseBar>
               </div>

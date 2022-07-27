@@ -11,7 +11,7 @@ import style from './index.module.css';
 
 type Props = {
   id?: string;
-  dataHandlder?: () => any;
+  dataHandlder?: (world:string) => any;
   defaultColor?: Array<number>;
   gradient?: boolean;
   className?: string;
@@ -179,7 +179,7 @@ export default function ChartLineSimple({
     setLoading(true);
     let result = null;
     try {
-      const res = await dataHandlder();
+      const res = await dataHandlder("nft_worlds");
       const { monthly } = res.data;
       result = monthly;
     } catch (ex) {

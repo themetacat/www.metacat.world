@@ -191,12 +191,48 @@ export const getCvParcelOwnerStats = async () => {
   return json;
 };
 
-// export const getVoxelsOwnerStats = async () => {
-//   const url = `/api/cv_parcel_owner_stats`;
-//   const res = await fetch(url);
-//   const json = await res.json();
-//   return json;
-// };
+//   // Individual下Sandbox接口
+
+export const getSandboxOwnerStats = async (world?: string) => {
+  const params = qs.stringify({ world }, { addQueryPrefix: true });
+  const url = `/api/cv_sandbox_stats${params}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  console.log(json);
+  return json;
+};
+export const getChartNftworlds = async (world?: string) => {
+  const params = qs.stringify({ world }, { addQueryPrefix: true });
+  const url = `/api/cv_chartNftworlds_stats${params}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  console.log(json);
+  return json;
+};
+export const getchartOtherside = async (world?: string) => {
+  const params = qs.stringify({ world }, { addQueryPrefix: true });
+  const url = `/api/cv_getchartOtherside_stats${params}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  console.log(json);
+  return json;
+};
+export const getchartSomniumSpace = async (world?: string) => {
+  const params = qs.stringify({ world }, { addQueryPrefix: true });
+  const url = `/api/cv_getchartSomniumSpace_stats${params}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  console.log(json);
+  return json;
+};
+export const getchartWebb = async (world?: string) => {
+  const params = qs.stringify({ world }, { addQueryPrefix: true });
+  const url = `/api/cv_getChartcv_getchartWebb_stats${params}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  console.log(json);
+  return json;
+};
 
 export const getDclParcelAvgPriceStats = async () => {
   const url = `/api/dcl_parcel_avg_price_stats`;
