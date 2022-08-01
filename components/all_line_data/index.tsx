@@ -160,6 +160,7 @@ export default function AllLineData({
           if (items.length <= 0) {
             return;
           }
+          
           items.forEach((item, index) => {
             result[item.name] = item;
           });
