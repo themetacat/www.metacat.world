@@ -671,8 +671,7 @@ class API {
   }
 
   public async req_avg_creater_price() {
-    // const url = `${this.url}/get_all_worlds_floor_price`;
-    const url = `http://8.130.23.16/api/v1/get_all_worlds_floor_price`;
+    const url = `${this.url}/get_all_worlds_floor_price`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
