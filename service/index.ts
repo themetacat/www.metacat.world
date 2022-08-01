@@ -191,14 +191,7 @@ export const getCvParcelOwnerStats = async () => {
   return json;
 };
 
-export const getCreatorStats = async (join_type?: string) => {
-  const params = qs.stringify({ join_type }, { addQueryPrefix: true });
-  const url = `/api/cv_getCreatorStats${params}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  console.log(json);
-  return json;
-};
+
 //   // Individual下Sandbox接口
 
 export const getSandboxOwnerStats = async (world?: string) => {

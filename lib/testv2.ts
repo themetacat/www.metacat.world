@@ -38,12 +38,6 @@ class API {
     return json;
   }
 
-  public async getCreatorStats(): Promise<any> {
-    const url = `${this.url}get_all_worlds_floor_price`;
-    const res = await fetch(url);
-    const json = await res.json();
-    return json;
-  }
 
   public async getFloorPrice(): Promise<any> {
     const url = `${this.url}/home_page/get_floor_price`;

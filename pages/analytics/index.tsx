@@ -30,7 +30,6 @@ import {
   getDclParcelSoldTotalStats,
   getchartWebb,
   getDclParcelOwnerStats,
-  getCreatorStats,
 } from '../../service';
 
 import {
