@@ -668,6 +668,18 @@ export const req_avg_parcel_price = async () => {
   return json;
 };
 
+export const req_avg_creater_price = async () => {
+  // const url = 'http://8.130.23.16/api/v1/get_all_worlds_floor_price';
+  const url = 'https://api.metacat.world/api/v1/get_all_worlds_floor_price';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 16.3 获取六个平台每 月/季度/年 各个总量
 
 export const req_sales_amount_stack = async () => {

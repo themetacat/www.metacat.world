@@ -578,6 +578,22 @@ class API {
     return json;
   }
 
+  public async getCreatorStats(): Promise<any> {
+    const url = `${this.url}/get_all_worlds_floor_price`;
+    const res = await fetch(url);
+    const json = await res.json();
+    return json;
+  }
+
+  // public async getCreatorStats(join_type: string): Promise<any> {
+  //   const search = qs.stringify({ join_type }, { addQueryPrefix: true });
+  //   const url = `${this.url}/user/user_apply_become${search}`;
+  //   const res = await fetch(url);
+  //   const json = await res.json();
+
+  //   return json;
+  // }
+
   public async getFloorPrice(): Promise<any> {
     const url = `${this.url}/home_page/get_floor_price`;
     const res = await fetch(url);

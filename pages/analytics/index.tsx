@@ -30,6 +30,7 @@ import {
   getDclParcelSoldTotalStats,
   getchartWebb,
   getDclParcelOwnerStats,
+  getCreatorStats,
 } from '../../service';
 
 import {
@@ -56,6 +57,7 @@ import {
   req_netvrk_avg_price,
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
+  req_avg_creater_price,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -133,6 +135,9 @@ const Miniline = dynamic(() => import(/* webpackPrefetch: true */ '../../compone
   ssr: false,
 });
 const Allline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line'), {
+  ssr: false,
+});
+const AlllineData = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line_data'), {
   ssr: false,
 });
 const AllPillar2 = dynamic(
@@ -1369,6 +1374,62 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></AllPillar2>
               </div>
+              <div className={style.allLine}>
+              {/* <AlllineData
+            id={'allline1'}
+            // className="mt-5"
+            labelText="Average Parcel Price5555555"
+            dataHandlder={req_avg_creater_price}
+            // defaultColor={[194, 157, 135]}
+            // textColor={style.cvColor}
+          ></AlllineData> */}
+               <AlllineData
+                  id="allline1"
+                  labelText="Floor Price"
+                  dataHandlder={req_avg_creater_price}
+                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
+                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
+                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
+                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                    // {
+                    //   label: 'Weekly',
+                    //   value: 'weekly',
+                    // },
+                    // {
+                    //   label: 'Monthly',
+                    //   value: 'monthly',
+                    // },
+                    // {
+                    //   label: 'Quarterly',
+                    //   value: 'quarterly',
+                    // },
+                    // {
+                    //   label: 'Year',
+                    //   value: 'year',
+                    // },
+                  ]}
+                  // priceOptions={[
+                  //   // {
+                  //   //   label: 'USD',
+                  //   //   value: 'usd',
+                  //   // },
+                  //   {
+                  //     label: 'ETH',
+                  //     value: 'eth',
+                  //   },
+                  // ]}
+                ></AlllineData>
+              </div>
+
               <div className={cn('w-full h-auto mt-7', style.table)}>
                 <div className={style.tabContainer}>
                   <AnalyticsInfo options={types} labelText={'Coprehensive Data'}></AnalyticsInfo>

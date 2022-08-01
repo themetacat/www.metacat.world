@@ -124,6 +124,7 @@ export default function Index(props) {
     setCreatorCarouselList(wearables);
     setCreatorData(convert(creator));
   }, []);
+  
 
   const requestPersonal = React.useCallback(
     async (token: string) => {
