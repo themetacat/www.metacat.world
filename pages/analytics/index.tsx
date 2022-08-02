@@ -38,8 +38,6 @@ import {
   getDecentralandStats,
   getDclParcelOwnerStats,
 } from '../../service';
-console.log(getDecentralandStats(),"getDecentralandStats");
-
 
 import {
   req_sandbox_avg_price_stats,
@@ -396,7 +394,7 @@ export default function AnalyticsIndex(props) {
             textColor={style.cvColor}
           ></BaseBarData>
 
-{/* <BaseBarData
+          {/* <BaseBarData
             id={'stackbar'}
             className="mt-5"
           labelText={'Traffic5555555555'}
@@ -1422,8 +1420,8 @@ export default function AnalyticsIndex(props) {
                 ></AllPillar2>
               </div>
               <div className={style.allLine} >
-             
-               <AlllineData
+
+                <AlllineData
                   id="allline1"
                   labelText="Floor Price"
                   dataHandlder={req_avg_creater_price}
@@ -1442,16 +1440,16 @@ export default function AnalyticsIndex(props) {
                     },
                   ]}
                   priceOptions={[
-              
+
                     {
                       label: 'ETH',
                       value: 'eth',
                     },
                   ]}
-                 
+
                 >
                 </AlllineData>
-          
+
               </div>
 
               <div className={cn('w-full h-auto mt-7', style.table)}>
