@@ -193,9 +193,7 @@ export default function Index(props) {
               </div>
               <div className="flex justify-between items-center">
                 <FloorPriceCard items={floorData} title={'Floor Price'}>
-      
                 </FloorPriceCard>
-             
                 <Annular
                   id="annular1"
                   labelText={'Parcel Sales Amount (USD)'}
