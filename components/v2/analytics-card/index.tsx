@@ -31,6 +31,7 @@ export default function AnalyticsCard({
       }
     }, []
   )
+  
   return (
     <div
       className={cn(
