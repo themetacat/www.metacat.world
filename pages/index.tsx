@@ -181,6 +181,7 @@ export default function Index(props) {
     requestWearableData();
   }, [null]);
 
+  
   return (
     <Page meta={meta}>
       <Layout>
