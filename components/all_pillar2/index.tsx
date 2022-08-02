@@ -388,7 +388,7 @@ export default function AllLine({
                 fill: `l(270) 0: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1: rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Otherside') {
+            if (tVal === 'otherside') {
               return {
                 fill: `l(270) 0: rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1: rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
               };
