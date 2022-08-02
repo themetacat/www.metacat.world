@@ -8,7 +8,7 @@ import style from './index.module.css';
 interface Props {
   title?: string;
   link?: string;
-  children?:any;
+  children?: ReactElement|any;
   baseSize?: boolean;
   className?: string;
   backCls?: string;
@@ -31,7 +31,6 @@ export default function AnalyticsCard({
       }
     }, []
   )
-  console.log(children,"GFfff");
   return (
     <div
       className={cn(

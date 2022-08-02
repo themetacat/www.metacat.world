@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import AnalyticsCard from '../analytics-card';
-import ViewMore from '../view-more';
+
 import { ICON_DATA } from '../../../common/const';
 
 class price {
@@ -14,7 +14,7 @@ class price {
 
 interface Props {
   items?: Array<price>;
-  title?: string;
+  title?: any;
   className?: string;
 }
 
@@ -42,7 +42,7 @@ export default function FloorPriceCard({ title, items, className }: Props) {
     const n2 = Number(arg2.toString().replace('.', ''));
     return (n1 * n2) / 10 ** (r1 + r2);
   };
-      
+
   React.useEffect(() => {
     const result = items.map((x) => {
       const n = ICON_DATA.find((y) => y.world === x.world);
