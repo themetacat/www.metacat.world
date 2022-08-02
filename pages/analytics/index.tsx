@@ -11,7 +11,6 @@ import AnalyticsInfo from '../../components/analytics-info';
 import Switch from '../../components/switch';
 
 import AnimationBack from '../../components/animation-back';
-
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
 import {

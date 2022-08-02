@@ -8,7 +8,7 @@ import style from './index.module.css';
 interface Props {
   title?: string;
   link?: string;
-  children?: ReactElement|any;
+  children?: ReactElement;
   baseSize?: boolean;
   className?: string;
   backCls?: string;
