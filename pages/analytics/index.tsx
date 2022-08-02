@@ -1505,6 +1505,7 @@ export default function AnalyticsIndex(props) {
   //     setFixedState(false)
   //   }
   // }, [Top, Dtop.current])
+
   React.useEffect(() => {
     const listener = () => {
       if (
@@ -1528,6 +1529,7 @@ export default function AnalyticsIndex(props) {
       setHeaderNav(hNav[0].type);
     }
   }, [props.query.type]);
+
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -1571,3 +1573,4 @@ export async function getServerSideProps({ query }) {
     }, // will be passed to the page component as props
   };
 }
+
