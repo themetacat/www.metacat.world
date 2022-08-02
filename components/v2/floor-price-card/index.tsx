@@ -14,7 +14,7 @@ class price {
 
 interface Props {
   items?: Array<price>;
-  title?: any;
+  title?: string;
   className?: string;
 }
 
