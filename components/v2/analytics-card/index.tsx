@@ -23,6 +23,7 @@ export default function AnalyticsCard({
   backCls,
 }: Props) {
   const cls = style[backCls];
+  
   const pageNew = React.useCallback(
     () => {
       console.log(title);
@@ -31,7 +32,7 @@ export default function AnalyticsCard({
       }
     }, []
   )
-  
+
   return (
     <div
       className={cn(
