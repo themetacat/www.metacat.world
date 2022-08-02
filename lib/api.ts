@@ -183,6 +183,14 @@ class API {
     return json;
   }
 
+  public async getDecentralandStats(): Promise<any> {
+    const url = `${this.url}/get_dcl_traffic_stats`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getCvParcelAvgPriceStats(): Promise<any> {
     const url = `${this.url}/get_cv_parcel_avg_price_stats`;
     const res = await fetch(url);

@@ -156,6 +156,13 @@ export const getCvTrafficStats = async () => {
   return json;
 };
 
+export const getDecentralandStats = async () => {
+  const url = `/api/cv_decent_stats`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
 export const getCvParcelAvgPriceStats = async () => {
   const url = `/api/cv_parcel_avg_price_stats`;
   const res = await fetch(url);

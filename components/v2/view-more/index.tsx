@@ -22,7 +22,9 @@ export default function ViewMore({
         if (link) {
           window.open(link);
         }
+        
       }}
+      
       className={cn(' flex items-center event-hand', style.base, className)}
     >
       View More

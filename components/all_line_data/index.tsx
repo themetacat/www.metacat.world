@@ -114,7 +114,6 @@ export default function AllLineData({
 
   const initChart = React.useCallback(
     (data) => {
-
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -157,11 +156,9 @@ export default function AllLineData({
             voxels: null,
             somniumspance: null,
           };
-          
           if (items.length <= 0) {
             return;
           }
-
           items.forEach((item, index) => {
             result[item.name] = item;
           });
@@ -303,7 +300,7 @@ export default function AllLineData({
       chart.current.legend(false);
 
       // 设置横纵轴
-      chart.current.axis('value', {
+      chart.current.axis('floor_price', {
         grid: {
           line: {
             type: 'line',
@@ -512,11 +509,11 @@ export default function AllLineData({
     return (
       <div
         className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(0, 236, 222, 0.05)' }}
+        style={{ color: 'rgba(0, 236, 222, 0.05)'   }}
       >
         <ChartSelecter
           options={options}
-          showArrow={true}
+          showArrow={false}
           onClick={changeStatic}
           className={style.selecterLong}
           defaultLabel={options[0].value}
@@ -524,14 +521,14 @@ export default function AllLineData({
           cl={style.bg}
         ></ChartSelecter>
         丨
-        {/* <ChartSelecter
+        <ChartSelecter
           options={priceOptions}
-          showArrow={true}
+          showArrow={false}
           onClick={changePriceStatic}
           defaultLabel={priceOptions[0].value}
           hasBorder={false}
           cl={style.bg}
-        ></ChartSelecter> */}
+        ></ChartSelecter>
       </div>
     );
     // }

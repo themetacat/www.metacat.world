@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import AnalyticsCard from '../analytics-card';
-
+import ViewMore from '../view-more';
 import { ICON_DATA } from '../../../common/const';
 
 class price {
@@ -60,7 +60,9 @@ export default function FloorPriceCard({ title, items, className }: Props) {
   }, [items]);
 
   return (
+    
     <AnalyticsCard title={title} backCls="cover1">
+      
       <ul
         className={cn(' list-none w-full text-white text-sm py-8 px-5 overflow-hidden', className)}
       >
