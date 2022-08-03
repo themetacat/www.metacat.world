@@ -3,10 +3,7 @@ import { Chart } from '@antv/g2';
 import cn from 'classnames';
 import style from './index.module.css';
 
-
-
-// 178行     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>   
-
+// 178行     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
 
 import ChartTitle from '../chart-title';
 import Status from '../status';
@@ -96,7 +93,6 @@ export default function AllLineData({
             staticT: type,
             // priceStaticT: priceType,
           });
-
         });
         return result;
       }
@@ -165,82 +161,94 @@ export default function AllLineData({
 
           const staticItem = `
           <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]
-            }, 1);">
+          <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${
+            legend7.color[2]
+          }, 1);">
           ${showKeyTypes[6]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]
-            }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[6]]?.value,
-            )}</span>
+              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                legend7.color[0]
+              }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[6]]?.value,
+          )}</span>
             <span>ETH</span>
             </span>
           </span>
         </div>
 
           <div style="color:#fff;margin-bottom:12px">
-            <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]
-            }, 1);">
+            <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
+            legend1.color[2]
+          }, 1);">
             ${showKeyTypes[0]}:
               <span style="color:#fff;">
-                <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend1.color[0]
-            }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[0]]?.value,
-            )}</span>
+                <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                  legend1.color[0]
+                }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[0]]?.value,
+          )}</span>
                 <span>ETH</span>
               </span>
             </span>
           </div>
               <div style="color:#fff;margin-bottom:12px">
-                <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]
-            }, 1);">
+                <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
+            legend2.color[2]
+          }, 1);">
                 ${showKeyTypes[1]}:
                   <span style="color:#fff;">
-                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend2.color[0]
-            }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[1]]?.value,
-            )}</span>
+                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                      legend2.color[0]
+                    }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[1]]?.value,
+          )}</span>
           <span>ETH</span>
                   </span>
                 </span>
               </div>
 
               <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]
-            }, 1);">
+              <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${
+            legend3.color[2]
+          }, 1);">
               ${showKeyTypes[2]}:
                 <span style="color:#fff;">
-                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend3.color[0]
-            }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[2]]?.value,
-            )}</span>
+                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                    legend3.color[0]
+                  }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[2]]?.value,
+          )}</span>
           <span>ETH</span>
                 </span>
               </span>
             </div>
             <div style="color:#fff;margin-bottom:12px">
-            <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]
-            }, 1);">
+            <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
+            legend4.color[2]
+          }, 1);">
             ${showKeyTypes[3]}:
               <span style="color:#fff;">
-                <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend4.color[0]
-            }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[3]]?.value,
-            )}</span>
+                <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                  legend4.color[0]
+                }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[3]]?.value,
+          )}</span>
           <span>ETH</span>
               </span>
             </span>
           </div>
 
           <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]
-            }, 1);">
+          <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${
+            legend5.color[2]
+          }, 1);">
           ${showKeyTypes[4]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend5.color[0]
-            }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[4]]?.value,
-            )}</span>
+              <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                legend5.color[0]
+              }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[4]]?.value,
+          )}</span>
           <span>ETH</span>
             </span>
           </span>
@@ -250,10 +258,11 @@ export default function AllLineData({
         <span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
         ${showKeyTypes[5]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend6.color[0]
             }, ${legend6.color[1]}, ${legend6.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[5]]?.value,
-            )}</span>
+            result[showKeyTypes[5]]?.value,
+          )}</span>
           <span>ETH</span>
           </span>
         </span>
@@ -263,10 +272,11 @@ export default function AllLineData({
         <span style="color:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1);">
         ${showKeyTypes[7]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend8.color[0]
             }, ${legend8.color[1]}, ${legend8.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[7]]?.value,
-            )}</span>
+            result[showKeyTypes[7]]?.value,
+          )}</span>
           <span>ETH</span>
           </span>
         </span>
@@ -509,7 +519,7 @@ export default function AllLineData({
     return (
       <div
         className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(0, 236, 222, 0.05)'   }}
+        style={{ color: 'rgba(0, 236, 222, 0.05)' }}
       >
         <ChartSelecter
           options={options}
@@ -520,8 +530,9 @@ export default function AllLineData({
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
-       
-        <span style={{color:"#505c4e"}}> 丨</span>
+
+        <span style={{ color: '#505c4e' }}> 丨</span>
+
         <ChartSelecter
           options={priceOptions}
           showArrow={false}
@@ -620,9 +631,3 @@ export default function AllLineData({
     </div>
   );
 }
-
-
-
-
-
-
