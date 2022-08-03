@@ -156,6 +156,7 @@ export default function AllPillar({
               Number(result[showKeyTypes[2]]?.value) +
               Number(result[showKeyTypes[3]]?.value) +
               Number(result[showKeyTypes[4]]?.value) +
+              Number(result[showKeyTypes[7]]?.value) +
               Number(result[showKeyTypes[5]]?.value),
           )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
             showKeyTypes[1]

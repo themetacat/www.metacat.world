@@ -1,13 +1,19 @@
 import React from 'react';
+
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
+
 import dynamic from 'next/dynamic';
 
 import Page from '../../components/page';
+
 import PageHeader from '../../components/page-header';
+
 import Footer from '../../components/footer';
+
 import AnalyticsInfo from '../../components/analytics-info';
+
 import Switch from '../../components/switch';
 
 import AnimationBack from '../../components/animation-back';
@@ -29,6 +35,7 @@ import {
   getchartOtherside,
   getDclParcelSoldTotalStats,
   getchartWebb,
+  getDecentralandStats,
   getDclParcelOwnerStats,
 } from '../../service';
 
@@ -56,6 +63,7 @@ import {
   req_netvrk_avg_price,
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
+  req_avg_creater_price,
 } from '../../service/z_api';
 
 import style from './index.module.css';
@@ -63,6 +71,12 @@ import style from './index.module.css';
 const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
   ssr: false,
 });
+const BaseBarData = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/base-barData'),
+  {
+    ssr: false,
+  },
+);
 const ChartLine = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-line'), {
   ssr: false,
 });
@@ -109,10 +123,9 @@ const ChartLineToolTipSimpleSandbox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox'),
   { ssr: false },
 );
-const ChartWebb = dynamic(
-  () => import(/* webpackPrefetch: true */ '../../components/chart-Webb'),
-  { ssr: false },
-);
+const ChartWebb = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-Webb'), {
+  ssr: false,
+});
 const ChartSandBox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-sandBox'),
   { ssr: false },
@@ -135,6 +148,12 @@ const Miniline = dynamic(() => import(/* webpackPrefetch: true */ '../../compone
 const Allline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line'), {
   ssr: false,
 });
+const AlllineData = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/all_line_data'),
+  {
+    ssr: false,
+  },
+);
 const AllPillar2 = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/all_pillar2'),
   { ssr: false },
@@ -370,6 +389,42 @@ export default function AnalyticsIndex(props) {
     if (showType === 'decentraland') {
       return (
         <>
+          <BaseBarData
+            id={'basebar1'}
+            className="mt-5"
+            labelText={'Traffic'}
+            dataHandlder={getDecentralandStats}
+            barWidth={18}
+            legend1={{ color: [255, 224, 206, 0.3] }}
+            textColor={style.cvColor}
+          ></BaseBarData>
+
+          {/* <BaseBarData
+            id={'stackbar'}
+            className="mt-5"
+          labelText={'Traffic5555555555'}
+            dataHandlder={getDecentralandStats}
+            barWidth={18}
+            textColor={style.cvColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+            ]}
+          ></BaseBarData> */}
           <ChartLine
             id={'dcl-chartline-1'}
             className="mt-5"
@@ -1312,7 +1367,6 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
-
                     },
                     {
                       label: 'Quarterly',
@@ -1322,7 +1376,6 @@ export default function AnalyticsIndex(props) {
                       label: 'Yearly',
                       value: 'yearly',
                     },
-
                   ]}
                   priceOptions={[
                     {
@@ -1369,6 +1422,34 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></AllPillar2>
               </div>
+              <div className={style.allLine}>
+                <AlllineData
+                  id="allline1"
+                  labelText="Floor Price"
+                  dataHandlder={req_avg_creater_price}
+                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
+                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
+                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
+                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
+                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  options={[
+                    {
+                      label: 'Daily',
+                      value: 'daily',
+                    },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></AlllineData>
+              </div>
+
               <div className={cn('w-full h-auto mt-7', style.table)}>
                 <div className={style.tabContainer}>
                   <AnalyticsInfo options={types} labelText={'Coprehensive Data'}></AnalyticsInfo>
@@ -1421,6 +1502,7 @@ export default function AnalyticsIndex(props) {
   //     setFixedState(false)
   //   }
   // }, [Top, Dtop.current])
+
   React.useEffect(() => {
     const listener = () => {
       if (
@@ -1444,6 +1526,7 @@ export default function AnalyticsIndex(props) {
       setHeaderNav(hNav[0].type);
     }
   }, [props.query.type]);
+
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       <div className="bg-black relative">

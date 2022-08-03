@@ -670,6 +670,17 @@ class API {
     return json;
   }
 
+  public async req_avg_creater_price() {
+    const url = `${this.url}/get_all_worlds_floor_price`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 16.3 获取六个平台每 月/季度/年 各个总量
 
   public async req_sales_amount_stack() {
