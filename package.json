@@ -123,7 +123,7 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "eslint-plugin-unicorn": "^20.0.0",
-    "husky": "^4.3.8",
+    "husky": "4.3.8",
     "lint-staged": "^10.0.7",
     "prettier": "^2.3.2",
     "stylelint": "^13.7.0",
