@@ -399,7 +399,7 @@ export default function StackBar({
           defaultLabel={options[1].value}
           hasBorder={false}
         ></ChartSelecter>
-        <span style={{ color: '#505c4e' }}> 丨</span>
+        丨
         <ChartSelecter
           hasBorder={false}
           options={optionsPrice}

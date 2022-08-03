@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chart } from '@antv/g2';
 import cn from 'classnames';
-import style from './index.module.css';
+import style from './index.module.css'; //
 
 // 178行     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
 
@@ -530,9 +530,7 @@ export default function AllLineData({
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
-
         <span style={{ color: '#505c4e' }}> 丨</span>
-
         <ChartSelecter
           options={priceOptions}
           showArrow={false}

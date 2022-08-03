@@ -405,7 +405,7 @@ export default function ChartLine({
             }
           }}
         ></ChartSelecter>
-        <span style={{ color: '#505c4e' }}> 丨</span>
+        丨
         <ChartSelecter
           options={priceOptions}
           showArrow={true}

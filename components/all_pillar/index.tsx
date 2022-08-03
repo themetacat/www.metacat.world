@@ -511,7 +511,7 @@ ${showKeyTypes[6]}:
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
-        <span style={{ color: '#505c4e' }}> 丨</span>
+        丨
         <ChartSelecter
           options={priceOptions}
           showArrow={true}
