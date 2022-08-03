@@ -243,7 +243,7 @@ export default function AnalyticsIndex(props) {
   const changeHeaderNav = React.useCallback(
     (nav) => {
       if (nav === 'single') {
-        router.replace(`/analytics?type=${showType}`);
+        router.replace(`/analytics?type=${showType}`);  
         setHeaderNav(nav);
       }
       if (nav === 'all') {

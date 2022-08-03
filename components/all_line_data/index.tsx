@@ -520,7 +520,8 @@ export default function AllLineData({
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
-        丨
+       
+        <span style={{color:"#505c4e"}}> 丨</span>
         <ChartSelecter
           options={priceOptions}
           showArrow={false}
