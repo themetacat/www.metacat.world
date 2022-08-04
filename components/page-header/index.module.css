@@ -24,8 +24,25 @@
   z-index: 99;
   background-color: #0f191b;
 }
+.location3 {
+  position: absolute;
+  right: -65;
+  bottom: -280px;
+  /* z-index: 999; */
+  background-color: #0f191b;
+}
+.location4 {
+  position: absolute;
+  right: -65;
+  bottom: -425px;
+  /* z-index: 999; */
+  background-color: #0f191b;
+}
 .cn {
   width: 135px;
+}
+.cn1 {
+  width: 150px;
 }
 
 .cn2 {

@@ -71,9 +71,12 @@ import style from './index.module.css';
 const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
   ssr: false,
 });
-const BaseBarData = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-barData'), {
-  ssr: false,
-});
+const BaseBarData = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/base-barData'),
+  {
+    ssr: false,
+  },
+);
 const ChartLine = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-line'), {
   ssr: false,
 });
@@ -120,10 +123,9 @@ const ChartLineToolTipSimpleSandbox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox'),
   { ssr: false },
 );
-const ChartWebb = dynamic(
-  () => import(/* webpackPrefetch: true */ '../../components/chart-Webb'),
-  { ssr: false },
-);
+const ChartWebb = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-Webb'), {
+  ssr: false,
+});
 const ChartSandBox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-sandBox'),
   { ssr: false },
@@ -146,9 +148,12 @@ const Miniline = dynamic(() => import(/* webpackPrefetch: true */ '../../compone
 const Allline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line'), {
   ssr: false,
 });
-const AlllineData = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line_data'), {
-  ssr: false,
-});
+const AlllineData = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/all_line_data'),
+  {
+    ssr: false,
+  },
+);
 const AllPillar2 = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/all_pillar2'),
   { ssr: false },
@@ -243,7 +248,7 @@ export default function AnalyticsIndex(props) {
   const changeHeaderNav = React.useCallback(
     (nav) => {
       if (nav === 'single') {
-        router.replace(`/analytics?type=${showType}`);  
+        router.replace(`/analytics?type=${showType}`);
         setHeaderNav(nav);
       }
       if (nav === 'all') {
@@ -384,7 +389,7 @@ export default function AnalyticsIndex(props) {
     if (showType === 'decentraland') {
       return (
         <>
-          <BaseBarData
+          {/* <BaseBarData
             id={'basebar1'}
             className="mt-5"
             labelText={'Traffic'}
@@ -392,13 +397,12 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             legend1={{ color: [255, 224, 206, 0.3] }}
             textColor={style.cvColor}
-          ></BaseBarData>
-
-          {/* <BaseBarData
+          ></BaseBarData> */}
+          <BaseBarData
             id={'stackbar'}
             className="mt-5"
-          labelText={'Traffic5555555555'}
-            dataHandlder={getDecentralandStats}
+            labelText={'Traffic'}
+            dataHandler={getDecentralandStats}
             barWidth={18}
             textColor={style.cvColor}
             options={[
@@ -410,16 +414,21 @@ export default function AnalyticsIndex(props) {
                 label: 'Weekly',
                 value: 'weekly',
               },
-              {
-                label: 'Monthly',
-                value: 'monthly',
-              },
-              {
-                label: 'Quarterly',
-                value: 'quarterly',
-              },
+              // {
+              //   label: 'Monthly',
+              //   value: 'monthly',
+              // },
+              // {
+              //   label: 'Quarterly',
+              //   value: 'quarterly',
+              // },
+              // {
+              //   label: 'Yearly',
+              //   value: 'yearly',
+              // },
             ]}
-          ></BaseBarData> */}
+          ></BaseBarData>
+
           <ChartLine
             id={'dcl-chartline-1'}
             className="mt-5"
@@ -1362,7 +1371,6 @@ export default function AnalyticsIndex(props) {
                     {
                       label: 'Monthly',
                       value: 'monthly',
-
                     },
                     {
                       label: 'Quarterly',
@@ -1372,7 +1380,6 @@ export default function AnalyticsIndex(props) {
                       label: 'Yearly',
                       value: 'yearly',
                     },
-
                   ]}
                   priceOptions={[
                     {
@@ -1419,8 +1426,7 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></AllPillar2>
               </div>
-              <div className={style.allLine} >
-
+              <div className={style.allLine}>
                 <AlllineData
                   id="allline1"
                   labelText="Floor Price"
@@ -1440,16 +1446,12 @@ export default function AnalyticsIndex(props) {
                     },
                   ]}
                   priceOptions={[
-
                     {
                       label: 'ETH',
                       value: 'eth',
                     },
                   ]}
-
-                >
-                </AlllineData>
-
+                ></AlllineData>
               </div>
 
               <div className={cn('w-full h-auto mt-7', style.table)}>
@@ -1572,4 +1574,3 @@ export async function getServerSideProps({ query }) {
     }, // will be passed to the page component as props
   };
 }
-
