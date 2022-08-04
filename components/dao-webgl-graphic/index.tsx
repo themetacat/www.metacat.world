@@ -66,9 +66,11 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState, i
   const sceneRef = React.useRef(null);
   const goToDetail = React.useCallback(() => {
     if (tabState === 'chinesered' || tabState === 'pfp') {
-      router.replace(`/wearables/detail/${model.id}?type=${tabState}`);
+      // router.replace(`/wearables/detail/${model.id}?type=${tabState}`);
+      window.open(`/wearables/detail/${model.id}?type=${tabState}`);
     } else {
-      router.replace(`/wearables/detail/${model.id}?type=${id}&name=${name}&form=${model.type}`);
+      // router.replace(`/wearables/detail/${model.id}?type=${id}&name=${name}&form=${model.type}`);
+      window.open(`/wearables/detail/${model.id}?type=${id}&name=${name}&form=${model.type}`);
     }
   }, [tabState, id]);
 
@@ -191,3 +193,4 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState, i
     </div>
   );
 }
+// Chinese Red

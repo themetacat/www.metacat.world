@@ -145,12 +145,16 @@ export default function WearablesDetail({ artwork, artist, id }) {
       router.replace(`/topic/${router.query.type}?type=wearables`);
     }
   }, [router.query.type]);
-
+  const GoBack = () => {
+    // window.open(`https://www.metacat.world/profile?type=wearablelist`);
+    router.push(`/profile?type=wearablelist`);
+  };
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'wearables'} />
       </div>
+
       <div
         className={cn('main-content flex flex-col justify-start items-start mt-5', style.content)}
       >
@@ -172,9 +176,14 @@ export default function WearablesDetail({ artwork, artist, id }) {
             {router.query.type === 'mywearables' ? 'My wearabels' : null}
             {router.query.type === 'topic' ? artistData.name : null}
           </span>
+
           <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
           <span className=" text-white">{artworkData.name}</span>
+          {/* <div style={{color:"#000000",marginLeft:"350px",background:"#00d0ec",width:"100px",height:"30px",lineHeight:"30px",textAlign:"center",fontWeight:"800"}}
+          onClick={GoBack}
+          >GoBack</div> */}
         </div>
+
         <div className="mt-5 flex justify-between items-start w-full">
           <div className={cn('relative', style.modelCard)}>
             {intro ? (
