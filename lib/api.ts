@@ -176,8 +176,8 @@ class API {
   }
 
   public async getCvTrafficStats(): Promise<any> {
-    // const url = `http://8.130.23.16/api/v1/get_cv_traffic_stats`;
-    const url = `${this.url}/get_cv_traffic_stats`;
+    const url = `http://8.130.23.16/api/v1/get_cv_traffic_stats`;
+    // const url = `${this.url}/get_cv_traffic_stats`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -185,8 +185,8 @@ class API {
   }
 
   public async getDecentralandStats(): Promise<any> {
-    // const url =`http://8.130.23.16/api/v1/get_dcl_traffic_stats`
-    const url = `${this.url}/get_dcl_traffic_stats`;
+    const url =`http://8.130.23.16/api/v1/get_dcl_traffic_stats`
+    // const url = `${this.url}/get_dcl_traffic_stats`;
     const res = await fetch(url);
     const json = await res.json(); 
 
