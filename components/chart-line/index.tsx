@@ -428,7 +428,7 @@ export default function ChartLine({
     init();
     return () => {
       if (chart.current) {
-        chart.current.destroy();
+        // chart.current.destroy();
       }
     };
   }, [requestData, init]);

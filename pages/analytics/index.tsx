@@ -71,6 +71,12 @@ import style from './index.module.css';
 const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
   ssr: false,
 });
+const BaseVoxelsData = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/base_Voxels_Data'),
+  {
+    ssr: false,
+  },
+);
 const BaseBarData = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/base-barData'),
   {
@@ -263,15 +269,36 @@ export default function AnalyticsIndex(props) {
     if (showType === 'cryptovoxels') {
       return (
         <>
-          <BaseBar
-            id={'basebar1'}
+          <BaseVoxelsData
+            id={'stackbar'}
             className="mt-5"
             labelText={'Traffic'}
-            dataHandlder={getCvTrafficStats}
+            dataHandler={getCvTrafficStats}
             barWidth={18}
-            legend1={{ color: [255, 224, 206, 0.3] }}
             textColor={style.cvColor}
-          ></BaseBar>
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+          ></BaseVoxelsData>
           <ChartLine
             id={'chartline1'}
             labelText={'Average Parcel Price'}
@@ -389,15 +416,6 @@ export default function AnalyticsIndex(props) {
     if (showType === 'decentraland') {
       return (
         <>
-          {/* <BaseBarData
-            id={'basebar1'}
-            className="mt-5"
-            labelText={'Traffic'}
-            dataHandlder={getDecentralandStats}
-            barWidth={18}
-            legend1={{ color: [255, 224, 206, 0.3] }}
-            textColor={style.cvColor}
-          ></BaseBarData> */}
           <BaseBarData
             id={'stackbar'}
             className="mt-5"
@@ -414,18 +432,18 @@ export default function AnalyticsIndex(props) {
                 label: 'Weekly',
                 value: 'weekly',
               },
-              // {
-              //   label: 'Monthly',
-              //   value: 'monthly',
-              // },
-              // {
-              //   label: 'Quarterly',
-              //   value: 'quarterly',
-              // },
-              // {
-              //   label: 'Yearly',
-              //   value: 'yearly',
-              // },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
             ]}
           ></BaseBarData>
 

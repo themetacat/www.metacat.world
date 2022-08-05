@@ -5,6 +5,7 @@
 .active {
   color: #fff;
 }
+
 .base {
   z-index: 10002;
   width: 1400px;
@@ -28,21 +29,19 @@
   position: absolute;
   right: -65;
   bottom: -280px;
-  /* z-index: 999; */
   background-color: #0f191b;
 }
 .location4 {
   position: absolute;
-  right: -65;
+  right: -75;
   bottom: -425px;
-  /* z-index: 999; */
   background-color: #0f191b;
 }
 .cn {
-  width: 135px;
+  width: 175px;
 }
 .cn1 {
-  width: 150px;
+  width: 175px;
 }
 
 .cn2 {

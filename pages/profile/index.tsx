@@ -51,7 +51,7 @@ import {
 
 import style from './index.module.css';
 
-const TAB = [
+const TABData = [
   {
     label: 'Voxels',
     icon: '/images/cvLogo.png',
@@ -916,7 +916,7 @@ function ProfilePage(r) {
           <div className={cn('tab-list flex mt-5', style.allHeight)}>
             <div className={cls}></div>
             <div className="main-content flex px-0">
-              {TAB.map((item) => {
+              {TABData.map((item) => {
                 return (
                   <Tab
                     active={tabState === item.type}

@@ -4,10 +4,9 @@ import cn from 'classnames';
 
 import { Toaster } from 'react-hot-toast';
 
-import { useRouter } from 'next/router';
-
 import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
+import TwoNav from '../two_nav';
 import style from './index.module.css';
 
 type Props = {
@@ -143,7 +142,7 @@ const analyticsData = [
 function myfun() {
   setTimeout(() => {
     window.open(window.location.href);
-  }, 2000);
+  }, 1000);
 }
 
 function myfunData() {
@@ -197,7 +196,8 @@ export default function PageHeader({ active, className }: Props) {
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
-            active === 'Analytics' ? style.active : null,
+            active === 'analytics' ? style.active : null,
+            style.z,
           )}
           // onClick={analyticsData}
           onMouseEnter={() => {
@@ -207,24 +207,23 @@ export default function PageHeader({ active, className }: Props) {
             setAnalyticState(false);
           }}
         >
-          Analytics
-          {/* <Link href={'/analytics'} prefetch>
+          <Link href={'/analytics'} prefetch>
             Analytics
-          </Link> */}
+          </Link>
           {analyticState ? (
             <div onClick={myfunData}>
-              <TwoNavigation
+              <TwoNav
                 options={analyticsData}
                 className={style.cn1}
                 location={style.location4}
-              ></TwoNavigation>
+              ></TwoNav>
             </div>
           ) : null}
         </div>
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
-            active === 'Heatmap' ? style.active : null,
+            active === 'heatmap' ? style.active : null,
           )}
           onMouseEnter={() => {
             setHeatmapState(true);
@@ -233,17 +232,16 @@ export default function PageHeader({ active, className }: Props) {
             setHeatmapState(false);
           }}
         >
-          Heatmap
-          {/* <Link href={'/heatmap?type=cryptovoxels'} prefetch>
+          <Link href={'/heatmap?type=cryptovoxels'} prefetch>
             Heatmap
-          </Link> */}
+          </Link>
           {heatmapState ? (
             <div onClick={myfun}>
-              <TwoNavigation
+              <TwoNav
                 options={heatmapData}
                 className={style.cn}
                 location={style.location3}
-              ></TwoNavigation>
+              ></TwoNav>
             </div>
           ) : null}
         </div>
