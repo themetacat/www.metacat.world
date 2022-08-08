@@ -60,7 +60,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
         modules={[Navigation]}
         spaceBetween={1}
         slidesPerView="auto"
-        loop={false} //左右箭头滚动设为true
+        loop={false} 
         className={cn('w-full', style.swiper)}
         navigation={{
           prevEl: '.per',
