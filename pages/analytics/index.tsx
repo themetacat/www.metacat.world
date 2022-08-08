@@ -407,7 +407,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getCvParcelOwnerStats}
-            defaultColor={[194, 157, 135]}
+            defaultColor={[255, 224, 206]}
             textColor={style.cvColor}
           ></ChartLineSimple>
         </>
@@ -452,8 +452,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Average Parcel Price'}
             dataHandlder={getDclParcelAvgPriceStats}
-            legend1={{ label: 'Separate Land', color: [255, 107, 84] }}
-            legend2={{ label: 'Land in Estate', color: [255, 207, 84] }}
+            legend1={{ label: 'Separate Land', color: [240, 117, 97] }}
+            legend2={{ label: 'Land in Estate', color: [255, 190, 114] }}
             keyTypes={['land', 'estate']}
             textColor={style.dclColor}
             options={[
@@ -494,8 +494,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={getDclParcelSoldTotalStats}
-            legend1={{ label: 'Land', color: [255, 79, 163] }}
-            legend2={{ label: 'Estate', color: [225, 255, 40] }}
+            legend1={{ label: 'Land', color: [240, 117, 97] }}
+            legend2={{ label: 'Estate', color: [255, 190, 114] }}
             keyTypes={['land', 'estate']}
             textColor={style.dclColor}
             options={[
@@ -524,8 +524,8 @@ export default function AnalyticsIndex(props) {
               className="mt-5"
               labelText={'Parcel Sales Amount'}
               dataHandler={getDclParcelSoldSumStats}
-              legend1={{ label: 'Land', color: [255, 207, 84] }}
-              legend2={{ label: 'Estate', color: [255, 107, 84] }}
+              legend1={{ label: 'Land',  color: [240, 117, 97] }}
+              legend2={{ label: 'Estate', color: [255, 190, 114] }}
               keyTypes={['land', 'estate']}
               barWidth={18}
               isEth={true}
@@ -582,7 +582,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_sandbox_avg_price_stats}
-            legend1={{ label: 'Primary', color: [24, 147, 247] }}
+            legend1={{ label: 'Primary', color: [119, 152, 238] }}
             textColor={style.sandboxColor}
             options={[
               {
@@ -619,7 +619,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_sandbox_sold_total_stats}
-            legend1={{ label: 'Land', color: [24, 60, 247] }}
+            legend1={{ label: 'Land', color: [42, 97, 237] }}
             keyTypes={['land', 'estate']}
             textColor={style.sandboxColor}
             options={[
@@ -647,7 +647,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_sandbox_sold_sun_stats}
-            legend1={{ label: 'Land', color: [0, 117, 255] }}
+            legend1={{ label: 'Land', color: [119, 152, 238] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
@@ -684,8 +684,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getSandboxOwnerStats}
-            defaultColor={[194, 157, 135]}
-            textColor={style.cvColor}
+            defaultColor={[119, 152, 238]}
+            textColor={style.sandboxColor}
           ></ChartSandBox>
         </>
       );
@@ -816,7 +816,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_ntfworlds_avg_price_stats}
-            legend1={{ label: 'Primary', color: [132, 193, 14] }}
+            legend1={{ label: 'Primary', color: [175, 234, 101] }}
             textColor={style.nftColor}
             options={[
               {
@@ -853,7 +853,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_ntfworlds_sold_total_stats}
-            legend1={{ label: 'Land', color: [0, 191, 8] }}
+            legend1={{ label: 'Land', color: [33, 238, 29] }}
             keyTypes={['land', 'estate']}
             textColor={style.nftColor}
             options={[
@@ -881,7 +881,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_ntfworlds_sold_sum_stats}
-            legend1={{ label: 'Land', color: [132, 193, 14] }}
+            legend1={{ label: 'Land', color: [175, 234, 101] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
@@ -918,8 +918,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getChartNftworlds}
-            defaultColor={[194, 157, 135]}
-            textColor={style.cvColor}
+            defaultColor={[175, 234, 101]}
+            textColor={style.nftColor}
           ></ChartNftworlds>
         </>
       );
@@ -931,7 +931,7 @@ export default function AnalyticsIndex(props) {
             id={'chartline1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
-            legend1={{ label: 'Primary', color: [229, 68, 155] }}
+            legend1={{ label: 'Primary', color: [245, 120, 157] }}
             dataHandlder={req_webb_parcel_avg_price_stats}
             textColor={style.webbColor}
             options={[
@@ -969,7 +969,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_webb_sold_total_stats}
-            legend1={{ label: 'Land', color: [177, 51, 255] }}
+            legend1={{ label: 'Land', color: [244, 68, 79] }}
             keyTypes={['land', 'estate']}
             textColor={style.webbColor}
             options={[
@@ -997,7 +997,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_webb_sold_sum_stats}
-            legend1={{ label: 'Land', color: [229, 68, 155] }}
+            legend1={{ label: 'Land', color: [245, 120, 157] }}
             keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
@@ -1034,7 +1034,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getchartWebb}
-            defaultColor={[194, 157, 135]}
+            defaultColor={[245, 120, 157]}
             textColor={style.cvColor}
           ></ChartWebb>
         </>
@@ -1049,7 +1049,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             legend1={{ label: 'Primary', color: [255, 248, 187] }}
             dataHandlder={req_otherside_avg_price}
-            textColor={style.osdColor}
+            textColor={style.othersideColor}
             options={[
               {
                 label: 'Daily price',
@@ -1085,9 +1085,9 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number Of Parcel Sales'}
             dataHandlder={req_otherside_sales_num}
-            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            legend1={{ label: 'Land', color: [237, 195, 133] }}
             keyTypes={['land', 'estate']}
-            textColor={style.osdColor}
+            textColor={style.othersideColor}
             options={[
               {
                 label: 'Daily',
@@ -1118,7 +1118,7 @@ export default function AnalyticsIndex(props) {
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
-            textColor={style.osdColor}
+            textColor={style.othersideColor}
             options={[
               {
                 label: 'Weekly',
@@ -1151,7 +1151,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getchartOtherside}
             defaultColor={[194, 157, 135]}
-            textColor={style.cvColor}
+            textColor={style.othersideColor}
           ></ChartOtherside>
         </>
       );
@@ -1330,14 +1330,22 @@ export default function AnalyticsIndex(props) {
                   id="allline1"
                   labelText="Average Parcel Price"
                   dataHandlder={req_avg_parcel_price}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
-                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  // legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
+                  // legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
+                  // legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
+                  // legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
+                  // legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  // legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
+                  // legend7={{ label: 'Otherside', color: [255, 248, 187] }}
+                  // legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  legend1={{ label: 'The Sandbox', color: [119, 152, 238]}}
+                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
                   options={[
                     {
                       label: 'Weekly',
@@ -1373,14 +1381,14 @@ export default function AnalyticsIndex(props) {
                   id="allpillar1"
                   labelText="Parcel Sales Amount"
                   dataHandlder={req_sales_amount_stack}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
-                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  legend1={{ label: 'The Sandbox', color: [119, 152, 238]}}
+                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
                   options={[
                     {
                       label: 'Weekly',
@@ -1416,14 +1424,14 @@ export default function AnalyticsIndex(props) {
                   id="allpillar2"
                   labelText="Number Of Parcel Sales"
                   dataHandlder={req_all_number_sales}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
-                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  legend1={{ label: 'The Sandbox', color: [119, 152, 238]}}
+                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
                   options={[
                     {
                       label: 'Weekly',
@@ -1449,14 +1457,14 @@ export default function AnalyticsIndex(props) {
                   id="allline1"
                   labelText="Floor Price"
                   dataHandlder={req_avg_creater_price}
-                  legend1={{ label: 'The Sandbox', color: [24, 147, 247] }}
-                  legend2={{ label: 'NFT Worlds', color: [132, 193, 14] }}
-                  legend3={{ label: 'Decentraland', color: [255, 107, 84] }}
-                  legend4={{ label: 'Worldwide Webb', color: [229, 68, 155] }}
-                  legend5={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend6={{ label: 'Somnium Space ', color: [250, 216, 23] }}
-                  legend7={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend8={{ label: 'Netvrk', color: [196, 148, 254] }}
+                  legend1={{ label: 'The Sandbox', color: [119, 152, 238]}}
+                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
                   options={[
                     {
                       label: 'Daily',
@@ -1485,14 +1493,7 @@ export default function AnalyticsIndex(props) {
     if (headerNav === 'single') {
       return (
         <>
-          <div className={cn('flex flex-col justify-center items-center', style.content)}>
-            <div
-              className={cn(
-                'w-full mt-7 p-5 flex flex-col justify-start items-center',
-                style.chartList,
-              )}
-            >
-              <div className={cn(style.tmbg, fixedState ? style.fixed : null)}>
+            <div className={cn(style.tmbg, fixedState ? style.fixed : null)}>
                 <div className={cn(style.bg)}>
                   <Switch
                     onActive={changeType}
@@ -1504,6 +1505,14 @@ export default function AnalyticsIndex(props) {
                   ></Switch>
                 </div>
               </div>
+          <div className={cn('flex flex-col justify-center items-center', style.content)}>
+            <div
+              className={cn(
+                'w-full mt-7 p-5 flex flex-col justify-start items-center',
+                style.chartList,
+              )}
+            >
+          
               {renderChartList}
             </div>
           </div>

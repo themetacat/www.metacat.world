@@ -718,5 +718,5 @@ function SubstrataMap({
     </div>
   );
 }
-
+XMLSerializer
 export default SubstrataMap;

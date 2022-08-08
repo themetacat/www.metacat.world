@@ -43,7 +43,7 @@ type Props = {
 export default function StackBar({
   id,
   dataHandler,
-  legend1 = { label: 'Primary', color: [176, 168, 91] },
+  legend1 = { label: 'Primary', color: [255, 229, 160] },
   legend2 = { label: 'Secondary', color: [139, 116, 188] },
   gradient = true,
   className,

@@ -7,6 +7,7 @@
   padding: 12px;
   background-color: #0f191b;
   cursor: pointer;
+  border-radius: 8px;
 }
 .container .imgContainer {
   position: relative;

@@ -38,8 +38,8 @@ type Props = {
 export default function ChartLine({
   id,
   dataHandlder,
-  legend1 = { label: 'Primary', color: [194, 157, 135] },
-  legend2 = { label: 'Secondary', color: [130, 137, 195] },
+  legend1 = { label: 'Primary', color: [255, 224, 206] },
+  legend2 = { label: 'Secondary', color: [172, 174, 242] },
   labelText,
   limit,
   options,
@@ -96,6 +96,7 @@ export default function ChartLine({
         autoFit: true,
         height: 210,
       });
+      
       chart.current.data(
         transfromData(data[staticType].data[priceStaticType], staticType, priceStaticType),
       );
@@ -136,23 +137,21 @@ export default function ChartLine({
 
           const staticItem = `
             <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1); font-size: 20px; font-weight:700;">
+              <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]
+            }, 1); font-size: 20px; font-weight:700;">
               ${formatNum(result[keyTypes[0]]?.valueAvg)}
               <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
-                keyTypes[0]
-              ].priceStaticT.toLocaleUpperCase()} Avg</span>
+              keyTypes[0]
+            ].priceStaticT.toLocaleUpperCase()} Avg</span>
               </span>
             </div>
             <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1); font-size: 20px; font-weight:700;">
+              <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]
+            }, 1); font-size: 20px; font-weight:700;">
               ${formatNum(result[keyTypes[1]]?.valueAvg)}
               <span style="font-size: 12px;color:#fff;font-weight:400;">${result[
-                keyTypes[1]
-              ].priceStaticT.toLocaleUpperCase()} Avg</span>
+              keyTypes[1]
+            ].priceStaticT.toLocaleUpperCase()} Avg</span>
               </span>
             </div>`;
           const priceDetail = `
@@ -160,13 +159,11 @@ export default function ChartLine({
             <span style="color:#999999;">
             Lowest:
               <span style="color:#fff;">
-                <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1);">${formatNum(result[keyTypes[0]]?.valueMin)}</span>
+                <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]
+            }, 1);">${formatNum(result[keyTypes[0]]?.valueMin)}</span>
                 /
-                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">${formatNum(result[keyTypes[1]]?.valueMin)}</span>
+                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]
+            }, 1);">${formatNum(result[keyTypes[1]]?.valueMin)}</span>
                 <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
               </span>
             </span>
@@ -175,13 +172,11 @@ export default function ChartLine({
             <span style="color:#999999;">
             Highest:
               <span style="color:#fff;">
-                <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1);">${formatNum(result[keyTypes[0]]?.valueMax)}</span>
+                <span style="margin:0px 5px; color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]
+            }, 1);">${formatNum(result[keyTypes[0]]?.valueMax)}</span>
                 /
-                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">${formatNum(result[keyTypes[1]]?.valueMax)}</span>
+                <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]
+            }, 1);">${formatNum(result[keyTypes[1]]?.valueMax)}</span>
                 <span>${result[keyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
               </span>
             </span>
@@ -255,6 +250,7 @@ export default function ChartLine({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*valueAvg')
         .color('type')
         .style({
@@ -284,16 +280,18 @@ export default function ChartLine({
             };
           },
         );
-
       chart.current
         .line()
+        .shape('smooth')
         .position('time*valueAvg')
         .size(2)
-        .tooltip(false)
+        .tooltip(true)
         .color('type', [
           `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
           `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
-        ]);
+        ])
+        
+
       chart.current.render();
     },
     [staticType, priceStaticType, limit],

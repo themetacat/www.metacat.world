@@ -19,11 +19,13 @@ export default function TwoNav({ options, className, location }: Props) {
               <img
                 src={item.icon}
                 style={{
-                  width: '30px',
-                  height: '30px',
+                  width: '25px',
+                  height: '25px',
+                  marginRight:"8px",
                   lineHeight: '30px',
                   borderRadius: '50%',
                   marginTop: '12px',
+                  border:"0.3px solid rgba(255,255,255,0.3)",
                 }}
               ></img>
               <Link href={item.link}>{item.label}</Link>

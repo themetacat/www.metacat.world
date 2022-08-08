@@ -141,6 +141,7 @@ export default function AllLine({
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
+          // date日期标记
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
           const result = {
             thesandbox: null,
@@ -290,6 +291,7 @@ export default function AllLine({
             color: '#ffffff',
             boxShadow: null,
           },
+          // date日期
           'g2-tooltip-title': {
             color: 'rgba(153, 153, 153, 1)',
           },
@@ -310,6 +312,7 @@ export default function AllLine({
       // 设置横纵轴
       chart.current.axis('value', {
         grid: {
+          series:[{  smooth: true,}],
           line: {
             type: 'line',
             style: (x, y) => {
@@ -329,6 +332,7 @@ export default function AllLine({
       });
       chart.current.axis('time', {
         grid: {
+          series:[{  smooth: true,}],
           line: {
             type: 'line',
             style: (x, y) => {
@@ -340,6 +344,7 @@ export default function AllLine({
             },
           },
         },
+        // 横轴
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
           // offset: 25,
@@ -351,6 +356,7 @@ export default function AllLine({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('name')
         .style({
@@ -412,6 +418,7 @@ export default function AllLine({
         );
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
         .tooltip(false)

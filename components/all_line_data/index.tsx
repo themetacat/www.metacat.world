@@ -353,6 +353,7 @@ export default function AllLineData({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*floor_price')
         .color('name')
         .style({
@@ -414,6 +415,7 @@ export default function AllLineData({
         );
       chart.current
         .line()
+        .shape('smooth')
         .position('time*floor_price')
         .size(2)
         .tooltip(false)

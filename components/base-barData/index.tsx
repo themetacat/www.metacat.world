@@ -122,9 +122,9 @@ export default function StackBar({
           items.forEach((item) => {
             listItem += `
           <li class="g2-tooltip-list-item" data-index={index}>
-            <span class="g2-tooltip-name">${item.type}</span>
+            <span class="g2-tooltip-name">${item.time}</span>
             :
-            <span class="g2-tooltip-value" style="color:${item.color}">
+            <span class="g2-tooltip-value" style="color:${item.time}">
               <span>${formatNum(item.value)}</span>
               <span ${isEth ? 'style="margin-left:5px"' : ''}>${
               isEth ? item.staticT.toLocaleUpperCase() : ''

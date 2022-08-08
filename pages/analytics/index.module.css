@@ -19,6 +19,7 @@
 .content {
   min-height: 650px;
   padding: 30px;
+  padding-top:0px !important;
 }
 
 .table,
@@ -30,10 +31,12 @@
 }
 
 .chartList {
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15)
+  ;
   min-height: 650px;
+  border-radius: 12px;
 }
 
 .fixed {
@@ -46,12 +49,17 @@
   padding: 0 30px;
   width: 96%;
   background-color: #111a1b;
+
 }
 
 .tmbg {
-  width: 96%;
-  width: 1800px;
-  height: 75px;
+  /* width: 96%;
+  width: 1800px; */
+  padding: 15px;
+  padding-left: 40px;
+  border-bottom:1px solid rgba(255, 255, 255, 1) ;
+  /* height: 75px; */
+  
   background-color: #111a1b;
 }
 
@@ -113,6 +121,7 @@
   box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
   border-bottom: none;
   min-height: 650px;
+  border-radius: 12px;
 }
 
 .topContainer {
@@ -125,6 +134,7 @@
   background: #041111;
   margin-top: 20px;
   padding: 20px;
+  border-radius: 8px;
 }
 
 .tabContainer {
@@ -133,7 +143,7 @@
 }
 
 .cvColor {
-  background-color: rgba(194, 157, 135, 1);
+  background-color: rgba(255, 224, 206, 1);
 }
 
 .dclColor {
@@ -141,7 +151,7 @@
 }
 
 .sandboxColor {
-  background-color: rgba(0, 117, 255, 1);
+  background-color: rgba(119, 152, 238, 1);
 }
 
 .spaceColor {
@@ -149,13 +159,16 @@
 }
 
 .nftColor {
-  background-color: rgba(132, 193, 14, 1);
+  background-color: rgba(175, 234, 101, 1);
 }
 
 .webbColor {
-  background-color: rgba(229, 68, 155, 1);
+  background-color: rgba(245, 120, 157, 1);
 }
 
 .osdColor {
+  background-color: rgba(192, 151, 234, 1);
+}
+.othersideColor{
   background-color: rgba(255, 248, 187, 1);
 }

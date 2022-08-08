@@ -256,6 +256,7 @@ export default function ChartLine({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*valueAvg')
         .color('type')
         .style({
@@ -285,6 +286,7 @@ export default function ChartLine({
 
       chart.current
         .line()
+        .shape('smooth')
         .position('time*valueAvg')
         .size(2)
         .tooltip(false)

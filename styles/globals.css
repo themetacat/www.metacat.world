@@ -98,6 +98,7 @@ a {
   background: rgb(7 36 41) !important;
   border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
   box-sizing: border-box !important;
+  border-radius: 8px;
 }
 .leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar{
   display: none !important;

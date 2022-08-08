@@ -213,6 +213,7 @@ export default function ChartLineToolTipSimple({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('type')
         .style({
@@ -236,6 +237,7 @@ export default function ChartLineToolTipSimple({
 
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
         .tooltip(false)

@@ -164,6 +164,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('name')
         .style({
@@ -189,6 +190,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
 
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
         .tooltip(false)

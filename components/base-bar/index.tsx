@@ -30,7 +30,7 @@ export default function BaseBar({
   labelText,
   limit,
   barWidth = 35,
-  legend1 = {  color: [95, 213, 236] },
+  legend1 = {  color: [172, 174, 242] },
   textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(true);
