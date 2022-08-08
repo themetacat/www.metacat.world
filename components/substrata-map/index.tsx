@@ -482,38 +482,38 @@ function SubstrataMap({
     [null],
   );
 
-  // const getCanvas = React.useCallback(
-  //   (text) => {
-  //     const canvas = document.createElement('canvas');
+  const getCanvas = React.useCallback(
+    (text) => {
+      const canvas = document.createElement('canvas');
 
-  //     const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d');
 
-  //     ctx.font = `12px Arial`;
+      ctx.font = `12px Arial`;
 
-  //     const fontSize = 13;
-  //     const cdiv = ctx.measureText(text).width;
+      const fontSize = 13;
+      const cdiv = ctx.measureText(text).width;
 
-  //     const width = cdiv * 1.3;
-  //     const height = 28;
+      const width = cdiv * 1.3;
+      const height = 28;
 
-  //     canvas.width = width;
-  //     canvas.height = height;
+      canvas.width = width;
+      canvas.height = height;
 
-  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     // ctx.fillStyle = 'rgba(100,200,0, 0.7)';
-  //     // ctx.fillRect(0, 0, width, height);
-  //     ctx.font = `${fontSize}px bold`;
-  //     ctx.textAlign = 'center';
-  //     ctx.textBaseline = 'middle';
-  //     ctx.strokeStyle = '#000';
-  //     ctx.strokeText(text, width / 2, height / 2);
-  //     ctx.lineWidth = 3;
-  //     ctx.fillStyle = '#fff';
-  //     ctx.fillText(text, width / 2, height / 2);
-  //     return canvas;
-  //   },
-  //   [null],
-  // );
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.fillStyle = 'rgba(100,200,0, 0.7)';
+      // ctx.fillRect(0, 0, width, height);
+      ctx.font = `${fontSize}px bold`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.strokeStyle = '#000';
+      ctx.strokeText(text, width / 2, height / 2);
+      ctx.lineWidth = 3;
+      ctx.fillStyle = '#fff';
+      ctx.fillText(text, width / 2, height / 2);
+      return canvas;
+    },
+    [null],
+  );
 
   const requestDeatil = React.useCallback(
     async (id) => {
@@ -598,13 +598,13 @@ function SubstrataMap({
         }
       });
 
-      map.on('movestart', () => {
+      map.on('movestart', (e) => {
         if (popDetail && popDetail.current) {
           updatePop.current.need = true;
         }
       });
 
-      map.on('move', () => {
+      map.on('move', (e) => {
         if (updatePop.current.need && popDetail.current && (popDetail.current as any).source) {
           const containerPoint = map.latLngToContainerPoint((popDetail.current as any).source);
           (popDetail.current as any).style.top = `${containerPoint.y}px`;
@@ -620,7 +620,7 @@ function SubstrataMap({
     }
 
     if (clickToJump) {
-      map.on('click', function () {
+      map.on('click', function (e) {
         Router.push('/heatmap?type=substrata');
       });
     }
@@ -718,5 +718,5 @@ function SubstrataMap({
     </div>
   );
 }
-XMLSerializer
+
 export default SubstrataMap;
