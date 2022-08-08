@@ -598,13 +598,13 @@ function SubstrataMap({
         }
       });
 
-      map.on('movestart', (e) => {
+      map.on('movestart', () => {
         if (popDetail && popDetail.current) {
           updatePop.current.need = true;
         }
       });
 
-      map.on('move', (e) => {
+      map.on('move', () => {
         if (updatePop.current.need && popDetail.current && (popDetail.current as any).source) {
           const containerPoint = map.latLngToContainerPoint((popDetail.current as any).source);
           (popDetail.current as any).style.top = `${containerPoint.y}px`;
@@ -620,7 +620,7 @@ function SubstrataMap({
     }
 
     if (clickToJump) {
-      map.on('click', function (e) {
+      map.on('click', function () {
         Router.push('/heatmap?type=substrata');
       });
     }
