@@ -58,7 +58,7 @@ import {
 
 
 import style from './index.module.css';
-import { className } from 'babylonjs/index';
+
 
 const TABData = [
   {
