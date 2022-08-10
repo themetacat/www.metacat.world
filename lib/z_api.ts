@@ -616,62 +616,59 @@ class API {
     return json;
   }
 
-   // 14.7 获取当前登录者 dece 单个地块一段时间内的每日流量统计接口
+  //  // 14.7 获取当前登录者 dece 单个地块一段时间内的每日流量统计接口
 
-   public async req_dece_parcel_traffic_list(
-    token: string,
-  ): Promise<any> {
-    // const url = `${this.url}/user/get_cv_parcel_traffic_list${search}`;
-    const url = `http://8.130.23.16/api/v1/user/get_dcl_parcel_traffic_detail_info`;
-    const result = await fetch(url, {
-      method: 'get',
-      mode: 'cors',
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
+  //  public async req_dece_parcel_traffic_list(
+  //   token: string,
+  // ): Promise<any> {
+  //   const url = `${this.url}/user/get_dcl_parcel_traffic_detail_info`;
+  //   const result = await fetch(url, {
+  //     method: 'get',
+  //     mode: 'cors',
+  //     headers: {
+  //       Authorization: token,
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //   });
     
-    const json = await result.json();
+  //   const json = await result.json();
     
-    return json;
-  }
+  //   return json;
+  // }
 
-    // 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
+  //   // 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
 
-    public async req_deceData_parcel_traffic_daily(token): Promise<any> {
-      // const url = `${this.url}/user/get_cv_parcel_traffic_percentage`;
-      const url = `http://8.130.23.16/api/v1/user/get_dcl_parcel_traffic_percentage`;
-      const result = await fetch(url, {
-        method: 'get',
-        mode: 'cors',
-        headers: {
-          Authorization: token,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-      const json = await result.json();
+  //   public async req_deceData_parcel_traffic_daily(token): Promise<any> {
+  //     const url = `${this.url}/user/get_cv_parcel_traffic_percentage`;
+  //     const result = await fetch(url, {
+  //       method: 'get',
+  //       mode: 'cors',
+  //       headers: {
+  //         Authorization: token,
+  //         'Content-Type': 'application/x-www-form-urlencoded',
+  //       },
+  //     });
+  //     const json = await result.json();
   
-      return json;
-    }
+  //     return json;
+  //   }
 
-    // 14.9 获取当前登录者 Cryptovoxels 地块每日流量总数接口
+  //   // 14.9 获取当前登录者 Cryptovoxels 地块每日流量总数接口
 
-  public async req_dece_parcel_traffic(token: string): Promise<any> {
-    // const url = `${this.url}/user/get_cv_parcel_traffic_daily_stats`;
-    const url = `http://8.130.23.16/api/v1/user/get_dcl_parcel_traffic_daily_stats`;
-    const result = await fetch(url, {
-      method: 'get',
-      mode: 'cors',
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
-    const json = await result.json();
+  // public async req_dece_parcel_traffic(token: string): Promise<any> {
+  //   const url = `${this.url}/user/get_dcl_parcel_traffic_daily_stats`;
+  //   const result = await fetch(url, {
+  //     method: 'get',
+  //     mode: 'cors',
+  //     headers: {
+  //       Authorization: token,
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //   });
+  //   const json = await result.json();
 
-    return json;
-  }
+  //   return json;
+  // }
 
   // 15.1 获取 Metaverse Learn 文章列表接口
 

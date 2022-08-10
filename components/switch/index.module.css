@@ -1,8 +1,10 @@
 .container {
   position: relative;
+  /* width: 1760px; */
+  margin: 15px auto;
 }
 .base {
-  width: 220px !important;
+  width: 12% !important;
   min-height: 60px;
   padding: 0 50px;
   /* border: 1px solid #086975; */
@@ -86,6 +88,7 @@
 
 .swiper-wrapper {
   transition-timing-function: linear !important;
+  
 }
 .underline{
   width: 1800px !important;
