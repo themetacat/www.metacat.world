@@ -3,6 +3,7 @@ import React from 'react';
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
+import { className } from 'babylonjs/index';
 
 import { useRouter, withRouter } from 'next/router';
 import Page from '../../components/page';
