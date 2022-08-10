@@ -423,6 +423,7 @@ export default function AnalyticsIndex(props) {
             dataHandler={getDecentralandStats}
             barWidth={18}
             textColor={style.cvColor}
+            legend2 = {{ label: '', color: [225, 110, 92] }}
             options={[
               {
                 label: 'Daily',
@@ -1035,7 +1036,7 @@ export default function AnalyticsIndex(props) {
             labelText={'Total Number Of Landlords At The End Of Each Month'}
             dataHandlder={getchartWebb}
             defaultColor={[245, 120, 157]}
-            textColor={style.cvColor}
+            textColor={style.webbColor}
           ></ChartWebb>
         </>
       );

@@ -13,22 +13,26 @@ type Props = {
   textColor?;
 };
 
-export default function ProfileDetailDece({ label, dataHandlder, token ,  textColor,}: Props) {
+export default function ProfileDetailDece({ label, dataHandlder, token, textColor, }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [data, setData] = React.useState([]);
   const [datas, setDatas] = React.useState([]);
+  const [totalVisits, settotalVisits] = React.useState([]);
 
   const requestData = React.useCallback(async (tok) => {
     setLoading(true);
     try {
       const tk = await tok;
       const result = await dataHandlder(tk);
-      if (result.data.date_list) {
-        setData(result.data.date_list);
-        setDatas(result.data.traffic_data_list);
+      if (result.data[0].daily_visits) {
+        setData(result.data[0].name);
+        setDatas(result.data[0].daily_visits);
+        settotalVisits(result.data[0].total_visits);
       }
-      
+      console.log(result.data[0].daily_visits, 8888888888);
+      console.log(result.data[0], "就是data数据");
+
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -62,48 +66,58 @@ export default function ProfileDetailDece({ label, dataHandlder, token ,  textCo
             <th className={cn(style.th1, style.title)}>
               <div>Parcel</div>
             </th>
-            <th className={cn(style.th2, style.title)}>
+            {/* <th className={cn(style.th2, style.title)}>
               <div>lsland</div>
             </th>
             <th className={cn(style.th3, style.title)}>
               <div>Suburb</div>
-            </th>
+            </th> */}
             <th className={cn(style.th4, style.title)}>
               <div>Total Traffic</div>
             </th>
-            {data.map((item) => {
+
+            {datas.map((item) => {
               return (
-                <th key={item} className={style.title}>
-                  <div>{item}</div>
-                </th>
+                <>
+                  <th className={cn(style.th4, style.title)}>
+                    <div className={cn('flex justify-center items-center')}>{item.time}</div>
+                  </th>
+
+                  {/* <td className={style.item}>
+                    <div className={cn('flex justify-center items-center')}>{item.value}</div>
+                  </td> */}
+                </>
+              );
+            })}
+
+          </tr>
+          {/* <tr>
+            <td className={style.item}>
+              <div className={cn('flex justify-center items-center')}>{data}</div>
+            </td>
+            <td className={style.item}>
+              <div className={cn('flex justify-center items-center')}>{totalVisits}</div>
+            </td>
+          </tr> */}
+          <tr key={uuid()}>
+
+            <td className={style.item}>
+              <div className={cn('flex justify-center items-center')}>{data}</div>
+            </td>
+            <td className={style.item}>
+              <div className={cn('flex justify-center items-center')}>{totalVisits}</div>
+            </td>
+            {datas.map((item) => {
+              return (
+                <>
+                  <td className={style.item} key={uuid()}>
+                    <div className={cn('flex justify-center items-center')}>{item.value}</div>
+                  </td>
+                </>
               );
             })}
           </tr>
-          {datas.map((item) => {
-            return (
-              <tr key={uuid()}>
-                <td className={style.item}>
-                  <div>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
-                </td>
-                <th className={style.item}>
-                  <div>{item.island}</div>
-                </th>
-                <td className={style.item}>
-                  <div>{item.suburb}</div>
-                </td>
-                <td className={style.item}>
-                  <div className={cn('flex justify-center items-center')}>{item.total_traffic}</div>
-                </td>
-                {item.traffic_detail.map((i) => {
-                  return (
-                    <td className={style.item} key={uuid()}>
-                      <div className={cn('flex justify-center items-center')}>{i}</div>
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+
         </tbody>
       </table>
     );
@@ -115,10 +129,10 @@ export default function ProfileDetailDece({ label, dataHandlder, token ,  textCo
 
   return (
     <div>
-      <div className={cn('w-full p-5', style.content)}  style={{ borderRadius:"8px" }}>
+      <div className={cn('w-full p-5', style.content)} style={{ borderRadius: "8px" }}>
         <div>
           <div className={cn('w-full flex justify-between item-center', style.header)}>
-            <ChartTitle text={label}  color={textColor}></ChartTitle>
+            <ChartTitle text={label} color={textColor}></ChartTitle>
           </div>
           <div
             className={cn(

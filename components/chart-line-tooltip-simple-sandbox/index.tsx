@@ -240,7 +240,7 @@ export default function ChartLineToolTipSimple({
         .shape('smooth')
         .position('time*value')
         .size(2)
-        .tooltip(false)
+        .tooltip(true)
         .color('type', [`rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`]);
       chart.current.render();
     },

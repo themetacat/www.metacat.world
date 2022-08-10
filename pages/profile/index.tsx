@@ -20,9 +20,12 @@ import Popup from '../../components/popup';
 import store from '../../store/profile';
 import BaseChart from '../../components/base-chart';
 import PieChart from '../../components/pie-chart';
+import PieChartDece from '../../components/pie-chart-dece';
 import ProfileDetail from '../../components/profiledetail';
+import ProfileDetailDece from '../../components/profiledetail-dece';
 import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
+import BaseBarDece from '../../components/parcel-basebardece';
 import TrafficBar from '../../components/parcel-traffic_bar';
 import Creator from '../../components/creator';
 import DaoModelList2 from '../../components/dao-model-list2';
@@ -44,12 +47,17 @@ import {
   req_cv_parcel_traffic,
   req_cv_parcel_traffic_daily,
   req_cv_parcel_month_traffic_detail,
+  req_deceData_parcel_traffic_daily,
+  req_dece_parcel_traffic_list,
+  req_dece_parcel_traffic,
   req_cv_parcel_traffic_list,
   req_get_user_wearable,
   req_set_wearable_show_status,
 } from '../../service/z_api';
 
+
 import style from './index.module.css';
+import { className } from 'babylonjs/index';
 
 const TABData = [
   {
@@ -68,6 +76,11 @@ const REPORTTAB = [
     label: 'Voxels',
     icon: '/images/cvLogo.png',
     type: 'cryptovoxels',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
   },
 ];
 
@@ -146,6 +159,7 @@ function ProfilePage(r) {
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
+  const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
@@ -331,10 +345,34 @@ function ProfilePage(r) {
     },
     [orginData, tabState],
   );
+  const onTabChangeTR = React.useCallback(
+    async (tab) => {
+      setShowType(tab);
+      if (tabState === tab) return;
+      setLoading(true);
+      setTabState(tab);
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
+      if (tab === 'cryptovoxels') {
+        setDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'decentraland') {
+        // alert("kkkkk")
+        setDclDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'dcl' }));
+      }
+    },
+    [orginData, tabState],
+  );
 
-  const onTabChangeTR = React.useCallback((i) => {
-    setTabStateTR(i);
-  }, []);
+  // const onTabChangeTR = React.useCallback((i) => {
+
+  //   setTabStateTR(i);
+
+  // }, []);
 
   const resultHandler = React.useCallback(
     (res, callback) => {
@@ -971,82 +1009,160 @@ function ProfilePage(r) {
       );
     }
     if (routeTab === 'trafficreport') {
-      return (
-        <>
-          <div className={cn('tab-list flex mt-5', style.allHeight)}>
-            <div className={cls}></div>
-            <div className="main-content flex px-0">
-              {REPORTTAB.map((item) => {
-                return (
-                  <Tab
-                    active={tabState === item.type}
-                    isMini={true}
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    onClick={() => {
-                      onTabChangeTR(item.type);
-                    }}
-                  />
-                );
-              })}
+      if (showType === "cryptovoxels") {
+        return (
+          <>
+            <div className={cn('tab-list flex mt-5', style.allHeight)}>
+              <div className={cls}></div>
+              <div className="main-content flex px-0">
+                {REPORTTAB.map((item) => {
+                  return (
+                    <Tab
+                      active={tabState === item.type}
+                      isMini={true}
+                      key={item.label}
+                      label={item.label}
+                      icon={item.icon}
+                      onClick={() => {
+                        onTabChangeTR(item.type);
+                      }}
+                    />
+                  );
+                })}
+                <div className={cls} />
+              </div>
               <div className={cls} />
             </div>
-            <div className={cls} />
-          </div>
-          <div className={cn(style.content)}>
-            <BaseChart className=" my-5">
-              <BaseBar
-                id={'parcel1'}
-                labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
-                dataHandlder={req_cv_parcel_traffic}
-                barWidth={20}
-                limit={21}
-                token={refreshTK()}
-              ></BaseBar>
-            </BaseChart>
-            <BaseChart className=" my-5">
-              <TrafficBar
-                id={'parcel3'}
-                labelText={'DAILY TRAFFIC'}
-                dataHandlder={req_cv_parcel_traffic_list}
-                barWidth={20}
-                limit={21}
-                token={refreshTK()}
-              ></TrafficBar>
-            </BaseChart>
-            <BaseChart className=" my-5" type={true}>
-              <PieChart
-                id="piechart2"
-                labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
-                dataHandlder={req_cv_parcel_traffic_daily}
-                token={refreshTK()}
-                options={[
-                  {
-                    label: 'Day',
-                    value: 'day',
-                  },
-                  {
-                    label: 'Week',
-                    value: 'week',
-                  },
-                  {
-                    label: 'Month',
-                    value: 'month',
-                  },
-                ]}
-              ></PieChart>
-            </BaseChart>
-            <BaseChart className=" my-5" type={true}>
-              <ProfileDetail
-                label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
-                dataHandlder={req_cv_parcel_month_traffic_detail}
-                token={refreshTK()}
-              ></ProfileDetail>
-            </BaseChart>
-          </div>
-        </>
-      );
+            <div className={cn(style.content)}>
+              <BaseChart className=" my-5">
+                <BaseBar
+                  id={'parcel1'}
+                  labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
+                  dataHandlder={req_cv_parcel_traffic}
+                  barWidth={20}
+                  limit={21}
+                  textColor={style.nftColor}
+                  token={refreshTK()}
+                ></BaseBar>
+              </BaseChart>
+              {/* <BaseChart className=" my-5">
+                <TrafficBar
+                  id={'parcel3'}
+                  labelText={'DAILY TRAFFIC'}
+                  dataHandlder={req_cv_parcel_traffic_list}
+                  barWidth={20}
+                  limit={21}
+                  textColor={style.nftColor}
+                  token={refreshTK()}
+                ></TrafficBar>
+              </BaseChart> */}
+              <BaseChart className=" my-5" type={true}>
+                <PieChart
+                  id="piechart2"
+                  labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+                  dataHandlder={req_cv_parcel_traffic_daily}
+                  token={refreshTK()}
+                  textColor={style.nftColor}
+                  options={[
+                    {
+                      label: 'Day',
+                      value: 'day',
+                    },
+                    {
+                      label: 'Week',
+                      value: 'week',
+                    },
+                    {
+                      label: 'Month',
+                      value: 'month',
+                    },
+                  ]}
+                ></PieChart>
+              </BaseChart>
+              <BaseChart className=" my-5" type={true}>
+                <ProfileDetail
+                  label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+                  dataHandlder={req_cv_parcel_month_traffic_detail}
+                  token={refreshTK()}
+                  textColor={style.nftColor}
+                ></ProfileDetail>
+              </BaseChart>
+            </div>
+          </>
+        );
+      }
+      if (showType === "decentraland") {
+        return (
+          <>
+            <div className={cn('tab-list flex mt-5', style.allHeight)}>
+              <div className={cls}></div>
+              <div className="main-content flex px-0">
+                {REPORTTAB.map((item) => {
+                  return (
+                    <Tab
+                      active={tabState === item.type}
+                      isMini={true}
+                      key={item.label}
+                      label={item.label}
+                      icon={item.icon}
+                      onClick={() => {
+                        onTabChangeTR(item.type);
+                      }}
+                    />
+                  );
+                })}
+                <div className={cls} />
+              </div>
+              <div className={cls} />
+            </div>
+            <div className={cn(style.content)}>
+              <BaseChart className=" my-5">
+                <BaseBarDece
+                  id={'parcel1'}
+                  labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
+                  dataHandlder={req_dece_parcel_traffic}
+                  barWidth={20}
+                  limit={21}
+                  textColor={style.deceColor}
+                  token={refreshTK()}
+                ></BaseBarDece>
+              </BaseChart>
+              <BaseChart className=" my-5" type={true}>
+                <PieChartDece
+                  id="piechart2"
+                  labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+                  dataHandlder={req_deceData_parcel_traffic_daily}
+                  token={refreshTK()}
+                  textColor={style.deceColor}
+                  options={[
+                    {
+                      label: 'Day',
+                      value: 'day',
+                    },
+                    {
+                      label: 'Week',
+                      value: 'week',
+                    },
+                    {
+                      label: 'Month',
+                      value: 'month',
+                    },
+                  ]}
+                ></PieChartDece>
+              </BaseChart>
+              <BaseChart className=" my-5" type={true}>
+                <ProfileDetailDece
+                  label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+                  dataHandlder={req_dece_parcel_traffic_list}
+                  token={refreshTK()}
+                  textColor={style.deceColor}
+                ></ProfileDetailDece>
+              </BaseChart>
+            </div>
+          </>
+        )
+
+      }
     }
     if (routeTab === 'wearablelist') {
       return (
@@ -1136,18 +1252,18 @@ function ProfilePage(r) {
                 >
                   {showOrHideState
                     ? showOrHide[wearablesNavState].map((item, index) => {
-                        return (
-                          <li
-                            className={style.showOrHideItem}
-                            key={index}
-                            onClick={() => {
-                              settingShowOrHide(item.type);
-                            }}
-                          >
-                            {item.label}
-                          </li>
-                        );
-                      })
+                      return (
+                        <li
+                          className={style.showOrHideItem}
+                          key={index}
+                          onClick={() => {
+                            settingShowOrHide(item.type);
+                          }}
+                        >
+                          {item.label}
+                        </li>
+                      );
+                    })
                     : null}
                 </ul>
               </div>
@@ -1228,9 +1344,8 @@ function ProfilePage(r) {
 
       {wearablesShowOrHideState ? (
         <div className={style.settingShowOrHide}>
-          {`${wearablesSleceteIdList.length}/${
-            wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
-          } selected`}
+          {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
+            } selected`}
           <div
             onClick={() => {
               setWearablesShowOrHideState(false);

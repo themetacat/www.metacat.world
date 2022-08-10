@@ -5,13 +5,14 @@ import cn from 'classnames';
 import ChartTitle from '../chart-title';
 import Status from '../status';
 import { formatNum } from '../../common/utils';
-import SelecterTraffic from '../chart-select-traffic';
+
+import { req_cv_parcel_traffic } from '../../service/z_api';
 
 import style from './index.module.css';
 
 type Props = {
   id?: string;
-  dataHandlder?: (token: string, id: number, day_total: number) => any;
+  dataHandlder?: (token: string) => any;
   defaultColor?: Array<number>;
   gradient?: boolean;
   className?: string;
@@ -22,25 +23,22 @@ type Props = {
   textColor?;
 };
 
-export default function BaseBar({
+export default function BaseBarDece({
   id,
   dataHandlder,
-  defaultColor = [255, 224, 206],
+  defaultColor = [240, 117, 97],
   gradient = true,
   className,
   labelText,
   limit,
-  barWidth = 35,
-  textColor,
+  barWidth = 45,
   token,
+  textColor,
 }: Props) {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const chart = React.useRef(null);
   const [data, setData] = React.useState([]);
-  const [showType, setShowType] = React.useState({ parcel_id: null, name: '' });
-  const [selectType, setSelectType] = React.useState(false);
-  const visible1 = React.useRef();
 
   const initChart = React.useCallback(
     (dt) => {
@@ -186,24 +184,17 @@ export default function BaseBar({
   );
 
   const requestData = React.useCallback(
-    async (tok, i) => {
+    async (tok) => {
       setLoading(true);
       let result = null;
       try {
         const tk = await tok;
-        const res = await dataHandlder(tk, i, 30);
-        if (res.code === 100000 && res.data[0]) {
-          setData(res.data);
-          result = res.data;
-        } else {
-          setSelectType(true);
-        }
-        setLoading(false);
+        const res = await dataHandlder(tk);
+        result = res.data.reverse();
+        setData(result);
       } catch (ex) {
-        setLoading(false);
         setError(true);
       }
-
       setLoading(false);
       if (result) {
         initChart(result);
@@ -214,13 +205,14 @@ export default function BaseBar({
   );
 
   const onRetry = React.useCallback(() => {
-    requestData(token, showType.parcel_id);
+    requestData(token);
   }, [requestData]);
 
   const render = React.useMemo(() => {
     if (loading) {
       return <Status mini={true} status="loading" />;
     }
+
     if (data.length === 0) {
       return (
         <div className={style.totop}>
@@ -228,46 +220,17 @@ export default function BaseBar({
         </div>
       );
     }
+    if (error) {
+      return <Status mini={true} retry={onRetry} status="error" />;
+    }
+
     return <div id={id}></div>;
-  }, [loading, error, onRetry, data]);
-
-  // const update = React.useCallback((v) => {
-  //   setShowType(data[v]);
-  // }, []);
-
-  const changeStatic = React.useCallback((val) => {
-    if (val) {
-      setShowType(val);
-      requestData(token, val.parcel_id);
-    }
-    // if (data) {
-    // update(val);
-    // }
-  }, []);
-
-  const getSelect = React.useMemo(() => {
-    if (!selectType) {
-      return (
-        <div
-          className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)' }}
-        >
-          <SelecterTraffic
-            showArrow={true}
-            onClick={changeStatic}
-            className={style.selecterLong}
-            hasBorder={false}
-            useRef={visible1}
-            token={token}
-          ></SelecterTraffic>
-        </div>
-      );
-    }
-  }, [data, visible1, changeStatic, selectType]);
+  }, [loading, error, onRetry]);
 
   React.useEffect(() => {
+    requestData(token);
     return () => {
-      if (chart.current && data[0]) {
+      if (chart.current) {
         chart.current.destroy();
       }
     };
@@ -277,8 +240,10 @@ export default function BaseBar({
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText}  color={textColor}></ChartTitle>
-          <div className="flex items-center">{getSelect}</div>
+          <ChartTitle text={labelText} color={textColor}></ChartTitle>
+          <div className="flex items-center">
+            <div className="flex items-center mr-7"></div>
+          </div>
         </div>
         {render}
       </div>

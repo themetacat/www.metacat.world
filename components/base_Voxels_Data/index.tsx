@@ -44,7 +44,7 @@ export default function StackBar({
   dataHandler,
   // legend1 = { label: 'Primary', color: [194, 157, 135] },
   // legend2 = { label: '', color: [130, 137, 195] },
-  legend2 = { label: '', color: [255, 224, 206, 0.3] },
+  legend2 = { label: '', color: [255, 224, 206] },
   gradient = true,
   className,
   options,

@@ -29,6 +29,7 @@
 .selecter {
   height: 30px;
   /* width: 80px; */
+
   padding: 0 10px;
   z-index: 1005;
   color: #fff;
@@ -39,7 +40,8 @@
 
 .border {
   background: rgba(0, 236, 222, 0.05);
-  border: 0.5px solid rgba(0, 208, 236, 0.6);
+  border: 0.5px solid rrgba(0, 208, 236, 0.6);
+
   box-sizing: border-box;
 }
 

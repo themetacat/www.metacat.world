@@ -23,7 +23,7 @@ type Props = {
 
 };
 
-export default function PieChartZ({ id, options, labelText, dataHandlder, token,  textColor, }: Props) {
+export default function PieChartDece({ id, options, labelText, dataHandlder, token,  textColor, }: Props) {
   const visible1 = React.useRef();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -40,8 +40,8 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
         chartData = dd.map((item) => {
           return {
             name: item.name,
-            parcel_id: item.parcel_id,
-            percent: Math.round(item.percent * 100),
+            // parcel_id: item.parcel_id,
+            percent: Math.round(item.value * 100),
           };
         });
       }
@@ -93,25 +93,25 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
                 borderColor: '#fff',
                 color: (tval) => {
                   if (tval.dataIndex === 0) {
-                    return `#00D0EC`;
+                    return `#00E7AF`;
                   }
                   if (tval.dataIndex === 1) {
-                    return `#00C5F0`;
+                    return `#00EE98`;
                   }
                   if (tval.dataIndex === 2) {
-                    return `#00B6DE`;
+                    return `#00CF85`;
                   }
                   if (tval.dataIndex === 3) {
-                    return `#00A2C6`;
+                    return `#00B977`;
                   }
                   if (tval.dataIndex === 4) {
-                    return `#BBF7FF`;
+                    return `#B8FFEE`;
                   }
                   if (tval.dataIndex === 5) {
-                    return `#79EFFF`;
+                    return `#76FFDE`;
                   }
                   if (tval.dataIndex === 6) {
-                    return `#21E4FF`;
+                    return `#28FFCB`;
                   }
                 },
               },
