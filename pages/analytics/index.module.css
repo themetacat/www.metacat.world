@@ -59,7 +59,7 @@
   padding-left: 40px;
   padding-bottom:0px;
   border-bottom:1px solid rgba(255, 255, 255, 0.2) ;
-  height: 90px;
+  height: 70px;
   
   background-color: #111a1b;
 }
@@ -74,7 +74,6 @@
 .headerNav {
   width: 100%;
   height: 50px;
-  /* background: skyblue; */
   position: absolute;
   left: 0;
   bottom: 20px;
@@ -83,14 +82,17 @@
 
 .navContainer {
   width: 1200px;
-  height: 50px;
+  height: 52px;
   margin: 0 auto;
   display: flex;
+  border-radius: 8px;
+  border-radius: 8px;
+  border:1px solid rgba(0, 208, 236,1);
 }
 .nav {
   width: 600px;
   height: 50px;
-  background: #00d0ec;
+  background: linear-gradient(270deg, rgba(0, 236, 179, 1) 4.81%, rgba(0, 208, 236, 1) 150.96%);
   color: #000;
   display: flex;
   justify-content: center;
@@ -98,10 +100,11 @@
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
+  border-radius: 8px ;
 }
 
 .n {
-  background: #000000;
+  
   color: #00d0ec;
   width: 598px;
   height: 50px;
@@ -111,7 +114,8 @@
   font-weight: 500;
   font-size: 20px;
   cursor: pointer;
-  border: 1px solid #00d0ec;
+  border-radius: 8px ;
+  
 }
 
 .list {
@@ -132,7 +136,7 @@
 .allLine {
   width: 1340px;
   height: 519px;
-  background: #041111;
+  background: #000;
   margin-top: 20px;
   padding: 20px;
   border-radius: 8px;
@@ -140,36 +144,48 @@
 
 .tabContainer {
   padding: 20px;
-  background: #081616;
+  background: #000;
 }
 
 .cvColor {
   background-color: rgba(255, 224, 206, 1);
+  border-radius: 2px;
 }
 
 .dclColor {
   background-color: rgba(255, 107, 84, 1);
+  border-radius: 2px;
 }
 
 .sandboxColor {
   background-color: rgba(119, 152, 238, 1);
+  border-radius: 2px;
 }
 
 .spaceColor {
   background-color: rgba(250, 216, 23, 1);
+  border-radius: 2px;
 }
 
 .nftColor {
   background-color: rgba(175, 234, 101, 1);
+  border-radius: 2px;
 }
 
 .webbColor {
   background-color: rgba(245, 120, 157, 1);
+  border-radius: 2px;
 }
 
 .osdColor {
   background-color: rgba(192, 151, 234, 1);
+  border-radius: 2px;
 }
 .othersideColor{
   background-color: rgba(255, 248, 187, 1);
+  border-radius: 2px;
+}
+.allColor{
+  background-color:  rgba(0, 208, 236, 1) ;
+  border-radius: 2px;
 }

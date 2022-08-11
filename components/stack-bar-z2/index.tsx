@@ -57,7 +57,7 @@ export default function StackBar({
   optionsPrice,
   textColor,
 }: Props) {
-  const [staticType, setStaticType] = React.useState(options[1].value);
+  const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceType, setPriceType] = React.useState(optionsPrice[0].value);
   const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
@@ -395,7 +395,7 @@ export default function StackBar({
             showArrow={true}
             onClick={changeStatic}
             className={style.selecterLong}
-            defaultLabel={options[1].value}
+            defaultLabel={options[0].value}
             hasBorder={false}
           ></ChartSelecter>
         ) : null}

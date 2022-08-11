@@ -25,6 +25,7 @@ type Props = {
   legend8?;
   priceOptions?;
   limit?: number;
+  textColor?;
 };
 /**
  * The Sandbox
@@ -70,6 +71,7 @@ export default function AllPillar({
   options,
   priceOptions,
   limit,
+  textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -507,7 +509,7 @@ ${showKeyTypes[6]}:
           showArrow={true}
           onClick={changeStatic}
           className={style.selecterLong}
-          defaultLabel={options[1].value}
+          defaultLabel={options[0].value}
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
@@ -603,7 +605,7 @@ ${showKeyTypes[6]}:
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}></ChartTitle>
+        <ChartTitle text={labelText}  color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

@@ -64,7 +64,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
         <tbody>
           <tr>
             <th className={cn(style.th1, style.title)}>
-              <div>Parcel</div>
+            <div className={cn('flex justify-center items-center')}>Parcel</div>
             </th>
             {/* <th className={cn(style.th2, style.title)}>
               <div>lsland</div>
@@ -73,7 +73,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
               <div>Suburb</div>
             </th> */}
             <th className={cn(style.th4, style.title)}>
-              <div>Total Traffic</div>
+            <div className={cn('flex justify-center items-center')}>Total Traffic</div>
             </th>
 
             {datas.map((item) => {

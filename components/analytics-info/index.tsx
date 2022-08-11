@@ -15,9 +15,10 @@ type optionItem = {
 type Props = {
   options?: Array<optionItem>;
   labelText?: string;
+  textColor?;
 };
 
-export default function AnalyticsInfo({ options, labelText }: Props) {
+export default function AnalyticsInfo({ options, labelText ,textColor}: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
@@ -34,7 +35,7 @@ export default function AnalyticsInfo({ options, labelText }: Props) {
 
   return (
     <>
-      <ChartTitle text={labelText} className={style.tobottom}></ChartTitle>
+      <ChartTitle text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
       <table className={cn('w-full', style.table)}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>

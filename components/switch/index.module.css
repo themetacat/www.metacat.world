@@ -5,7 +5,7 @@
 }
 .base {
   width: 12% !important;
-  min-height: 60px;
+  min-height: 40px;
   padding: 0 50px;
   /* border: 1px solid #086975; */
   background-color: rgba(255, 255, 255, 0.05);
@@ -13,7 +13,7 @@
   box-sizing: border-box;
   font-weight: 500;
   color: rgba(153, 153, 153, 1);
-  line-height: 60px;
+  line-height: 40px;
 }
 
 .active {
