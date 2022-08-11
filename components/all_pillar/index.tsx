@@ -76,7 +76,7 @@ export default function AllPillar({
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState(null);
-  const [showType, setShowType] = React.useState(options[1].value);
+  const [showType, setShowType] = React.useState(options[0].value);
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const chart = React.useRef(null);
   const transfromData = React.useCallback(

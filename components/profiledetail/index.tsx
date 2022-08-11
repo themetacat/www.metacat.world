@@ -20,27 +20,14 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
   const [datas, setDatas] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
-   React.useEffect(()=>{
-     console.log(bgState);
-   },[bgState])
+  React.useEffect(() => {
+    console.log(bgState);
+  }, [bgState])
 
 
-  const getgState = React.useCallback(async (tok) => {
-    setLoading(true);
-    try {
-      const tk = await tok;
-      const result = await dataHandlder(tk);
-      if (result.data.date_list) {
-        setData(result.data.date_list);
-        setDatas(result.data.traffic_data_list);
-      }
-
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      setError(true);
-    }
-  }, []);
+  const getgState = React.useCallback(() => {
+    setBgState('ccc');//值是已经改变了
+  }, [bgState]);
   const requestData = React.useCallback(async (tok) => {
     setLoading(true);
     try {
@@ -147,17 +134,11 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
               <tr key={uuid()}>
                 <td className={cn(style.item, bgState === 'ccc' ? style.hoverBg : null, index === idx ? style.hoverBg : null,)}
 
-                  onMouseEnter={() => {
-                    setBgState('ccc');
-                    setTimeout(() => {
-                      console.log(bgState, 555555);
-                    }, 1000);
-
-                  }}
+                  onMouseEnter={getgState}
                   onMouseLeave={() => {
                     setIndex(null);
                   }}>
-                  <div className={cn('flex justify-center items-center')}>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}555555555</div>
+                  <div className={cn('flex justify-center items-center')}>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
                 </td>
                 <th className={style.item}>
                   <div className={cn('flex justify-center items-center')}>{item.island}</div>
