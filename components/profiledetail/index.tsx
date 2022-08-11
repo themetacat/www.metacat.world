@@ -26,7 +26,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
 
 
   const getgState = React.useCallback(() => {
-    setBgState('ccc');//值是已经改变了
+    setBgState('ccc');
   }, [bgState]);
   const requestData = React.useCallback(async (tok) => {
     setLoading(true);
