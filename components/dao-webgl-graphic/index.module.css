@@ -1,6 +1,10 @@
 .graphic {
   /* min-width: 355px; */
   min-height: 355px;
+  text-align: center;
+  margin: 30px auto;
+  padding: 20px;
+  width: 350px;
 }
 .card {
   max-width: 385px;

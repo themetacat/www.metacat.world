@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
+import TwoNav from '../two_nav';
 import style from './index.module.css';
 
 type Props = {
@@ -42,9 +43,118 @@ const wearable = [
     link: '/wearables/wearabledao?type=chinesered',
   },
 ];
+const heatmapData = [
+  {
+    label: 'Otherside',
+    icon: '/images/osd.png',
+    type: 'otherside',
+    link: '/heatmap?type=otherside',
+  },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    type: 'sandbox',
+    link: '/heatmap?type=sandbox',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
+    link: '/heatmap?type=decentraland',
+  },
+  {
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
+    type: 'cryptovoxels',
+    link: '/heatmap?type=cryptovoxels',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/heatmap?type=somniumspace',
+  },
+  {
+    label: 'SubStrata',
+    icon: '/images/substrata.png',
+    type: 'substrata',
+    link: '/heatmap?type=substrata',
+  },
+];
+const analyticsData = [
+  {
+    label: 'Overview',
+    icon: '/images/logo.png',
+    type: 'overview',
+    link: '/analytics',
+  },
+  {
+    label: 'Otherside',
+    icon: '/images/osd.png',
+    type: 'otherside',
+    link: '/analytics?type=otherside',
+  },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    type: 'sandbox',
+    link: '/analytics?type=sandbox',
+  },
+  {
+    label: 'NFT Worlds',
+    icon: '/images/worlds.svg',
+    type: 'nftworlds',
+    link: '/analytics?type=nftworlds',
+  },
+  {
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
+    link: '/analytics?type=decentraland',
+  },
+
+  {
+    label: 'Worldwide Webb',
+    icon: '/images/unnamed.svg',
+    type: 'worldwidewebb',
+    link: '/analytics?type=worldwidewebb',
+  },
+  {
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
+    type: 'cryptovoxels',
+    link: '/analytics?type=cryptovoxels',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/analytics?type=somniumspace',
+  },
+  {
+    label: 'Netvrk',
+    icon: '/images/netvrk_logomark.svg',
+    type: 'netvrk',
+    link: '/analytics?type=netvrk',
+  },
+];
+
+function myfun() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
+
+function myfunData() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
 
 export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
+  const [heatmapState, setHeatmapState] = React.useState(false);
+  const [analyticState, setAnalyticState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
@@ -87,22 +197,53 @@ export default function PageHeader({ active, className }: Props) {
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
+            style.z,
           )}
-          // onClick={jumpToData}
+          // onClick={analyticsData}
+          onMouseEnter={() => {
+            setAnalyticState(true);
+          }}
+          onMouseLeave={() => {
+            setAnalyticState(false);
+          }}
         >
           <Link href={'/analytics'} prefetch>
             Analytics
           </Link>
+          {analyticState ? (
+            <div onClick={myfunData}>
+              <TwoNav
+                options={analyticsData}
+                className={style.cn1}
+                location={style.location4}
+              ></TwoNav>
+            </div>
+          ) : null}
         </div>
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'heatmap' ? style.active : null,
           )}
+          onMouseEnter={() => {
+            setHeatmapState(true);
+          }}
+          onMouseLeave={() => {
+            setHeatmapState(false);
+          }}
         >
           <Link href={'/heatmap?type=cryptovoxels'} prefetch>
             Heatmap
           </Link>
+          {heatmapState ? (
+            <div onClick={myfun}>
+              <TwoNav
+                options={heatmapData}
+                className={style.cn}
+                location={style.location3}
+              ></TwoNav>
+            </div>
+          ) : null}
         </div>
 
         <div

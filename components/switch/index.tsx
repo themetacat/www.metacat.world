@@ -36,6 +36,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
   );
 
   return (
+    <>
     <div
       className={cn(
         'flex justify-center items-center mt-2',
@@ -44,7 +45,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
       )}
       id={id}
     >
-      <div
+      {/* <div
         className={cn(
           'per absolute z-50 flex justify-start items-center',
           {
@@ -54,12 +55,12 @@ export default function Switch({ onActive, options, defaultValue, id, className,
         )}
       >
         <img className={style.icon} src="/images/tab-left.png"></img>
-      </div>
+      </div> */}
       <Swiper
         modules={[Navigation]}
         spaceBetween={1}
         slidesPerView="auto"
-        loop={true}
+        loop={false} 
         className={cn('w-full', style.swiper)}
         navigation={{
           prevEl: '.per',
@@ -99,7 +100,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
           );
         })}
       </Swiper>
-      <div
+      {/* <div
         className={cn(
           'next absolute z-50  flex justify-end items-center',
           {
@@ -109,7 +110,10 @@ export default function Switch({ onActive, options, defaultValue, id, className,
         )}
       >
         <img className={style.icon} src="/images/tab-right.png"></img>
-      </div>
+      </div> */}
+         
     </div>
+ <div className={style.underline}></div>
+ </>
   );
 }

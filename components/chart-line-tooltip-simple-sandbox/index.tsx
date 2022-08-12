@@ -213,6 +213,7 @@ export default function ChartLineToolTipSimple({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('type')
         .style({
@@ -236,9 +237,10 @@ export default function ChartLineToolTipSimple({
 
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
-        .tooltip(false)
+        .tooltip(true)
         .color('type', [`rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`]);
       chart.current.render();
     },

@@ -1,19 +1,56 @@
 .avater {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 60px;
+  margin-left: 36%;
 }
 
 .profile {
   height: 200px;
+  padding-left: 25%;
+  margin: 12px;
   /* background: url('/images/v5/full.png') no-repeat; */
   background-size: 100% 100%;
+}
+
+.content{
+  display: flex;
+  line-height: 14px;
+  width: 100px;
+  border-right: 2px solid  #c4c4c4;
+  height: 20px;
+  text-align: center;
+}
+
+.content2{
+  width: 120px;
+  display: flex;
+  padding-left: 20px;
+  line-height: 14px;
+  border-right: 2px solid  #c4c4c4;
+  height: 20px;
+  text-align: center;
+}
+
+.content3{
+  width: 120px;
+  display: flex;
+  padding-left: 20px;
+  line-height: 14px;
+  height: 20px;
+  text-align: center;
 }
 
 .divide {
   width: 1px;
   height: 10px;
   background-color: rgba(196, 196, 196, 1);
+}
+
+.imgSet{
+  width: 14px;
+  height: 12px;
+  margin-right: 5px;
 }
 
 .address {

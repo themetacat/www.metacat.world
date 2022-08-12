@@ -614,6 +614,58 @@ export const req_cv_parcel_traffic_list = async (
   return json;
 };
 
+// 14.7 获取当前登录者 dece 单个地块一段时间内的每日流量统计接口
+
+export const req_dece_parcel_traffic_list = async (
+  token: string,
+) => {
+  const url = `/api/get_dece_parcel_traffix`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
+export const req_deceData_parcel_traffic_daily = async (token: string) => {
+  const url = '/api/get_deceData_parcel_traffic_per';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 14.9 获取当前登录者 Cryptovoxels 地块每日流量统计接口
+
+export const req_dece_parcel_traffic = async (token: string) => {
+  const url = '/api/get_decent_parcel_traffic_daily_stats';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 15.1 获取 Metaverse Learn 文章列表接口
 
 export const req_learn_article_list = async (page: number, count: number, type: string) => {

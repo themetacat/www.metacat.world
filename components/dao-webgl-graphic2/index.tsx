@@ -68,8 +68,10 @@ export default function DaoWebglCard({
   const goToDetail = React.useCallback(() => {
     if (type === 'topic') {
       router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
+      // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
     } else {
-      router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
+      // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
+      window.open(`/wearables/detail/${model.id}?type=${'mywearables'}`);
     }
   }, [tabState, id, address]);
 

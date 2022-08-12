@@ -88,10 +88,15 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.hoverBg {
+  background-color: rgba(1, 218, 217, 0.08);
+  /* background-color: red; */
+}
 .container tr .th1 {
   min-width: 170px;
   max-width: 170px;
   min-height: 48px;
+
 }
 .container tr .th2 {
   min-width: 150px;

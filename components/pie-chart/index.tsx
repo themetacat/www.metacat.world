@@ -18,10 +18,12 @@ type Props = {
   options?: Array<optionItem>;
   labelText?: string;
   dataHandlder?;
+  textColor?;
   token: Promise<any>;
+
 };
 
-export default function PieChartZ({ id, options, labelText, dataHandlder, token }: Props) {
+export default function PieChartZ({ id, options, labelText, dataHandlder, token,  textColor, }: Props) {
   const visible1 = React.useRef();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -52,7 +54,8 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
           {
             name: 'Access From',
             type: 'pie',
-            radius: '50%',
+            // radius: '50%',
+            radius: ['30%', '55%'],
             hoverAnimated: true,
             encode: {
               x: 'name', // 指定x轴对应的值
@@ -90,25 +93,25 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
                 borderColor: '#fff',
                 color: (tval) => {
                   if (tval.dataIndex === 0) {
-                    return `#FF7575`;
-                  }
-                  if (tval.dataIndex === 1) {
-                    return `#F06AF2`;
-                  }
-                  if (tval.dataIndex === 2) {
-                    return `#FFCE1F`;
-                  }
-                  if (tval.dataIndex === 3) {
-                    return `#21D473`;
-                  }
-                  if (tval.dataIndex === 4) {
-                    return `#2276FC`;
-                  }
-                  if (tval.dataIndex === 5) {
                     return `#00D0EC`;
                   }
+                  if (tval.dataIndex === 1) {
+                    return `#00C5F0`;
+                  }
+                  if (tval.dataIndex === 2) {
+                    return `#00B6DE`;
+                  }
+                  if (tval.dataIndex === 3) {
+                    return `#00A2C6`;
+                  }
+                  if (tval.dataIndex === 4) {
+                    return `#BBF7FF`;
+                  }
+                  if (tval.dataIndex === 5) {
+                    return `#79EFFF`;
+                  }
                   if (tval.dataIndex === 6) {
-                    return `#ADADAD`;
+                    return `#21E4FF`;
                   }
                 },
               },
@@ -187,7 +190,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
       return (
         <div
           className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)' }}
+          style={{ color: 'rgba(255,255,255, 0.3)',borderRadius:"8px" }}
         >
           <ChartSelecter
             options={options}
@@ -211,10 +214,10 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token 
 
   return (
     <div>
-      <div className={cn('w-full p-5', style.content)}>
+      <div className={cn('w-full p-5', style.content)} style={{ borderRadius:"8px" }}>
         <div>
           <div className={cn('w-full flex justify-between item-center', style.header)}>
-            <ChartTitle text={labelText}></ChartTitle>
+            <ChartTitle text={labelText}  color={textColor}></ChartTitle>
             <div className="flex items-center">{getSelect}</div>
           </div>
           <div className={cn(data.length === 0 ? style.tobottom : null)}>{render}</div>

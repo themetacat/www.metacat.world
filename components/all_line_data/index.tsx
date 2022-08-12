@@ -27,6 +27,7 @@ type Props = {
   legend8?;
   priceOptions?;
   limit?: number;
+  textColor?;
 };
 /**
  * The Sandbox
@@ -72,6 +73,7 @@ export default function AllLineData({
   legend8,
   priceOptions,
   limit,
+  textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -353,6 +355,7 @@ export default function AllLineData({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*floor_price')
         .color('name')
         .style({
@@ -414,6 +417,7 @@ export default function AllLineData({
         );
       chart.current
         .line()
+        .shape('smooth')
         .position('time*floor_price')
         .size(2)
         .tooltip(false)
@@ -621,7 +625,7 @@ export default function AllLineData({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}></ChartTitle>
+        <ChartTitle text={labelText} color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className={cn('flex items-center')}>{getSelect}</div>
       </div>

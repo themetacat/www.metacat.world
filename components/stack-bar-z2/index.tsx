@@ -43,7 +43,7 @@ type Props = {
 export default function StackBar({
   id,
   dataHandler,
-  legend1 = { label: 'Primary', color: [176, 168, 91] },
+  legend1 = { label: 'Primary', color: [255, 229, 160] },
   legend2 = { label: 'Secondary', color: [139, 116, 188] },
   gradient = true,
   className,
@@ -57,7 +57,7 @@ export default function StackBar({
   optionsPrice,
   textColor,
 }: Props) {
-  const [staticType, setStaticType] = React.useState(options[1].value);
+  const [staticType, setStaticType] = React.useState(options[0].value);
   const [priceType, setPriceType] = React.useState(optionsPrice[0].value);
   const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
@@ -395,7 +395,7 @@ export default function StackBar({
             showArrow={true}
             onClick={changeStatic}
             className={style.selecterLong}
-            defaultLabel={options[1].value}
+            defaultLabel={options[0].value}
             hasBorder={false}
           ></ChartSelecter>
         ) : null}

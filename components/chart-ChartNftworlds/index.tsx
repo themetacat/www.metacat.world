@@ -150,6 +150,7 @@ export default function ChartLineSimple({
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('value')
         .style({
@@ -166,6 +167,7 @@ export default function ChartLineSimple({
 
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
         .tooltip(false)

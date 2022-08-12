@@ -20,18 +20,20 @@ type Props = {
   limit?: number;
   barWidth?: number;
   token?: Promise<any>;
+  textColor?;
 };
 
 export default function BaseBar({
   id,
   dataHandlder,
-  defaultColor = [34, 118, 252],
+  defaultColor = [255, 224, 206,],
   gradient = true,
   className,
   labelText,
   limit,
   barWidth = 45,
   token,
+  textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -238,7 +240,7 @@ export default function BaseBar({
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText}></ChartTitle>
+          <ChartTitle text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
             <div className="flex items-center mr-7"></div>
           </div>

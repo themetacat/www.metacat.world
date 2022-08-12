@@ -10,6 +10,8 @@
 }
 
 .picker{
+  border:0.5px solid #0F191B;
+  border-radius: 8px;
   position: absolute !important;
   top: 30px;
   left: 30px;

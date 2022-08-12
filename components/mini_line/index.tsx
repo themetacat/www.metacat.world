@@ -17,11 +17,12 @@ type Props = {
   legend1?;
   legend2?;
   limit?;
+  textColor?;
 };
 
 const keyTypes = ['ETH', 'MREI'];
 
-export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2, limit }: Props) {
+export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2, limit,textColor }: Props) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState(null);
@@ -164,6 +165,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
 
       chart.current
         .area()
+        .shape('smooth')
         .position('time*value')
         .color('name')
         .style({
@@ -189,6 +191,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
 
       chart.current
         .line()
+        .shape('smooth')
         .position('time*value')
         .size(2)
         .tooltip(false)
@@ -272,7 +275,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}></ChartTitle>
+        <ChartTitle text={labelText}  color={textColor}></ChartTitle>
         <div className="flex items-center">{getLenged}</div>
       </div>
       {render}

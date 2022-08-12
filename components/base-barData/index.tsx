@@ -1,13 +1,18 @@
 import React from 'react';
-import { Chart } from '@antv/g2';
 import cn from 'classnames';
+import { Chart } from '@antv/g2';
 
 import ChartTitle from '../chart-title';
+
 import Status from '../status';
+import IconLabel from '../icon-label';
+import ChartSelecter from '../chart-select';
+
 import { formatNum } from '../../common/utils';
 
 import style from './index.module.css';
 
+<<<<<<< HEAD
 type Props = {
   id?: string;
   dataHandlder?: () => any;
@@ -19,26 +24,91 @@ type Props = {
   barWidth?: number;
   textColor?;
   legend1?;
+=======
+type optionItem = {
+  label?: string;
+  value?: string;
+>>>>>>> dev
 };
 
-export default function BaseBar({
+type legend = {
+  label?: string;
+  color?: Array<number>;
+};
+
+type Props = {
+  id?: string;
+  dataHandler?: () => any;
+  // legend1?: legend;
+  legend2?: legend;
+  gradient?: boolean;
+  className?: string;
+  options?: Array<optionItem>;
+  isEth?: boolean;
+  labelText?: string;
+  showMarkerType?: string;
+  limit?: number;
+  barWidth?: number;
+  keyTypes?: Array<string>;
+  textColor?;
+};
+
+export default function StackBar({
   id,
-  dataHandlder,
-  defaultColor = [194, 157, 135],
+  dataHandler,
+  // legend1 = { label: 'Primary', color: [194, 157, 135] },
+  legend2 = { label: '', color: [225, 110, 92] },
   gradient = true,
   className,
+  options,
+  isEth = false,
   labelText,
+  showMarkerType,
   limit,
+<<<<<<< HEAD
   barWidth = 35,
   legend1 = { color: [95, 213, 236] },
+=======
+  barWidth = 25,
+  keyTypes = ['primary', 'secondary'],
+>>>>>>> dev
   textColor,
 }: Props) {
+  const [staticType, setStaticType] = React.useState(options[0].value);
+  const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
+
   const chart = React.useRef(null);
 
+  const transfromData = React.useCallback(
+    (data, type) => {
+      const result = [];
+      if (limit && data.length > limit) {
+        const l = data.length;
+        const d = l - limit * 2;
+        const last = data.slice(d);
+        last.forEach((element) => {
+          result.push({
+            ...element,
+            staticT: type,
+          });
+        });
+        return result;
+      }
+      data.forEach((element) => {
+        result.push({
+          ...element,
+          staticT: type,
+        });
+      });
+      return result;
+    },
+    [limit],
+  );
+
   const initChart = React.useCallback(
-    (daily) => {
+    (data) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -48,19 +118,12 @@ export default function BaseBar({
         autoFit: true,
         height: 210,
       });
-      if (limit && daily.data?.length > limit) {
-        const l = daily.data.length;
-        const d = l - limit;
-        chart.current.data(daily.data.slice(d));
-      } else {
-        chart.current.data(daily.data);
-      }
-      chart.current.scale('value', {
-        nice: true,
-      });
+      const tempData = transfromData(data[staticType].data, staticType);
+      chart.current.data(tempData);
+      // 设置弹窗
       chart.current.tooltip({
-        showCrosshairs: true,
         shared: true,
+        showCrosshairs: true,
         crosshairs: {
           line: {
             style: {
@@ -68,23 +131,37 @@ export default function BaseBar({
             },
           },
         },
-        marker: {
-          fill: `rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`,
-        },
         customContent: (name, items) => {
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
           let sum = 0;
+          let listItem = '';
+          let type = '';
           items.forEach((item) => {
-            sum += item.value;
+            listItem += `
+          <li class="g2-tooltip-list-item" data-index={index}>
+            <span class="g2-tooltip-name">${item.time}</span>
+            :
+            <span class="g2-tooltip-value" style="color:${item.time}">
+              <span>${formatNum(item.value)}</span>
+              <span ${isEth ? 'style="margin-left:5px"' : ''}>${
+              isEth ? item.staticT.toLocaleUpperCase() : ''
+            }</span>
+            </span>
+          </li>`;
+            sum += item.value * 1000;
+            type = item.staticT;
           });
-          const staticItem = `<div style="color:#fff;margin-bottom:12px"><span style="color:#fff; font-size: 20px; font-weight:600;">${formatNum(
-            sum,
-          )}</span></div>`;
-          container.innerHTML = title + staticItem;
+          const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${formatNum(
+            sum / 1000,
+          )}</span><span ${isEth ? 'style="margin-left:5px"' : ''}>${
+            isEth ? type.toLocaleUpperCase() : ''
+          }</span><span style="margin-left:5px">Total</span></div>`;
+          container.innerHTML = title + staticItem + listItem;
           return container;
         },
+
         domStyles: {
           'g2-tooltip': {
             background: 'rgba(0,0,0,0.5)',
@@ -106,6 +183,7 @@ export default function BaseBar({
         },
       });
 
+      // 设置图例
       chart.current.legend(false);
 
       // 设置横纵轴
@@ -126,7 +204,8 @@ export default function BaseBar({
           },
         },
         label: {
-          formatter: (text, item, index) => {
+          offsetX: barWidth / 2,
+          formatter: (text) => {
             return formatNum(parseFloat(text));
           },
         },
@@ -141,42 +220,82 @@ export default function BaseBar({
         },
         label: {
           style: { fill: 'rgba(255,255, 255, 0.85)' },
-          offsetX: barWidth / 2,
+          offsetX: 25,
           offsetY: 0,
           rotate: 1,
-          mask: 'YYYY.MM.DD',
         },
       });
 
-      chart.current
-        .interval()
-        .size(barWidth)
-        .position('time*value')
-        .color('value')
-        .style({
-          fill: gradient
-            ? `l(270) 0:rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 0.2) 1:rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`
-            : `rgba(${defaultColor[0]}, ${defaultColor[1]}, ${defaultColor[2]}, 1)`,
-        })
-        .tooltip('time*value*type', (time, value) => {
-          return {
-            value: value * 1,
-            time,
-          };
-        });
+      // 设置纵轴值
+      chart.current.scale('value', {
+        nice: true,
+      });
 
-      chart.current.render();
+      chart.current.scale('time', {
+        type: 'cat',
+        mask: 'YYYY.MM.DD',
+      });
+
+      // 数据处理
+      if (data) {
+        // chart.current.data(transfromData(data[staticType].data, staticType, limit));
+        chart.current
+          .interval()
+          .position('time*value')
+          .size(barWidth)
+          .color('type')
+          .style({
+            fields: ['type'],
+            callback: (tVal) => {
+              // if (tVal === keyTypes[0]) {
+              //   return {
+              //     fill: gradient
+              //       ? `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`
+              //       : `rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`,
+              //   };
+              // }
+              return {
+                fill: gradient
+                  ? `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`
+                  : `rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`,
+              };
+            },
+          })
+          .tooltip('time*value*type*staticT', (time, value, type, staticT) => {
+            let s = type;
+            if (type) {
+              const temp = type;
+              s = temp.charAt(0).toUpperCase() + temp.slice(1);
+            }
+            return {
+              value: value * 1,
+              type: s,
+              time,
+              color:
+                type === keyTypes[0]
+                  ? // ? `rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`
+                    `rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`
+                  : null,
+              staticT,
+            };
+          })
+          .adjust({
+            type: 'stack',
+            reverseOrder: false,
+          });
+        chart.current.render();
+      }
     },
-    [limit],
+    [staticType, limit, id, options],
   );
 
   const requestData = React.useCallback(async () => {
     setLoading(true);
     let result = null;
     try {
-      const res = await dataHandlder();
-      const { daily } = res.data;
-      result = daily;
+      const res = await dataHandler();
+      result = res.data;
+      setDataSource(result);
     } catch (ex) {
       setError(true);
     }
@@ -185,26 +304,15 @@ export default function BaseBar({
       initChart(result);
     }
     return result;
-  }, [dataHandlder]);
+  }, [dataHandler]);
 
   const onRetry = React.useCallback(() => {
     requestData();
   }, [requestData]);
 
-  const render = React.useMemo(() => {
-    if (loading) {
-      return <Status mini={true} status="loading" />;
-    }
-
-    if (error) {
-      return <Status mini={true} retry={onRetry} status="error" />;
-    }
-
-    return <div id={id}></div>;
-  }, [loading, error, onRetry]);
-
   React.useEffect(() => {
     requestData();
+
     return () => {
       if (chart.current) {
         chart.current.destroy();
@@ -212,13 +320,66 @@ export default function BaseBar({
     };
   }, [requestData]);
 
+  const changeStatic = React.useCallback(
+    (val) => {
+      setStaticType(val);
+      if (chart.current && dataSource) {
+        chart.current.changeData(transfromData(dataSource[val].data, val));
+      }
+    },
+    [dataSource, limit],
+  );
+
+  const getLenged = React.useMemo(() => {
+    if (showMarkerType !== 'sandbox') {
+      return (
+        <>
+          {/* <IconLabel
+            text={legend1.label}
+            color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
+            className="mr-5"
+          ></IconLabel> */}
+          <IconLabel
+            text={legend2.label}
+            color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
+          ></IconLabel>
+        </>
+      );
+    }
+    return null;
+  }, [legend2]);
+
+  const getSelect = React.useMemo(() => {
+    return (
+      <ChartSelecter
+        options={options}
+        showArrow={true}
+        onClick={changeStatic}
+        defaultLabel={options[0].value}
+      ></ChartSelecter>
+    );
+  }, [options, changeStatic]);
+
+  const render = React.useMemo(() => {
+    if (loading) {
+      return <Status mini={true} status="loading" />;
+    }
+
+    if (error) {
+      return <Status retry={onRetry} mini={true} status="error" />;
+    }
+
+    return <div id={id}></div>;
+  }, [loading, error, onRetry]);
+
   return (
     <div className={cn('w-full p-5', style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
           <ChartTitle text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
-            <div className="flex items-center mr-7"></div>
+            {/* <div className="flex items-center mr-7">{getLenged}</div> */}
+            {getSelect}
           </div>
         </div>
         {render}

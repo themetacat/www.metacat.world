@@ -1230,7 +1230,9 @@ function Map({
 
   const selecterRander = React.useMemo(() => {
     return (
-      <div className={cn('flex justify-between items-center', style.picker)}>
+      <div className={cn('flex justify-between items-center', style.picker)} 
+     
+      >
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter
           mini={style.change}

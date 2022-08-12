@@ -749,7 +749,7 @@ function DecentralandMap({
     <div className={style.mapContainer} onClick={onClick} onMouseLeave={handleHidePopup}>
       <div className={style.container}>
         <div className={style.bg}></div>
-        <div className={cn('flex justify-between items-center', style.picker)}>
+        <div className={cn('flex justify-between items-center', style.picker) } >
           {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
           <Selecter
             mini={style.change}

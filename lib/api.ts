@@ -186,7 +186,7 @@ class API {
   public async getDecentralandStats(): Promise<any> {
     const url = `${this.url}/get_dcl_traffic_stats`;
     const res = await fetch(url);
-    const json = await res.json();
+    const json = await res.json(); 
 
     return json;
   }

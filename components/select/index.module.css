@@ -21,6 +21,7 @@
   position: relative;
 }
 .selecter{
+  border-radius: 8px;
   background-color:rgba(15, 25, 27, 1);
   height: 48px;
   width: 148px;

@@ -26,6 +26,7 @@ type Props = {
   legend7?,
   legend8?,
   legend9?,
+  textColor?,
 };
 
 export default function Annular({
@@ -43,6 +44,7 @@ export default function Annular({
   legend7,
   legend8,
   legend9,
+  textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -85,7 +87,7 @@ export default function Annular({
             emphasis: {
               itemStyle: {
                 borderWidth: 1,
-                borderColor: '#fff',
+                borderColor: '#000',
                 fontSize: 20,
               },
               label: {
@@ -129,7 +131,7 @@ export default function Annular({
                   }
                 },
                 borderWidth: 0.5,
-                borderColor: '#fff',
+                borderColor: '#000',
               },
             },
           },
@@ -228,7 +230,7 @@ export default function Annular({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}></ChartTitle>
+        <ChartTitle text={labelText}  color={textColor}></ChartTitle>
         <div className="flex items-center">{getSelect}</div>
       </div>
       {rander}

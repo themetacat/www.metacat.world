@@ -10,14 +10,26 @@ type Props = {
   label?: string;
   dataHandlder?;
   token?: Promise<any>;
+  textColor?;
 };
 
-export default function ProfileDetail({ label, dataHandlder, token }: Props) {
+export default function ProfileDetailDece({ label, dataHandlder, token, textColor, }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [data, setData] = React.useState([]);
   const [datas, setDatas] = React.useState([]);
+  const [bgState, setBgState] = React.useState('');
+  const [index, setIndex] = React.useState(null);
+  React.useEffect(() => {
+    console.log(bgState);
+  }, [bgState])
 
+
+  const getgState = React.useCallback(() => {
+    setBgState('ccc');
+    console.log(bgState,55555);
+    
+  }, [bgState]);
   const requestData = React.useCallback(async (tok) => {
     setLoading(true);
     try {
@@ -27,6 +39,7 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
         setData(result.data.date_list);
         setDatas(result.data.traffic_data_list);
       }
+
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -57,37 +70,82 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
       <table className={cn(style.container)}>
         <tbody>
           <tr>
-            <th className={cn(style.th1, style.title)}>
-              <div>Parcel</div>
+            <th className={cn(style.th1, style.title, bgState === 'Parcel' ? style.hoverBg : null)}
+            // onMouseEnter={() => {
+            //   setBgState('Parcel');
+            //   console.log(bgState,99999);
+
+            // }}
+            // onMouseLeave={() => {
+            //   setIndex(null);
+            // }}
+            >
+              <div className={cn('flex justify-center items-center')}>Parcel</div>
             </th>
-            <th className={cn(style.th2, style.title)}>
-              <div>lsland</div>
+            <th className={cn(style.th2, style.title, bgState === 'lsland' ? style.hoverBg : null)}
+            // onMouseEnter={() => {
+            //   setBgState('lsland');
+            // }}
+            // onMouseLeave={() => {
+            //   setIndex(null);
+            // }}
+            >
+              <div className={cn('flex justify-center items-center')}>lsland</div>
             </th>
-            <th className={cn(style.th3, style.title)}>
-              <div>Suburb</div>
+            <th className={cn(style.th3, style.title, bgState === 'Suburb' ? style.hoverBg : null)}
+            // onMouseEnter={() => {
+            //   setBgState('Suburb');
+            // }}
+            // onMouseLeave={() => {
+            //   setIndex(null);
+            // }}
+            >
+              <div className={cn('flex justify-center items-center')}>Suburb</div>
             </th>
-            <th className={cn(style.th4, style.title)}>
-              <div>Total Traffic</div>
+            <th className={cn(style.th4, style.title, bgState === 'TotalTraffic' ? style.hoverBg : null)}
+            // onMouseEnter={() => {
+            //   setBgState('TotalTraffic');
+            // }}
+            // onMouseLeave={() => {
+            //   setIndex(null);
+            // }}
+            >
+              <div className={cn('flex justify-center items-center')}>Total Traffic</div>
             </th>
-            {data.map((item) => {
+            {data.map((item, idx) => {
               return (
-                <th key={item} className={style.title}>
+                //   <tr
+                //   key={idx}
+                //   className={cn('text-base font-medium', style.info)}
+                //   onMouseOver={() => {
+                //     setIndex(idx);
+                //   }}
+                //   onMouseOut={() => {
+                //     setIndex(null);
+                //   }}
+                // >
+                <th key={item} className={style.title} >
                   <div>{item}</div>
                 </th>
+                // </tr>
               );
             })}
           </tr>
-          {datas.map((item) => {
+          {datas.map((item, idx) => {
             return (
               <tr key={uuid()}>
-                <td className={style.item}>
-                  <div>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
+                <td className={cn(style.item, bgState === 'ccc' ? style.hoverBg : null, index === idx ? style.hoverBg : null,)}
+                  onMouseEnter={getgState}
+                  onMouseLeave={() => {
+                    setIndex(null);
+                  }}>
+                  <div className={cn('flex justify-center items-center')}>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
                 </td>
                 <th className={style.item}>
-                  <div>{item.island}</div>
+                  <div className={cn('flex justify-center items-center')}>{item.island}</div>
                 </th>
                 <td className={style.item}>
-                  <div>{item.suburb}</div>
+                  <div className={cn('flex justify-center items-center')}>{item.suburb}</div>
                 </td>
                 <td className={style.item}>
                   <div className={cn('flex justify-center items-center')}>{item.total_traffic}</div>
@@ -113,10 +171,10 @@ export default function ProfileDetail({ label, dataHandlder, token }: Props) {
 
   return (
     <div>
-      <div className={cn('w-full p-5', style.content)}>
+      <div className={cn('w-full p-5', style.content)} style={{ borderRadius: "8px" }}>
         <div>
           <div className={cn('w-full flex justify-between item-center', style.header)}>
-            <ChartTitle text={label}></ChartTitle>
+            <ChartTitle text={label} color={textColor}></ChartTitle>
           </div>
           <div
             className={cn(
