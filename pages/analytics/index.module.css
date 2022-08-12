@@ -20,6 +20,7 @@
   min-height: 650px;
   padding: 30px;
   padding-top:0px !important;
+  /* position: relative; */
 }
 
 .table,
@@ -47,6 +48,9 @@
   margin: 0 auto;
   z-index: 9999999999999;
   padding: 0 30px;
+  padding: 15px;
+  padding-left: 40px;
+  padding-bottom:0px;
   width: 96%;
   background-color: #111a1b;
 
@@ -65,9 +69,15 @@
 }
 
 .aboslute {
-  position: absolute;
+  position:fixed;
+  z-index: 99999999;
+  background-color: #111a1b;
+  top:0px;
   left: 0;
   right: 0;
+  padding: 15px;
+  padding-left: 40px;
+  padding-bottom:0px;
   margin: 7px auto 0;
 }
 
@@ -121,9 +131,9 @@
 .list {
   max-width: 1380px;
   min-width: 1380px;
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border: 0.5px solid rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.05);
   border-bottom: none;
   min-height: 650px;
   border-radius: 12px;
