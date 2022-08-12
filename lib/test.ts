@@ -104,7 +104,7 @@ class API {
   // 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
 
   public async req_deceData_parcel_traffic_daily(token): Promise<any> {
-    const url = `${this.url}/user/get_cv_parcel_traffic_percentage`;
+    const url = `${this.url}/user/get_dcl_parcel_traffic_percentage`;
     // const url = `http://8.130.23.16/api/v1/user/get_dcl_parcel_traffic_percentage`;
     const result = await fetch(url, {
       method: 'get',

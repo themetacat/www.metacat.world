@@ -639,7 +639,7 @@ class API {
     // 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
 
     public async req_deceData_parcel_traffic_daily(token): Promise<any> {
-      const url = `${this.url}/user/get_cv_parcel_traffic_percentage`;
+      const url = `${this.url}/user/get_dcl_parcel_traffic_percentage`;
       const result = await fetch(url, {
         method: 'get',
         mode: 'cors',
@@ -653,7 +653,7 @@ class API {
       return json;
     }
 
-    // 14.9 获取当前登录者 Cryptovoxels 地块每日流量总数接口
+   // // 14.9 获取当前登录者 dece 地块每日流量总数接口
 
   public async req_dece_parcel_traffic(token: string): Promise<any> {
     const url = `${this.url}/user/get_dcl_parcel_traffic_daily_stats`;
