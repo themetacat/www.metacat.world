@@ -616,9 +616,9 @@ class API {
     return json;
   }
 
-  //  // 14.7 获取当前登录者 dece 单个地块一段时间内的每日流量统计接口
+  // 14.7 获取当前登录者 dece 单个地块一段时间内的每日流量统计接口
 
-   public async req_dece_parcel_traffic_list(
+  public async req_dece_parcel_traffic_list(
     token: string,
   ): Promise<any> {
     const url = `${this.url}/user/get_dcl_parcel_traffic_detail_info`;
@@ -630,30 +630,30 @@ class API {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
-    
+
     const json = await result.json();
-    
+
     return json;
   }
 
-    // 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
+  // 14.8 获取当前登录者 dece 地块每日/每周/每月流量占比接口
 
-    public async req_deceData_parcel_traffic_daily(token): Promise<any> {
-      const url = `${this.url}/user/get_dcl_parcel_traffic_percentage`;
-      const result = await fetch(url, {
-        method: 'get',
-        mode: 'cors',
-        headers: {
-          Authorization: token,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
-      const json = await result.json();
-  
-      return json;
-    }
+  public async req_deceData_parcel_traffic_daily(token): Promise<any> {
+    const url = `${this.url}/user/get_dcl_parcel_traffic_percentage`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+    const json = await result.json();
 
-  //// 14.9 获取当前登录者 dece 地块每日流量总数接口
+    return json;
+  }
+
+  // 14.9 获取当前登录者 dece 地块每日流量总数接口
 
   public async req_dece_parcel_traffic(token: string): Promise<any> {
     const url = `${this.url}/user/get_dcl_parcel_traffic_daily_stats`;
