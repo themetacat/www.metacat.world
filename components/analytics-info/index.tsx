@@ -12,6 +12,7 @@ type optionItem = {
   value?: string;
   icon?: string;
 };
+
 type Props = {
   options?: Array<optionItem>;
   labelText?: string;
