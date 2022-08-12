@@ -46,10 +46,11 @@ export default function Profile({
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
       <div>
+        
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
-        
+
         <div className={cn('ml-8', style.info)}>
           <div className="flex">
             {address && address !== '' && name ? (
