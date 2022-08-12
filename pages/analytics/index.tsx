@@ -1630,6 +1630,7 @@ export default function AnalyticsIndex(props) {
                 'w-full mt-7 p-5 flex flex-col justify-start items-center',
                 style.chartList,
               )}
+              style={{marginTop:"25px"}}
             >
               {renderChartList}
             </div>
