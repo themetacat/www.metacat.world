@@ -48,17 +48,7 @@ export default function Profile({
       <div>
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
-          {/* <div style={{ color: '#fff', fontSize: '18px', display: 'flex', paddingLeft: '35%' }}>
-            <span>BCA Gallery</span>
-            <img
-              src={`/images/icon/bianji.png`}
-              style={{ width: '25px', height: '25px', marginLeft: '12px' }}
-            ></img>
-          </div> */}
-          {/* <div style={{ color: '#6a6f6e' }}>Area:Brazi</div> */}
-
         </div>
-        
         <div className={cn('ml-8', style.info)}>
           <div className="flex">
             {address && address !== '' && name ? (
@@ -72,7 +62,7 @@ export default function Profile({
                 classname={'text-2xl font-semibold mb-4'}
               ></ProfileIconLabel>
             ) : null}
-            
+
             {!name && name === '' ? (
               <ProfileIconLabel
                 label={address}
