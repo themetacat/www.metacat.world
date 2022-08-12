@@ -48,7 +48,7 @@ export default function Profile({
       <div >
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
-          {/* <div style={{ color: '#fff', fontSize: '18px', display: 'flex', paddingLeft: '35%' }}>
+          {/* <div style={{ color: '#fff', fontSize: '18px', display: 'flex', paddingLeft: '35px' }}>
             <span>BCA Gallery</span>
             <img
               src={`/images/icon/bianji.png`}
@@ -56,7 +56,7 @@ export default function Profile({
             ></img>
           </div> */}
           {/* <div style={{ color: '#6a6f6e' }}>Area:Brazi</div> */}
-          
+
         </div>
         
         <div className={cn('ml-8', style.info)}>
