@@ -34,8 +34,7 @@
 .chartList {
   border: 0.5px solid rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15)
-  ;
+  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15);
   min-height: 650px;
   border-radius: 12px;
 }
@@ -70,17 +69,12 @@
 
 .aboslute {
   position:fixed;
-  height: 65px;
+  height: 42px;
   z-index: 99999999;
   background-color: #111a1b;
   border-bottom:1px solid rgba(255, 255, 255, 0.2) ;
   top:0px;
-  left: 0;
-  right: 0;
-  padding: 15px;
-  padding-left: 40px;
-  padding-bottom:0px;
-  margin: 7px auto 0;
+  margin: 0px auto 0;
 }
 
 .headerNav {
@@ -135,8 +129,7 @@
   min-width: 1380px;
   border: 0.5px solid rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.05);
-  border-bottom: none;
+  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15);
   min-height: 650px;
   border-radius: 12px;
 }
