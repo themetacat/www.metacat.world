@@ -6,8 +6,6 @@ import style from './index.module.css';
 import ChartTitle from '../chart-title';
 import Status from '../status';
 
-import { formatNum } from '../../common/utils';
-
 type Props = {
   label?: string;
   dataHandlder?;
@@ -29,8 +27,8 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
 
   const getgState = React.useCallback(() => {
     setBgState('ccc');
-    console.log(bgState, 55555);
-
+    console.log(bgState,55555);
+    
   }, [bgState]);
   const requestData = React.useCallback(async (tok) => {
     setLoading(true);
@@ -73,12 +71,12 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
         <tbody>
           <tr>
             <th className={cn(style.th1, style.title)}
-              onMouseEnter={() => {
-                setBgState('Parcel');
-              }}
-              onMouseLeave={() => {
-                setIndex(null);
-              }}
+            onMouseEnter={() => {
+              setBgState('Parcel');
+            }}
+            onMouseLeave={() => {
+              setIndex(null);
+            }}
             >
               <div className={cn('flex justify-center items-center')}>Parcel</div>
             </th>
@@ -124,17 +122,17 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
                 //     setIndex(null);
                 //   }}
                 // >
-                <th key={idx} className={cn(style.title, bgState === 'Parcel' ? style.hoverBg : null, index === idx ? style.hoverBg : null)}
-                  onMouseEnter={() => {
-                    setBgState('Parcel');
-                    console.log(bgState, 8895);
-                  }}
-                  onMouseLeave={() => {
-                    setIndex(null);
-                  }}
+                <th key={item} className={cn(style.title,bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null)} 
+                onMouseEnter={() => {
+                  setBgState('Parcel');
+                  console.log(bgState,8895);
+                }}
+                onMouseLeave={() => {
+                  setBgState(null);
+                  setIndex(null);
+                }}
                 >
-                  {formatNum(item, false)}
-                  {/* <div>{item}</div> */}
+                  <div>{item}</div>
                 </th>
                 // </tr>
               );
@@ -142,20 +140,20 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
           </tr>
           {datas.map((item, idx) => {
             return (
-              <tr key={idx}
-                onMouseOver={() => {
-                  setIndex(idx);
-                }}
-                onMouseOut={() => {
-                  setIndex(null);
-                }}>
-                <th className={cn('', style.item,
-                  bgState === 'Parcel' ? style.hoverBg : null,
-                  index === idx ? style.hoverBg : null,
+              <tr key={idx}   
+              onMouseOver={() => {
+                setIndex(idx);
+              }}
+              onMouseOut={() => {
+                setIndex(null);
+              }}>
+                <th className={cn(style.item, 
+                bgState === 'Parcel' ? style.hoverBg : null,  
+                index === idx ? style.hoverBg : null,
                 )}
                   onMouseEnter={() => {
                     setBgState('Parcel');
-                    console.log(bgState, 8888);
+                    console.log(bgState,8888);
                   }}
                   onMouseLeave={() => {
                     setIndex(null);

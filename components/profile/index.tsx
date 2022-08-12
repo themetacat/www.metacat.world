@@ -45,7 +45,7 @@ export default function Profile({
   }, [address]);
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
-      <div style={{marginLeft:"1px"}}>
+      <div>
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
