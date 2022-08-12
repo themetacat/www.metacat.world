@@ -49,7 +49,6 @@ export default function Profile({
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
-
         {/* <div className={cn('ml-8', style.info)}> */}
           <div className="flex">
             {address && address !== '' && name ? (
