@@ -72,6 +72,7 @@ export default function Profile({
                 classname={'text-2xl font-semibold mb-4'}
               ></ProfileIconLabel>
             ) : null}
+            
             {!name && name === '' ? (
               <ProfileIconLabel
                 label={address}
