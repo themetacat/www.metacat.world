@@ -12,32 +12,25 @@ import { formatNum } from '../../common/utils';
 
 import style from './index.module.css';
 
-<<<<<<< HEAD
-type Props = {
-  id?: string;
-  dataHandlder?: () => any;
-  defaultColor?: Array<number>;
-  gradient?: boolean;
-  className?: string;
-  labelText?: string;
-  limit?: number;
-  barWidth?: number;
-  textColor?;
-  legend1?;
-=======
-type optionItem = {
-  label?: string;
-  value?: string;
->>>>>>> dev
-};
+
 
 type legend = {
   label?: string;
   color?: Array<number>;
 };
 
+
+type optionItem = {
+  label?: string;
+  value?: string;
+};
+
 type Props = {
   id?: string;
+  dataHandlder?: () => any;
+  defaultColor?: Array<number>;
+  
+  legend1?;
   dataHandler?: () => any;
   // legend1?: legend;
   legend2?: legend;
@@ -65,13 +58,9 @@ export default function StackBar({
   labelText,
   showMarkerType,
   limit,
-<<<<<<< HEAD
-  barWidth = 35,
   legend1 = { color: [95, 213, 236] },
-=======
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
->>>>>>> dev
   textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);

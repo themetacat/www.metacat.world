@@ -73,15 +73,12 @@ import style from './index.module.css';
 const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
   ssr: false,
 });
-<<<<<<< HEAD
-=======
 const BaseVoxelsData = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/base_Voxels_Data'),
   {
     ssr: false,
   },
 );
->>>>>>> dev
 const BaseBarData = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/base-barData'),
   {
