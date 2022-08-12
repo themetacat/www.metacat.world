@@ -45,7 +45,7 @@ export default function Profile({
   }, [address]);
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
-      <div>
+      <div style={{marginLeft:"1px"}}>
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
@@ -110,19 +110,19 @@ export default function Profile({
           </div>
         </div>
         <div style={{ color: '#fff', display: 'flex', marginTop: '12px' }}>
-            <div className={style.content}>
-              <img src={`/images/icon/twitter.png`} className={style.imgSet}></img>
-              Twitter{' '}
-            </div>
-            <div className={style.content2}>
-              <img src={`/images/icon/discord.png`} className={style.imgSet}></img>
-              Discord{' '}
-            </div>
-            <div className={style.content3}>
-              <img src={`/images/icon/emailIcon.png`} className={style.imgSet}></img>
-              Email{' '}
-            </div>
+          <div className={style.content}>
+            <img src={`/images/icon/twitter.png`} className={style.imgSet}></img>
+            Twitter{' '}
           </div>
+          <div className={style.content2}>
+            <img src={`/images/icon/discord.png`} className={style.imgSet}></img>
+            Discord{' '}
+          </div>
+          <div className={style.content3}>
+            <img src={`/images/icon/emailIcon.png`} className={style.imgSet}></img>
+            Email{' '}
+          </div>
+        </div>
       </div>
       {/* <img className={cn('h-1/2 w-1/2', style.back)} src="/images/v5/textOnly.png"></img> */}
     </div>
