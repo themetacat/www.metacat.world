@@ -27,7 +27,6 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
 
   const getgState = React.useCallback(() => {
     setBgState('ccc');
-    console.log(bgState,55555);
     
   }, [bgState]);
   const requestData = React.useCallback(async (tok) => {
@@ -123,14 +122,13 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
                 //   }}
                 // >
                 <th key={item} className={cn(style.title,bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null)} 
-                onMouseEnter={() => {
-                  setBgState('Parcel');
-                  console.log(bgState,8895);
-                }}
-                onMouseLeave={() => {
-                  setBgState(null);
-                  setIndex(null);
-                }}
+                  onMouseEnter={() => {
+                    setBgState('Parcel');
+                  }}
+                  onMouseLeave={() => {
+                    setBgState(null);
+                    setIndex(null);
+                  }}
                 >
                   <div>{item}</div>
                 </th>
@@ -144,9 +142,9 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
                 <th className={cn(style.item, bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null,)}
                   onMouseEnter={() => {
                     setBgState('Parcel');
-                    console.log(bgState,8888);
                   }}
                   onMouseLeave={() => {
+                    setBgState(null);
                     setIndex(null);
                   }}
                 >
