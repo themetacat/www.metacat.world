@@ -50,7 +50,7 @@ export default function Profile({
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
 
-        <div className={cn('ml-8', style.info)}>
+        {/* <div className={cn('ml-8', style.info)}> */}
           <div className="flex">
             {address && address !== '' && name ? (
               <ProfileIconLabel
@@ -120,11 +120,10 @@ export default function Profile({
               <img src={`/images/icon/emailIcon.png`} className={style.imgSet}></img>
               Email{' '}
             </div>
-          </div>
+          {/* </div> */}
         </div>
-        
+
       </div>
-      
       {/* <img className={cn('h-1/2 w-1/2', style.back)} src="/images/v5/textOnly.png"></img> */}
     </div>
   );
