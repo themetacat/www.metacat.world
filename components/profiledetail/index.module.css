@@ -89,7 +89,7 @@
   text-overflow: ellipsis;
 }
 .hoverBg {
-  background-color: rgba(1, 218, 217, 0.08);
+  background-color: rgba(1, 218, 217, 0.18);
   /* background-color: red; */
 }
 .container tr .th1 {
