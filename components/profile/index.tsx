@@ -56,6 +56,7 @@ export default function Profile({
             ></img>
           </div> */}
           {/* <div style={{ color: '#6a6f6e' }}>Area:Brazi</div> */}
+          
         </div>
         
         <div className={cn('ml-8', style.info)}>
