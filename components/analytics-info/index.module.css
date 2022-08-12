@@ -58,10 +58,12 @@
   box-shadow: -0.5px 0px 0px rgba(255, 255, 255, 0.1);
   border: 1px solid #333e3e;
 }
+
 .hoverBg {
   background-color: 
   rgba(1, 218, 217, 0.08);
 }
+
 .biaotou {
   font-style: normal;
   font-weight: 600;
