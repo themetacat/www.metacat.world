@@ -140,17 +140,8 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
           </tr>
           {datas.map((item, idx) => {
             return (
-              <tr key={idx}   
-              onMouseOver={() => {
-                setIndex(idx);
-              }}
-              onMouseOut={() => {
-                setIndex(null);
-              }}>
-                <th className={cn(style.item, 
-                bgState === 'Parcel' ? style.hoverBg : null,  
-                index === idx ? style.hoverBg : null,
-                )}
+              <tr key={uuid()}>
+                <th className={cn(style.item, bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null,)}
                   onMouseEnter={() => {
                     setBgState('Parcel');
                     console.log(bgState,8888);
