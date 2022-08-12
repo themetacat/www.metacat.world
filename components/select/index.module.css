@@ -5,7 +5,9 @@
   font-size: 12px;
   width: 123px;
   height: 41px;
-  border-bottom: #000000 solid 1px;
+  /* border-bottom: #000000 solid 1px; */
+  border: 0.3px solid #000;
+  border-radius: 8px;
 }
 .option:hover{
   color: #fff;
