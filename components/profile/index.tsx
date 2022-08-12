@@ -48,7 +48,7 @@ export default function Profile({
       <div >
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
-         
+        
 
         </div>
         
