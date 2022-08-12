@@ -27,6 +27,8 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
 
   const getgState = React.useCallback(() => {
     setBgState('ccc');
+    console.log(bgState,55555);
+    
   }, [bgState]);
   const requestData = React.useCallback(async (tok) => {
     setLoading(true);
@@ -133,7 +135,6 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
             return (
               <tr key={uuid()}>
                 <td className={cn(style.item, bgState === 'ccc' ? style.hoverBg : null, index === idx ? style.hoverBg : null,)}
-
                   onMouseEnter={getgState}
                   onMouseLeave={() => {
                     setIndex(null);
