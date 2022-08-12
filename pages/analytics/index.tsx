@@ -1612,7 +1612,7 @@ export default function AnalyticsIndex(props) {
     if (headerNav === 'single') {
       return (
         <>
-          <div className={cn(style.tmbg, fixedState ? style.fixed : null)}>
+          <div className={cn(style.tmbg, fixedState ? style.aboslute : null)}>
             <div className={cn(style.bg)}>
               <Switch
                 onActive={changeType}
