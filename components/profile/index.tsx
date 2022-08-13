@@ -109,7 +109,7 @@ export default function Profile({
           </div>
           
         </div>
-        <div style={{ color: '#fff', display: 'flex', marginTop: '12px' }}>
+        {/* <div style={{ color: '#fff', display: 'flex', marginTop: '12px' }}>
             <div className={style.content}>
               <img src={`/images/icon/twitter.png`} className={style.imgSet}></img>
               Twitter{' '}
@@ -122,7 +122,7 @@ export default function Profile({
               <img src={`/images/icon/emailIcon.png`} className={style.imgSet}></img>
               Email{' '}
             </div>
-          </div>
+          </div> */}
       </div>
       {/* <img className={cn('h-1/2 w-1/2', style.back)} src="/images/v5/textOnly.png"></img> */}
     </div>
