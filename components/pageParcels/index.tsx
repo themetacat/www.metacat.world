@@ -2,7 +2,7 @@ import cn from 'classnames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { SITE_NAME, SITE_URL } from '../../www.metacat.world/common/const';
+import { SITE_NAME, SITE_URL } from '../../common/const';
 
 import style from './index.module.css';
 

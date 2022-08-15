@@ -155,18 +155,18 @@ const SUBTAB = [
     label: 'Space',
     type: 'space',
   },
-  {
-    label: 'Heatmap',
-    type: 'map',
-  },
-  {
-    label: 'Analytics',
-    type: 'analytics',
-  },
-  {
-    label: 'Events',
-    type: 'event',
-  },
+  // {
+  //   label: 'Heatmap',
+  //   type: 'map',
+  // },
+  // {
+  //   label: 'Analytics',
+  //   type: 'analytics',
+  // },
+  // {
+  //   label: 'Events',
+  //   type: 'event',
+  // },
 ];
 const SUBTABZ = [
   {
