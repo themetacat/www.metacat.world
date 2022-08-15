@@ -25,18 +25,7 @@ class API {
     return json;
   }
 
-  public async getCVSpace(
-    page: number,
-    count: number,
-  ): Promise<any> {
-    const search = qs.stringify({ page, count}, { addQueryPrefix: true });
-    // const url = `${this.url}/get_cv_space_buildings${search}`;
-    const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
-    const res = await fetch(url);
-    const json = await res.json();
-
-    return json;
-  }
+  
 
   public async getCVEventList(cursor: number, count: number): Promise<any> {
     const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
