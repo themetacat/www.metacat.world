@@ -43,6 +43,20 @@ const wearable = [
     link: '/wearables/wearabledao?type=chinesered',
   },
 ];
+const parcels = [
+  {
+    label: 'Voxels',
+    type: 'voxelsParcels',
+    link: '/oldParcels?tab=cryptovoxels',
+    icon: '/images/cvLogo.png',
+  },
+  {
+    label: 'Decentraland',
+    type: 'decentraParcels',
+    link: '/oldParcels?tab=decentraland',
+    icon: '/images/Decentraland.jpg',
+  },
+]
 const heatmapData = [
   {
     label: 'Otherside',
@@ -145,6 +159,12 @@ function myfun() {
   }, 1000);
 }
 
+function myfunParcels() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
+
 function myfunData() {
   setTimeout(() => {
     window.open(window.location.href);
@@ -155,11 +175,11 @@ export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
   const [analyticState, setAnalyticState] = React.useState(false);
+  const [ParcelsState, setParcelsState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
-
   return (
     <header
       className={cn(
@@ -220,6 +240,7 @@ export default function PageHeader({ active, className }: Props) {
             </div>
           ) : null}
         </div>
+
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
@@ -244,6 +265,32 @@ export default function PageHeader({ active, className }: Props) {
               ></TwoNav>
             </div>
           ) : null}
+        </div>
+
+        <div
+          className={cn(
+            'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+            active === '/oldParcels' ? style.active : null,
+            style.z,
+          )}
+          onMouseEnter={() => {
+            setParcelsState(true);
+          }}
+          onMouseLeave={() => {
+            setParcelsState(false);
+          }}
+        >
+          <Link href="/oldParcels" prefetch>Parcels</Link>
+          {ParcelsState ? (
+            <div onClick={myfunParcels}>
+              <TwoNav
+                options={parcels}
+                className={style.cn}
+                location={style.parcels}
+              ></TwoNav>
+            </div>
+          ) : null}
+
         </div>
 
         <div

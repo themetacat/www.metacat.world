@@ -20,6 +20,16 @@ export const getCVParcelList = async (page: number, count: number, query: string
   return json;
 };
 
+export const getCVSpace = async (page: number, count: number) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/cv-space-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getDCLEventList = async (cursor: number, count: number) => {
   const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
   const url = `/api/dcl-event-list${search}`;

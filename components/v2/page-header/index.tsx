@@ -8,6 +8,8 @@ import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
 import style from './index.module.css';
 
+import TwoNav from '../../two_nav';
+
 type Props = {
   active?: string;
   className?: string;
@@ -42,6 +44,20 @@ const wearable = [
     link: '/wearables/wearabledao?type=chinesered',
   },
 ];
+const parcels = [
+  {
+    label: 'Voxels',
+    type: 'voxelsParcels',
+    link: '/oldParcels',
+    icon: '/images/cvLogo.png',
+  },
+  {
+    label: 'Decentraland',
+    type: 'decentraParcels',
+    link: '/oldParcels',
+    icon: '/images/Decentraland.jpg',
+  },
+]
 const analytics = [
   {
     label: 'Overview',
@@ -144,6 +160,7 @@ export default function PageHeader({ active, className }: Props) {
   const [wearableState, setWearableState] = React.useState(false);
   const [analyticsState, setAnalyticsState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
+  const [ParcelsState, setParcelsState] = React.useState(false);
 
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
@@ -226,6 +243,29 @@ export default function PageHeader({ active, className }: Props) {
               Heatmap
               {heatmapState ? (
                 <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
+              ) : null}
+            </div>
+
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+                active === 'heatmap' ? style.active : null,
+                style.z,
+              )}
+              onMouseEnter={() => {
+                setParcelsState(true);
+              }}
+              onMouseLeave={() => {
+                setParcelsState(false);
+              }}
+            >
+              <Link href="/oldParcels" prefetch>Parcels</Link>
+              {ParcelsState ? (
+                <TwoNav
+                  options={parcels}
+                  className={style.cn}
+                  location={style.parcels}
+                ></TwoNav>
               ) : null}
             </div>
 

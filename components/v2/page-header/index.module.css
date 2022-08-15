@@ -6,8 +6,18 @@
 .active {
   color: #fff;
 }
+.old {
+  color: #fff;
+}
 .base {
   z-index: 10002;
+}
+.parcels {
+  position: absolute;
+ right: 550px;
+ top:40px;
+  z-index: 99;
+  background-color: #0f191b;
 }
 .location {
   position: absolute;
