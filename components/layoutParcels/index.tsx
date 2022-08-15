@@ -47,7 +47,6 @@ export default function Layout({
       const { list } = data.data || [];
       setCarouselList(convert(list));
     });
-    // Smoke('smoke');
   }, [null]);
 
   return (
