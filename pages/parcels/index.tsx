@@ -397,7 +397,7 @@ export default function Index(props) {
       setSubTabState(subTab);
       setSearchText('');
       setTypeState('');
-
+      setTypeState('All')
       const data = await requestData({
         tab: tabState,
         subTab,
