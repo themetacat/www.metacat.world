@@ -44,6 +44,7 @@ const wearable = [
     link: '/wearables/wearabledao?type=chinesered',
   },
 ];
+
 const parcels = [
   {
     label: 'Voxels',
