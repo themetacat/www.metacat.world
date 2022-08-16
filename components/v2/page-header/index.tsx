@@ -48,13 +48,13 @@ const parcels = [
   {
     label: 'Voxels',
     type: 'voxelsParcels',
-    link: '/oldParcels',
+    link: '/parcels',
     icon: '/images/cvLogo.png',
   },
   {
     label: 'Decentraland',
     type: 'decentraParcels',
-    link: '/oldParcels',
+    link: '/parcels',
     icon: '/images/Decentraland.jpg',
   },
 ]
@@ -259,7 +259,7 @@ export default function PageHeader({ active, className }: Props) {
                 setParcelsState(false);
               }}
             >
-              <Link href="/oldParcels" prefetch>Parcels</Link>
+              <Link href="/parcels" prefetch>Parcels</Link>
               {ParcelsState ? (
                 <TwoNav
                   options={parcels}

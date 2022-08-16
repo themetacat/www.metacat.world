@@ -1,6 +1,6 @@
 .allHeight {
   height: 60px;
-  border-bottom: 0.5px solid #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 .content {
   min-height: 650px;

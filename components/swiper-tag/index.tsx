@@ -25,9 +25,10 @@ type Props = {
 
 export default function SwiperTag({ tags = [], label, className, onActive }: Props) {
   const [percent, setPercent] = React.useState(0);
-  const [activeLabel, setActiveLabel] = React.useState(label);
+  const [activeLabel, setActiveLabel] = React.useState('label');
 
   React.useEffect(() => {
+    
     setActiveLabel(label);
   }, [label]);
 

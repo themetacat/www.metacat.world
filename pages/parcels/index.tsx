@@ -23,6 +23,7 @@ import SwiperTag from '../../components/swiper-tag';
 import SwiperTagParcels from '../../components/swiper-tagParcels';
 import PageHeader from '../../components/page-header';
 import SpaceBuilding from './spacebuildings';
+import ScenceBuilding from './scencebuildings';
 import PagiNation from '../../components/pagination';
 import Search from '../../components/search';
 import PostGrid from '../../components/post-grid';
@@ -78,7 +79,8 @@ import {
   req_netvrk_avg_price,
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
-  req_space_buildings_list
+  req_space_buildings_list,
+  req_scence_list
 } from '../../service/z_api';
 
 import style from './index.module.less';
@@ -168,6 +170,28 @@ const SUBTAB = [
   //   type: 'event',
   // },
 ];
+const SUBTABDECE = [
+  {
+    label: 'Parcel',
+    type: 'parcel',
+  },
+  {
+    label: 'Scene',
+    type: 'scene',
+  },
+  // {
+  //   label: 'Heatmap',
+  //   type: 'map',
+  // },
+  // {
+  //   label: 'Analytics',
+  //   type: 'analytics',
+  // },
+  // {
+  //   label: 'Events',
+  //   type: 'event',
+  // },
+];
 const SUBTABZ = [
   {
     label: 'Analytics',
@@ -199,7 +223,7 @@ export default function Index(props) {
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
   const [searchText, setSearchText] = React.useState(props.query.search || '');
-  const [typeState, setTypeState] = React.useState(props.query.type || 'all');
+  const [typeState, setTypeState] = React.useState(props.query.type || 'All');
   const [typeList, setTypeList] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const nextCursor = React.useRef(1);
@@ -301,8 +325,8 @@ export default function Index(props) {
 
           data = event_list;
         }
-        } else if (subTab === 'space') {
-          const res = await req_space_buildings_list(page, 40);
+        } else if (subTab === 'scene') {
+          const res = await req_scence_list(page, 40);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
           // setPageNumber(currentPage);
@@ -356,7 +380,7 @@ export default function Index(props) {
     //   setSubTabState(sub);
     // }
     setSearchText('');
-    setTypeState('all');
+    setTypeState('All');
     nextCursor.current = 1;
     const data = await requestData({
       tab,
@@ -1458,6 +1482,7 @@ export default function Index(props) {
 
   React.useEffect(() => {
     console.log('');
+    setTypeState('All')
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -1590,7 +1615,7 @@ export default function Index(props) {
                 })
                 : null}
               {tabState === 'decentraland'
-                ? SUBTAB.map((item, index) => {
+                ? SUBTABDECE.map((item, index) => {
                   if (item) {
                     return (
                       <SecondTab
@@ -1651,14 +1676,20 @@ export default function Index(props) {
              {subTabState === 'space' ? (
               <Search text={searchText} onSearch={onSearchHandler}></Search>
             ) : null}
+             {subTabState === 'scene' ? (
+              <Search text={searchText} onSearch={onSearchHandler}></Search>
+            ) : null}
           </div>
           
           <div className={cn('mt-8', style.content)}>
             {subTabState === 'parcel' && (
-              <SwiperTag onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+              <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
             {subTabState === 'space' && (
               <SpaceBuilding/>
+            )}
+            {subTabState === 'scene' && (
+              <ScenceBuilding/>
             )}
 
             {subTabState === 'analytics' && (

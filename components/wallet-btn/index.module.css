@@ -4,6 +4,7 @@
   background-color: rgba(0, 208, 236, 1);
   color: black;
   position: relative;
+  border-radius: 8px;
 }
 
 .btnDiv>img{

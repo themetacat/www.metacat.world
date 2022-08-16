@@ -47,13 +47,13 @@ const parcels = [
   {
     label: 'Voxels',
     type: 'voxelsParcels',
-    link: '/oldParcels?tab=cryptovoxels',
+    link: '/parcels?tab=cryptovoxels',
     icon: '/images/cvLogo.png',
   },
   {
     label: 'Decentraland',
     type: 'decentraParcels',
-    link: '/oldParcels?tab=decentraland',
+    link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
 ]
@@ -270,7 +270,7 @@ export default function PageHeader({ active, className }: Props) {
         <div
           className={cn(
             'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
-            active === '/oldParcels' ? style.active : null,
+            active === '/parcels' ? style.active : null,
             style.z,
           )}
           onMouseEnter={() => {
@@ -280,7 +280,7 @@ export default function PageHeader({ active, className }: Props) {
             setParcelsState(false);
           }}
         >
-          <Link href="/oldParcels" prefetch>Parcels</Link>
+          <Link href="/parcels" prefetch>Parcels</Link>
           {ParcelsState ? (
             <div onClick={myfunParcels}>
               <TwoNav
