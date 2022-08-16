@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { v4 as uuid } from 'uuid';
 import dynamic from 'next/dynamic';
@@ -7,8 +8,6 @@ import dynamic from 'next/dynamic';
 import toast from 'react-hot-toast';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
-
-import { useRouter } from 'next/router';
 
 
 import Page from '../../components/page';
@@ -109,7 +108,7 @@ const OtherSideMap = dynamic(() => import('../../components/otherside-map'), {
   ssr: false,
 });
 
-const router = useRouter();
+
 
 const TAB = [
   {
@@ -218,6 +217,7 @@ const SUBTABZ2 = [
 ];
 
 export default function Index(props) {
+  const router = useRouter();
   const meta = {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
