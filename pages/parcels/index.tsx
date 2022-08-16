@@ -1,6 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
+
 import { useRouter } from 'next/router';
+
 import Link from 'next/link';
 import { v4 as uuid } from 'uuid';
 import dynamic from 'next/dynamic';
@@ -86,7 +88,6 @@ import {
 } from '../../service/z_api';
 
 import style from './index.module.less';
-import Router from 'next/router';
 
 const MapWithNoSSR = dynamic(() => import('../../components/map'), {
   ssr: false,
@@ -217,7 +218,9 @@ const SUBTABZ2 = [
 ];
 
 export default function Index(props) {
+
   const router = useRouter();
+  
   const meta = {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -1541,6 +1544,7 @@ export default function Index(props) {
 
   React.useEffect(() => {
     console.log('');
+    setSubTabState('parcel')
     setTypeState('All')
     const accessToken = getToken('atk');
     if (accessToken) {
