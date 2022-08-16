@@ -109,6 +109,8 @@ const OtherSideMap = dynamic(() => import('../../components/otherside-map'), {
   ssr: false,
 });
 
+const router = useRouter();
+
 const TAB = [
   {
     label: 'Voxels',
@@ -369,7 +371,7 @@ export default function Index(props) {
   };
 
 
-  const router = useRouter();
+ 
 
   const onTabChange = async (tab) => {
    
