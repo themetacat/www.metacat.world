@@ -1072,8 +1072,8 @@ class API {
 
   public async req_scence_list(page: number, count: number) {
     const search = qs.stringify({ page, count }, { addQueryPrefix: true });
-    // const url = `${this.url}/get_cv_space_buildings${search}`;
-    const url = `http://8.130.23.16/api/v1/get_dcl_scenes${search}`;
+    const url = `${this.url}/get_dcl_scenes${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_dcl_scenes${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
