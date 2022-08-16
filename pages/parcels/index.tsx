@@ -295,22 +295,22 @@ export default function Index(props) {
         else if (subTab === 'space') {
           const res = await req_space_buildings_list(page, 40,);
           
-          data = res.data.filter((item)=>{
-            return item.name.indexOf(query) != -1
-          })
-          console.log(data);
-          // const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          // data = res.data.filter((item)=>{
+          //   return item.name.indexOf(query) !== -1
+          // })
+          // console.log(data);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-          // const typeArray = Object.keys(type_total).map((key) => {
-          //   const value = type_total[key];
-          //   return { name: key, value };
-          // });
-          // setTotalPage(total_page);
+          const typeArray = Object.keys(type_total).map((key) => {
+            const value = type_total[key];
+            return { name: key, value };
+          });
+          setTotalPage(total_page);
 
-          // if (needUpdateTypeList) {
-          //   setTypeList(typeArray);
-          // }
-          // data = parcel_list;
+          if (needUpdateTypeList) {
+            setTypeList(typeArray);
+          }
+          data = parcel_list;
         }
       } else if (tab === 'decentraland') {
         if (subTab === 'parcel') {
@@ -375,12 +375,12 @@ export default function Index(props) {
    
     let subIndex
     if (tabState === 'cryptovoxels') {
-      subIndex = SUBTAB.findIndex(item => item.type == subTabState)
+      subIndex = SUBTAB.findIndex(item => item.type === subTabState)
     } else if (tabState === "decentraland") {
-      subIndex = SUBTABDECE.findIndex(item => item.type == subTabState)
+      subIndex = SUBTABDECE.findIndex(item => item.type === subTabState)
     }
     console.log(subIndex,tabState);
-    subIndex = subIndex == -1 ? 0 : subIndex
+    subIndex = subIndex === -1 ? 0 : subIndex
     setTabState(tab);
     let sub = '';
     if (tab === 'cryptovoxels') {
