@@ -32,6 +32,7 @@ const build = [
     link: '/build/spacebuildings',
   },
 ];
+
 const wearable = [
   {
     label: 'Creators',
