@@ -60,6 +60,7 @@ const parcels = [
     icon: '/images/Decentraland.jpg',
   },
 ]
+
 const analytics = [
   {
     label: 'Overview',
