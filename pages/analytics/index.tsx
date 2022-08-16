@@ -1442,14 +1442,14 @@ export default function AnalyticsIndex(props) {
                   textColor={style.allColor}
                   labelText="Average Parcel Price"
                   dataHandlder={req_avg_parcel_price}
-                  legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
                   options={[
                     {
                       label: 'Daily',
@@ -1490,14 +1490,14 @@ export default function AnalyticsIndex(props) {
                   textColor={style.allColor}
                   labelText="Parcel Sales Amount"
                   dataHandlder={req_sales_amount_stack}
-                  legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
                   options={[
                     {
                       label: 'Daily',
@@ -1538,14 +1538,14 @@ export default function AnalyticsIndex(props) {
                   textColor={style.allColor}
                   labelText="Number Of Parcel Sales"
                   dataHandlder={req_all_number_sales}
-                  legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
                   options={[
                     {
                       label: 'Daily',
@@ -1576,14 +1576,14 @@ export default function AnalyticsIndex(props) {
                   labelText="Floor Price"
                   textColor={style.allColor}
                   dataHandlder={req_avg_creater_price}
-                  legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend5={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend7={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend8={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
                   options={[
                     {
                       label: 'Daily',

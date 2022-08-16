@@ -48,13 +48,13 @@ const parcels = [
   {
     label: 'Voxels',
     type: 'voxelsParcels',
-    link: '/parcels',
+    link: '/parcels?tab=cryptovoxels',
     icon: '/images/cvLogo.png',
   },
   {
     label: 'Decentraland',
     type: 'decentraParcels',
-    link: '/parcels',
+    link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
 ]

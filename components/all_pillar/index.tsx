@@ -46,13 +46,13 @@ const keyTypes = [
 ];
 
 const showKeyTypes = [
+  'Otherside',
   'The Sandbox',
   'NFT Worlds',
   'Decentraland',
   'Worldwide Webb',
   'Voxels',
   'Somnium Space',
-  'Otherside',
   'Netvrk',
 ];
 
@@ -153,57 +153,43 @@ export default function AllPillar({
           });
           const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
             Number(result[showKeyTypes[6]]?.value) +
-              Number(result[showKeyTypes[0]]?.value) +
-              Number(result[showKeyTypes[1]]?.value) +
-              Number(result[showKeyTypes[2]]?.value) +
-              Number(result[showKeyTypes[3]]?.value) +
-              Number(result[showKeyTypes[4]]?.value) +
-              Number(result[showKeyTypes[7]]?.value) +
-              Number(result[showKeyTypes[5]]?.value),
+            Number(result[showKeyTypes[0]]?.value) +
+            Number(result[showKeyTypes[1]]?.value) +
+            Number(result[showKeyTypes[2]]?.value) +
+            Number(result[showKeyTypes[3]]?.value) +
+            Number(result[showKeyTypes[4]]?.value) +
+            Number(result[showKeyTypes[7]]?.value) +
+            Number(result[showKeyTypes[5]]?.value),
           )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
             showKeyTypes[1]
           ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
-          <div style="color:#fff;margin-bottom:12px">
-<span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
-${showKeyTypes[6]}:
-  <span style="color:#fff;">
-    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${
-            legend7.color[1]
-          }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
-    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-  </span>
-</span>
-</div>
+         
          
           <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
-            legend1.color[2]
-          }, 1);">
+          <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]
+            }, 1);">
           ${showKeyTypes[0]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
-                legend1.color[0]
-              }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[0]]?.value,
-          )}</span>
+              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend1.color[0]
+            }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
+              result[showKeyTypes[0]]?.value,
+            )}</span>
               <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
 
         <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
-            legend2.color[2]
-          }, 1);">
+          <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]
+            }, 1);">
           ${showKeyTypes[1]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
-                legend2.color[0]
-              }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[1]]?.value,
-          )}</span>
+              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend2.color[0]
+            }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
+              result[showKeyTypes[1]]?.value,
+            )}</span>
               <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
@@ -213,11 +199,10 @@ ${showKeyTypes[6]}:
         <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1);">
         ${showKeyTypes[2]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
-              legend3.color[0]
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend3.color[0]
             }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[2]]?.value,
-          )}</span>
+              result[showKeyTypes[2]]?.value,
+            )}</span>
             <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
           </span>
         </span>
@@ -227,11 +212,10 @@ ${showKeyTypes[6]}:
       <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1);">
       ${showKeyTypes[3]}:
         <span style="color:#fff;">
-          <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
-            legend4.color[0]
-          }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[3]]?.value,
-          )}</span>
+          <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend4.color[0]
+            }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
+              result[showKeyTypes[3]]?.value,
+            )}</span>
           <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
         </span>
       </span>
@@ -241,11 +225,10 @@ ${showKeyTypes[6]}:
     <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1);">
     ${showKeyTypes[4]}:
       <span style="color:#fff;">
-        <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
-          legend5.color[0]
-        }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[4]]?.value,
-          )}</span>
+        <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend5.color[0]
+            }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
+              result[showKeyTypes[4]]?.value,
+            )}</span>
         <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
       </span>
     </span>
@@ -255,21 +238,30 @@ ${showKeyTypes[6]}:
   <span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
   ${showKeyTypes[5]}:
     <span style="color:#fff;">
-      <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${
-            legend6.color[1]
-          }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
+      <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${legend6.color[1]
+            }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
       <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
     </span>
   </span>
+</div>
+
+<div style="color:#fff;margin-bottom:12px">
+<span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
+${showKeyTypes[6]}:
+<span style="color:#fff;">
+<span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${legend7.color[1]
+            }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
+<span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+</span>
+</span>
 </div>
 
   <div style="color:#fff;margin-bottom:12px">
   <span style="color:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1);">
   ${showKeyTypes[7]}:
     <span style="color:#fff;">
-      <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]}, ${
-            legend8.color[1]
-          }, ${legend8.color[2]}, 1);">${formatNum(result[showKeyTypes[7]]?.value)}</span>
+      <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]}, ${legend8.color[1]
+            }, ${legend8.color[2]}, 1);">${formatNum(result[showKeyTypes[7]]?.value)}</span>
       <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
     </span>
   </span>
@@ -364,27 +356,28 @@ ${showKeyTypes[6]}:
         .position('time*value')
         .size(showType === 'yearly' ? 70 : 20)
         .color('name', (tVal) => {
-          if (tVal === 'The Sandbox') {
+          if (tVal === 'Otherside') {
             return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
           }
-          if (tVal === 'NFT Worlds') {
+          if (tVal === 'The Sandbox') {
             return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (tVal === 'Decentraland') {
+          if (tVal === 'NFT Worlds') {
             return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
-          if (tVal === 'Worldwide Webb') {
+          if (tVal === 'Decentraland') {
             return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
           }
-          if (tVal === 'Voxels') {
+          if (tVal === 'Worldwide Webb') {
             return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
           }
-          if (tVal === 'Somnium Space') {
+          if (tVal === 'Voxels') {
             return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
           }
-          if (tVal === 'Otherside') {
+          if (tVal === 'Somnium Space') {
             return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
           }
+
           if (tVal === 'Netvrk') {
             return `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
           }
@@ -392,41 +385,42 @@ ${showKeyTypes[6]}:
         .style({
           fields: ['name'],
           callback: (tVal) => {
-            if (tVal === 'The Sandbox') {
+            if (tVal === 'Otherside') {
               return {
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
             }
-            if (tVal === 'NFT Worlds') {
+            if (tVal === 'The Sandbox') {
               return {
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Decentraland') {
+            if (tVal === 'NFT Worlds') {
               return {
                 fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Worldwide Webb') {
+            if (tVal === 'Decentraland') {
               return {
                 fill: `l(270) 0:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Voxels') {
+            if (tVal === 'Worldwide Webb') {
               return {
                 fill: `l(270) 0:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Somnium Space') {
+            if (tVal === 'Voxels') {
               return {
                 fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Otherside') {
+            if (tVal === 'Somnium Space') {
               return {
                 fill: `l(270) 0:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
               };
             }
+
             if (tVal === 'Netvrk') {
               return {
                 fill: `l(270) 0:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 0.2) 1:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`,
@@ -531,11 +525,7 @@ ${showKeyTypes[6]}:
   const getLenged = React.useMemo(() => {
     return (
       <>
-        <IconLabel
-          text={legend7.label}
-          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
-          className="mr-5"
-        ></IconLabel>
+
         <IconLabel
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
@@ -564,6 +554,11 @@ ${showKeyTypes[6]}:
         <IconLabel
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
+          text={legend7.label}
+          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
@@ -605,7 +600,7 @@ ${showKeyTypes[6]}:
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}  color={textColor}></ChartTitle>
+        <ChartTitle text={labelText} color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>
