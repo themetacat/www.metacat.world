@@ -252,7 +252,7 @@ export default function PageHeader({ active, className }: Props) {
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
-                active === 'heatmap' ? style.active : null,
+                active === '/parcels' ? style.active : null,
                 style.z,
               )}
               onMouseEnter={() => {

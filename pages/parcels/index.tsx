@@ -8,6 +8,9 @@ import toast from 'react-hot-toast';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 
+import { useRouter } from 'next/router';
+
+
 import Page from '../../components/page';
 // import Layout from '../../components/layout';
 import Layout from '../../components/layoutParcels';
@@ -84,6 +87,7 @@ import {
 } from '../../service/z_api';
 
 import style from './index.module.less';
+import Router from 'next/router';
 
 const MapWithNoSSR = dynamic(() => import('../../components/map'), {
   ssr: false,
@@ -110,11 +114,13 @@ const TAB = [
     label: 'Voxels',
     icon: '/images/cvLogo.png',
     type: 'cryptovoxels',
+    link: '/parcels?tab=cryptovoxels',
   },
   {
     label: 'Decentraland',
     icon: '/images/Decentraland.jpg',
     type: 'decentraland',
+    link: '/parcels?tab=decentraland',
   },
   // {
   //   label: 'The Sandbox',
@@ -220,6 +226,7 @@ export default function Index(props) {
 
   const [tabState, setTabState] = React.useState(props.query.tab || 'cryptovoxels');
   const [subTabState, setSubTabState] = React.useState(props.query.subTab || 'parcel');
+  const [subSpaceState, setSubSpaceState] = React.useState(props.query.subTab || 'space');
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
   const [searchText, setSearchText] = React.useState(props.query.search || '');
@@ -248,7 +255,12 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
-
+    console.log(tab,
+      subTab,
+      page,
+      query,
+      type);
+    
     try {
       if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
@@ -281,19 +293,24 @@ export default function Index(props) {
           data = event_list;
         }
         else if (subTab === 'space') {
-          const res = await req_space_buildings_list(page, 40);
-          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          const res = await req_space_buildings_list(page, 40,);
+          
+          data = res.data.filter((item)=>{
+            return item.name.indexOf(query) != -1
+          })
+          console.log(data);
+          // const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-          const typeArray = Object.keys(type_total).map((key) => {
-            const value = type_total[key];
-            return { name: key, value };
-          });
-          setTotalPage(total_page);
+          // const typeArray = Object.keys(type_total).map((key) => {
+          //   const value = type_total[key];
+          //   return { name: key, value };
+          // });
+          // setTotalPage(total_page);
 
-          if (needUpdateTypeList) {
-            setTypeList(typeArray);
-          }
-          data = parcel_list;
+          // if (needUpdateTypeList) {
+          //   setTypeList(typeArray);
+          // }
+          // data = parcel_list;
         }
       } else if (tab === 'decentraland') {
         if (subTab === 'parcel') {
@@ -325,24 +342,24 @@ export default function Index(props) {
 
           data = event_list;
         }
-        } else if (subTab === 'scene') {
-          const res = await req_scence_list(page, 40);
-          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+      } else if (subTab === 'scene') {
+        const res = await req_scence_list(page, 40);
+        const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-          // setPageNumber(currentPage);
-          setTotalPage(total_page);
+        // setPageNumber(currentPage);
+        setTotalPage(total_page);
 
-          const typeArray = Object.keys(type_total).map((key) => {
-            const value = type_total[key];
-            return { name: key, value };
-          });
+        const typeArray = Object.keys(type_total).map((key) => {
+          const value = type_total[key];
+          return { name: key, value };
+        });
 
-          if (needUpdateTypeList) {
-            setTypeList(typeArray);
-          }
-          data = parcel_list;
+        if (needUpdateTypeList) {
+          setTypeList(typeArray);
         }
-      
+        data = parcel_list;
+      }
+
     } catch (err) {
       setError(true);
     }
@@ -351,12 +368,31 @@ export default function Index(props) {
     return convert(data);
   };
 
+
+  const router = useRouter();
+
   const onTabChange = async (tab) => {
+   
+    let subIndex
+    if (tabState === 'cryptovoxels') {
+      subIndex = SUBTAB.findIndex(item => item.type == subTabState)
+    } else if (tabState === "decentraland") {
+      subIndex = SUBTABDECE.findIndex(item => item.type == subTabState)
+    }
+    console.log(subIndex,tabState);
+    subIndex = subIndex == -1 ? 0 : subIndex
     setTabState(tab);
     let sub = '';
-    if (tab === 'cryptovoxels' || tab === 'decentraland') {
+    if (tab === 'cryptovoxels') {
       sub = subTabState;
-    } else if (
+      setSubTabState(SUBTAB[subIndex].type)
+      router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
+    } else if (tab === 'decentraland') {
+      sub = subTabState;
+      setSubTabState(SUBTABDECE[subIndex].type)
+      router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`)
+    }
+    else if (
       tab === 'nftworlds' ||
       tab === 'worldwidewebb' ||
       // tab === 'otherside' ||
@@ -461,6 +497,27 @@ export default function Index(props) {
     [tabState, subTabState, typeState],
   );
 
+  const onSearchSpace = React.useCallback(
+    async (text: string) => {
+      // alert("ddddd") 你那个接口就没有这些东西 可是他们说这个查询接口里面不需要 说只是前段的搜索 我就很懵 怎么会只有前段的 那不然列表里展示啥  行前端查是不是啊 说是parcel就是
+      console.log(tabState,subTabState);
+      
+      setSearchText(text);
+      const data = await requestData({
+        tab: tabState,
+        subTab: subTabState,
+        query: text,
+        page: 1,
+        type: typeState,
+        needUpdateTypeList: true,
+      });
+      console.log(data);
+
+      setDataSource(data);
+    },
+    [tabState, subTabState, typeState],
+  )
+
   const loadMore = React.useCallback(
     async (defaultPage?: number) => {
       if (dataSource.length === 0) return;
@@ -509,7 +566,7 @@ export default function Index(props) {
       }
       return (
         <>
-        
+
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
             {dataSource.map((card, idx) => {
               return <Card {...card} key={uuid()}></Card>;
@@ -550,7 +607,7 @@ export default function Index(props) {
     //         pageChange={onPageChangeHandler}
     //       />
     //     </>
-      // );
+    // );
     // }
     if (subTabState === 'event') {
       if (error) {
@@ -1673,23 +1730,23 @@ export default function Index(props) {
             {subTabState === 'parcel' ? (
               <Search text={searchText} onSearch={onSearchHandler}></Search>
             ) : null}
-             {subTabState === 'space' ? (
-              <Search text={searchText} onSearch={onSearchHandler}></Search>
+            {subTabState === 'space' ? (
+              <Search text={searchText} onSearch={onSearchSpace}></Search>
             ) : null}
-             {subTabState === 'scene' ? (
+            {subTabState === 'scene' ? (
               <Search text={searchText} onSearch={onSearchHandler}></Search>
             ) : null}
           </div>
-          
+
           <div className={cn('mt-8', style.content)}>
             {subTabState === 'parcel' && (
               <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
             {subTabState === 'space' && (
-              <SpaceBuilding/>
+              <SpaceBuilding />
             )}
             {subTabState === 'scene' && (
-              <ScenceBuilding/>
+              <ScenceBuilding />
             )}
 
             {subTabState === 'analytics' && (
