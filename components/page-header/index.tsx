@@ -293,7 +293,7 @@ export default function PageHeader({ active, className }: Props) {
             </div>
           ) : null} */}
 
-        </div> */}
+        {/* </div> */}
 
         <div
           className={cn(
