@@ -278,11 +278,9 @@ export default function PageHeader({ active, className }: Props) {
                 active === 'Build' ? style.active : null,
                 style.z,
               )}
-
               // onClick={() => {
               //   setBuildState(!buildState);
               // }}
-              
               onMouseEnter={() => {
                 setBuildState(true);
               }}
