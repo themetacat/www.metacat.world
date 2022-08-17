@@ -1,75 +1,66 @@
-.avater {
-  width: 100px;
-  height: 100px;
-  border-radius: 60px;
-  margin-left: 20%;
+.miniActive {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
 }
-.profile {
-  height: 200px;
-  padding-left: 30%;
-  margin: 12px;
-  /* background: url('/images/v5/full.png') no-repeat; */
-  background-size: 100% 100%;
+.miniNormal {
+  color: #aaa;
+  font-size: 14px;
 }
-.content {
-  display: flex;
-  line-height: 14px;
-  width: 100px;
-  border-right: 2px solid #c4c4c4;
-  height: 20px;
-  text-align: center;
+.name {
+  font-family: PingFang SC;
+  font-size: 16px;
+  font-weight: 600;
 }
-.content2 {
-  width: 120px;
-  display: flex;
-  padding-left: 20px;
-  line-height: 14px;
-  border-right: 2px solid #c4c4c4;
-  height: 20px;
-  text-align: center;
-}
-.content3 {
-  width: 120px;
-  display: flex;
-  padding-left: 20px;
-  line-height: 14px;
-  height: 20px;
-  text-align: center;
-}
-.divide {
-  width: 1px;
-  height: 10px;
-  background-color: #c4c4c4;
-}
-.imgSet {
-  width: 14px;
-  height: 12px;
-  margin-right: 5px;
-}
-.address {
-  color: #666666;
-}
-.back {
-  max-width: 550px;
-}
-.info {
+.miniBase {
   position: relative;
-  margin-left: 60px;
+  z-index: 1;
+  height: 100%;
 }
-.cd {
-  color: #00f0ff;
-  font-weight: 500;
+.miniActive > .miniCanHover,
+.miniCanHover:hover {
+  color: black;
   font-size: 14px;
   cursor: pointer;
-  margin-left: 72px;
-  margin-top: 8px;
-  white-space: nowrap;
 }
-.waiting {
-  color: #ffcf5f;
-  font-weight: 500;
-  font-size: 14px;
-  margin-left: 72px;
-  margin-top: 8px;
-  white-space: nowrap;
+.miniActive > .miniCanHover > .miniTabIcon,
+.miniCanHover:hover > .miniTabIcon {
+  transform: scale(1);
+}
+.miniTabIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 16px;
+}
+.active {
+  color: #fff;
+  font-size: 30px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+.normal {
+  color: #aaa;
+  font-size: 26px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+.base {
+  min-width: 300px;
+  padding: 0 30px;
+}
+.active > .canHover,
+.canHover:hover {
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+}
+.active > .canHover > .tabIcon,
+.canHover:hover > .tabIcon {
+  width: 44px;
+  height: 44px;
+}
+.tabIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
 }

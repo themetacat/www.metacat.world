@@ -14,6 +14,7 @@ type Props = {
   openseaUrl?: string;
   hasTypeTag?: boolean;
   world?: string;
+  typeState?: string;
 };
 
 export default function Card({
@@ -25,6 +26,7 @@ export default function Card({
   parcelPageUrl,
   hasTypeTag = true,
   world,
+  typeState
 }: Props) {
   const jumpToOpenC = React.useCallback(
     (event) => {
@@ -53,15 +55,17 @@ export default function Card({
           img={coverImgUrl}
           error="/images/default-cover.png"
         ></CoverImg>
+           <span className={style.typeIcon}>{typeState}</span>
       </div>
       <div className={cn('p-5 flex-1', style.content)}>
         <div className={cn('flex justify-between items-center', style.contnetHeader)}>
-          <div className="text-xl font-semibold truncate flex-1 mr-3" title={name}>
+          <div className={cn("text-xl font-semibold truncate flex-1 mr-3",style.name)} title={name}>
             {name}
           </div>
           {openseaUrl ? (
             <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
           ) : null}
+       
         </div>
         <div className={cn('text-xs my-3', style.description)}>{description}</div>
       </div>

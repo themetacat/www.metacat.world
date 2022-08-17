@@ -28,7 +28,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
             style={{ backgroundImage: `url('${icon}')` }}
           ></div>
         ) : null}
-        <div>{label}</div>
+        <div  className={style.name}>{label}</div>
       </div>
     </div>
   ) : (
@@ -41,7 +41,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
           className={cn('bg-contain mr-2', style.tabIcon)}
           style={{ backgroundImage: `url('${icon}')` }}
         ></div>
-        <div>{label}</div>
+        <div className={style.name}>{label}</div>
       </div>
     </div>
   );

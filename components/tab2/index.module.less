@@ -1,9 +1,11 @@
 .active::after {
   position: absolute;
   bottom: 0;
-  width: 180px;
-  height: 6px;
-  background-color: #00d0ec;
+  width: 100px;
+  height: 2px;
+  border-radius: 2px;
+  // background-color: #00d0ec;
+  background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
   content: ' ';
 }
 
@@ -14,15 +16,26 @@
   position: relative;
   color: #fff;
   cursor: pointer;
+  width: 100px;
+  text-align: center;
 }
 
 .canHover {
   color: #aaa;
+  font-size: 16px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  width: 100px;
+  text-align: center;
 }
 
 .active,
 .active > .canHover,
 .canHover:hover {
   color: #fff;
-  font-size: 25px;
+  font-size: 16px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  width: 100px;
+  text-align: center;
 }

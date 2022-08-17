@@ -1,7 +1,9 @@
 .btn{
   width: 120px;
   height: 36px;
-  background-color: rgba(0, 208, 236, 1);
+  /* background-color: rgba(0, 208, 236, 1); */
+  background: linear-gradient(270deg, rgba(0, 236, 179, 1) 10.81%, rgba(0, 208, 236, 1) 150.96%);
+
   color: black;
   position: relative;
   border-radius: 8px;

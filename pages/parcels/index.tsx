@@ -28,7 +28,7 @@ import SwiperTagParcels from '../../components/swiper-tagParcels';
 import PageHeader from '../../components/page-header';
 import SpaceBuilding from './spacebuildings';
 import ScenceBuilding from './scencebuildings';
-import PagiNation from '../../components/pagination';
+import PagiNation from '../../components/paginationParcels';
 import Search from '../../components/search';
 import PostGrid from '../../components/post-grid';
 import Status from '../../components/status';
@@ -238,6 +238,7 @@ export default function Index(props) {
   const [typeState, setTypeState] = React.useState(props.query.type || 'All');
   const [typeList, setTypeList] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
+  const [fixedState, setFixedState] = React.useState(false);
   const nextCursor = React.useRef(1);
 
   const [dataSource, setDataSource] = React.useState([]);
@@ -373,7 +374,22 @@ export default function Index(props) {
     return convert(data);
   };
 
-
+  React.useEffect(() => {
+    const listener = () => {
+    console.log(11111,document.querySelector('.myClassName'));
+      if (
+        document.querySelector('.myClassName') &&
+        document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+        window.scrollY > 200
+      ) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
  
 
   const onTabChange = async (tab) => {
@@ -504,7 +520,6 @@ export default function Index(props) {
 
   const onSearchSpace = React.useCallback(
     async (text: string) => {
-      // alert("ddddd") 你那个接口就没有这些东西 可是他们说这个查询接口里面不需要 说只是前段的搜索 我就很懵 怎么会只有前段的 那不然列表里展示啥  行前端查是不是啊 说是parcel就是
       console.log(tabState,subTabState);
       
       setSearchText(text);
@@ -572,17 +587,19 @@ export default function Index(props) {
       return (
         <>
 
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
+          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ',style.bottomContent)}>
             {dataSource.map((card, idx) => {
-              return <Card {...card} key={uuid()}></Card>;
+              return <Card {...card} typeState={typeState} key={uuid()}></Card>;
             })}
           </div>
+          <div className={style.pagiNation}>
           <PagiNation
             total={totalPage}
             pageNumber={pageNumber - 1}
             pageSize={9}
             pageChange={onPageChangeHandler}
           />
+          </div>
         </>
       );
     }
@@ -1591,7 +1608,7 @@ export default function Index(props) {
             <TopicCardList topics={topicList}></TopicCardList>
           </>
         ) : null} */}
-        <div className={cn('tab-list flex mt-5', style.allHeight)}>
+        <div className={cn('tab-list flex mt-5 myClassName', style.allHeight ,fixedState ? style.aboslute : null)} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
             <div
@@ -1609,7 +1626,7 @@ export default function Index(props) {
               modules={[Navigation]}
               spaceBetween={1}
               slidesPerView="auto"
-              className={cn('w-full', style.swiper)}
+              className={cn('w-full',)}
               navigation={{
                 prevEl: '.p',
                 nextEl: '.n',
@@ -1622,7 +1639,7 @@ export default function Index(props) {
                 return (
                   <SwiperSlide
                     className={cn(
-                      'box-border w-12 py-2 px-4 font-semibold text-white',
+                      'box-border w-12   font-semibold text-white',
                       style.base,
                       tabState === item.type ? style.active : null,
                     )}
@@ -1746,7 +1763,7 @@ export default function Index(props) {
 
           <div className={cn('mt-8', style.content)}>
             {subTabState === 'parcel' && (
-              <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+              <SwiperTagParcels onActive={onTypeChangeHandler}   tags={typeList} label={typeState} />
             )}
             {subTabState === 'space' && (
               <SpaceBuilding />

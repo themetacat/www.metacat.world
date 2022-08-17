@@ -1024,10 +1024,11 @@ class API {
 
   // 4.2 获取 Topic 详情页信息接口
 
-  public async req_topic_detail(id: number, creator: string) {
+  public async req_topic_detail(id: number, creator: string,query: string,
+    type: string,) {
     let search = null;
     if (id) {
-      search = qs.stringify({ id }, { addQueryPrefix: true });
+      search = qs.stringify({ id , query, type}, { addQueryPrefix: true });
     } else {
       search = qs.stringify({ creator }, { addQueryPrefix: true });
     }

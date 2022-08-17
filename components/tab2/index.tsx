@@ -15,7 +15,7 @@ export default function SecondTab({ label, active, onClick }: Props) {
   return (
     <div
       className={cn(
-        'flex w-48 justify-center items-center p-5 box-border  text-2xl',
+        'flex w-48 justify-center items-center  box-border  ',
         style.tab,
         cls,
       )}

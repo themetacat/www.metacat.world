@@ -70,7 +70,7 @@ export default function Search({ text, onSearch, type }: Props) {
           className={cn(style.searchIcon, type === 'z' ? style.lessen : null)}
           src="/images/search.png"
         ></img>
-        Search
+        <span style={{fontSize:"14px"}}>Search</span>
       </div>
     </div>
   );

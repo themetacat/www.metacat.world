@@ -249,7 +249,7 @@ export default function PageHeader({ active, className }: Props) {
               ) : null}
             </div>
 
-            <div
+            {/* <div
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
                 active === '/parcels' ? style.active : null,
@@ -270,7 +270,7 @@ export default function PageHeader({ active, className }: Props) {
                   location={style.parcels}
                 ></TwoNav>
               ) : null}
-            </div>
+            </div> */}
 
             <div
               className={cn(

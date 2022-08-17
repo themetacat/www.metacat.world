@@ -1,15 +1,16 @@
 .topicCard {
-  width: 290px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 250px;
-  padding: 15px;
-  border: 0.3px solid rgba(255, 255, 255);
+  min-width: 290px;
+  min-height: 364px;
+  padding: 15px !important;
+  /* 辅-亮绿 */
+  border: 0.5px solid rgba(255, 255, 255,0.3);
   box-sizing: border-box;
   border-radius: 12px;
-  box-shadow: inset 0px 0px 15px rgba(255,255,255,0.3);
+  box-shadow: inset 0px 0px 15px rgba(255,255,255,0.15);
 }
 
 .topicCard:hover {
@@ -54,11 +55,14 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: PingFang SC;
 }
 
 .oneImg {
   width: 290px;
-  height: 160px;
+  height: 275px;
   display: block;
   border-radius: 8px 8px 0px 0px;
 }

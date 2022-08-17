@@ -75,6 +75,7 @@ export default function SwiperTag({ tags = [], label, className, onActive }: Pro
                 item.name === activeLabel ? styles.active : null,
                 styles.slide,
               )}
+             
               key={index}
               onClick={() => {
                 activeTag(item);
