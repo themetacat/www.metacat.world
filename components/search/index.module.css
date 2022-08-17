@@ -85,6 +85,7 @@
   background: rgba(27, 241, 255, 1);
   background: linear-gradient(270deg,rgba(0, 236, 179, 1)  0%,  rgba(0, 208, 236, 1)100%);
 }
+
 .active {
   color: rgba(17, 26, 27, 1);
   background: rgba(0, 0, 0, 0.2);
