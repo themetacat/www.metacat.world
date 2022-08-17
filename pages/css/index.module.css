@@ -94,12 +94,18 @@
   margin-right: 0px !important;
 }
 .base :hover {
-  height: 50px;
-  font-weight: 500;
-  line-height: 40px;
+  color: #111a1b;
   border-radius: 12px  12px 0px 0px;
-  color: #fff;
   background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
+  filter: brightness(125%);
+}
+.base :active {
+  width: 204px;
+  text-align: center;
+  color: #111a1b;
+  border-radius: 12px  12px 0px 0px;
+  background: linear-gradient(270deg, rgba(0, 236, 179, 0.8) 0%, rgba(0, 208, 236, 0.8) 100%);
+  filter: brightness(125%);
 }
 .active {
   height: 40px;
