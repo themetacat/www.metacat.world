@@ -243,6 +243,7 @@ export default function PageHeader({ active, className }: Props) {
                 setHeatmapState(false);
               }}
             >
+              
               Heatmap
               {heatmapState ? (
                 <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
