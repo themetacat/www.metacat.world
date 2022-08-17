@@ -3,7 +3,7 @@
 import api from '../../lib/z_api';
 
 export default async (req, res) => {
-  const { id, creator } = req.query;
+  const { id, creator} = req.query;
   const data = await api.req_topic_detail(id, creator);
 
   res.statusCode = 200;
