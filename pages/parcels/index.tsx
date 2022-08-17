@@ -1639,7 +1639,7 @@ export default function Index(props) {
                 return (
                   <SwiperSlide
                     className={cn(
-                      'box-border w-12   font-semibold text-white',
+                      'box-border w-12 font-semibold text-white ',
                       style.base,
                       tabState === item.type ? style.active : null,
                     )}

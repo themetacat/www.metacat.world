@@ -32,24 +32,21 @@
   font-size: 14px;
   cursor: pointer;
 }
-.miniActive > .miniCanHover > .miniTabIcon,
-.miniCanHover:hover > .miniTabIcon {
+// .miniActive > .miniCanHover > .miniTabIcon,
+// .miniCanHover:hover > .miniTabIcon {
+//   transform: scale(1);
+// }
+
+.miniTabIcon:hover{
   transform: scale(1);
+  border-radius: 50% !important;
+  opacity: 1;
 }
-
-// .miniCanHover :hover{
-//   color: rgba(17, 26, 27, 1);
-//   border-radius: 12px  12px 0px 0px;
-//   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
-//   filter: brightness(125%);
-// }
-
-// .miniCanHover :active{
-//   color: rgba(17, 26, 27, 1);
-//   border-radius: 12px  12px 0px 0px;
-//   background: linear-gradient(270deg,rgba(0, 236, 179, 0.8)  0%,  rgba(0, 208, 236, 0.8)100%);
-//   filter: brightness(125%);
-// }
+.miniTabIcon:active{
+  transform: scale(1);
+  border-radius: 50% !important;
+  opacity: 999;
+}
 
 .miniTabIcon {
   width: 20px;

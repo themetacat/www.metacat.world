@@ -23,9 +23,15 @@
   font-size: 14px;
   cursor: pointer;
 }
-.miniActive > .miniCanHover > .miniTabIcon,
-.miniCanHover:hover > .miniTabIcon {
+.miniTabIcon:hover {
   transform: scale(1);
+  border-radius: 50% !important;
+  opacity: 1;
+}
+.miniTabIcon:active {
+  transform: scale(1);
+  border-radius: 50% !important;
+  opacity: 999;
 }
 .miniTabIcon {
   width: 20px;
