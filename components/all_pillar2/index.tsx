@@ -148,24 +148,6 @@ export default function AllLine({
           });
 
           const staticItem = `
-
-<<<<<<< HEAD
-                <div style="color:#fff;margin-bottom:12px">
-      <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
-      ${`Otherside`}:
-        <span style="color:#fff;">
-          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
-            legend7.color[0]
-          }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[6]]?.value,
-          )}</span>
-        </span>
-      </span>
-    </div>
-=======
-             
->>>>>>> dev
-              
               <div style="color:#fff;margin-bottom:12px">
                 <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
