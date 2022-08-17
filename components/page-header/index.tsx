@@ -269,7 +269,7 @@ export default function PageHeader({ active, className }: Props) {
           ) : null}
         </div>
 
-        {/* <div
+        <div
           className={cn(
             'text-xl  text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/parcels' ? style.active : null,
@@ -293,7 +293,7 @@ export default function PageHeader({ active, className }: Props) {
             </div>
           ) : null}
 
-        </div> */}
+        </div>
 
         <div
           className={cn(
@@ -375,7 +375,7 @@ export default function PageHeader({ active, className }: Props) {
         </div> */}
         <div
           className={cn(
-            'text-xl  text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400 hover:text-white mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'builders' ? style.active : null,
           )}
         >
