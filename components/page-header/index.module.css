@@ -5,6 +5,9 @@
 .active {
   color: #fff;
 }
+.old {
+  color: #fff;
+}
 
 .base {
   z-index: 10002;
@@ -15,6 +18,13 @@
   right: -35px;
   bottom: -141px;
   /* bottom: -90px; */
+  z-index: 99;
+  background-color: #0f191b;
+}
+.parcels {
+  position: absolute;
+  /* right: 450px;
+  top:40px; */
   z-index: 99;
   background-color: #0f191b;
 }

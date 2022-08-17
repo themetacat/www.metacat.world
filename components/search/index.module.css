@@ -1,8 +1,10 @@
 .search {
 }
 .search > input {
+  margin-top: 6px;
   width: 100%;
-  height: 100%;
+  height: 32px;
+  line-height: 32px;
   background: rgba(0, 208, 236, 0.1);
   border: 0.5px solid #00d0ec;
   box-sizing: border-box;
@@ -10,6 +12,7 @@
   outline: black;
   color: #fff;
   padding: 0 10px;
+  border-radius: 6px 0px 0px 6px;
 }
 .searchContainer {
   display: block;
@@ -68,9 +71,11 @@
 }
 
 .searchbtn {
-  width: 110px;
-  height: 44px;
-  color: rgba(153, 153, 153, 1);
+  /* width: 95px; */
+  padding:6px 15px;
+  height: 32px;
+  color: #999999;
+  border-radius: 8px;
   background: rgba(0, 208, 236, 0.1);
   cursor: pointer;
 }
@@ -78,18 +83,21 @@
 .searchbtn:hover {
   color: rgba(17, 26, 27, 1);
   background: rgba(27, 241, 255, 1);
+  background: linear-gradient(270deg,rgba(0, 236, 179, 1)  0%,  rgba(0, 208, 236, 1)100%);
 }
 .active {
   color: rgba(17, 26, 27, 1);
-  background: rgba(0, 208, 236, 1);
+  background: rgba(0, 0, 0, 0.2);
+  background: linear-gradient(270deg,rgba(0, 236, 179, 1)  0%,  rgba(0, 208, 236, 1)100%);
+  border-radius: 0px 6px 6px 0px;
 }
 .searchbtn:active {
   background: #00abc2;
 }
 
 .searchIcon {
-  width: 30px;
-  height: 30px;
+  width: 15.47px;
+  height: 15.8px;
   filter: contrast(0);
 }
 

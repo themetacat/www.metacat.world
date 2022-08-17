@@ -20,6 +20,7 @@ export const getCVParcelList = async (page: number, count: number, query: string
   return json;
 };
 
+
 export const getDCLEventList = async (cursor: number, count: number) => {
   const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
   const url = `/api/dcl-event-list${search}`;

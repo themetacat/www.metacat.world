@@ -43,6 +43,20 @@ const wearable = [
     link: '/wearables/wearabledao?type=chinesered',
   },
 ];
+const parcels = [
+  {
+    label: 'Voxels',
+    type: 'voxelsParcels',
+    link: '/parcels?tab=cryptovoxels',
+    icon: '/images/cvLogo.png',
+  },
+  {
+    label: 'Decentraland',
+    type: 'decentraParcels',
+    link: '/parcels?tab=decentraland',
+    icon: '/images/Decentraland.jpg',
+  },
+]
 const heatmapData = [
   {
     label: 'Otherside',
@@ -145,6 +159,12 @@ function myfun() {
   }, 1000);
 }
 
+function myfunParcels() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
+
 function myfunData() {
   setTimeout(() => {
     window.open(window.location.href);
@@ -155,11 +175,11 @@ export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
   const [analyticState, setAnalyticState] = React.useState(false);
+  const [ParcelsState, setParcelsState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
-
   return (
     <header
       className={cn(
@@ -177,7 +197,7 @@ export default function PageHeader({ active, className }: Props) {
       <div className="flex flex-grow justify-end">
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
+            'text-xl  text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/' ? style.active : null,
           )}
         >
@@ -195,10 +215,12 @@ export default function PageHeader({ active, className }: Props) {
         </div> */}
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+            'text-xl  text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
             style.z,
+           
           )}
+        
           // onClick={analyticsData}
           onMouseEnter={() => {
             setAnalyticState(true);
@@ -220,9 +242,10 @@ export default function PageHeader({ active, className }: Props) {
             </div>
           ) : null}
         </div>
+
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
+            'text-xl  text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'heatmap' ? style.active : null,
           )}
           onMouseEnter={() => {
@@ -248,7 +271,33 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl  text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+            active === '/parcels' ? style.active : null,
+            style.z,
+          )}
+          onMouseEnter={() => {
+            setParcelsState(true);
+          }}
+          onMouseLeave={() => {
+            setParcelsState(false);
+          }}
+        >
+          <Link href="/parcels" prefetch>Parcels</Link>
+          {ParcelsState ? (
+            <div onClick={myfunParcels}>
+              <TwoNav
+                options={parcels}
+                className={style.cn}
+                location={style.parcels}
+              ></TwoNav>
+            </div>
+          ) : null}
+
+        </div>
+
+        <div
+          className={cn(
+            'text-xl  text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'Build' ? style.active : null,
             style.z,
           )}
@@ -274,7 +323,7 @@ export default function PageHeader({ active, className }: Props) {
 
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl  text-gray-400 hover:text-white relative  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'wearables' ? style.active : null,
             style.z,
           )}
@@ -296,7 +345,7 @@ export default function PageHeader({ active, className }: Props) {
         </div>
         <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl  text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'learn' ? style.active : null,
           )}
         >

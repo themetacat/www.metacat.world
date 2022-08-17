@@ -25,6 +25,8 @@ class API {
     return json;
   }
 
+  
+
   public async getCVEventList(cursor: number, count: number): Promise<any> {
     const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_event_list${search}`;

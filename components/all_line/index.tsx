@@ -46,13 +46,13 @@ const keyTypes = [
 ];
 
 const showKeyTypes = [
+  'Otherside',
   'The Sandbox',
   'NFT Worlds',
   'Decentraland',
   'Worldwide Webb',
   'Voxels',
   'Somnium Space',
-  'Otherside',
   'Netvrk',
 ];
 
@@ -161,22 +161,7 @@ export default function AllLine({
           });
 
           const staticItem = `
-          <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${
-            legend7.color[2]
-          }, 1);">
-          ${showKeyTypes[6]}:
-            <span style="color:#fff;">
-              <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
-                legend7.color[0]
-              }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-            result[showKeyTypes[6]]?.value,
-          )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-            </span>
-          </span>
-        </div>
-
+         
           <div style="color:#fff;margin-bottom:12px">
             <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
             legend1.color[2]
@@ -268,6 +253,23 @@ export default function AllLine({
           </span>
         </span>
       </div>
+
+      <div style="color:#fff;margin-bottom:12px">
+      <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${
+        legend7.color[2]
+      }, 1);">
+      ${showKeyTypes[6]}:
+        <span style="color:#fff;">
+          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+            legend7.color[0]
+          }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
+        result[showKeyTypes[6]]?.value,
+      )}</span>
+          <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+        </span>
+      </span>
+    </div>
+
 
         <div style="color:#fff;margin-bottom:12px">
         <span style="color:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1);">
@@ -364,41 +366,42 @@ export default function AllLine({
         .style({
           fields: ['name'],
           callback: (tVal) => {
-            if (tVal === 'The Sandbox') {
+            if (tVal === 'Otherside') {
               return {
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
             }
-            if (tVal === 'NFT Worlds') {
+            if (tVal === 'The Sandbox') {
               return {
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Decentraland') {
+            if (tVal === 'NFT Worlds') {
               return {
                 fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Worldwide Webb') {
+            if (tVal === 'Decentraland') {
               return {
                 fill: `l(270) 0:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Voxels') {
+            if (tVal === 'Worldwide Webb') {
               return {
                 fill: `l(270) 0:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Somnium Space') {
+            if (tVal === 'Voxels') {
               return {
                 fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
               };
             }
-            if (tVal === 'Otherside') {
+            if (tVal === 'Somnium Space') {
               return {
                 fill: `l(270) 0:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
               };
             }
+
             if (tVal === 'Netvrk') {
               return {
                 fill: `l(270) 0:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 0.2) 1:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`,
@@ -425,31 +428,32 @@ export default function AllLine({
         .size(2)
         .tooltip(false)
         .color('name', (tVal) => {
-          if (tVal === 'The Sandbox') {
+          if (tVal === 'Otherside') {
             return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
           }
-          if (tVal === 'NFT Worlds') {
+          if (tVal === 'The Sandbox') {
             return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (tVal === 'Decentraland') {
+          if (tVal === 'NFT Worlds') {
             return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
-          if (tVal === 'Worldwide Webb') {
+          if (tVal === 'Decentraland') {
             return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
           }
-          if (tVal === 'Voxels') {
+          if (tVal === 'Worldwide Webb') {
             return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
           }
-          if (tVal === 'Somnium Space') {
+          if (tVal === 'Voxels') {
             return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
           }
-          if (tVal === 'Otherside') {
+          if (tVal === 'Somnium Space') {
             return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
           }
+
           if (tVal === 'Netvrk') {
             return `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
           }
-        });
+        })
       /**
              * const showKeyTypes = [
 'The Sandbox',
@@ -572,11 +576,7 @@ export default function AllLine({
   const getLenged = React.useMemo(() => {
     return (
       <>
-        <IconLabel
-          text={legend7.label}
-          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
-          className="mr-5"
-        ></IconLabel>
+      
         <IconLabel
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
@@ -605,6 +605,11 @@ export default function AllLine({
         <IconLabel
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+          <IconLabel
+          text={legend7.label}
+          color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel

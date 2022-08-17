@@ -8,6 +8,8 @@ import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
 import style from './index.module.css';
 
+import TwoNav from '../../two_nav';
+
 type Props = {
   active?: string;
   className?: string;
@@ -30,6 +32,7 @@ const build = [
     link: '/build/spacebuildings',
   },
 ];
+
 const wearable = [
   {
     label: 'Creators',
@@ -42,6 +45,22 @@ const wearable = [
     link: '/wearables/wearabledao?type=chinesered',
   },
 ];
+
+const parcels = [
+  {
+    label: 'Voxels',
+    type: 'voxelsParcels',
+    link: '/parcels?tab=cryptovoxels',
+    icon: '/images/cvLogo.png',
+  },
+  {
+    label: 'Decentraland',
+    type: 'decentraParcels',
+    link: '/parcels?tab=decentraland',
+    icon: '/images/Decentraland.jpg',
+  },
+]
+
 const analytics = [
   {
     label: 'Overview',
@@ -144,6 +163,7 @@ export default function PageHeader({ active, className }: Props) {
   const [wearableState, setWearableState] = React.useState(false);
   const [analyticsState, setAnalyticsState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
+  const [ParcelsState, setParcelsState] = React.useState(false);
 
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
@@ -228,6 +248,30 @@ export default function PageHeader({ active, className }: Props) {
                 <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
               ) : null}
             </div>
+
+            {/* <div
+              className={cn(
+                'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+                active === '/parcels' ? style.active : null,
+                style.z,
+              )}
+              onMouseEnter={() => {
+                setParcelsState(true);
+              }}
+              onMouseLeave={() => {
+                setParcelsState(false);
+              }}
+            >
+              <Link href="/parcels" prefetch>Parcels</Link>
+              {ParcelsState ? (
+                <TwoNav
+                  options={parcels}
+                  className={style.cn}
+                  location={style.parcels}
+                ></TwoNav>
+              ) : null}
+            </div> */}
+
 
             <div
               className={cn(
