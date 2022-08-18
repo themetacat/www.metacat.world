@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import cn from 'classnames';
 
 import dynamic from 'next/dynamic';
 
 import { useRouter } from 'next/router';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -14,7 +15,6 @@ import Status from '../../components/status';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
 import style from './index.module.css';
-import { useEffect } from 'react';
 
 const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
@@ -79,6 +79,8 @@ const TAB = [
 ];
 
 export default function MapPage(props) {
+  const router = useRouter();
+
   const cls = cn('flex-1', style.bottomLine);
 
   const [fullScreen, setFullScreen] = React.useState(false);
@@ -86,17 +88,19 @@ export default function MapPage(props) {
   const [mapType, setMapType] = React.useState(props.query.type || 'cryptovoxels');
   const [staticType, setStaticType] = React.useState(props.query.static || 'price');
 
-  const router = useRouter();
-  useEffect(() => {
-    console.log(router, 'switch');
-    setMapType(router.query.type)
-  }, [router.query.type])
+ 
+  
   const showFull = React.useCallback(
     (x) => {
       setFullScreen(x);
     },
     [null],
   );
+
+  useEffect(() => {
+    console.log(router, 'switch');
+    setMapType(router.query.type)
+  }, [router.query.type])
 
   const renderMap = React.useMemo(() => {
     if (loading) {
