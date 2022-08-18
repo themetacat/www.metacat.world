@@ -410,12 +410,12 @@ export default function Index(props) {
     setTabState(tab);
     let sub = '';
     if (tab === 'cryptovoxels') {
-      sub = subTabState;
+      sub = SUBTAB[subIndex].type;
       setSubTabState(SUBTAB[subIndex].type)
       router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
-    
+      
     } else if (tab === 'decentraland') {
-      sub = subTabState;
+      sub = SUBTAB[subIndex].type;
       setSubTabState(SUBTABDECE[subIndex].type)
       router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`)
    
@@ -502,9 +502,10 @@ export default function Index(props) {
       setSearchText('');
       setTypeState('');
       setTypeState('All')
+      console.log(sub,111111111111111);
       const data = await requestData({
         tab: tabState,
-      subTab: sub,
+      subTab: subTab,
       // subTab,
         page: 1,
         query: '',
@@ -1664,8 +1665,6 @@ export default function Index(props) {
   );
 
   React.useEffect(() => {
-    console.log('');
-    setSubTabState('parcel')
     setTypeState('All')
     const accessToken = getToken('atk');
     if (accessToken) {
