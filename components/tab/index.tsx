@@ -1,10 +1,12 @@
 import React, { MouseEventHandler } from 'react';
 
+import { useRouter } from 'next/router';
+
 import cn from 'classnames';
 
 import style from './index.module.less';
 
-import { useRouter } from 'next/router';
+
 
 type Props = {
   onActive?: (x) => void;
