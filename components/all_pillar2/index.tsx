@@ -148,8 +148,6 @@ export default function AllLine({
           });
 
           const staticItem = `
-
-             
               
               <div style="color:#fff;margin-bottom:12px">
                 <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
