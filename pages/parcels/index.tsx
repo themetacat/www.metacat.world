@@ -375,7 +375,7 @@ export default function Index(props) {
     }
 
     setLoading(false);
-    console.log(convert(data), 111);
+    console.log(convert(data));
 
     return convert(data);
   };
@@ -460,7 +460,7 @@ export default function Index(props) {
     async (subTab) => {
       setSubTabState(subTab);
       let subIndexData
-      console.log(subTab,tabState,subIndexData,'???');
+      console.log(subTab,tabState,subIndexData)
       // setTabState(subTab);
       if(tabState==="cryptovoxels"){
         if (subTab==='parcel') {
@@ -486,14 +486,14 @@ export default function Index(props) {
 
       if (tabState === 'cryptovoxels') {
       sub = subTabState;
-      console.log(SUBTAB[subIndexData].type,'1111111111');
+      console.log(SUBTAB[subIndexData].type,);
       
       setSubTabState(SUBTAB[subIndexData].type)
         router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
       
       } else if (tabState === 'decentraland') {
       sub = subTabState;
-      console.log(SUBTABDECE[subIndexData].type,'22222');
+      console.log(SUBTABDECE[subIndexData].type);
       setSubTabState(SUBTABDECE[subIndexData].type)
         router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
      
@@ -502,7 +502,7 @@ export default function Index(props) {
       setSearchText('');
       setTypeState('');
       setTypeState('All')
-      console.log(sub,111111111111111);
+      console.log(sub);
       const data = await requestData({
         tab: tabState,
       subTab: subTab,
