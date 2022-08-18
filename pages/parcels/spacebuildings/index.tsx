@@ -55,6 +55,7 @@ export default function spacebuildings() {
   const [tabState, setTabState] = React.useState('spacebuildings');
   const [fixedState, setFixedState] = React.useState(false);
 
+  
   const cls = cn('flex-1', style.bottomLine);
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
