@@ -7,7 +7,9 @@ import { Toaster } from 'react-hot-toast';
 import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
 import TwoNav from '../two_nav';
+
 import { useRouter } from 'next/router';
+
 import style from './index.module.css';
 type Props = {
   active?: string;
