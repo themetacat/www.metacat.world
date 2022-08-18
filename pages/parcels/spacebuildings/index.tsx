@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import PageParcedl from '../../../components/pageParcels';
 import PageHeader from '../../../components/page-header';
 import Status from '../../../components/status';
-import Footer from '../../../components/footer';
 import TopicDetailCard from '../../../components/topic-detail-card';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
