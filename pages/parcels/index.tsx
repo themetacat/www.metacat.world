@@ -459,48 +459,53 @@ export default function Index(props) {
   const onSubTabChange = React.useCallback(
     async (subTab) => {
       setSubTabState(subTab);
-      // setTabState(tab);
       let subIndexData
-      // if (subTab='parcel') {
-      //   subIndexData = TAB.findIndex(item => item.type === subTab)
-      // }
-      //  else if (subTab==='space') {
-      //   subIndexData = TAB.findIndex(item => item.type === subTab)
-      // }
-      console.log(subTab,tabState,subIndexData);
-      if(subTab==='parcel'&&tabState==='cryptovoxels'){
-          router.replace(`/parcels?tab=cryptovoxels&subTab=parcel`)
-      }
-      if(subTab==='space'&&tabState==='cryptovoxels'){
-        router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
-      }
-      if(subTab==='parcel'&&tabState==='decentraland'){
-router.replace(`/parcels?tab=decentraland&subTab=parcel`)
-      }
-      if(subTab==='space'&&tabState==='cryptovoxels'){
-router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
+      console.log(subTab,tabState,subIndexData,'???');
+      // setTabState(subTab);
+      if(tabState==="cryptovoxels"){
+        if (subTab==='parcel') {
+          subIndexData = SUBTAB.findIndex(item => item.type === subTab)
+        }
+         else if (subTab==='space') {
+          subIndexData = SUBTAB.findIndex(item => item.type === subTab)
+        }
+        console.log(subIndexData, tabState);
+        subIndexData = subIndexData === -1 ? 0 : subIndexData
+      }else{
+        if (subTab==='parcel') {
+          subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
+        }
+         else if (subTab==='scene') {
+          subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
+        }
+        console.log(subIndexData, tabState);
+        subIndexData = subIndexData === -1 ? 0 : subIndexData
       }
 
-            // subIndexData = subIndexData === -1 ? 0 : subIndexData
-            // setTabState(tabState);
-            // let sub = '';
-            // if (tabState === 'cryptovoxels') {
-            //   sub = subTabState;
-            //   setSubTabState(SUBTAB[subIndexData].type)
-            //   router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
+    let sub = '';
 
-            // } else if (tabState === 'decentraland') {
-            //   sub = subTabState;
-            //   setSubTabState(SUBTABDECE[subIndexData].type)
-            //   router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
-            // }
+      if (tabState === 'cryptovoxels') {
+      sub = subTabState;
+      console.log(SUBTAB[subIndexData].type,'1111111111');
+      
+      setSubTabState(SUBTAB[subIndexData].type)
+        router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
+      
+      } else if (tabState === 'decentraland') {
+      sub = subTabState;
+      console.log(SUBTABDECE[subIndexData].type,'22222');
+      setSubTabState(SUBTABDECE[subIndexData].type)
+        router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
+     
+      }
 
       setSearchText('');
       setTypeState('');
       setTypeState('All')
       const data = await requestData({
         tab: tabState,
-        subTab,
+      subTab: sub,
+      // subTab,
         page: 1,
         query: '',
         type: '',
@@ -668,6 +673,7 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
       );
     }
     if (subTabState === 'scene') {
+      console.log(dataSource)
       if (loading) {
         return <Status status="loading" />;
       }
@@ -677,7 +683,7 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
       }
 
       if (dataSource.length === 0) {
-        return <Status status="empty" />;
+        return null;//  <Status status="empty" />;
       }
       return (
         <>
@@ -708,7 +714,9 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
       }
 
       if (dataSource.length === 0) {
-        return <Status status="empty" />;
+        return null; // 临时救这么处理吧 你下边的逻辑有点不对  不过现在只有先这样了
+        // 你是说样式么？不是  就是有时候那个图片出不来 是因为啥呀 啥图片  
+        // return <Status status="empty" />;
       }
       return (
         <>
