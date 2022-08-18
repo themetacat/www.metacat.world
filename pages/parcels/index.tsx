@@ -224,7 +224,7 @@ export default function Index(props) {
   const meta = {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
-  };
+};
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -506,7 +506,6 @@ export default function Index(props) {
       const data = await requestData({
         tab: tabState,
       subTab: subTab,
-      // subTab,
         page: 1,
         query: '',
         type: '',
@@ -684,7 +683,7 @@ export default function Index(props) {
       }
 
       if (dataSource.length === 0) {
-        return null;//  <Status status="empty" />;
+        return null;
       }
       return (
         <>
@@ -716,7 +715,7 @@ export default function Index(props) {
 
       if (dataSource.length === 0) {
         return null;   
-        // return <Status status="empty" />;
+       
       }
       return (
         <>
