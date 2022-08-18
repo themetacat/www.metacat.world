@@ -112,7 +112,6 @@ export default function spacebuildings() {
 
     return (
       <>
-      
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
           {builders.map((card, idx) => {
             return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
