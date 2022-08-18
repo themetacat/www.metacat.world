@@ -39,7 +39,6 @@ export default function Switch({ onActive, options, defaultValue, id, className,
 React.useEffect(()=>{
   console.log(router,'switch');
   if(router){
-    // setActive(router.query.type?router.query.type:(defaultValue || options[0].value))
     setActive(router.query.type)
       onActive(router?.query?.type);
   }
