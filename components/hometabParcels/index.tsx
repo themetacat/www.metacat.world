@@ -29,7 +29,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
           ></div>
         ) : null}
         {/* <div  className={style.name}></div> */}
-        {label}
+        <span className={style.name} >{label}</span>
       {/* </div> */}
     </div>
   ) : (

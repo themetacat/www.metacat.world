@@ -47,8 +47,10 @@ export default function spacebuildings() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
-  const [pageCount, setPageCount] = React.useState(80);
+  const [pageCount, setPageCount] = React.useState(40);
   const [totalPage, setTotalPage] = React.useState(0);
+  const [query, setQuery] = React.useState(null);
+  const [type, setType] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('spacebuildings');
   const [fixedState, setFixedState] = React.useState(false);
@@ -59,7 +61,7 @@ export default function spacebuildings() {
     router.replace(`/build/${t}`);
   }, []);
 
-  const requestData = React.useCallback(async (page: number, count: number) => {
+  const requestData = React.useCallback(async (page: number, count: number,query,type) => {
     setLoading(true);
     setError(false);
     try {
@@ -67,7 +69,7 @@ export default function spacebuildings() {
         setLoading(false);
         return;
       }
-      const res = await req_space_buildings_list(page, count);
+      const res = await req_space_buildings_list(page, count,query,type);
       const { data, total_page } = res;
       setBuilders(convert(data));
       setTotalPage(total_page);
@@ -79,19 +81,19 @@ export default function spacebuildings() {
   }, []);
 
   const onRetry = React.useCallback(() => {
-    requestData(pageNumber, pageCount);
+    requestData(pageNumber, pageCount,query,type);
   }, [pageNumber, pageCount]);
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
       const requestNumber = number + 1;
-      await requestData(requestNumber, pageCount);
+      await requestData(requestNumber, pageCount,query,type);
     },
     [pageCount],
   );
 
   React.useEffect(() => {
-    requestData(pageNumber, pageCount);
+    requestData(pageNumber, pageCount,query,type);
   }, []);
 
   const renderStatus = React.useMemo(() => {

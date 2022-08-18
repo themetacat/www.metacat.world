@@ -21,7 +21,9 @@ export default function SecondTab({ label, active, onClick }: Props) {
       )}
       onClick={onClick}
     >
-      <div className={style.canHover}>{label}</div>
+      <div className={style.canHover}>
+        <span className={style.label}>{label}</span>
+      </div>
     </div>
   );
 }

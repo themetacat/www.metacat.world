@@ -220,7 +220,7 @@ const SUBTABZ2 = [
 export default function Index(props) {
 
   const router = useRouter();
-  
+
   const meta = {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -231,7 +231,7 @@ export default function Index(props) {
 
   const [tabState, setTabState] = React.useState(props.query.tab || 'cryptovoxels');
   const [subTabState, setSubTabState] = React.useState(props.query.subTab || 'parcel');
-  const [subSpaceState, setSubSpaceState] = React.useState(props.query.subTab || 'space');
+  // const [subSpaceState, setSubSpaceState] = React.useState(props.query.subTab || 'space');
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
   const [searchText, setSearchText] = React.useState(props.query.search || '');
@@ -266,7 +266,7 @@ export default function Index(props) {
       page,
       query,
       type);
-    
+
     try {
       if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
@@ -299,24 +299,24 @@ export default function Index(props) {
           data = event_list;
         }
         else if (subTab === 'space') {
-          const res = await req_space_buildings_list(page, 40,);
-          
-          // data = res.data.filter((item)=>{
-          //   return item.name.indexOf(query) !== -1
-          // })
-          // console.log(data);
-          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+         
+          const res = await req_space_buildings_list(page, 40, query, type);
 
-          const typeArray = Object.keys(type_total).map((key) => {
-            const value = type_total[key];
-            return { name: key, value };
-          });
-          setTotalPage(total_page);
+          // let { page, count } = res;
+          setTotalPage(res.page);
+          data = res.data;
+          // const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-          if (needUpdateTypeList) {
-            setTypeList(typeArray);
-          }
-          data = parcel_list;
+          // const typeArray = Object.keys(type_total).map((key) => {
+          //   const value = type_total[key];
+          //   return { name: key, value };
+          // });
+          // setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(typeArray);
+          // }
+          // data = parcel_list;
         }
       } else if (tab === 'decentraland') {
         if (subTab === 'parcel') {
@@ -348,35 +348,40 @@ export default function Index(props) {
 
           data = event_list;
         }
-      } else if (subTab === 'scene') {
-        const res = await req_scence_list(page, 40);
-        const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+        else if (subTab === 'scene') {
+          const res = await req_scence_list(page, 40, query, type);
 
-        // setPageNumber(currentPage);
-        setTotalPage(total_page);
+          // let { page, count } = res;
+          setTotalPage(res.page);
+          data = res.data;
+          //  const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-        const typeArray = Object.keys(type_total).map((key) => {
-          const value = type_total[key];
-          return { name: key, value };
-        });
+          //  const typeArray = Object.keys(type_total).map((key) => {
+          //    const value = type_total[key];
+          //    return { name: key, value };
+          //  });
+          //  setTotalPage(total_page);
 
-        if (needUpdateTypeList) {
-          setTypeList(typeArray);
+          //  if (needUpdateTypeList) {
+          //    setTypeList(typeArray);
+          //  }
+          //  data = parcel_list;
         }
-        data = parcel_list;
       }
 
     } catch (err) {
+
       setError(true);
     }
 
     setLoading(false);
+    console.log(convert(data), 111);
+
     return convert(data);
   };
 
   React.useEffect(() => {
     const listener = () => {
-    console.log(11111,document.querySelector('.myClassName'));
       if (
         document.querySelector('.myClassName') &&
         document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
@@ -390,17 +395,17 @@ export default function Index(props) {
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
- 
+
 
   const onTabChange = async (tab) => {
-   
+
     let subIndex
     if (tabState === 'cryptovoxels') {
       subIndex = SUBTAB.findIndex(item => item.type === subTabState)
     } else if (tabState === "decentraland") {
       subIndex = SUBTABDECE.findIndex(item => item.type === subTabState)
     }
-    console.log(subIndex,tabState);
+    console.log(subIndex, tabState);
     subIndex = subIndex === -1 ? 0 : subIndex
     setTabState(tab);
     let sub = '';
@@ -408,10 +413,12 @@ export default function Index(props) {
       sub = subTabState;
       setSubTabState(SUBTAB[subIndex].type)
       router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
+    
     } else if (tab === 'decentraland') {
       sub = subTabState;
       setSubTabState(SUBTABDECE[subIndex].type)
       router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`)
+   
     }
     else if (
       tab === 'nftworlds' ||
@@ -452,6 +459,42 @@ export default function Index(props) {
   const onSubTabChange = React.useCallback(
     async (subTab) => {
       setSubTabState(subTab);
+      // setTabState(tab);
+      let subIndexData
+      // if (subTab='parcel') {
+      //   subIndexData = TAB.findIndex(item => item.type === subTab)
+      // }
+      //  else if (subTab==='space') {
+      //   subIndexData = TAB.findIndex(item => item.type === subTab)
+      // }
+      console.log(subTab,tabState,subIndexData);
+      if(subTab==='parcel'&&tabState==='cryptovoxels'){
+          router.replace(`/parcels?tab=cryptovoxels&subTab=parcel`)
+      }
+      if(subTab==='space'&&tabState==='cryptovoxels'){
+        router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
+      }
+      if(subTab==='parcel'&&tabState==='decentraland'){
+router.replace(`/parcels?tab=decentraland&subTab=parcel`)
+      }
+      if(subTab==='space'&&tabState==='cryptovoxels'){
+router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
+      }
+
+            // subIndexData = subIndexData === -1 ? 0 : subIndexData
+            // setTabState(tabState);
+            // let sub = '';
+            // if (tabState === 'cryptovoxels') {
+            //   sub = subTabState;
+            //   setSubTabState(SUBTAB[subIndexData].type)
+            //   router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
+
+            // } else if (tabState === 'decentraland') {
+            //   sub = subTabState;
+            //   setSubTabState(SUBTABDECE[subIndexData].type)
+            //   router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
+            // }
+
       setSearchText('');
       setTypeState('');
       setTypeState('All')
@@ -464,6 +507,7 @@ export default function Index(props) {
         needUpdateTypeList: true,
       });
       setDataSource(data);
+  
     },
     [tabState, searchText, typeState],
   );
@@ -520,8 +564,8 @@ export default function Index(props) {
 
   const onSearchSpace = React.useCallback(
     async (text: string) => {
-      console.log(tabState,subTabState);
-      
+      console.log(tabState, subTabState);
+
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
@@ -532,6 +576,25 @@ export default function Index(props) {
         needUpdateTypeList: true,
       });
       console.log(data);
+
+      setDataSource(data);
+    },
+    [tabState, subTabState, typeState],
+  );
+
+  const onSearchScene = React.useCallback(
+    async (text: string) => {
+      console.log(tabState, subTabState);
+
+      setSearchText(text);
+      const data = await requestData({
+        tab: tabState,
+        subTab: subTabState,
+        query: text,
+        page: 1,
+        type: typeState,
+        needUpdateTypeList: true,
+      });
 
       setDataSource(data);
     },
@@ -587,9 +650,41 @@ export default function Index(props) {
       return (
         <>
 
-          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ',style.bottomContent)}>
+          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
             {dataSource.map((card, idx) => {
+
               return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+            })}
+          </div>
+          <div className={style.pagiNation}>
+            <PagiNation
+              total={totalPage}
+              pageNumber={pageNumber - 1}
+              pageSize={9}
+              pageChange={onPageChangeHandler}
+            />
+          </div>
+        </>
+      );
+    }
+    if (subTabState === 'scene') {
+      if (loading) {
+        return <Status status="loading" />;
+      }
+
+      if (error) {
+        return <Status retry={onRetry} status="error" />;
+      }
+
+      if (dataSource.length === 0) {
+        return <Status status="empty" />;
+      }
+      return (
+        <>
+          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
+            {dataSource.map((card, idx) => {
+         
+              return <Card {...card}  key={uuid()}></Card>;
             })}
           </div>
           <div className={style.pagiNation}>
@@ -603,34 +698,36 @@ export default function Index(props) {
         </>
       );
     }
-    // if (subTabState === 'space') {
-    //   if (loading) {
-    //     return <Status status="loading" />;
-    //   }
+    if (subTabState === 'space') {
+      if (loading) {
+        return <Status status="loading" />;
+      }
 
-    //   if (error) {
-    //     return <Status retry={onRetry} status="error" />;
-    //   }
+      if (error) {
+        return <Status retry={onRetry} status="error" />;
+      }
 
-    //   if (dataSource.length === 0) {
-    //     return <Status status="empty" />;
-    //   }
-    //   return (
-    //     <>
-    //       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
-    //         {dataSource.map((card, idx) => {
-    //           return <Card {...card} key={uuid()}></Card>;
-    //         })}
-    //       </div>
-    //       <PagiNation
-    //         total={totalPage}
-    //         pageNumber={pageNumber - 1}
-    //         pageSize={9}
-    //         pageChange={onPageChangeHandler}
-    //       />
-    //     </>
-    // );
-    // }
+      if (dataSource.length === 0) {
+        return <Status status="empty" />;
+      }
+      return (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
+            {dataSource.map((card, idx) => {
+              return <Card {...card} key={uuid()}></Card>;
+            })}
+          </div>
+          <div className={style.pagiNation}>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+          </div>
+        </>
+    );
+    }
     if (subTabState === 'event') {
       if (error) {
         return (
@@ -1608,7 +1705,7 @@ export default function Index(props) {
             <TopicCardList topics={topicList}></TopicCardList>
           </>
         ) : null} */}
-        <div className={cn('tab-list flex mt-5 myClassName', style.allHeight ,fixedState ? style.aboslute : null)} >
+        <div className={cn('tab-list flex mt-5 myClassName', style.allHeight, fixedState ? style.aboslute : null)} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
             <div
@@ -1757,18 +1854,18 @@ export default function Index(props) {
               <Search text={searchText} onSearch={onSearchSpace}></Search>
             ) : null}
             {subTabState === 'scene' ? (
-              <Search text={searchText} onSearch={onSearchHandler}></Search>
+              <Search text={searchText} onSearch={onSearchScene}></Search>
             ) : null}
           </div>
 
           <div className={cn('mt-8', style.content)}>
             {subTabState === 'parcel' && (
-              <SwiperTagParcels onActive={onTypeChangeHandler}   tags={typeList} label={typeState} />
+              <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
-            {subTabState === 'space' && (
+            {subTabState === 'space' && dataSource.length==0  && (
               <SpaceBuilding />
             )}
-            {subTabState === 'scene' && (
+            {subTabState === 'scene'&& dataSource.length==0 &&  (
               <ScenceBuilding />
             )}
 
@@ -1789,7 +1886,6 @@ export default function Index(props) {
                 </div>
               </a>
             )}
-
             {renderContent}
           </div>
         </div>

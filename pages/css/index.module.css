@@ -1,11 +1,10 @@
 .contentHeader {
-  height: 50px;
-  line-height: 50px;
+  margin-top: 30px;
   border-bottom: 1px solid rgba(0, 208, 236, 0.1);
 }
 .allHeight {
   height: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
 }
 .aboslute {
   position: fixed;
