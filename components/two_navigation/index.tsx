@@ -10,22 +10,12 @@ type Props = {
   location?: string;
 };
 
-// export default function TwoNavigation({ options, className, location }: Props) {
   export default function TwoNavigation(props) {
   const router = useRouter();
   
   const [showType, setShowType] = React.useState(router.route || 'analytics');
-  // function myfun(type) {
-  //   console.log(type);
-  //   // setTimeout(() => {
-  //   //   window.location.reload();
-  //   // }, 1000);
-  //   router.replace(`/analytics?type=${type}`)
 
-  // }
   const changeType = React.useCallback((newType) => {
-  // console.log(props,'acb',router);
-  //  console.log(newType);
    
     setShowType(newType.type);
     router.replace(newType.link);
