@@ -14,6 +14,7 @@ import Status from '../../components/status';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
 import style from './index.module.css';
+import { useEffect } from 'react';
 
 const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
@@ -86,7 +87,10 @@ export default function MapPage(props) {
   const [staticType, setStaticType] = React.useState(props.query.static || 'price');
 
   const router = useRouter();
-
+  useEffect(() => {
+    console.log(router, 'switch');
+    setMapType(router.query.type)
+  }, [router.query.type])
   const showFull = React.useCallback(
     (x) => {
       setFullScreen(x);

@@ -249,12 +249,9 @@ export default function PageHeader({ active, className }: Props) {
               ) : null}
             </div>
 
-<<<<<<< HEAD
 
             {/* <div
-=======
             <div
->>>>>>> c7767b7034fb3d84602802f8a8f3f3c99c35ae38
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
                 active === '/parcels' ? style.active : null,
