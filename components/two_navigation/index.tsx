@@ -23,7 +23,6 @@ type Props = {
     <div className={cn(props.location)}>
         {props.options.map((item, index) => {
         return (
-          // <Link href={item.link}>
             <div key={index} onClick={()=>{changeType(item)}} className={cn(style.item, props.className)} style={{ display: 'flex' }}
             >
              {item.icon?(<img
@@ -40,7 +39,6 @@ type Props = {
               ></img>):""} 
               <Link href={item.link}>{item.label}</Link>
             </div>
-          // </Link>
         );
       })}
     </div>
