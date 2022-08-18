@@ -505,7 +505,7 @@ export default function Index(props) {
       console.log(sub);
       const data = await requestData({
         tab: tabState,
-      subTab: subTab,
+        subTab,
         page: 1,
         query: '',
         type: '',
