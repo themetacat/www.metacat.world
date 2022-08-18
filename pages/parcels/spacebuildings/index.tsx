@@ -44,7 +44,7 @@ export default function spacebuildings() {
       type: 'spacebuildings',
     },
   ];
-  
+
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
@@ -109,6 +109,7 @@ export default function spacebuildings() {
     if (builders.length === 0) {
       return <Status status="empty" />;
     }
+
     return (
       <>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
