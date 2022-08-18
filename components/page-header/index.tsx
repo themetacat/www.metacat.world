@@ -233,13 +233,11 @@ export default function PageHeader({ active, className }: Props) {
             Analytics
           </Link>
           {analyticState ? (
-            <div onClick={myfunData}>
               <TwoNav
                 options={analyticsData}
                 className={style.cn1}
                 location={style.location4}
               ></TwoNav>
-            </div>
           ) : null}
         </div>
 
@@ -259,17 +257,15 @@ export default function PageHeader({ active, className }: Props) {
             Heatmap
           </Link>
           {heatmapState ? (
-            <div onClick={myfun}>
               <TwoNav
                 options={heatmapData}
                 className={style.cn}
                 location={style.location3}
               ></TwoNav>
-            </div>
           ) : null}
         </div>
 
-        <div
+    <div
           className={cn(
             'text-xl  text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/parcels' ? style.active : null,
@@ -284,16 +280,18 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href="/parcels" prefetch>Parcels</Link>
           {ParcelsState ? (
-            <div onClick={myfunParcels}>
-              <TwoNav
-                options={parcels}
-                className={style.cn}
-                location={style.parcels}
-              ></TwoNav>
-            </div>
+              // <TwoNav
+              //   options={parcels}
+              //   className={style.cn}
+              //   location={style.parcels}
+              // ></TwoNav>
+              <TwoNavigation
+               options={parcels}
+               className={style.cn}
+               location={style.parcels}
+             ></TwoNavigation>
           ) : null}
-
-        </div>
+ </div> 
 
         <div
           className={cn(
