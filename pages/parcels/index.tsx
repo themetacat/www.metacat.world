@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
@@ -249,6 +249,13 @@ export default function Index(props) {
   const [tabPercent, setTabPercent] = React.useState(0);
 
   const web3 = useWalletProvider();
+
+  console.log(router, 'switch');
+  useEffect(() => {
+    console.log(router, 'switch');
+    //     setTabState(router.route)
+    //  setTabState(router.query.type)
+  }, [router.query.type])
 
   const requestData = async ({
     tab,

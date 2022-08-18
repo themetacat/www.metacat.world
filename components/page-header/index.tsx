@@ -291,7 +291,7 @@ export default function PageHeader({ active, className }: Props) {
           ) : null}
         </div>
 
-        {/* <div
+    <div
           className={cn(
             'text-xl  text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/parcels' ? style.active : null,
@@ -306,16 +306,18 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href="/parcels" prefetch>Parcels</Link>
           {ParcelsState ? (
-            <div onClick={myfunParcels}>
-              <TwoNav
-                options={parcels}
-                className={style.cn}
-                location={style.parcels}
-              ></TwoNav>
-            </div>
+              // <TwoNav
+              //   options={parcels}
+              //   className={style.cn}
+              //   location={style.parcels}
+              // ></TwoNav>
+              <TwoNavigation
+               options={parcels}
+               className={style.cn}
+               location={style.parcels}
+             ></TwoNavigation>
           ) : null}
-
-        {/* </div> */}
+ </div> 
 
         <div
           className={cn(

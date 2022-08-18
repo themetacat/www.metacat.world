@@ -250,7 +250,6 @@ export default function PageHeader({ active, className }: Props) {
             </div>
 
 
-            {/* <div
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
