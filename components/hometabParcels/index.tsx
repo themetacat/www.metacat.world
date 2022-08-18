@@ -21,15 +21,16 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
       className={cn('flex justify-center items-center text-white', st, style.miniBase)}
       onClick={onClick}
     >
-      <div className={cn('flex justify-center items-center', style.miniCanHover)}>
+      {/* <div className={cn('flex justify-center items-center', style.miniCanHover)}> */}
         {icon ? (
           <div
             className={cn('bg-contain mr-2', style.miniTabIcon)}
             style={{ backgroundImage: `url('${icon}')` }}
           ></div>
         ) : null}
-        <div  className={style.name}>{label}</div>
-      </div>
+        {/* <div  className={style.name}></div> */}
+        <span className={style.name} >{label}</span>
+      {/* </div> */}
     </div>
   ) : (
     <div

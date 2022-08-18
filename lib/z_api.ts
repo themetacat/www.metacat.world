@@ -10,6 +10,21 @@ class API {
     this.key = key;
   }
 
+  public async req_scence_list(page: number, count: number,query: string,
+    type: string,) {
+      const search = qs.stringify({ page, count, query, type }, {  addQueryPrefix: true });
+    const url = `${this.url}/get_dcl_scenes${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_dcl_scenes${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+  
   // 设置单个或批量出租
 
   public async req_parcels_rent_out(
@@ -1056,8 +1071,9 @@ class API {
     return json;
   }
 
-  public async req_space_buildings_list(page: number, count: number) {
-    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  public async req_space_buildings_list(page: number, count: number,    query: string,
+    type: string,) {
+      const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_space_buildings${search}`;
     // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
     const result = await fetch(url, {
@@ -1070,19 +1086,7 @@ class API {
     return json;
   }
 
-  public async req_scence_list(page: number, count: number) {
-    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
-    const url = `${this.url}/get_dcl_scenes${search}`;
-    // const url = `http://8.130.23.16/api/v1/get_dcl_scenes${search}`;
-    const result = await fetch(url, {
-      method: 'get',
-      mode: 'cors',
-    });
 
-    const json = await result.json();
-
-    return json;
-  }
 
   public async req_dcl_top20_parcel() {
     // const url = `http://8.130.23.16/api/v1/get_dcl_top20_parcel`;

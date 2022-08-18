@@ -74,6 +74,14 @@
   font-size: 12px;
   font-weight: 400;
   font-family: PingFang SC;
+width: 235px;
+height: 47px;
+font-family: 'PingFang SC';
+font-style: normal;
+line-height: 15px;
+display: flex;
+align-items: center;
+color: #DDDDDD;
 }
 .typeIcon{
   position: absolute;

@@ -25,14 +25,14 @@
 
 .footer {
   /* height: 44px; */
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   border-radius: 0px 0px 8px 8px;
 }
 
 .footer:hover,
 .footer:active {
   font-size: 20px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
@@ -57,6 +57,7 @@
   overflow: hidden;
   font-size: 16px;
   font-weight: 600;
+  color: #fff;
   font-family: PingFang SC;
 }
 

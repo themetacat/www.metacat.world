@@ -1,11 +1,10 @@
 .contentHeader {
-  height: 50px;
-  line-height: 50px;
+  margin-top: 30px;
   border-bottom: 1px solid rgba(0, 208, 236, 0.1);
 }
 .allHeight {
   height: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
 }
 .aboslute {
   position: fixed;
@@ -94,18 +93,19 @@
   margin-right: 0px !important;
 }
 .base :hover {
+  text-align: center;
   color: #111a1b;
   border-radius: 12px  12px 0px 0px;
   background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
   filter: brightness(125%);
+  cursor: pointer;
 }
 .base :active {
-  width: 204px;
   text-align: center;
   color: #111a1b;
   border-radius: 12px  12px 0px 0px;
-  background: linear-gradient(270deg, rgba(0, 236, 179, 0.8) 0%, rgba(0, 208, 236, 0.8) 100%);
-  filter: brightness(125%);
+  background: linear-gradient(270deg, rgba(0, 236, 179, 0.8) 0%, rgba(0, 208, 236, 0.8) 100%) !important;
+  filter: brightness(75%);
 }
 .active {
   height: 40px;

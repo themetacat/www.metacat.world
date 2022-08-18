@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import PageParcedl from '../../../components/pageParcels';
 import PageHeader from '../../../components/page-header';
 import Status from '../../../components/status';
-import Footer from '../../../components/footer';
 import TopicDetailCard from '../../../components/topic-detail-card';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
@@ -44,11 +43,14 @@ export default function spacebuildings() {
       type: 'spacebuildings',
     },
   ];
+
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
-  const [pageCount, setPageCount] = React.useState(80);
+  const [pageCount, setPageCount] = React.useState(40);
   const [totalPage, setTotalPage] = React.useState(0);
+  // const [query, setQuery] = React.useState(null);
+  // const [type, setType] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('spacebuildings');
   const [fixedState, setFixedState] = React.useState(false);
@@ -59,7 +61,7 @@ export default function spacebuildings() {
     router.replace(`/build/${t}`);
   }, []);
 
-  const requestData = React.useCallback(async (page: number, count: number) => {
+  const requestData = React.useCallback(async (page: number, count: number,query,type) => {
     setLoading(true);
     setError(false);
     try {
@@ -67,7 +69,7 @@ export default function spacebuildings() {
         setLoading(false);
         return;
       }
-      const res = await req_space_buildings_list(page, count);
+      const res = await req_space_buildings_list(page, count,query,type);
       const { data, total_page } = res;
       setBuilders(convert(data));
       setTotalPage(total_page);
@@ -79,19 +81,19 @@ export default function spacebuildings() {
   }, []);
 
   const onRetry = React.useCallback(() => {
-    requestData(pageNumber, pageCount);
+    requestData(pageNumber, pageCount,null,null);
   }, [pageNumber, pageCount]);
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
       const requestNumber = number + 1;
-      await requestData(requestNumber, pageCount);
+      await requestData(requestNumber, pageCount,null,null);
     },
     [pageCount],
   );
 
   React.useEffect(() => {
-    requestData(pageNumber, pageCount);
+    requestData(pageNumber, pageCount,null,null);
   }, []);
 
   const renderStatus = React.useMemo(() => {
@@ -106,6 +108,7 @@ export default function spacebuildings() {
     if (builders.length === 0) {
       return <Status status="empty" />;
     }
+
     return (
       <>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
