@@ -714,8 +714,7 @@ export default function Index(props) {
       }
 
       if (dataSource.length === 0) {
-        return null; // 临时救这么处理吧 你下边的逻辑有点不对  不过现在只有先这样了
-        // 你是说样式么？不是  就是有时候那个图片出不来 是因为啥呀 啥图片  
+        return null;   
         // return <Status status="empty" />;
       }
       return (
