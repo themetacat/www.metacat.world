@@ -50,8 +50,8 @@ export default function scencebuildings() {
   const [pageCount, setPageCount] = React.useState(40);
   const [totalPage, setTotalPage] = React.useState(0);
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [query, setQuery] = React.useState(null);
-  const [type, setType] = React.useState(null);
+  // const [query, setQuery] = React.useState(null);
+  // const [type, setType] = React.useState(null);
   const [tabState, setTabState] = React.useState('scencebuildings');
   const [fixedState, setFixedState] = React.useState(false);
 
@@ -83,19 +83,19 @@ export default function scencebuildings() {
 
 
   const onRetry = React.useCallback(() => {
-    requestData(pageNumber, pageCount,query,type);
+    requestData(pageNumber, pageCount,null,null);
   }, [pageNumber, pageCount]);
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
       const requestNumber = number + 1;
-      await  requestData(requestNumber, pageCount,query,type);
+      await  requestData(requestNumber, pageCount,null,null);
     },
     [pageCount],
   );
 
   React.useEffect(() => {
-    requestData(pageNumber, pageCount,query,type);
+    requestData(pageNumber, pageCount,null,null);
   }, []);
 
   const renderStatus = React.useMemo(() => {

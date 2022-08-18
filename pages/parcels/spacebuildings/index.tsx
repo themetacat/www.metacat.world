@@ -49,8 +49,8 @@ export default function spacebuildings() {
   const [builders, setBuilders] = React.useState([]);
   const [pageCount, setPageCount] = React.useState(40);
   const [totalPage, setTotalPage] = React.useState(0);
-  const [query, setQuery] = React.useState(null);
-  const [type, setType] = React.useState(null);
+  // const [query, setQuery] = React.useState(null);
+  // const [type, setType] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('spacebuildings');
   const [fixedState, setFixedState] = React.useState(false);
@@ -81,19 +81,19 @@ export default function spacebuildings() {
   }, []);
 
   const onRetry = React.useCallback(() => {
-    requestData(pageNumber, pageCount,query,type);
+    requestData(pageNumber, pageCount,null,null);
   }, [pageNumber, pageCount]);
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
       const requestNumber = number + 1;
-      await requestData(requestNumber, pageCount,query,type);
+      await requestData(requestNumber, pageCount,null,null);
     },
     [pageCount],
   );
 
   React.useEffect(() => {
-    requestData(pageNumber, pageCount,query,type);
+    requestData(pageNumber, pageCount,null,null);
   }, []);
 
   const renderStatus = React.useMemo(() => {

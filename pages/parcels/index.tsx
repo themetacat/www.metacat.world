@@ -1862,10 +1862,10 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
             {subTabState === 'parcel' && (
               <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
-            {subTabState === 'space' && dataSource.length==0  && (
+            {subTabState === 'space' && dataSource.length===0  && (
               <SpaceBuilding />
             )}
-            {subTabState === 'scene'&& dataSource.length==0 &&  (
+            {subTabState === 'scene'&& dataSource.length===0 &&  (
               <ScenceBuilding />
             )}
 
