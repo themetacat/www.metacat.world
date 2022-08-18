@@ -250,7 +250,6 @@ export default function PageHeader({ active, className }: Props) {
             </div>
 
 
-            {/* <div
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
@@ -325,25 +324,25 @@ export default function PageHeader({ active, className }: Props) {
               </Link>
             </div>
             {/* <div
-          className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
-            active === 'learn' ? style.active : null,
-          )}
-        >
-          <Link href={'/demo'} prefetch>
-            demo
-          </Link>
-        </div> */}
-            {/* <div
-          className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
-            active === 'learn' ? style.active : null,
-          )}
-        >
-          <Link href={'/demo'} prefetch>
-            demo
-          </Link>
-        </div> */}
+              className={cn(
+                'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+                active === 'learn' ? style.active : null,
+              )}
+            >
+              <Link href={'/demo'} prefetch>
+                demo
+              </Link>
+            </div>
+            <div
+              className={cn(
+                'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+                active === 'learn' ? style.active : null,
+              )}
+            >
+              <Link href={'/demo'} prefetch>
+                demo
+              </Link>
+            </div> */}
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
