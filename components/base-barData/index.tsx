@@ -12,18 +12,25 @@ import { formatNum } from '../../common/utils';
 
 import style from './index.module.css';
 
-type optionItem = {
-  label?: string;
-  value?: string;
-};
+
 
 type legend = {
   label?: string;
   color?: Array<number>;
 };
 
+
+type optionItem = {
+  label?: string;
+  value?: string;
+};
+
 type Props = {
   id?: string;
+  dataHandlder?: () => any;
+  defaultColor?: Array<number>;
+  
+  legend1?;
   dataHandler?: () => any;
   // legend1?: legend;
   legend2?: legend;
@@ -51,6 +58,7 @@ export default function StackBar({
   labelText,
   showMarkerType,
   limit,
+  legend1 = { color: [95, 213, 236] },
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
   textColor,

@@ -23,15 +23,13 @@ export default function AnalyticsCard({
   backCls,
 }: Props) {
   const cls = style[backCls];
-  
-  const pageNew = React.useCallback(
-    () => {
-      console.log(title);
-      if (title === "Floor Price") {
-        window.open("https://www.metacat.world/analytics");
-      }
-    }, []
-  )
+
+  const pageNew = React.useCallback(() => {
+    console.log(title);
+    if (title === 'Floor Price') {
+      window.open('https://www.metacat.world/analytics');
+    }
+  }, []);
 
   return (
     <div
@@ -41,13 +39,11 @@ export default function AnalyticsCard({
         cls,
         className,
       )}
-      onClick={ pageNew }
+      onClick={pageNew}
     >
       <div className="flex justify-between items-center p-5 pt-8 border-solid border-b border-white border-opacity-30">
         <div className=" text-white text-base font-medium ">{title}</div>
-        <ViewMore
-          link={link}
-          className=" text-xs font-normal" imgClass="w-2 h-2"></ViewMore>
+        <ViewMore link={link} className=" text-xs font-normal" imgClass="w-2 h-2"></ViewMore>
       </div>
       {children}
     </div>

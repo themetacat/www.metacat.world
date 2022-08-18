@@ -249,6 +249,8 @@ export default function PageHeader({ active, className }: Props) {
               ) : null}
             </div>
 
+
+            {/* <div
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
@@ -271,6 +273,7 @@ export default function PageHeader({ active, className }: Props) {
                 ></TwoNav>
               ) : null}
             </div>
+
 
             <div
               className={cn(

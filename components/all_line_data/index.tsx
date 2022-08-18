@@ -638,3 +638,49 @@ export default function AllLineData({
     </div>
   );
 }
+
+// , legend2, legend3, legend4, legend5, legend6]);
+
+//   React.useEffect(() => {
+//     requestData();
+//     return () => {
+//       if (chart.current) {
+//         chart.current.destroy();
+//       }
+//     };
+//   }, [requestData]);
+
+//   return (
+//     <div className={style.container}>
+//       <div className={cn('w-full flex justify-between item-center', style.header)}>
+//         <ChartTitle text={labelText}></ChartTitle>
+//         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
+//         <div className={cn('flex items-center')}>{getSelect}</div>
+//       </div>
+//       {rander}
+//     </div>
+//   );
+// }
+
+// egend2, legend3, legend4, legend5, legend6]);
+
+//   React.useEffect(() => {
+//     requestData();
+//     return () => {
+//       if (chart.current) {
+//         chart.current.destroy();
+//       }
+//     };
+//   }, [requestData]);
+
+//   return (
+//     <div className={style.container}>
+//       <div className={cn('w-full flex justify-between item-center', style.header)}>
+//         <ChartTitle text={labelText}></ChartTitle>
+//         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
+//         <div className={cn('flex items-center')}>{getSelect}</div>
+//       </div>
+//       {rander}
+//     </div>
+//   );
+// }

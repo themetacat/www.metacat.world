@@ -38,7 +38,6 @@ class API {
     return json;
   }
 
-
   public async getFloorPrice(): Promise<any> {
     const url = `${this.url}/home_page/get_floor_price`;
     const res = await fetch(url);

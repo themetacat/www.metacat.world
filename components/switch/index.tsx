@@ -3,6 +3,7 @@ import cn from 'classnames';
 
 import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useRouter } from 'next/router';
 
 import style from './index.module.css';
 import 'swiper/css';
@@ -17,12 +18,13 @@ type optionItem = {
 type Props = {
   onActive?: (x) => void;
   options?: Array<optionItem>;
-  defaultValue?: string;
+  defaultValue?;
   id?: string;
   className?;
   fixedS?;
 };
 export default function Switch({ onActive, options, defaultValue, id, className, fixedS }: Props) {
+  const router = useRouter();
   const [active, setActive] = React.useState(defaultValue || options[0].value);
   const [percent, setPercent] = React.useState(0);
   const changeActive = React.useCallback(
@@ -34,7 +36,13 @@ export default function Switch({ onActive, options, defaultValue, id, className,
     },
     [options, onActive],
   );
-
+React.useEffect(()=>{
+  // console.log(router,'switch');
+  if(router){
+    setActive(router.query.type)
+      onActive(router?.query?.type);
+  }
+},[router.query.type])
   return (
     <>
     <div
