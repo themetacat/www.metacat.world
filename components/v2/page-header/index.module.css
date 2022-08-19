@@ -68,8 +68,14 @@
 }
 
 .base {
+  /* background-image: url("/images/v2/nav.png"); */
+  /* background-size:cover;
+  background-repeat: no-repeat; */
   z-index: 10002;
   width: 1400px;
+  padding-right: 50px;
+  padding-left: 27px;
+
 }
 .location {
   position: absolute;

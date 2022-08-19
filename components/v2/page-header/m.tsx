@@ -171,9 +171,9 @@ export default function PageHeader({ active, className }: Props) {
 
   return (
     <header
-      className={cn('w-full z-10 h-full flex justify-center fixed items-start pointer-events-none')}
+      className={cn('main-content h-full flex justify-center items-center p-5 pointer-events-none')}
     >
-      <div
+      {/* <div
         className={cn(
           ' py-5  flex justify-center items-center pointer-events-none w-full',
           style.header,
@@ -185,14 +185,14 @@ export default function PageHeader({ active, className }: Props) {
             style.base,
             className,
           )}
-        >
+        > */}
           <div className="flex flex-grow items-center text-white font-bold text-3xl pointer-events-auto">
             <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img>
             <Link href="/" prefetch>
               METACAT
             </Link>
           </div>
-          <div className="flex flex-grow" style={{marginLeft:"9px"}}>
+          <div className="flex flex-grow justify-end">
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
@@ -225,7 +225,9 @@ export default function PageHeader({ active, className }: Props) {
                 setAnalyticsState(false);
               }}
             >
-              Analytics
+               <Link href={'/analytics'} prefetch>
+            Analytics
+          </Link>
               {analyticsState ? (
                 <TwoNavigation options={analytics} widthType={'long'}></TwoNavigation>
               ) : null}
@@ -363,8 +365,8 @@ export default function PageHeader({ active, className }: Props) {
               }}
             />
           </div>
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
     </header>
   );
 }
