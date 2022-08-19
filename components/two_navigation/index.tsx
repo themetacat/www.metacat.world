@@ -1,9 +1,11 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
+
 import { useRouter } from 'next/router';
+
 import style from './index.module.css';
-import { useEffect } from 'react';
+
 
 type Props = {
   options?;
@@ -23,7 +25,7 @@ type Props = {
   
     router.replace(newType.link);
   }, []);
-  
+
   return (
     <div className={cn(props.location)}>
         {props.options.map((item, index) => {
