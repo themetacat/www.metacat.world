@@ -225,7 +225,9 @@ export default function PageHeader({ active, className }: Props) {
                 setAnalyticsState(false);
               }}
             >
-              Analytics
+               <Link href={'/analytics'} prefetch>
+            Analytics
+          </Link>
               {analyticsState ? (
                 <TwoNavigation options={analytics} widthType={'long'}></TwoNavigation>
               ) : null}

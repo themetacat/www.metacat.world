@@ -97,9 +97,15 @@ export default function MapPage(props) {
     [null],
   );
 
+
   useEffect(() => {
     console.log(router, 'switch');
-    setMapType(router.query.type)
+    if(router.query.type){
+      setMapType(router.query.type);
+    }else{
+      setMapType('cryptovoxels')
+    }
+    
   }, [router.query.type])
 
   const renderMap = React.useMemo(() => {

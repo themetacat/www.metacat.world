@@ -240,6 +240,10 @@ const hNav = [
 ];
 
 export default function AnalyticsIndex(props) {
+ 
+  React.useEffect(()=>{
+    console.log(props,"1234")
+  },[])
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -249,19 +253,31 @@ export default function AnalyticsIndex(props) {
   const [fixedState, setFixedState] = React.useState(false);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
-    setShowType(newType);
-    router.replace(`/analytics?type=${newType}`);
+    
+    setShowType(newType); 
+    if(newType==='undefined'){
+      router.replace('/analytics');
+      // return;
+    }
+     
+      // router.replace(`/analytics?type=${newType}`);
+    // }
+    
   }, []);
 
   const changeHeaderNav = React.useCallback(
     (nav) => {
       if (nav === 'single') {
-        router.replace(`/analytics?type=${showType}`);
+        router.replace('/analytics?type=cryptovoxels')
+        // router.replace(`/analytics?type=${showType}`);
         setHeaderNav(nav);
+        console.log(nav);
+        
       }
       if (nav === 'all') {
         router.replace(`/analytics`);
         setHeaderNav(nav);
+        console.log(nav);
       }
     },
     [headerNav],
@@ -427,6 +443,7 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
+   
     if (showType === 'decentraland') {
       return (
         <>
