@@ -211,6 +211,7 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href="/rent">Rent</Link>
         </div> */}
+        
             <div
               className={cn(
                 'text-xl font-medium relative text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
