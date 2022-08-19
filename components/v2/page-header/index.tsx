@@ -222,7 +222,7 @@ export default function PageHeader({ active, className }: Props) {
                 setAnalyticsState(true);
               }}
               onMouseLeave={() => {
-                setAnalyticsState(false);
+                setAnalyticsState(true);
               }}
             >
                <Link href={'/analytics'} prefetch>

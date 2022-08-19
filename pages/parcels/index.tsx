@@ -310,7 +310,8 @@ export default function Index(props) {
           const res = await req_space_buildings_list(page, 40, query, type);
 
           // let { page, count } = res;
-          setTotalPage(res.page);
+          setTotalPage(res.total_page);
+          // setTotalPage(res.page);
           data = res.data;
           // const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
@@ -359,7 +360,7 @@ export default function Index(props) {
           const res = await req_scence_list(page, 40, query, type);
 
           // let { page, count } = res;
-          setTotalPage(res.page);
+          setTotalPage(res.total_page);
           data = res.data;
           //  const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
@@ -696,7 +697,6 @@ export default function Index(props) {
         <>
           <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
             {dataSource.map((card, idx) => {
-         
               return <Card {...card}  key={uuid()}></Card>;
             })}
           </div>
