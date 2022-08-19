@@ -225,7 +225,9 @@ export default function PageHeader({ active, className }: Props) {
                 setAnalyticsState(false);
               }}
             >
-              Analytics
+               <Link href={'/analytics'} prefetch>
+            Analytics
+          </Link>
               {analyticsState ? (
                 <TwoNavigation options={analytics} widthType={'long'}></TwoNavigation>
               ) : null}
@@ -243,7 +245,9 @@ export default function PageHeader({ active, className }: Props) {
                 setHeatmapState(false);
               }}
             >
-              Heatmap
+                <Link href={'/heatmap?type=cryptovoxels'} prefetch>
+            Heatmap
+          </Link>
               {heatmapState ? (
                 <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
               ) : null}
