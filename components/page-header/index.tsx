@@ -2,23 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
 
-import { useRouter } from 'next/router';
-
 import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
-
 import TwoNavigation from '../two_navigation';
-
 import TwoNav from '../two_nav';
-
 import style from './index.module.css';
 
 type Props = {
   active?: string;
   className?: string;
 };
-// 首页 二级页
+// 首页！
 const build = [
   {
     label: 'Builders',
@@ -158,7 +153,23 @@ const analyticsData = [
   },
 ];
 
+function myfun() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
 
+function myfunParcels() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
+
+function myfunData() {
+  setTimeout(() => {
+    window.open(window.location.href);
+  }, 1000);
+}
 
 export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
@@ -166,46 +177,9 @@ export default function PageHeader({ active, className }: Props) {
   const [analyticState, setAnalyticState] = React.useState(false);
   const [ParcelsState, setParcelsState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
-  const [tabState, setTabState] = React.useState('cryptovoxels');
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
-  const router = useRouter();
-
-
-  function myfun() {
-    // setTimeout(() => {
-    //   window.location.reload();
-    // }, 1000);
-    // router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
-
-  }
-  
-    const activeChange = async (type) => {
-    setTimeout(() => {
-      // window.location.reload();
-    },1000 )
-    console.log(analyticsData.findIndex(item => item.type === type));
-    
-    // let subIndex
-    // setTabState(type);
-    // if (type === 'cryptovoxels') {
-    // console.log(type === 'cryptovoxels');
-      
-    // subIndex = analyticsData.findIndex(item => item.type === type)
-    // } else if (tabState === "decentraland") {
-    //   subIndex = analyticsData.findIndex(item => item.type === type)
-    // }
-    // console.log(tabState,subIndex);
-    
-  }
-  
-  function myfunData() {
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-  }
-
   return (
     <header
       className={cn(
@@ -244,7 +218,9 @@ export default function PageHeader({ active, className }: Props) {
             'text-xl  text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
             style.z,
+           
           )}
+        
           // onClick={analyticsData}
           onMouseEnter={() => {
             setAnalyticState(true);
@@ -253,15 +229,15 @@ export default function PageHeader({ active, className }: Props) {
             setAnalyticState(false);
           }}
         >
-        <Link href="/analytics">Analytics</Link>
+          <Link href={'/analytics'} prefetch>
+            Analytics
+          </Link>
           {analyticState ? (
-            <div onClick={activeChange}>
-              <TwoNavigation
+              <TwoNav
                 options={analyticsData}
                 className={style.cn1}
                 location={style.location4}
-              ></TwoNavigation>
-            </div>
+              ></TwoNav>
           ) : null}
         </div>
 
@@ -281,13 +257,11 @@ export default function PageHeader({ active, className }: Props) {
             Heatmap
           </Link>
           {heatmapState ? (
-            <div >
-               <TwoNavigation
-               options={heatmapData}
-               className={style.cn}
-               location={style.location3}
-              ></TwoNavigation>
-            </div>
+              <TwoNav
+                options={heatmapData}
+                className={style.cn}
+                location={style.location3}
+              ></TwoNav>
           ) : null}
         </div>
 

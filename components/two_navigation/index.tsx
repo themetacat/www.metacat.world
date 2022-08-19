@@ -3,6 +3,7 @@ import Link from 'next/link';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 import style from './index.module.css';
+import { useEffect } from 'react';
 
 type Props = {
   options?;
@@ -11,14 +12,18 @@ type Props = {
 };
 
   export default function TwoNavigation(props) {
-  const router = useRouter();
-  
-  const [showType, setShowType] = React.useState(router.route || 'analytics');
 
+  const router = useRouter();
+   
+  const [showType, setShowType] = React.useState(router.route || 'analytics');
+  
   const changeType = React.useCallback((newType) => {
+    console.log(newType);
     setShowType(newType.type);
+  
     router.replace(newType.link);
   }, []);
+  
   return (
     <div className={cn(props.location)}>
         {props.options.map((item, index) => {
