@@ -257,7 +257,7 @@ export default function AnalyticsIndex(props) {
     setShowType(newType); 
     if(newType==='undefined'){
       router.replace('/analytics');
-      return;
+      // return;
     }
      
       // router.replace(`/analytics?type=${newType}`);
