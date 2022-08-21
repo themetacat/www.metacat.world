@@ -252,9 +252,13 @@ export default function Index(props) {
   const web3 = useWalletProvider();
 
   useEffect(() => {
-     setTabState(router.query.tab)
-     setSubTabState(router.query.subTab || 'parcel')
-  }, [router.query])
+    console.log(router.query.tab);
+      let tab = router.query.tab || "cryptovoxels"
+      let subTab = router.query.subTab || 'parcel'
+     setTabState(tab)
+     setSubTabState(subTab)
+     onTabChange(tab)
+  }, [router.query.tab])
 
   const requestData = async ({
     tab,
@@ -405,7 +409,8 @@ export default function Index(props) {
 
 
   const onTabChange = async (tab) => {
-
+    console.log(tab,222222222);
+    
     let subIndex
     if (tabState === 'cryptovoxels') {
       subIndex = SUBTAB.findIndex(item => item.type === subTabState)
