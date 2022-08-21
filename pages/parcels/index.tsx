@@ -162,10 +162,10 @@ const SUBTAB = [
     label: 'Parcel',
     type: 'parcel',
   },
-  {
-    label: 'Space',
-    type: 'space',
-  },
+  // {
+  //   label: 'Space',
+  //   type: 'space',
+  // },
   // {
   //   label: 'Heatmap',
   //   type: 'map',
@@ -184,10 +184,10 @@ const SUBTABDECE = [
     label: 'Parcel',
     type: 'parcel',
   },
-  {
-    label: 'Scene',
-    type: 'scene',
-  },
+  // {
+  //   label: 'Scene',
+  //   type: 'scene',
+  // },
   // {
   //   label: 'Heatmap',
   //   type: 'map',
