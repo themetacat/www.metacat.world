@@ -28,7 +28,9 @@ export default function Switch({ onActive, options, defaultValue, id, className,
   const [active, setActive] = React.useState(defaultValue || options[0].value);
   const [percent, setPercent] = React.useState(0);
   const changeActive = React.useCallback(
+    
     (acitveItem) => {
+    console.log(11111111);
       setActive(acitveItem.value);
       if (onActive) {
         onActive(acitveItem.value);

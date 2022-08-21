@@ -7,6 +7,7 @@ import PageHeader from '../../../components/page-header';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
 import TopicDetailCard from '../../../components/topic-detail-card';
+import CardSpace from '../../../components/cardSpaace';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
 
@@ -114,7 +115,8 @@ export default function scencebuildings() {
       <>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
           {builders.map((card, idx) => {
-            return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
+            // return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
+            return <CardSpace {...card} key={idx}></CardSpace>;
           })}
         </div>
         <PagiNation

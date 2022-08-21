@@ -267,7 +267,7 @@ export default function PageHeader({ active, className }: Props) {
                 setParcelsState(false);
               }}
             >
-              <Link href="/parcels" prefetch>Parcels</Link>
+              <Link href="/parcels?tab=cryptovoxels" prefetch>Parcels</Link>
               {ParcelsState ? (
                 <TwoNav
                   options={parcels}

@@ -253,17 +253,17 @@ export default function AnalyticsIndex(props) {
   const [fixedState, setFixedState] = React.useState(false);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
-    
+    console.log(55555);
     setShowType(newType); 
-    if(newType==='undefined'){
+    // router.replace(`/analytics?type=${newType}`);
+    if(newType===undefined){
       router.replace('/analytics');
-      // return;
+    }else{
+      router.replace(`/analytics?type=${newType}`);
     }
-     
-      // router.replace(`/analytics?type=${newType}`);
-    // }
-    
   }, []);
+
+
 
   const changeHeaderNav = React.useCallback(
     (nav) => {
