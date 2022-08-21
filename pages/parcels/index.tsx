@@ -23,7 +23,6 @@ import Tab from '../../components/hometabParcels';
 import SecondTab from '../../components/tab2';
 // import Card from '../../components/card';
 import Card from '../../components/cardParcels';
-import CardSpace from '../../components/cardSpaace';
 import SwiperTag from '../../components/swiper-tag';
 import SwiperTagParcels from '../../components/swiper-tagParcels';
 import PageHeader from '../../components/page-header';
@@ -162,10 +161,10 @@ const SUBTAB = [
     label: 'Parcel',
     type: 'parcel',
   },
-  // {
-  //   label: 'Space',
-  //   type: 'space',
-  // },
+  {
+    label: 'Space',
+    type: 'space',
+  },
   // {
   //   label: 'Heatmap',
   //   type: 'map',
@@ -184,10 +183,10 @@ const SUBTABDECE = [
     label: 'Parcel',
     type: 'parcel',
   },
-  // {
-  //   label: 'Scene',
-  //   type: 'scene',
-  // },
+  {
+    label: 'Scene',
+    type: 'scene',
+  },
   // {
   //   label: 'Heatmap',
   //   type: 'map',
@@ -225,7 +224,7 @@ export default function Index(props) {
   const meta = {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
-  };
+};
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -252,24 +251,9 @@ export default function Index(props) {
   const web3 = useWalletProvider();
 
   useEffect(() => {
-    console.log(router, 'switch',router.query.tab);
-    //     setTabState(router.route)
-    //  setTabState(router.query.tab)
-    //  router.replace(`/analytics?type=${newType}`);
-    // if(router.query.tab){
-    //   setTabState(router.query.tab);
-    // }else{
-    //   setTabState('cryptovoxels')
-    // }
-  }, [router.query.type])
-
-
-
-  const changeType = React.useCallback((newType) => {
-    setTabState(newType);
-    router.replace(`/analytics?type=${newType}`);
-  }, []);
-
+     setTabState(router.query.tab)
+     setSubTabState(router.query.subTab || 'parcel')
+  }, [router.query])
 
   const requestData = async ({
     tab,
@@ -325,6 +309,7 @@ export default function Index(props) {
 
           // let { page, count } = res;
           setTotalPage(res.total_page);
+          // setTotalPage(res.page);
           data = res.data;
           // const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
@@ -373,7 +358,7 @@ export default function Index(props) {
           const res = await req_scence_list(page, 40, query, type);
 
           // let { page, count } = res;
-          setTotalPage(res.page);
+          setTotalPage(res.total_page);
           data = res.data;
           //  const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
@@ -396,7 +381,7 @@ export default function Index(props) {
     }
 
     setLoading(false);
-    console.log(convert(data), 111);
+    console.log(convert(data));
 
     return convert(data);
   };
@@ -419,6 +404,7 @@ export default function Index(props) {
 
 
   const onTabChange = async (tab) => {
+
     let subIndex
     if (tabState === 'cryptovoxels') {
       subIndex = SUBTAB.findIndex(item => item.type === subTabState)
@@ -430,12 +416,12 @@ export default function Index(props) {
     setTabState(tab);
     let sub = '';
     if (tab === 'cryptovoxels') {
-      sub = subTabState;
+      sub = SUBTAB[subIndex].type;
       setSubTabState(SUBTAB[subIndex].type)
       router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
-    
+      
     } else if (tab === 'decentraland') {
-      sub = subTabState;
+      sub = SUBTAB[subIndex].type;
       setSubTabState(SUBTABDECE[subIndex].type)
       router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`)
    
@@ -479,45 +465,50 @@ export default function Index(props) {
   const onSubTabChange = React.useCallback(
     async (subTab) => {
       setSubTabState(subTab);
-      // setTabState(tab);
       let subIndexData
-      // if (subTab='parcel') {
-      //   subIndexData = TAB.findIndex(item => item.type === subTab)
-      // }
-      //  else if (subTab==='space') {
-      //   subIndexData = TAB.findIndex(item => item.type === subTab)
-      // }
-      console.log(subTab,tabState,subIndexData);
-      if(subTab==='parcel'&&tabState==='cryptovoxels'){
-          router.replace(`/parcels?tab=cryptovoxels&subTab=parcel`)
-      }
-      if(subTab==='space'&&tabState==='cryptovoxels'){
-        router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
-      }
-      if(subTab==='parcel'&&tabState==='decentraland'){
-router.replace(`/parcels?tab=decentraland&subTab=parcel`)
-      }
-      if(subTab==='space'&&tabState==='cryptovoxels'){
-router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
+      console.log(subTab,tabState,subIndexData)
+      // setTabState(subTab);
+      if(tabState==="cryptovoxels"){
+        if (subTab==='parcel') {
+          subIndexData = SUBTAB.findIndex(item => item.type === subTab)
+        }
+         else if (subTab==='space') {
+          subIndexData = SUBTAB.findIndex(item => item.type === subTab)
+        }
+        console.log(subIndexData, tabState);
+        subIndexData = subIndexData === -1 ? 0 : subIndexData
+      }else{
+        if (subTab==='parcel') {
+          subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
+        }
+         else if (subTab==='scene') {
+          subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
+        }
+        console.log(subIndexData, tabState);
+        subIndexData = subIndexData === -1 ? 0 : subIndexData
       }
 
-            // subIndexData = subIndexData === -1 ? 0 : subIndexData
-            // setTabState(tabState);
-            // let sub = '';
-            // if (tabState === 'cryptovoxels') {
-            //   sub = subTabState;
-            //   setSubTabState(SUBTAB[subIndexData].type)
-            //   router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
+    let sub = '';
 
-            // } else if (tabState === 'decentraland') {
-            //   sub = subTabState;
-            //   setSubTabState(SUBTABDECE[subIndexData].type)
-            //   router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
-            // }
+      if (tabState === 'cryptovoxels') {
+      sub = subTabState;
+      console.log(SUBTAB[subIndexData].type,);
+      
+      setSubTabState(SUBTAB[subIndexData].type)
+        router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
+      
+      } else if (tabState === 'decentraland') {
+      sub = subTabState;
+      console.log(SUBTABDECE[subIndexData].type);
+      setSubTabState(SUBTABDECE[subIndexData].type)
+        router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
+     
+      }
 
       setSearchText('');
       setTypeState('');
       setTypeState('All')
+      console.log(sub);
       const data = await requestData({
         tab: tabState,
         subTab,
@@ -688,6 +679,7 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
       );
     }
     if (subTabState === 'scene') {
+      console.log(dataSource)
       if (loading) {
         return <Status status="loading" />;
       }
@@ -698,14 +690,12 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
 
       if (dataSource.length === 0) {
         return null;
-        // <Status status="empty" />;
       }
       return (
         <>
           <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
             {dataSource.map((card, idx) => {
-         
-              return <CardSpace {...card} key={uuid()}></CardSpace>;
+              return <Card {...card}  key={uuid()}></Card>;
             })}
           </div>
           <div className={style.pagiNation}>
@@ -729,14 +719,14 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
       }
 
       if (dataSource.length === 0) {
-        return null;
-        // <Status status="empty" />;
+        return null;   
+       
       }
       return (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
             {dataSource.map((card, idx) => {
-              return <CardSpace {...card} key={idx}></CardSpace>;
+              return <Card {...card} key={uuid()}></Card>;
             })}
           </div>
           <div className={style.pagiNation}>
@@ -1679,8 +1669,6 @@ router.replace(`/parcels?tab=cryptovoxels&subTab=space`)
   );
 
   React.useEffect(() => {
-    console.log('');
-    // setSubTabState('parcel')
     setTypeState('All')
     const accessToken = getToken('atk');
     if (accessToken) {
