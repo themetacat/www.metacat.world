@@ -23,6 +23,7 @@ import Tab from '../../components/hometabParcels';
 import SecondTab from '../../components/tab2';
 // import Card from '../../components/card';
 import Card from '../../components/cardParcels';
+import CardSpace from '../../components/cardSpaace';
 import SwiperTag from '../../components/swiper-tag';
 import SwiperTagParcels from '../../components/swiper-tagParcels';
 import PageHeader from '../../components/page-header';
@@ -250,10 +251,7 @@ export default function Index(props) {
 
   const web3 = useWalletProvider();
 
-  useEffect(() => {
-     setTabState(router.query.tab)
-     setSubTabState(router.query.subTab || 'parcel')
-  }, [router.query])
+
 
   const requestData = async ({
     tab,
@@ -404,7 +402,8 @@ export default function Index(props) {
 
 
   const onTabChange = async (tab) => {
-
+    console.log(tab,222222222);
+    
     let subIndex
     if (tabState === 'cryptovoxels') {
       subIndex = SUBTAB.findIndex(item => item.type === subTabState)
@@ -695,7 +694,8 @@ export default function Index(props) {
         <>
           <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
             {dataSource.map((card, idx) => {
-              return <Card {...card}  key={uuid()}></Card>;
+              // return <Card {...card}  key={uuid()}></Card>;
+              return <CardSpace {...card} key={idx}></CardSpace>;
             })}
           </div>
           <div className={style.pagiNation}>
@@ -726,7 +726,8 @@ export default function Index(props) {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
             {dataSource.map((card, idx) => {
-              return <Card {...card} key={uuid()}></Card>;
+              // return <Card {...card} key={uuid()}></Card>;
+              return <CardSpace {...card} key={idx}></CardSpace>;
             })}
           </div>
           <div className={style.pagiNation}>
@@ -1654,6 +1655,16 @@ export default function Index(props) {
     },
     [refreshTK],
   );
+
+
+  useEffect(() => {
+    console.log(router.query.tab);
+      const tab = router.query.tab || "cryptovoxels"
+      const subTab = router.query.subTab || 'parcel'
+     setTabState(tab)
+     setSubTabState(subTab)
+     onTabChange(tab)
+  }, [router.query.tab])
 
   const requestPersonal = React.useCallback(
     async (token: string) => {
