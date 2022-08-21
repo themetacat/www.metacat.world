@@ -251,14 +251,7 @@ export default function Index(props) {
 
   const web3 = useWalletProvider();
 
-  useEffect(() => {
-    console.log(router.query.tab);
-      let tab = router.query.tab || "cryptovoxels"
-      let subTab = router.query.subTab || 'parcel'
-     setTabState(tab)
-     setSubTabState(subTab)
-     onTabChange(tab)
-  }, [router.query.tab])
+
 
   const requestData = async ({
     tab,
@@ -1662,6 +1655,16 @@ export default function Index(props) {
     },
     [refreshTK],
   );
+
+
+  useEffect(() => {
+    console.log(router.query.tab);
+      const tab = router.query.tab || "cryptovoxels"
+      const subTab = router.query.subTab || 'parcel'
+     setTabState(tab)
+     setSubTabState(subTab)
+     onTabChange(tab)
+  }, [router.query.tab])
 
   const requestPersonal = React.useCallback(
     async (token: string) => {
