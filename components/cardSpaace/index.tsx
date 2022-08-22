@@ -10,7 +10,7 @@ type Props = {
   name?: string;
   description?: string;
   type?: string;
-  parcelPageUrl?: string;
+  detailUrl?: string;
   openseaUrl?: string;
   hasTypeTag?: boolean;
   world?: string;
@@ -23,7 +23,7 @@ export default function Card({
   description,
   type,
   openseaUrl,
-  parcelPageUrl,
+  detailUrl,
   hasTypeTag = true,
   world,
   typeState
@@ -36,8 +36,8 @@ export default function Card({
     [openseaUrl],
   );
   const jumpToParcel = React.useCallback(() => {
-    window.open(parcelPageUrl);
-  }, [parcelPageUrl]);
+    window.open(detailUrl);
+  }, [detailUrl]);
 
   return (
     <div
@@ -69,7 +69,7 @@ export default function Card({
           ) : null}
 
         </div>
-        <div className={cn('text-xs my-3', style.description)}>{description}</div>
+        {/* <div className={cn('text-xs my-3', style.description)}>{description}</div> */}
       </div>
     </div>
   );

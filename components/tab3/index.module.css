@@ -1,27 +1,59 @@
 .normal {
   color: #aaa;
+  
 }
 .tab {
   position: relative;
-  color: #FFF;
+  color: #AAAAAA;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
   padding-top: 17px;
   padding-bottom: 11px;
-  margin-right: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px 12px 0px 0px;
 }
+.tab:hover{
+  filter: brightness(125%);
+  color: #fff;
+  font-weight: 600;
+  background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
+}
+.tab:active{
+  filter: brightness(75%);
+}
+
 .active {
-  border-bottom: 6px solid #00d0ec;
+  /* border-bottom: 6px solid #00d0ec; */
+  border-radius: 12px 12px 0px 0px;
+  background :linear-gradient(270deg,rgba(0,236,179,.8),rgba(0,208,236,.8))!important;
+  border: 1px solid rgba(0, 208, 236, 0.5);
+  /* border-radius: 2px; */
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000 !important;
 }
 .canHover {
-  color: #aaa;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  /* color: #AAAAAA; */
 }
-.active,
-.active > .canHover,
+
 .canHover:hover {
   color: #fff;
-  font-size: 20px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
 }

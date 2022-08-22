@@ -11,10 +11,12 @@ type Props = {
   name?: string;
   address?: string;
   twitter?: string;
+  country?: string;
   home?: string;
   avater?: string;
   classname?: string;
   email?: string;
+  introduction?:string;
   onClick?;
   creatorsState?: number;
 };
@@ -27,6 +29,8 @@ export default function Profile({
   avater = '',
   classname,
   email,
+  introduction,
+  country,
   onClick,
   creatorsState,
 }: Props) {
@@ -60,7 +64,7 @@ export default function Profile({
                 suffixCopy={true}
                 hasIcon={!(name && name !== '')}
                 onClick={copyName}
-                classname={'text-2xl font-semibold mb-4'}
+                classname={'text-2xl font-semibold '}
               ></ProfileIconLabel>
             ) : null}
             {!name && name === '' ? (
@@ -69,10 +73,11 @@ export default function Profile({
                 icon="/images/v5/copy.png"
                 suffixCopy={true}
                 onClick={copyName}
-                classname={cn('mb-4 text-sm', style.address)}
+                classname={cn(' text-sm', style.address)}
               ></ProfileIconLabel>
             ) : null}
-            {creatorsState === 1 ? (
+          
+            {/* {creatorsState === 1 ? (
               <div className={style.cd} onClick={onClick}>
                 {`Join Creators >`}
               </div>
@@ -82,8 +87,12 @@ export default function Profile({
             ) : null}
             {creatorsState === 4 ? (
               <div className={style.cd} onClick={toTopic}>{` My creator page >`}</div>
-            ) : null}
+            ) : null} */}
           </div>
+          {
+  country?   <div className={style.cony}>{country}</div>:null
+
+          }
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
               <ProfileIconLabel
@@ -106,9 +115,22 @@ export default function Profile({
                 classname={'text-sm'}
               ></ProfileIconLabel>
             ) : null}
+            {home && email ? <div className={cn('mx-5', style.divide)}></div> : null}
+            {email ? (
+              <ProfileIconLabel
+                label={`Email`}
+                link={email}
+                icon="/images/icon/emailIcon.png"
+                prefix={true}
+                isLink={true}
+                classname={'text-sm'}
+              ></ProfileIconLabel>
+            ) : null}
           </div>
           
         </div>
+        {introduction?<div style={{color:"red"}}>{introduction}</div>:null}
+      
         {/* <div style={{ color: '#fff', display: 'flex', marginTop: '12px' }}>
             <div className={style.content}>
               <img src={`/images/icon/twitter.png`} className={style.imgSet}></img>

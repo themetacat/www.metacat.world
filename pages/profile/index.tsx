@@ -13,6 +13,7 @@ import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
+import Tab4 from '../../components/tab4';
 import Status from '../../components/status';
 import Card from '../../components/parcels-card';
 import DclCard from '../../components/parcels-dcl-card';
@@ -160,6 +161,8 @@ function ProfilePage(r) {
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [nickName, setNickName] = React.useState('');
+  const [introductionText, setIntroduction] = React.useState('');
+  const [countryAddress, setcountry] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
@@ -364,7 +367,7 @@ function ProfilePage(r) {
         store.setState(() => ({ type: 'cv' }));
       }
       if (tab === 'decentraland') {
-        // alert("kkkkk")
+        
         setDclDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'dcl' }));
       }
@@ -490,6 +493,8 @@ function ProfilePage(r) {
       const {
         address: addr,
         nickName: name,
+        introduction: m,
+        country: n,
         avatar: ava,
         links,
         email: e,
@@ -502,6 +507,8 @@ function ProfilePage(r) {
       setCreatorsState(creatorStatus);
       setAddress(addr);
       setNickName(name);
+      setIntroduction(m);
+      setcountry(n);
       setTwitterAddress(twitterName);
       setWebsiteAddress(websiteUrl);
       state.setState({ profile });
@@ -572,7 +579,7 @@ function ProfilePage(r) {
     // }
     if (tabState === 'cryptovoxels') {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-5">
           {dataSource.map((card) => {
             return (
               <Card
@@ -592,7 +599,7 @@ function ProfilePage(r) {
     }
     if (tabState === 'decentraland') {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-7">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
           {dclDataSource.map((card) => {
             return (
               <DclCard
@@ -771,6 +778,8 @@ function ProfilePage(r) {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
   React.useEffect(() => {
+    // setNavLabel('All')
+    // setWearablesNavState('all')
     const accessToken = getToken('atk');
     setRouteTab(r.router.query.type);
     reqWearablesData();
@@ -782,6 +791,7 @@ function ProfilePage(r) {
     watcher_cardState();
     if (!accessToken) window.location.href = '/';
   }, [
+    navLabel,
     getToken,
     requestData,
     requestPersonal,
@@ -955,12 +965,12 @@ function ProfilePage(r) {
     if (routeTab === 'parcellist') {
       return (
         <>
-          <div className={cn('tab-list flex mt-5', style.allHeight)}>
+          <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className="main-content flex px-0">
+            <div className={cn("main-content flex px-0",style.tabtext)}>
               {TABData.map((item) => {
                 return (
-                  <Tab
+                  <Tab4
                     active={tabState === item.type}
                     isMini={true}
                     key={item.label}
@@ -1018,10 +1028,10 @@ function ProfilePage(r) {
           <>
             <div className={cn('tab-list flex mt-5', style.allHeight)}>
               <div className={cls}></div>
-              <div className="main-content flex px-0">
+              <div className={cn("main-content flex px-0",style.tabtext)}>
                 {REPORTTAB.map((item) => {
                   return (
-                    <Tab
+                    <Tab4
                       active={tabState === item.type}
                       isMini={true}
                       key={item.label}
@@ -1103,7 +1113,7 @@ function ProfilePage(r) {
               <div className="main-content flex px-0">
                 {REPORTTAB.map((item) => {
                   return (
-                    <Tab
+                    <Tab4
                       active={tabState === item.type}
                       isMini={true}
                       key={item.label}
@@ -1300,23 +1310,26 @@ function ProfilePage(r) {
         onClick={() => {
           setManySetState(false);
         }}
+        className={style.bigPic}
       >
-        <div className="bg-black relative">
+        <div className=" relative">
           <PageHeader className="relative z-10" active={'profile'} />
         </div>
 
-        <div className={cn('bg-black flex flex-col justify-center items-center')}>
+        <div className={cn(' flex flex-col justify-center items-center')}>
           <Profile
             avater={avatar}
             address={address}
             creatorsState={creatorsState}
             twitter={twitterAddress}
             home={websiteAddress}
+            country={countryAddress}
             name={nickName}
             email={email}
             onClick={creatorDisplay}
             classname="main-content"
           ></Profile>
+          <div className={style.intor}>{introductionText}</div>
         </div>
         <div className={cn(style.tablebg)}>
           <div className={cn(style.tableList)}>

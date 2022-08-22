@@ -4,10 +4,44 @@
 }
 .iconLabel>img{
   cursor: pointer;
-  width: 22px;
-  height: 22px;
+  width: 14px;
+  height: 12px;
 }
 
 .a{
   cursor: pointer;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+color: #FFFFFF;
+}
+.imgInsturation{
+  color: #CCCCCC;
+  width: 14px;
+  height: 12px;
+}
+.cns{
+  margin-left: 105px;
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 25px;
+color: #FFFFFF;
+}
+.imgSet{
+  line-height: 12px;
+  width: 12px;
+  height: 12px;
+  text-align: center;
+  margin-top: 2px;
+  margin-left: 10px;
+}
+.content{
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
 }
