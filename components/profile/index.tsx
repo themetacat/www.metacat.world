@@ -16,7 +16,7 @@ type Props = {
   avater?: string;
   classname?: string;
   email?: string;
-  introduction?:string;
+  introduction?: string;
   onClick?;
   creatorsState?: number;
 };
@@ -76,7 +76,7 @@ export default function Profile({
                 classname={cn(' text-sm', style.address)}
               ></ProfileIconLabel>
             ) : null}
-          
+
             {/* {creatorsState === 1 ? (
               <div className={style.cd} onClick={onClick}>
                 {`Join Creators >`}
@@ -90,8 +90,7 @@ export default function Profile({
             ) : null} */}
           </div>
           {
-  country?   <div className={style.cony}>{country}</div>:null
-
+            country ? <div className={style.cony}>{country}</div> : null
           }
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
@@ -127,10 +126,10 @@ export default function Profile({
               ></ProfileIconLabel>
             ) : null}
           </div>
-          
+
         </div>
-        {introduction?<div style={{color:"red"}}>{introduction}</div>:null}
-      
+        {introduction ? <div style={{ color: "red" }}>{introduction}</div> : null}
+
         {/* <div style={{ color: '#fff', display: 'flex', marginTop: '12px' }}>
             <div className={style.content}>
               <img src={`/images/icon/twitter.png`} className={style.imgSet}></img>

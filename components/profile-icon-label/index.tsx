@@ -66,7 +66,7 @@ export default function ProfileIconLabel({
   return (
     <div className={cn('flex items-center', style.iconLabel, classname)}>
       {prefix && hasIcon ? (
-        <img className={cn("mr-2 cursor-pointer",style.imgInsturation)} src={icon} onClick={iconClick}></img>
+        <img className={cn("mr-2 cursor-pointer", style.imgInsturation)} src={icon} onClick={iconClick}></img>
       ) : null}
       {isLink ? (
         <a href={link} target="_blank" title={link} className={style.a}>
@@ -74,10 +74,12 @@ export default function ProfileIconLabel({
         </a>
       ) : (
         <>
-        <span className={style.cns} title={label || clipName(address)}>{label || clipName(address)}</span>
-        <div className={style.content}>
+          <div className={style.cns} title={label || clipName(address)}>
+            <span>{label || clipName(address)}</span>
+            <span className={style.content}>
               <img src={`/images/icon/bianji.png`} className={style.imgSet}></img>
-            </div>
+            </span>
+          </div>
         </>
       )}
       {renderSuffix}
