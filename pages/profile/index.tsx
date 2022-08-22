@@ -1329,7 +1329,7 @@ function ProfilePage(r) {
             onClick={creatorDisplay}
             classname="main-content"
           ></Profile>
-          <div className={style.introduction}>{introduction}</div>
+          <div className={style.intor}>{introduction}</div>
         </div>
         <div className={cn(style.tablebg)}>
           <div className={cn(style.tableList)}>

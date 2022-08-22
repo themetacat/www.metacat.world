@@ -90,7 +90,7 @@ export default function Profile({
             ) : null} */}
           </div>
           {
-  country?   <div className={style.country}>{country}</div>:null
+  country?   <div className={style.cony}>{country}</div>:null
 
           }
           <div className={cn('flex justify-start items-center', style.links)}>
