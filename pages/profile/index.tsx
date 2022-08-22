@@ -493,8 +493,8 @@ function ProfilePage(r) {
       const {
         address: addr,
         nickName: name,
-        introduction: introductionText,
-        country: countryAddress,
+        introduction: m,
+        country: n,
         avatar: ava,
         links,
         email: e,
@@ -507,8 +507,8 @@ function ProfilePage(r) {
       setCreatorsState(creatorStatus);
       setAddress(addr);
       setNickName(name);
-      setIntroduction(introductionText);
-      setcountry(countryAddress);
+      setIntroduction(m);
+      setcountry(n);
       setTwitterAddress(twitterName);
       setWebsiteAddress(websiteUrl);
       state.setState({ profile });
