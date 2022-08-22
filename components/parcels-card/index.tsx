@@ -81,7 +81,7 @@ export default function Card({
   };
   return (
     <div
-      className={cn('text-white flex flex-col justify-center items-center p-5', style.card)}
+      className={cn('text-white flex flex-col justify-center items-center ', style.card)}
       onClick={
         state
           ? () => {

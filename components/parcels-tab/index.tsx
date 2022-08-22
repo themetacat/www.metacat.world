@@ -40,7 +40,7 @@ export default ({ dataSource, label, state, num, onClick }: Props) => {
   return (
     <div className={cn(cls1, style.navItem)} key={label} onClick={onClick}>
       <div>
-        {label} <span className={cn(cls2, style.navItem_span)}>{nums}</span>
+        <span className={style.lable}>{label}</span> <span className={cn(cls2, style.navItem_span)}>{nums}</span>
       </div>
     </div>
   );

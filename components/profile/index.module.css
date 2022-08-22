@@ -2,22 +2,33 @@
   width: 100px;
   height: 100px;
   border-radius: 60px;
-  margin-left: 20%;
+  margin-left: 44%;
 }
 
 .profile {
-  height: 200px;
-  padding-left: 30%;
+  /* height: 200px; */
+  padding-left: 24%;
   margin: 12px;
+  margin-top: 46px;
   /* background: url('/images/v5/full.png') no-repeat; */
   background-size: 100% 100%;
 }
 
+.country{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(153, 153, 153, 1);
+text-align: center;
+margin-top: 4px;
+margin-bottom: 11px;
+}
+
 .content{
-  display: flex;
-  line-height: 14px;
-  width: 100px;
-  border-right: 2px solid  #c4c4c4;
+  line-height: 20px;
+  width: 20px;
   height: 20px;
   text-align: center;
 }
@@ -48,9 +59,12 @@
 }
 
 .imgSet{
-  width: 14px;
+  line-height: 12px;
+  width: 12px;
   height: 12px;
-  margin-right: 5px;
+  text-align: center;
+  margin-top: 12px;
+  margin-left: 10px;
 }
 
 .address {

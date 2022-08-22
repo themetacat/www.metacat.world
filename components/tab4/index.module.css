@@ -2,19 +2,22 @@
   color: #fff;
   font-weight: 600;
   font-size: 16px;
-  border-bottom: 2px solid #00dcd5;
-  border-radius: 2px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
 }
 .miniNormal {
   color: #aaa;
   font-size: 14px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .miniBase {
   position: relative;
   z-index: 1;
-  padding: 0px 10px 0px 10px ;
+  min-width: 171px;
+  padding: 0 10px;
   height: 100%;
-  border-radius: 8px 8px 0px 0px;
+
 }
 .miniActive > .miniCanHover,
 .miniCanHover:hover {
