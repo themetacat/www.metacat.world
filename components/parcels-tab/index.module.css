@@ -41,7 +41,7 @@
   color: #666;
 }
 .active_span {
-  color: #999;
+  /* color: #999; */
   font-family: 'PingFang SC';
 font-style: normal;
 font-weight: 400;
@@ -57,10 +57,10 @@ font-weight: 400;
 font-size: 12px;
 line-height: 17px;
 text-align: center;
-color: #DDDDDD;
+/* color: #DDDDDD; */
 
 }
-.lable :active{
+/* .lable :active{
   font-family: 'PingFang SC';
 font-style: normal;
 font-weight: 600;
@@ -77,4 +77,4 @@ font-size: 12px;
 line-height: 17px;
 text-align: center;
 color: #000000;
-}
+} */
