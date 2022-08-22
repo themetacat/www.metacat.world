@@ -7,7 +7,9 @@
 
 .profile {
   /* height: 200px; */
-  padding-left: 24%;
+  /* padding-left: 24%; */
+  /* text-align: center; */
+  justify-content: center;
   margin: 12px;
   margin-top: 46px;
   /* background: url('/images/v5/full.png') no-repeat; */
@@ -76,7 +78,6 @@ margin-bottom: 11px;
 }
 .info {
   position: relative;
-  margin-left:60px;
 }
 .cd {
   color: #00f0ff;

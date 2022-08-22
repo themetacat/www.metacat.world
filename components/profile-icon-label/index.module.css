@@ -23,13 +23,16 @@ color: #FFFFFF;
   height: 12px;
 }
 .cns{
-  margin-left: 105px;
+  display: flex;
+  justify-content: center;
   font-family: 'PingFang SC';
 font-style: normal;
 font-weight: 500;
 font-size: 18px;
 line-height: 25px;
 color: #FFFFFF;
+width: 285px;
+text-align: center;
 }
 .imgSet{
   line-height: 12px;
