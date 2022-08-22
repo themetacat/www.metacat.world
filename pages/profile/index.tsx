@@ -161,8 +161,8 @@ function ProfilePage(r) {
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [nickName, setNickName] = React.useState('');
-  const [introduction, setIntroduction] = React.useState('');
-  const [country, setcountry] = React.useState('');
+  const [introductionText, setIntroduction] = React.useState('');
+  const [countryAddress, setcountry] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
@@ -493,8 +493,8 @@ function ProfilePage(r) {
       const {
         address: addr,
         nickName: name,
-        introduction: introduction,
-        country: country,
+        introduction: introductionText,
+        country: countryAddress,
         avatar: ava,
         links,
         email: e,
@@ -507,8 +507,8 @@ function ProfilePage(r) {
       setCreatorsState(creatorStatus);
       setAddress(addr);
       setNickName(name);
-      setIntroduction(introduction);
-      setcountry(country);
+      setIntroduction(introductionText);
+      setcountry(countryAddress);
       setTwitterAddress(twitterName);
       setWebsiteAddress(websiteUrl);
       state.setState({ profile });
@@ -1323,13 +1323,13 @@ function ProfilePage(r) {
             creatorsState={creatorsState}
             twitter={twitterAddress}
             home={websiteAddress}
-            country={country}
+            country={countryAddress}
             name={nickName}
             email={email}
             onClick={creatorDisplay}
             classname="main-content"
           ></Profile>
-          <div className={style.intor}>{introduction}</div>
+          <div className={style.intor}>{introductionText}</div>
         </div>
         <div className={cn(style.tablebg)}>
           <div className={cn(style.tableList)}>
