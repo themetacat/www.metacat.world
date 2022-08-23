@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import style from './index.module.css';
+import Router from 'next/router';
 
 type Porps = {
   icon?: string;
@@ -50,6 +51,9 @@ export default function ProfileIconLabel({
     },
     [null],
   );
+  const bianji =()=>{
+    Router.replace('/profile/setting')
+  }
   const renderSuffix = React.useMemo(() => {
     if (!prefix && hasIcon) {
       return suffixCopy ? (
@@ -76,7 +80,7 @@ export default function ProfileIconLabel({
         <>
           <div className={style.cns} title={label || clipName(address)}>
             <span>{label || clipName(address)}</span>
-            <span className={style.content}>
+            <span className={style.content} onClick={bianji}>
               <img src={`/images/icon/bianji.png`} className={style.imgSet}></img>
             </span>
           </div>

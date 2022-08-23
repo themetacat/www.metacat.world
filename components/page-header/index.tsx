@@ -189,7 +189,7 @@ export default function PageHeader({ active, className }: Props) {
       )}
     >
       <div className="flex flex-grow items-center text-white font-bold text-3xl pointer-events-auto">
-        <img className={cn('mr-4 bg-white', style.logo)} src="/images/logo.png"></img>
+        <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img>
         <Link href="/" prefetch>
           METACAT
         </Link>

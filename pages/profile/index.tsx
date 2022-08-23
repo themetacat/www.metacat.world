@@ -91,15 +91,15 @@ const REPORTTAB = [
 
 const TAB3 = [
   {
-    label: 'PARCEL LIST',
+    label: 'Parcel List',
     type: 'parcellist',
   },
   {
-    label: 'TRAFFIC REPORT',
+    label: 'Traffic Report',
     type: 'trafficreport',
   },
   {
-    label: 'WEARABLE LIST',
+    label: 'Wearable List',
     type: 'wearablelist',
   },
   // {
@@ -367,7 +367,7 @@ function ProfilePage(r) {
         store.setState(() => ({ type: 'cv' }));
       }
       if (tab === 'decentraland') {
-        
+
         setDclDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'dcl' }));
       }
@@ -967,7 +967,7 @@ function ProfilePage(r) {
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className={cn("main-content flex px-0",style.tabtext)}>
+            <div className={cn("main-content flex px-0", style.tabtext)}>
               {TABData.map((item) => {
                 return (
                   <Tab4
@@ -1028,7 +1028,7 @@ function ProfilePage(r) {
           <>
             <div className={cn('tab-list flex mt-5', style.allHeight)}>
               <div className={cls}></div>
-              <div className={cn("main-content flex px-0",style.tabtext)}>
+              <div className={cn("main-content flex px-0", style.tabtext)}>
                 {REPORTTAB.map((item) => {
                   return (
                     <Tab4
@@ -1330,25 +1330,25 @@ function ProfilePage(r) {
             classname="main-content"
           ></Profile>
           <div className={style.intor}>{introductionText}</div>
-        </div>
-        <div className={cn(style.tablebg)}>
-          <div className={cn(style.tableList)}>
-            {TAB3.map((item) => {
-              return (
-                <Tab3
-                  label={item.label}
-                  key={item.label}
-                  active={routeTab === item.type}
-                  onClick={() => {
-                    changeTab3(item.label, item.type);
-                  }}
-                />
-              );
-            })}
+          <div className={cn(style.tablebg)}>
+            <div className={cn(style.tableList)}>
+              {TAB3.map((item) => {
+                return (
+                  <Tab3
+                    label={item.label}
+                    key={item.label}
+                    active={routeTab === item.type}
+                    onClick={() => {
+                      changeTab3(item.label, item.type);
+                    }}
+                  />
+                );
+              })}
+            </div>
           </div>
+          {randerCardList}
+         <div style={{width:"100%"}}><Footer /></div> 
         </div>
-        {randerCardList}
-        <Footer />
       </div>
       {creatorState ? (
         <Creator

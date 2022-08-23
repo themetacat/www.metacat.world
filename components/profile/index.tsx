@@ -49,7 +49,7 @@ export default function Profile({
   }, [address]);
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
-      <div className=" justify-between items-center">
+      <div className={cn(" justify-between items-center",style.container)}>
         <div style={{ textAlign: 'center' }}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
@@ -90,7 +90,7 @@ export default function Profile({
             ) : null} */}
           </div>
           {
-            country ? <div className={style.cony}>{country}</div> : null
+            country ? <div className={style.cony}>Area： {country}</div> : null
           }
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
@@ -128,7 +128,7 @@ export default function Profile({
           </div>
 
         </div>
-        {introduction ? <div style={{ color: "red" }}>{introduction}</div> : null}
+        {/* {introduction ? <div style={{ color: "red" }}>{introduction}</div> : null} */}
 
         {/* <div style={{ color: '#fff', display: 'flex', marginTop: '12px' }}>
             <div className={style.content}>

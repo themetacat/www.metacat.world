@@ -4,6 +4,8 @@ import cn from 'classnames';
 
 import ReactTooltip from 'react-tooltip';
 
+import Router from 'next/router';
+
 import { toast } from 'react-hot-toast';
 
 import Page from '../../../components/page';
@@ -312,6 +314,9 @@ export default function Settings() {
   const changeCountry = React.useCallback((c) => {
     setCountry(c);
   }, []);
+  const Save =()=>{
+    Router.replace('/profile?type=parcellist')
+  }
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -484,6 +489,7 @@ export default function Settings() {
                       'flex justify-center items-center text-base font-semibold',
                       style.saveBtn,
                     )}
+                    onClick={Save}
                   >
                     {saving ? (
                       <img

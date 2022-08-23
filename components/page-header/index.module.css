@@ -2,6 +2,7 @@
 .logo {
   width: 36px;
   height: 30px;
+  background: transparent;
 }
 .active {
   color: #fff;
