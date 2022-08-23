@@ -471,7 +471,6 @@ function ProfilePage(r) {
         setLoading(false);
         if (!data) {
           return;
-          // <Status status="empty" />;
         }
         setDclDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
@@ -600,23 +599,23 @@ function ProfilePage(r) {
     if (tabState === 'decentraland') {
       return (
         <>
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
-          {dclDataSource.map((card) => {
-            return (
-              <DclCard
-                {...card}
-                parcelsIds={parcelsIds}
-                state={cardState}
-                key={uuid()}
-                y
-                selectedIds={selectedIds}
-                onClick={(id, ids) => {
-                  select(id, ids);
-                }}
-              ></DclCard>
-            );
-          })}
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
+            {dclDataSource.map((card) => {
+              return (
+                <DclCard
+                  {...card}
+                  parcelsIds={parcelsIds}
+                  state={cardState}
+                  key={uuid()}
+                  y
+                  selectedIds={selectedIds}
+                  onClick={(id, ids) => {
+                    select(id, ids);
+                  }}
+                ></DclCard>
+              );
+            })}
+          </div>
         </>
       );
     }
@@ -1009,7 +1008,7 @@ function ProfilePage(r) {
           </div>
           {/* 导航结束 */}
           {/* 卡片开始 */}
-          <div className={cn('main-content mt-8', style.content)} style={{marginTop:"-20px"}}>{renderContent}</div>
+          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderContent}</div>
 
           {/* 卡片结束 */}
           {tag2()}
@@ -1207,7 +1206,7 @@ function ProfilePage(r) {
           <div className={style.wearablesContainer}>
             <div className={style.title}>
               <div className={style.wearables}
-               
+
               ></div>
               <div className={style.texteated}>Wearables Created</div>
             </div>
@@ -1236,17 +1235,17 @@ function ProfilePage(r) {
                       )}
                       key={uuid()}
                     >
-                     {/* <div className={style.mmm}> */}
-                     <div >{item.label}
-                       {/* <span>{item.label}</span> */}
-                     <span style={{marginLeft:"2px"}}>
-                        {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-                        {item.type === 'shown' ? wearablesShowData.length : null}
-                        {item.type === 'hidden' ? wearablesHideData.length : null}
-                      </span>
-                     </div>
-                      
-                     {/* </div> */}
+                      {/* <div className={style.mmm}> */}
+                      <div >{item.label}
+                        {/* <span>{item.label}</span> */}
+                        <span style={{ marginLeft: "2px" }}>
+                          {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+                          {item.type === 'shown' ? wearablesShowData.length : null}
+                          {item.type === 'hidden' ? wearablesHideData.length : null}
+                        </span>
+                      </div>
+
+                      {/* </div> */}
                     </div>
                   );
                 })}
@@ -1349,7 +1348,7 @@ function ProfilePage(r) {
             </div>
           </div>
           {randerCardList}
-         <div style={{width:"100%"}}><Footer /></div> 
+          <div style={{ width: "100%" }}><Footer /></div>
         </div>
       </div>
       {creatorState ? (
