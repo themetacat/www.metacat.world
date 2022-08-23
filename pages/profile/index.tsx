@@ -6,7 +6,6 @@ import { toast } from 'react-hot-toast';
 
 import { className } from 'babylonjs/index';
 
-
 import { useRouter, withRouter } from 'next/router';
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
@@ -472,6 +471,7 @@ function ProfilePage(r) {
         setLoading(false);
         if (!data) {
           return;
+          // <Status status="empty" />;
         }
         setDclDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
@@ -574,9 +574,9 @@ function ProfilePage(r) {
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
-    // if (cartData.length === 0) {
-    //   return <Status status="empty" />;
-    // }
+    if (cartData.length === 0) {
+      return <Status status="empty" />;
+    }
     if (tabState === 'cryptovoxels') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-5">
@@ -599,6 +599,7 @@ function ProfilePage(r) {
     }
     if (tabState === 'decentraland') {
       return (
+        <>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
           {dclDataSource.map((card) => {
             return (
@@ -616,6 +617,7 @@ function ProfilePage(r) {
             );
           })}
         </div>
+        </>
       );
     }
   }, [
