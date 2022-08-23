@@ -89,9 +89,11 @@ export default function Profile({
               <div className={style.cd} onClick={toTopic}>{` My creator page >`}</div>
             ) : null} */}
           </div>
+          <div className={style.cony}>
           {
-            country ? <div className={style.cony}>Area： {country}</div> : null
+            country ? <>Area： {country}</> : null
           }
+          </div>
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
               <ProfileIconLabel

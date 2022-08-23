@@ -84,7 +84,9 @@ export default function Settings() {
       const { code, msg, data } = res;
       if (code === 100000) {
         return convert(data);
+        
       }
+    
       if (code === 100003) {
         refreshTK().then((token) => {
           if (token && callback) {
@@ -222,6 +224,7 @@ export default function Settings() {
           }
           toast.success('Profile successfully updated');
           setSaving(false);
+          Router.replace('/profile?type=parcellist')
           state.setState({
             profile: {
               nickName,
@@ -489,7 +492,7 @@ export default function Settings() {
                       'flex justify-center items-center text-base font-semibold',
                       style.saveBtn,
                     )}
-                    onClick={Save}
+                    // onClick={Save}
                   >
                     {saving ? (
                       <img
