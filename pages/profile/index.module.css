@@ -21,6 +21,7 @@ font-size: 12px;
 color: #AAAAAA;
 line-height: 17px;
 margin-bottom: 20px;
+min-height: 17px;
 }
 
 .chartList {
@@ -95,7 +96,7 @@ margin-bottom: 20px;
 }
 .allHeight {
   height: 48px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .content {
@@ -279,7 +280,7 @@ margin-bottom: 20px;
 
 .content {
   width: 1200px;
-  margin: 0 auto;
+  margin: -20px auto;
 }
 
 .wearablesContainer {

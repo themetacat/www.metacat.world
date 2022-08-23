@@ -516,7 +516,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       >
         {getText}
       </div>
+      <div style={{borderRadius:"6px"}}>
       <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
+      </div>
     </div>
   );
 }

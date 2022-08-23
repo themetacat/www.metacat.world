@@ -2,7 +2,8 @@
   width: 100px;
   height: 100px;
   border-radius: 60px;
-  margin-left: 44%;
+  position: absolute;
+  left: 33%;
 }
 
 .profile {
@@ -10,13 +11,24 @@
   /* padding-left: 24%; */
   /* text-align: center; */
   justify-content: center;
-  margin: 12px;
+  margin:0px 12px 12px 12px;
   margin-top: 46px;
   /* background: url('/images/v5/full.png') no-repeat; */
   background-size: 100% 100%;
 }
+.links{
+  text-align: center;
+  justify-content: center;
+}
+.container{
+  width: 30%;
+  min-height: 171px;
+  position: relative;
+  text-align: center;
+}
 
 .cony{
+  min-height: 17px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -77,7 +89,8 @@ margin-bottom: 11px;
   max-width: 550px;
 }
 .info {
-  position: relative;
+  position: absolute;
+  bottom:0px;
 }
 .cd {
   color: #00f0ff;
