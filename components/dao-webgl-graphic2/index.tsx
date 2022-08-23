@@ -174,7 +174,7 @@ export default function DaoWebglCard({
   return (
     <>
       <div
-        className={cn('z-10 p-4 relative', styles.card)}
+        className={cn('z-10  relative', styles.card)}
         onMouseEnter={() => {
           triggerModelRotation(true);
         }}
@@ -212,28 +212,29 @@ export default function DaoWebglCard({
           ) : null}
         </div>
         <div
-          className={cn('flex justify-start items-center p-4 text-white', styles.footer)}
+          className={cn('flex justify-start items-center  text-white', styles.footer)}
           onClick={goToDetail}
         >
-          <div className="flex flex-col justify-start items-start w-full text-lg font-medium">
-            <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span>
-            <div className={cn('flex items-end justify-center text-xs  mt-4', styles.goDetail)}>
-              <div style={{ whiteSpace: 'nowrap' }}>Voxel Artist：</div>
+          <div className={cn("flex flex-col justify-start items-start w-full text-lg font-medium", styles.bigbox)}>
+            <div className={styles.model}>  <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span></div>
+            <div className={cn('flex items-end justify-center text-xs', styles.goDetail)}>
+              <div className={styles.artist}>Voxel Artist：</div>
               <div className={styles.text}> {model ? model.creator_name : null}</div>
             </div>
           </div>
           <div className={styles.container}>
-            {!type && model && model.show_status ? (
-              <div className={styles.showOrHide} onClick={changeShowOrHide}>
-                {model && model.show_status === 2 ? `Show` : `Hide`}
-              </div>
-            ) : null}
             <span className={cn('flex  items-center cursor-pointer ml-4', styles.goDetail2)}>
               {`Detail`}
               <img className=" ml-1" src="/images/v5/arrow-simple.png"></img>
             </span>
           </div>
         </div>
+        {!type && model && model.show_status ? (
+          <div className={styles.showOrHide} onClick={changeShowOrHide}>
+            {model && model.show_status === 2 ? `Show` : `Hide`}
+          </div>
+        ) : null}
+
       </div>
     </>
   );

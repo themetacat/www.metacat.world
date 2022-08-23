@@ -41,6 +41,9 @@ export default function Profile({
     },
     [null],
   );
+const heaDortrait =()=>{
+  router.replace(`/profile/setting`);
+}
 
   const toTopic = React.useCallback(() => {
     if (address) {
@@ -50,7 +53,7 @@ export default function Profile({
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
       <div className={cn(" justify-between items-center",style.container)}>
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center' }} onClick={heaDortrait}>
           <img className={style.avater} src={avater || '/images/logo.png'}></img>
         </div>
 
@@ -91,7 +94,7 @@ export default function Profile({
           </div>
           <div className={style.cony}>
           {
-            country ? <>Area： {country}</> : null
+            country ? <>Area: {country}</> : null
           }
           </div>
           <div className={cn('flex justify-start items-center', style.links)}>
@@ -120,8 +123,8 @@ export default function Profile({
             {email ? (
               <ProfileIconLabel
                 label={`Email`}
-                link={email}
-                icon="/images/icon/emailIcon.png"
+                // link={email}
+                icon="/images/008email.png"
                 prefix={true}
                 isLink={true}
                 classname={'text-sm'}
