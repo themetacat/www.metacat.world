@@ -76,7 +76,7 @@ padding:15px;
   overflow: hidden;
 }
 .detail {
-  margin-top: 10px;
+  margin-top: 6px;
   color: #ddd;
   font-weight: 400;
   font-size: 14px;
@@ -100,7 +100,7 @@ align-items: center;
 color: #DDDDDD;
 }
 .detail .plot {
-  margin: 8px 0;
+  /* margin: 8px 0; */
 }
 .detail .plot div {
   margin-top: 2px;
@@ -114,6 +114,7 @@ align-items: center;
 color: #DDDDDD;
 }
 .detail .info {
+  margin-top: 2px;
   display: flex;
   flex-wrap: nowrap;
 }
