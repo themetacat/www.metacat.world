@@ -471,7 +471,6 @@ function ProfilePage(r) {
         setLoading(false);
         if (!data) {
           return;
-          // <Status status="empty" />;
         }
         setDclDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
