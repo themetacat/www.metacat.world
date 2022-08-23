@@ -36,8 +36,8 @@ text-align: center;
 }
 .imgSet{
   line-height: 12px;
-  width: 12px;
-  height: 12px;
+  /* width: 12px;
+  height: 12px; */
   text-align: center;
   margin-top: 2px;
   margin-left: 10px;

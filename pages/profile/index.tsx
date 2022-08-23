@@ -99,7 +99,7 @@ const TAB3 = [
     type: 'trafficreport',
   },
   {
-    label: 'Wearable List',
+    label: 'My Wearables',
     type: 'wearablelist',
   },
   // {
@@ -967,7 +967,7 @@ function ProfilePage(r) {
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className={cn("main-content flex px-0", style.tabtext)}>
+            <div className={cn("main-content flex px-0", style.tabtext)} >
               {TABData.map((item) => {
                 return (
                   <Tab4
@@ -1007,7 +1007,7 @@ function ProfilePage(r) {
           </div>
           {/* 导航结束 */}
           {/* 卡片开始 */}
-          <div className={cn('main-content mt-8', style.content)}>{renderContent}</div>
+          <div className={cn('main-content mt-8', style.content)} style={{marginTop:"-20px"}}>{renderContent}</div>
 
           {/* 卡片结束 */}
           {tag2()}
@@ -1048,7 +1048,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart className=" my-5">
+              <BaseChart >
                 <BaseBar
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1108,7 +1108,7 @@ function ProfilePage(r) {
       if (showType === "decentraland") {
         return (
           <>
-            <div className={cn('tab-list flex mt-5', style.allHeight)}>
+            <div className={cn('tab-list flex ', style.allHeight)}>
               <div className={cls}></div>
               <div className="main-content flex px-0">
                 {REPORTTAB.map((item) => {
@@ -1130,7 +1130,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart className=" my-5">
+              <BaseChart >
                 <BaseBarDece
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1204,15 +1204,10 @@ function ProfilePage(r) {
           </div> */}
           <div className={style.wearablesContainer}>
             <div className={style.title}>
-              <div
-                style={{
-                  width: '4px',
-                  height: '16px',
-                  backgroundColor: '#00D0EC',
-                  margin: '5px 8px 0 0',
-                }}
+              <div className={style.wearables}
+               
               ></div>
-              <div className={style.text}>Wearables Created</div>
+              <div className={style.texteated}>Wearables Created</div>
             </div>
             <div className={style.wearablesNav}>
               <div className={style.left}>
@@ -1239,12 +1234,17 @@ function ProfilePage(r) {
                       )}
                       key={uuid()}
                     >
-                      <div className="mr-1">{item.label}</div>
-                      <span>
+                     {/* <div className={style.mmm}> */}
+                     <div >{item.label}
+                       {/* <span>{item.label}</span> */}
+                     <span style={{marginLeft:"2px"}}>
                         {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
                         {item.type === 'shown' ? wearablesShowData.length : null}
                         {item.type === 'hidden' ? wearablesHideData.length : null}
                       </span>
+                     </div>
+                      
+                     {/* </div> */}
                     </div>
                   );
                 })}
@@ -1282,7 +1282,7 @@ function ProfilePage(r) {
                 </ul>
               </div>
             </div>
-            <div style={{ marginTop: '26px', marginBottom: '50px' }}>{creatorsReander}</div>
+            <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
           </div>
         </>
       );

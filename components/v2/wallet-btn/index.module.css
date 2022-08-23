@@ -36,6 +36,7 @@
 
 .walletItem{
   background-color: rgba(15, 25, 27, 1);
+  border-radius: 6px;
   color: rgba(204, 204, 204, 1);
   width: 240px;
   height: 70px;
@@ -45,6 +46,7 @@
 .walletContent{
   border: 0.5px solid rgba(0, 208, 236, 0.2);
   box-sizing: border-box;
+  border-radius: 6px;
   padding: 12px;
   color:rgba(204, 204, 204, 1);
 }

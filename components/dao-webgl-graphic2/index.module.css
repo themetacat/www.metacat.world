@@ -1,22 +1,21 @@
 .graphic {
-  min-height: 355px;
+  min-height: 260px;
   text-align: center;
-  margin: 30px auto;
-  width: 350px;
-  padding: 20px;
+  margin: 15px 15px 0px 15px;
+  width: 260px;
+  border-radius: 6px 6px 0px 0px;
 }
 .card {
   max-width: 385px;
   background: rgba(0, 236, 222, 0.05);
-  /* 辅-亮绿 */
-
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
-  box-sizing: border-box;
-  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0px 0px 12px rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
 }
 .card:hover {
+  box-shadow: 0 6px 25px rgb(255 255 255 / 30%), inset 0 0 15px rgb(255 255 255 / 15%);
   transform: translateY(-2px);
-  box-shadow: 0px 6px 25px rgba(0, 236, 222, 0.35), inset 0px 0px 15px rgba(24, 255, 241, 0.3);
   cursor: pointer;
 }
 
@@ -27,21 +26,44 @@
 
 .footer {
   background-color: rgba(0, 0, 0, 0.2);
+  width: 260px;
+  margin: 0px 15px 0px 15px;
+  position: relative;
+  padding:15px 19.08px 10px 15px;
 }
 .footer:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .goDetail {
   color: #888;
   font-size: 12px;
   cursor: pointer;
+  margin-top: 8px;
 }
-
+.model{
+ width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
 .title {
-  max-width: 250px;
+ 
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 22px;
+display: flex;
+align-items: center;
+color: #FFFFFF;
 }
-
+.bigbox{
+  width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
 .goDetail2 {
   color: #777;
   font-size: 12px;
@@ -63,13 +85,23 @@
 }
 
 .opese {
-  width: 32px;
-  height: 32px;
-  top: 15px;
-  right: 15px;
+  width: 37.65px;
+  height: 38.59px;
+  top: 8.23px;
+  right: 10.12px;
   cursor: pointer;
 }
+.artist{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  color: #CCCCCC;
 
+}
 .goDetail:hover,
 .goDetail2:hover,
 .icon:hover,
@@ -91,16 +123,25 @@
   flex-direction: column;
 }
 .showOrHide {
-  margin-bottom: 12px;
+  /* margin-bottom: 12px;
   width: 69px;
-  height: 28px;
-  font-weight: 600;
+  height: 28px; */
+  width: 260px;
+  height: 28px; 
+  margin: 0px 15px 15px 15px;
+  border-radius: 0px 0px 6px 6px;
+  font-weight: 500;
   font-size: 14px;
   color: #00d0ec;
   background: #0f403f;
   line-height: 28px;
   text-align: center;
   cursor: pointer;
+  font-family: 'Roboto';
+  font-style: normal;
+  align-items: center;
+  color: #01DAD9;
+  background: #0F403F;
 }
 .shade {
   background: #000000;

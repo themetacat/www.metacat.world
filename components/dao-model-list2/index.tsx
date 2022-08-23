@@ -202,7 +202,7 @@ export default function DaoModelList({
         )}
         ref={canvaRef}
       ></canvas>
-      <div className="w-full h-full top-0 left-0 grid grid-cols-3 gap-4 z-10">{renderGraphic}</div>
+      <div className="w-full h-full top-0 left-0 grid grid-cols-4 gap-4 z-10">{renderGraphic}</div>
     </div>
   );
 }
