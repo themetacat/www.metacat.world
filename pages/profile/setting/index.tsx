@@ -314,9 +314,9 @@ export default function Settings() {
   const changeCountry = React.useCallback((c) => {
     setCountry(c);
   }, []);
-  const Save =()=>{
-    Router.replace('/profile?type=parcellist')
-  }
+  // const Save =()=>{
+  //   Router.replace('/profile?type=parcellist')
+  // }
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -489,7 +489,7 @@ export default function Settings() {
                       'flex justify-center items-center text-base font-semibold',
                       style.saveBtn,
                     )}
-                    onClick={Save}
+                    // onClick={Save}
                   >
                     {saving ? (
                       <img

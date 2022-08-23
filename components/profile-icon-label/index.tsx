@@ -3,8 +3,10 @@ import cn from 'classnames';
 
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import style from './index.module.css';
 import Router from 'next/router';
+
+import style from './index.module.css';
+
 
 type Porps = {
   icon?: string;
