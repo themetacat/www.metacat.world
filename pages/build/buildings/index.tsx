@@ -6,7 +6,7 @@ import Page from '../../../components/page';
 import PageHeader from '../../../components/page-header';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
-import TopicDetailCard from '../../../components/topic-detail-card';
+import TopicDetailCardBuildings from '../../../components/topic-detail-card-Buildings';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
 
@@ -162,7 +162,7 @@ export default function TopicIndex() {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
               {builders.map((card, idx) => {
-                return <TopicDetailCard {...card} key={idx}></TopicDetailCard>;
+                return <TopicDetailCardBuildings {...card} key={idx}></TopicDetailCardBuildings>;
               })}
             </div>
             <PagiNation
