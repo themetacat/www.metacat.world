@@ -14,6 +14,12 @@ import Footer from '../../components/footer';
 
 import AnalyticsInfo from '../../components/analytics-info';
 
+import AnalyticsInfoSale from '../../components/analytics-info-sale';
+
+import AnalyticsAverage from '../../components/analytics-info-average';
+
+import AnalyticsInfoNum from '../../components/analytics-info-num';
+
 import Switch from '../../components/switch';
 
 import AnimationBack from '../../components/animation-back';
@@ -1621,6 +1627,30 @@ export default function AnalyticsIndex(props) {
                   <AnalyticsInfo options={types} labelText={'Coprehensive Data'} textColor={style.allColor}></AnalyticsInfo>
                 </div>
               </div>
+              <div className={cn('w-full h-auto mt-7', style.table)}>
+                <div className={style.tabContainer}>
+                  <AnalyticsInfoSale options={types} labelText={'销售额环比(USD)'} textColor={style.allColor}></AnalyticsInfoSale>
+                </div>
+              </div>
+              <div className={cn('w-full h-auto mt-7', style.tableBox)}>
+                <div className={style.tabContainer}>
+                  <AnalyticsAverage options={types} labelText={'销售均价环比'} textColor={style.allColor}
+                     priceOptions={[
+                      {
+                        label: 'USD',
+                        value: 'usd',
+                      },
+                      {
+                        label: 'ETH',
+                        value: 'eth',
+                      },
+                    ]}
+                  ></AnalyticsAverage>
+                </div>
+                <div className={style.tabContainer} style={{marginLeft:"20px"}}>
+                  <AnalyticsInfoNum options={types} labelText={'销售数量环比'} textColor={style.allColor}></AnalyticsInfoNum>
+                </div>
+              </div>
             </div>
           </div>
         </>
@@ -1670,6 +1700,8 @@ export default function AnalyticsIndex(props) {
   //     setFixedState(false)
   //   }
   // }, [Top, Dtop.current])
+
+  
 
   React.useEffect(() => {
     const listener = () => {

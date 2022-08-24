@@ -178,6 +178,27 @@ export const getWorldsStats = async () => {
   return json;
 };
 
+export const getWorldsStatsSale = async () => {
+  const url = `/api/worlds_stats_scale`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getWorldsAverageSale = async () => {
+  const url = `/api/worlds_stats_average`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getWorldsNum = async () => {
+  const url = `/api/worlds_stats_num`;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
 export const getCvParcelSoldSumStats = async () => {
   const url = `/api/cv_parcel_sold_sum_stats`;
   const res = await fetch(url);
