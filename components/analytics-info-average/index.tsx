@@ -1,6 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 
+import { DataStorage } from 'babylonjs';
+
 import { getWorldsAverageSale } from '../../service';
 
 import ChartSelecter from '../chart-select';
@@ -8,7 +10,7 @@ import ChartSelecter from '../chart-select';
 import { convert, formatNum } from '../../common/utils';
 import style from './index.module.css';
 import ChartTitle from '../chart-title';
-import { DataStorage } from 'babylonjs';
+
 
 type optionItem = {
   label?: string;
@@ -30,7 +32,7 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
-  var obj = new Object()
+  let obj = new Object()
  
   const requestData = React.useCallback(async () => {
     const res: any = await getWorldsAverageSale();
@@ -82,10 +84,9 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
         return obj;
       })
     }
-    var arr = []
+    let arr = []
     for (let name in obj) {
       arr.push({ [name]: obj[name] })
-     
     }
     setArrDataSource(arr)
   }, [priceShowType]);

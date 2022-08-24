@@ -28,7 +28,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
-  var obj = new Object()
+  let obj = new Object()
   React.useEffect(() => {
     getWorldsNum().then((data) => {
       setalldata(data);
@@ -52,7 +52,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
       obj[item.name].percent = item.value;
       return obj;
     })
-    var arr = []
+    let arr = []
     for (let name in obj) {
       arr.push({ [name]: obj[name] })
     }
