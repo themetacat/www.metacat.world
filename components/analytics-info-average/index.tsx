@@ -32,7 +32,7 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
-  let obj = new Object()
+  const obj = {}
  
   const requestData = React.useCallback(async () => {
     const res: any = await getWorldsAverageSale();
@@ -84,10 +84,16 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
         return obj;
       })
     }
-    let arr = []
-    for (let name in obj) {
-      arr.push({ [name]: obj[name] })
-    }
+    const arr = []
+    // for (const name in obj) {
+    //   arr.push({ [name]: obj[name] })
+    // }
+    Object.keys(obj).forEach(name => {
+      let value = obj[name];
+       if(value){
+        arr.push({ [name]: obj[name] })
+       }	
+     });
     setArrDataSource(arr)
   }, [priceShowType]);
 

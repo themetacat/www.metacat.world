@@ -1,12 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
 
+import { DataStorage } from 'babylonjs';
+
 import { getWorldsStatsSale } from '../../service';
 
 import { convert, formatNum } from '../../common/utils';
 import style from './index.module.css';
 import ChartTitle from '../chart-title';
-import { DataStorage } from 'babylonjs';
+
 
 type optionItem = {
   label?: string;
@@ -28,7 +30,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
-  let obj = new Object()
+  const obj = {}
   // React.useEffect(() => {
   //   getWorldsStatsSale().then((data) => {
   //     setalldata(data);
@@ -63,10 +65,16 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
       obj[item.name].percent = item.value;
       return obj;
     })
-    let arr = []
-    for (let name in obj) {
-      arr.push({ [name]: obj[name] })
-    }
+    const arr = []
+    // for (const name in obj) {
+    //   arr.push({ [name]: obj[name] })
+    // }
+    Object.keys(obj).forEach(name => {
+      let value = obj[name];
+       if(value){
+        arr.push({ [name]: obj[name] })
+       }	
+     });
     setArrDataSource(arr)
   }, [null]);
 
@@ -100,7 +108,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.left}>2022.07</div>
+              <div className={style.right}>2022.07</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -111,7 +119,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.left}>2022.08</div>
+            <div className={style.right}>2022.08</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -122,7 +130,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.left}>% of Change</div>
+              <div className={style.right}>% of Change</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -133,7 +141,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.left}>% of Total sales in 202207</div>
+              <div className={style.right}>% of Total sales in 202207</div>
             </th>
           </tr>
           {arrdataSource.map((item, idx) => {
@@ -237,7 +245,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                   >
                     <div className={cn('justify-end',  style.right,style.leftContext)}>
                       {Object.keys(item).map((o) => {
-                        return Math.round(item[o]["percent"] * 100)
+                        return Math.round(item[o]["percent"]* 100)
                       })}
                     </div>
                   </th>
@@ -259,7 +267,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                   >
                     <div className={cn('justify-end', style.right, style.font3)}>
                       {Object.keys(item).map((o) => {
-                        return Math.round(item[o]["total"] * 100)
+                        return item[o]["total"] * 100
 
                       })}
                     </div>

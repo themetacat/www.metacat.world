@@ -211,7 +211,7 @@ class API {
 
   public async getWorldsStatsSale(): Promise<any> {
     // const url = `${this.url}/analytics/cur_data_compared_last_sum`;
-    const url = `https://api.metacat.world/api/v1/analytics/cur_data_compared_last_sum`;
+    const url = `${this.url}/analytics/cur_data_compared_last_sum`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -220,7 +220,7 @@ class API {
 
   public async getWorldsAverageSale(): Promise<any> {
     // const url = `${this.url}/analytics/cur_data_compared_last_sum`;
-    const url = `https://api.metacat.world/api/v1/analytics/cur_data_compared_last_avg`;
+    const url = `${this.url}/analytics/cur_data_compared_last_avg`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -229,7 +229,7 @@ class API {
 
   public async getWorldsNum(): Promise<any> {
     // const url = `${this.url}/analytics/cur_data_compared_last_sum`;
-    const url = `https://api.metacat.world/api/v1/analytics/cur_data_compared_last_sales`;
+    const url = `${this.url}/analytics/cur_data_compared_last_sales`;
     const res = await fetch(url);
     const json = await res.json();
 

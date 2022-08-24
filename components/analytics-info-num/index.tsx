@@ -1,12 +1,14 @@
 import React from 'react';
 import cn from 'classnames';
 
+import { DataStorage } from 'babylonjs';
+
 import { getWorldsNum } from '../../service';
 
 import { convert, formatNum } from '../../common/utils';
 import style from './index.module.css';
 import ChartTitle from '../chart-title';
-import { DataStorage } from 'babylonjs';
+
 
 type optionItem = {
   label?: string;
@@ -28,7 +30,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
-  let obj = new Object()
+  const obj = {}
   React.useEffect(() => {
     getWorldsNum().then((data) => {
       setalldata(data);
@@ -52,11 +54,19 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
       obj[item.name].percent = item.value;
       return obj;
     })
-    let arr = []
-    for (let name in obj) {
-      arr.push({ [name]: obj[name] })
-    }
+    const arr = []
+
+    // for (const name in obj) {
+    //   arr.push({ [name]: obj[name] })
+    // }
+    Object.keys(obj).forEach(name => {
+      let value = obj[name];
+       if(value){
+        arr.push({ [name]: obj[name] })
+       }	
+     });
     setArrDataSource(arr)
+
   }, [null]);
 
   React.useEffect(() => {
@@ -89,7 +99,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.left}>2022.07</div>
+            <div className={style.right}>2022.07</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -100,7 +110,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.left}>2022.08</div>
+              <div className={style.right}>2022.08</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -111,7 +121,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.left}>% of Change</div>
+              <div className={style.right}>% of Change</div>
             </th>
             {/* <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -178,7 +188,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     }}
 
                   >
-                    <div className={cn('justify-end', style.leftContext)}>
+                    <div className={cn('justify-end',style.right, style.leftContext)}>
                       {Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })}
@@ -201,7 +211,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.leftContext)}>
+                    <div className={cn('justify-end',style.right, style.leftContext)}>
                       {Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })}
@@ -223,7 +233,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end', style.leftContext)}>
+                  <div className={cn('justify-end',style.right, style.leftContext)}>
                   {Object.keys(item).map((o) => {
                         return Math.round(item[o]["percent"]* 100)
                       })}
