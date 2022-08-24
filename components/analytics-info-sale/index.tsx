@@ -70,7 +70,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
     //   arr.push({ [name]: obj[name] })
     // }
     Object.keys(obj).forEach(name => {
-      let value = obj[name];
+      const value = obj[name];
        if(value){
         arr.push({ [name]: obj[name] })
        }	
@@ -245,7 +245,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                   >
                     <div className={cn('justify-end',  style.right,style.leftContext)}>
                       {Object.keys(item).map((o) => {
-                        return Math.round(item[o]["percent"]* 100)
+                        return Math.round(item[o].percent* 100)
                       })}
                     </div>
                   </th>
@@ -267,7 +267,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                   >
                     <div className={cn('justify-end', style.right, style.font3)}>
                       {Object.keys(item).map((o) => {
-                        return item[o]["total"] * 100
+                        return item[o].total * 100
 
                       })}
                     </div>

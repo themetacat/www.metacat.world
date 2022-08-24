@@ -60,7 +60,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
     //   arr.push({ [name]: obj[name] })
     // }
     Object.keys(obj).forEach(name => {
-      let value = obj[name];
+      const value = obj[name];
        if(value){
         arr.push({ [name]: obj[name] })
        }	
@@ -235,7 +235,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 >
                   <div className={cn('justify-end',style.right, style.leftContext)}>
                   {Object.keys(item).map((o) => {
-                        return Math.round(item[o]["percent"]* 100)
+                        return Math.round(item[o].percent* 100)
                       })}
                   </div>
                 </th>
