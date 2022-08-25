@@ -264,7 +264,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                     }}
 
                   >
-                    <div className={cn('justify-end', style.leftContext)}>
+                    <div className={cn('justify-end',style.right, style.leftContext)}>
                       {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
