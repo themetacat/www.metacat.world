@@ -1638,11 +1638,11 @@ export default function AnalyticsIndex(props) {
                      priceOptions={[
                       {
                         label: 'USD',
-                        value: 'usd',
+                        value: 'USD',
                       },
                       {
                         label: 'ETH',
-                        value: 'eth',
+                        value: 'ETH',
                       },
                     ]}
                   ></AnalyticsAverage>

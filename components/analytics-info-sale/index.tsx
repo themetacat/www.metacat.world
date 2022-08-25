@@ -209,7 +209,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
-                      ${arrdataSource[item]["2022.08"]}
+                      {/* ${arrdataSource[item]["2022.08"]} */}
+                      ${formatNum(arrdataSource[item]["2022.08"], false)}
                     </div>
                   </th>
 
@@ -230,7 +231,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      ${arrdataSource[item]["2022.07"]}
+                      {/* ${arrdataSource[item]["2022.07"]} */}
+                      ${formatNum(arrdataSource[item]["2022.07"], false)}
                     </div>
                   </th>
                   <th

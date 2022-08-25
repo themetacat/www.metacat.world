@@ -24,7 +24,7 @@ type Props = {
 
 export default function AnalyticsAverage({ options, labelText, textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
-  const [arrdataSource, setArrDataSource] = React.useState([]||{});
+  const [arrdataSource, setArrDataSource] = React.useState([] || {});
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [usdPercent, setUsdPercent] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
@@ -62,10 +62,10 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
     // }
     Object.keys(obj).forEach(name => {
       const value = obj[name];
-       if(value){
+      if (value) {
         arr.push({ [name]: obj[name] })
-       }	
-     });
+      }
+    });
     setArrDataSource(obj)
 
   }, [null]);
@@ -104,7 +104,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-            <div className={style.right}>2022.08</div>
+              <div className={style.right}>2022.08</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -171,11 +171,11 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     }}
                   >
                     <div className={cn(style.leftContext, style.font1)}>
-                    {/* {formatNum(item.totalLandOwner, false)} */}
+                      {/* {formatNum(item.totalLandOwner, false)} */}
                       {/* {Object.keys(item).map((o) => {
                       return (<span>{o}</span>)
                     })} */}
-                     {<span>{item}</span>}
+                      {<span>{item}</span>}
                     </div>
                   </th>
                   <th
@@ -195,11 +195,12 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     }}
 
                   >
-                    <div className={cn('justify-end',style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right, style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
-                        {arrdataSource[item]["2022.08"]}
+                      {/* {arrdataSource[item]["2022.08"]} */}
+                      ${formatNum(arrdataSource[item]["2022.08"], false)}
                     </div>
                   </th>
 
@@ -219,46 +220,47 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end',style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right, style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })} */}
-                      {arrdataSource[item]["2022.07"]}
+                      {/* {arrdataSource[item]["2022.07"]} */}
+                      ${formatNum(arrdataSource[item]["2022.07"], false)}
                     </div>
                   </th>
                   <th
-                  className={cn(
-                    '',
-                    style.cell,
-                    style.h3,
-                    style.bg2,
-                    index === idx ? style.hoverBg : null,
-                    bgState === 'whales' ? style.hoverBg : null,
-                    arrdataSource[item].percent* 100>0 ? style.redTextCol :  style.rightText,
-                  )}
-                  onMouseEnter={() => {
-                    setBgState('whales');
-                    // if(Math.round(item[o].percent* 100)>0){
-                    
-                    // }
-                  }}
-                  // onMouseOver={()=>{
-                  //   setBackNum('backNum');
-                  // }}
-                  onMouseLeave={() => {
-                    setIndex(null);
-                  }}
-                >
-                  <div className={cn('justify-end',style.right, style.leftContext,
-                  )}
+                    className={cn(
+                      '',
+                      style.cell,
+                      style.h3,
+                      style.bg2,
+                      index === idx ? style.hoverBg : null,
+                      bgState === 'whales' ? style.hoverBg : null,
+                      arrdataSource[item].percent * 100 > 0 ? style.redTextCol : style.rightText,
+                    )}
+                    onMouseEnter={() => {
+                      setBgState('whales');
+                      // if(Math.round(item[o].percent* 100)>0){
+
+                      // }
+                    }}
+                    // onMouseOver={()=>{
+                    //   setBackNum('backNum');
+                    // }}
+                    onMouseLeave={() => {
+                      setIndex(null);
+                    }}
                   >
-                  {/* {Object.keys(item).map((o) => {
+                    <div className={cn('justify-end', style.right, style.leftContext,
+                    )}
+                    >
+                      {/* {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
                       })}% */}
-                        {Math.round(arrdataSource[item].percent* 100)}%
-                  </div>
-                </th>
-                  </tr>
+                      {Math.round(arrdataSource[item].percent * 100)}%
+                    </div>
+                  </th>
+                </tr>
               </>
             );
 
