@@ -30,6 +30,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
+  const [backNum, setBackNum] = React.useState('');
+  const [backCol, setBackCol] = React.useState('');
   const obj = {}
   // React.useEffect(() => {
   //   getWorldsStatsSale().then((data) => {
@@ -39,6 +41,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   const requestData = React.useCallback(async () => {
 
     const res: any = await getWorldsStatsSale();
+
     const result = convert(res.data);
 
     setDataSource(res.data.monthly.usd);
@@ -63,7 +66,19 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
         obj[item.name] = {}
       }
       obj[item.name].percent = item.value;
+
+      // if (obj[item.name].percent* 100>0) {
+      //   setBackNum('GreenText');
+      //   console.log(obj[item.name].percent*100 , "大于0");
+      //   console.log(backNum, '三四十万');
+      // }else {
+      //   console.log(obj[item.name].percent * 100 , "小于0");
+      //   setBackCol('redText');
+      //   console.log(backCol, 'sss');
+      // }
+
       return obj;
+
     })
     const arr = []
     // for (const name in obj) {
@@ -71,10 +86,11 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
     // }
     Object.keys(obj).forEach(name => {
       const value = obj[name];
-       if(value){
+      if (value) {
         arr.push({ [name]: obj[name] })
-       }	
-     });
+      }
+    });
+
     setArrDataSource(arr)
   }, [null]);
 
@@ -119,7 +135,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-            <div className={style.right}>2022.08</div>
+              <div className={style.right}>2022.08</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -198,7 +214,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
 
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })}
                     </div>
@@ -221,7 +237,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      ${Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })}
                     </div>
@@ -235,6 +251,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       // style.rightText,
                       index === idx ? style.hoverBg : null,
                       bgState === 'whales' ? style.hoverBg : null,
+                      backNum === 'GreenText' ? style.rightText : null,
+                      backCol === 'redText' ? style.redTextCol : null,
                     )}
                     onMouseEnter={() => {
                       setBgState('whales');
@@ -243,10 +261,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end',  style.right,style.leftContext)}>
+                    <div className={cn('justify-end', style.right, style.leftContext)}>
                       {Object.keys(item).map((o) => {
-                        return Math.round(item[o].percent* 100)
-                      })}
+                        return Math.round(item[o].percent * 100)
+                      })}%
                     </div>
                   </th>
                   <th
@@ -269,7 +287,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       {Object.keys(item).map((o) => {
                         return item[o].total * 100
 
-                      })}
+                      })}%
                     </div>
                   </th>
 

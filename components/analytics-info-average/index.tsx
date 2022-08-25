@@ -262,7 +262,7 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
 
                   >
                     <div className={cn('justify-end',style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })}
                     </div>
@@ -285,7 +285,7 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      ${Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })}
                     </div>
@@ -309,7 +309,7 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
                   <div className={cn('justify-end', style.right)}>
                   {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
-                      })}
+                      })}%
                   </div>
                 </th>
                   </tr>

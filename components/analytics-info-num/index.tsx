@@ -30,6 +30,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
+  const [backNum, setBackNum] = React.useState(null);
   const obj = {}
   React.useEffect(() => {
     getWorldsNum().then((data) => {
@@ -71,16 +72,20 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
 
   React.useEffect(() => {
     requestData();
+    // setBackNum('backNum');
   }, [null]);
 
   return (
     <>
-      <ChartTitle text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
-      <table className={cn('w-full', style.table)}>
+      <ChartTitle text={labelText} className={style.tobottom} color={textColor} ></ChartTitle>
+      <table className={cn('w-full', style.table)} >
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
             <th
               className={cn(style.h1, style.bg, style.biaotou)}
+              // onMouseOver={()=>{
+              //   setBackNum('backNum');
+              // }}
               onMouseEnter={() => {
                 setBgState('world');
               }}
@@ -225,18 +230,33 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     style.bg2,
                     index === idx ? style.hoverBg : null,
                     bgState === 'whales' ? style.hoverBg : null,
+                    backNum==='backNum'?style.rightText:null
                   )}
                   onMouseEnter={() => {
                     setBgState('whales');
+                    // if(Math.round(item[o].percent* 100)>0){
+                    
+                    // }
                   }}
+                  // onMouseOver={()=>{
+                  //   setBackNum('backNum');
+                  // }}
                   onMouseLeave={() => {
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end',style.right, style.leftContext)}>
+                  <div className={cn('justify-end',style.right, style.leftContext,
+                   
+                  )}
+                  onMouseEnter={() => {
+                  
+                  }}
+                  >
+                     
                   {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
-                      })}
+                      })}%
+                    
                   </div>
                 </th>
                   </tr>
