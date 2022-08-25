@@ -152,6 +152,7 @@
 .tabContainer {
   padding: 25px 20px 20px 20px;
   background: #000;
+  border-radius: 8px;
 }
 
 .cvColor {
