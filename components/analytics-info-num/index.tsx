@@ -246,13 +246,8 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                   }}
                 >
                   <div className={cn('justify-end',style.right, style.leftContext,
-                   
                   )}
-                  onMouseEnter={() => {
-                  
-                  }}
                   >
-                     
                   {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
                       })}%
