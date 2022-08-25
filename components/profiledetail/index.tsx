@@ -69,7 +69,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
       <table className={cn(style.container)}>
         <tbody>
           <tr>
-            <th className={cn(style.th1, style.title)}
+            <th className={cn(style.th1, style.title,style.firstHead)}
             onMouseEnter={() => {
               setBgState('Parcel');
             }}

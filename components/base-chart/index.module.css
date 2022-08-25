@@ -2,7 +2,7 @@
   height: 350px;
   width: 100%;
   background: rgba(0, 236, 222, 0.05);
-  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
   box-sizing: border-box;
   box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15);
   padding: 20px;
@@ -13,7 +13,7 @@
   max-height: 500px;
   width: 100%;
   background: rgba(0, 236, 222, 0.05);
-  border: 0.5px solid rgba(255, 255, 255, 0.5);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
   box-sizing: border-box;
   box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15);
   padding: 20px;

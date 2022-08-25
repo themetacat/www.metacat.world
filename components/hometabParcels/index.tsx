@@ -18,7 +18,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
   const st = active ? ac : no;
   return isMini ? (
     <div
-      className={cn('flex justify-center items-center text-white', st, style.miniBase)}
+      className={cn('flex justify-center items-center ', st, style.miniBase)}
       onClick={onClick}
     >
       {/* <div className={cn('flex justify-center items-center', style.miniCanHover)}> */}
@@ -34,7 +34,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
     </div>
   ) : (
     <div
-      className={cn('flex justify-center items-center text-white', st, style.base)}
+      className={cn('flex justify-center items-center ', st, style.base)}
       onClick={onClick}
     >
       <div className={cn('flex justify-center items-center', style.canHover)}>
