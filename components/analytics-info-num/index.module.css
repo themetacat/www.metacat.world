@@ -124,3 +124,7 @@ color: rgba(238, 238, 238, 0.85);
   background: #00A410;
   box-shadow: -0.5px 0px 0px rgba(255, 255, 255, 0.1);
 }
+.redTextCol{
+  background: #B90000;
+  box-shadow: -0.5px 0px 0px rgba(255, 255, 255, 0.1);
+}

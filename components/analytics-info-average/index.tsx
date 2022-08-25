@@ -25,15 +25,15 @@ type Props = {
   textColor?;
 };
 
-export default function AnalyticsAverage({ options,priceOptions, labelText, textColor }: Props) {
+export default function AnalyticsAverage({ options, priceOptions, labelText, textColor }: Props) {
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const [dataSource, setDataSource] = React.useState([]);
-  const [arrdataSource, setArrDataSource] = React.useState([]);
+  const [arrdataSource, setArrDataSource] = React.useState([] || {});
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
   const obj = {}
- 
+
   const requestData = React.useCallback(async () => {
     const res: any = await getWorldsAverageSale();
     setDataSource(res.data.monthly.usd);
@@ -52,7 +52,8 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
     //   obj[item.name].percent = item.value;
     //   return obj;
     // })
-    if(priceShowType==='usd'){
+    if (priceShowType === 'usd') {
+      // labelText==='Parcel Average Price(USD)'
       res.data.monthly.usd.forEach(item => {
         if (!obj[item.name]) {
           obj[item.name] = {}
@@ -67,8 +68,9 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
         obj[item.name].percent = item.value;
         return obj;
       })
-      
-    }else{
+
+    } else {
+      // labelText==='Parcel Average Price(ETH)'
       res.data.monthly.eth.forEach(item => {
         if (!obj[item.name]) {
           obj[item.name] = {}
@@ -90,11 +92,11 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
     // }
     Object.keys(obj).forEach(name => {
       const value = obj[name];
-       if(value){
+      if (value) {
         arr.push({ [name]: obj[name] })
-       }	
-     });
-    setArrDataSource(arr)
+      }
+    });
+    setArrDataSource(obj)
   }, [priceShowType]);
 
 
@@ -122,36 +124,36 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
   );
 
   const getSelect = React.useMemo(() => {
-      return (
-        <div
-          className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)' }}
-        >
-          <ChartSelecter
-            options={priceOptions}
-            showArrow={true}
-            onClick={changeStatic}
-            className={style.selecterLong}
-            defaultLabel={priceOptions[0].value}
-            hasBorder={false}
-            cl={style.bg}
-          ></ChartSelecter>
-        </div>
-      );
-    }
+    return (
+      <div
+        className={cn('flex items-center', style.border)}
+        style={{ color: 'rgba(255,255,255, 0.3)' }}
+      >
+        <ChartSelecter
+          options={priceOptions}
+          showArrow={true}
+          onClick={changeStatic}
+          className={style.selecterLong}
+          defaultLabel={priceOptions[0].value}
+          hasBorder={false}
+          cl={style.bg}
+        ></ChartSelecter>
+      </div>
+    );
+  }
     // return null;
-  , []);
+    , []);
 
-  
+
 
   return (
     <>
       <ChartTitle text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
       <table className={cn('w-full', style.tableHead)}>
         <tbody>
-        <div className={style.getSelect}>{getSelect}</div>
+          <div className={style.getSelect}>{getSelect}</div>
           <tr className={cn('text-base font-normal', style.title)}>
-         
+
             <th
               className={cn(style.h1, style.bg, style.biaotou)}
               onMouseEnter={() => {
@@ -208,7 +210,7 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
               <div className={style.right}>% of Total sales in 202207</div>
             </th> */}
           </tr>
-          {arrdataSource.map((item, idx) => {
+          {Object.keys(arrdataSource).map((item, idx) => {
             return (
               <>
                 <tr
@@ -239,10 +241,11 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
                     }}
                   >
                     <div className={cn(style.leftContext)}>
-                    {/* {formatNum(item.totalLandOwner, false)} */}
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
                       return (<span>{o}</span>)
-                    })}</div>
+                    })} */}
+                      {<span>{item}</span>}
+                    </div>
                   </th>
                   <th
                     className={cn(
@@ -261,10 +264,11 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
                     }}
 
                   >
-                    <div className={cn('justify-end',style.leftContext)}>
-                      ${Object.keys(item).map((o) => {
+                    <div className={cn('justify-end', style.leftContext)}>
+                      {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
-                      })}
+                      })} */}
+                      {arrdataSource[item]["2022.07"]}
                     </div>
                   </th>
 
@@ -285,39 +289,42 @@ export default function AnalyticsAverage({ options,priceOptions, labelText, text
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      ${Object.keys(item).map((o) => {
+                      {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
-                      })}
+                      })} */}
+                      {arrdataSource[item]["2022.08"]}
                     </div>
                   </th>
                   <th
-                  className={cn(
-                    '',
-                    style.cell,
-                    style.h3,
-                    style.bg2,
-                    index === idx ? style.hoverBg : null,
-                    bgState === 'whales' ? style.hoverBg : null,
-                  )}
-                  onMouseEnter={() => {
-                    setBgState('whales');
-                  }}
-                  onMouseLeave={() => {
-                    setIndex(null);
-                  }}
-                >
-                  <div className={cn('justify-end', style.right)}>
-                  {Object.keys(item).map((o) => {
+                    className={cn(
+                      '',
+                      style.cell,
+                      style.h3,
+                      style.bg2,
+                      index === idx ? style.hoverBg : null,
+                      bgState === 'whales' ? style.hoverBg : null,
+                      arrdataSource[item].percent * 100 > 0 ? style.redTextCol : style.rightText,
+                    )}
+                    onMouseEnter={() => {
+                      setBgState('whales');
+                    }}
+                    onMouseLeave={() => {
+                      setIndex(null);
+                    }}
+                  >
+                    <div className={cn('justify-end', style.right)}>
+                      {/* {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
-                      })}%
-                  </div>
-                </th>
-                  </tr>
+                      })}% */}
+                      {Math.round(arrdataSource[item].percent * 100)}%
+                    </div>
+                  </th>
+                </tr>
               </>
             );
 
           })}
-         
+
         </tbody>
       </table>
     </>

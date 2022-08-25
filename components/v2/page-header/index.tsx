@@ -192,7 +192,7 @@ export default function PageHeader({ active, className }: Props) {
               METACAT
             </Link>
           </div>
-          <div className="flex flex-grow" style={{marginLeft:"9px"}}>
+          <div className="flex flex-grow" style={{ marginLeft: "9px" }}>
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
@@ -225,9 +225,9 @@ export default function PageHeader({ active, className }: Props) {
                 setAnalyticsState(false);
               }}
             >
-               <Link href={'/analytics'} prefetch>
-            Analytics
-          </Link>
+              <Link href={'/analytics'} prefetch>
+                Analytics
+              </Link>
               {analyticsState ? (
                 <TwoNavigation options={analytics} widthType={'long'}></TwoNavigation>
               ) : null}
@@ -245,9 +245,9 @@ export default function PageHeader({ active, className }: Props) {
                 setHeatmapState(false);
               }}
             >
-                <Link href={'/heatmap?type=cryptovoxels'} prefetch>
-            Heatmap
-          </Link>
+              <Link href={'/heatmap?type=cryptovoxels'} prefetch>
+                Heatmap
+              </Link>
               {heatmapState ? (
                 <TwoNavigation options={heatmap} widthType={'long'}></TwoNavigation>
               ) : null}
@@ -295,7 +295,9 @@ export default function PageHeader({ active, className }: Props) {
                 setBuildState(false);
               }}
             >
-              Build
+              <Link href={'/build/builders'} prefetch>
+                Build
+              </Link>
               {buildState ? (
                 <TwoNavigation options={build} widthType={'middle'}></TwoNavigation>
               ) : null}
@@ -314,7 +316,9 @@ export default function PageHeader({ active, className }: Props) {
                 setWearableState(false);
               }}
             >
-              Wearables
+              <Link href={'/wearables'} prefetch>
+                Wearables
+              </Link>
               {wearableState ? <TwoNavigation options={wearable}></TwoNavigation> : null}
             </div>
             <div

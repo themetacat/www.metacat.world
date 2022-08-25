@@ -1629,12 +1629,12 @@ export default function AnalyticsIndex(props) {
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>
                 <div className={style.tabContainer}>
-                  <AnalyticsInfoSale options={types} labelText={'销售额环比(USD)'} textColor={style.allColor}></AnalyticsInfoSale>
+                  <AnalyticsInfoSale options={types} labelText={'Parcel Trading Volume(USD)'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.tableBox)}>
                 <div className={style.tabContainer}>
-                  <AnalyticsAverage options={types} labelText={'销售均价环比'} textColor={style.allColor}
+                  <AnalyticsAverage options={types} labelText={'Parcel Average Price(USD/ETH)'} textColor={style.allColor}
                      priceOptions={[
                       {
                         label: 'USD',
@@ -1648,7 +1648,7 @@ export default function AnalyticsIndex(props) {
                   ></AnalyticsAverage>
                 </div>
                 <div className={style.tabContainer} style={{marginLeft:"20px"}}>
-                  <AnalyticsInfoNum options={types} labelText={'销售数量环比'} textColor={style.allColor}></AnalyticsInfoNum>
+                  <AnalyticsInfoNum options={types} labelText={'Parcel Trading Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
               </div>
             </div>

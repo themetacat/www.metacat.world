@@ -24,7 +24,7 @@ type Props = {
 
 export default function AnalyticsAverage({ options, labelText, textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
-  const [arrdataSource, setArrDataSource] = React.useState([]);
+  const [arrdataSource, setArrDataSource] = React.useState([]||{});
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [usdPercent, setUsdPercent] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
@@ -32,11 +32,11 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
   const [index, setIndex] = React.useState(null);
   const [backNum, setBackNum] = React.useState(null);
   const obj = {}
-  React.useEffect(() => {
-    getWorldsNum().then((data) => {
-      setalldata(data);
-    });
-  }, [])
+  // React.useEffect(() => {
+  //   getWorldsNum().then((data) => {
+  //     setalldata(data);
+  //   });
+  // }, [])
   const requestData = React.useCallback(async () => {
     const res: any = await getWorldsNum();
     setDataSource(res.data.monthly.sales_data);
@@ -66,7 +66,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
         arr.push({ [name]: obj[name] })
        }	
      });
-    setArrDataSource(arr)
+    setArrDataSource(obj)
 
   }, [null]);
 
@@ -140,7 +140,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
               <div className={style.right}>% of Total sales in 202207</div>
             </th> */}
           </tr>
-          {arrdataSource.map((item, idx) => {
+          {Object.keys(arrdataSource).map((item, idx) => {
             return (
               <>
                 <tr
@@ -172,9 +172,11 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                   >
                     <div className={cn(style.leftContext, style.font1)}>
                     {/* {formatNum(item.totalLandOwner, false)} */}
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
                       return (<span>{o}</span>)
-                    })}</div>
+                    })} */}
+                     {<span>{item}</span>}
+                    </div>
                   </th>
                   <th
                     className={cn(
@@ -194,9 +196,10 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
 
                   >
                     <div className={cn('justify-end',style.right, style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
-                      })}
+                      })} */}
+                        {arrdataSource[item]["2022.07"]}
                     </div>
                   </th>
 
@@ -217,9 +220,10 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     }}
                   >
                     <div className={cn('justify-end',style.right, style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
-                      })}
+                      })} */}
+                        {arrdataSource[item]["2022.08"]}
                     </div>
                   </th>
                   <th
@@ -230,7 +234,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                     style.bg2,
                     index === idx ? style.hoverBg : null,
                     bgState === 'whales' ? style.hoverBg : null,
-                    backNum==='backNum'?style.rightText:null
+                    arrdataSource[item].percent* 100>0 ? style.redTextCol :  style.rightText,
                   )}
                   onMouseEnter={() => {
                     setBgState('whales');
@@ -248,10 +252,10 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                   <div className={cn('justify-end',style.right, style.leftContext,
                   )}
                   >
-                  {Object.keys(item).map((o) => {
+                  {/* {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
-                      })}%
-                    
+                      })}% */}
+                        {Math.round(arrdataSource[item].percent* 100)}%
                   </div>
                 </th>
                   </tr>

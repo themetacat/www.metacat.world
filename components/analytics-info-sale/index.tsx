@@ -24,7 +24,7 @@ type Props = {
 
 export default function AnalyticsInfoSale({ options, labelText, textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
-  const [arrdataSource, setArrDataSource] = React.useState([]);
+  const [arrdataSource, setArrDataSource] = React.useState([] || {});
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [usdPercent, setUsdPercent] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
@@ -67,23 +67,13 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
       }
       obj[item.name].percent = item.value;
 
-      // if (obj[item.name].percent* 100>0) {
-      //   setBackNum('GreenText');
-      //   console.log(obj[item.name].percent*100 , "大于0");
-      //   console.log(backNum, '三四十万');
-      // }else {
-      //   console.log(obj[item.name].percent * 100 , "小于0");
-      //   setBackCol('redText');
-      //   console.log(backCol, 'sss');
-      // }
+
 
       return obj;
 
     })
     const arr = []
-    // for (const name in obj) {
-    //   arr.push({ [name]: obj[name] })
-    // }
+
     Object.keys(obj).forEach(name => {
       const value = obj[name];
       if (value) {
@@ -91,7 +81,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
       }
     });
 
-    setArrDataSource(arr)
+    setArrDataSource(obj)
   }, [null]);
 
   React.useEffect(() => {
@@ -160,7 +150,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
               <div className={style.right}>% of Total sales in 202207</div>
             </th>
           </tr>
-          {arrdataSource.map((item, idx) => {
+          {Object.keys(arrdataSource).map((item, idx) => {
             return (
               <>
                 <tr
@@ -192,9 +182,11 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                   >
                     <div className={cn(style.leftContext, style.font1)}>
                       {/* {formatNum(item.totalLandOwner, false)} */}
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
                         return (<span>{o}</span>)
-                      })}</div>
+                      })} */}
+                      {<span>{item}</span>}
+                    </div>
                   </th>
                   <th
                     className={cn(
@@ -214,9 +206,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
 
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      ${Object.keys(item).map((o) => {
+                      {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
-                      })}
+                      })} */}
+                      {arrdataSource[item]["2022.07"]}
                     </div>
                   </th>
 
@@ -237,9 +230,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      ${Object.keys(item).map((o) => {
-                        return item[o]["2022.08"]
-                      })}
+                      {arrdataSource[item]["2022.08"]}
                     </div>
                   </th>
                   <th
@@ -251,8 +242,9 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       // style.rightText,
                       index === idx ? style.hoverBg : null,
                       bgState === 'whales' ? style.hoverBg : null,
-                      backNum === 'GreenText' ? style.rightText : null,
-                      backCol === 'redText' ? style.redTextCol : null,
+                      // backNum === 'GreenText' ? style.rightText : null,
+                      arrdataSource[item].percent * 100 > 0 ? style.redTextCol : style.rightText,
+                      // backCol === 'redText' ? style.redTextCol : null,
                     )}
                     onMouseEnter={() => {
                       setBgState('whales');
@@ -262,9 +254,11 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
+                        console.log(o,item,11111111111111);
                         return Math.round(item[o].percent * 100)
-                      })}%
+                      })}% */}
+                      {arrdataSource[item].percent * 100}%
                     </div>
                   </th>
                   <th
@@ -284,10 +278,11 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.font3)}>
-                      {Object.keys(item).map((o) => {
+                      {/* {Object.keys(item).map((o) => {
                         return item[o].total * 100
 
-                      })}%
+                      })}% */}
+                      {arrdataSource[item].total * 100}%
                     </div>
                   </th>
 
