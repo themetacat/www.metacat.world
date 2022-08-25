@@ -52,7 +52,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
     //   obj[item.name].percent = item.value;
     //   return obj;
     // })
-    if (priceShowType === 'usd') {
+    if (priceShowType === 'USD') {
       // labelText==='Parcel Average Price(USD)'
       res.data.monthly.usd.forEach(item => {
         if (!obj[item.name]) {
@@ -102,7 +102,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
 
   React.useEffect(() => {
     requestData();
-  }, [requestData]);
+  }, [requestData, priceShowType]);
 
   const updata = React.useCallback(
     (st, pt) => {
@@ -163,7 +163,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                 setIndex(null);
               }}
             >
-              <div className={style.left}>World/sales（USD）</div>
+              <div className={style.left}>World/sales（{priceShowType}）</div>
             </th>
             <th
               className={cn(style.h2, style.bg, style.biaotou)}
@@ -264,11 +264,12 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                     }}
 
                   >
-                    <div className={cn('justify-end',style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right, style.leftContext)}>
                       {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
-                      ${arrdataSource[item]["2022.08"]}
+                      {/* ${arrdataSource[item]["2022.08"]} */}
+                      <span style={{ marginRight: "0.75rem" }}>{formatNum(arrdataSource[item]["2022.08"], false)}</span>{priceShowType}
                     </div>
                   </th>
 
@@ -292,7 +293,8 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                       {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })} */}
-                      ${arrdataSource[item]["2022.07"]}
+                      {/* ${arrdataSource[item]["2022.07"]} */}
+                      <span style={{ marginRight: "0.75rem" }}>{formatNum(arrdataSource[item]["2022.07"], false)}</span>{priceShowType}
                     </div>
                   </th>
                   <th
