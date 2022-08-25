@@ -13,6 +13,11 @@
   /* 滚动槽 */
   /* 滚动条滑块 */
 }
+.firstHead{
+  /* position: fixed; */
+  position: sticky;
+  left: 0px;
+}
 .content .ov {
   min-height: 48px;
   max-height: 385px;

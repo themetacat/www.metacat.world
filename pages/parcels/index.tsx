@@ -660,7 +660,7 @@ export default function Index(props) {
       return (
         <>
 
-          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
+          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5', style.bottomContent)}>
             {dataSource.map((card, idx) => {
 
               return <Card {...card} typeState={typeState} key={uuid()}></Card>;
@@ -692,7 +692,7 @@ export default function Index(props) {
       }
       return (
         <>
-          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7 ', style.bottomContent)}>
+          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  ', style.bottomContent)}>
             {dataSource.map((card, idx) => {
               // return <Card {...card}  key={uuid()}></Card>;
               return <CardSpace {...card} key={idx}></CardSpace>;
@@ -1726,7 +1726,7 @@ export default function Index(props) {
             <TopicCardList topics={topicList}></TopicCardList>
           </>
         ) : null} */}
-        <div className={cn('tab-list flex mt-5 myClassName', style.allHeight, fixedState ? style.aboslute : null)} >
+        <div className={cn('tab-list flex myClassName bg-black', style.allHeight, fixedState ? style.aboslute : null)} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
             <div
@@ -1879,7 +1879,7 @@ export default function Index(props) {
             ) : null}
           </div>
 
-          <div className={cn('mt-8', style.content)}>
+          <div className={cn('', style.content)}>
             {subTabState === 'parcel' && (
               <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}

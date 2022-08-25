@@ -6,6 +6,7 @@
   position: relative;
   color: #AAAAAA;
   cursor: pointer;
+  font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +20,7 @@
 }
 .tab:hover{
   filter: brightness(125%);
-  color: #fff;
+  color: #000000;
   font-weight: 600;
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
 }
@@ -43,17 +44,17 @@
 .canHover {
   font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 16px;
   line-height: 22px;
   /* color: #AAAAAA; */
 }
 
 .canHover:hover {
-  color: #fff;
+  color: #000000;
   font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 600;
+  /* font-weight: 600; */
   font-size: 16px;
   line-height: 22px;
 }
