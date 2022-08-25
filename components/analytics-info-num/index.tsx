@@ -104,7 +104,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-            <div className={style.right}>2022.07</div>
+            <div className={style.right}>2022.08</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -115,7 +115,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.08</div>
+              <div className={style.right}>2022.07</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -199,7 +199,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
-                        {arrdataSource[item]["2022.07"]}
+                        {arrdataSource[item]["2022.08"]}
                     </div>
                   </th>
 
@@ -223,7 +223,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })} */}
-                        {arrdataSource[item]["2022.08"]}
+                      {arrdataSource[item]["2022.07"]}
                     </div>
                   </th>
                   <th
