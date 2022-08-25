@@ -93,7 +93,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.left}>World/sales（USD）</div>
+              <div className={style.left}>World/sales</div>
             </th>
             <th
               className={cn(style.h2, style.bg, style.biaotou)}
@@ -200,7 +200,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                         return item[o]["2022.07"]
                       })} */}
                       {/* {arrdataSource[item]["2022.08"]} */}
-                      ${formatNum(arrdataSource[item]["2022.08"], false)}
+                      {formatNum(arrdataSource[item]["2022.08"], false)}
                     </div>
                   </th>
 
@@ -225,7 +225,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                         return item[o]["2022.08"]
                       })} */}
                       {/* {arrdataSource[item]["2022.07"]} */}
-                      ${formatNum(arrdataSource[item]["2022.07"], false)}
+                      {formatNum(arrdataSource[item]["2022.07"], false)}
                     </div>
                   </th>
                   <th
