@@ -98,7 +98,7 @@ export default function Card({
           error="/images/default-cover.png"
         ></CoverImg>
       </div>
-      <div className={cn('p-5 flex-1', style.content)}>
+      <div className={cn(' flex-1', style.content)}>
         <h2>{name}</h2>
         {/* <ParcelsState status={status} price={price} id={parcelId} is_state={state} /> */}
         <div className={style.detail}>

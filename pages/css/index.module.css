@@ -3,8 +3,10 @@
   border-bottom: 1px solid rgba(0, 208, 236, 0.1);
 }
 .allHeight {
-  height: 40px;
+  padding-top: 46px;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+  background-image: url('/images/Mask groupbeijingtutu.png');
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
 .aboslute {
   position: fixed;
@@ -17,6 +19,7 @@
 }
 .content {
   min-height: 650px;
+  margin-top: 15px;
 }
 .mapContanier {
   position: relative;
@@ -78,6 +81,7 @@
 }
 .bottomContent {
   margin-bottom: 0px !important;
+  margin-top: 20px;
 }
 .pagiNation {
   margin-bottom: 30px !important;
@@ -95,6 +99,7 @@
 .base :hover {
   text-align: center;
   color: #111a1b;
+  font-weight: 400;
   border-radius: 12px  12px 0px 0px;
   background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
   filter: brightness(125%);

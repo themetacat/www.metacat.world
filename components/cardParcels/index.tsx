@@ -59,7 +59,7 @@ export default function Card({
           typeState && <span className={style.typeIcon}>{type}</span>
         }
       </div>
-      <div className={cn('p-5 flex-1', style.content)}>
+      <div className={cn(' flex-1', style.content)}>
         <div className={cn('flex justify-between items-center', style.contnetHeader)}>
           <div className={cn("text-xl font-semibold truncate flex-1 mr-3", style.name)} title={name}>
             {name}

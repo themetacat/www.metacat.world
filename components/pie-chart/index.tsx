@@ -70,7 +70,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
               },
               itemStyle: {
                 borderWidth: 1,
-                borderColor: '#fff',
+                borderColor: '#000',
                 fontSize: 20,
               },
               label: {
@@ -81,7 +81,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
               },
             },
             label: {
-              color: '#aaa',
+              color: '#00C5F0;',
               fontSize: 16,
               alignTo: 'labelLine',
               formatter: `#{@parcel_id}  {@name} - {@percent}%`,
@@ -90,7 +90,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
               // 此配置
               normal: {
                 borderWidth: 0.5,
-                borderColor: '#fff',
+                borderColor: '#000',
                 color: (tval) => {
                   if (tval.dataIndex === 0) {
                     return `#00D0EC`;
