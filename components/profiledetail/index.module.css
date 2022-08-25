@@ -14,7 +14,8 @@
   /* 滚动条滑块 */
 }
 .firstHead{
-  position: fixed;
+  /* position: fixed; */
+  position: sticky;
   left: 0px;
 }
 .content .ov {
