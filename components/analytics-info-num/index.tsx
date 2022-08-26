@@ -236,7 +236,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       style.bg2,
                       index === idx ? style.hoverBg : null,
                       bgState === 'whales' ? style.hoverBg : null,
-                      arrdataSource[item].percent * 100 > 0 ? style.redTextCol : style.rightText,
+                      arrdataSource[item].percent * 100 > 0 ? style.rightText : style.redTextCol,
                     )}
                     onMouseEnter={() => {
                       setBgState('whales');
