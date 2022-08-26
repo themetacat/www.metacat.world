@@ -8,7 +8,6 @@ import style from './index.module.css';
 
 type Props = {
   label?: string;
-  placeholder?: string;
   onChangeHandler?: (evt) => void;
   onClearHandler?: () => void;
   value?: string;
@@ -16,15 +15,15 @@ type Props = {
   classname?: string;
   require?: boolean;
   requirePrefix?: boolean;
-  bold?: boolean;
   disable?: boolean;
-  name?: string;
   onBlur?: (valu) => void;
+  data?;
+  onClick?;
+  country?: string;
 };
 
-export default function MeteInputBuilding({
+export default function MeteSelectBuilding({
   label,
-  placeholder,
   onChangeHandler,
   onClearHandler,
   value,
@@ -32,14 +31,15 @@ export default function MeteInputBuilding({
   classname,
   require = false,
   requirePrefix = true,
-  bold = false,
   disable = false,
-  name,
+  data,
   onBlur,
+  onClick,
+  country,
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
-
+  const [arrowsState, setArrowsState] = React.useState(false);
   const onChange = React.useCallback(
     (dom) => {
       const temp = dom.target.value;
@@ -69,6 +69,13 @@ export default function MeteInputBuilding({
     [null],
   );
 
+  const rander = React.useMemo(() => {
+    if (country) {
+      return <>{country}</>;
+    }
+    return <>{'Select Country'}</>;
+  }, [country]);
+
   const clear = React.useCallback(() => {
     setVal('');
     setShowClear(false);
@@ -92,9 +99,12 @@ export default function MeteInputBuilding({
       setVal(value);
     }
   }, [val, value]);
-
+  // var box1 = document.getElementById('box1');
+  //     box1.onmouseover=function(){
+  //       setArrowsState(arrowsState);
+  //     }
   return (
-    <div className={cn('text-base', classname, style.metainput)}>
+    <div className={cn('text-base relative', classname, style.metainput)}>
       {label ? (
         <div className="mb-2">
           {require && requirePrefix && <span className={cn('mr-1', style.require)}>*</span>}
@@ -114,45 +124,49 @@ export default function MeteInputBuilding({
             <img className={style.icon} src={prefix}></img>
           </span>
         ) : null}
-        <input
-          type="text"
-          placeholder={placeholder}
-          name={name}
-          value={val}
-          onChange={onChange}
-          disabled={disable}
-          autoComplete="off"
-          onFocus={() => {
-            if (val) {
-              setShowClear(true);
-            }
+        <div
+          onClick={() => {
+            setArrowsState(!arrowsState);
           }}
-          onBlur={inputBlur}
-          className={cn(
-            ' text-sm',
-            bold ? 'font-medium' : '',
-            style.input,
-            disable ? style.disable : null,
-          )}
-        ></input>
-        {disable ? (
-          <CopyToClipboard text={val} onCopy={iconClick}>
-            <span className={cn('inline-flex items-center ml-5', style.icon)}>
-              <img
-                className={cn('cursor-pointer', 'inline-flex', style.icon)}
-                src="/images/v5/copy.png"
-              ></img>
-            </span>
-          </CopyToClipboard>
-        ) : (
-          <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
-            <img
-              className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
-              src="/images/close.png"
-            ></img>
-          </span>
-        )}
+          style={{width:"415px"}}
+          onMouseOut={() => {
+            setTimeout(() => {
+              setArrowsState(false);
+            }, 2000);
+          }}
+        >
+         {rander}
+        </div>
       </div>
+      <img
+        src={`/images/${!arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`}
+        className={style.arrows}
+        onClick={() => {
+          setArrowsState(!arrowsState);
+        }}
+        onMouseOut={() => {
+          setTimeout(() => {
+            setArrowsState(false);
+          }, 2000);
+        }}
+      />
+      <ul className={cn(style.list, !arrowsState ? style.dn : null)}>
+        {data.map((i, index) => {
+          return (
+            <li
+              key={index}
+              value={i}
+              onClick={() => {
+                onClick(i);
+                setArrowsState(false);
+              }}
+              className={country === i ? style.co : null}
+            >
+              {i}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

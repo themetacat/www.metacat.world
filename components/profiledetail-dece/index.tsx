@@ -30,8 +30,6 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
         setDatas(result.data[0].daily_visits);
         settotalVisits(result.data[0].total_visits);
       }
-      console.log(result.data[0].daily_visits, 8888888888);
-      console.log(result.data[0], "就是data数据");
 
       setLoading(false);
     } catch (e) {
@@ -63,8 +61,8 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
       <table className={cn(style.container)}>
         <tbody>
           <tr>
-            <th className={cn(style.th1, style.title)}>
-            <div className={cn('flex justify-center items-center')}>Parcel</div>
+            <th className={cn(style.th1, style.title,style.firstHead,)}>
+            <div className={cn('flex justify-center items-center',style.parcel)}>Parcel</div>
             </th>
             {/* <th className={cn(style.th2, style.title)}>
               <div>lsland</div>
@@ -73,14 +71,14 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
               <div>Suburb</div>
             </th> */}
             <th className={cn(style.th4, style.title)}>
-            <div className={cn('flex justify-center items-center')}>Total Traffic</div>
+            <div className={cn('flex justify-center items-center',style.parcel)}>Total Traffic</div>
             </th>
 
             {datas.map((item) => {
               return (
                 <>
                   <th className={cn(style.th4, style.title)}>
-                    <div className={cn('flex justify-center items-center')}>{item.time}</div>
+                    <div className={cn('flex justify-center items-center',style.parcel,)}>{item.time}</div>
                   </th>
 
                   {/* <td className={style.item}>
@@ -101,17 +99,17 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
           </tr> */}
           <tr key={uuid()}>
 
-            <td className={style.item}>
-              <div className={cn('flex justify-center items-center')}>{data}</div>
+            <td className={cn(style.item,style.firstHead)}>
+              <div className={cn(' justify-center items-center',style.parcel_name)}>{data}</div>
             </td>
             <td className={style.item}>
-              <div className={cn('flex justify-center items-center')}>{totalVisits}</div>
+              <div className={cn(' justify-center items-center',style.parcel_name)}>{totalVisits}</div>
             </td>
             {datas.map((item) => {
               return (
                 <>
                   <td className={style.item} key={uuid()}>
-                    <div className={cn('flex justify-center items-center')}>{item.value}</div>
+                    <div className={cn(' justify-center items-center',style.parcel_name)}>{item.value}</div>
                   </td>
                 </>
               );

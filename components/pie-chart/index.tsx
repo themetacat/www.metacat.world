@@ -69,7 +69,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
                 },
               },
               itemStyle: {
-                borderWidth: 1,
+                borderWidth: 0.5,
                 borderColor: '#000',
                 fontSize: 20,
               },
@@ -190,7 +190,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
       return (
         <div
           className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)',borderRadius:"8px" }}
+          style={{ color: 'rgba(255,255,255, 0.3)',borderRadius:"4px" }}
         >
           <ChartSelecter
             options={options}
@@ -214,7 +214,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
 
   return (
     <div>
-      <div className={cn('w-full p-5', style.content)} style={{ borderRadius:"8px" }}>
+      <div className={cn('w-full p-5', style.content)} style={{ borderRadius:"4px" }}>
         <div>
           <div className={cn('w-full flex justify-between item-center', style.header)}>
             <ChartTitle text={labelText}  color={textColor}></ChartTitle>

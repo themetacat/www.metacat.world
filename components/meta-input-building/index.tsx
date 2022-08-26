@@ -22,7 +22,7 @@ type Props = {
   onBlur?: (valu) => void;
 };
 
-export default function MeteInputBuilding({
+export default function MeteInput({
   label,
   placeholder,
   onChangeHandler,

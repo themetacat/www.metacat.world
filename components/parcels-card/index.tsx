@@ -31,7 +31,7 @@ type Props = {
 export default function Card({
   area,
   coverImgUrl,
-  endDate,
+  endDate, 
   high,
   isBuilt,
   island,

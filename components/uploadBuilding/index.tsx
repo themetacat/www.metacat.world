@@ -14,7 +14,7 @@ interface Props {
   afterUpload?: (event) => void;
 }
 
-export default function UploadBuilding({ imgUrl, afterUpload, beginUpload }: Props) {
+export default function UploadImg({ imgUrl, afterUpload, beginUpload }: Props) {
   const multipartUpload = React.useCallback(
     async (file) => {
       const names = file.name.split('.');

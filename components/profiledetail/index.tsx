@@ -77,7 +77,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
               setIndex(null);
             }}
             >
-              <div className={cn('flex justify-center items-center')}>Parcel</div>
+              <div className={cn('flex justify-center items-center',style.parcel)}>Parcel</div>
             </th>
             <th className={cn(style.th2, style.title, bgState === 'lsland' ? style.hoverBg : null)}
             // onMouseEnter={() => {
@@ -87,7 +87,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
             //   setIndex(null);
             // }}
             >
-              <div className={cn('flex justify-center items-center')}>lsland</div>
+              <div className={cn('flex justify-center items-center,style.parcel')}>lsland</div>
             </th>
             <th className={cn(style.th3, style.title, bgState === 'Suburb' ? style.hoverBg : null)}
             // onMouseEnter={() => {
@@ -97,7 +97,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
             //   setIndex(null);
             // }}
             >
-              <div className={cn('flex justify-center items-center')}>Suburb</div>
+              <div className={cn('flex justify-center items-center',style.parcel)}>Suburb</div>
             </th>
             <th className={cn(style.th4, style.title, bgState === 'TotalTraffic' ? style.hoverBg : null)}
             // onMouseEnter={() => {
@@ -107,7 +107,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
             //   setIndex(null);
             // }}
             >
-              <div className={cn('flex justify-center items-center')}>Total Traffic</div>
+              <div className={cn('flex justify-center items-center',style.parcel)}>Total Traffic</div>
             </th>
             {data.map((item, idx) => {
               return (
@@ -121,7 +121,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
                 //     setIndex(null);
                 //   }}
                 // >
-                <th key={item} className={cn(style.title,bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null)} 
+                <th key={item} className={cn(style.title,style.parcel,bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null)} 
                   onMouseEnter={() => {
                     setBgState('Parcel');
                   }}
@@ -139,7 +139,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
           {datas.map((item, idx) => {
             return (
               <tr key={uuid()}>
-                <th className={cn(style.item, bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null,)}
+                <th className={cn(style.item,style.firstHead, bgState === 'Parcel' ? style.hoverBg : null,  index === idx ? style.hoverBg : null,)}
                   onMouseEnter={() => {
                     setBgState('Parcel');
                   }}
@@ -148,21 +148,21 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('flex justify-center items-center')}>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
+                  <div className={cn(' justify-center items-center',style.parcel_name)}>{`${item.parcel_id}${item.parcel_name ? ':' : ''} ${item.parcel_name}`}</div>
                 </th>
                 <th className={style.item}>
-                  <div className={cn('flex justify-center items-center')}>{item.island}</div>
+                  <div className={cn(' justify-center items-center',style.parcel_name)}>{item.island}</div>
                 </th>
                 <td className={style.item}>
-                  <div className={cn('flex justify-center items-center')}>{item.suburb}</div>
+                  <div className={cn(' justify-center items-center',style.parcel_name)}>{item.suburb}</div>
                 </td>
                 <td className={style.item}>
-                  <div className={cn('flex justify-center items-center')}>{item.total_traffic}</div>
+                  <div className={cn('justify-center items-center',style.parcel_name)}>{item.total_traffic}</div>
                 </td>
                 {item.traffic_detail.map((i) => {
                   return (
                     <td className={style.item} key={uuid()}>
-                      <div className={cn('flex justify-center items-center')}>{i}</div>
+                      <div className={cn('justify-center items-center',style.parcel_name)}>{i}</div>
                     </td>
                   );
                 })}
