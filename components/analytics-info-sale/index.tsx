@@ -260,7 +260,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                         console.log(o,item,11111111111111);
                         return Math.round(item[o].percent * 100)
                       })}% */}
-                      {arrdataSource[item].percent * 100}%
+                      {/* {arrdataSource[item].percent * 100}% */}
+                      {Math.round(arrdataSource[item].percent * 100)}%
                     </div>
                   </th>
                   <th
@@ -284,7 +285,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                         return item[o].total * 100
 
                       })}% */}
-                      {arrdataSource[item].total * 100}%
+                      {/* {arrdataSource[item].total * 100}% */}
+                      {Math.round(arrdataSource[item].total * 100)}%
                     </div>
                   </th>
 
