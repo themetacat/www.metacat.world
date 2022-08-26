@@ -245,7 +245,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       index === idx ? style.hoverBg : null,
                       bgState === 'whales' ? style.hoverBg : null,
                       // backNum === 'GreenText' ? style.rightText : null,
-                      arrdataSource[item].percent * 100 > 0 ? style.redTextCol : style.rightText,
+                      arrdataSource[item].percent * 100 > 0 ? style.rightText : style.redTextCol,
                       // backCol === 'redText' ? style.redTextCol : null,
                     )}
                     onMouseEnter={() => {
