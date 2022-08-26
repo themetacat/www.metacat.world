@@ -19,3 +19,15 @@
   padding: 0px;
   color: rgba(153, 153, 153, 1);
 }
+.nowork{
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  border-radius: 4px;
+  padding: 4px 20px 4px 20px;
+  color: #0F191B;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+}

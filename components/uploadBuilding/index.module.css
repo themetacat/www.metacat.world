@@ -1,0 +1,33 @@
+.uploadContainer{
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  position: relative;
+}
+.cover{
+  /* background-color: rgba(0, 208, 236, 0.8); */
+  /* border-radius: 60px; */
+  background: #00D0EC;
+opacity: 0.1;
+border-radius: 6px;
+}
+
+.cover:hover{
+  background-image: url('/images/v5/edit.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px;
+  background-color: rgba(0, 208, 236, 0.8);
+}
+
+.cover>img{
+  width: 24px;
+  height: 24px;
+}
+
+.backImg{
+  /* border-radius: 60px; */
+  background: #00D0EC;
+opacity: 0.1;
+border-radius: 6px;
+}

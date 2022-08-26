@@ -55,7 +55,7 @@ export default function PieChartDece({ id, options, labelText, dataHandlder, tok
             name: 'Access From',
             type: 'pie',
             // radius: '50%',
-            radius: ['30%', '55%'],
+            radius: ['25%', '50%'],
             hoverAnimated: true,
             encode: {
               x: 'name', // 指定x轴对应的值
@@ -70,7 +70,7 @@ export default function PieChartDece({ id, options, labelText, dataHandlder, tok
               },
               itemStyle: {
                 borderWidth: 1,
-                borderColor: '#fff',
+                borderColor: '#000',
                 fontSize: 20,
               },
               label: {
@@ -90,7 +90,7 @@ export default function PieChartDece({ id, options, labelText, dataHandlder, tok
               // 此配置
               normal: {
                 borderWidth: 0.5,
-                borderColor: '#fff',
+                borderColor: '#000',
                 color: (tval) => {
                   if (tval.dataIndex === 0) {
                     return `#00E7AF`;
@@ -190,7 +190,7 @@ export default function PieChartDece({ id, options, labelText, dataHandlder, tok
       return (
         <div
           className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)',borderRadius:"8px" }}
+          style={{ color: 'rgba(255,255,255, 0.3)',borderRadius:"4px" }}
         >
           <ChartSelecter
             options={options}

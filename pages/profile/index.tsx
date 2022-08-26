@@ -15,6 +15,7 @@ import Tab from '../../components/tab';
 import Tab4 from '../../components/tab4';
 import Status from '../../components/status';
 import Card from '../../components/parcels-card';
+import CardBuilding from '../../components/cardBuilding';
 import DclCard from '../../components/parcels-dcl-card';
 import Tab3 from '../../components/tab3';
 import ParcelsTab from '../../components/parcels-tab';
@@ -102,6 +103,10 @@ const TAB3 = [
     type: 'wearablelist',
   },
   // {
+  //   label: 'Building',
+  //   type: 'building',
+  // },
+  // {
   //   label: 'SALES REPORT',
   // },
 ];
@@ -156,6 +161,7 @@ function ProfilePage(r) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
+  const [dataBuildSource, setDataBuildSource] = React.useState([]);
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
@@ -622,6 +628,45 @@ function ProfilePage(r) {
   }, [
     error,
     dataSource,
+    loading,
+    onRetry,
+    changeNum,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
+  ]);
+  const renderBuilding = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (dataBuildSource.length === 0) {
+      return <Status status="emptyBuilding" />;
+    }
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-5">
+          {dataBuildSource.map((card) => {
+            return (
+              <CardBuilding
+                {...card}
+                parcelsIds={parcelsIds}
+                state={cardState}
+                key={uuid()}
+                selectedIds={selectedIds}
+                onClick={(id, ids) => {
+                  select(id, ids);
+                }}
+              ></CardBuilding>
+            );
+          })}
+        </div>
+      );
+  }, [
+    error,
+    dataBuildSource,
     loading,
     onRetry,
     changeNum,
@@ -1288,6 +1333,16 @@ function ProfilePage(r) {
         </>
       );
     }
+    if(routeTab === 'building'){
+      return(
+        <>
+        <div className={style.buildingContainer}>
+        <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}</div>
+        </div>
+        </>
+      )
+
+    }
   }, [
     showTab,
     status,
@@ -1299,7 +1354,9 @@ function ProfilePage(r) {
     cartData,
     manySetLabel,
     renderContent,
+    renderBuilding,
     dataSource,
+    dataBuildSource,
     tabState,
     routeTab,
     creatorsReander,
