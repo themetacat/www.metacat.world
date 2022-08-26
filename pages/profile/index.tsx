@@ -977,7 +977,6 @@ function ProfilePage(r) {
     wearablesSleceteIdList,
     batchShowOrHide,
   ]);
-
   // const ownedRander = React.useMemo(() => {
   //   if (ownerData.length === 0) {
   //     return (
