@@ -1,9 +1,11 @@
 import React from 'react';
+
 import { useRouter } from 'next/router';
+
 import cn from 'classnames';
 
 import style from './index.module.css';
-import Router from 'next/router';
+
 
 interface Props {
   status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search'| 'emptyBuilding';
