@@ -39,6 +39,7 @@ export default function Layout({
   const activeRoute = router.asPath;
   const { pathname } = router;
   const t = useTranslations('navigation');
+  const [fixedState, setFixedState] = React.useState(false);
 
   React.useEffect(() => {
     fetch('/api/carousel').then(async (res) => {
@@ -49,13 +50,30 @@ export default function Layout({
     });
   }, [null]);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (
+        document.querySelector('.myClassName') &&
+        document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+        window.scrollY > 200
+      ) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
+
   return (
     <>
       <div className={cn('min-h-screen', 'w-full')}>
         <div
-          className={cn(headerBgCls, 'relative z-10 h-22 bg-black', {
+          className={cn(headerBgCls, 'relative z-10 h-22 bg-black myClassName', {
             'fixed-center': fixed,
-          })}
+           
+          }, fixedState ? style.fix1 : null)}
           style={{ zIndex: 88888 }}
         >
           {!hideNav && <PageHeader className="relative z-10" active={pathname} />}

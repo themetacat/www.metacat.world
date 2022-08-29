@@ -240,6 +240,7 @@ export default function Index(props) {
   const [typeList, setTypeList] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const [fixedState, setFixedState] = React.useState(false);
+  const [fixedStatePage, setFixedStatePage] = React.useState(false);
   const nextCursor = React.useRef(1);
 
   const [dataSource, setDataSource] = React.useState([]);
@@ -1707,6 +1708,9 @@ export default function Index(props) {
 
   return (
     <Page meta={meta}>
+       {/* <div className={cn('bg-black relative myClassName', fixedState ? style.fix1 : null)}>
+        <PageHeader className="relative z-10" active={'/parcels'} />
+      </div> */}
       <Layout>
         {/* {topicList.length > 0 ? (
           <>
@@ -1727,7 +1731,9 @@ export default function Index(props) {
           </>
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
-        <div className={cn('tab-list flex myClassName bg-black', style.allHeight, fixedState ? style.aboslute : null)} >
+        <div className={cn('tab-list flex myClassName bg-black', style.allHeight, 
+        // fixedState ? style.aboslute : null
+        )} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
             <div

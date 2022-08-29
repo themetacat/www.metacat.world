@@ -19,7 +19,7 @@
   padding: 0px !important;
   z-index: 99999999;
   background-color: #111a1b;
-  top: 0px;
+  top: 72px;
   margin: 0px auto 0;
   width: 100%;
 }
@@ -104,13 +104,24 @@
   font-weight: 500;
   margin-right: 0px !important;
 }
-.baseCON :hover {
+.baseCON:hover {
   text-align: center;
   color: #fff;
   font-weight: 400;
   border-radius: 12px  12px 0px 0px;
+  background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
   filter: brightness(125%);
   cursor: pointer;
+}
+.fix1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  width: 100%;
+  margin: 0 auto;
+  background: #000;
+  opacity: 1;
 }
 .active {
   color: #fff;

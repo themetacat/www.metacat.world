@@ -411,16 +411,21 @@ function ProfilePage(r) {
   const changeNavTab = React.useCallback(
     
     (nav_label, index = 0) => {
+      console.log(nav_label,222222222222222);
+      
       // setNavLabel(navLabel);
       setNavLabel(nav_label);
       setCardState(false);
       setManySetState(false);
       nav_Label.current = nav_label;
       // changeNum(dataSource, nav_label);
+      console.log(Nav);
+      
       const set_nav = Nav.map((item, i) => {
         if (index === i) return { ...item, state: 1 };
         return { ...item, state: 0 };
       });
+      console.log(set_nav);
       setNav(set_nav);
     },
     [Nav, setCardState, setManySetState, setNavLabel, setNav, dataSource, cartData],

@@ -37,7 +37,7 @@
   font-size: 12px;
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
 } */
-.navItem :active{
+/* .navItem :active{
   padding:4px 10px 4px 15px;
   border-radius: 2px;
   color: #000 !important;
@@ -55,9 +55,8 @@
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
-  /* line-height: 17px; */
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
-}
+} */
 .active_span :active{
   color: #000;
 }
@@ -96,4 +95,24 @@ line-height: 17px;
 text-align: center;
 /* color: #DDDDDD; */
 
+}
+.active{
+  padding:4px 10px 4px 15px;
+  border-radius: 2px;
+  color: #000 !important;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
+}
+.active_span{
+  padding:4px 10px 4px 15px;
+  border-radius: 2px;
+  color: #000 !important;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
 }

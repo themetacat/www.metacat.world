@@ -1657,7 +1657,7 @@ export default function AnalyticsIndex(props) {
     if (headerNav === 'single') {
       return (
         <>
-          <div className={cn(style.tmbg, fixedState ? style.aboslute : null)}>
+          <div className={cn(style.tmbg,)}>
             {/* <div className={cn(style.bg)}> */}
               <Switch
                 onActive={changeType}
@@ -1725,24 +1725,21 @@ export default function AnalyticsIndex(props) {
   }, [fixedState]);
 
   React.useEffect(() => {
-    if(headerNav === 'all'){
-      const listener = () => {
-        if (
-          document.querySelector('.myClassName') &&
-          document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-          window.scrollY > 350
-        ) {
-          setFixedStateAll(true);
-          
-        } else {
-          setFixedStateAll(false);
-        }
-      };
-      document.addEventListener('scroll', listener);
-      return () => document.removeEventListener('scroll', listener);
-    }
-  
-  }, [fixedStateAll,headerNav]);
+    const listener = () => {
+      if (
+        document.querySelector('.myClassName') &&
+        document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+        window.scrollY > 350
+      ) {
+        setFixedStateAll(true);
+        
+      } else {
+        setFixedStateAll(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedStateAll]);
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
@@ -1760,7 +1757,7 @@ export default function AnalyticsIndex(props) {
       
         )}>
           <div 
-          className={cn(style.navContainer, fixedStateAll ? style.abosluteAll : null)}>
+          className={cn(style.navContainer, )}>
             {hNav.map((nav) => {
               return (
                 <div

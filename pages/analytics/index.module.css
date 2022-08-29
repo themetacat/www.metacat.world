@@ -80,7 +80,7 @@
   margin: 0px auto 0;
 }
 .abosluteAll {
-  margin-left: 17% !important;
+  /* margin-left: 17% !important; */
   position:fixed;
   height: 42px;
   z-index: 999999;
