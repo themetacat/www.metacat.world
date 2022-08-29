@@ -28,9 +28,7 @@ export default function Tab({ icon, label, active, onClick, isMini = false }: Pr
             style={{ backgroundImage: `url('${icon}')` }}
           ></div>
         ) : null}
-        {/* <div  className={style.name}></div> */}
         <span className={style.name} >{label}</span>
-      {/* </div> */}
     </div>
   ) : (
     <div

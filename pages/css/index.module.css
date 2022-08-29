@@ -87,30 +87,25 @@
   margin-bottom: 30px !important;
   margin-top: 20px !important;
 }
-.base {
+.baseCON {
   box-sizing: border-box;
-  width: 17% !important;
+  padding: 9px 30px 9px 30px !important;
+  width: auto;
   min-height: 40px;
+  border-radius: 12px  12px 0px 0px;
   color: #999999;
+  background: rgba(255, 255, 255, 0.05);
   font-weight: 500;
-  line-height: 40px;
   margin-right: 0px !important;
 }
-.base :hover {
+.baseCON :hover {
+  width: auto;
   text-align: center;
-  color: #111a1b;
+  color: #fff;
   font-weight: 400;
   border-radius: 12px  12px 0px 0px;
-  background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
   filter: brightness(125%);
   cursor: pointer;
-}
-.base :active {
-  text-align: center;
-  color: #111a1b;
-  border-radius: 12px  12px 0px 0px;
-  background: linear-gradient(270deg, rgba(0, 236, 179, 0.8) 0%, rgba(0, 208, 236, 0.8) 100%) !important;
-  filter: brightness(75%);
 }
 .active {
   height: 40px;

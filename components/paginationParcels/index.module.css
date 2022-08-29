@@ -5,6 +5,7 @@
   padding: 0 5px;
   margin: 0 10px;
   cursor: pointer;
+  border-radius: 2px;
 }
 .link{
   min-width: 26px;

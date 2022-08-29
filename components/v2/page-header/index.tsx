@@ -64,7 +64,7 @@ const parcels = [
 const analytics = [
   {
     label: 'Overview',
-    icon: '/images/logo.png',
+    icon: '/images/1.png',
     type: 'overview',
     link: '/analytics',
   },

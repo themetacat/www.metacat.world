@@ -490,6 +490,8 @@ function ProfilePage(r) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
+      
+      const statue = res.data.profile.creator_status;
       const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
@@ -847,7 +849,7 @@ function ProfilePage(r) {
     routeTab,
     tabState,
     reqWearablesData,
-  ]);
+  ],);
 
   const tag1 = () => {
     if (label === 'Cancel lease for multiple') return 'Cancel leased';
@@ -946,6 +948,7 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
+   
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -1224,6 +1227,7 @@ function ProfilePage(r) {
       }
     }
     if (routeTab === 'wearablelist') {
+
       return (
         <>
           {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
@@ -1247,6 +1251,7 @@ function ProfilePage(r) {
             </div>
             <div className={cls} />
           </div> */}
+       
           <div className={style.wearablesContainer}>
             <div className={style.title}>
               <div className={style.wearables}
@@ -1258,6 +1263,8 @@ function ProfilePage(r) {
               <div className={style.left}>
                 {wearablesNav.map((item, index) => {
                   return (
+                    <>
+                 
                     <div
                       onClick={() => {
                         setWearablesNavState(item.type);
@@ -1291,7 +1298,8 @@ function ProfilePage(r) {
 
                       {/* </div> */}
                     </div>
-                  );
+                 </> 
+                 );
                 })}
               </div>
               <div

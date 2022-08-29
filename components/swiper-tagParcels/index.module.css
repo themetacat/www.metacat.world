@@ -9,8 +9,9 @@
   font-family: PingFang SC;
   font-size: 12px;
   font-weight: 400;
-  height: 36px;
+  /* height: 36px; */
   margin-left: 40px;
+  padding: 4px 15px 4px 15px;
   margin-right: 0px !important;
 }
 .slide:nth-child(1){
@@ -26,8 +27,6 @@ line-height: 17px;
 text-align: center;
 color: #000000;
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
-  /* font-weight: 600; */
-  height: 36px;
   border-radius: 2px;
 }
 
@@ -40,7 +39,7 @@ color: #000000;
 
 .active,
 .slide:active {
-  height: 36px;
+  /* height: 36px; */
   background-color: rgba(0, 0, 0, 0.6);
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
   /* 辅-亮绿 */

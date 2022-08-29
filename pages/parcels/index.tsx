@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
@@ -225,7 +225,7 @@ export default function Index(props) {
   const meta = {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
-};
+  };
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -302,7 +302,7 @@ export default function Index(props) {
           data = event_list;
         }
         else if (subTab === 'space') {
-         
+
           const res = await req_space_buildings_list(page, 40, query, type);
 
           // let { page, count } = res;
@@ -402,8 +402,8 @@ export default function Index(props) {
 
 
   const onTabChange = async (tab) => {
-    console.log(tab,222222222);
-    
+    console.log(tab, 222222222);
+
     let subIndex
     if (tabState === 'cryptovoxels') {
       subIndex = SUBTAB.findIndex(item => item.type === subTabState)
@@ -418,12 +418,12 @@ export default function Index(props) {
       sub = SUBTAB[subIndex].type;
       setSubTabState(SUBTAB[subIndex].type)
       router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
-      
+
     } else if (tab === 'decentraland') {
       sub = SUBTAB[subIndex].type;
       setSubTabState(SUBTABDECE[subIndex].type)
       router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`)
-   
+
     }
     else if (
       tab === 'nftworlds' ||
@@ -465,43 +465,43 @@ export default function Index(props) {
     async (subTab) => {
       setSubTabState(subTab);
       let subIndexData
-      console.log(subTab,tabState,subIndexData)
+      console.log(subTab, tabState, subIndexData)
       // setTabState(subTab);
-      if(tabState==="cryptovoxels"){
-        if (subTab==='parcel') {
+      if (tabState === "cryptovoxels") {
+        if (subTab === 'parcel') {
           subIndexData = SUBTAB.findIndex(item => item.type === subTab)
         }
-         else if (subTab==='space') {
+        else if (subTab === 'space') {
           subIndexData = SUBTAB.findIndex(item => item.type === subTab)
         }
         console.log(subIndexData, tabState);
         subIndexData = subIndexData === -1 ? 0 : subIndexData
-      }else{
-        if (subTab==='parcel') {
+      } else {
+        if (subTab === 'parcel') {
           subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
         }
-         else if (subTab==='scene') {
+        else if (subTab === 'scene') {
           subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
         }
         console.log(subIndexData, tabState);
         subIndexData = subIndexData === -1 ? 0 : subIndexData
       }
 
-    let sub = '';
+      let sub = '';
 
       if (tabState === 'cryptovoxels') {
-      sub = subTabState;
-      console.log(SUBTAB[subIndexData].type,);
-      
-      setSubTabState(SUBTAB[subIndexData].type)
+        sub = subTabState;
+        console.log(SUBTAB[subIndexData].type,);
+
+        setSubTabState(SUBTAB[subIndexData].type)
         router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
-      
+
       } else if (tabState === 'decentraland') {
-      sub = subTabState;
-      console.log(SUBTABDECE[subIndexData].type);
-      setSubTabState(SUBTABDECE[subIndexData].type)
+        sub = subTabState;
+        console.log(SUBTABDECE[subIndexData].type);
+        setSubTabState(SUBTABDECE[subIndexData].type)
         router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
-     
+
       }
 
       setSearchText('');
@@ -517,7 +517,7 @@ export default function Index(props) {
         needUpdateTypeList: true,
       });
       setDataSource(data);
-  
+
     },
     [tabState, searchText, typeState],
   );
@@ -699,12 +699,12 @@ export default function Index(props) {
             })}
           </div>
           <div className={style.pagiNation}>
-          <PagiNation
-            total={totalPage}
-            pageNumber={pageNumber - 1}
-            pageSize={9}
-            pageChange={onPageChangeHandler}
-          />
+            <PagiNation
+              total={totalPage}
+              pageNumber={pageNumber - 1}
+              pageSize={9}
+              pageChange={onPageChangeHandler}
+            />
           </div>
         </>
       );
@@ -719,8 +719,8 @@ export default function Index(props) {
       }
 
       if (dataSource.length === 0) {
-        return null;   
-       
+        return null;
+
       }
       return (
         <>
@@ -731,15 +731,15 @@ export default function Index(props) {
             })}
           </div>
           <div className={style.pagiNation}>
-          <PagiNation
-            total={totalPage}
-            pageNumber={pageNumber - 1}
-            pageSize={9}
-            pageChange={onPageChangeHandler}
-          />
+            <PagiNation
+              total={totalPage}
+              pageNumber={pageNumber - 1}
+              pageSize={9}
+              pageChange={onPageChangeHandler}
+            />
           </div>
         </>
-    );
+      );
     }
     if (subTabState === 'event') {
       if (error) {
@@ -1659,11 +1659,11 @@ export default function Index(props) {
 
   useEffect(() => {
     console.log(router.query.tab);
-      const tab = router.query.tab || "cryptovoxels"
-      const subTab = router.query.subTab || 'parcel'
-     setTabState(tab)
-     setSubTabState(subTab)
-     onTabChange(tab)
+    const tab = router.query.tab || "cryptovoxels"
+    const subTab = router.query.subTab || 'parcel'
+    setTabState(tab)
+    setSubTabState(subTab)
+    onTabChange(tab)
   }, [router.query.tab])
 
   const requestPersonal = React.useCallback(
@@ -1758,7 +1758,7 @@ export default function Index(props) {
                   <SwiperSlide
                     className={cn(
                       'box-border w-12 font-semibold text-white ',
-                      style.base,
+                      style.baseCON,
                       tabState === item.type ? style.active : null,
                     )}
                     key={index}
@@ -1883,10 +1883,10 @@ export default function Index(props) {
             {subTabState === 'parcel' && (
               <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
-            {subTabState === 'space' && dataSource.length===0  && (
+            {subTabState === 'space' && dataSource.length === 0 && (
               <SpaceBuilding />
             )}
-            {subTabState === 'scene'&& dataSource.length===0 &&  (
+            {subTabState === 'scene' && dataSource.length === 0 && (
               <ScenceBuilding />
             )}
 
