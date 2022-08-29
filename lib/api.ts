@@ -209,6 +209,33 @@ class API {
     return json;
   }
 
+  public async getWorldsStatsSale(): Promise<any> {
+    // const url = `${this.url}/analytics/cur_data_compared_last_sum`;
+    const url = `${this.url}/analytics/cur_data_compared_last_sum`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getWorldsAverageSale(): Promise<any> {
+    // const url = `${this.url}/analytics/cur_data_compared_last_sum`;
+    const url = `${this.url}/analytics/cur_data_compared_last_avg`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getWorldsNum(): Promise<any> {
+    // const url = `${this.url}/analytics/cur_data_compared_last_sum`;
+    const url = `${this.url}/analytics/cur_data_compared_last_sales`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getCvParcelSoldSumStats(): Promise<any> {
     const url = `${this.url}/get_cv_parcel_sold_sum_stats`;
     const res = await fetch(url);

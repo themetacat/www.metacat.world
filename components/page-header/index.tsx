@@ -218,9 +218,9 @@ export default function PageHeader({ active, className }: Props) {
             'text-xl  text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
             style.z,
-           
+
           )}
-        
+
           // onClick={analyticsData}
           onMouseEnter={() => {
             setAnalyticState(true);
@@ -233,11 +233,11 @@ export default function PageHeader({ active, className }: Props) {
             Analytics
           </Link>
           {analyticState ? (
-              <TwoNav
-                options={analyticsData}
-                className={style.cn1}
-                location={style.location4}
-              ></TwoNav>
+            <TwoNav
+              options={analyticsData}
+              className={style.cn1}
+              location={style.location4}
+            ></TwoNav>
           ) : null}
         </div>
 
@@ -257,15 +257,15 @@ export default function PageHeader({ active, className }: Props) {
             Heatmap
           </Link>
           {heatmapState ? (
-              <TwoNav
-                options={heatmapData}
-                className={style.cn}
-                location={style.location3}
-              ></TwoNav>
+            <TwoNav
+              options={heatmapData}
+              className={style.cn}
+              location={style.location3}
+            ></TwoNav>
           ) : null}
         </div>
 
-    <div
+        <div
           className={cn(
             'text-xl  text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
             active === '/parcels' ? style.active : null,
@@ -280,18 +280,18 @@ export default function PageHeader({ active, className }: Props) {
         >
           <Link href="/parcels?tab=cryptovoxels" prefetch>Parcels</Link>
           {ParcelsState ? (
-              // <TwoNav
-              //   options={parcels}
-              //   className={style.cn}
-              //   location={style.parcels}
-              // ></TwoNav>
-              <TwoNavigation
-               options={parcels}
-               className={style.cn}
-               location={style.parcels}
-             ></TwoNavigation>
+            // <TwoNav
+            //   options={parcels}
+            //   className={style.cn}
+            //   location={style.parcels}
+            // ></TwoNav>
+            <TwoNavigation
+              options={parcels}
+              className={style.cn}
+              location={style.parcels}
+            ></TwoNavigation>
           ) : null}
- </div> 
+        </div>
 
         <div
           className={cn(
@@ -309,7 +309,9 @@ export default function PageHeader({ active, className }: Props) {
             setBuildState(false);
           }}
         >
-          Build
+          <Link href={'/build/builders'} prefetch>
+            Build
+          </Link>
           {buildState ? (
             <TwoNavigation
               options={build}
@@ -332,7 +334,10 @@ export default function PageHeader({ active, className }: Props) {
             setWearableState(false);
           }}
         >
-          Wearables
+
+          <Link href={'/wearables'} prefetch>
+            Wearables
+          </Link>
           {wearableState ? (
             <TwoNavigation
               options={wearable}

@@ -54,6 +54,9 @@
   background-color: #111a1b;
 
 }
+.tableBox{
+  display: flex;
+}
 
 .tmbg {
   /* width: 96%;
@@ -147,8 +150,9 @@
 }
 
 .tabContainer {
-  padding: 20px;
+  padding: 25px 20px 20px 20px;
   background: #000;
+  border-radius: 8px;
 }
 
 .cvColor {
