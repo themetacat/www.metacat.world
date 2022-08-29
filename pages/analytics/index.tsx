@@ -247,9 +247,9 @@ const hNav = [
 
 export default function AnalyticsIndex(props) {
  
-  React.useEffect(()=>{
-    console.log(props,"1234")
-  },[])
+  // React.useEffect(()=>{
+  //   console.log(props,"1234")
+  // },[])
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -257,9 +257,9 @@ export default function AnalyticsIndex(props) {
   const router = useRouter();
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
+  const [fixedStateAll, setFixedStateAll] = React.useState(false);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
-    console.log(55555);
     setShowType(newType); 
     // router.replace(`/analytics?type=${newType}`);
     if(newType===undefined){
@@ -277,13 +277,11 @@ export default function AnalyticsIndex(props) {
         router.replace('/analytics?type=cryptovoxels')
         // router.replace(`/analytics?type=${showType}`);
         setHeaderNav(nav);
-        console.log(nav);
         
       }
       if (nav === 'all') {
         router.replace(`/analytics`);
         setHeaderNav(nav);
-        console.log(nav);
       }
     },
     [headerNav],
@@ -1660,7 +1658,7 @@ export default function AnalyticsIndex(props) {
       return (
         <>
           <div className={cn(style.tmbg, fixedState ? style.aboslute : null)}>
-            <div className={cn(style.bg)}>
+            {/* <div className={cn(style.bg)}> */}
               <Switch
                 onActive={changeType}
                 options={types}
@@ -1669,7 +1667,7 @@ export default function AnalyticsIndex(props) {
                 className={style.aboslute}
                 fixedS={fixedState}
               ></Switch>
-            </div>
+            {/* </div> */}
           </div>
           <div className={cn('flex flex-col justify-center items-center', style.content)}>
             <div
@@ -1701,7 +1699,13 @@ export default function AnalyticsIndex(props) {
   //   }
   // }, [Top, Dtop.current])
 
-  
+  React.useEffect(() => {
+    if (props.query.type) {
+      setHeaderNav(hNav[1].type);
+    } else {
+      setHeaderNav(hNav[0].type);
+    }
+  }, [props.query.type]);
 
   React.useEffect(() => {
     const listener = () => {
@@ -1714,18 +1718,31 @@ export default function AnalyticsIndex(props) {
       } else {
         setFixedState(false);
       }
+
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
   React.useEffect(() => {
-    if (props.query.type) {
-      setHeaderNav(hNav[1].type);
-    } else {
-      setHeaderNav(hNav[0].type);
+    if(headerNav === 'all'){
+      const listener = () => {
+        if (
+          document.querySelector('.myClassName') &&
+          document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+          window.scrollY > 350
+        ) {
+          setFixedStateAll(true);
+          
+        } else {
+          setFixedStateAll(false);
+        }
+      };
+      document.addEventListener('scroll', listener);
+      return () => document.removeEventListener('scroll', listener);
     }
-  }, [props.query.type]);
+  
+  }, [fixedStateAll,headerNav]);
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
@@ -1739,15 +1756,20 @@ export default function AnalyticsIndex(props) {
         >
           <img src="/images/analyticsBack.png" className={style.sign}></img>
         </div>
-        <div className={style.headerNav}>
-          <div className={style.navContainer}>
+        <div className={cn('myClassName',style.headerNav,
+      
+        )}>
+          <div 
+          className={cn(style.navContainer, fixedStateAll ? style.abosluteAll : null)}>
             {hNav.map((nav) => {
               return (
                 <div
-                  className={cn(headerNav === nav.type ? style.nav : style.n)}
+                  className={cn(headerNav === nav.type ? style.nav : style.n, )}
                   onClick={() => {
                     changeHeaderNav(nav.type);
                   }}
+                  id='navContainer'
+                  
                 >
                   {nav.value}
                 </div>

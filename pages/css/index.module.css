@@ -8,9 +8,15 @@
   background-image: url('/images/Mask groupbeijingtutu.png');
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
+.cls {
+  width: 100%;
+  height: 46px;
+  background-image: url('/images/Mask groupbeijingtutu.png');
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
 .aboslute {
   position: fixed;
-  height: 42px;
+  padding: 0px !important;
   z-index: 99999999;
   background-color: #111a1b;
   top: 0px;
@@ -107,7 +113,6 @@
   cursor: pointer;
 }
 .active {
-  height: 40px;
   color: #fff;
   font-size: 30px;
   background-color: rgba(0, 236, 222, 0.05);

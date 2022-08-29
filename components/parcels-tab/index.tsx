@@ -11,7 +11,7 @@ type Props = {
   dataSource?;
 };
 
-export default ({ dataSource, label, state, num, onClick }: Props) => {
+export default ({ dataSource, label, state,num, onClick }: Props) => {
   const cls1 = state === 1 ? style.active : '';
   const cls2 = state === 1 ? style.active_span : '';
   let nums = 0;
@@ -37,6 +37,7 @@ export default ({ dataSource, label, state, num, onClick }: Props) => {
       }).length;
     }
   }
+
   return (
     <div className={cn(cls1, style.navItem)} key={label} onClick={onClick}>
       <div>

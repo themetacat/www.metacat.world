@@ -187,7 +187,7 @@ function ProfilePage(r) {
   const [email, setEmail] = React.useState(null);
 
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
-  const [tabStateTR, setTabStateTR] = React.useState('cryptovoxels');
+  const [tabStateTR, setTabStateTR] = React.useState('All');
   const [creatorState, setCreatorState] = React.useState(false);
 
   const [navLabel, setNavLabel] = React.useState('All');
@@ -409,7 +409,9 @@ function ProfilePage(r) {
   );
 
   const changeNavTab = React.useCallback(
+    
     (nav_label, index = 0) => {
+      // setNavLabel(navLabel);
       setNavLabel(nav_label);
       setCardState(false);
       setManySetState(false);
@@ -586,7 +588,7 @@ function ProfilePage(r) {
     }
     if (tabState === 'cryptovoxels') {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
           {dataSource.map((card) => {
             return (
               <Card
@@ -607,7 +609,7 @@ function ProfilePage(r) {
     if (tabState === 'decentraland') {
       return (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
             {dclDataSource.map((card) => {
               return (
                 <DclCard
@@ -649,7 +651,7 @@ function ProfilePage(r) {
       return <Status status="emptyBuilding" />;
     }
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
           {dataBuildSource.map((card) => {
             return (
               <CardBuilding
@@ -825,9 +827,10 @@ function ProfilePage(r) {
   const watcher_cardState = React.useCallback(() => {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
+
+ 
   React.useEffect(() => {
-    // setNavLabel('All')
-    // setWearablesNavState('all')
+    setNavLabel('All')
     const accessToken = getToken('atk');
     setRouteTab(r.router.query.type);
     reqWearablesData();
@@ -1039,6 +1042,7 @@ function ProfilePage(r) {
             <div className={style.nav_left}>
               {nav.map((item, index) => {
                 return (
+                  <>
                   <ParcelsTab
                     dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
                     label={item.label}
@@ -1049,6 +1053,7 @@ function ProfilePage(r) {
                       changeNavTab(item.label, index);
                     }}
                   />
+                  </>
                 );
               })}
             </div>

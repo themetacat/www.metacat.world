@@ -1726,6 +1726,7 @@ export default function Index(props) {
             <TopicCardList topics={topicList}></TopicCardList>
           </>
         ) : null} */}
+        {/* <div className={cn(' bg-black', style.cls)}></div> */}
         <div className={cn('tab-list flex myClassName bg-black', style.allHeight, fixedState ? style.aboslute : null)} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
@@ -1772,6 +1773,9 @@ export default function Index(props) {
                       label={item.label}
                       icon={item.icon}
                       isMini={true}
+                    //          id="switch"
+                    // className={style.aboslute}
+                    // fixedS={fixedState}
                     />
                   </SwiperSlide>
                 );

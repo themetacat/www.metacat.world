@@ -10,16 +10,22 @@ type Props = {
   label?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   isMini?: boolean;
+  fixedS?;
+  id?: string;
+  className?;
 };
 
-export default function Tab({ icon, label, active, onClick, isMini = false }: Props) {
+export default function Tab({ icon, label, fixedS,active, id,  className,onClick, isMini = false }: Props) {
   const ac = isMini ? style.miniActive : style.active;
   const no = isMini ? style.miniNormal : style.normal;
   const st = active ? ac : no;
   return isMini ? (
     <div
-      className={cn('flex justify-center items-center ', st, style.miniBase)}
+      className={cn('flex justify-center items-center ', st, style.miniBase,
+      fixedS ? className : null,
+      )}
       onClick={onClick}
+      id={id}
     >
       {/* <div className={cn('flex justify-center items-center', style.miniCanHover)}> */}
         {icon ? (

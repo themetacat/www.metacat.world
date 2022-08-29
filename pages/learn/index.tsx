@@ -57,6 +57,7 @@ function Learn(r) {
   const [showType, setShowType] = React.useState(ps[0].value);
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(50);
+  const [fixedState, setFixedState] = React.useState(false);
   const [totalPage, setTotalPage] = React.useState(null);
   const [dataSource, setDataSource] = React.useState([]);
   const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'articles');
@@ -181,6 +182,22 @@ function Learn(r) {
     }
   }, [requestData, r.router.query.type, page, count, showType]);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (
+        document.querySelector('.myClassName') &&
+        document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+        window.scrollY > 200
+      ) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedState]);
+
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
@@ -190,7 +207,7 @@ function Learn(r) {
       <div className={style.containerBanner}>
         <img src="/images/LearnBanner.png" className={style.banner} />
       </div>
-      <div className={cn('tab-list flex mt-5', style.allHeight)}>
+      <div className={cn('tab-list flex mt-5 myClassName', style.allHeight,fixedState ? style.aboslute : null)}>
         <div className={cls}></div>
         <div className={cn('main-content flex px-0', style.r)}>
           {REPORTTAB.map((item) => {

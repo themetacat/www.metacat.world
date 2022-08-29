@@ -379,13 +379,13 @@ min-height: 17px;
   color: #999;
 }
 .wearablesNavItem:hover > div {
-  color: #fff;
+  color: #000;
   background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
   padding: 4px 15px 4px 15px;
   /* margin: 0px 0px 0px 25px; */
 }
 .wearablesNavItem:hover   > div > span {
-  color: #fff;
+  color: #000;
 }
 .wearablesNavItem:hover{
   filter: brightness(125%);
