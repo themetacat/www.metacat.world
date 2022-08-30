@@ -25,11 +25,11 @@ const build = [
     type: 'buildings',
     link: '/build/buildings',
   },
-  {
-    label: 'Space Buildings',
-    type: 'spacebuildings',
-    link: '/build/spacebuildings',
-  },
+  // {
+  //   label: 'Space Buildings',
+  //   type: 'spacebuildings',
+  //   link: '/build/spacebuildings',
+  // },
 ];
 const wearable = [
   {
@@ -153,23 +153,7 @@ const analyticsData = [
   },
 ];
 
-function myfun() {
-  setTimeout(() => {
-    window.open(window.location.href);
-  }, 1000);
-}
 
-function myfunParcels() {
-  setTimeout(() => {
-    window.open(window.location.href);
-  }, 1000);
-}
-
-function myfunData() {
-  setTimeout(() => {
-    window.open(window.location.href);
-  }, 1000);
-}
 
 export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
