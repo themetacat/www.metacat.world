@@ -4,6 +4,7 @@
   box-sizing: border-box;
   padding: 0 5px;
   margin: 0 10px;
+  border-radius: 2px;
   cursor: pointer;
 }
 .link{
@@ -34,6 +35,7 @@
   width: 32px;
   height: 26px;
   background: rgba(0, 208, 236, 0.1);
+  border-radius: 2px;
   border: 0.5px solid rgba(255, 255, 255, 0.1);
   box-sizing: border-box;
   caret-color: #00D0EC;

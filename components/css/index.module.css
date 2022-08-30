@@ -1,11 +1,8 @@
 .miniActive {
-  font-size: 30px;
   background-color: rgba(0, 236, 222, 0.05);
   background: linear-gradient(90deg, #00d0ec, #00ecb3);
   border-bottom: transparent;
   border-radius: 12px 12px 0 0;
-}
-.miniActive:active {
   font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 500;
@@ -74,11 +71,9 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-  color: #AAAAAA;
 }
 .active {
   color: #000;
-  font-size: 30px;
   background-color: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   border-bottom: transparent;
@@ -95,7 +90,6 @@
 .active > .canHover,
 .canHover:hover {
   color: #000;
-  font-size: 30px;
   cursor: pointer;
 }
 .active > .canHover > .tabIcon,
@@ -107,14 +101,4 @@
   width: 34px;
   height: 34px;
   border-radius: 20px;
-}
-.lable {
-  font-family: 'PingFang SC';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-}
-.lable:hover {
-  color: #000;
 }

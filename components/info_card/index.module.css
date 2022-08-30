@@ -24,6 +24,7 @@
   border-radius: 50%;
 }
 .container .topDetail .name {
+  font-family: 'Inter';
   margin-top: 20px;
   margin-bottom: 4px;
   overflow: hidden;
@@ -35,16 +36,21 @@
   text-overflow: ellipsis;
 }
 .container .topDetail .area {
+  font-family: 'Inter';
   color: #999;
+  height: 19px;
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  margin-bottom: 25px;
 }
 .container .bottom {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
+  /* height: 56px; */
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 .container .bottom .item {
   display: flex;
@@ -60,7 +66,7 @@
   width: 14px;
   height: 14px;
   margin-top: 3px;
-  margin-right: 3px;
+  margin-right: 4px;
 }
 .container .bottom .item:last-child {
   border-right: 0;

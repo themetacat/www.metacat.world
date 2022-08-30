@@ -73,11 +73,12 @@
 }
 
 .bottomLine {
-  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
 }
 
 .allHeight {
   height: 48px;
+  border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
 }
 
 .navCOntainer {
