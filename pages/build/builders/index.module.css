@@ -1,10 +1,11 @@
 .bottomLine {
   position: relative;
   z-index: 1;
-  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
 }
 .allHeight {
   height: 48px;
+  border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);;
 }
 .bannerContainer {
   display: flex;
@@ -60,7 +61,18 @@
   height: 16px;
   margin-top: 4px;
   margin-right: 8px;
-  background: #00d0ec;
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+border-radius: 4px;
+}
+.institutions{
+  display: inline-block;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  align-items: center;
+  color: #FFFFFF;
 }
 .cardList {
   display: flex;

@@ -137,7 +137,7 @@ export default function Builders() {
         <div className={cn('bg-black', fixedState ? style.fix2 : null)} id="switch">
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className="main-content flex px-0">
+            <div className={cn("main-content flex px-0")}>
               {TAB.map((item, index) => {
                 return (
                   <Tab
@@ -160,7 +160,7 @@ export default function Builders() {
         <div className={style.bannerContainer}>
           <img src="/images/buildersBanner.png" />
         </div>
-        <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
+        {/* <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
           <div className={style.navcontainer}>
             {anchorNav.map((i, idx) => {
               return (
@@ -180,11 +180,11 @@ export default function Builders() {
               );
             })}
           </div>
-        </div>
+        </div> */}
         <div className={style.title} id="Institutions">
           <div className={style.cn}>
             <div></div>
-            Institutions
+            <span className={style.institutions}>Institutions</span>
           </div>
         </div>
         <div className={style.cardList}>{reander1}</div>
@@ -192,7 +192,7 @@ export default function Builders() {
         <div className={style.title} id="Individuals">
           <div className={style.cn}>
             <div></div>
-            Individuals
+            <span className={style.institutions}>Individuals</span>
           </div>
         </div>
 
