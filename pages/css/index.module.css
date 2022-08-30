@@ -93,6 +93,12 @@
   margin-bottom: 30px !important;
   margin-top: 20px !important;
 }
+.baseCON:hover {
+  filter: brightness(125%);
+}
+.baseCON:active {
+  filter: brightness(75%);
+}
 .baseCON {
   box-sizing: border-box;
   padding: 9px 30px 9px 30px !important;
@@ -102,15 +108,16 @@
   color: #999999;
   background: rgba(255, 255, 255, 0.05);
   font-weight: 500;
+  font-size: 16px;
   margin-right: 0px !important;
 }
 .baseCON:hover {
+  font-size: 16px;
   text-align: center;
-  color: #fff;
+  color: #000 !important;
   font-weight: 400;
   border-radius: 12px  12px 0px 0px;
   background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
-  filter: brightness(125%);
   cursor: pointer;
 }
 .fix1 {

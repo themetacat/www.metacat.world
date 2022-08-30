@@ -13,6 +13,7 @@ border-bottom:1px solid rgba(0, 208, 236,0.1);
 
   padding-top: 46px;
   border-bottom: 0.5px solid rgba(255,255,255,0.3);
+  // background-image: url('/images/beijingtu/2.png');
   background-image: url('/images/Mask groupbeijingtutu.png');
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
  
@@ -114,6 +115,13 @@ border-bottom:1px solid rgba(0, 208, 236,0.1);
   margin-bottom: 30px !important;
   margin-top: 20px !important;
 }
+.baseCON:hover {
+  filter: brightness(125%);
+}
+
+.baseCON:active {
+  filter: brightness(75%);
+}
 .baseCON {
   box-sizing: border-box;
   // width: 17% !important;
@@ -127,15 +135,17 @@ border-bottom:1px solid rgba(0, 208, 236,0.1);
   background: rgba(255, 255, 255, 0.05);
   font-weight: 500;
   // line-height: 40px;
+  font-size: 16px;
   margin-right: 0px !important;
   &:hover{
     // width: auto;
+    font-size: 16px;
     text-align: center;
-    color: #fff;
+    color: #000 !important; 
     font-weight: 400;
     border-radius: 12px  12px 0px 0px;
     background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
-    filter: brightness(125%);
+    // filter: brightness(125%);
     cursor: pointer;
   }
 }

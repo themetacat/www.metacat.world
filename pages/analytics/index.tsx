@@ -26,6 +26,10 @@ import AnimationBack from '../../components/animation-back';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
+import JumpToAnalytics from '../../components/jump_to_analytics';
+
+import TopJumper from '../../components/jump-to-top';
+
 import {
   getCvTrafficStats,
   getCvParcelAvgPriceStats,
@@ -1651,6 +1655,7 @@ export default function AnalyticsIndex(props) {
               </div>
             </div>
           </div>
+          <TopJumper></TopJumper>
         </>
       );
     }
@@ -1680,6 +1685,7 @@ export default function AnalyticsIndex(props) {
               {renderChartList}
             </div>
           </div>
+        <JumpToAnalytics></JumpToAnalytics>
         </>
       );
     }

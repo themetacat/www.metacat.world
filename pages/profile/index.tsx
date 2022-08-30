@@ -173,6 +173,7 @@ function ProfilePage(r) {
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
+  const [statue, setStatue] = React.useState(1);
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -497,8 +498,10 @@ function ProfilePage(r) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
+      setStatue(res.data.profile.creator_status)
+      console.log(res.data.profile.creator_status,99999);
       
-      const statue = res.data.profile.creator_status;
+      // const statue = res.data.profile.creator_status;
       const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
@@ -1237,7 +1240,17 @@ function ProfilePage(r) {
       }
     }
     if (routeTab === 'wearablelist') {
-
+      // if(statue===1){
+      //   return(
+      //     <div className={style.createrCont}>
+      //       <span className={style.join}>Join Creators to show your works</span>
+      //       <span className={style.apply}>Apply</span>
+      //     </div>
+      //   )
+      // }else{
+     
+       
+      // }
       return (
         <>
           {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>

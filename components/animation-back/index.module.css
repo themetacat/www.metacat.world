@@ -6,6 +6,7 @@
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
+  /* background-image: url('/images/beijingtu/1.png'); */
   background-image: url("/images/Mask groupbeijingtutu.png");
   overflow: hidden;
   /* animation: animateColor 5s linear infinite; */

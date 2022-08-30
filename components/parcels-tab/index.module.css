@@ -107,12 +107,12 @@ text-align: center;
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
 }
 .active_span{
-  padding:4px 10px 4px 15px;
+  /* padding:4px 10px 4px 15px; */
   border-radius: 2px;
   color: #000 !important;
   font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12px;
   background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
 }
