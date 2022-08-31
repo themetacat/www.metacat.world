@@ -1708,10 +1708,9 @@ export default function Index(props) {
 
   return (
     <Page meta={meta}>
-       {/* <div className={cn('bg-black relative myClassName', fixedState ? style.fix1 : null)}>
-        <PageHeader className="relative z-10" active={'/parcels'} />
-      </div> */}
+
       <Layout>
+
         {/* {topicList.length > 0 ? (
           <>
             <div
@@ -1731,8 +1730,12 @@ export default function Index(props) {
           </>
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
-        <div className={cn('tab-list flex myClassName bg-black', style.allHeight, 
-        // fixedState ? style.aboslute : null
+        <div className={style.containerBox}>
+        <div className={cn(' relative myClassName', fixedState ? style.fix1 : null)}>
+          <PageHeader className="relative z-10" active={'/parcels'} />
+        </div>
+        <div className={cn('tab-list flex myClassName ', style.allHeight,
+          // fixedState ? style.aboslute : null
         )} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
@@ -1801,6 +1804,7 @@ export default function Index(props) {
             <div className={cls} />
           </div>
           <div className={cls} />
+        </div>
         </div>
         <div className="main-content">
           <div className={cn('flex justify-between items-center ', style.contentHeader)}>

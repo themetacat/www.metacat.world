@@ -76,7 +76,7 @@ export default function Layout({
           }, fixedState ? style.fix1 : null)}
           style={{ zIndex: 88888 }}
         >
-          {!hideNav && <PageHeader className="relative z-10" active={pathname} />}
+          {/* {!hideNav && <PageHeader className="relative z-10" active={pathname} />} */}
           {/* <div className="flex main-content justify-between h-88 py-10 relative z-10 pointer-events-none"> */}
             {/* <div className="flex items-center" style={{ minHeight: '220px' }}> */}
               {/* <div className={cn('sign-mark-word text-white font-bold', style.headText)}>
