@@ -30,8 +30,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
-  const [backNum, setBackNum] = React.useState('');
-  const [backCol, setBackCol] = React.useState('');
+  
   const obj = {}
   // React.useEffect(() => {
   //   getWorldsStatsSale().then((data) => {
