@@ -147,7 +147,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.right}>% of Total sales in 202207</div>
+              <div className={style.right}>% of Total sales in 2022.08</div>
             </th>
           </tr>
           {Object.keys(arrdataSource).map((item, idx) => {
@@ -258,10 +258,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     <div className={cn('justify-end', style.right, style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         console.log(o,item,11111111111111);
-                        return Math.round(item[o].percent * 100)
+                        return (item[o].percent * 100)
                       })}% */}
                       {/* {arrdataSource[item].percent * 100}% */}
-                      {Math.round(arrdataSource[item].percent * 100)}%
+                      {(arrdataSource[item].percent * 100).toFixed(2)}%
                     </div>
                   </th>
                   <th
@@ -286,7 +286,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
 
                       })}% */}
                       {/* {arrdataSource[item].total * 100}% */}
-                      {Math.round(arrdataSource[item].total * 100)}%
+                      {(arrdataSource[item].total * 100).toFixed(2)}%
                     </div>
                   </th>
 
