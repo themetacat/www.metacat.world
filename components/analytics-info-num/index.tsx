@@ -257,7 +257,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       {/* {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
                       })}% */}
-                      {Math.round(arrdataSource[item].percent * 100)}%
+                      {(arrdataSource[item].percent * 100).toFixed(2)}%
                     </div>
                   </th>
                 </tr>
