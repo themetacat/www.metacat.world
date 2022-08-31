@@ -21,6 +21,7 @@
   text-align: center;
   font-size: 18px;
   font-weight: 600;
+  margin: 20px 0px 20px 20px;
 }
 
 .selecter {
@@ -183,6 +184,8 @@
   background: #000000;
   opacity: 0.7;
   z-index: 999;
+  margin-top: 18px;
+  
 }
 .change {
   width: 138px !important;
