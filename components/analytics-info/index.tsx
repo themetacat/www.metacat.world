@@ -26,9 +26,9 @@ export default function AnalyticsInfo({ options, labelText ,textColor}: Props) {
   const requestData = React.useCallback(async () => {
     const res = await getWorldsStats();
     const result = convert(res.data);
-    console.log(result.data,"555555");
+    // console.log(result.data,"555555");
     setDataSource(result);
-    console.log(dataSource,"88888");
+    // console.log(dataSource,"88888");
   }, [null]);
 
   React.useEffect(() => {

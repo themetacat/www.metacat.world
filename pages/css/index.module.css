@@ -1,124 +1,57 @@
-.contentHeader {
-  margin-top: 30px;
-  border-bottom: 1px solid rgba(0, 208, 236, 0.1);
+.bottomLine {
+  position: relative;
+  z-index: 1;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .allHeight {
-  padding-top: 46px;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
-  background-image: url('/images/Mask groupbeijingtutu.png');
-  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+  height: 48px;
 }
-.cls {
+.imgContanier {
   width: 100%;
-  height: 46px;
-  background-image: url('/images/Mask groupbeijingtutu.png');
-  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+  height: 216px;
+  overflow: hidden;
+  background-color: #000;
 }
-.aboslute {
-  position: fixed;
-  padding: 0px !important;
-  z-index: 99999999;
-  background-color: #111a1b;
-  top: 72px;
-  margin: 0px auto 0;
-  width: 100%;
+.imgContanier .title {
+  margin-top: 50px;
+  color: #ddd;
+  font-weight: 900;
+  font-size: 60px;
+  text-align: center;
 }
-.content {
-  min-height: 650px;
-  margin-top: 15px;
-}
-.mapContanier {
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 660px;
-  margin-bottom: 50px;
-  padding: 15px;
-  border: 0.5px solid rgba(0, 208, 236, 0.5);
-  box-shadow: inset 0 0 15px rgba(24, 255, 241, 0.3);
-}
-.mapBack {
-  position: absolute;
-  width: calc(100% - 30px);
-  height: calc(100% - 30px);
-}
-.builders {
-  font-size: 25px;
-}
-.analytics {
-  height: 50px;
-  padding: 12px 20px;
-  color: #0f191b;
-  font-size: 18px;
-  background-color: #ffcf5f;
-}
-.analyticsMore {
-  color: #666666;
-  font-size: 14px;
-  cursor: pointer;
-}
-.more {
-  color: #999999;
-  font-size: 16px;
-  cursor: pointer;
-}
-.more > img {
-  width: 10px;
-  height: 10px;
-  margin-top: 2px;
-}
-.analyticsMore > img {
-  width: 10px;
-  height: 10px;
-  margin-top: -2px;
-}
-.more:hover,
-.analyticsMore:hover {
-  filter: brightness(125%);
-}
-.more:active,
-.analyticsMore:active {
-  filter: brightness(75%);
-}
-.swiper {
+.imgContanier .text {
   display: flex;
-  width: 100%;
-  margin: 0 !important;
-}
-.bottomContent {
-  margin-bottom: 0px !important;
+  justify-content: center;
+  margin: 0 auto;
   margin-top: 20px;
 }
-.pagiNation {
-  margin-bottom: 30px !important;
-  margin-top: 20px !important;
-}
-.baseCON:hover {
-  filter: brightness(125%);
-}
-.baseCON:active {
-  filter: brightness(75%);
-}
-.baseCON {
-  box-sizing: border-box;
-  padding: 9px 30px 9px 30px !important;
-  width: auto;
-  min-height: 40px;
-  border-radius: 12px  12px 0px 0px;
-  color: #999999;
-  background: rgba(255, 255, 255, 0.05);
-  font-weight: 500;
-  font-size: 16px;
-  margin-right: 0px !important;
-}
-.baseCON:hover {
-  font-size: 16px;
-  text-align: center;
-  color: #000 !important;
+.imgContanier .text .t {
+  margin: 0 50px;
+  color: #999;
   font-weight: 400;
-  border-radius: 12px  12px 0px 0px;
-  background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
-  cursor: pointer;
+  font-size: 14px;
+}
+.imgContanier .text .hengxian {
+  width: 300px;
+  height: 1px;
+  margin-top: 10px;
+  background-color: #999;
+}
+.cardList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1200px;
+  margin: 50px auto 30px;
+}
+.cls {
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.cls:nth-child(3n) {
+  margin-right: 0;
+}
+.backImage {
+  background-image: url('/images/beijingtu/biaotilan.png');
 }
 .fix1 {
   position: fixed;
@@ -130,29 +63,12 @@
   background: #000;
   opacity: 1;
 }
-.active {
-  color: #fff;
-  font-size: 30px;
-  background-color: rgba(0, 236, 222, 0.05);
-  background: linear-gradient(90deg, #00d0ec 0%, #00ecb3 100%);
-  border-bottom: transparent;
-  border-radius: 12px  12px 0px 0px;
-}
-.per {
+.fix2 {
+  position: fixed;
+  top: 76px;
   left: 0;
-  width: 76px;
-  height: 76px;
-  background: linear-gradient(90deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
-  cursor: pointer;
-}
-.icon {
-  width: 20px;
-  height: 20px;
-}
-.next {
-  right: 0;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(270deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
-  cursor: pointer;
+  z-index: 9;
+  width: 100%;
+  margin: 0 auto;
+  background: #000;
 }

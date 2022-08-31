@@ -1,14 +1,13 @@
 .bottomLine {
   position: relative;
   z-index: 1;
-  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .allHeight {
   height: 48px;
-  border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
 }
-.backImage{
-  background-image: url('/images/beijingtu/biaotilan.png') !important;
+.backImage {
+  background-image: url('/images/beijingtu/biaotilan.png');
 }
 .bannerContainer {
   display: flex;
@@ -16,6 +15,7 @@
   justify-content: center;
   width: 100%;
   height: 217px;
+  background-color: #000;
 }
 .bannerContainer img {
   width: 1200px;
@@ -63,25 +63,13 @@
   height: 16px;
   margin-top: 4px;
   margin-right: 8px;
-  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
-border-radius: 4px;
-}
-.institutions{
-  display: inline-block;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  align-items: center;
-  color: #FFFFFF;
+  background: #00d0ec;
 }
 .cardList {
   display: flex;
   flex-wrap: wrap;
   width: 1200px;
   margin: 0 auto;
-  margin-bottom: 30px;
 }
 .cls {
   margin-right: 15px;
@@ -95,25 +83,23 @@ border-radius: 4px;
   top: 0;
   left: 0;
   width: 100%;
-  background: #000;
   margin: 0 auto;
-  background-image: url('/images/beijingtu/biaotilan.png')
+  background: #000;
 }
 .fix2 {
   position: fixed;
   top: 76px;
   left: 0;
-  width: 100%;
-  background: #000;
-  margin: 0 auto;
   z-index: 9;
-  background-image: url('/images/beijingtu/biaotilan.png')
+  width: 100%;
+  margin: 0 auto;
+  background: #000;
 }
 .fix3 {
   position: fixed;
   top: 124px;
   left: 0;
+  z-index: 9;
   width: 100%;
   margin: 0 auto;
-  z-index: 9;
 }

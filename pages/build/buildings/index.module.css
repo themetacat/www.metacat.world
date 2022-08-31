@@ -9,8 +9,18 @@
 .info {
   color: #fff;
 }
+.backImage{
+  background-image: url('/images/beijingtu/biaotilan.png');
+}
+.topCon{
+  /* background-image: url('/images/beijingtu/biaotilan.png') !important; */
+}
 .content {
   min-height: 650px;
+  width: 1250px !important;
+}
+.buildingsCon{
+  margin-top: 50px;
 }
 .bottomLine {
   /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
@@ -32,6 +42,7 @@
   background: #000;
   z-index: 11;
   opacity: 1;
+  background-image: url('/images/beijingtu/biaotilan.png')
 }
 .fix2 {
   position: fixed;
@@ -41,4 +52,5 @@
   background: #000;
   margin: 0 auto;
   z-index: 9;
+  background-image: url('/images/beijingtu/biaotilan.png')
 }

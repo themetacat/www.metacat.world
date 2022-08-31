@@ -25,7 +25,7 @@ export default function AnalyticsCard({
   const cls = style[backCls];
 
   const pageNew = React.useCallback(() => {
-    console.log(title);
+    // console.log(title);
     if (title === 'Floor Price') {
       window.open('https://www.metacat.world/analytics');
     }

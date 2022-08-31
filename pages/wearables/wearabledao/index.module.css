@@ -1,6 +1,11 @@
 .signBack {
-  height: 286px;
-  background-color: black;
+  /* height: 286px; */
+  /* background-color: black; */
+  /* background-image: url('/images/beijingtu/biaotilan.png'); */
+  margin-top: 30px;
+}
+.backImage{
+  background-image: url('/images/beijingtu/biaotilan.png');
 }
 
 .anPage {
@@ -19,7 +24,8 @@
 }
 .content {
   min-height: 650px;
-  padding: 20px 0;
+  /* padding: 20px 0; */
+  margin-bottom: 30px;
   flex: 1 auto;
 }
 
@@ -37,15 +43,33 @@
 }
 
 .desc {
-  color: rgba(170, 170, 170, 1);
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: -0.022em;
+  color: #AAAAAA;
+  opacity: 0.6;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 .searchbtn {
-  width: 110px;
   height: 44px;
+  padding: 9px 16px 9px 16px;
   color: rgba(153, 153, 153, 1);
   background: rgba(27, 241, 255, 1);
-  color: rgba(17, 26, 27, 1);
+  border-radius: 0px 8px 8px 0px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  align-items: center;
+  color: #111A1B;
 }
 .active {
   color: rgba(17, 26, 27, 1);
@@ -83,29 +107,48 @@
 
 .navCOntainer {
   width: 100%;
-  height: 60px;
-  background: #0e2b30;
+  /* height: 60px; */
+  background: #111a1b;
 }
 .nav {
   width: 1200px;
   margin: 0 auto;
   display: flex;
+  border-bottom: 1px solid rgba(0, 208, 236,0.1);
+  margin-top: 20px;
 }
 
 .item {
-  margin-right: 70px;
+ padding-bottom: 6px;
+  margin-right: 50px;
   line-height: 60px;
   box-sizing: border-box;
-  color: #999;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: #999999;
   cursor: pointer;
 }
-.item :hover {
+.item:hover {
   color: #fff;
 }
+/* .item:active{
+  background-color: red
+} */
 .action {
-  border-bottom: 4px solid #00abc2;
+  border-bottom: 4px solid #00decf;
   color: #fff;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  /* background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); */
+  border-radius: 2px;
 }
+
 .fix1 {
   position: fixed;
   top: 0;
@@ -114,6 +157,7 @@
   background: #000;
   z-index: 21;
   margin: 0 auto;
+  background-image: url('/images/beijingtu/biaotilan.png')
 }
 .fix2 {
   position: fixed;
@@ -123,6 +167,7 @@
   background: #000;
   margin: 0 auto;
   z-index: 20;
+  background-image: url('/images/beijingtu/biaotilan.png')
 }
 .fix3 {
   position: fixed;
@@ -134,7 +179,7 @@
 }
 .fix4 {
   position: fixed;
-  top: 184px;
+  top: 177px;
   left: 0;
   width: 100%;
   margin: 0 auto;
@@ -142,6 +187,8 @@
 }
 .search {
   width: 100%;
-  padding: 20px 0;
+  /* padding: 20px 0; */
+  padding-top: 30px;
+  margin-bottom: 20px;
   background: #111a1b;
 }

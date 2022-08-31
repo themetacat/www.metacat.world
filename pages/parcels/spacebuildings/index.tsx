@@ -76,7 +76,7 @@ export default function spacebuildings() {
       setTotalPage(total_page);
       setPageNumber(page);
       setLoading(false);
-      console.log(total_page,"convert(data)");
+      // console.log(total_page,"convert(data)");
       
     } catch (err) {
       setError(true);

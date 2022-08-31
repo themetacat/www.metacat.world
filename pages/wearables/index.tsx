@@ -88,10 +88,11 @@ export default function Wearables() {
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className="min-h-screen" meta={meta}>
-      <div className={cn('bg-black relative', fixedState ? style.fix1 : null)}>
+        <div className={cn("bg-black relative",style.backImage)}>
+      <div className={cn(' relative', fixedState ? style.fix1 : null)}>
         <PageHeader className="relative z-10" active={'wearables'} />
       </div>
-      <div className={cn('bg-black relative', fixedState ? style.fix2 : null)} id="switch">
+      <div className={cn(' relative', fixedState ? style.fix2 : null)} id="switch">
         <div className={cn('tab-list flex', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
@@ -122,7 +123,7 @@ export default function Wearables() {
           <div className={style.hengxian}></div>
         </div>
       </div>
-
+      </div>
       <div className={style.cardList}>{reander}</div>
       <Footer></Footer>
     </Page>

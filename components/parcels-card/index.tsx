@@ -53,7 +53,7 @@ export default function Card({
   }, [parcelPageUrl]);
 
   React.useEffect(() => {
-    console.log('');
+    // console.log('');
   }, [parcelsIds, selectedIds]);
 
   const tag1 = () => {

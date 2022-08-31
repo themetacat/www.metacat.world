@@ -131,10 +131,12 @@ export default function Builders() {
   return (
     <>
       <Page className="min-h-screen" meta={meta}>
-        <div className={cn('bg-black z-10', fixedState ? style.fix1 : null)}>
+
+      <div className={cn("bg-black relative",style.backImage)}>
+        <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
           <PageHeader className="relative z-20" active={'Build'} />
         </div>
-        <div className={cn('bg-black', fixedState ? style.fix2 : null)} id="switch">
+        <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
             <div className={cn("main-content flex px-0")}>
@@ -160,6 +162,7 @@ export default function Builders() {
         <div className={style.bannerContainer}>
           <img src="/images/buildersBanner.png" />
         </div>
+       </div>
         {/* <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
           <div className={style.navcontainer}>
             {anchorNav.map((i, idx) => {
