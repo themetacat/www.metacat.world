@@ -795,7 +795,7 @@ function DecentralandMap({
               ></img>
             </div>
             <div
-              className={cn('flex justify-center items-center', style.zoomButton)}
+              className={cn('flex justify-center items-center', style.zoomButtonrEACT)}
               onClick={() => {
                 zoomButtonClick('zoomOut');
               }}
