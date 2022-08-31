@@ -352,8 +352,9 @@ export default function Wearables(props) {
           </div>
         </div>
         {renderContent}
+        <TopJumper classname={style.jumper}></TopJumper>
       </div>
-      <TopJumper classname={style.jumper}></TopJumper>
+    
       <Footer />
     </Page>
   );

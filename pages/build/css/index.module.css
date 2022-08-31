@@ -6,6 +6,10 @@
 .allHeight {
   height: 48px;
 }
+.jumper {
+  right: 8% !important;
+  bottom: 30% !important;
+}
 .backImage {
   background-image: url('/images/beijingtu/parcelBeiJingtu.png');
 }

@@ -7,6 +7,7 @@ import PageHeader from '../../components/page-header';
 import Tab from '../../components/tab';
 import InfoCard from '../../components/info_card';
 import Footer from '../../components/footer';
+import TopJumper from '../../components/jump-to-top';
 import Status from '../../components/status';
 
 import { req_wearable_creators } from '../../service/z_api';
@@ -125,6 +126,7 @@ export default function Wearables() {
       </div>
       </div>
       <div className={style.cardList}>{reander}</div>
+      <TopJumper classname={style.jumper}></TopJumper>
       <Footer></Footer>
     </Page>
   );

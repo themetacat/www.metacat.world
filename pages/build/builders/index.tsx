@@ -5,6 +5,7 @@ import Page from '../../../components/page';
 import PageHeader from '../../../components/page-header';
 import InfoCard from '../../../components/info_card';
 import Tab from '../../../components/tab';
+import TopJumper from '../../../components/jump-to-top';
 import Footer from '../../../components/footer';
 import Status from '../../../components/status';
 
@@ -198,7 +199,7 @@ export default function Builders() {
             <span className={style.institutions}>Individuals</span>
           </div>
         </div>
-
+        <TopJumper classname={style.jumper}></TopJumper>
         <div className={style.cardList}>{reander2}</div>
         <Footer></Footer>
       </Page>

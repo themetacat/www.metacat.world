@@ -9,12 +9,15 @@ import Footer from '../../../components/footer';
 import TopicDetailCardBuildings from '../../../components/topic-detail-card-Buildings';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
+import TopJumper from '../../../components/jump-to-top';
+
 
 import AnimationBack from '../../../components/animation-back';
 
 import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
+
 
 import { getBuilderList } from '../../../service';
 
@@ -158,7 +161,7 @@ export default function TopicIndex() {
           <img src="/images/buildingsBanner.png" className={style.sign}></img>
         </div>
       </div>
-
+      <TopJumper classname={style.jumper}></TopJumper>
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
@@ -176,8 +179,11 @@ export default function TopicIndex() {
           </>
         ) : null}
         {renderStatus}
+       
       </div>
+    
       <Footer />
+    
     </Page>
   );
 }

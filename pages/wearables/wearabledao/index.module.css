@@ -61,7 +61,8 @@
   height: 44px;
   padding: 9px 16px 9px 16px;
   color: rgba(153, 153, 153, 1);
-  background: rgba(27, 241, 255, 1);
+  /* background: rgba(27, 241, 255, 1); */
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
   border-radius: 0px 8px 8px 0px;
   font-family: 'PingFang SC';
   font-style: normal;
@@ -76,7 +77,8 @@
   background: rgba(0, 208, 236, 1);
 }
 .searchbtn:active {
-  background: #00abc2;
+  filter: brightness(75%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
 }
 
 .searchIcon {
@@ -92,8 +94,8 @@
 }
 
 .jumper {
-  right: 50px;
-  bottom: 25%;
+  right: 120px;
+  bottom: 26%;
 }
 
 .bottomLine {
@@ -179,7 +181,7 @@
 }
 .fix4 {
   position: fixed;
-  top: 177px;
+  top: 175px;
   left: 0;
   width: 100%;
   margin: 0 auto;

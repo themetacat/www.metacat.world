@@ -7,6 +7,10 @@
   height: 48px;
   border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
 }
+.jumper {
+  right: 8% !important;
+  bottom: 30% !important;
+}
 .backImage{
   background-image: url('/images/beijingtu/biaotilan.png') !important;
 
