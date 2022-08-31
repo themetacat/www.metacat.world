@@ -25,7 +25,7 @@ export default function TopicDetailCardBuildings({ topicId, name, imgUrlList, co
       }}
       target="_blank"
     >
-      <div className={cn('relative', style.topicCard)} style={{width:"290px",height:"364px"}}>
+      <div className={cn('relative', style.topicCard)} style={{width:"290px"}}>
         {/* <div
           className={cn(
             'absolute top-2 right-2 flex justify-center items-center font-medium text-xs p-1',
@@ -41,7 +41,7 @@ export default function TopicDetailCardBuildings({ topicId, name, imgUrlList, co
                 <img
                   className={cn('w-1/2 h-1/2', style.cover)}
                   // className={style.cover}
-                  style={{width:"129px",height:"129px"}}
+                  style={{width:"50%",height:"145px"}}
                   src={img}
                   onError={() => {
                     this.src = '/images/logo.png';
@@ -54,14 +54,14 @@ export default function TopicDetailCardBuildings({ topicId, name, imgUrlList, co
             <img className={style.oneImg} src={coverImg} />
           )}
         </div>
-        <div
+        {/* <div
           className={cn(
-            'text-white flex-1 font-semibold w-full bottom-0 flex justify-between p-4 pb-6 text-lg items-start',
+            'text-white flex-1 font-semibold w-full bottom-0 flex justify-between items-start',
             style.footer,
           )}
-        >
-          <div className={cn('text-base font-semibold', style.description)}>{name}</div>
-        </div>
+        > */}
+          <div className={cn('text-base font-semibold',style.footer, style.description)}>{name}</div>
+        {/* </div> */}
       </div>
     </a>
   );

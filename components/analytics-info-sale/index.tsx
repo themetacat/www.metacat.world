@@ -80,9 +80,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
         arr.push({ [name]: obj[name] })
       }
     });
-
     setArrDataSource(obj)
+    
   }, [null]);
+
 
   React.useEffect(() => {
     requestData();
@@ -147,7 +148,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.right}>% of Total sales in 202207</div>
+              <div className={style.right}>% of Total sales in 2022.08</div>
             </th>
           </tr>
           {Object.keys(arrdataSource).map((item, idx) => {
@@ -188,6 +189,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       {<span>{item}</span>}
                     </div>
                   </th>
+              
                   <th
                     className={cn(
                       '',
@@ -261,7 +263,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                         return Math.round(item[o].percent * 100)
                       })}% */}
                       {/* {arrdataSource[item].percent * 100}% */}
-                      {Math.round(arrdataSource[item].percent * 100)}%
+                      {(arrdataSource[item].percent * 100).toFixed(2)}%
                     </div>
                   </th>
                   <th
@@ -286,14 +288,15 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
 
                       })}% */}
                       {/* {arrdataSource[item].total * 100}% */}
-                      {Math.round(arrdataSource[item].total * 100)}%
+                      {(arrdataSource[item].total * 100).toFixed(2)}%
                     </div>
                   </th>
 
                 </tr>
+                
               </>
             );
-
+           
           })}
 
         </tbody>

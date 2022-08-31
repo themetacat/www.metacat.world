@@ -43,7 +43,7 @@ export default function Tab({onActive, icon, label, active, options,onClick, isM
             style={{ backgroundImage: `url('${icon}')` }}
           ></div>
         ) : null}
-        <div>{label}</div>
+       <div className={style.lable}>{label}</div>
       </div>
     </div>
   ) : (
@@ -56,7 +56,7 @@ export default function Tab({onActive, icon, label, active, options,onClick, isM
           className={cn('bg-contain mr-2', style.tabIcon)}
           style={{ backgroundImage: `url('${icon}')` }}
         ></div>
-        <div>{label}</div>
+        <div className={style.lable}>{label}</div>
       </div>
     </div>
   );

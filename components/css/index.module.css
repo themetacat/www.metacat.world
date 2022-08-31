@@ -1,23 +1,60 @@
 .miniActive {
+  background-color: rgba(0, 236, 222, 0.05);
+  background: linear-gradient(90deg, #00d0ec, #00ecb3);
+  border-bottom: transparent;
+  border-radius: 12px 12px 0 0;
   font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  color: #000000;
+  color: #000000 !important;
 }
 .miniNormal {
-  font-size: 14px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  box-sizing: border-box;
+  padding: 9px 30px!important;
+  width: auto;
+  color: #aaaaaa;
+  background: hsla(0, 0%, 100%, 0.05);
+  margin-right: 0!important;
+}
+.miniNormal:hover {
+  color: #000;
+}
+.miniBase {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 9px 30px 9px 30px;
+  border-radius: 8px 8px 0px 0px;
+}
+.miniBase:hover {
+  text-align: center;
+  color: #000 !important;
+  width: auto;
+  font-weight: 400;
+  background: linear-gradient(90deg, #00d0ec, #00ecb3);
+  cursor: pointer;
+}
+.miniActive:hover {
+  filter: brightness(125%);
+}
+.miniBase:active {
+  filter: brightness(75%);
 }
 .miniActive > .miniCanHover,
 .miniCanHover:hover {
   font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 16px;
   line-height: 22px;
   color: #000000;
-  cursor: pointer;
 }
 .miniActive > .miniCanHover > .miniTabIcon,
 .miniCanHover:hover > .miniTabIcon {
@@ -28,9 +65,15 @@
   height: 20px;
   border-radius: 16px;
 }
+.miniCanHover {
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
 .active {
-  color: #fff;
-  font-size: 30px;
+  color: #000;
   background-color: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   border-bottom: transparent;
@@ -46,8 +89,7 @@
 }
 .active > .canHover,
 .canHover:hover {
-  color: #fff;
-  font-size: 30px;
+  color: #000;
   cursor: pointer;
 }
 .active > .canHover > .tabIcon,

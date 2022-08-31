@@ -127,7 +127,7 @@ export default function Modal({ show, setClose, type }: Props) {
   }, [inputEmail]);
 
   const submit = useCallback(async () => {
-    console.log("是我需要的点击事件ma");
+    // console.log("是我需要的点击事件ma");
     
     if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     if (!inputAddress && !profile?.address) {

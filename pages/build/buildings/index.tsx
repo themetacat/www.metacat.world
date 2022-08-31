@@ -9,12 +9,15 @@ import Footer from '../../../components/footer';
 import TopicDetailCardBuildings from '../../../components/topic-detail-card-Buildings';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
+import TopJumper from '../../../components/jump-to-top';
+
 
 import AnimationBack from '../../../components/animation-back';
 
 import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
+
 
 import { getBuilderList } from '../../../service';
 
@@ -122,8 +125,9 @@ export default function TopicIndex() {
 
   return (
     <Page className="min-h-screen" meta={meta}>
-      <div className="bg-black relative">
-        <div className={fixedState ? style.fix1 : null}>
+      <div className={cn("bg-black relative",style.backImage)}>
+        <div className={style.topCon}>
+        <div className={cn(fixedState ? style.fix1 : null,)}>
           <PageHeader className={cn('relative z-20')} active={'Build'} />
         </div>
         <div
@@ -150,17 +154,18 @@ export default function TopicIndex() {
           </div>
           <div className={cls} />
         </div>
+        </div>
         <div
           className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
           <img src="/images/buildingsBanner.png" className={style.sign}></img>
         </div>
       </div>
-
+      <TopJumper classname={style.jumper}></TopJumper>
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-7 gap-4 pb-7 justify-center">
+            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-8  justify-center",style.buildingsCon)}>
               {builders.map((card, idx) => {
                 return <TopicDetailCardBuildings {...card} key={idx}></TopicDetailCardBuildings>;
               })}
@@ -174,8 +179,11 @@ export default function TopicIndex() {
           </>
         ) : null}
         {renderStatus}
+       
       </div>
+    
       <Footer />
+    
     </Page>
   );
 }

@@ -40,7 +40,7 @@ export default function UserAvatar({ avatar, name, contact, country, from, id }:
     <div className="flex flex-col justify-center items-center">
       <img className={cn('mt-1', style.userAvatar)} src={avatar}></img>
       <div className="flex">
-        <div className=" mt-1 text-white text-xl">{name}</div>
+        <div className={cn("  text-white text-xl",style.name)}>{name}</div>
         {from === 'profile' || address === id ? (
           <img
             src="/images/icon/bianji.png"
