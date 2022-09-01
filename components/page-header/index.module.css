@@ -17,47 +17,47 @@
 }
 .location {
   position: absolute;
-  right: -73px;
-  bottom: -97px;
+  right: -48px;
+  bottom: -100px;
   /* bottom: -90px; */
   z-index: 99;
   background-color: #0f191b;
 }
 .parcels {
   position: absolute;
-  /* right: 450px;
-  top:40px; */
+  right: 575px;
+  top:57px;
   z-index: 99;
   background-color: #0f191b;
 }
 .location2 {
   position: absolute;
-  right: 0;
-  bottom: -95px;
+  right: -25px;
+  bottom: -100px;
   z-index: 99;
   background-color: #0f191b;
 }
 .location3 {
   position: absolute;
-  right: -65;
+  left: 530px;
   bottom: -280px;
   background-color: #0f191b;
 }
 .location4 {
   position: absolute;
-  right: -75;
-  bottom: -425px;
+  left: 390px;
+  bottom: -430px;
   background-color: #0f191b;
 }
 .cn {
-  width: 175px;
+  width: 154px;
 }
 .cn1 {
-  width: 175px;
+  width: 154px;
 }
 
 .cn2 {
-  width: 116px;
+  width: 154px;
 }
 .z {
   z-index: 99;
