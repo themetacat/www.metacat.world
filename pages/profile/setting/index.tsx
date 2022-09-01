@@ -527,7 +527,7 @@ export default function Settings() {
                 </ReactTooltip>
               </div>
               <UploadImg
-                imgUrl={avatarUrl || '/images/icon.png'}
+                imgUrl={avatarUrl || '/images/metacat_default_cover_img.png'}
                 afterUpload={uploadImage}
                 beginUpload={beginUpload}
               ></UploadImg>
