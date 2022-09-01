@@ -22,8 +22,10 @@
   /* bottom: -90px; */
   z-index: 99;
   background-color: #0f191b;
+  border-radius: 4px;
 }
 .parcels {
+  border-radius: 4px;
   position: absolute;
   right: 575px;
   top:57px;
@@ -35,6 +37,7 @@
   right: -25px;
   bottom: -100px;
   z-index: 99;
+  border-radius: 4px;
   background-color: #0f191b;
 }
 .location3 {
@@ -42,12 +45,14 @@
   left: 530px;
   bottom: -280px;
   background-color: #0f191b;
+  border-radius: 4px;
 }
 .location4 {
   position: absolute;
   left: 390px;
   bottom: -430px;
   background-color: #0f191b;
+  border-radius: 4px;
 }
 .cn {
   width: 154px;
