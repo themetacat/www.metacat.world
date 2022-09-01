@@ -265,11 +265,11 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
-    console.log(tab,
-      subTab,
-      page,
-      query,
-      type);
+    // console.log(tab,
+    //   subTab,
+    //   page,
+    //   query,
+    //   type);
 
     try {
       if (tab === 'cryptovoxels') {
@@ -380,7 +380,7 @@ export default function Index(props) {
     }
 
     setLoading(false);
-    console.log(convert(data));
+    // console.log(convert(data));
 
     return convert(data);
   };
@@ -403,7 +403,7 @@ export default function Index(props) {
 
 
   const onTabChange = async (tab) => {
-    console.log(tab, 222222222);
+    // console.log(tab, 222222222);
 
     let subIndex
     if (tabState === 'cryptovoxels') {
@@ -411,7 +411,7 @@ export default function Index(props) {
     } else if (tabState === "decentraland") {
       subIndex = SUBTABDECE.findIndex(item => item.type === subTabState)
     }
-    console.log(subIndex, tabState);
+    // console.log(subIndex, tabState);
     subIndex = subIndex === -1 ? 0 : subIndex
     setTabState(tab);
     let sub = '';
@@ -466,7 +466,7 @@ export default function Index(props) {
     async (subTab) => {
       setSubTabState(subTab);
       let subIndexData
-      console.log(subTab, tabState, subIndexData)
+      // console.log(subTab, tabState, subIndexData)
       // setTabState(subTab);
       if (tabState === "cryptovoxels") {
         if (subTab === 'parcel') {
@@ -475,7 +475,7 @@ export default function Index(props) {
         else if (subTab === 'space') {
           subIndexData = SUBTAB.findIndex(item => item.type === subTab)
         }
-        console.log(subIndexData, tabState);
+        // console.log(subIndexData, tabState);
         subIndexData = subIndexData === -1 ? 0 : subIndexData
       } else {
         if (subTab === 'parcel') {
@@ -484,7 +484,7 @@ export default function Index(props) {
         else if (subTab === 'scene') {
           subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
         }
-        console.log(subIndexData, tabState);
+        // console.log(subIndexData, tabState);
         subIndexData = subIndexData === -1 ? 0 : subIndexData
       }
 
@@ -492,14 +492,14 @@ export default function Index(props) {
 
       if (tabState === 'cryptovoxels') {
         sub = subTabState;
-        console.log(SUBTAB[subIndexData].type,);
+        // console.log(SUBTAB[subIndexData].type,);
 
         setSubTabState(SUBTAB[subIndexData].type)
         router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
 
       } else if (tabState === 'decentraland') {
         sub = subTabState;
-        console.log(SUBTABDECE[subIndexData].type);
+        // console.log(SUBTABDECE[subIndexData].type);
         setSubTabState(SUBTABDECE[subIndexData].type)
         router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
 
@@ -508,7 +508,7 @@ export default function Index(props) {
       setSearchText('');
       setTypeState('');
       setTypeState('All')
-      console.log(sub);
+      // console.log(sub);
       const data = await requestData({
         tab: tabState,
         subTab,
@@ -575,7 +575,7 @@ export default function Index(props) {
 
   const onSearchSpace = React.useCallback(
     async (text: string) => {
-      console.log(tabState, subTabState);
+      // console.log(tabState, subTabState);
 
       setSearchText(text);
       const data = await requestData({
@@ -586,7 +586,7 @@ export default function Index(props) {
         type: typeState,
         needUpdateTypeList: true,
       });
-      console.log(data);
+      // console.log(data);
 
       setDataSource(data);
     },
@@ -595,7 +595,7 @@ export default function Index(props) {
 
   const onSearchScene = React.useCallback(
     async (text: string) => {
-      console.log(tabState, subTabState);
+      // console.log(tabState, subTabState);
 
       setSearchText(text);
       const data = await requestData({
@@ -679,7 +679,7 @@ export default function Index(props) {
       );
     }
     if (subTabState === 'scene') {
-      console.log(dataSource)
+      // console.log(dataSource)
       if (loading) {
         return <Status status="loading" />;
       }
@@ -1659,7 +1659,7 @@ export default function Index(props) {
 
 
   useEffect(() => {
-    console.log(router.query.tab);
+    // console.log(router.query.tab);
     const tab = router.query.tab || "cryptovoxels"
     const subTab = router.query.subTab || 'parcel'
     setTabState(tab)
@@ -1708,10 +1708,9 @@ export default function Index(props) {
 
   return (
     <Page meta={meta}>
-       {/* <div className={cn('bg-black relative myClassName', fixedState ? style.fix1 : null)}>
-        <PageHeader className="relative z-10" active={'/parcels'} />
-      </div> */}
+
       <Layout>
+
         {/* {topicList.length > 0 ? (
           <>
             <div
@@ -1731,8 +1730,12 @@ export default function Index(props) {
           </>
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
-        <div className={cn('tab-list flex myClassName bg-black', style.allHeight, 
-        // fixedState ? style.aboslute : null
+        <div className={style.containerBox}>
+        <div className={cn(' relative myClassName', fixedState ? style.fix1 : null)}>
+          <PageHeader className="relative z-10" active={'/parcels'} />
+        </div>
+        <div className={cn('tab-list flex myClassName ', style.allHeight,
+          // fixedState ? style.aboslute : null
         )} >
           <div className={cls}></div>
           <div className="main-content flex px-0 relative">
@@ -1801,6 +1804,7 @@ export default function Index(props) {
             <div className={cls} />
           </div>
           <div className={cls} />
+        </div>
         </div>
         <div className="main-content">
           <div className={cn('flex justify-between items-center ', style.contentHeader)}>

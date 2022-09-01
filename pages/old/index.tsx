@@ -1385,7 +1385,7 @@ export default function Index(props) {
   );
 
   React.useEffect(() => {
-    console.log('');
+    // console.log('');
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);

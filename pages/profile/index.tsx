@@ -412,7 +412,7 @@ function ProfilePage(r) {
   const changeNavTab = React.useCallback(
     
     (nav_label, index = 0) => {
-      console.log(nav_label,222222222222222);
+      // console.log(nav_label,222222222222222);
       
       // setNavLabel(navLabel);
       setNavLabel(nav_label);
@@ -420,13 +420,13 @@ function ProfilePage(r) {
       setManySetState(false);
       nav_Label.current = nav_label;
       // changeNum(dataSource, nav_label);
-      console.log(Nav);
+      // console.log(Nav);
       
       const set_nav = Nav.map((item, i) => {
         if (index === i) return { ...item, state: 1 };
         return { ...item, state: 0 };
       });
-      console.log(set_nav);
+      // console.log(set_nav);
       setNav(set_nav);
     },
     [Nav, setCardState, setManySetState, setNavLabel, setNav, dataSource, cartData],
@@ -499,7 +499,7 @@ function ProfilePage(r) {
     async (token: string) => {
       const res = await getBaseInfo(token);
       setStatue(res.data.profile.creator_status)
-      console.log(res.data.profile.creator_status,99999);
+      // console.log(res.data.profile.creator_status,99999);
       
       // const statue = res.data.profile.creator_status;
       const data = resultHandler(res, requestPersonal);
@@ -541,7 +541,7 @@ function ProfilePage(r) {
       const hide = result.data.filter((i) => {
         return i.show_status === 2;
       });
-      console.log(wearablesState.current);
+      // console.log(wearablesState.current);
       if (wearablesState.current === 'all') {
         setWearablesCreatorsData(result.data);
       } else if (wearablesState.current === 'shown') {
@@ -925,7 +925,7 @@ function ProfilePage(r) {
           wearablesShowOrHide,
         );
       }
-      console.log(result, wearablesShowOrHide, stat);
+      // console.log(result, wearablesShowOrHide, stat);
       if (result.code === 100000) {
         if (wearablesShowOrHide === 2 || stat === 2) {
           toast.success('Successfully hidden!');

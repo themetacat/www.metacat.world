@@ -5,6 +5,7 @@ import Page from '../../../components/page';
 import PageHeader from '../../../components/page-header';
 import InfoCard from '../../../components/info_card';
 import Tab from '../../../components/tab';
+import TopJumper from '../../../components/jump-to-top';
 import Footer from '../../../components/footer';
 import Status from '../../../components/status';
 
@@ -23,10 +24,10 @@ const TAB = [
     label: 'Buildings',
     type: 'buildings',
   },
-  {
-    label: 'Space Buildings',
-    type: 'spacebuildings',
-  },
+  // {
+  //   label: 'Space Buildings',
+  //   type: 'spacebuildings',
+  // },
 ];
 
 const anchorNav = [
@@ -131,13 +132,15 @@ export default function Builders() {
   return (
     <>
       <Page className="min-h-screen" meta={meta}>
-        <div className={cn('bg-black z-10', fixedState ? style.fix1 : null)}>
+
+      <div className={cn("bg-black relative",style.backImage)}>
+        <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
           <PageHeader className="relative z-20" active={'Build'} />
         </div>
-        <div className={cn('bg-black', fixedState ? style.fix2 : null)} id="switch">
+        <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className="main-content flex px-0">
+            <div className={cn("main-content flex px-0")}>
               {TAB.map((item, index) => {
                 return (
                   <Tab
@@ -160,7 +163,8 @@ export default function Builders() {
         <div className={style.bannerContainer}>
           <img src="/images/buildersBanner.png" />
         </div>
-        <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
+       </div>
+        {/* <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
           <div className={style.navcontainer}>
             {anchorNav.map((i, idx) => {
               return (
@@ -180,11 +184,11 @@ export default function Builders() {
               );
             })}
           </div>
-        </div>
+        </div> */}
         <div className={style.title} id="Institutions">
           <div className={style.cn}>
             <div></div>
-            Institutions
+            <span className={style.institutions}>Institutions</span>
           </div>
         </div>
         <div className={style.cardList}>{reander1}</div>
@@ -192,10 +196,10 @@ export default function Builders() {
         <div className={style.title} id="Individuals">
           <div className={style.cn}>
             <div></div>
-            Individuals
+            <span className={style.institutions}>Individuals</span>
           </div>
         </div>
-
+        <TopJumper classname={style.jumper}></TopJumper>
         <div className={style.cardList}>{reander2}</div>
         <Footer></Footer>
       </Page>

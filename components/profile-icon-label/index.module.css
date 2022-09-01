@@ -11,16 +11,18 @@
 .a{
   cursor: pointer;
   font-family: 'Roboto';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 14px;
-color: #FFFFFF;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #CCCCCC;
 }
 .imgInsturation{
   color: #CCCCCC;
   width: 14px;
   height: 12px;
+  margin-right: 4px;
+  
 }
 .cns{
   display: flex;

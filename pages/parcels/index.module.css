@@ -7,6 +7,9 @@
 .allHeight {
   height: 60px;
 }
+.containerBox{
+  background-image: url(/images/Mask\ groupbeijingtutu.png);
+}
 .content {
   min-height: 650px;
 }

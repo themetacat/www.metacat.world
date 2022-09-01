@@ -17,8 +17,8 @@
 }
 .location {
   position: absolute;
-  right: -35px;
-  bottom: -141px;
+  right: -73px;
+  bottom: -97px;
   /* bottom: -90px; */
   z-index: 99;
   background-color: #0f191b;
@@ -33,7 +33,7 @@
 .location2 {
   position: absolute;
   right: 0;
-  bottom: -90px;
+  bottom: -95px;
   z-index: 99;
   background-color: #0f191b;
 }

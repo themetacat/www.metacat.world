@@ -282,7 +282,7 @@ export default function StackBar({
     try {
       const res = await dataHandler();
       result = res.data;
-      console.log(result);
+      // console.log(result);
       setDataSource(result);
     } catch (ex) {
       setError(true);

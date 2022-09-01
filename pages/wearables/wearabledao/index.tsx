@@ -180,7 +180,7 @@ export default function Wearables(props) {
 
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-      <div className="bg-black relative">
+      <div className={cn("bg-black relative",style.backImage)}>
         <div className={fixedState ? style.fix1 : null}>
           <PageHeader className="relative z-10" active={'wearables'} />
         </div>
@@ -210,7 +210,7 @@ export default function Wearables(props) {
         </div>
         <div
           className={cn(
-            'main-content flex flex-col justify-center items-center relative z-10 text-white mt-5',
+            'main-content flex flex-col justify-center items-center relative z-10 text-white ',
             style.signBack,
           )}
         >
@@ -289,7 +289,7 @@ export default function Wearables(props) {
               ></UserAvatar>
             ) : null}
           </div>
-          <div className={cn(' text-center mt-4 mb-7', style.desc)}>
+          <div className={cn('', style.desc)}>
             {navState === 'okx'
               ? `For a new product launch held by OKX in metaverse, wearableDao customized a variety of
               3D wearables for invited KOLs.`
@@ -352,8 +352,9 @@ export default function Wearables(props) {
           </div>
         </div>
         {renderContent}
+        <TopJumper classname={style.jumper}></TopJumper>
       </div>
-      <TopJumper classname={style.jumper}></TopJumper>
+    
       <Footer />
     </Page>
   );

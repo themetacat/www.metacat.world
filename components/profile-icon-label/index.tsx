@@ -72,7 +72,7 @@ export default function ProfileIconLabel({
   return (
     <div className={cn('flex items-center', style.iconLabel, classname)}>
       {prefix && hasIcon ? (
-        <img className={cn("mr-2 cursor-pointer", style.imgInsturation)} src={icon} onClick={iconClick}></img>
+        <img className={cn(" cursor-pointer", style.imgInsturation)} src={icon} onClick={iconClick}></img>
       ) : null}
       {isLink ? (
         <a href={link} target="_blank" title={link} className={style.a}>

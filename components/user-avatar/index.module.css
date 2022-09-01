@@ -15,3 +15,15 @@
   margin-bottom: 17px;
   color: #999;
 }
+.name{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: -0.022em;
+  color: #FFFFFF;
+  margin-top: 5px;
+  margin-bottom: 8px;
+}

@@ -20,7 +20,7 @@ type Props = {
   const [showType, setShowType] = React.useState(router.route || 'analytics');
   
   const changeType = React.useCallback((newType) => {
-    console.log(newType);
+    // console.log(newType);
     setShowType(newType.type);
   
     router.replace(newType.link);

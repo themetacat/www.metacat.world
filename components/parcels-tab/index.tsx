@@ -12,12 +12,12 @@ type Props = {
 };
 
 export default ({ dataSource, label, state,num, onClick }: Props) => {
-  console.log(state,9999);
-  console.log(style);
+  // console.log(state,9999);
+  // console.log(style);
   
   const cls1 = state === 1 ? style.active : '';
   const cls2 = state === 1 ? style.active_span : '';
-  console.log(cls1,'--------------------',cls2);
+  // console.log(cls1,'--------------------',cls2);
   
   let nums = 0;
   if (dataSource.length !== 0) {

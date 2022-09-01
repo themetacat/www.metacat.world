@@ -150,7 +150,7 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState, i
 
   return (
     <div
-      className={cn('z-10 p-4', styles.card)}
+      className={cn('z-10 ', styles.card)}
       onMouseEnter={() => {
         triggerModelRotation(true);
       }}
@@ -171,7 +171,7 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState, i
         ) : null}
       </div>
       <div
-        className={cn('flex justify-start items-center p-4 text-white', styles.footer)}
+        className={cn('flex justify-start items-center  text-white', styles.footer)}
         onClick={goToDetail}
       >
         <div className="flex flex-col justify-start items-start w-full text-lg font-medium">
@@ -179,10 +179,10 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState, i
             {model.artwork?.name}
           </span>
           <div
-            className={cn('flex items-end justify-center text-xs text-right mt-4', styles.goDetail)}
+            className={cn('flex items-end justify-center text-xs text-right ', styles.goDetail)}
           >
-            <div>Voxel Artist：</div>
-            <div>{model.artist.name}</div>
+            <div className={styles.artist}>Voxel Artist：</div>
+            <div className={styles.name}>{model.artist.name}</div>
           </div>
         </div>
         <span className={cn('flex justify-between items-center cursor-pointer', styles.goDetail2)}>
