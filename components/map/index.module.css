@@ -11,7 +11,7 @@
 
 .picker {
   border:0.5px solid #0F191B;
-  border-radius: 8px;
+  border-radius: 4px;
   position: absolute !important;
   top: 20px;
   left: 20px;
@@ -21,6 +21,7 @@
   text-align: center;
   font-size: 18px;
   font-weight: 600;
+  /* margin: 20px 0px 20px 20px; */
 }
 
 .selecter {
@@ -58,19 +59,45 @@
   left: 410px;
   top: 20px;
   z-index: 1001;
+  background: rgba(0, 0, 0, 0.8);
+/* border: 0.5px solid rgba(1, 218, 217, 0.6); */
+border-radius: 4px;
 }
 .zoomButton {
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.8) !important;
-  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
+  background: rgba(0, 0, 0, 0.8);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  border-radius: 4px 4px 0px 0px;
   box-sizing: border-box;
   cursor: pointer;
+}
+.zoomButtonrEACT{
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  border-radius:0px 0px 4px 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.zoomButtonrEACT:hover {
+  filter: brightness(125%);
+}
+
+.zoomButtonrEACT:active {
+  filter: brightness(75%);
+}
+
+.zoomButtonrEACT > img {
+  width: 18px;
 }
 
 .zoomButton > img {
   width: 18px;
 }
+
 
 .zoomButton:hover {
   filter: brightness(125%);
@@ -119,8 +146,9 @@
   left: 460px;
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.8) !important;
-  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
+  background: rgba(0, 0, 0, 0.8);
+border: 0.5px solid rgba(1, 218, 217, 0.6);
+border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -183,6 +211,8 @@
   background: #000000;
   opacity: 0.7;
   z-index: 999;
+  margin-top: 18px;
+  
 }
 .change {
   width: 138px !important;
@@ -201,6 +231,8 @@
 }
 .topList {
   width: 390px;
+  border-top: 1px solid rgba(10, 34, 39,0.8);
+  margin-top: 17px;
   position: absolute;
   height: 93%;
   left: 0;

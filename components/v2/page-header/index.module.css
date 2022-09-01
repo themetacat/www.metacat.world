@@ -86,9 +86,10 @@
   background-color: #0f191b;
 }
 .parcels {
+  width: 154px;
   position: absolute;
-  /* right: 450px;
-  top:40px; */
+  right: 655px;
+  top:30px;
   z-index: 99;
   background-color: #0f191b;
 }
@@ -112,7 +113,7 @@
   background-color: #0f191b;
 }
 .cn {
-  width: 175px;
+  width: 154px;
 }
 .cn1 {
   width: 175px;

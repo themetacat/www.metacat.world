@@ -1256,7 +1256,7 @@ function Map({
   return (
     <div className={style.mapContainer} onClick={onClick}>
       <div className={style.container}>
-        <div className={style.bg}></div>
+        <div className={style.bg}>
         {selecterRander}
         {mapType.current === 'PRICE' ? (
           <div className={cn('flex justify-center items-center', style.helper)}>
@@ -1294,6 +1294,7 @@ function Map({
         >
           <img src={`/images/${arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`} />
         </div>
+        </div>
       </div>
       <div className={cn(style.topList, arrowsState ? style.dn : null)}>
         <div className={style.title}>TOP 20 Parcels</div>
@@ -1314,7 +1315,7 @@ function Map({
               ></img>
             </div>
             <div
-              className={cn('flex justify-center items-center', style.zoomButton)}
+              className={cn('flex justify-center items-center', style.zoomButtonrEACT)}
               onClick={() => {
                 zoomButtonClick('zoomOut');
               }}

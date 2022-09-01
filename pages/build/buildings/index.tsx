@@ -155,17 +155,38 @@ export default function TopicIndex() {
           <div className={cls} />
         </div>
         </div>
-        <div
+        {/* <div
           className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
           <img src="/images/buildingsBanner.png" className={style.sign}></img>
-        </div>
+        </div> */}
+        <div className={style.imgContanier}>
+            <div className={style.title}>Featured Buildings</div>
+            <div className={style.text}>
+              <div className={style.hengxian}></div>
+              <div className={style.t}>
+              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS.
+              {/* EXCELLENT &nbsp;&nbsp;
+              BUILDINGS &nbsp;&nbsp;
+              ARE&nbsp;&nbsp;&nbsp;
+              GATHERED&nbsp;&nbsp;
+              ACCORDING&nbsp;&nbsp;
+              TO&nbsp;&nbsp;&nbsp;
+              THE&nbsp;&nbsp;&nbsp;
+              LANDOWNERS&nbsp;&nbsp;
+              OR&nbsp;&nbsp;&nbsp;
+              ARCHITECTS&nbsp;&nbsp; */}
+              </div>
+              {/* <div className={style.t}>Excellent buildings are gathered according to the landowners or architects.</div> */}
+              <div className={style.hengxian}></div>
+            </div>
+          </div>
       </div>
       <TopJumper classname={style.jumper}></TopJumper>
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
-            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-8  justify-center",style.buildingsCon)}>
+            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center",style.buildingsCon)}>
               {builders.map((card, idx) => {
                 return <TopicDetailCardBuildings {...card} key={idx}></TopicDetailCardBuildings>;
               })}

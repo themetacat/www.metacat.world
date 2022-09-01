@@ -233,7 +233,8 @@ export default function MapPage(props) {
     <Page className="min-h-screen" meta={meta}>
       {fullScreen ? null : (
         <>
-          <div className="bg-black relative">
+        <div className={style.container}>
+          <div className="relative">
             <PageHeader className="relative z-10" active={'heatmap'} />
           </div>
 
@@ -258,6 +259,7 @@ export default function MapPage(props) {
               <div className={cls} />
             </div>
             <div className={cls} />
+          </div>
           </div>
         </>
       )}

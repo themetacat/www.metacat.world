@@ -725,7 +725,7 @@ export default function Index(props) {
       }
       return (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 my-7">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
             {dataSource.map((card, idx) => {
               // return <Card {...card} key={uuid()}></Card>;
               return <CardSpace {...card} key={idx}></CardSpace>;

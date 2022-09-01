@@ -17,8 +17,10 @@
 .container .imgContainer .img {
   width: 100%;
   height: 100%;
+  border-radius: 8px;
 }
 .container .imgContainer .desc {
+  border-radius: 8px 0px 8px 0px;
   position: absolute;
   top: 0;
   left: 0;
@@ -28,7 +30,7 @@
   font-size: 12px;
   line-height: 20px;
   text-align: center;
-  background-color: #00d0ec;
+  background: #01DAD9;
 }
 .container .detail {
   width: 72%;
@@ -41,13 +43,20 @@
   font-size: 14px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 600;
+color: #FFFFFF;
 }
 .container .detail .parcelId {
-  margin: 4px 0;
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 15px;
+color: #FFFFFF;
+  margin-top: 4px ;
   overflow: hidden;
-  color: #fff;
-  font-weight: 400;
-  font-size: 12px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -81,20 +90,29 @@
   display: flex;
 }
 .container .detail .info {
-  margin-top: 1px;
-  color: #bbb;
-  font-weight: 400;
-  font-size: 12px;
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 11px;
+line-height: 15px;
+
+color: #999999;
+  margin-top: 5px;
 }
 .container .detail .info:last-child {
-  color: #fff;
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 17px;
+color: #FFFFFF;
 }
 .container .icon {
   position: absolute;
-  top: 10px;
-  right: 18px;
-  width: 21px;
-  height: 21px;
+  top: 10.88px;
+  right: 28.94px;
+  width: 21.18px;
+  height: 21.71px;
   border-radius: 50%;
   cursor: pointer;
 }
