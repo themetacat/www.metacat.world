@@ -103,10 +103,10 @@ const TAB3 = [
     label: 'My Wearables',
     type: 'wearablelist',
   },
-  {
-    label: 'My Buildings',
-    type: 'building',
-  },
+  // {
+  //   label: 'My Buildings',
+  //   type: 'building',
+  // },
   // {
   //   label: 'SALES REPORT',
   // },
@@ -569,14 +569,16 @@ function ProfilePage(r) {
     }
   }, [requestData, getToken, reqDclData]);
 
-  const addWork = React.useCallback( () => {
+  const addWork = React.useCallback( async() => {
       console.log("hhhhhhhhhhhhhhhhhhh");
       // <JoinBuilders/>
       // joinBuilders
+      setJoinBuilders(true)
+      console.log(joinBuilders,5555555555);
       
 
       // renderssssContent
-  }, [])
+  }, [joinBuilders])
 
 
 
