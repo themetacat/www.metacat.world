@@ -165,7 +165,7 @@ export default function TopicIndex() {
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
-            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-8  justify-center",style.buildingsCon)}>
+            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center",style.buildingsCon)}>
               {builders.map((card, idx) => {
                 return <TopicDetailCardBuildings {...card} key={idx}></TopicDetailCardBuildings>;
               })}

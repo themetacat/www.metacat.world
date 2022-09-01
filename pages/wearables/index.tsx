@@ -93,7 +93,7 @@ export default function Wearables() {
       <div className={cn(' relative', fixedState ? style.fix1 : null)}>
         <PageHeader className="relative z-10" active={'wearables'} />
       </div>
-      <div className={cn(' relative', fixedState ? style.fix2 : null)} id="switch">
+      <div className={cn(' relative mt-5', fixedState ? style.fix2 : null)} id="switch">
         <div className={cn('tab-list flex', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">

@@ -360,14 +360,13 @@ min-height: 17px;
 }
 .wearablesNavItem {
   display: flex;
+  width: auto !important;
   /* margin: 0px 25px 0px 0px; */
+  padding: 4px 15px;
   margin-right: 25px;
   font-size: 12px;
   cursor: pointer;
   box-sizing: border-box;
-  /* background-color: red; */
-  /* height: 100%; */
-  /* line-height: 44px; */
 }
 
 .wearablesNavItem > div {
@@ -380,21 +379,27 @@ min-height: 17px;
 }
 .wearablesNavItem:hover > div {
   color: #000;
-  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
-  padding: 4px 15px 4px 15px;
+  /* background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); */
+  /* padding: 4px 15px 4px 15px; */
   /* margin: 0px 0px 0px 25px; */
 }
-.wearablesNavItem:hover   > div > span {
+ .wearablesNavItem:hover   > div > span { 
+  padding: 0px !important;
   color: #000;
-}
+} 
 .wearablesNavItem:hover{
   filter: brightness(125%);
+   background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); 
+  color: #000 !important;
+  border-radius: 2px;
 }
 .wearablesNavItem:active{
   filter: brightness(75%);
 }
 .wearablesNavItem :hover{
   /* background-color: blue; */
+  /* background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); */
+  /* color: #000; */
 }
 .wearableNavAction {
   /* border-bottom: 2px solid#00d0ec; */
