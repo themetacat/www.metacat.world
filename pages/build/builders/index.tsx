@@ -133,37 +133,52 @@ export default function Builders() {
     <>
       <Page className="min-h-screen" meta={meta}>
 
-      <div className={cn("bg-black relative",style.backImage)}>
-        <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
-          <PageHeader className="relative z-20" active={'Build'} />
-        </div>
-        <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
-          <div className={cn('tab-list flex ', style.allHeight)}>
-            <div className={cls}></div>
-            <div className={cn("main-content flex px-0")}>
-              {TAB.map((item, index) => {
-                return (
-                  <Tab
-                    active={tabState === item.type}
-                    key={item.label}
-                    icon={null}
-                    label={item.label}
-                    isMini={true}
-                    onClick={() => {
-                      onTabChange(item.type);
-                    }}
-                  />
-                );
-              })}
+        <div className={cn("bg-black relative", style.backImage)}>
+          <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
+            <PageHeader className="relative z-20" active={'Build'} />
+          </div>
+          <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
+            <div className={cn('tab-list flex ', style.allHeight)}>
+              <div className={cls}></div>
+              <div className={cn("main-content flex px-0")}>
+                {TAB.map((item, index) => {
+                  return (
+                    <Tab
+                      active={tabState === item.type}
+                      key={item.label}
+                      icon={null}
+                      label={item.label}
+                      isMini={true}
+                      onClick={() => {
+                        onTabChange(item.type);
+                      }}
+                    />
+                  );
+                })}
+                <div className={cls} />
+              </div>
               <div className={cls} />
             </div>
-            <div className={cls} />
+          </div>
+          {/* <div className={style.bannerContainer}>
+          <img src="/images/buildersBanner.png" />
+
+        </div> */}
+          <div className={style.imgContanier}>
+            <div className={style.title}>Builders</div>
+            <div className={style.text}>
+              <div className={style.hengxian}></div>
+              <div className={style.t}>
+                I N &nbsp;&nbsp;&nbsp;
+                M E T A V E R S E  &nbsp;&nbsp;&nbsp;
+                W E &nbsp;&nbsp;&nbsp;
+                B U I L D &nbsp;&nbsp;&nbsp;
+              </div>
+              {/* <div className={style.t}>In Metaverse we Creator</div> */}
+              <div className={style.hengxian}></div>
+            </div>
           </div>
         </div>
-        <div className={style.bannerContainer}>
-          <img src="/images/buildersBanner.png" />
-        </div>
-       </div>
         {/* <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
           <div className={style.navcontainer}>
             {anchorNav.map((i, idx) => {

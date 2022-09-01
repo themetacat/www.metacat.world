@@ -1,16 +1,20 @@
 
 .item {
   box-sizing: border-box;
-  min-height: 50px;
+  /* min-height: 50px; */
   padding: 0 20px;
   color: #ccc;
   font-size: 12px;
-  line-height: 50px;
+  /* line-height: 50px; */
+  padding: 15.99px 0px 16.01px 15px;
   background-color: #0F191B;
-  border-bottom: 1px solid rgba(28, 141, 135, 0.2);
+  border-bottom: 0.5px solid rgba(28, 141, 135, 0.2);
   cursor: pointer;
 }
-
+.lable{
+  height: 18px;
+  line-height: 18px;
+}
 
 .item:last-child {
   border: 0;
@@ -41,7 +45,7 @@
 }
 
 .long{
-  width: 180px;
+  width: 154px;
 }
 .short{
   width: 120px;
@@ -53,4 +57,7 @@
 
 .border{
   border: 1px solid rgba(255,255,255,0.5);
+  width: 16px;
+  height: 16px;
+  margin-right: 6px !important;
 }

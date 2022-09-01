@@ -11,6 +11,7 @@
   caret-color: #00d0ec;
   outline: black;
   color: #fff;
+  font-size: 12px;
   padding: 0 10px;
   border-radius: 6px 0px 0px 6px;
 }
@@ -54,8 +55,8 @@
   position: absolute;
   right: 10px;
   top: 12px;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   cursor: pointer;
 }
 

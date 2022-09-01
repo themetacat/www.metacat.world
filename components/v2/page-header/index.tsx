@@ -269,11 +269,11 @@ export default function PageHeader({ active, className }: Props) {
             >
               <Link href="/parcels?tab=cryptovoxels" prefetch>Parcels</Link>
               {ParcelsState ? (
-                <TwoNav
+                <TwoNavigation
                   options={parcels}
                   className={style.cn}
                   location={style.parcels}
-                ></TwoNav>
+                ></TwoNavigation>
               ) : null}
             </div>
 
