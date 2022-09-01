@@ -34,6 +34,7 @@ import TrafficBar from '../../components/parcel-traffic_bar';
 import Creator from '../../components/creator';
 import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
+import JoinBuilders from '../../components/join_builders';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -102,10 +103,10 @@ const TAB3 = [
     label: 'My Wearables',
     type: 'wearablelist',
   },
-  // {
-  //   label: 'Building',
-  //   type: 'building',
-  // },
+  {
+    label: 'My Buildings',
+    type: 'building',
+  },
   // {
   //   label: 'SALES REPORT',
   // },
@@ -203,6 +204,7 @@ function ProfilePage(r) {
   const [wearablesHideData, setWearablesHideData] = React.useState([]);
 
   const [wearablesShowOrHideState, setWearablesShowOrHideState] = React.useState(false);
+  const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
   const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
 
@@ -410,10 +412,10 @@ function ProfilePage(r) {
   );
 
   const changeNavTab = React.useCallback(
-    
+
     (nav_label, index = 0) => {
       // console.log(nav_label,222222222222222);
-      
+
       // setNavLabel(navLabel);
       setNavLabel(nav_label);
       setCardState(false);
@@ -421,7 +423,7 @@ function ProfilePage(r) {
       nav_Label.current = nav_label;
       // changeNum(dataSource, nav_label);
       // console.log(Nav);
-      
+
       const set_nav = Nav.map((item, i) => {
         if (index === i) return { ...item, state: 1 };
         return { ...item, state: 0 };
@@ -500,7 +502,7 @@ function ProfilePage(r) {
       const res = await getBaseInfo(token);
       setStatue(res.data.profile.creator_status)
       // console.log(res.data.profile.creator_status,99999);
-      
+
       // const statue = res.data.profile.creator_status;
       const data = resultHandler(res, requestPersonal);
       if (!data) {
@@ -566,6 +568,18 @@ function ProfilePage(r) {
       reqDclData(accessToken);
     }
   }, [requestData, getToken, reqDclData]);
+
+  const addWork = React.useCallback( () => {
+      console.log("hhhhhhhhhhhhhhhhhhh");
+      // <JoinBuilders/>
+      // joinBuilders
+      
+
+      // renderssssContent
+  }, [])
+
+
+
 
   const select = React.useCallback(
     (id, ids) => {
@@ -656,26 +670,26 @@ function ProfilePage(r) {
       return <Status retry={onRetry} status="error" />;
     }
     if (dataBuildSource.length === 0) {
-      return <Status status="emptyBuilding" />;
+      return <Status addWork={addWork} status="emptyBuilding" />;
     }
-      return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
-          {dataBuildSource.map((card) => {
-            return (
-              <CardBuilding
-                {...card}
-                parcelsIds={parcelsIds}
-                state={cardState}
-                key={uuid()}
-                selectedIds={selectedIds}
-                onClick={(id, ids) => {
-                  select(id, ids);
-                }}
-              ></CardBuilding>
-            );
-          })}
-        </div>
-      );
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+        {dataBuildSource.map((card) => {
+          return (
+            <CardBuilding
+              {...card}
+              parcelsIds={parcelsIds}
+              state={cardState}
+              key={uuid()}
+              selectedIds={selectedIds}
+              onClick={(id, ids) => {
+                select(id, ids);
+              }}
+            ></CardBuilding>
+          );
+        })}
+      </div>
+    );
   }, [
     error,
     dataBuildSource,
@@ -836,7 +850,7 @@ function ProfilePage(r) {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
 
- 
+
   React.useEffect(() => {
     setNavLabel('All')
     const accessToken = getToken('atk');
@@ -860,7 +874,7 @@ function ProfilePage(r) {
     routeTab,
     tabState,
     reqWearablesData,
-  ],);
+  ]);
 
   const tag1 = () => {
     if (label === 'Cancel lease for multiple') return 'Cancel leased';
@@ -959,7 +973,7 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
-   
+
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -1051,16 +1065,16 @@ function ProfilePage(r) {
               {nav.map((item, index) => {
                 return (
                   <>
-                  <ParcelsTab
-                    dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
-                    label={item.label}
-                    state={item.state}
-                    num={item.num}
-                    key={item.label}
-                    onClick={() => {
-                      changeNavTab(item.label, index);
-                    }}
-                  />
+                    <ParcelsTab
+                      dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
+                      label={item.label}
+                      state={item.state}
+                      num={item.num}
+                      key={item.label}
+                      onClick={() => {
+                        changeNavTab(item.label, index);
+                      }}
+                    />
                   </>
                 );
               })}
@@ -1248,8 +1262,8 @@ function ProfilePage(r) {
       //     </div>
       //   )
       // }else{
-     
-       
+
+
       // }
       return (
         <>
@@ -1274,7 +1288,7 @@ function ProfilePage(r) {
             </div>
             <div className={cls} />
           </div> */}
-       
+
           <div className={style.wearablesContainer}>
             <div className={style.title}>
               <div className={style.wearables}
@@ -1287,42 +1301,42 @@ function ProfilePage(r) {
                 {wearablesNav.map((item, index) => {
                   return (
                     <>
-                 
-                    <div
-                      onClick={() => {
-                        setWearablesNavState(item.type);
-                        wearablesState.current = item.type;
-                        setShowOrHideState(false);
-                        if (item.type === 'all') {
-                          setWearablesCreatorsData(wearablesCreatorsOriginData);
-                        }
-                        if (item.type === 'shown') {
-                          setWearablesCreatorsData(wearablesShowData);
-                        }
-                        if (item.type === 'hidden') {
-                          setWearablesCreatorsData(wearablesHideData);
-                        }
-                      }}
-                      className={cn(
-                        style.wearablesNavItem,
-                        wearablesNavState === item.type ? style.wearableNavAction : null,
-                      )}
-                      key={uuid()}
-                    >
-                      {/* <div className={style.mmm}> */}
-                      <div >{item.label}
-                        {/* <span>{item.label}</span> */}
-                        <span style={{ marginLeft: "2px" }}>
-                          {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-                          {item.type === 'shown' ? wearablesShowData.length : null}
-                          {item.type === 'hidden' ? wearablesHideData.length : null}
-                        </span>
-                      </div>
 
-                      {/* </div> */}
-                    </div>
-                 </> 
-                 );
+                      <div
+                        onClick={() => {
+                          setWearablesNavState(item.type);
+                          wearablesState.current = item.type;
+                          setShowOrHideState(false);
+                          if (item.type === 'all') {
+                            setWearablesCreatorsData(wearablesCreatorsOriginData);
+                          }
+                          if (item.type === 'shown') {
+                            setWearablesCreatorsData(wearablesShowData);
+                          }
+                          if (item.type === 'hidden') {
+                            setWearablesCreatorsData(wearablesHideData);
+                          }
+                        }}
+                        className={cn(
+                          style.wearablesNavItem,
+                          wearablesNavState === item.type ? style.wearableNavAction : null,
+                        )}
+                        key={uuid()}
+                      >
+                        {/* <div className={style.mmm}> */}
+                        <div >{item.label}
+                          {/* <span>{item.label}</span> */}
+                          <span style={{ marginLeft: "2px" }}>
+                            {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+                            {item.type === 'shown' ? wearablesShowData.length : null}
+                            {item.type === 'hidden' ? wearablesHideData.length : null}
+                          </span>
+                        </div>
+
+                        {/* </div> */}
+                      </div>
+                    </>
+                  );
                 })}
               </div>
               <div
@@ -1363,12 +1377,13 @@ function ProfilePage(r) {
         </>
       );
     }
-    if(routeTab === 'building'){
-      return(
+    if (routeTab === 'building') {
+      return (
         <>
-        <div className={style.buildingContainer}>
-        <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}</div>
-        </div>
+          <div className={style.buildingContainer}>
+            <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+            </div>
+          </div>
         </>
       )
 

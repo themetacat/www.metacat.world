@@ -11,12 +11,11 @@ interface Props {
   status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search'| 'emptyBuilding';
   mini?: boolean;
   retry?: () => void;
+  addWork?: () => void;
 }
-export default function Status({ status, retry, mini = false }: Props) {
+export default function Status({ status, retry,addWork, mini = false }: Props) {
   const router = useRouter();
-  const addWork =()=>{
-    router.replace('/profile/addBuilding')
-  }
+
   const commonCls = cn(
     'flex w-full flex-col justify-center items-center py-10',
     mini ? style.mini : style.baseText,
