@@ -110,10 +110,10 @@ const TAB3 = [
     label: 'My Wearables',
     type: 'wearablelist',
   },
-  // {
-  //   label: 'My Buildings',
-  //   type: 'building',
-  // },
+  {
+    label: 'My Buildings',
+    type: 'building',
+  },
   // {
   //   label: 'SALES REPORT',
   // },

@@ -76,8 +76,18 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   }
 
   const delBuild = () => {
-    console.log(555555555);
+    console.log(555555555,subLength);
+    // let newNumDel = subLength;
+    // newNumDel-=1;
+    // const newArr = []
+    // for (let index = 0; index < newNumDel; index -= 1) {
+    //   newArr.push(index)
 
+    // }
+    // setSubLength(newNumDel)
+
+    // setSubArr(newArr)
+    
   }
 
   const codeBlue = React.useCallback(() => {
@@ -118,20 +128,21 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
                       }}
                       onBlur={emailBlue}
                     />
-                    {/* <>
+                    <>
                       <span className={styles.add} onClick={delBuild}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
-                    </> : '' */}
+                    </> : ''
                   </>
                 )
                 )
               }
-              {
+              {/* {
                 email !== '' ?
                   <>
                     <span className={styles.add} onClick={delBuild}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
+                    
                   </> : ''
 
-              }
+              } */}
               <span onClick={addBuild} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
             </div>
             <p className={styles.send}>You can also send your works to our：
