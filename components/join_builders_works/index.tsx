@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import styles from './index.module.css';
+
 
 import { toast } from 'react-hot-toast';
 
@@ -23,6 +23,8 @@ interface Props {
   addBuildOther?;
 }
 
+import styles from './index.module.css';
+
 export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modifyEmail }: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
@@ -32,7 +34,7 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [token, setToken] = React.useState('');
   const [codeState, setCodeState] = React.useState('getCode');
-  let [subLength, setSubLength] = React.useState(1);
+  const [subLength, setSubLength] = React.useState(1);
   const [subArr, setSubArr] = React.useState([1]);
   const time = React.useRef(60);
   const timeId = React.useRef(null);
@@ -60,12 +62,13 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
 
 
   const addBuildOther = () => {
-    console.log(subLength,subLength++);
+    console.log(subLength,);
     if(subLength>9){
       return false;
     }
-    let newNum = subLength++
-    let newArr =[]
+    let newNum = subLength;
+    newNum++;
+    const newArr =[]
     for (let index = 0; index < newNum; index++) {
       newArr.push(index)
       

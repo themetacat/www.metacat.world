@@ -7,6 +7,9 @@ import { toast } from 'react-hot-toast';
 import { className } from 'babylonjs/index';
 
 import { useRouter, withRouter } from 'next/router';
+
+import { join } from 'path/posix';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
@@ -66,7 +69,7 @@ import {
 
 
 import style from './index.module.css';
-import { join } from 'path/posix';
+
 
 
 const TABData = [
@@ -511,9 +514,9 @@ function ProfilePage(r) {
       const res = await getBaseInfo(token);
 
       const sta = res.data.profile.creator_status
-      const emailState = res.data.profile.email
+      // const emailState = res.data.profile.email
 
-      setStatue(sta)//这个值为什么设置的不起作用
+      setStatue(sta)
       console.log(sta, 88888, emailState, 888, statue);
 
       // setEmailState(res.data.profile.email)
@@ -1345,7 +1348,7 @@ function ProfilePage(r) {
       // if(statue===1){
       return (
         <>
-          {statue == 1 ?
+          {statue === 1 ?
             <div className={style.createrCont}>
               <span className={style.join}>Join Creators to show your works</span>
               <span className={style.apply}>Apply</span>
@@ -1580,14 +1583,14 @@ function ProfilePage(r) {
         </div>
       ) : null}
       {joinBuilders === true ? <>
-        <JoinBuilders
+        {/* <JoinBuilders
             turnOff={turnOff} 
             nextBtn={nextBtn}
-          />
-        {/* <JoinBuildersWork
+          /> */}
+        <JoinBuildersWork
           turnOff={turnOff}
           nextBtnAdd={nextBtnAdd}
-        /> */}
+        />
 
         {/* <ChangeEmail
         value={email}
