@@ -66,11 +66,7 @@ import {
   req_set_wearable_show_status,
 } from '../../service/z_api';
 
-
-
 import style from './index.module.css';
-
-
 
 const TABData = [
   {
@@ -387,7 +383,6 @@ function ProfilePage(r) {
         store.setState(() => ({ type: 'cv' }));
       }
       if (tab === 'decentraland') {
-
         setDclDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'dcl' }));
       }
@@ -424,7 +419,6 @@ function ProfilePage(r) {
   );
 
   const changeNavTab = React.useCallback(
-
     (nav_label, index = 0) => {
       // console.log(nav_label,222222222222222);
 
@@ -513,10 +507,10 @@ function ProfilePage(r) {
     async (token: string) => {
       const res = await getBaseInfo(token);
 
-      const sta = res.data.profile.creator_status
+      const sta = res.data.profile.creator_status;
       // const emailState = res.data.profile.email
 
-      setStatue(sta)
+      setStatue(sta);
       console.log(sta, 88888, emailState, 888, statue);
 
       // setEmailState(res.data.profile.email)
@@ -593,31 +587,28 @@ function ProfilePage(r) {
   const addWork = React.useCallback(async () => {
     // <JoinBuilders/>
     // joinBuilders
-    setJoinBuilders(true)
+    setJoinBuilders(true);
     console.log(joinBuilders, 5555555555);
 
-
     // renderssssContent
-  }, [joinBuilders])
-
+  }, [joinBuilders]);
 
   const turnOff = () => {
-    setJoinBuilders(false)
-  }
+    setJoinBuilders(false);
+  };
   const turnBuild = () => {
-    setTabStateTR(false)
-  }
+    setTabStateTR(false);
+  };
   const nextBtn = () => {
-    setJoinBuilders(false)
-    setTabStateTR(true)
-  }
+    setJoinBuilders(false);
+    setTabStateTR(true);
+  };
   const nextBtnAdd = () => {
-    setTabStateTR(false)
-  }
+    setTabStateTR(false);
+  };
   const addBuildOther = () => {
     console.log(444444444);
-
-  }
+  };
 
   const select = React.useCallback(
     (id, ids) => {
@@ -787,7 +778,6 @@ function ProfilePage(r) {
     [rent_set_state, manyChange],
   );
 
-
   const requireData = React.useCallback(
     async (token) => {
       const res = await getBaseInfo(token);
@@ -940,9 +930,8 @@ function ProfilePage(r) {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
 
-
   React.useEffect(() => {
-    setNavLabel('All')
+    setNavLabel('All');
     const accessToken = getToken('atk');
     setRouteTab(r.router.query.type);
     reqWearablesData();
@@ -1063,7 +1052,6 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
-
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -1130,7 +1118,7 @@ function ProfilePage(r) {
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className={cn("main-content flex px-0", style.tabtext)} >
+            <div className={cn('main-content flex px-0', style.tabtext)}>
               {TABData.map((item) => {
                 return (
                   <Tab4
@@ -1172,7 +1160,9 @@ function ProfilePage(r) {
           </div>
           {/* 导航结束 */}
           {/* 卡片开始 */}
-          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderContent}</div>
+          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: '-20px' }}>
+            {renderContent}
+          </div>
 
           {/* 卡片结束 */}
           {tag2()}
@@ -1188,12 +1178,12 @@ function ProfilePage(r) {
       );
     }
     if (routeTab === 'trafficreport') {
-      if (showType === "cryptovoxels") {
+      if (showType === 'cryptovoxels') {
         return (
           <>
             <div className={cn('tab-list flex mt-5', style.allHeight)}>
               <div className={cls}></div>
-              <div className={cn("main-content flex px-0", style.tabtext)}>
+              <div className={cn('main-content flex px-0', style.tabtext)}>
                 {REPORTTAB.map((item) => {
                   return (
                     <Tab4
@@ -1213,7 +1203,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart >
+              <BaseChart>
                 <BaseBar
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1270,7 +1260,7 @@ function ProfilePage(r) {
           </>
         );
       }
-      if (showType === "decentraland") {
+      if (showType === 'decentraland') {
         return (
           <>
             <div className={cn('tab-list flex ', style.allHeight)}>
@@ -1295,7 +1285,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart >
+              <BaseChart>
                 <BaseBarDece
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1339,26 +1329,24 @@ function ProfilePage(r) {
               </BaseChart>
             </div>
           </>
-        )
-
+        );
       }
     }
     if (routeTab === 'wearablelist') {
-      
       // if(statue===1){
       return (
         <>
-          {statue === 1 ?
+          {statue === 1 ? (
             <div className={style.createrCont}>
               <span className={style.join}>Join Creators to show your works</span>
               <span className={style.apply}>Apply</span>
             </div>
-            : <></>}
+          ) : (
+            <></>
+          )}
         </>
-      )
+      );
       // }else{
-
-
     }
     // return (
     //   <>
@@ -1476,12 +1464,12 @@ function ProfilePage(r) {
       return (
         <>
           <div className={style.buildingContainer}>
-            <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+            <div className={cn('main-content mt-8', style.content)} style={{ marginTop: '-20px' }}>
+              {renderBuilding}
             </div>
           </div>
         </>
-      )
-
+      );
     }
   }, [
     showTab,
@@ -1503,7 +1491,7 @@ function ProfilePage(r) {
   ]);
 
   return (
-    <Page className={cn('min-h-screen', style.anPage,)} meta={meta} >
+    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
       {/* joinBuilders === true?style.joinBuilders:'' */}
       <div
         onClick={() => {
@@ -1546,7 +1534,9 @@ function ProfilePage(r) {
             </div>
           </div>
           {randerCardList}
-          <div style={{ width: "100%" }}><Footer /></div>
+          <div style={{ width: '100%' }}>
+            <Footer />
+          </div>
         </div>
       </div>
       {creatorState ? (
@@ -1560,8 +1550,9 @@ function ProfilePage(r) {
 
       {wearablesShowOrHideState ? (
         <div className={style.settingShowOrHide}>
-          {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
-            } selected`}
+          {`${wearablesSleceteIdList.length}/${
+            wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
+          } selected`}
           <div
             onClick={() => {
               setWearablesShowOrHideState(false);
@@ -1582,29 +1573,31 @@ function ProfilePage(r) {
           </div>
         </div>
       ) : null}
-      {joinBuilders === true ? <>
-        <JoinBuilders
-            turnOff={turnOff} 
-            nextBtn={nextBtn}
-          />
-        {/* <JoinBuildersWork
+      {joinBuilders === true ? (
+        <>
+          <JoinBuilders turnOff={turnOff} nextBtn={nextBtn} />
+          {/* <JoinBuildersWork
           turnOff={turnOff}
           nextBtnAdd={nextBtnAdd}
         /> */}
 
-        {/* <ChangeEmail
+          {/* <ChangeEmail
         value={email}
         state={emailState}
         closeEmail={closeEmail}
         modifyEmail={modifyEmail}
       ></ChangeEmail> */}
-      </> : ''}
-      {tabStateTR === true ? <>
-        <JoinBuildersAdd
-          turnBuild={turnBuild}
-          nextBtnAdd={nextBtnAdd}
-        />
-      </> : ''}
+        </>
+      ) : (
+        ''
+      )}
+      {tabStateTR === true ? (
+        <>
+          <JoinBuildersAdd turnBuild={turnBuild} nextBtnAdd={nextBtnAdd} />
+        </>
+      ) : (
+        ''
+      )}
     </Page>
   );
 }

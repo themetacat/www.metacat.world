@@ -25,8 +25,6 @@ class API {
     return json;
   }
 
-
-
   public async getCVEventList(cursor: number, count: number): Promise<any> {
     const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_event_list${search}`;
@@ -188,7 +186,7 @@ class API {
   public async getDecentralandStats(): Promise<any> {
     const url = `${this.url}/get_dcl_traffic_stats`;
     const res = await fetch(url);
-    const json = await res.json(); 
+    const json = await res.json();
 
     return json;
   }
@@ -618,6 +616,23 @@ class API {
     const url = `${this.url}/home_page/get_floor_price`;
     const res = await fetch(url);
     const json = await res.json();
+    return json;
+  }
+
+  public async getTzLandPriceMap(): Promise<any> {
+    const url = `${this.url}/get_tz1and_price_map`;
+    const result = await fetch(url);
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async getTzLandParcelDetail(tokenId: string): Promise<any> {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_tz1and_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
     return json;
   }
 }

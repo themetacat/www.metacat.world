@@ -84,9 +84,8 @@ export default function Settings() {
       const { code, msg, data } = res;
       if (code === 100000) {
         return convert(data);
-        
       }
-    
+
       if (code === 100003) {
         refreshTK().then((token) => {
           if (token && callback) {
@@ -224,7 +223,7 @@ export default function Settings() {
           }
           toast.success('Profile successfully updated');
           setSaving(false);
-          Router.replace('/profile?type=parcellist')
+          Router.replace('/profile?type=parcellist');
           state.setState({
             profile: {
               nickName,
@@ -317,9 +316,9 @@ export default function Settings() {
   const changeCountry = React.useCallback((c) => {
     setCountry(c);
   }, []);
-  const Save =()=>{
-    Router.replace('/profile?type=parcellist')
-  }
+  const Save = () => {
+    Router.replace('/profile?type=parcellist');
+  };
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
@@ -388,7 +387,6 @@ export default function Settings() {
                   data={allCountry}
                   country={country}
                   onClick={changeCountry}
-
                 ></CountryInput>
 
                 <div className={style.Introduction}>

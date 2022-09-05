@@ -11,7 +11,6 @@ import toast from 'react-hot-toast';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
 
-
 import Page from '../../components/page';
 // import Layout from '../../components/layout';
 import Layout from '../../components/layoutParcels';
@@ -85,7 +84,7 @@ import {
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
   req_space_buildings_list,
-  req_scence_list
+  req_scence_list,
 } from '../../service/z_api';
 
 import style from './index.module.less';
@@ -109,8 +108,6 @@ const SomniumMap = dynamic(() => import('../../components/somnium-map'), {
 const OtherSideMap = dynamic(() => import('../../components/otherside-map'), {
   ssr: false,
 });
-
-
 
 const TAB = [
   {
@@ -219,7 +216,6 @@ const SUBTABZ2 = [
 ];
 
 export default function Index(props) {
-
   const router = useRouter();
 
   const meta = {
@@ -251,8 +247,6 @@ export default function Index(props) {
   const [tabPercent, setTabPercent] = React.useState(0);
 
   const web3 = useWalletProvider();
-
-
 
   const requestData = async ({
     tab,
@@ -301,9 +295,7 @@ export default function Index(props) {
           }
 
           data = event_list;
-        }
-        else if (subTab === 'space') {
-
+        } else if (subTab === 'space') {
           const res = await req_space_buildings_list(page, 40, query, type);
 
           // let { page, count } = res;
@@ -352,8 +344,7 @@ export default function Index(props) {
           }
 
           data = event_list;
-        }
-        else if (subTab === 'scene') {
+        } else if (subTab === 'scene') {
           const res = await req_scence_list(page, 40, query, type);
 
           // let { page, count } = res;
@@ -373,9 +364,7 @@ export default function Index(props) {
           //  data = parcel_list;
         }
       }
-
     } catch (err) {
-
       setError(true);
     }
 
@@ -401,32 +390,28 @@ export default function Index(props) {
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
-
   const onTabChange = async (tab) => {
     // console.log(tab, 222222222);
 
-    let subIndex
+    let subIndex;
     if (tabState === 'cryptovoxels') {
-      subIndex = SUBTAB.findIndex(item => item.type === subTabState)
-    } else if (tabState === "decentraland") {
-      subIndex = SUBTABDECE.findIndex(item => item.type === subTabState)
+      subIndex = SUBTAB.findIndex((item) => item.type === subTabState);
+    } else if (tabState === 'decentraland') {
+      subIndex = SUBTABDECE.findIndex((item) => item.type === subTabState);
     }
     // console.log(subIndex, tabState);
-    subIndex = subIndex === -1 ? 0 : subIndex
+    subIndex = subIndex === -1 ? 0 : subIndex;
     setTabState(tab);
     let sub = '';
     if (tab === 'cryptovoxels') {
       sub = SUBTAB[subIndex].type;
-      setSubTabState(SUBTAB[subIndex].type)
-      router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`)
-
+      setSubTabState(SUBTAB[subIndex].type);
+      router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`);
     } else if (tab === 'decentraland') {
       sub = SUBTAB[subIndex].type;
-      setSubTabState(SUBTABDECE[subIndex].type)
-      router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`)
-
-    }
-    else if (
+      setSubTabState(SUBTABDECE[subIndex].type);
+      router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`);
+    } else if (
       tab === 'nftworlds' ||
       tab === 'worldwidewebb' ||
       // tab === 'otherside' ||
@@ -465,27 +450,25 @@ export default function Index(props) {
   const onSubTabChange = React.useCallback(
     async (subTab) => {
       setSubTabState(subTab);
-      let subIndexData
+      let subIndexData;
       // console.log(subTab, tabState, subIndexData)
       // setTabState(subTab);
-      if (tabState === "cryptovoxels") {
+      if (tabState === 'cryptovoxels') {
         if (subTab === 'parcel') {
-          subIndexData = SUBTAB.findIndex(item => item.type === subTab)
-        }
-        else if (subTab === 'space') {
-          subIndexData = SUBTAB.findIndex(item => item.type === subTab)
+          subIndexData = SUBTAB.findIndex((item) => item.type === subTab);
+        } else if (subTab === 'space') {
+          subIndexData = SUBTAB.findIndex((item) => item.type === subTab);
         }
         // console.log(subIndexData, tabState);
-        subIndexData = subIndexData === -1 ? 0 : subIndexData
+        subIndexData = subIndexData === -1 ? 0 : subIndexData;
       } else {
         if (subTab === 'parcel') {
-          subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
-        }
-        else if (subTab === 'scene') {
-          subIndexData = SUBTABDECE.findIndex(item => item.type === subTab)
+          subIndexData = SUBTABDECE.findIndex((item) => item.type === subTab);
+        } else if (subTab === 'scene') {
+          subIndexData = SUBTABDECE.findIndex((item) => item.type === subTab);
         }
         // console.log(subIndexData, tabState);
-        subIndexData = subIndexData === -1 ? 0 : subIndexData
+        subIndexData = subIndexData === -1 ? 0 : subIndexData;
       }
 
       let sub = '';
@@ -494,20 +477,18 @@ export default function Index(props) {
         sub = subTabState;
         // console.log(SUBTAB[subIndexData].type,);
 
-        setSubTabState(SUBTAB[subIndexData].type)
-        router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`)
-
+        setSubTabState(SUBTAB[subIndexData].type);
+        router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`);
       } else if (tabState === 'decentraland') {
         sub = subTabState;
         // console.log(SUBTABDECE[subIndexData].type);
-        setSubTabState(SUBTABDECE[subIndexData].type)
-        router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`)
-
+        setSubTabState(SUBTABDECE[subIndexData].type);
+        router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`);
       }
 
       setSearchText('');
       setTypeState('');
-      setTypeState('All')
+      setTypeState('All');
       // console.log(sub);
       const data = await requestData({
         tab: tabState,
@@ -518,7 +499,6 @@ export default function Index(props) {
         needUpdateTypeList: true,
       });
       setDataSource(data);
-
     },
     [tabState, searchText, typeState],
   );
@@ -610,7 +590,7 @@ export default function Index(props) {
       setDataSource(data);
     },
     [tabState, subTabState, typeState],
-  )
+  );
 
   const loadMore = React.useCallback(
     async (defaultPage?: number) => {
@@ -660,10 +640,13 @@ export default function Index(props) {
       }
       return (
         <>
-
-          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5', style.bottomContent)}>
+          <div
+            className={cn(
+              'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+              style.bottomContent,
+            )}
+          >
             {dataSource.map((card, idx) => {
-
               return <Card {...card} typeState={typeState} key={uuid()}></Card>;
             })}
           </div>
@@ -693,7 +676,12 @@ export default function Index(props) {
       }
       return (
         <>
-          <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  ', style.bottomContent)}>
+          <div
+            className={cn(
+              'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  ',
+              style.bottomContent,
+            )}
+          >
             {dataSource.map((card, idx) => {
               // return <Card {...card}  key={uuid()}></Card>;
               return <CardSpace {...card} key={idx}></CardSpace>;
@@ -721,7 +709,6 @@ export default function Index(props) {
 
       if (dataSource.length === 0) {
         return null;
-
       }
       return (
         <>
@@ -1657,15 +1644,14 @@ export default function Index(props) {
     [refreshTK],
   );
 
-
   useEffect(() => {
     // console.log(router.query.tab);
-    const tab = router.query.tab || "cryptovoxels"
-    const subTab = router.query.subTab || 'parcel'
-    setTabState(tab)
-    setSubTabState(subTab)
-    onTabChange(tab)
-  }, [router.query.tab])
+    const tab = router.query.tab || 'cryptovoxels';
+    const subTab = router.query.subTab || 'parcel';
+    setTabState(tab);
+    setSubTabState(subTab);
+    onTabChange(tab);
+  }, [router.query.tab]);
 
   const requestPersonal = React.useCallback(
     async (token: string) => {
@@ -1681,7 +1667,7 @@ export default function Index(props) {
   );
 
   React.useEffect(() => {
-    setTypeState('All')
+    setTypeState('All');
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -1708,9 +1694,7 @@ export default function Index(props) {
 
   return (
     <Page meta={meta}>
-
       <Layout>
-
         {/* {topicList.length > 0 ? (
           <>
             <div
@@ -1731,155 +1715,159 @@ export default function Index(props) {
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
         <div className={style.containerBox}>
-        <div className={cn(' relative myClassName', fixedState ? style.fix1 : null)}>
-          <PageHeader className="relative z-10" active={'/parcels'} />
-        </div>
-        <div className={cn('tab-list flex myClassName ', style.allHeight,
-          // fixedState ? style.aboslute : null
-        )} >
-          <div className={cls}></div>
-          <div className="main-content flex px-0 relative">
-            <div
-              className={cn(
-                'p absolute z-40 flex justify-start items-center',
-                {
-                  hidden: tabPercent <= 0,
-                },
-                style.per,
-              )}
-            >
-              <img className={style.icon} src="/images/tab-left.png"></img>
-            </div>
-            <Swiper
-              modules={[Navigation]}
-              spaceBetween={1}
-              slidesPerView="auto"
-              className={cn('w-full',)}
-              navigation={{
-                prevEl: '.p',
-                nextEl: '.n',
-              }}
-              onProgress={(swiper, progress) => {
-                setTabPercent(progress);
-              }}
-            >
-              {TAB.map((item, index) => {
-                return (
-                  <SwiperSlide
-                    className={cn(
-                      'box-border w-12 font-semibold text-white ',
-                      style.baseCON,
-                      tabState === item.type ? style.active : null,
-                    )}
-                    key={index}
-                    onClick={() => {
-                      onTabChange(item.type);
-                    }}
-                  >
-                    <Tab
-                      active={tabState === item.type}
-                      key={item.label}
-                      label={item.label}
-                      icon={item.icon}
-                      isMini={true}
-                    //          id="switch"
-                    // className={style.aboslute}
-                    // fixedS={fixedState}
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-            <div
-              className={cn(
-                'n absolute z-40  flex justify-end items-center',
-                {
-                  hidden: tabPercent >= 1,
-                },
-                style.next,
-              )}
-            >
-              <img className={style.icon} src="/images/tab-right.png"></img>
+          <div className={cn(' relative myClassName', fixedState ? style.fix1 : null)}>
+            <PageHeader className="relative z-10" active={'/parcels'} />
+          </div>
+          <div
+            className={cn(
+              'tab-list flex myClassName ',
+              style.allHeight,
+              // fixedState ? style.aboslute : null
+            )}
+          >
+            <div className={cls}></div>
+            <div className="main-content flex px-0 relative">
+              <div
+                className={cn(
+                  'p absolute z-40 flex justify-start items-center',
+                  {
+                    hidden: tabPercent <= 0,
+                  },
+                  style.per,
+                )}
+              >
+                <img className={style.icon} src="/images/tab-left.png"></img>
+              </div>
+              <Swiper
+                modules={[Navigation]}
+                spaceBetween={1}
+                slidesPerView="auto"
+                className={cn('w-full')}
+                navigation={{
+                  prevEl: '.p',
+                  nextEl: '.n',
+                }}
+                onProgress={(swiper, progress) => {
+                  setTabPercent(progress);
+                }}
+              >
+                {TAB.map((item, index) => {
+                  return (
+                    <SwiperSlide
+                      className={cn(
+                        'box-border w-12 font-semibold text-white ',
+                        style.baseCON,
+                        tabState === item.type ? style.active : null,
+                      )}
+                      key={index}
+                      onClick={() => {
+                        onTabChange(item.type);
+                      }}
+                    >
+                      <Tab
+                        active={tabState === item.type}
+                        key={item.label}
+                        label={item.label}
+                        icon={item.icon}
+                        isMini={true}
+                        //          id="switch"
+                        // className={style.aboslute}
+                        // fixedS={fixedState}
+                      />
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+              <div
+                className={cn(
+                  'n absolute z-40  flex justify-end items-center',
+                  {
+                    hidden: tabPercent >= 1,
+                  },
+                  style.next,
+                )}
+              >
+                <img className={style.icon} src="/images/tab-right.png"></img>
+              </div>
+              <div className={cls} />
             </div>
             <div className={cls} />
           </div>
-          <div className={cls} />
-        </div>
         </div>
         <div className="main-content">
           <div className={cn('flex justify-between items-center ', style.contentHeader)}>
             <div className="flex">
               {tabState === 'cryptovoxels'
                 ? SUBTAB.map((item, index) => {
-                  if (item) {
-                    return (
-                      <SecondTab
-                        label={item.label}
-                        key={item.label}
-                        onClick={() => {
-                          onSubTabChange(item.type);
-                        }}
-                        active={subTabState === item.type}
-                      />
-                    );
-                  }
-                  return null;
-                })
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
                 : null}
               {tabState === 'decentraland'
                 ? SUBTABDECE.map((item, index) => {
-                  if (item) {
-                    return (
-                      <SecondTab
-                        label={item.label}
-                        key={item.label}
-                        onClick={() => {
-                          onSubTabChange(item.type);
-                        }}
-                        active={subTabState === item.type}
-                      />
-                    );
-                  }
-                  return null;
-                })
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
                 : null}
               {tabState === 'nftworlds' ||
-                tabState === 'worldwidewebb' ||
-                // tabState === 'otherside' ||
-                tabState === 'netvrk'
+              tabState === 'worldwidewebb' ||
+              // tabState === 'otherside' ||
+              tabState === 'netvrk'
                 ? SUBTABZ.map((item, index) => {
-                  if (item) {
-                    return (
-                      <SecondTab
-                        label={item.label}
-                        key={item.label}
-                        onClick={() => {
-                          onSubTabChange(item.type);
-                        }}
-                        active={subTabState === item.type}
-                      />
-                    );
-                  }
-                  return null;
-                })
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
                 : null}
 
               {tabState === 'sandbox' || tabState === 'somniumspace' || tabState === 'otherside'
                 ? SUBTABZ2.map((item, index) => {
-                  if (item) {
-                    return (
-                      <SecondTab
-                        label={item.label}
-                        key={item.label}
-                        onClick={() => {
-                          onSubTabChange(item.type);
-                        }}
-                        active={subTabState === item.type}
-                      />
-                    );
-                  }
-                  return null;
-                })
+                    if (item) {
+                      return (
+                        <SecondTab
+                          label={item.label}
+                          key={item.label}
+                          onClick={() => {
+                            onSubTabChange(item.type);
+                          }}
+                          active={subTabState === item.type}
+                        />
+                      );
+                    }
+                    return null;
+                  })
                 : null}
             </div>
             {subTabState === 'parcel' ? (
@@ -1897,12 +1885,8 @@ export default function Index(props) {
             {subTabState === 'parcel' && (
               <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
             )}
-            {subTabState === 'space' && dataSource.length === 0 && (
-              <SpaceBuilding />
-            )}
-            {subTabState === 'scene' && dataSource.length === 0 && (
-              <ScenceBuilding />
-            )}
+            {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}
+            {subTabState === 'scene' && dataSource.length === 0 && <ScenceBuilding />}
 
             {subTabState === 'analytics' && (
               <a href={`/analytics?type=${tabState}`}>

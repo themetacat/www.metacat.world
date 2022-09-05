@@ -33,7 +33,9 @@ export default function TwoNavigation({
             {item.icon ? (
               <img className={cn(' rounded-xl w-6 h-6 mr-2', style.border)} src={item.icon}></img>
             ) : null}
-            <div className={style.lable}><Link href={item.link} >{item.label}</Link></div>
+            <div className={style.lable}>
+              <Link href={item.link}>{item.label}</Link>
+            </div>
           </div>
         );
       })}

@@ -9,7 +9,6 @@ import { convert, formatNum } from '../../common/utils';
 import style from './index.module.css';
 import ChartTitle from '../chart-title';
 
-
 type optionItem = {
   label?: string;
   value?: string;
@@ -30,15 +29,14 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   const [bgState, setBgState] = React.useState('');
   const [alldata, setalldata] = React.useState([]);
   const [index, setIndex] = React.useState(null);
-  
-  const obj = {}
+
+  const obj = {};
   // React.useEffect(() => {
   //   getWorldsStatsSale().then((data) => {
   //     setalldata(data);
   //   });
   // }, [])
   const requestData = React.useCallback(async () => {
-
     const res: any = await getWorldsStatsSale();
 
     const result = convert(res.data);
@@ -46,43 +44,38 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
     setDataSource(res.data.monthly.usd);
     setTotalDataSource(res.data.monthly.total_usd_sale_per);
     setUsdPercent(res.data.monthly.usd_percent);
-    res.data.monthly.usd.forEach(item => {
+    res.data.monthly.usd.forEach((item) => {
       if (!obj[item.name]) {
-        obj[item.name] = {}
+        obj[item.name] = {};
       }
       obj[item.name][item.time] = item.value;
       return obj;
-    })
-    res.data.monthly.total_usd_sale_per.forEach(item => {
+    });
+    res.data.monthly.total_usd_sale_per.forEach((item) => {
       if (!obj[item.name]) {
-        obj[item.name] = {}
+        obj[item.name] = {};
       }
       obj[item.name].total = item.value;
       return obj;
-    })
-    res.data.monthly.usd_percent.forEach(item => {
+    });
+    res.data.monthly.usd_percent.forEach((item) => {
       if (!obj[item.name]) {
-        obj[item.name] = {}
+        obj[item.name] = {};
       }
       obj[item.name].percent = item.value;
 
-
-
       return obj;
+    });
+    const arr = [];
 
-    })
-    const arr = []
-
-    Object.keys(obj).forEach(name => {
+    Object.keys(obj).forEach((name) => {
       const value = obj[name];
       if (value) {
-        arr.push({ [name]: obj[name] })
+        arr.push({ [name]: obj[name] });
       }
     });
-    setArrDataSource(obj)
-    
+    setArrDataSource(obj);
   }, [null]);
-
 
   React.useEffect(() => {
     requestData();
@@ -188,7 +181,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       {<span>{item}</span>}
                     </div>
                   </th>
-              
+
                   <th
                     className={cn(
                       '',
@@ -204,14 +197,13 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     onMouseLeave={() => {
                       setIndex(null);
                     }}
-
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
                       {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
-                      {/* ${arrdataSource[item]["2022.08"]} */}
-                      ${formatNum(arrdataSource[item]["2022.08"], false)}
+                      {/* ${arrdataSource[item]["2022.08"]} */}$
+                      {formatNum(arrdataSource[item]['2022.08'], false)}
                     </div>
                   </th>
 
@@ -232,8 +224,8 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {/* ${arrdataSource[item]["2022.07"]} */}
-                      ${formatNum(arrdataSource[item]["2022.07"], false)}
+                      {/* ${arrdataSource[item]["2022.07"]} */}$
+                      {formatNum(arrdataSource[item]['2022.07'], false)}
                     </div>
                   </th>
                   <th
@@ -290,14 +282,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       {(arrdataSource[item].total * 100).toFixed(2)}%
                     </div>
                   </th>
-
                 </tr>
-                
               </>
             );
-           
           })}
-
         </tbody>
       </table>
     </>
