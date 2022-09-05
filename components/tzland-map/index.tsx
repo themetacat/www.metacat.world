@@ -420,10 +420,10 @@ function OtherSideMap({
         const oldZ = camera.position.z;
         if (type === 'zoomIn') {
           const nextOne = oldZ * 0.8;
-          camera.position.setZ(nextOne > -100 ? -100 : nextOne);
+          camera.position.setZ(nextOne > -570 ? -570 : nextOne);
         } else {
           const nextOne = oldZ / 0.8;
-          camera.position.setZ(nextOne < -900 ? -900 : nextOne);
+          camera.position.setZ(nextOne < -1400 ? -1400 : nextOne);
         }
       }
     },
@@ -600,16 +600,16 @@ function OtherSideMap({
       const old = camera.position.z;
       // 10 600
 
-      if (old === -100 && minZoomAble) {
+      if (old === -570 && minZoomAble) {
         setMinZoomAble(false);
       }
-      if (old !== -100 && !minZoomAble) {
+      if (old !== -570 && !minZoomAble) {
         setMinZoomAble(true);
       }
-      if (old === -900 && maxZoomAble) {
+      if (old === -1400 && maxZoomAble) {
         setMaxZoomAble(false);
       }
-      if (old !== -900 && !maxZoomAble) {
+      if (old !== -1400 && !maxZoomAble) {
         setMaxZoomAble(true);
       }
     }
@@ -644,8 +644,8 @@ function OtherSideMap({
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
 
-      controls.minDistance = 100;
-      controls.maxDistance = 900;
+      controls.minDistance = 570;
+      controls.maxDistance = 1400;
       controls.enablePan = true;
       controls.enableRotate = false;
       controls.enableZoom = true;
