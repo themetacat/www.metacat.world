@@ -25,7 +25,7 @@ export default function TopicDetailCardBuildings({ topicId, name, imgUrlList, co
       }}
       target="_blank"
     >
-      <div className={cn('relative', style.topicCard)} style={{width:"290px"}}>
+      <div className={cn('relative', style.topicCard)} >
         {/* <div
           className={cn(
             'absolute top-2 right-2 flex justify-center items-center font-medium text-xs p-1',

@@ -269,7 +269,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                         return item[o]["2022.07"]
                       })} */}
                       {/* ${arrdataSource[item]["2022.08"]} */}
-                      <span style={{ marginRight: "0.75rem" }}>{formatNum(arrdataSource[item]["2022.08"], false)}</span>{priceShowType}
+                      <span style={{ marginRight: "0.75rem" }}>${arrdataSource[item]["2022.08"]}</span>{priceShowType}
                     </div>
                   </th>
 
@@ -294,7 +294,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                         return item[o]["2022.08"]
                       })} */}
                       {/* ${arrdataSource[item]["2022.07"]} */}
-                      <span style={{ marginRight: "0.75rem" }}>{formatNum(arrdataSource[item]["2022.07"], false)}</span>{priceShowType}
+                      <span style={{ marginRight: "0.75rem" }}>${arrdataSource[item]["2022.07"]}</span>{priceShowType}
                     </div>
                   </th>
                   <th

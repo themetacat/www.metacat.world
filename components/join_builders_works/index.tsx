@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 
 import styles from './index.module.css';
 
+
 import { getToken } from '../../common/utils';
 
 import {
@@ -66,6 +67,7 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
   const addBuildOther = () => {
     console.log(subLength,);
     if(subLength>9){
+      toast.error('不得超过九条数据');
       return false;
     }
     let newNum = subLength;
@@ -114,6 +116,7 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
             <p>Email</p>
             <p>This mailbox also works for personal information</p>
             <input
+             style={{marginBottom:"10px"}}
               type="text"
               placeholder="email"
               value={email}
@@ -147,6 +150,7 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
                 {
                subArr.map((item,index)=>
                     (
+                      <>
                     <input
                     style={{ width: "350px" }}
                     id="addBuilding"
@@ -161,6 +165,8 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
                     }}
                     onBlur={codeBlue}
                   />
+                 
+                  </>
                    )
                  )
                 }
