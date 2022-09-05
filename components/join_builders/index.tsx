@@ -1,8 +1,9 @@
 import React from 'react';
 import cn from 'classnames';
-import styles from './index.module.css';
 
 import { toast } from 'react-hot-toast';
+
+import styles from './index.module.css';
 
 import { getToken } from '../../common/utils';
 

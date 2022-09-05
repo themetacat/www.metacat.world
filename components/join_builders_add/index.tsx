@@ -1,13 +1,15 @@
 import React from 'react';
 import cn from 'classnames';
 
+import styles from './index.module.css';
+
 interface Props {
   classname?: string;
   turnBuild?;
   nextBtnAdd?;
 }
 
-import styles from './index.module.css';
+
 
 
 

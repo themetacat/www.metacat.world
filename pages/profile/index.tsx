@@ -797,7 +797,7 @@ function ProfilePage(r) {
         const {
           address: addr,
           nickName: name,
-          avatar,
+          // avatar,
           links,
           email: e,
           country: c,
