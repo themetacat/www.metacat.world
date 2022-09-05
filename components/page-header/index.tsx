@@ -56,13 +56,19 @@ const parcels = [
     link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
-]
+];
 const heatmapData = [
   {
     label: 'Otherside',
     icon: '/images/osd.png',
     type: 'otherside',
     link: '/heatmap?type=otherside',
+  },
+  {
+    label: 'Tz1and',
+    icon: '/images/tz1and.png',
+    type: 'tz1and',
+    link: '/heatmap?type=tz1and',
   },
   {
     label: 'The Sandbox',
@@ -153,8 +159,6 @@ const analyticsData = [
   },
 ];
 
-
-
 export default function PageHeader({ active, className }: Props) {
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
@@ -202,9 +206,7 @@ export default function PageHeader({ active, className }: Props) {
             'text-xl  text-gray-400 hover:text-white  mr-14  active:text-white cursor-pointer pointer-events-auto',
             active === 'analytics' ? style.active : null,
             style.z,
-
           )}
-
           // onClick={analyticsData}
           onMouseEnter={() => {
             setAnalyticState(true);
@@ -241,11 +243,7 @@ export default function PageHeader({ active, className }: Props) {
             Heatmap
           </Link>
           {heatmapState ? (
-            <TwoNav
-              options={heatmapData}
-              className={style.cn}
-              location={style.location3}
-            ></TwoNav>
+            <TwoNav options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
           ) : null}
         </div>
 
@@ -262,7 +260,9 @@ export default function PageHeader({ active, className }: Props) {
             setParcelsState(false);
           }}
         >
-          <Link href="/parcels?tab=cryptovoxels" prefetch>Parcels</Link>
+          <Link href="/parcels?tab=cryptovoxels" prefetch>
+            Parcels
+          </Link>
           {ParcelsState ? (
             // <TwoNav
             //   options={parcels}
@@ -318,7 +318,6 @@ export default function PageHeader({ active, className }: Props) {
             setWearableState(false);
           }}
         >
-
           <Link href={'/wearables'} prefetch>
             Wearables
           </Link>

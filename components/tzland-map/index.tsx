@@ -5,14 +5,14 @@ import Router from 'next/router';
 import {
   Scene,
   PerspectiveCamera,
-  InstancedMesh,
-  CircleGeometry,
+  MeshStandardMaterial,
+  ExtrudeGeometry,
   DoubleSide,
   WebGLRenderer,
   MOUSE,
   Mesh,
   MeshBasicMaterial,
-  Object3D,
+  Shape,
   Color,
   Raycaster,
   Vector2,
@@ -24,8 +24,8 @@ import style from './index.module.css';
 
 import Selecter from '../select';
 import Legend from '../legend';
-import ParcelDeatil from '../parcel-detail';
-import Popup from '../otherside-popup';
+import ParcelDeatil from '../tzland-parcel-detail';
+import Popup from '../tzland-popup';
 import Status from '../status';
 
 import { convert } from '../../common/utils';
@@ -316,15 +316,15 @@ function OtherSideMap({
   const domRef = React.useRef(null);
   const raycasterRef = React.useRef(null);
   const activeParcel = React.useRef({
-    index: null,
+    parcel: null,
     id: null,
     point: null,
   });
-  const parcelsAttr = React.useRef(null);
+  const allMesh = React.useRef(null);
   const [popupPosition, setPopupPosition] = React.useState({ x: null, y: null });
   const [showDetail, setShowDetail] = React.useState(false);
   const detailPosition = React.useRef({
-    index: null,
+    parcel: null,
     x: null,
     y: null,
     z: null,
@@ -355,12 +355,28 @@ function OtherSideMap({
     [null],
   );
 
+  const setColor = React.useCallback(
+    (insMesh, acColor?) => {
+      if (!insMesh) {
+        return;
+      }
+      let result;
+      if (!acColor) {
+        const { color } = getSingleColor(insMesh.userData);
+        result = color;
+      } else {
+        result = acColor;
+      }
+      insMesh.material.color.set(result); // eslint-disable-line
+      insMesh.material.needsUpdate = true; // eslint-disable-line
+    },
+    [getSingleColor],
+  );
+
   const clearHeightLight = () => {
-    if (detailPosition.current.index) {
-      const { color } = getSingleColor(parcelsAttr.current[detailPosition.current.index]);
-      mapMesh.current.setColorAt(detailPosition.current.index, new Color(color));
-      mapMesh.current.instanceColor.needsUpdate = true; // eslint-disable-line
-      detailPosition.current.index = null;
+    if (detailPosition.current.parcel) {
+      setColor(detailPosition.current.parcel);
+      detailPosition.current.parcel = null;
     }
   };
 
@@ -372,26 +388,12 @@ function OtherSideMap({
     clearHeightLight();
   }, [popDetail.current, clearHeightLight]);
 
-  const setColor = React.useCallback(
-    (insMesh, attrs) => {
-      if (!insMesh) {
-        return;
-      }
-
-      for (let i = 0; i < attrs.length; i += 1) {
-        const fe = attrs[i];
-        const { color } = getSingleColor(fe);
-        insMesh.setColorAt(i, new Color(color));
-      }
-      insMesh.instanceColor.needsUpdate = true; // eslint-disable-line
-    },
-    [colors, getSingleColor],
-  );
-
   const changeStaticType = React.useCallback(
     (newType) => {
       staticType.current = newType;
-      setColor(mapMesh.current, parcelsAttr.current);
+      allMesh.current.forEach((element) => {
+        setColor(element);
+      });
       closePop();
     },
     [setColor],
@@ -463,35 +465,40 @@ function OtherSideMap({
       }
 
       if (parcels) {
-        const org = parcels[0];
-        const orgCenter = [0, 0];
-
-        const insGeometry = new CircleGeometry(0.2, 32);
-
-        const pointsMaterial = new MeshBasicMaterial({ color: 0xffffff, side: DoubleSide });
-        insGeometry.center();
-
-        const insMesh = new InstancedMesh(insGeometry, pointsMaterial, parcels.length);
-        const transform = new Object3D();
-        const allAttr = [];
+        const all = [];
         for (let i = 0; i < parcels.length; i += 1) {
-          const x = parcels[i].properties.coordinates[0] - orgCenter[0];
-          const y = parcels[i].properties.coordinates[1] - orgCenter[1];
-          const z = 0;
-          transform.position.set(x, y, z);
-          transform.updateMatrix();
-          insMesh.setMatrixAt(i, transform.matrix);
-          allAttr.push({
-            id: parcels[i].properties.token_id,
-            attr: parcels[i].price,
+          const { geometry, properties, price: pr } = parcels[i];
+          const { coordinates } = geometry;
+          const shape = new Shape();
+          coordinates.forEach((ele, idx) => {
+            if (idx === 0) {
+              shape.moveTo(ele[0], ele[2]);
+            } else {
+              shape.lineTo(ele[0], ele[2]);
+            }
           });
+          const extrudeSettings = {
+            steps: 2,
+            depth: 1,
+            bevelEnabled: true,
+            bevelThickness: 1,
+            bevelSize: 1,
+            bevelOffset: 0,
+            bevelSegments: 1,
+          };
+
+          const geo = new ExtrudeGeometry(shape, extrudeSettings);
+          const material = new MeshBasicMaterial({ color: 0x00ff00 });
+          const mesh = new Mesh(geo, material);
+          mesh.userData = {
+            id: properties.token_id,
+            attr: pr,
+          };
+          setColor(mesh);
+          sc.add(mesh);
+          all.push(mesh);
         }
-        parcelsAttr.current = allAttr;
-        // insMesh.userData.attrs = allAttr;
-        mapMesh.current = insMesh;
-        insMesh.rotateY(Math.PI);
-        setColor(insMesh, allAttr);
-        sc.add(insMesh);
+        allMesh.current = all;
         setLoading(false);
       }
 
@@ -518,16 +525,15 @@ function OtherSideMap({
         detailPosition.current.x = vector.x;
         detailPosition.current.y = vector.y;
         detailPosition.current.z = vector.z;
-        detailPosition.current.index = activeParcel.current.index;
-        mapMesh.current.setColorAt(activeParcel.current.index, new Color(0xff0000));
-        const { index } = getSingleColor(parcelsAttr.current[detailPosition.current.index]);
+        detailPosition.current.parcel = activeParcel.current.parcel;
+        setColor(activeParcel.current.parcel, new Color(0xff0000));
+        const { index } = getSingleColor(activeParcel.current.parcel.userData);
         if (index > -1) {
           setActiveColor(index);
         }
-        mapMesh.current.instanceColor.needsUpdate = true; // eslint-disable-line
       }
     },
-    [clearHeightLight],
+    [clearHeightLight, setColor],
   );
 
   const onPointerMove = React.useCallback(
@@ -562,15 +568,15 @@ function OtherSideMap({
       if (intersects.length > 0) {
         for (let i = 0; i < intersects.length; i += 1) {
           const intersect = intersects[i];
-          const { instanceId } = intersect;
-          activeParcel.current.index = instanceId;
-          activeParcel.current.id = parcelsAttr.current[instanceId].id;
-          activeParcel.current.point = intersect.point;
+          const { object, point } = intersect;
+          activeParcel.current.id = object.userData.id;
+          activeParcel.current.point = point;
+          activeParcel.current.parcel = object;
         }
       } else if (activeParcel.current.id) {
-        activeParcel.current.index = null;
         activeParcel.current.id = null;
         activeParcel.current.point = null;
+        activeParcel.current.parcel = null;
       }
 
       if (showDetail && popDetail.current) {
@@ -593,16 +599,16 @@ function OtherSideMap({
       const old = camera.position.z;
       // 10 600
 
-      if (old === 10 && minZoomAble) {
+      if (old === -20 && minZoomAble) {
         setMinZoomAble(false);
       }
-      if (old !== 10 && !minZoomAble) {
+      if (old !== -20 && !minZoomAble) {
         setMinZoomAble(true);
       }
-      if (old === 600 && maxZoomAble) {
+      if (old === -700 && maxZoomAble) {
         setMaxZoomAble(false);
       }
-      if (old !== 600 && !maxZoomAble) {
+      if (old !== -700 && !maxZoomAble) {
         setMaxZoomAble(true);
       }
     }
@@ -632,13 +638,13 @@ function OtherSideMap({
         0.1,
         20000,
       );
-      camera.position.z = 300;
+      camera.position.z = -300;
       scene.userData.camera = camera;
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
 
-      controls.minDistance = 10;
-      controls.maxDistance = 600;
+      controls.minDistance = 20;
+      controls.maxDistance = 700;
       controls.enablePan = true;
       controls.enableRotate = false;
       controls.enableZoom = true;

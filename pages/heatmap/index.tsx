@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import cn from 'classnames';
 
@@ -20,6 +20,10 @@ const Map = dynamic(() => import('../../components/map'), {
   ssr: false,
 });
 const OthersideMap = dynamic(() => import('../../components/otherside-map'), {
+  ssr: false,
+});
+
+const TzLandMap = dynamic(() => import('../../components/tzland-map'), {
   ssr: false,
 });
 
@@ -72,6 +76,11 @@ const TAB = [
     type: 'otherside',
   },
   {
+    label: 'Tz1and',
+    icon: '/images/tz1and.png',
+    type: 'tz1and',
+  },
+  {
     label: 'SubStrata',
     icon: '/images/substrata.png',
     type: 'substrata',
@@ -85,11 +94,9 @@ export default function MapPage(props) {
 
   const [fullScreen, setFullScreen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [mapType, setMapType] = React.useState(props.query.type || 'cryptovoxels');
+  const [mapType, setMapType] = React.useState(router.query.type || 'cryptovoxels');
   const [staticType, setStaticType] = React.useState(props.query.static || 'price');
 
- 
-  
   const showFull = React.useCallback(
     (x) => {
       setFullScreen(x);
@@ -97,16 +104,13 @@ export default function MapPage(props) {
     [null],
   );
 
-
   useEffect(() => {
-    console.log(router, 'switch');
-    if(router.query.type){
+    if (router.query.type) {
       setMapType(router.query.type);
-    }else{
-      setMapType('cryptovoxels')
+    } else {
+      setMapType('cryptovoxels');
     }
-    
-  }, [router.query.type])
+  }, [router.query.type]);
 
   const renderMap = React.useMemo(() => {
     if (loading) {
@@ -212,6 +216,22 @@ export default function MapPage(props) {
         ></SubStrataMap>
       );
     }
+    if (mapType === 'tz1and') {
+      return (
+        <TzLandMap
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          defaultStatic={staticType}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="#000"
+        ></TzLandMap>
+      );
+    }
 
     return (
       <Map
@@ -233,33 +253,33 @@ export default function MapPage(props) {
     <Page className="min-h-screen" meta={meta}>
       {fullScreen ? null : (
         <>
-        <div className={style.container}>
-          <div className="relative">
-            <PageHeader className="relative z-10" active={'heatmap'} />
-          </div>
+          <div className={style.container}>
+            <div className="relative">
+              <PageHeader className="relative z-10" active={'heatmap'} />
+            </div>
 
-          <div className={cn('tab-list flex mt-5', style.allHeight)}>
-            <div className={cls}></div>
-            <div className="main-content flex px-0">
-              {TAB.map((item, index) => {
-                return (
-                  <Tab
-                    active={mapType === item.type}
-                    isMini={true}
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    onClick={(val) => {
-                      setMapType(item.type);
-                      router.replace(`/heatmap?type=${item.type}`);
-                    }}
-                  />
-                );
-              })}
+            <div className={cn('tab-list flex mt-5', style.allHeight)}>
+              <div className={cls}></div>
+              <div className="main-content flex px-0">
+                {TAB.map((item, index) => {
+                  return (
+                    <Tab
+                      active={mapType === item.type}
+                      isMini={true}
+                      key={item.label}
+                      label={item.label}
+                      icon={item.icon}
+                      onClick={(val) => {
+                        setMapType(item.type);
+                        router.replace(`/heatmap?type=${item.type}`);
+                      }}
+                    />
+                  );
+                })}
+                <div className={cls} />
+              </div>
               <div className={cls} />
             </div>
-            <div className={cls} />
-          </div>
           </div>
         </>
       )}

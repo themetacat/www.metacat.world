@@ -59,7 +59,7 @@ const parcels = [
     link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
-]
+];
 
 const analytics = [
   {
@@ -127,6 +127,12 @@ const heatmap = [
     link: '/heatmap?type=otherside',
   },
   {
+    label: 'Tz1and',
+    icon: '/images/tz1and.png',
+    type: 'tz1and',
+    link: '/heatmap?type=tz1and',
+  },
+  {
     label: 'The Sandbox',
     icon: '/images/home-icon.svg',
     type: 'sandbox',
@@ -192,7 +198,7 @@ export default function PageHeader({ active, className }: Props) {
               METACAT
             </Link>
           </div>
-          <div className="flex flex-grow" style={{ marginLeft: "9px" }}>
+          <div className="flex flex-grow" style={{ marginLeft: '9px' }}>
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mx-14 cursor-pointer hover:text-white pointer-events-auto',
@@ -253,7 +259,6 @@ export default function PageHeader({ active, className }: Props) {
               ) : null}
             </div>
 
-
             <div
               className={cn(
                 'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
@@ -267,16 +272,13 @@ export default function PageHeader({ active, className }: Props) {
                 setParcelsState(false);
               }}
             >
-              <Link href="/parcels?tab=cryptovoxels" prefetch>Parcels</Link>
+              <Link href="/parcels?tab=cryptovoxels" prefetch>
+                Parcels
+              </Link>
               {ParcelsState ? (
-                <TwoNav
-                  options={parcels}
-                  className={style.cn}
-                  location={style.parcels}
-                ></TwoNav>
+                <TwoNav options={parcels} className={style.cn} location={style.parcels}></TwoNav>
               ) : null}
             </div>
-
 
             <div
               className={cn(
@@ -290,7 +292,6 @@ export default function PageHeader({ active, className }: Props) {
               onMouseEnter={() => {
                 setBuildState(true);
               }}
-
               onMouseLeave={() => {
                 setBuildState(false);
               }}
