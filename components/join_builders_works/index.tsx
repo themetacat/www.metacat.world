@@ -67,9 +67,9 @@ export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modi
       return false;
     }
     let newNum = subLength;
-    newNum++;
+    newNum+=1;
     const newArr =[]
-    for (let index = 0; index < newNum; index++) {
+    for (let index = 0; index < newNum; index+=1) {
       newArr.push(index)
       
     }
