@@ -63,12 +63,12 @@ const mediaData = [
 
 const PriceMap = [
   'otherside',
-  'tz1and',
   'decentraland',
   'sandbox',
   'somniumspace',
   'cryptovoxels',
   'substrata',
+  'tz1and',
 ];
 
 const Traffic = ['decentraland', 'cryptovoxels'];

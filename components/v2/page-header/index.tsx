@@ -127,12 +127,6 @@ const heatmap = [
     link: '/heatmap?type=otherside',
   },
   {
-    label: 'Tz1and',
-    icon: '/images/tz1and.png',
-    type: 'tz1and',
-    link: '/heatmap?type=tz1and',
-  },
-  {
     label: 'The Sandbox',
     icon: '/images/home-icon.svg',
     type: 'sandbox',
@@ -161,6 +155,12 @@ const heatmap = [
     icon: '/images/substrata.png',
     type: 'substrata',
     link: '/heatmap?type=substrata',
+  },
+  {
+    label: 'Tz1and',
+    icon: '/images/tz1and.png',
+    type: 'tz1and',
+    link: '/heatmap?type=tz1and',
   },
 ];
 

@@ -76,14 +76,14 @@ const TAB = [
     type: 'otherside',
   },
   {
-    label: 'Tz1and',
-    icon: '/images/tz1and.png',
-    type: 'tz1and',
-  },
-  {
     label: 'SubStrata',
     icon: '/images/substrata.png',
     type: 'substrata',
+  },
+  {
+    label: 'Tz1and',
+    icon: '/images/tz1and.png',
+    type: 'tz1and',
   },
 ];
 

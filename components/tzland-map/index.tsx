@@ -420,10 +420,10 @@ function OtherSideMap({
         const oldZ = camera.position.z;
         if (type === 'zoomIn') {
           const nextOne = oldZ * 0.8;
-          camera.position.setZ(nextOne < 10 ? 10 : nextOne);
+          camera.position.setZ(nextOne > -100 ? -100 : nextOne);
         } else {
           const nextOne = oldZ / 0.8;
-          camera.position.setZ(nextOne > 600 ? 600 : nextOne);
+          camera.position.setZ(nextOne < -900 ? -900 : nextOne);
         }
       }
     },
@@ -490,6 +490,7 @@ function OtherSideMap({
           const geo = new ExtrudeGeometry(shape, extrudeSettings);
           const material = new MeshBasicMaterial({ color: 0x00ff00 });
           const mesh = new Mesh(geo, material);
+          mesh.rotateX(Math.PI);
           mesh.userData = {
             id: properties.token_id,
             attr: pr,
@@ -599,16 +600,16 @@ function OtherSideMap({
       const old = camera.position.z;
       // 10 600
 
-      if (old === -20 && minZoomAble) {
+      if (old === -100 && minZoomAble) {
         setMinZoomAble(false);
       }
-      if (old !== -20 && !minZoomAble) {
+      if (old !== -100 && !minZoomAble) {
         setMinZoomAble(true);
       }
-      if (old === -700 && maxZoomAble) {
+      if (old === -900 && maxZoomAble) {
         setMaxZoomAble(false);
       }
-      if (old !== -700 && !maxZoomAble) {
+      if (old !== -900 && !maxZoomAble) {
         setMaxZoomAble(true);
       }
     }
@@ -638,13 +639,13 @@ function OtherSideMap({
         0.1,
         20000,
       );
-      camera.position.z = -300;
+      camera.position.z = -900;
       scene.userData.camera = camera;
 
       const controls = new OrbitControls(scene.userData.camera, re.domElement);
 
-      controls.minDistance = 20;
-      controls.maxDistance = 700;
+      controls.minDistance = 100;
+      controls.maxDistance = 900;
       controls.enablePan = true;
       controls.enableRotate = false;
       controls.enableZoom = true;
