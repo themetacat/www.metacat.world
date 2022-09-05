@@ -222,7 +222,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     if (navState === 'buildings') {
       return (
         <div className={cn('main-content')}>
-          <div className={style.teaffic}>
+          {/* <div className={style.teaffic}>
             {trafficList.length !== 0 ? (
               <div>
                 <div className={cn(style.title, style.tb)}>
@@ -240,7 +240,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
                 </BaseChart>
               </div>
             ) : null}
-          </div>
+          </div> */}
 
           <div className={style.parcel}>
             {parcelList.length > 0 ? (

@@ -276,7 +276,11 @@ export default function PageHeader({ active, className }: Props) {
                 Parcels
               </Link>
               {ParcelsState ? (
-                <TwoNav options={parcels} className={style.cn} location={style.parcels}></TwoNav>
+                <TwoNavigation
+                  options={parcels}
+                  className={style.cn}
+                  location={style.parcels}
+                ></TwoNavigation>
               ) : null}
             </div>
 

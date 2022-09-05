@@ -6,17 +6,15 @@ import cn from 'classnames';
 
 import style from './index.module.css';
 
-
 interface Props {
-  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search'| 'emptyBuilding';
+  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search' | 'emptyBuilding';
   mini?: boolean;
   retry?: () => void;
+  addWork?: () => void;
 }
-export default function Status({ status, retry, mini = false }: Props) {
+export default function Status({ status, retry, addWork, mini = false }: Props) {
   const router = useRouter();
-  const addWork =()=>{
-    router.replace('/profile/addBuilding')
-  }
+
   const commonCls = cn(
     'flex w-full flex-col justify-center items-center py-10',
     mini ? style.mini : style.baseText,
@@ -74,7 +72,9 @@ export default function Status({ status, retry, mini = false }: Props) {
       <div className={cn(commonCls)}>
         <img src="/images/default-image.png" className={style.baseImg} />
         <span className="mt-4 text-xl font-semibold">No works</span>
-        <span className={cn("mt-4 text-xl font-semibold",style.nowork)} onClick={addWork}>Add your work</span>
+        <span className={cn('mt-4 text-xl font-semibold', style.nowork)} onClick={addWork}>
+          Add your work
+        </span>
       </div>
     );
   }
