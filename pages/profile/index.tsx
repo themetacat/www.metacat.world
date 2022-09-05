@@ -1583,14 +1583,14 @@ function ProfilePage(r) {
         </div>
       ) : null}
       {joinBuilders === true ? <>
-        {/* <JoinBuilders
+        <JoinBuilders
             turnOff={turnOff} 
             nextBtn={nextBtn}
-          /> */}
-        <JoinBuildersWork
+          />
+        {/* <JoinBuildersWork
           turnOff={turnOff}
           nextBtnAdd={nextBtnAdd}
-        />
+        /> */}
 
         {/* <ChangeEmail
         value={email}

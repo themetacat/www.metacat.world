@@ -18,6 +18,8 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   const [emailClear, setEmailClear] = React.useState(false);
   const [codeClear, setCodeClear] = React.useState(false);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
+  const [subLength, setSubLength] = React.useState(1);
+  const [subArr, setSubArr] = React.useState([1]);
 
   //   React.useEffect(() => {
   //     const listener = () => {
@@ -43,6 +45,26 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
     }
   }, []);
 
+  const addBuild = () => {
+    console.log(subLength,);
+    if (subLength > 9) {
+      return false;
+    }
+    let newNum = subLength;
+    newNum += 1;
+    const newArr = []
+    for (let index = 0; index < newNum; index += 1) {
+      newArr.push(index)
+
+    }
+    console.log(newArr, newNum);
+    console.log(new Array(subLength), subLength);
+    setSubLength(newNum)
+
+    setSubArr(newArr)
+
+  }
+
   const codeBlue = React.useCallback(() => {
     setCodeClear(false);
   }, []);
@@ -50,10 +72,7 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
     setEmailClear(false);
   }, []);
 
-  const addBuild = () => {
-    console.log(555555555);
 
-  }
 
   return (
     <>
@@ -65,27 +84,32 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
           </div>
           <div className={styles.emailBox}>
             <p>Links to representative works</p>
-            <div style={{display:"flex"}}>
-            <input
-              type="text"
-              placeholder=""
-              value={email}
-              onInput={setEmailValue}
-              onFocus={() => {
-                if (email) {
-                  setEmailClear(true);
+            <div style={{}}>
+            {
+            subArr.map((item,index)=>
+              (
+              <input
+                type="text"
+                placeholder=""
+                value={email}
+                onInput={setEmailValue}
+                onFocus={() => {
+                  if (email) {
+                    setEmailClear(true);
+                  }
+                }}
+                onBlur={emailBlue}
+              />
+              )
+              )
                 }
-              }}
-              onBlur={emailBlue}
-            />
-           
-             <span onClick={addBuild} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
-             </div>
-           <p className={styles.send}>You can also send your works to our：
-           <img src="/images/youxiang.png" alt="" />
-           <img src="/images/ttt.png" alt="" />
-           
-           </p>
+              <span onClick={addBuild} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
+            </div>
+            <p className={styles.send}>You can also send your works to our：
+              <img src="/images/youxiang.png" alt="" />
+              <img src="/images/ttt.png" alt="" />
+
+            </p>
             <div className={styles.next} onClick={nextBtnAdd}>Submit</div>
           </div>
         </div>
