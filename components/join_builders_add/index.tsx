@@ -78,18 +78,6 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   const delBuild = () => {
     console.log(555555555);
 
-    let newNum = subLength;
-    newNum -= 1;
-    const newArr = []
-    for (let index = 0; index < newNum; index -= 1) {
-      newArr.push(index)
-
-    }
-    console.log(newArr, newNum);
-    console.log(new Array(subLength), subLength);
-    setSubLength(newNum)
-
-    setSubArr(newArr)
   }
 
   const codeBlue = React.useCallback(() => {
