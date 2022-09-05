@@ -4,6 +4,8 @@ import cn from 'classnames';
 
 import { toast } from 'react-hot-toast';
 
+import styles from './index.module.css';
+
 import { getToken } from '../../common/utils';
 
 import {
@@ -23,7 +25,7 @@ interface Props {
   addBuildOther?;
 }
 
-import styles from './index.module.css';
+
 
 export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modifyEmail }: Props) {
   const [show, switchShow] = React.useState(false);
