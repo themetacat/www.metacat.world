@@ -19,9 +19,11 @@ interface Props {
   nextBtn?;
   value?: string;
   modifyEmail?: boolean;
+  nextBtnAdd?;
+  addBuildOther?;
 }
 
-export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Props) {
+export default function JoinBuilders({ turnOff, value, nextBtn, nextBtnAdd, modifyEmail }: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -30,6 +32,8 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [token, setToken] = React.useState('');
   const [codeState, setCodeState] = React.useState('getCode');
+  let [subLength, setSubLength] = React.useState(1);
+  const [subArr, setSubArr] = React.useState([1]);
   const time = React.useRef(60);
   const timeId = React.useRef(null);
 
@@ -48,6 +52,32 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
       setEmailClear(false);
     }
   }, []);
+
+
+  const emailBlue = React.useCallback(() => {
+    setEmailClear(false);
+  }, []);
+
+
+  const addBuildOther = () => {
+    console.log(subLength,subLength++);
+    if(subLength>9){
+      return false;
+    }
+    let newNum = subLength++
+    let newArr =[]
+    for (let index = 0; index < newNum; index++) {
+      newArr.push(index)
+      
+    }
+    console.log(newArr,newNum);
+    console.log(new Array(subLength),subLength);
+    setSubLength(newNum)
+    
+    setSubArr(newArr)
+
+  }
+
   const setCodeValue = React.useCallback((e) => {
     setCode(e.target.value);
     if (e.target.value) {
@@ -60,56 +90,6 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
   const codeBlue = React.useCallback(() => {
     setCodeClear(false);
   }, []);
-  const emailBlue = React.useCallback(() => {
-    setEmailClear(false);
-  }, []);
-
-  const GetCode = () => {
-    console.log(555555555);
-
-  }
-  const timeOut = () => {
-    return setInterval(function () {
-      if (time.current === 0) {
-        setCodeState('reacquire');
-        clearInterval(timeId.current);
-        time.current = 60;
-      } else {
-        setCodeState('');
-        setCodeState('time');
-        time.current = time.current - 1;
-      }
-    }, 1000);
-  };
-  const sendCodeTime = React.useCallback(async () => {
-    if (!email) return;
-    toast.success('The verification code has been sent');
-    setCodeState('time');
-    const t = timeOut();
-    timeId.current = t;
-    if (modifyEmail) {
-      await req_modify_send_email(token);
-    } else {
-      await req_bind_send_email(email, token);
-    }
-  }, [time, email, modifyEmail, timeOut]);
-  const sendCode = React.useMemo(() => {
-    return (
-      <>
-        {codeState === 'getCode' ? (
-          <div className={cn(email ? styles.getCode : styles.getCode2)} onClick={sendCodeTime}>
-            Get Code
-          </div>
-        ) : null}
-        {codeState === 'time' ? <div className={styles.time}>{time.current} s</div> : null}
-        {codeState === 'reacquire' ? (
-          <div className={styles.reacquire} onClick={sendCodeTime}>
-            reacquire
-          </div>
-        ) : null}
-      </>
-    );
-  }, [sendCodeTime, codeState, email]);
 
   React.useEffect(() => {
     setEmail(value);
@@ -140,7 +120,7 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
               }}
               onBlur={emailBlue}
             />
-            <p className={styles.codeText}>Code</p>
+            {/* <p className={styles.codeText}>Code</p>
             <div className={styles.getCodeBox}>
               <input
                 type="text"
@@ -155,12 +135,44 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
                 onBlur={codeBlue}
               />
               <span className={styles.a}></span>
-              {/* <div className={styles.n} onClick={GetCode}>Get code</div> */}
-              <div className={styles.n}> {sendCode}</div>
-             
+              <div className={styles.n}> {sendCode}</div> */}
+            <div className={styles.emailBoxCon}>
+              <p>Links to representative works</p>
+              <div style={{ }}>
+                {
+               subArr.map((item,index)=>
+                    (
+                    <input
+                    style={{ width: "350px" }}
+                    id="addBuilding"
+                    type="text"
+                    placeholder=""
+                    value={code}
+                    onInput={setCodeValue}
+                    onFocus={() => {
+                      if (code) {
+                        setCodeClear(true);
+                      }
+                    }}
+                    onBlur={codeBlue}
+                  />
+                   )
+                 )
+                }
+               
+
+               <span onClick={addBuildOther} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
+              </div>
+              <p className={styles.send}>You can also send your works to our：
+                <img src="/images/youxiang.png" alt="" />
+                <img src="/images/ttt.png" alt="" />
+
+              </p>
+              <div className={styles.next} onClick={nextBtnAdd}>Submit</div>
             </div>
-            <div className={styles.next} onClick={nextBtn}>Next</div>
           </div>
+
+
         </div>
       </div>
     </>

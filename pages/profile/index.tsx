@@ -12,6 +12,7 @@ import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
+import ChangeEmail from '../../components/changeEmail';
 import Tab4 from '../../components/tab4';
 import Status from '../../components/status';
 import Card from '../../components/parcels-card';
@@ -35,6 +36,8 @@ import Creator from '../../components/creator';
 import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
 import JoinBuilders from '../../components/join_builders';
+import JoinBuildersAdd from '../../components/join_builders_add';
+import JoinBuildersWork from '../../components/join_builders_works';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -63,6 +66,7 @@ import {
 
 
 import style from './index.module.css';
+import { join } from 'path/posix';
 
 
 const TABData = [
@@ -103,10 +107,10 @@ const TAB3 = [
     label: 'My Wearables',
     type: 'wearablelist',
   },
-  // {
-  //   label: 'My Buildings',
-  //   type: 'building',
-  // },
+  {
+    label: 'My Buildings',
+    type: 'building',
+  },
   // {
   //   label: 'SALES REPORT',
   // },
@@ -174,7 +178,8 @@ function ProfilePage(r) {
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
-  const [statue, setStatue] = React.useState(1);
+  const [statue, setStatue] = React.useState(null);
+  const [emailState, setEmailState] = React.useState(null);
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -189,8 +194,9 @@ function ProfilePage(r) {
   const [email, setEmail] = React.useState(null);
 
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
-  const [tabStateTR, setTabStateTR] = React.useState('All');
+  const [tabStateTR, setTabStateTR] = React.useState(false);
   const [creatorState, setCreatorState] = React.useState(false);
+  const [modifyEmail, setModifyEmail] = React.useState(false);
 
   const [navLabel, setNavLabel] = React.useState('All');
   const [wearablesNavState, setWearablesNavState] = React.useState('all');
@@ -207,6 +213,9 @@ function ProfilePage(r) {
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
   const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
+  const [initEmail, setInitEmail] = React.useState('');
+  const [orginName, setOrginName] = React.useState('');
+  const [country, setCountry] = React.useState('');
 
   const Nav = [
     {
@@ -500,10 +509,18 @@ function ProfilePage(r) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
-      setStatue(res.data.profile.creator_status)
+
+      const sta = res.data.profile.creator_status
+      const emailState = res.data.profile.email
+
+      setStatue(sta)//这个值为什么设置的不起作用
+      console.log(sta, 88888, emailState, 888, statue);
+
+      // setEmailState(res.data.profile.email)
       // console.log(res.data.profile.creator_status,99999);
 
       // const statue = res.data.profile.creator_status;
+
       const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
@@ -532,8 +549,9 @@ function ProfilePage(r) {
       setWebsiteAddress(websiteUrl);
       state.setState({ profile });
     },
-    [resultHandler],
+    [resultHandler, statue],
   );
+
   const reqWearablesData = React.useCallback(async () => {
     const result = await req_get_user_wearable(await refreshTK());
     if (result.code === 100000) {
@@ -569,19 +587,34 @@ function ProfilePage(r) {
     }
   }, [requestData, getToken, reqDclData]);
 
-  const addWork = React.useCallback( async() => {
-      console.log("hhhhhhhhhhhhhhhhhhh");
-      // <JoinBuilders/>
-      // joinBuilders
-      setJoinBuilders(true)
-      console.log(joinBuilders,5555555555);
-      
+  const addWork = React.useCallback(async () => {
+    // <JoinBuilders/>
+    // joinBuilders
+    setJoinBuilders(true)
+    console.log(joinBuilders, 5555555555);
 
-      // renderssssContent
+
+    // renderssssContent
   }, [joinBuilders])
 
 
+  const turnOff = () => {
+    setJoinBuilders(false)
+  }
+  const turnBuild = () => {
+    setTabStateTR(false)
+  }
+  const nextBtn = () => {
+    setJoinBuilders(false)
+    setTabStateTR(true)
+  }
+  const nextBtnAdd = () => {
+    setTabStateTR(false)
+  }
+  const addBuildOther = () => {
+    console.log(444444444);
 
+  }
 
   const select = React.useCallback(
     (id, ids) => {
@@ -750,6 +783,58 @@ function ProfilePage(r) {
     },
     [rent_set_state, manyChange],
   );
+
+
+  const requireData = React.useCallback(
+    async (token) => {
+      const res = await getBaseInfo(token);
+      const data = resultHandler(res, requireData);
+      if (data) {
+        const profile = convert(data.profile);
+        const {
+          address: addr,
+          nickName: name,
+          avatar,
+          links,
+          email: e,
+          country: c,
+          introduction: i,
+        } = profile;
+        const { twitterName, websiteUrl } = links;
+        setAvatarUrl(avatar);
+        setInitEmail(e);
+        if (e) {
+          setEmail(e);
+        }
+        setCountry(c);
+        setIntroduction(i);
+        setAddress(addr);
+        setNickName(name);
+        setOrginName(name);
+        setTwitterAddress(twitterName);
+        setWebsiteAddress(websiteUrl);
+        state.setState({ profile });
+      }
+    },
+    [resultHandler],
+  );
+
+  const closeEmail = React.useCallback((t) => {
+    setEmailState(false);
+    const accessToken = getToken('atk');
+
+    if (t === 'bind') {
+      toast.success('Binding succeeded');
+    }
+    if (t === 'modify') {
+      setModifyEmail(false);
+      setEmailState(true);
+    }
+
+    if (accessToken) {
+      requireData(accessToken);
+    }
+  }, []);
 
   const req_event = React.useCallback(async () => {
     if (selectedIds.length === 0) return;
@@ -1256,129 +1341,134 @@ function ProfilePage(r) {
       }
     }
     if (routeTab === 'wearablelist') {
+      
       // if(statue===1){
-      //   return(
-      //     <div className={style.createrCont}>
-      //       <span className={style.join}>Join Creators to show your works</span>
-      //       <span className={style.apply}>Apply</span>
-      //     </div>
-      //   )
+      return (
+        <>
+          {statue == 1 ?
+            <div className={style.createrCont}>
+              <span className={style.join}>Join Creators to show your works</span>
+              <span className={style.apply}>Apply</span>
+            </div>
+            : <></>}
+        </>
+      )
       // }else{
 
 
-      // }
-      return (
-        <>
-          {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
-            <div className={cls}></div>
-            <div className="main-content flex px-0">
-              {TAB.map((item) => {
-                return (
-                  <Tab
-                    active={tabState === item.type}
-                    isMini={true}
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    onClick={() => {
-                      onTabChange(item.type);
-                    }}
-                  />
-                );
-              })}
-              <div className={cls} />
-            </div>
-            <div className={cls} />
-          </div> */}
-
-          <div className={style.wearablesContainer}>
-            <div className={style.title}>
-              <div className={style.wearables}
-
-              ></div>
-              <div className={style.texteated}>Wearables Created</div>
-            </div>
-            <div className={style.wearablesNav}>
-              <div className={style.left}>
-                {wearablesNav.map((item, index) => {
-                  return (
-                    <>
-
-                      <div
-                        onClick={() => {
-                          setWearablesNavState(item.type);
-                          wearablesState.current = item.type;
-                          setShowOrHideState(false);
-                          if (item.type === 'all') {
-                            setWearablesCreatorsData(wearablesCreatorsOriginData);
-                          }
-                          if (item.type === 'shown') {
-                            setWearablesCreatorsData(wearablesShowData);
-                          }
-                          if (item.type === 'hidden') {
-                            setWearablesCreatorsData(wearablesHideData);
-                          }
-                        }}
-                        className={cn(
-                          style.wearablesNavItem,
-                          wearablesNavState === item.type ? style.wearableNavAction : null,
-                        )}
-                        key={uuid()}
-                      >
-                        {/* <div className={style.mmm}> */}
-                        <div >{item.label}
-                          {/* <span>{item.label}</span> */}
-                          <span style={{ marginLeft: "2px" }}>
-                            {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-                            {item.type === 'shown' ? wearablesShowData.length : null}
-                            {item.type === 'hidden' ? wearablesHideData.length : null}
-                          </span>
-                        </div>
-
-                        {/* </div> */}
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-              <div
-                className={style.right}
-                onClick={() => {
-                  setShowOrHideState(!showOrHideState);
-                }}
-              >
-                <img src="/images/Settings.png" />
-                <div>Batch setting</div>
-                <ul
-                  className={
-                    wearablesNavState === 'all' && showOrHideState
-                      ? style.showOrHideList
-                      : style.showOrHideList1
-                  }
-                >
-                  {showOrHideState
-                    ? showOrHide[wearablesNavState].map((item, index) => {
-                      return (
-                        <li
-                          className={style.showOrHideItem}
-                          key={index}
-                          onClick={() => {
-                            settingShowOrHide(item.type);
-                          }}
-                        >
-                          {item.label}
-                        </li>
-                      );
-                    })
-                    : null}
-                </ul>
-              </div>
-            </div>
-            <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
-          </div>
-        </>
-      );
     }
+    // return (
+    //   <>
+    //     {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
+    //       <div className={cls}></div>
+    //       <div className="main-content flex px-0">
+    //         {TAB.map((item) => {
+    //           return (
+    //             <Tab
+    //               active={tabState === item.type}
+    //               isMini={true}
+    //               key={item.label}
+    //               label={item.label}
+    //               icon={item.icon}
+    //               onClick={() => {
+    //                 onTabChange(item.type);
+    //               }}
+    //             />
+    //           );
+    //         })}
+    //         <div className={cls} />
+    //       </div>
+    //       <div className={cls} />
+    //     </div> */}
+
+    //     <div className={style.wearablesContainer}>
+    //       <div className={style.title}>
+    //         <div className={style.wearables}
+
+    //         ></div>
+    //         <div className={style.texteated}>Wearables Created</div>
+    //       </div>
+    //       <div className={style.wearablesNav}>
+    //         <div className={style.left}>
+    //           {wearablesNav.map((item, index) => {
+    //             return (
+    //               <>
+
+    //                 <div
+    //                   onClick={() => {
+    //                     setWearablesNavState(item.type);
+    //                     wearablesState.current = item.type;
+    //                     setShowOrHideState(false);
+    //                     if (item.type === 'all') {
+    //                       setWearablesCreatorsData(wearablesCreatorsOriginData);
+    //                     }
+    //                     if (item.type === 'shown') {
+    //                       setWearablesCreatorsData(wearablesShowData);
+    //                     }
+    //                     if (item.type === 'hidden') {
+    //                       setWearablesCreatorsData(wearablesHideData);
+    //                     }
+    //                   }}
+    //                   className={cn(
+    //                     style.wearablesNavItem,
+    //                     wearablesNavState === item.type ? style.wearableNavAction : null,
+    //                   )}
+    //                   key={uuid()}
+    //                 >
+    //                   {/* <div className={style.mmm}> */}
+    //                   <div >{item.label}
+    //                     {/* <span>{item.label}</span> */}
+    //                     <span style={{ marginLeft: "2px" }}>
+    //                       {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+    //                       {item.type === 'shown' ? wearablesShowData.length : null}
+    //                       {item.type === 'hidden' ? wearablesHideData.length : null}
+    //                     </span>
+    //                   </div>
+
+    //                   {/* </div> */}
+    //                 </div>
+    //               </>
+    //             );
+    //           })}
+    //         </div>
+    //         <div
+    //           className={style.right}
+    //           onClick={() => {
+    //             setShowOrHideState(!showOrHideState);
+    //           }}
+    //         >
+    //           <img src="/images/Settings.png" />
+    //           <div>Batch setting</div>
+    //           <ul
+    //             className={
+    //               wearablesNavState === 'all' && showOrHideState
+    //                 ? style.showOrHideList
+    //                 : style.showOrHideList1
+    //             }
+    //           >
+    //             {showOrHideState
+    //               ? showOrHide[wearablesNavState].map((item, index) => {
+    //                 return (
+    //                   <li
+    //                     className={style.showOrHideItem}
+    //                     key={index}
+    //                     onClick={() => {
+    //                       settingShowOrHide(item.type);
+    //                     }}
+    //                   >
+    //                     {item.label}
+    //                   </li>
+    //                 );
+    //               })
+    //               : null}
+    //           </ul>
+    //         </div>
+    //       </div>
+    //       <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
+    //     </div>
+    //   </>
+    // );
+    // }
     if (routeTab === 'building') {
       return (
         <>
@@ -1410,7 +1500,8 @@ function ProfilePage(r) {
   ]);
 
   return (
-    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
+    <Page className={cn('min-h-screen', style.anPage,)} meta={meta} >
+      {/* joinBuilders === true?style.joinBuilders:'' */}
       <div
         onClick={() => {
           setManySetState(false);
@@ -1488,6 +1579,29 @@ function ProfilePage(r) {
           </div>
         </div>
       ) : null}
+      {joinBuilders === true ? <>
+        <JoinBuilders
+            turnOff={turnOff} 
+            nextBtn={nextBtn}
+          />
+        {/* <JoinBuildersWork
+          turnOff={turnOff}
+          nextBtnAdd={nextBtnAdd}
+        /> */}
+
+        {/* <ChangeEmail
+        value={email}
+        state={emailState}
+        closeEmail={closeEmail}
+        modifyEmail={modifyEmail}
+      ></ChangeEmail> */}
+      </> : ''}
+      {tabStateTR === true ? <>
+        <JoinBuildersAdd
+          turnBuild={turnBuild}
+          nextBtnAdd={nextBtnAdd}
+        />
+      </> : ''}
     </Page>
   );
 }
