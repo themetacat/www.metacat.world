@@ -763,6 +763,28 @@ class API {
     return json;
   }
 
+  public async req_sales_rent_sum_price() {
+    const url = `${this.url}/analytics/rent_sum_price`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_num_of_rent() {
+    const url = `${this.url}/analytics/num_of_rent`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 16.4 获取MetaIndex和ETH Price
 
   public async req_metaindex_ethprice() {

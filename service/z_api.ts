@@ -745,6 +745,28 @@ export const req_sales_amount_stack = async () => {
   return json;
 };
 
+export const req_sales_rent_sum_price = async () => {
+  const url = '/api/get_sales_sum_price';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_num_of_rent = async () => {
+  const url = '/api/get_sales_num_of_rent';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 16.4 获取MetaIndex和ETH Price
 
 export const req_metaindex_ethprice = async () => {
