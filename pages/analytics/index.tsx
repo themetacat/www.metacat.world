@@ -75,6 +75,8 @@ import {
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
   req_avg_creater_price,
+  req_sales_rent_sum_price,
+  req_num_of_rent
 } from '../../service/z_api';
 
 
@@ -177,6 +179,12 @@ const AllPillar2 = dynamic(
   { ssr: false },
 );
 const AllPillar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillar'), {
+  ssr: false,
+});
+const AllPillarNum = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum'), {
+  ssr: false,
+});
+const AllPillarNum2 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum2'), {
   ssr: false,
 });
 
@@ -363,7 +371,7 @@ export default function AnalyticsIndex(props) {
           <StackBar
             id={'stackbar'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandler={getCvParcelSoldTotalStats}
             barWidth={18}
             textColor={style.cvColor}
@@ -443,7 +451,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineSimple
             id={'chartlinesimple'}
             className="mt-5"
-            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getCvParcelOwnerStats}
             defaultColor={[255, 224, 206]}
             textColor={style.cvColor}
@@ -532,7 +540,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimple
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandlder={getDclParcelSoldTotalStats}
             legend1={{ label: 'Land', color: [240, 117, 97] }}
             legend2={{ label: 'Estate', color: [255, 190, 114] }}
@@ -617,7 +625,7 @@ export default function AnalyticsIndex(props) {
             <ChartLineSimple
               id={'chartlinesimple2'}
               className="mt-5"
-              labelText={'Total Number Of Landlords At The End Of Each Month'}
+              labelText={'Total Number of Landlords At The End of Each Month'}
               dataHandlder={getDclParcelOwnerStats}
               defaultColor={[255, 105, 40]}
               textColor={style.dclColor}
@@ -669,7 +677,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandlder={req_sandbox_sold_total_stats}
             legend1={{ label: 'Land', color: [42, 97, 237] }}
             keyTypes={['land', 'estate']}
@@ -747,7 +755,7 @@ export default function AnalyticsIndex(props) {
           <ChartSandBox
             id={'chartlinesimple'}
             className="mt-5"
-            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getSandboxOwnerStats}
             defaultColor={[119, 152, 238]}
             textColor={style.sandboxColor}
@@ -799,7 +807,7 @@ export default function AnalyticsIndex(props) {
             <ChartLineToolTipSimpleSandbox
               id={'dcl-chartline-2'}
               className="mt-5"
-              labelText={'Number Of Parcel Sales'}
+              labelText={'Number of Parcel Sales'}
               dataHandlder={req_somniumspace_sold_total_stats}
               legend1={{ label: 'Land', color: [250, 159, 23] }}
               keyTypes={['land', 'estate']}
@@ -876,7 +884,7 @@ export default function AnalyticsIndex(props) {
             <ChartSomniumSpace
               id={'charnftworlds'}
               className="mt-5"
-              labelText={'Total Number Of Landlords At The End Of Each Month'}
+              labelText={'Total Number of Landlords At The End of Each Month'}
               dataHandlder={getchartSomniumSpace}
               defaultColor={[194, 157, 135]}
               textColor={style.cvColor}
@@ -928,7 +936,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandlder={req_ntfworlds_sold_total_stats}
             legend1={{ label: 'Land', color: [33, 238, 29] }}
             keyTypes={['land', 'estate']}
@@ -1005,7 +1013,7 @@ export default function AnalyticsIndex(props) {
           <ChartNftworlds
             id={'charnftworlds'}
             className="mt-5"
-            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getChartNftworlds}
             defaultColor={[175, 234, 101]}
             textColor={style.nftColor}
@@ -1056,7 +1064,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandlder={req_webb_sold_total_stats}
             legend1={{ label: 'Land', color: [244, 68, 79] }}
             keyTypes={['land', 'estate']}
@@ -1134,7 +1142,7 @@ export default function AnalyticsIndex(props) {
           <ChartWebb
             id={'chartworldwidewebb'}
             className="mt-5"
-            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getchartWebb}
             defaultColor={[245, 120, 157]}
             textColor={style.webbColor}
@@ -1185,7 +1193,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'dcl-chartline-2'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandlder={req_otherside_sales_num}
             legend1={{ label: 'Land', color: [237, 195, 133] }}
             keyTypes={['land', 'estate']}
@@ -1262,7 +1270,7 @@ export default function AnalyticsIndex(props) {
           <ChartOtherside
             id={'charnftworlds'}
             className="mt-5"
-            labelText={'Total Number Of Landlords At The End Of Each Month'}
+            labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getchartOtherside}
             defaultColor={[194, 157, 135]}
             textColor={style.othersideColor}
@@ -1313,7 +1321,7 @@ export default function AnalyticsIndex(props) {
           <ChartLineToolTipSimpleSandbox
             id={'netvrk2'}
             className="mt-5"
-            labelText={'Number Of Parcel Sales'}
+            labelText={'Number of Parcel Sales'}
             dataHandlder={req_netvrk_sales_num}
             legend1={{ label: 'Land', color: [148, 159, 254] }}
             keyTypes={['land', 'estate']}
@@ -1561,7 +1569,7 @@ export default function AnalyticsIndex(props) {
                 <AllPillar2
                   id="allpillar2"
                   textColor={style.allColor}
-                  labelText="Number Of Parcel Sales"
+                  labelText="Number of Parcel Sales"
                   dataHandlder={req_all_number_sales}
                   legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                   legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
@@ -1652,6 +1660,104 @@ export default function AnalyticsIndex(props) {
                 <div className={style.tabContainer} style={{marginLeft:"20px"}}>
                   <AnalyticsInfoNum options={types} labelText={'Parcel Trading Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
+              </div>
+              <div className={style.allLine}>
+                <AllPillarNum
+                  id="allpillarNum"
+                  textColor={style.allColor}
+                  labelText="Number of Parcel Rent"
+                  dataHandlder={req_sales_rent_sum_price}
+                  // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  options={[
+                    // {
+                    //   label: 'Daily',
+                    //   value: 'daily',
+                    // },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    // {
+                    //   label: 'Monthly',
+                    //   value: 'monthly',
+                    // },
+                    // {
+                    //   label: 'Quarterly',
+                    //   value: 'quarterly',
+                    // },
+                    // {
+                    //   label: 'Yearly',
+                    //   value: 'yearly',
+                    // },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></AllPillarNum>
+                
+              </div>
+              <div className={style.allLine}>
+                <AllPillarNum2
+                  id="allpillarNum"
+                  textColor={style.allColor}
+                  labelText="Number of Parcel Rent"
+                  dataHandlder={req_num_of_rent}
+                  // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  options={[
+                    // {
+                    //   label: 'Daily',
+                    //   value: 'daily',
+                    // },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    // {
+                    //   label: 'Monthly',
+                    //   value: 'monthly',
+                    // },
+                    // {
+                    //   label: 'Quarterly',
+                    //   value: 'quarterly',
+                    // },
+                    // {
+                    //   label: 'Yearly',
+                    //   value: 'yearly',
+                    // },
+                  ]}
+                  // priceOptions={[
+                  //   {
+                  //     label: 'USD',
+                  //     value: 'usd',
+                  //   },
+                  //   {
+                  //     label: 'ETH',
+                  //     value: 'eth',
+                  //   },
+                  // ]}
+                ></AllPillarNum2>
+                
               </div>
             </div>
           </div>
