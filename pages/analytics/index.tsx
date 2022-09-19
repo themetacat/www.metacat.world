@@ -1665,7 +1665,7 @@ export default function AnalyticsIndex(props) {
                 <AllPillarNum
                   id="allpillarNum"
                   textColor={style.allColor}
-                  labelText="Number of Parcel Rent"
+                  labelText="Parcel Rent Amount"
                   dataHandlder={req_sales_rent_sum_price}
                   // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                   // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
