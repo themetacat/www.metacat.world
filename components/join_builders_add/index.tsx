@@ -3,15 +3,18 @@ import cn from 'classnames';
 
 import { toast } from 'react-hot-toast';
 
+import { getToken } from '../../common/utils';
+
 import styles from './index.module.css';
 
 interface Props {
   classname?: string;
   turnBuild?;
   nextBtnAdd?;
+  value?: string;
 }
 
-export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
+export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState(null);
@@ -19,7 +22,8 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   const [codeClear, setCodeClear] = React.useState(false);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [subLength, setSubLength] = React.useState(1);
-  const [subArr, setSubArr] = React.useState([1]);
+  const [subArr, setSubArr] = React.useState([]);
+  const [token, setToken] = React.useState('');
 
   //   React.useEffect(() => {
   //     const listener = () => {
@@ -28,13 +32,22 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   //     document.addEventListener('scroll', listener);
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
-  const setEmailValue = React.useCallback((e) => {
+  const setEmailValue = React.useCallback((index, e, item) => {
 
-    const input = document.getElementById('input')
-    input.oninput = function () {
-      email.innerHTML = input;
-    }
+    // const input = document.getElementById('input')
+    // input.oninput = function () {
+    //   email.innerHTML = input;
+    // }
+    console.log(e.nativeEvent.data, e);
 
+    console.log(subArr);
+    subArr[index] = e.target.value
+    console.log(subArr);
+
+    setSubArr([...subArr])
+    // subArr[index]= value
+
+    // e.nativeEvent.data
 
     // setEmail(e.target.value);
     // if (e.target.value) {
@@ -44,6 +57,7 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
     // }
 
   }, []);
+
   const setCodeValue = React.useCallback((e) => {
     setCode(e.target.value);
     if (e.target.value) {
@@ -55,39 +69,44 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
 
   const addBuild = () => {
     console.log(subLength,);
-    if (subLength > 9) {
-      toast.error('不得超过九条数据');
+    if (subArr.length > 2) {
+      toast.error('不得超过三条数据');
       return false;
     }
 
-    let newNum = subLength;
-    newNum += 1;
-    const newArr = []
-    for (let index = 0; index < newNum; index += 1) {
-      newArr.push(index)
 
-    }
-    console.log(newArr, newNum);
-    console.log(new Array(subLength), subLength);
-    setSubLength(newNum)
-
-    setSubArr(newArr)
-
-  }
-
-  const delBuild = () => {
-    console.log(555555555,subLength);
-    // let newNumDel = subLength;
-    // newNumDel-=1;
+    // let newNum = subLength;
+    // newNum += 1;
     // const newArr = []
-    // for (let index = 0; index < newNumDel; index -= 1) {
+    // for (let index = 0; index < newNum; index += 1) {
     //   newArr.push(index)
 
     // }
-    // setSubLength(newNumDel)
+    // console.log(newArr, newNum);
+    // console.log(new Array(subLength), subLength);
+    // setSubLength(newNum)
+    console.log(subArr);
+    subArr.push([])
+    console.log(subArr);
 
-    // setSubArr(newArr)
-    
+    setSubArr([...subArr])
+  }
+
+  const delBuild = (index) => {
+    if (subLength < 1) {
+      toast.error('不得小于一条数据');
+      return false;
+    }
+
+    // let newNumDel = subLength;
+    // newNumDel - 1;
+    console.log(subArr, "dddddddddd", index);
+
+    subArr.splice(index, 1)
+
+    setSubLength(subArr.length)
+
+
   }
 
   const codeBlue = React.useCallback(() => {
@@ -97,7 +116,11 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
     setEmailClear(false);
   }, []);
 
+  React.useEffect(() => {
 
+    const t = getToken('atk');
+    setToken(t);
+  }, [value]);
 
   return (
     <>
@@ -119,8 +142,9 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
                       style={{ marginBottom: "10px" }}
                       type="text"
                       placeholder=""
-                      value={email}
-                      onInput={setEmailValue}
+                      value={item}
+                      onInput={(e) => { setEmailValue(index, e, item) }}
+                      // onInput={setEmailValue}
                       onFocus={() => {
                         if (email) {
                           setEmailClear(true);
@@ -129,7 +153,7 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
                       onBlur={emailBlue}
                     />
                     <>
-                      <span className={styles.add} onClick={delBuild}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
+                      <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                     </> : ''
                   </>
                 )
@@ -150,7 +174,7 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
               <img src="/images/ttt.png" alt="" />
 
             </p>
-            <div className={styles.next} onClick={nextBtnAdd}>Submit</div>
+            <div className={styles.next} onClick={()=>{nextBtnAdd(token,subArr)}}>Submit</div>
           </div>
         </div>
       </div>

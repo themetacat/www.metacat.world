@@ -20,6 +20,7 @@ type Props = {
   disable?: boolean;
   name?: string;
   onBlur?: (valu) => void;
+  clear?: (valu) => void;
 };
 
 export default function MeteInput({
@@ -36,6 +37,7 @@ export default function MeteInput({
   disable = false,
   name,
   onBlur,
+  clear
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
@@ -69,16 +71,16 @@ export default function MeteInput({
     [null],
   );
 
-  const clear = React.useCallback(() => {
-    setVal('');
-    setShowClear(false);
-    if (onClearHandler) {
-      onClearHandler();
-    }
-    if (onChangeHandler) {
-      onChangeHandler('');
-    }
-  }, [onClearHandler]);
+  // const clear = React.useCallback(() => {
+    // setVal('');
+    // setShowClear(false);
+    // if (onClearHandler) {
+    //   onClearHandler();
+    // }
+    // if (onChangeHandler) {
+    //   onChangeHandler('');
+    // }
+  // }, [onClearHandler]);
 
   const inputBlur = React.useCallback(() => {
     setShowClear(false);
@@ -144,14 +146,17 @@ export default function MeteInput({
               ></img>
             </span>
           </CopyToClipboard>
-        ) : (
+        ) 
+        : 
+        (
           <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
             <img
               className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
               src="/images/close.png"
             ></img>
           </span>
-        )}
+        )
+        }
       </div>
     </div>
   );

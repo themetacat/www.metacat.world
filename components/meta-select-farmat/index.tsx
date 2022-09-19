@@ -22,7 +22,7 @@ type Props = {
   platform?: string;
 };
 
-export default function MeteSelectBuilding({
+export default function MeteSelectFormat({
   label,
   onChangeHandler,
   onClearHandler,
@@ -148,7 +148,7 @@ export default function MeteSelectBuilding({
         }}
         onMouseLeave={() => {
           setTimeout(() => {
-            setArrowsState(false);
+            setArrowsState(true);
           }, 4000);
         }}
       />

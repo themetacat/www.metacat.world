@@ -14,6 +14,17 @@
   padding-bottom: 100px;
   color: rgba(153, 153, 153, 1);
 }
+.waitBuilder{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  align-items: center;
+  text-align: center;
+  text-transform: capitalize;
+  color: #FFCF5F;
+}
 
 .mini{
   padding: 0px;

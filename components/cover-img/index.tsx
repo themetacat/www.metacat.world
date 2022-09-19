@@ -17,7 +17,7 @@ export default function CoverImg({ img, className, error = '/images/logo.png' }:
   return (
     <img
       className={className}
-      src={baseImg || '/images/logo.png'}
+      src={img || '/images/logo.png'}
       onError={() => {
         setBaseImg(error);
       }}

@@ -1,0 +1,168 @@
+.content{
+  width: 1200px;
+  margin: 0 auto;
+  margin-bottom:20px ;
+}
+.backImg{
+      background-image: url(/images/beijingtu/biaotilan.png) !important;
+}
+.boxCon{
+  margin-top: 40px;
+  display: flex;
+}
+.mybuilding{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #666666;
+}
+.boxCon img{
+width: 10.42px;
+height: 5.83px;
+margin-top: 8px;
+margin-left: 8.08px;
+margin-right: 8.08px;
+}
+.nameCon{
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 20px;
+color: #FFFFFF;
+}
+.container{
+  margin-top: 20px;
+ display: flex;
+}
+.conLeft{
+  width: 520px;
+  height: 511px;
+  border-radius: 4px;
+}
+.conRight{
+margin-left: 18px;
+}
+.first{
+  margin-top: 12px;
+}
+.first:nth-child(1){
+  margin-top: 30px !important;
+}
+.platform{
+  display: inline-block;
+  width: 120px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  align-items: center;
+  color: #666666;
+}
+.instuor{
+  display: inline-block;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  align-items: center;
+  color: #FFFFFF;
+}
+.btnBox{
+display: flex;
+margin-top: 50px;
+}
+.btn1{
+  padding: 10px 65.5px 10px 65.5px;
+  border-radius: 8px;
+  color: #01DAD9;
+  border: 1px solid #00ffff;
+  cursor: pointer;
+}
+.btn1:hover{
+  filter: brightness(125%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #0F191B;
+}
+.btn1:active{
+  filter: brightness(75%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #0F191B;
+}
+.btn2{
+  margin-left: 30px;
+  padding: 10px 74.5px 10px 74.5px;
+  border-radius: 8px;
+  color: #01DAD9;
+  border: 1px solid #00ffff;
+  cursor: pointer;
+}
+.btn2:hover{
+  filter: brightness(125%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #0F191B;
+}
+.btn2:active{
+  filter: brightness(75%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #0F191B;
+}
+.btn3{
+  margin-left: 30px;
+  padding: 10px 108px 10px 108px;
+  border-radius: 8px;
+  color: #01DAD9;
+  border: 1px solid #00ffff;
+  cursor: pointer;
+}
+.btn3:hover{
+  filter: brightness(125%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #0F191B;
+}
+.btn3:active{
+  filter: brightness(75%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #0F191B;
+}
+.buildDet{
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.linellae{
+  width: 4px;
+    height: 16px;
+    background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+    margin: 5px 8px 0 0;
+    border-radius: 4px;
+}
+.buildDetInco{
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+align-items: center;
+text-transform: capitalize;
+color: #FFFFFF;
+}
+.buildName{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  align-items: center;
+  color: #FFFFFF;
+}
+.imgBox{
+  /* background-color: aqua;
+  display: flex;
+  width: 1200px; */
+}
+.imgBox img {
+  width: 613.6px;
+height: 602.98px;
+border-radius: 4px;
+}

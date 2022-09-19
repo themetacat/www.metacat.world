@@ -8,12 +8,13 @@ import style from './index.module.css';
 
 
 interface Props {
-  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search'| 'emptyBuilding';
+  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search'| 'emptyBuilding' | 'waitBuilder' | 'AddBuilder';
   mini?: boolean;
   retry?: () => void;
   addWork?: () => void;
+  unloadBuilders?: () => void;
 }
-export default function Status({ status, retry,addWork, mini = false }: Props) {
+export default function Status({ status, retry,addWork, unloadBuilders,mini = false }: Props) {
   const router = useRouter();
 
   const commonCls = cn(
@@ -74,6 +75,24 @@ export default function Status({ status, retry,addWork, mini = false }: Props) {
         <img src="/images/default-image.png" className={style.baseImg} />
         <span className="mt-4 text-xl font-semibold">No works</span>
         <span className={cn("mt-4 text-xl font-semibold",style.nowork)} onClick={addWork}>Add your work</span>
+      </div>
+    );
+  }
+
+  if (status === 'waitBuilder') {
+    return (
+      <div className={cn(commonCls)}>
+        <img src="/images/default-image.png" className={style.baseImg} />
+        <span className={cn("mt-4 text-xl font-semibold",style.waitBuilder)} >Waiting for confirmation to show as a Builder……</span>
+      </div>
+    );
+  }
+  if (status === 'AddBuilder') {
+    return (
+      <div className={cn(commonCls)}>
+        <img src="/images/default-image.png" className={style.baseImg} />
+        <span className="mt-4 text-xl font-semibold">No works</span>
+        <span className={cn("mt-4 text-xl font-semibold",style.nowork)} onClick={unloadBuilders}>Add your work</span>
       </div>
     );
   }

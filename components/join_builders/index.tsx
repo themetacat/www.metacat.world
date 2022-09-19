@@ -7,11 +7,14 @@ import styles from './index.module.css';
 
 import { getToken } from '../../common/utils';
 
+import JoinBuildersAdd from '../../components/join_builders_add';
+
 import {
   req_bind_send_email,
   req_bind_ver_email_code,
   req_modify_send_email,
   req_modify_old_email_ver_code,
+  req_userBuilder_apply_become,
 } from '../../service/z_api';
 
 interface Props {
@@ -22,7 +25,7 @@ interface Props {
   modifyEmail?: boolean;
 }
 
-export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Props) {
+export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -31,6 +34,7 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [token, setToken] = React.useState('');
   const [codeState, setCodeState] = React.useState('getCode');
+  const [tabStateTR, setTabStateTR] = React.useState(false);
   const time = React.useRef(60);
   const timeId = React.useRef(null);
 
@@ -66,7 +70,6 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
   }, []);
 
   const GetCode = () => {
-    console.log(555555555);
 
   }
   const timeOut = () => {
@@ -112,15 +115,71 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
     );
   }, [sendCodeTime, codeState, email]);
 
+  const nextBtn = React.useCallback(async () => {
+    if (!email && !code) return;
+    let result = null;
+
+    if (modifyEmail) {
+      // result = await req_modify_old_email_ver_code(code.toString(), token);
+      // if (result.code === 100000) {
+      //   closeEmail('modify');
+      // } else if (result.code === 100013) {
+      //   toast.error('Invalid verification code');
+      // } else {
+      //   toast.error('Verification code error');
+      // }
+    } else {
+      result = await req_bind_ver_email_code(code.toString(), token);
+      if (result.code === 100000) {
+        // closeEmail('bind');
+      } else if (result.code === 100013) {
+        toast.error('Invalid verification code');
+      } else {
+        toast.error('Verification code error');
+      }
+    }
+    setCode('');
+    setCodeClear(false);
+    setCodeState('getCode');
+    clearInterval(timeId.current);
+    time.current = 60;
+    setJoinBuilders(false)
+    setTabStateTR(true)
+  }, [email, code, modifyEmail]);
+
+  const turnBuild = () => {
+    setTabStateTR(false)
+  }
+
+  // const nextBtnAdd = () => {
+  //   // setTabStateTR(false)
+  //   //   console.log(token);
+      
+  //   //    const res =  req_userBuilder_apply_become(token,'builder',buildData.toString());
+       
+  //   //    setTabStateTR(false)
+  //   //  }
+  //   // setTabStateTR(false)
+  // }
+  const nextBtnAdd = (token: string, buildData: any) => {
+    console.log(token);
+
+    const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
+
+    setTabStateTR(false)
+  }
   React.useEffect(() => {
     setEmail(value);
+    setJoinBuilders(true)
     const t = getToken('atk');
     setToken(t);
   }, [value]);
 
   return (
     <>
-      <div className={styles.containerBox}>
+    {joinBuilders===true?
+    <>
+<div className={styles.containerBox}>
         <div className={styles.container}>
           <div className={styles.topBox}>
             <span>Join Builders</span>
@@ -164,6 +223,15 @@ export default function JoinBuilders({ turnOff, value,nextBtn ,modifyEmail}: Pro
           </div>
         </div>
       </div>
+    </>
+    :''}
+      
+      {tabStateTR === true ? <>
+        <JoinBuildersAdd
+          turnBuild={turnBuild}
+          nextBtnAdd={nextBtnAdd}
+        />
+      </> : ''}
     </>
   )
 }

@@ -7,7 +7,10 @@ class API {
   private key?: string;
 
   constructor(url: string, key?: string) {
-    this.url = url;
+
+    
+    // this.url = url;
+    this.url = 'http://8.130.23.16/api/v1';
     this.key = key;
   }
 
@@ -380,6 +383,7 @@ class API {
 
   public async getBaseInfo(token: string): Promise<any> {
     const url = `${this.url}/user/get_base_info`;
+    // const url = `http://8.130.23.16/api/v1/user/get_base_info`;
     const res = await fetch(url, {
       method: 'get',
       headers: {
