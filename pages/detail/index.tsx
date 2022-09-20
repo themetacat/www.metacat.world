@@ -221,7 +221,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className={cn("bg-black relative", style.backImg)}>
-        <PageHeader className={cn('relative z-20')} active={'Build'} />
+        <PageHeader className={cn('relative z-20')}  />
       </div>
       <div className={style.content}>
         <div className={style.boxCon}>

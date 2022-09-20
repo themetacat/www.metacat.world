@@ -23,22 +23,26 @@ interface Props {
   emailState?;
   dataBuild?;
   buildData?;
+  clickHeader?;
 }
 
 
 
-export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataBuild, retProps, modifyEmail, emailState, }: Props) {
+export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, buildData, dataBuild, retProps, modifyEmail, emailState, }: Props) {
   console.log(dataBuild);
 
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
+  const [infoMsgLink, setInfoMsgLink] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [emailClear, setEmailClear] = React.useState(false);
   const [codeClear, setCodeClear] = React.useState(false);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [token, setToken] = React.useState('');
+  const [infoMsgPlatform, setInfoMsgPlatform] = React.useState(false);
   // const [buildData, setBuildState] = React.useState([]);
   const [subLength, setSubLength] = React.useState(1);
+  const [infoMsgFiles, setInfoMsgFiles] = React.useState(false);
   const [subArr, setSubArr] = React.useState([]);
   const time = React.useRef(60);
   const timeId = React.useRef(null);
@@ -63,8 +67,8 @@ export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataB
     // let buildData = null;
     // buildData = subArr;
     // const buildData=this.status'
-    console.log([...subArr],'66');
-    
+    console.log([...subArr], '66');
+
     setSubArr([...subArr])
   }, []);
 
@@ -84,8 +88,8 @@ export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataB
 
 
   const addBuildOther = () => {
-    console.log(subLength,);
-    if (subLength > 2) {
+    console.log(subLength, subArr.length);
+    if (subArr.length > 2) {
       toast.error('不得超过三条数据');
       return false;
     }
@@ -105,8 +109,7 @@ export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataB
     // this.props.subArr
     // buildData([...subArr])
     setSubArr([...subArr])
-    console.log([...subArr],"llll");
-    
+
   }
 
   const delBuild = (index) => {
@@ -144,8 +147,8 @@ export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataB
   return (
     <>
       <div className={styles.containerBox}>
-        <div className={styles.container}>
-          <div className={styles.topBox}>
+        <div className={styles.container2}>
+          <div className={styles.topBox} onMouseDown={clickHeader}>
             <span>Join Builders</span>
             <span onClick={turnOff}><img src="/images/guanbi.png" alt="" /></span>
           </div>
@@ -196,16 +199,56 @@ export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataB
                         placeholder=""
                         value={item}
                         onInput={(e) => { setCodeValue(index, e, item) }}
-                        onFocus={() => {
-                          if (code) {
-                            setCodeClear(true);
+                        // onFocus={() => {
+                        //   if (code) {
+                        //     setCodeClear(true);
+                        //   }
+                        // }}
+                        // onBlur={() => {
+
+                        //   const linkBuildIndex = item.indexOf('http://')
+                        //   const linkBuildCom = item.indexOf('.com')
+                        //   if (linkBuildIndex === -1 || linkBuildCom === -1) {
+                        //     toast.error('请填写正确的link地址');
+                        //     return false;
+                        //   }
+                        // }}
+
+                        onBlur={(index) => {
+                          if (item === '') {
+                            setInfoMsgLink(true)
+                            setInfoMsgFiles(false)
+                          } else if (item !== '') {
+                            setInfoMsgLink(false)
+                            const linkBuildIndex = item.indexOf('http://')
+                            const linkBuildCom = item.indexOf('.com')
+                            if (linkBuildIndex === -1 || linkBuildCom === -1) {
+                              console.log(
+                                linkBuildIndex, 1, linkBuildCom
+                              );
+                              setInfoMsgFiles(true)
+                            } else {
+                              setInfoMsgFiles(false)
+                            }
+                          } else {
+                            setInfoMsgLink(false)
+                            setInfoMsgFiles(false)
                           }
+
                         }}
-                        onBlur={codeBlue}
                       />
                       <>
                         <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                       </>
+                      <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
+                        {
+                          infoMsgLink === true ? <span className={styles.warn}>Please input building link</span> : null
+                        }
+                        {
+                          infoMsgFiles === true ? <span className={styles.warn}>Please fill in the correct link address</span> : null
+                        }
+                      </div>
+
                     </>
                   )
                   )
@@ -219,7 +262,7 @@ export default function JoinBuilders({ turnOff, value, nextBtn, buildData, dataB
                 <img src="/images/ttt.png" alt="" />
 
               </p>
-              <div className={styles.next} onClick={()=>{retProps(token,subArr)}}>Submit</div>
+              <div className={cn(styles.next, infoMsgLink === true ? styles.sub : null, infoMsgFiles === true ? styles.sub : null)} onClick={() => { retProps(token, subArr) }}>Submit</div>
             </div>
           </div>
 

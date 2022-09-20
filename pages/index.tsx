@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
 import toast, { Toaster } from 'react-hot-toast';
@@ -48,7 +49,7 @@ export default function Index(props) {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-
+  const router = useRouter();
   const [builderCarouselList, setBuilderCarouselList] = React.useState([]);
   const [creatorCarouselList, setCreatorCarouselList] = React.useState([]);
   const [profile, setProfile] = React.useState(null);
@@ -154,6 +155,10 @@ export default function Index(props) {
   const jumpToUrl = React.useCallback((url) => {
     window.open(url);
   }, []);
+
+  const jumpToUrlEnt = ()=>{
+    router.replace(`/profile?type=building`)
+  }
 
   React.useEffect(() => {
     const accessToken = getToken('atk');
@@ -311,9 +316,10 @@ export default function Index(props) {
                       EXPLORE BUILDERS
                     </div>
                     <div
-                      onClick={() => {
-                        jumpToUrl('https://forms.gle/LKgT89B884yk2gAK7');
-                      }}
+                      // onClick={() => {
+                      //   jumpToUrl('/profile?type=parcellist');
+                      // }}
+                      onClick={jumpToUrlEnt}
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                     >
                       JOIN BUILDERS

@@ -624,7 +624,7 @@ function ProfilePage(r) {
 
     if (emailState === null) {
       setJoinBuilders(true)
-    } else if (emailState == '') {
+    } else if (emailState !== '') {
       setEmailBuilders(true)
       // this.props.emailState(this.props.emailState)
     }
@@ -639,6 +639,7 @@ function ProfilePage(r) {
 
   const unloadBuilders = React.useCallback(async () => {
     setAddbuild(true)
+    // router.replace('profile/addBuilding')
     setBuildInc('add')
     setBuildAll([])
   }, [])
@@ -703,13 +704,27 @@ function ProfilePage(r) {
   //   setBuildData(arr)
   // }
   const retProps = React.useCallback((token: string, buildData: any) => {
-    console.log(token);
-
+    console.log(token,buildData);
+  
     const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
+    // if(buildData === []){
+    //       toast.error('请填写正确的link地址');
+    //   return false;
+    // }
     // if(buildState === 2){
     //   console.log(buildState,6859);
 
     //   setBuilderSat(true)
+    // }
+    // if (buildData !== '') {
+    //   toast.error('请填写Link To Building');
+    //   return false;
+    // }
+    // const linkBuildIndex = buildData.indexOf('http://')
+    // const linkBuildCom = buildData.indexOf('.com')
+    // if (linkBuildIndex === -1 || linkBuildCom === -1) {
+    //   toast.error('请填写正确的link地址');
+    //   return false;
     // }
     setBuildState(2)
     console.log(buildState, 6859);
@@ -812,14 +827,21 @@ function ProfilePage(r) {
 
   const closeBuild = () => {
     setAddbuild(false)
+    console.log(5454);
+
+    // router.replace(`/profile?type=building`)
   }
 
   const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
     // setBuildInc(operationType)
-    console.log(buildInc, operationType,54,nickName, 565656);
+    console.log(buildInc, operationType, 54, nickName, 565656);
 
     if (nickName === '') {
       toast.error('请填写Building Name');
+      return false;
+    }
+    if (nickName.length > 200) {
+      toast.error('Max text length 200');
       return false;
     }
     if (platform === '') {
@@ -832,7 +854,7 @@ function ProfilePage(r) {
     }
     const linkBuildIndex = linkBuild.indexOf('http://')
     const linkBuildCom = linkBuild.indexOf('.com')
-    if (linkBuildIndex === -1 ||linkBuildCom === -1) {
+    if (linkBuildIndex === -1 || linkBuildCom === -1) {
       toast.error('请填写正确的link地址');
       return false;
     }
@@ -1265,7 +1287,7 @@ function ProfilePage(r) {
 
     reqBuilderData('0x79EF3DA763754387F06022Cf66c2668854B3389B')
 
-  }, [])
+  }, [addbuild])
 
   React.useEffect(() => {
     setNavLabel('All')
@@ -1444,6 +1466,117 @@ function ProfilePage(r) {
   //     );
   //   }
   // }, [ownerData]);
+
+
+  const drag = function (evt, dbele?) {
+    dbele = document.querySelector('.addBuilding_content__GcPPZ')
+    // ele.onmousedown = function (evt) {
+        //获取事件对象，兼容写法
+        var oEvent = evt || event;
+        var disX = oEvent.clientX - dbele.offsetLeft;
+        var disY = oEvent.clientY - dbele.offsetTop;
+        //实时改变位置
+        document.onmousemove = function (evts) {
+          console.log(evts);
+            var evtUp = evts;
+            var leftX = evtUp.clientX - disX;
+            var topY = evtUp.clientY - disY;
+            // 右边判断是否超出
+            
+            if (
+                leftX >
+                document.querySelector("#container").clientWidth - dbele.offsetWidth
+            ) {
+                leftX =
+                    document.body.clientWidth -
+                    dbele.offsetWidth;
+            }
+            // 左边判断是否超出
+            if (leftX < 0) {
+                leftX = 0;
+            }
+            if (
+                topY >
+                document.querySelector("#container").clientHeight -
+                dbele.offsetHeight
+            ) {
+                topY =
+                    document.body.clientHeight -
+                    dbele.offsetHeight;
+            }
+            if (topY < 0) {
+                topY = 0;
+            }
+            
+            dbele.style.left = leftX + "px";
+            dbele.style.marginLeft = 0 + "px";
+            dbele.style.marginTop = 0 + "px";
+            // dbele.style.marginBottom = 50 + "px";
+            dbele.style.top = topY + "px";
+            dbele.style.zIndex = "999999";
+        };
+        //停止拖动
+        document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        };
+}
+
+
+  const dragJoin = function (evt, dbele?) {
+    dbele = document.querySelector('.join_builders_works_container2__VidgJ')
+    // ele.onmousedown = function (evt) {
+        //获取事件对象，兼容写法
+        var oEvent = evt ;
+        var disX = oEvent.clientX - dbele.offsetLeft;
+        var disY = oEvent.clientY - dbele.offsetTop;
+        //实时改变位置
+        document.onmousemove = function (evts) {
+          console.log(evts);
+            var evtUp = evts;
+            var leftX = evtUp.clientX - disX;
+            var topY = evtUp.clientY - disY;
+            // 右边判断是否超出
+            
+            if (
+                leftX >
+                document.querySelector("#container").clientWidth - dbele.offsetWidth
+            ) {
+                leftX =
+                    document.body.clientWidth -
+                    dbele.offsetWidth;
+            }
+            // 左边判断是否超出
+            if (leftX < 0) {
+                leftX = 0;
+            }
+            if (
+                topY >
+                document.querySelector("#container").clientHeight -
+                dbele.offsetHeight
+            ) {
+                topY =
+                    document.body.clientHeight -
+                    dbele.offsetHeight;
+            }
+            if (topY < 0) {
+                topY = 0;
+            }
+            
+            dbele.style.left = leftX + "px";
+            dbele.style.marginLeft = 0 + "px";
+            dbele.style.marginTop = 0 + "px";
+            // dbele.style.marginBottom = 50 + "px";
+            dbele.style.top = topY + "px";
+            dbele.style.zIndex = "999999";
+        };
+        //停止拖动
+        document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        };
+}
+
 
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
@@ -1855,125 +1988,132 @@ function ProfilePage(r) {
 
   return (
     <>
-    <Page className={cn('min-h-screen', style.anPage,)} meta={meta} >
-      {/* joinBuilders === true?style.joinBuilders:'' */}
-      <div
-        onClick={() => {
-          setManySetState(false);
-        }}
-        className={style.bigPic}
+      <Page className={cn('min-h-screen', style.anPage,)} meta={meta}
       >
-        <div className=" relative">
-          <PageHeader className="relative z-10" active={'profile'} />
-        </div>
+        {/* joinBuilders === true?style.joinBuilders:'' */}
+        <div
+          onClick={() => {
+            setManySetState(false);
+          }}
+          id='container'
+          className={cn('', style.bigPic, addbuild === true ? style.joinBuilders : '', joinBuilders === true ? style.joinBuilders : '', emailBuilders === true ? style.joinBuilders : '')}
+        >
+          <div className=" relative">
+            <PageHeader
+              className="relative z-10" active={'profile'} />
+          </div>
 
-        <div className={cn(' flex flex-col justify-center items-center')}>
-          <Profile
-            avater={avatar}
-            address={address}
-            creatorsState={creatorsState}
-            twitter={twitterAddress}
-            home={websiteAddress}
-            country={countryAddress}
-            name={nickName}
+          <div className={cn(' flex flex-col justify-center items-center', style.profileCon)}>
+            <Profile
+              avater={avatar}
+              address={address}
+              creatorsState={creatorsState}
+              twitter={twitterAddress}
+              home={websiteAddress}
+              country={countryAddress}
+              name={nickName}
+              email={email}
+              onClick={creatorDisplay}
+              classname="main-content"
+            ></Profile>
+            <div className={style.intor}>{introductionText}</div>
+            <div className={cn(style.tablebg)}>
+              <div className={cn(style.tableList)}>
+                {TAB3.map((item) => {
+                  return (
+                    <Tab3
+                      label={item.label}
+                      key={item.label}
+                      active={routeTab === item.type}
+                      onClick={() => {
+                        changeTab3(item.label, item.type);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            {randerCardList}
+            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
+          </div>
+        </div>
+        {creatorState ? (
+          <Creator
+            onClick={changeCreatorState}
+            token={refreshTK()}
             email={email}
-            onClick={creatorDisplay}
-            classname="main-content"
-          ></Profile>
-          <div className={style.intor}>{introductionText}</div>
-          <div className={cn(style.tablebg)}>
-            <div className={cn(style.tableList)}>
-              {TAB3.map((item) => {
-                return (
-                  <Tab3
-                    label={item.label}
-                    key={item.label}
-                    active={routeTab === item.type}
-                    onClick={() => {
-                      changeTab3(item.label, item.type);
-                    }}
-                  />
-                );
-              })}
+            address={address}
+          ></Creator>
+        ) : null}
+
+        {wearablesShowOrHideState ? (
+          <div className={style.settingShowOrHide}>
+            {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
+              } selected`}
+            <div
+              onClick={() => {
+                setWearablesShowOrHideState(false);
+                setWearablesShowOrHide(0);
+                setWearablesSleceteIdList([]);
+              }}
+              className={style.close}
+            >
+              Close
+            </div>
+            <div
+              className={style.showOrHide}
+              onClick={() => {
+                batchShowOrHide();
+              }}
+            >
+              {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
             </div>
           </div>
-          {randerCardList}
-          <div style={{ width: "100%" }}><Footer /></div>
-        </div>
-      </div>
-      {creatorState ? (
-        <Creator
-          onClick={changeCreatorState}
-          token={refreshTK()}
-          email={email}
-          address={address}
-        ></Creator>
-      ) : null}
+        ) : null}
+        {joinBuilders === true ? <>
+          {/* <div style={{backgroundColor:"#fff",opacity:"0.3"}}> */}
+          <JoinBuilders
+            turnOff={turnOff}
+            nextBtn={nextBtn}
 
-      {wearablesShowOrHideState ? (
-        <div className={style.settingShowOrHide}>
-          {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
-            } selected`}
-          <div
-            onClick={() => {
-              setWearablesShowOrHideState(false);
-              setWearablesShowOrHide(0);
-              setWearablesSleceteIdList([]);
-            }}
-            className={style.close}
-          >
-            Close
-          </div>
-          <div
-            className={style.showOrHide}
-            onClick={() => {
-              batchShowOrHide();
-            }}
-          >
-            {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
-          </div>
-        </div>
-      ) : null}
-      {joinBuilders === true ? <>
-        {/* <div style={{backgroundColor:"#fff",opacity:"0.3"}}> */}
-        <JoinBuilders
-          turnOff={turnOff}
-          nextBtn={nextBtn}
-
-        />
-        {/* </div> */}
-      </> : ''}
-      {/* {tabStateTR === true ? <>
+          />
+          {/* </div> */}
+        </> : ''}
+        {/* {tabStateTR === true ? <>
         <JoinBuildersAdd
           turnBuild={turnBuild}
           nextBtnAdd={nextBtnAdd}
         />
       </> : ''} */}
+     
+
+
+      </Page>
       {emailBuilders === true ?
-        <>
-          <JoinBuildersWork
-            turnOff={turnOff}
-            retProps={retProps}
-            emailState={emailState}
-          />
-          {/* <JoinBuildersAdd
+          <>
+            <JoinBuildersWork
+              turnOff={turnOff}
+              retProps={retProps}
+              emailState={emailState}
+              clickHeader={dragJoin}
+            />
+            {/* <JoinBuildersAdd
             turnBuild={turnBuild}
             nextBtnAdd={nextBtnAdd}
           /> */}
-        </> : ''}
-    
-
-    </Page>
+          </> : ''}
       {addbuild === true ?
         <>
           <AddBuildings
+            id='addBuilding'
             Save={Save}
             buildAll={buildAll}
             buildInc={buildInc}
             closeBuild={closeBuild}
+            clickHeader={drag}
           />
         </> : ''}
-        </>
+    </>
   );
 }
 

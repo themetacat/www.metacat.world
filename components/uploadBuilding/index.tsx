@@ -62,11 +62,8 @@ export default function UploadImg({ imgUrl, cover,coverImg, closeBuild, showClea
       onSuccess,
       withCredentials,
     }) => {
-      console.log(file);
-      const fileInd = file.name.indexOf('.png')
-      const fileIndTh = file.name.indexOf('.jpeg')
-      const fileIndThr = file.name.indexOf('.gif')
-      if(fileInd === -1 ||fileIndTh === -1 || fileIndThr === -1){
+      const fileInd = file.type.indexOf('image')
+      if(fileInd === -1){
         toast.error('Please upload the correct file type');
         return;
       }

@@ -40,10 +40,12 @@ interface Props {
   closeBuild?: () => void;
   buildAll?;
   buildInc?;
+  clickHeader?;
+  id?;
 }
 
 
-export default function AddBuildings({ Save, subArrData, file_link_cover, closeBuild, buildAll, buildInc }: Props) {
+export default function AddBuildings({ Save, id,clickHeader,subArrData, file_link_cover, closeBuild, buildAll, buildInc }: Props) {
   const meta = {
     title: `ProfileSetting - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -297,6 +299,9 @@ export default function AddBuildings({ Save, subArrData, file_link_cover, closeB
   return (
     <>
       <Page className={cn('flex flex-col', style.anPage)} meta={meta}>
+      {/* <div className="bg-black relative">
+        <PageHeader className="relative z-10" active={'profile'} />
+      </div> */}
         <div className={cn('main-content flex flex-col justify-center items-center', style.content)}>
           <div className={cn('w-full flex flex-col justify-start items-center', style.chartList)}>
             <div
@@ -304,6 +309,8 @@ export default function AddBuildings({ Save, subArrData, file_link_cover, closeB
                 'w-full text-xl text-white flex justify-start items-center ',
                 style.bottomBorder,
               )}
+              onMouseDown={clickHeader}
+              // onmousedown={clickHeader}
             >
               <span>Upload the building</span>
               <span style={{ display: "inline-block", position: "absolute", right: "15px" }} onClick={closeBuild}><img src='/images/guanbi.png'></img></span>
@@ -411,7 +418,7 @@ export default function AddBuildings({ Save, subArrData, file_link_cover, closeB
                       infoMsgLink === true ? <span className={style.warn}>Please input building link</span> : null
                     }
                     {
-                      infoMsgFiles === true ? <span className={style.warn}>请填写正确的link地址</span> : null
+                      infoMsgFiles === true ? <span className={style.warn}>Please fill in the link address</span> : null
                     }
                   </div>
                 </div>

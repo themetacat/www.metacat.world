@@ -41,6 +41,14 @@ color: #FFFFFF;
   width: 520px;
   height: 511px;
   border-radius: 4px;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+.conLeft img{
+  width: 520px;
+  height: 511px;
+  border-radius: 4px;
+  object-fit: cover;
 }
 .conRight{
 margin-left: 18px;
@@ -165,4 +173,5 @@ color: #FFFFFF;
   width: 613.6px;
 height: 602.98px;
 border-radius: 4px;
+object-fit: cover;
 }

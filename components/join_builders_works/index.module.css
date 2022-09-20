@@ -1,4 +1,4 @@
-.container{
+.container2{
     width: 450px;
     /* height: 368px; */
     background: #000000;
@@ -10,9 +10,23 @@
     border-radius: 16px;
     padding-bottom: 37px;
 }
+.warn {
+  color: rgba(255, 214, 70, 1);
+}
+.sub{
+ cursor: not-allowed;
+}
+.warnContent > img {
+  width: 14px;
+  height: 14px;
+}
+.warnContent {
+  min-height: 16px;
+  color: red;
+}
 .containerBox{
     width: 100%;
-    position: relative;
+    /* position: relative; */
 }
 .topBox{
     /* height: 30px; */
