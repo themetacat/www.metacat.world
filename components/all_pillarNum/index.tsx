@@ -3,7 +3,7 @@ import { Chart } from '@antv/g2';
 import cn from 'classnames';
 import style from './index.module.css';
 
-import ChartTitle from '../chart-title';
+import ChartTitle from '../chart-title2';
 import Status from '../status';
 import IconLabel from '../icon-label';
 import ChartSelecter from '../chart-select';
@@ -26,6 +26,8 @@ type Props = {
   priceOptions?;
   limit?: number;
   textColor?;
+  imgBox?;
+  toLink?;
 };
 /**
  * The Sandbox
@@ -72,6 +74,8 @@ export default function AllPillarNum({
   priceOptions,
   limit,
   textColor,
+  imgBox,
+  toLink,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -529,7 +533,7 @@ export default function AllPillarNum({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText} color={textColor}></ChartTitle>
+        <ChartTitle text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>
