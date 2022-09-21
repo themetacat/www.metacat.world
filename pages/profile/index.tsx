@@ -704,11 +704,18 @@ function ProfilePage(r) {
   //   setBuildData(arr)
   // }
   const retProps = React.useCallback((token: string, buildData: any) => {
-    console.log(token,buildData);
+    console.log(buildData);
   
     const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
-    // if(buildData === []){
-    //       toast.error('请填写正确的link地址');
+    if(buildData.length === 0){
+          toast.error('请填写link地址');
+      return false;
+    }
+    // const linkArr = buildData.indexOf('Array(0)')
+    // console.log(linkArr);
+    
+    // if(linkArr === -1){
+    //   toast.error('请填写Link To Building');
     //   return false;
     // }
     // if(buildState === 2){
@@ -728,8 +735,8 @@ function ProfilePage(r) {
     // }
     setBuildState(2)
     console.log(buildState, 6859);
-    setTabStateTR(false)
-    setEmailBuilders(false)
+    // setTabStateTR(false)
+    // setEmailBuilders(false)
   }
     ,
     [buildState],

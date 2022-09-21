@@ -29,7 +29,6 @@ interface Props {
 
 
 export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, buildData, dataBuild, retProps, modifyEmail, emailState, }: Props) {
-  console.log(dataBuild);
 
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
@@ -88,7 +87,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
 
 
   const addBuildOther = () => {
-    console.log(subLength, subArr.length);
+    console.log(subLength, subArr);
     if (subArr.length > 2) {
       toast.error('不得超过三条数据');
       return false;
@@ -204,50 +203,51 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                         //     setCodeClear(true);
                         //   }
                         // }}
-                        // onBlur={() => {
+                        onBlur={() => {
 
-                        //   const linkBuildIndex = item.indexOf('http://')
-                        //   const linkBuildCom = item.indexOf('.com')
-                        //   if (linkBuildIndex === -1 || linkBuildCom === -1) {
-                        //     toast.error('请填写正确的link地址');
-                        //     return false;
-                        //   }
-                        // }}
-
-                        onBlur={(index) => {
-                          if (item === '') {
-                            setInfoMsgLink(true)
-                            setInfoMsgFiles(false)
-                          } else if (item !== '') {
-                            setInfoMsgLink(false)
-                            const linkBuildIndex = item.indexOf('http://')
-                            const linkBuildCom = item.indexOf('.com')
-                            if (linkBuildIndex === -1 || linkBuildCom === -1) {
-                              console.log(
-                                linkBuildIndex, 1, linkBuildCom
-                              );
-                              setInfoMsgFiles(true)
-                            } else {
-                              setInfoMsgFiles(false)
-                            }
-                          } else {
-                            setInfoMsgLink(false)
-                            setInfoMsgFiles(false)
+                          const linkBuildIndex = item.indexOf('http://')
+                          const linkBuildCom = item.indexOf('.com')
+                          if (linkBuildIndex === -1 || linkBuildCom === -1) {
+                            toast.error('请填写正确的link地址');
+                            return false;
                           }
-
                         }}
+
+                        // onBlur={(index) => {
+
+                        //   if (item === '') {
+                        //     setInfoMsgLink(true)
+                        //     setInfoMsgFiles(false)
+                        //   } else if (item !== '') {
+                        //     setInfoMsgLink(false)
+                        //     const linkBuildIndex = item.indexOf('http://')
+                        //     const linkBuildCom = item.indexOf('.com')
+                        //     if (linkBuildIndex === -1 || linkBuildCom === -1) {
+                        //       console.log(
+                        //         linkBuildIndex, 1, linkBuildCom
+                        //       );
+                        //       setInfoMsgFiles(true)
+                        //     } else {
+                        //       setInfoMsgFiles(false)
+                        //     }
+                        //   } else {
+                        //     setInfoMsgLink(false)
+                        //     setInfoMsgFiles(false)
+                        //   }
+
+                        // }}
                       />
                       <>
                         <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                       </>
-                      <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
+                      {/* <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
                         {
                           infoMsgLink === true ? <span className={styles.warn}>Please input building link</span> : null
                         }
                         {
                           infoMsgFiles === true ? <span className={styles.warn}>Please fill in the correct link address</span> : null
                         }
-                      </div>
+                      </div> */}
 
                     </>
                   )
@@ -262,7 +262,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                 <img src="/images/ttt.png" alt="" />
 
               </p>
-              <div className={cn(styles.next, infoMsgLink === true ? styles.sub : null, infoMsgFiles === true ? styles.sub : null)} onClick={() => { retProps(token, subArr) }}>Submit</div>
+              <div className={cn(styles.next, )} onClick={() => { retProps(token, subArr) }}>Submit</div>
             </div>
           </div>
 
