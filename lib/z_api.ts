@@ -6,8 +6,7 @@ class API {
   private key?: string;
 
   constructor(url: string, key?: string) {
-    this.url = url;
-    // this.url = 'http://8.130.23.16/api/v1';
+    this.url = 'http://8.130.23.16/api/v1';
     this.key = key;
   }
 
