@@ -77,8 +77,8 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
   const deleteBuild = (token, buildingLinkConVal) => {
     const url = window.location.search;
-    let str = url.substr(1);
-    let strs = str.split("building_link=");
+    const str = url.substr(1);
+    const strs = str.split("building_link=");
     if (url.indexOf('?') !== -1) {
       // var str = url.substr(1);
       // var strs = str.split("building_link=");

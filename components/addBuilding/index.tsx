@@ -384,7 +384,7 @@ console.log(e);
                     require={true}
                     name={'Link To Building'}
                     bold={true}
-                    disable={buildAll?.building_link === buildAll?.building_link ? true : false}
+                    disable={buildAll?.building_link}
                     value={linkBuild}
                     requirePrefix={false}
                     onChangeHandler={(val) => {

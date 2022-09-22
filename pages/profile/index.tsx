@@ -1572,12 +1572,12 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      dbele.style.left = leftX + "px";
-      dbele.style.marginLeft = 0 + "px";
-      dbele.style.marginTop = 0 + "px";
+      dbele.style.left = `${leftX}` + "px";
+      dbele.style.marginLeft = `${0}` + "px";
+      dbele.style.marginTop = `${0}` + "px";
       // dbele.style.marginBottom = 50 + "px";
-      dbele.style.top = topY + "px";
-      dbele.style.zIndex = "999999";
+      dbele.style.top = `${topY}` + "px";
+      dbele.style.zIndex = `${99999}`;
     };
     document.onmouseup = function () {
       document.onmousemove = null;
@@ -1622,12 +1622,18 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      dbele.style.left = leftX + "px";
-      dbele.style.marginLeft = 0 + "px";
-      dbele.style.marginTop = 0 + "px";
+      // dbele.style.left = leftX + "px";
+      // dbele.style.marginLeft = 0 + "px";
+      // dbele.style.marginTop = 0 + "px";
+      // // dbele.style.marginBottom = 50 + "px";
+      // dbele.style.top = topY + "px";
+      // dbele.style.zIndex = "999999";
+      dbele.style.left = `${leftX}` + "px";
+      dbele.style.marginLeft = `${0}` + "px";
+      dbele.style.marginTop = `${0}` + "px";
       // dbele.style.marginBottom = 50 + "px";
-      dbele.style.top = topY + "px";
-      dbele.style.zIndex = "999999";
+      dbele.style.top = `${topY}` + "px";
+      dbele.style.zIndex = `${99999}`;
     };
     //停止拖动
     document.onmouseup = function () {
@@ -1671,12 +1677,18 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      dbele.style.left = leftX + "px";
-      dbele.style.marginLeft = 0 + "px";
-      dbele.style.marginTop = 0 + "px";
+      // dbele.style.left = leftX + "px";
+      // dbele.style.marginLeft = 0 + "px";
+      // dbele.style.marginTop = 0 + "px";
+      // // dbele.style.marginBottom = 50 + "px";
+      // dbele.style.top = topY + "px";
+      // dbele.style.zIndex = "999999";
+      dbele.style.left = `${leftX}` + "px";
+      dbele.style.marginLeft = `${0}` + "px";
+      dbele.style.marginTop = `${0}` + "px";
       // dbele.style.marginBottom = 50 + "px";
-      dbele.style.top = topY + "px";
-      dbele.style.zIndex = "999999";
+      dbele.style.top = `${topY}` + "px";
+      dbele.style.zIndex = `${99999}`;
     };
     document.onmouseup = function () {
       document.onmousemove = null;
