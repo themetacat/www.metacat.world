@@ -973,10 +973,15 @@ function ProfilePage(r) {
     [resultHandlerBu, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
   );
 
-  // console.log(req_building_list(''),5959);
+  // const addWork = React.useCallback(async () => {
+  //   console.log('hhhhhhhhhhhhhhhhhhh');
+  //   // <JoinBuilders/>
+  //   // joinBuilders
+  //   setJoinBuilders(true);
+  //   console.log(joinBuilders, 5555555555);
 
-    // renderssssContent
-  }, [joinBuilders]);
+  //   // renderssssContent
+  // }, [joinBuilders]);
 
   const select = React.useCallback(
     (id, ids) => {
