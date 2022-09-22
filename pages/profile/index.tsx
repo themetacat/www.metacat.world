@@ -919,27 +919,24 @@ function ProfilePage(r) {
       toast.error('请上传building文件');
       return false;
     }
-    if (files_link_cover === '') {
-      // files_link_cover = subArrData[0]
-      // let arrV = ''
-      // arrV = subArrData[0]
-      // files_link_cover = arrV
+    let imgCont = files_link_cover 
+    if (imgCont === '') {
+      [imgCont] = subArrData
 
-      toast.error('请设置封面图');
-      return false;
+      // toast.error('请设置封面图');
+      // return false;
     }
-    const indexBuild = subArrData.indexOf(files_link_cover)
+    const indexBuild = subArrData.indexOf(imgCont)
+
     if (indexBuild === -1) {
       // files_link_cover = subArrData[0]
-      // let arrV = ''
-      // arrV = subArrData[0]
-      // files_link_cover = arrV
-      toast.error('请设置封面图');
-      return false;
+      [imgCont] = subArrData
+      // toast.error('请设置封面图');
+      // return false;
     }
     // console.log(indexBuild);
 
-    const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), files_link_cover.toString(), files_link_del.join(','));
+    const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), imgCont.toString(), files_link_del.join(','));
     // console.log(res, subArrData);
     // console.log(files_link_cover, "files_link_cover");
 
@@ -1539,163 +1536,173 @@ function ProfilePage(r) {
 
 
   const drag = function (evt, dbele?) {
-    // dbele = document.querySelector('.addBuilding_content__GcPPZ' || '')
-    // // ele.onmousedown = function (evt) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.addBuilding_content__GcPPZ')
+    }
 
-    // const oEvent = evt;
-    // const disX = oEvent.clientX - dbele.offsetLeft;
-    // const disY = oEvent.clientY - dbele.offsetTop;
-    // document.onmousemove = function (evts) {
-    //   // console.log(evts);
-    //   const evtUp = evts;
-    //   let leftX = evtUp.clientX - disX;
-    //   let topY = evtUp.clientY - disY;
+    // ele.onmousedown = function (evt) {
 
-    //   if (
-    //     leftX >
-    //     document.querySelector("#container").clientWidth - dbele.offsetWidth
-    //   ) {
-    //     leftX =
-    //       document.body.clientWidth -
-    //       dbele.offsetWidth;
-    //   }
-    //   if (leftX < 0) {
-    //     leftX = 0;
-    //   }
-    //   if (
-    //     topY >
-    //     document.querySelector("#container").clientHeight -
-    //     dbele.offsetHeight
-    //   ) {
-    //     topY =
-    //       document.body.clientHeight -
-    //       dbele.offsetHeight;
-    //   }
-    //   if (topY < 0) {
-    //     topY = 0;
-    //   }
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
-    //   // if (dbele) {
-    //   //   dbele.style.left = leftX + "px";
-    //   //   dbele.style.marginLeft = 0 + "px";
-    //   //   dbele.style.marginTop = 0 + "px";
-    //   //   // dbele.style.marginBottom = 50 + "px";
-    //   //   dbele.style.top = topY + "px";
-    //   //   dbele.style.zIndex = "999999";
-    //   // } else {
-    //   //   return false;
-    //   // }
-    // };
-    // document.onmouseup = function () {
-    //   document.onmousemove = null;
-    //   document.onmouseup = null;
-    // };
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
   }
 
 
-  const dragJoin = function (evt, dbele?) {
-    // dbele = document.querySelector('.join_builders_works_container2__VidgJ' || '')
-    // // ele.onmousedown = function (evt) {
-    // const oEvent = evt;
-    // const disX = oEvent.clientX - dbele.offsetLeft;
-    // const disY = oEvent.clientY - dbele.offsetTop;
-    // document.onmousemove = function (evts) {
-    //   // console.log(evts);
-    //   const evtUp = evts;
-    //   let leftX = evtUp.clientX - disX;
-    //   let topY = evtUp.clientY - disY;
+  const dragJoin = function (evt, dbele) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_add_container__JytZM')
+    }
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
-    //   if (
-    //     leftX >
-    //     document.querySelector("#container").clientWidth - dbele.offsetWidth
-    //   ) {
-    //     leftX =
-    //       document.body.clientWidth -
-    //       dbele.offsetWidth;
-    //   }
-    //   if (leftX < 0) {
-    //     leftX = 0;
-    //   }
-    //   if (
-    //     topY >
-    //     document.querySelector("#container").clientHeight -
-    //     dbele.offsetHeight
-    //   ) {
-    //     topY =
-    //       document.body.clientHeight -
-    //       dbele.offsetHeight;
-    //   }
-    //   if (topY < 0) {
-    //     topY = 0;
-    //   }
-
-    //   // if (dbele) {
-    //   //   dbele.style.left = leftX + "px";
-    //   //   dbele.style.marginLeft = 0 + "px";
-    //   //   dbele.style.marginTop = 0 + "px";
-    //   //   // dbele.style.marginBottom = 50 + "px";
-    //   //   dbele.style.top = topY + "px";
-    //   //   dbele.style.zIndex = "999999";
-    //   // } else {
-    //   //   return false;
-    //   // }
-    // };
-    // document.onmouseup = function () {
-    //   document.onmousemove = null;
-    //   document.onmouseup = null;
-    // };
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
   }
   const dragHead = function (evt, dbele?) {
-    // dbele = document.querySelector('.join_builders_container__31cSn' || '')
-    // // ele.onmousedown = function (evt) {
-    // const oEvent = evt;
-    // const disX = oEvent.clientX - dbele.offsetLeft;
-    // const disY = oEvent.clientY - dbele.offsetTop;
-    // document.onmousemove = function (evts) {
-    //   // console.log(evts);
-    //   const evtUp = evts;
-    //   let leftX = evtUp.clientX - disX;
-    //   let topY = evtUp.clientY - disY;
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_container__31cSn')
+    }
 
-    //   if (
-    //     leftX >
-    //     document.querySelector("#container").clientWidth - dbele.offsetWidth
-    //   ) {
-    //     leftX =
-    //       document.body.clientWidth -
-    //       dbele.offsetWidth;
-    //   }
-    //   if (leftX < 0) {
-    //     leftX = 0;
-    //   }
-    //   if (
-    //     topY >
-    //     document.querySelector("#container").clientHeight -
-    //     dbele.offsetHeight
-    //   ) {
-    //     topY =
-    //       document.body.clientHeight -
-    //       dbele.offsetHeight;
-    //   }
-    //   if (topY < 0) {
-    //     topY = 0;
-    //   }
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
-    //   // if (dbele) {
-    //   //   dbele.style.left = leftX + "px";
-    //   //   dbele.style.marginLeft = 0 + "px";
-    //   //   dbele.style.marginTop = 0 + "px";
-    //   //   // dbele.style.marginBottom = 50 + "px";
-    //   //   dbele.style.top = topY + "px";
-    //   //   dbele.style.zIndex = "999999";
-    //   // } else {
-    //   //   return false;
-    //   // }
-    // };
-    // document.onmouseup = function () {
-    //   document.onmousemove = null;
-    //   document.onmouseup = null;
-    // };
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
   }
 
 

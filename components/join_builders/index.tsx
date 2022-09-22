@@ -1,4 +1,4 @@
-import React,{useCallback} from 'react';
+import React, { useCallback } from 'react';
 import cn from 'classnames';
 
 import { toast } from 'react-hot-toast';
@@ -30,7 +30,7 @@ interface Props {
   clickHeader?;
 }
 
-export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeader, value, modifyEmail }: Props) {
+export default function JoinBuilders({ turnOff, stateVal, editStateVal, clickHeader, value, modifyEmail }: Props) {
   const [showState, setShow] = React.useState('');
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -51,12 +51,15 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
   //     document.addEventListener('scroll', listener);
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
-  const dragJoin = function (evt, dbele?) {
-    dbele = document.querySelector('.join_builders_add_container__JytZM' )
+  const dragJoin = function (evt, dbele) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_add_container__JytZM')
+    }
     // ele.onmousedown = function (evt) {
     const oEvent = evt;
-    const disX = oEvent.clientX - dbele.offsetLeft;
-    const disY = oEvent.clientY - dbele.offsetTop;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
       const evtUp = evts;
@@ -65,11 +68,11 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
 
       if (
         leftX >
-        document.querySelector("#container").clientWidth - dbele.offsetWidth
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
       ) {
         leftX =
           document.body.clientWidth -
-          dbele.offsetWidth;
+          containerVal.offsetWidth;
       }
       if (leftX < 0) {
         leftX = 0;
@@ -77,22 +80,22 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
       if (
         topY >
         document.querySelector("#container").clientHeight -
-        dbele.offsetHeight
+        containerVal.offsetHeight
       ) {
         topY =
           document.body.clientHeight -
-          dbele.offsetHeight;
+          containerVal.offsetHeight;
       }
       if (topY < 0) {
         topY = 0;
       }
-      if (dbele) {
-        dbele.style.left = leftX + "px";
-        dbele.style.marginLeft = 0 + "px";
-        dbele.style.marginTop = 0 + "px";
-        // dbele.style.marginBottom = 50 + "px";
-        dbele.style.top = topY + "px";
-        dbele.style.zIndex = "999999";
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
       } else {
         return false;
       }
@@ -228,16 +231,16 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
       if (resM.code === 100000) {
         const resbui = getBaseInfo(token);
         resbui.then((resbuiCon) => {
-          if(resM.code === 100000){
-          
+          if (resM.code === 100000) {
+
             const buildNum = resbuiCon.data.profile.builder_status
             editStateVal(buildNum)
-            
+
             // resBuil.then(()=>{
             // })
             // console.log(buildNum);
           }
-         
+
 
         })
       }
@@ -254,8 +257,8 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
     if (a) {
       setWalletAddress(a);
     }
-    
-  }, [value,walletAddress]);
+
+  }, [value, walletAddress]);
 
   return (
     <>
@@ -263,7 +266,7 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
         <>
           <div className={styles.containerBox}>
             <div className={styles.container}>
-              <div className={styles.topBox}   onMouseDown={clickHeader}>
+              <div className={styles.topBox} onMouseDown={clickHeader}>
                 <span>Join Builders</span>
                 <span onClick={turnOff}><img src="/images/guanbi.png" alt="" /></span>
               </div>

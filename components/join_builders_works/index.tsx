@@ -90,6 +90,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
       toast.error('不得超过三条数据');
       return false;
     }
+// console.log(subArr);
 
     // let newNum = subLength;
     // newNum+=1;
