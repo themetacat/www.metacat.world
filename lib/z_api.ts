@@ -1205,7 +1205,8 @@ class API {
   }
 
   public async req_get_building_detail_info(building_link) {
-    const search = qs.stringify({building_link:building_link}, {addQueryPrefix: true });
+
+    const search = qs.stringify({building_link}, {addQueryPrefix: true });
 
     const url = `${this.url}/building/get_building_detail_info${search}`;
 
@@ -1308,6 +1309,7 @@ class API {
 
     return json;
   }
+  
   public async req_platform() {
     // const url = 'http://8.130.23.16/api/v1/user/get_all_country';
     const url = `${this.url}/building/get_building_select_info`;
