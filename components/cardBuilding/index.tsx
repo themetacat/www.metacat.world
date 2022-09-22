@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { useRouter } from 'next/router';
 
-import { convert, getToken, setToken } from '../../common/utils';
+import { convert, getToken} from '../../common/utils';
 
 import CoverImg from '../cover-img';
 

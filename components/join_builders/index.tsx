@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useCallback} from 'react';
 import cn from 'classnames';
 
 import { toast } from 'react-hot-toast';
@@ -7,7 +7,7 @@ import styles from './index.module.css';
 
 import { getToken } from '../../common/utils';
 
-import JoinBuildersAdd from '../../components/join_builders_add';
+import JoinBuildersAdd from '../join_builders_add';
 
 import {
   req_bind_send_email,
@@ -18,7 +18,6 @@ import {
   req_building_list,
 } from '../../service/z_api';
 import { getBaseInfo, refreshToken, getParcelList2 } from '../../service';
-import { useCallback } from 'react';
 
 interface Props {
   classname?: string;
@@ -38,7 +37,7 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
   const [emailClear, setEmailClear] = React.useState(false);
   const [codeClear, setCodeClear] = React.useState(false);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
-  const [token, setToken] = React.useState('');
+  const [tokenVal, setTokenVal] = React.useState('');
   const [codeState, setCodeState] = React.useState('getCode');
   const [tabStateTR, setTabStateTR] = React.useState(false);
   const [walletAddress, setWalletAddress] = React.useState('');
@@ -55,17 +54,14 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
   const dragJoin = function (evt, dbele?) {
     dbele = document.querySelector('.join_builders_add_container__JytZM')
     // ele.onmousedown = function (evt) {
-    //获取事件对象，兼容写法
-    var oEvent = evt;
-    var disX = oEvent.clientX - dbele.offsetLeft;
-    var disY = oEvent.clientY - dbele.offsetTop;
-    //实时改变位置
+    let oEvent = evt;
+    let disX = oEvent.clientX - dbele.offsetLeft;
+    let disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      var evtUp = evts;
-      var leftX = evtUp.clientX - disX;
-      var topY = evtUp.clientY - disY;
-      // 右边判断是否超出
+      let evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
       if (
         leftX >
@@ -75,7 +71,6 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
           document.body.clientWidth -
           dbele.offsetWidth;
       }
-      // 左边判断是否超出
       if (leftX < 0) {
         leftX = 0;
       }
@@ -99,7 +94,6 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
       dbele.style.top = topY + "px";
       dbele.style.zIndex = "999999";
     };
-    //停止拖动
     document.onmouseup = function () {
       document.onmousemove = null;
       document.onmouseup = null;
@@ -129,9 +123,7 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
     setEmailClear(false);
   }, []);
 
-  const GetCode = () => {
 
-  }
   const timeOut = () => {
     return setInterval(function () {
       if (time.current === 0) {
@@ -152,9 +144,9 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
     const t = timeOut();
     timeId.current = t;
     if (modifyEmail) {
-      await req_modify_send_email(token);
+      await req_modify_send_email(tokenVal);
     } else {
-      await req_bind_send_email(email, token);
+      await req_bind_send_email(email, tokenVal);
     }
   }, [time, email, modifyEmail, timeOut]);
   const sendCode = React.useMemo(() => {
@@ -190,7 +182,7 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
       //   toast.error('Verification code error');
       // }
     } else {
-      result = await req_bind_ver_email_code(code.toString(), token);
+      result = await req_bind_ver_email_code(code.toString(), tokenVal);
       if (result.code === 100000) {
         // closeEmail('bind');
       } else if (result.code === 100013) {
@@ -229,13 +221,13 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
     const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
 
     setTabStateTR(false)
-    res.then((res) => {
-      if (res.code === 100000) {
+    res.then((resM) => {
+      if (resM.code === 100000) {
         const resbui = getBaseInfo(token);
-        resbui.then((resbui) => {
-          if(res.code === 100000){
+        resbui.then((resbuiCon) => {
+          if(resM.code === 100000){
           
-            const buildNum = resbui.data.profile.builder_status
+            const buildNum = resbuiCon.data.profile.builder_status
             editStateVal(buildNum)
             
             // resBuil.then(()=>{
@@ -254,7 +246,7 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
     setEmail(value);
     setJoinBuilders(true)
     const t = getToken('atk');
-    setToken(t);
+    setTokenVal(t);
     const a = getToken('address');
     if (a) {
       setWalletAddress(a);

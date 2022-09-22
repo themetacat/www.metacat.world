@@ -7,6 +7,7 @@ import ReactTooltip from 'react-tooltip';
 import Router from 'next/router';
 
 import { toast } from 'react-hot-toast';
+import { className } from 'babylonjs/index';
 
 import Page from '../page';
 import PageHeader from '../page-header';
@@ -26,10 +27,10 @@ import { req_all_country, req_platform, req_get_building_detail_info } from '../
 import { useWalletProvider } from '../web3modal';
 
 import style from './index.module.css';
-import { convert, getToken, setToken } from '../../common/utils';
+import { convert, getToken } from '../../common/utils';
 import UploadBuilding from '../uploadBuilding';
 import MeteInputLimit from '../meta-input-limit';
-import { className } from 'babylonjs/index';
+
 
 
 interface Props {
@@ -117,9 +118,9 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
 
   }, [buildAll]);
   React.useEffect(() => {
-    console.log(buildInc, buildInc == 'add');
+    console.log(buildInc, buildInc === 'add');
 
-    if (buildInc == 'add') {
+    if (buildInc === 'add') {
       setSubArr([])
       setLinkBuild('')
       setFormat('')
@@ -139,7 +140,6 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
     setToken(t);
     if (t) {
       get_platform();
-      return;
     }
 
 
@@ -158,12 +158,12 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
   // }, [nickName,linkBuild]);
 
 
-  const submit = React.useCallback(
-    async (event) => {
+  // const submit = React.useCallback(
+  //   async (event) => {
 
-    },
-    [],
-  );
+  //   },
+  //   [],
+  // );
 
 
   const uploadImage = React.useCallback((index, res, item) => {
@@ -206,8 +206,8 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
 
   const changeIntroductionValue = React.useCallback((e) => {
     setIntroduction(e.target.value);
-    var txt = document.getElementById("txt");
-    var countNumTxt = document.getElementById("countNum");
+    let txt = document.getElementById("txt");
+    let countNumTxt = document.getElementById("countNum");
     txt.addEventListener("keyup", function () {
       const value = e.target.value.length;
       setCountNum(value)
@@ -219,6 +219,7 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
     }
   }, [countNum]);
   const down = (e) => {
+console.log(e);
 
   }
 

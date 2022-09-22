@@ -15,7 +15,7 @@ interface Props {
   clickHeader?;
 }
 
-export default function JoinBuildersAdd({ turnBuild, value, clickHeader,nextBtnAdd }: Props) {
+export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtnAdd }: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState(null);
@@ -150,7 +150,8 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader,nextBtnA
                     <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
 
                       {
-                        item.toString() ? (item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null : null
+                        item.toString() ? 
+                        (item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null : null
                       }
 
                     </div>

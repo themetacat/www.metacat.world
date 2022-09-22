@@ -187,7 +187,7 @@ function ProfilePage(r) {
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const [nickName, setNickName] = React.useState('');
+  const [nickNameVal, setNickNameVla] = React.useState('');
   const [introductionText, setIntroduction] = React.useState('');
   const [countryAddress, setcountry] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
@@ -196,7 +196,7 @@ function ProfilePage(r) {
   const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [statue, setStatue] = React.useState(null);
-  const [emailState, setEmailState] = React.useState(null);
+  const [emailStateVal, setEmailStateVal] = React.useState(null);
   const [buildState, setBuildState] = React.useState(1);
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
@@ -571,7 +571,7 @@ function ProfilePage(r) {
 
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
 
-      setEmailState(emailState)
+      setEmailStateVal(emailState)
       // console.log(res.data.profile.creator_status,99999);
 
       // const statue = res.data.profile.creator_status;
@@ -597,7 +597,7 @@ function ProfilePage(r) {
       setAvatarUrl(ava);
       setCreatorsState(creatorStatus);
       setAddress(addr);
-      setNickName(name);
+      setNickNameVla(name);
       setIntroduction(m);
       setcountry(n);
       setTwitterAddress(twitterName);
@@ -660,7 +660,7 @@ function ProfilePage(r) {
 
     // }
 
-  }, [joinBuilders, emailState])
+  }, [joinBuilders, emailStateVal])
 
   const unloadBuilders = React.useCallback(async () => {
     setAddbuild(true)
@@ -675,14 +675,14 @@ function ProfilePage(r) {
     setEmailBuilders(false)
     setStateVal(false)
   }
-  const editStateVal = (state) => {
+  const editStateVal = (statev) => {
     // console.log(state);
-    setStateVal(state)
+    setStateVal(statev)
     setJoinBuilders(false)
     const resBuil = req_building_list(walletAddress);
-    resBuil.then((resBuil) => {
-      if (resBuil.data) {
-        setDataBuildSource(resBuil.data)
+    resBuil.then((resBuilV) => {
+      if (resBuilV.data) {
+        setDataBuildSource(resBuilV.data)
       }
     })
   }
@@ -764,7 +764,7 @@ function ProfilePage(r) {
       //   // setShowIndex(true)
 
       // }
-
+      return;
     })
 
     // console.log(showIndex);
@@ -774,7 +774,7 @@ function ProfilePage(r) {
     }
     const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
 
-    res.then((res) => {
+    res.then((resV) => {
       // console.log(res);
       setBuildState(2)
     })
@@ -788,10 +788,10 @@ function ProfilePage(r) {
   );
 
   const reqBuilderData = React.useCallback(
-    async (walletAddress: string) => {
+    async (walletAddressVal: string) => {
       try {
 
-        const res = await req_building_list(walletAddress);
+        const res = await req_building_list(walletAddressVal);
         // console.log(res, 5959);
 
 
@@ -837,7 +837,7 @@ function ProfilePage(r) {
       //   setCountry(c);
       //   setIntroduction(i);
       //   setAddress(addr);
-      //   setNickName(name);
+      //   setNickNameVla(name);
       //   setOrginName(name);
       //   setTwitterAddress(twitterName);
       //   setWebsiteAddress(websiteUrl);
@@ -852,13 +852,13 @@ function ProfilePage(r) {
     // console.log(buildingLinkCon, 558);
     const res = req_builder_del_self_building(token, buildingLinkCon)
     // console.log(res, 565656);
-    res.then((res) => {
-      toast(res.msg)
-      if (res.code === 100000) {
+    res.then((resC) => {
+      toast(resC.msg)
+      if (resC.code === 100000) {
         const resBuil = req_building_list(walletAddress);
-        resBuil.then((resBuil) => {
-          if (resBuil.data) {
-            setDataBuildSource(resBuil.data)
+        resBuil.then((resBuilvAL) => {
+          if (resBuilvAL.data) {
+            setDataBuildSource(resBuilvAL.data)
           }
         })
       }
@@ -922,6 +922,9 @@ function ProfilePage(r) {
     }
     if (files_link_cover === '') {
       files_link_cover = subArrData[0]
+
+      // var [files_link_cover] = subArrData
+      // var files_link_cover = subArrData[0]
       // toast.error('请设置封面图');
       // return false;
     }
@@ -943,10 +946,10 @@ function ProfilePage(r) {
 
 
 
-    res.then((res) => {
+    res.then((resCON) => {
       // toast(res.msg)
-      if (res.code === 100000) {
-        toast(res.msg)
+      if (resCON.code === 100000) {
+        toast(resCON.msg)
         const resBuil = req_building_list(walletAddress);
 
         resBuil.then((resBuil) => {
@@ -1073,7 +1076,7 @@ function ProfilePage(r) {
       return <Status retry={onRetry} status="error" />;
     }
     if (buildState === 1) {
-      return <Status addWork={() => { addWork(emailState) }} status="emptyBuilding" />;
+      return <Status addWork={() => { addWork(emailStateVal) }} status="emptyBuilding" />;
     }
     if (buildState === 2) {
       return <Status status="waitBuilder" />;
@@ -1083,10 +1086,11 @@ function ProfilePage(r) {
       // console.log(dataBuildSource.length,9889898989);
 
       return <Status status="AddBuilder" unloadBuilders={() => { unloadBuilders() }} />;
-    } else {
+    } 
+    // else {
 
       // }
-      // if (buildState === 4 && dataBuildSource.length !== 0) {
+      if (buildState === 4 && dataBuildSource.length !== 0) {
       //   // console.log(dataBuildSource,6565656);
 
       return (
@@ -1205,7 +1209,7 @@ function ProfilePage(r) {
         setCountry(c);
         setIntroduction(i);
         setAddress(addr);
-        setNickName(name);
+        setNickNameVla(name);
         setOrginName(name);
         setTwitterAddress(twitterName);
         setWebsiteAddress(websiteUrl);
@@ -1216,7 +1220,7 @@ function ProfilePage(r) {
   );
 
   const closeEmail = React.useCallback((t) => {
-    setEmailState(false);
+    setEmailStateVal(false);
     const accessToken = getToken('atk');
 
     if (t === 'bind') {
@@ -1224,7 +1228,7 @@ function ProfilePage(r) {
     }
     if (t === 'modify') {
       setModifyEmail(false);
-      setEmailState(true);
+      setEmailStateVal(true);
     }
 
     if (accessToken) {
@@ -1528,17 +1532,15 @@ function ProfilePage(r) {
   const drag = function (evt, dbele?) {
     dbele = document.querySelector('.addBuilding_content__GcPPZ')
     // ele.onmousedown = function (evt) {
-    //获取事件对象，兼容写法
-    var oEvent = evt || event;
-    var disX = oEvent.clientX - dbele.offsetLeft;
-    var disY = oEvent.clientY - dbele.offsetTop;
-    //实时改变位置
+   
+    let oEvent = evt ;
+    let disX = oEvent.clientX - dbele.offsetLeft;
+    let disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      var evtUp = evts;
-      var leftX = evtUp.clientX - disX;
-      var topY = evtUp.clientY - disY;
-      // 右边判断是否超出
+      let evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
       if (
         leftX >
@@ -1548,7 +1550,6 @@ function ProfilePage(r) {
           document.body.clientWidth -
           dbele.offsetWidth;
       }
-      // 左边判断是否超出
       if (leftX < 0) {
         leftX = 0;
       }
@@ -1572,7 +1573,6 @@ function ProfilePage(r) {
       dbele.style.top = topY + "px";
       dbele.style.zIndex = "999999";
     };
-    //停止拖动
     document.onmouseup = function () {
       document.onmousemove = null;
       document.onmouseup = null;
@@ -1583,17 +1583,14 @@ function ProfilePage(r) {
   const dragJoin = function (evt, dbele?) {
     dbele = document.querySelector('.join_builders_works_container2__VidgJ')
     // ele.onmousedown = function (evt) {
-    //获取事件对象，兼容写法
-    var oEvent = evt;
-    var disX = oEvent.clientX - dbele.offsetLeft;
-    var disY = oEvent.clientY - dbele.offsetTop;
-    //实时改变位置
+    let oEvent = evt;
+    let disX = oEvent.clientX - dbele.offsetLeft;
+    let disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      var evtUp = evts;
-      var leftX = evtUp.clientX - disX;
-      var topY = evtUp.clientY - disY;
-      // 右边判断是否超出
+      let evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
       if (
         leftX >
@@ -1603,7 +1600,6 @@ function ProfilePage(r) {
           document.body.clientWidth -
           dbele.offsetWidth;
       }
-      // 左边判断是否超出
       if (leftX < 0) {
         leftX = 0;
       }
@@ -1636,17 +1632,14 @@ function ProfilePage(r) {
   const dragHead = function (evt, dbele?) {
     dbele = document.querySelector('.join_builders_container__31cSn')
     // ele.onmousedown = function (evt) {
-    //获取事件对象，兼容写法
-    var oEvent = evt;
-    var disX = oEvent.clientX - dbele.offsetLeft;
-    var disY = oEvent.clientY - dbele.offsetTop;
-    //实时改变位置
+    let oEvent = evt;
+    let disX = oEvent.clientX - dbele.offsetLeft;
+    let disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      var evtUp = evts;
-      var leftX = evtUp.clientX - disX;
-      var topY = evtUp.clientY - disY;
-      // 右边判断是否超出
+      let evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
       if (
         leftX >
@@ -1656,7 +1649,6 @@ function ProfilePage(r) {
           document.body.clientWidth -
           dbele.offsetWidth;
       }
-      // 左边判断是否超出
       if (leftX < 0) {
         leftX = 0;
       }
@@ -1680,7 +1672,6 @@ function ProfilePage(r) {
       dbele.style.top = topY + "px";
       dbele.style.zIndex = "999999";
     };
-    //停止拖动
     document.onmouseup = function () {
       document.onmousemove = null;
       document.onmouseup = null;
@@ -2121,7 +2112,7 @@ function ProfilePage(r) {
               twitter={twitterAddress}
               home={websiteAddress}
               country={countryAddress}
-              name={nickName}
+              name={nickNameVal}
               email={email}
               onClick={creatorDisplay}
               classname="main-content"
@@ -2206,7 +2197,7 @@ function ProfilePage(r) {
           <JoinBuildersWork
             turnOff={turnOff}
             retProps={retProps}
-            emailState={emailState}
+            emailState={emailStateVal}
             clickHeader={dragJoin}
 
           />

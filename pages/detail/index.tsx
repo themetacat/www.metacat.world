@@ -3,19 +3,9 @@ import React from 'react';
 import cn from 'classnames';
 import Router, { useRouter } from 'next/router';
 
-import {
-  Scene,
-  PerspectiveCamera,
-  HemisphereLight,
-  DirectionalLight,
-  BoxHelper,
-  WebGLRenderer,
-} from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 import { toast } from 'react-hot-toast';
-import { req_get_building_detail_info, req_building_list, req_user_add_or_edit_building } from '../../service/z_api';
-import { getToken, setToken } from '../../common/utils';
+import { req_get_building_detail_info, req_builder_del_self_building, req_user_add_or_edit_building } from '../../service/z_api';
+import { getToken } from '../../common/utils';
 
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
@@ -23,18 +13,15 @@ import CardBuilding from '../../components/cardBuilding';
 import AddBuildings from '../../components/addBuilding';
 import Footer from '../../components/footer';
 
-import api from '../../lib/api';
-import z_api from '../../lib/z_api';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
-import {
-  req_builder_del_self_building,
-} from '../../service/z_api';
+
 
 import { convert } from '../../common/utils';
 
 import style from './index.module.css';
 
 export default function buildingDetail({ buildingLinkCon, artist, id }) {
+  const router = useRouter();
   const [buildFile, setBuildFile] = React.useState([])
   const [imgUrl, setImgUrl] = React.useState('')
   const [buildName, setBuildName] = React.useState('')
@@ -46,7 +33,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   const [buildAll, setBuildAll] = React.useState(null);
   const [buildInc, setBuildInc] = React.useState('edit');
   const [buildPush, setBuildPush] = React.useState('');
-  const router = useRouter();
+
   const meta = {
     title: `BuildingDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -61,11 +48,9 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   }
   const fn = async () => {
 
-    const buildLink = router.query.buildingLink
-    console.log(router);
+
 
     const url = window.location.search;
-    // const object = {}
     if (url.indexOf('?') !== -1) {
       var str = url.substr(1);
       var strs = str.split("building_link=");
@@ -84,7 +69,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     setBuildFile(res.data.detail_files)
     console.log(res.data.detail_files);
 
-    console.log(res.data, 12, str, 3333, strs[1]);
+    // console.log(res.data, 12, str, 3333, strs[1]);
   }
 
   const deleteBuild = (token, buildingLinkCon) => {
@@ -103,7 +88,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       }
     })
 
-    console.log(res, 565656);
+    // console.log(res, 565656);
   }
   const editBuild = async (buildingLinkCon) => {
     const url = window.location.search;
@@ -178,15 +163,15 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       // toast.error('请设置封面图');
       // return false;
     }
-    console.log(indexBuild);
+    // console.log(indexBuild);
 
     const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), files_link_cover.toString(), files_link_del.join(','));
     console.log(res, subArrData);
-    console.log(files_link_cover, "files_link_cover");
+    // console.log(files_link_cover, "files_link_cover");
 
     setAddbuild(false)
 
-    console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
+    // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
 
 
 
@@ -289,22 +274,3 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const { buildingLink } = context.params;
-//   let res = null;
-//   if (context.query.type === 'pfp' || context.query.form === 'pfp_wearable') {
-//     res = await z_api.req_pfp_detail(buildingLink);
-//   } else if (context.query.type === 'mywearables' || context.query.type === 'topic') {
-//     res = await z_api.req_get_wearable_detail(buildingLink);
-//   } else {
-//     res = await api.getDaoWearableDetail(buildingLink);
-//   }
-//   const { artwork, artist } = res.data[0];
-//   return {
-//     props: {
-//       artwork,
-//       artist,
-//       buildingLink,
-//     }, // will be passed to the page component as props
-//   };
-// }
