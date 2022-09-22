@@ -52,55 +52,55 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
   const dragJoin = function (evt, dbele?) {
-    // dbele = document.querySelector('.join_builders_add_container__JytZM' )
-    // // ele.onmousedown = function (evt) {
-    // const oEvent = evt;
-    // const disX = oEvent.clientX - dbele.offsetLeft;
-    // const disY = oEvent.clientY - dbele.offsetTop;
-    // document.onmousemove = function (evts) {
-    //   // console.log(evts);
-    //   const evtUp = evts;
-    //   let leftX = evtUp.clientX - disX;
-    //   let topY = evtUp.clientY - disY;
+    dbele = document.querySelector('.join_builders_add_container__JytZM' )
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - dbele.offsetLeft;
+    const disY = oEvent.clientY - dbele.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
 
-    //   if (
-    //     leftX >
-    //     document.querySelector("#container").clientWidth - dbele.offsetWidth
-    //   ) {
-    //     leftX =
-    //       document.body.clientWidth -
-    //       dbele.offsetWidth;
-    //   }
-    //   if (leftX < 0) {
-    //     leftX = 0;
-    //   }
-    //   if (
-    //     topY >
-    //     document.querySelector("#container").clientHeight -
-    //     dbele.offsetHeight
-    //   ) {
-    //     topY =
-    //       document.body.clientHeight -
-    //       dbele.offsetHeight;
-    //   }
-    //   if (topY < 0) {
-    //     topY = 0;
-    //   }
-    //   // if (dbele) {
-    //   //   dbele.style.left = leftX + "px";
-    //   //   dbele.style.marginLeft = 0 + "px";
-    //   //   dbele.style.marginTop = 0 + "px";
-    //   //   // dbele.style.marginBottom = 50 + "px";
-    //   //   dbele.style.top = topY + "px";
-    //   //   dbele.style.zIndex = "999999";
-    //   // } else {
-    //   //   return false;
-    //   // }
-    // };
-    // document.onmouseup = function () {
-    //   document.onmousemove = null;
-    //   document.onmouseup = null;
-    // };
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - dbele.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          dbele.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        dbele.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          dbele.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+      if (dbele) {
+        dbele.style.left = leftX + "px";
+        dbele.style.marginLeft = 0 + "px";
+        dbele.style.marginTop = 0 + "px";
+        // dbele.style.marginBottom = 50 + "px";
+        dbele.style.top = topY + "px";
+        dbele.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
   }
   const setEmailValue = React.useCallback((e) => {
     setEmail(e.target.value);
