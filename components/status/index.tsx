@@ -73,7 +73,7 @@ export default function Status({ status, retry,addWork, unloadBuilders,mini = fa
     return (
       <div className={cn(commonCls)}>
         <img src="/images/default-image.png" className={style.baseImg} />
-        <span className="mt-4 text-xl font-semibold">No works</span>
+        <span className={cn("",style.mmt)}>Join Builders to show your works</span>
         <span className={cn("mt-4 text-xl font-semibold",style.nowork)} onClick={addWork}>Add your work</span>
       </div>
     );

@@ -187,7 +187,6 @@ export const req_building_list = async (addr:string) => {
     { addQueryPrefix: true },
   );
   const url = `/api/get_owned_building_list${search}`;
-  console.log(url,'urlurl');
   
   const result = await fetch(url, {
     method: 'get',
@@ -1156,10 +1155,8 @@ export const req_user_apply_become = async (join_type: string, token: string) =>
 };
 
 export const req_userBuilder_apply_become = async (token: string,join_type: string, representative_links: string ) => {
-  console.log(token,join_type,representative_links,22222);
   
   const search = qs.stringify({ join_type, representative_links } ,{ addQueryPrefix: false });
-  console.log(search);
   
   const url = `api/user_userBuilder_become`;
   const result = await fetch(url, {
@@ -1226,7 +1223,6 @@ export const req_get_building_detail_info = async ( building_link)=> {
     method: 'get',
     mode: 'cors',
   });
-  console.log(result,url,5656,result.url);
   
   const json = await result.json();
 

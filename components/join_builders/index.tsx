@@ -15,18 +15,24 @@ import {
   req_modify_send_email,
   req_modify_old_email_ver_code,
   req_userBuilder_apply_become,
+  req_building_list,
 } from '../../service/z_api';
+import { getBaseInfo, refreshToken, getParcelList2 } from '../../service';
+import { useCallback } from 'react';
 
 interface Props {
   classname?: string;
   turnOff?;
   nextBtn?;
+  stateVal?;
+  editStateVal?;
   value?: string;
   modifyEmail?: boolean;
+  clickHeader?;
 }
 
-export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
-  const [show, switchShow] = React.useState(false);
+export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeader, value, modifyEmail }: Props) {
+  const [showState, setShow] = React.useState('');
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [emailClear, setEmailClear] = React.useState(false);
@@ -35,6 +41,7 @@ export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
   const [token, setToken] = React.useState('');
   const [codeState, setCodeState] = React.useState('getCode');
   const [tabStateTR, setTabStateTR] = React.useState(false);
+  const [walletAddress, setWalletAddress] = React.useState('');
   const time = React.useRef(60);
   const timeId = React.useRef(null);
 
@@ -45,6 +52,59 @@ export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
   //     document.addEventListener('scroll', listener);
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
+  const dragJoin = function (evt, dbele?) {
+    dbele = document.querySelector('.join_builders_add_container__JytZM')
+    // ele.onmousedown = function (evt) {
+    //获取事件对象，兼容写法
+    var oEvent = evt;
+    var disX = oEvent.clientX - dbele.offsetLeft;
+    var disY = oEvent.clientY - dbele.offsetTop;
+    //实时改变位置
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      var evtUp = evts;
+      var leftX = evtUp.clientX - disX;
+      var topY = evtUp.clientY - disY;
+      // 右边判断是否超出
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - dbele.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          dbele.offsetWidth;
+      }
+      // 左边判断是否超出
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        dbele.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          dbele.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      dbele.style.left = leftX + "px";
+      dbele.style.marginLeft = 0 + "px";
+      dbele.style.marginTop = 0 + "px";
+      // dbele.style.marginBottom = 50 + "px";
+      dbele.style.top = topY + "px";
+      dbele.style.zIndex = "999999";
+    };
+    //停止拖动
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
   const setEmailValue = React.useCallback((e) => {
     setEmail(e.target.value);
     if (e.target.value) {
@@ -116,6 +176,7 @@ export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
   }, [sendCodeTime, codeState, email]);
 
   const nextBtn = React.useCallback(async () => {
+    setJoinBuilders(false)
     if (!email && !code) return;
     let result = null;
 
@@ -145,6 +206,7 @@ export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
     time.current = 60;
     setJoinBuilders(false)
     setTabStateTR(true)
+
   }, [email, code, modifyEmail]);
 
   const turnBuild = () => {
@@ -154,82 +216,108 @@ export default function JoinBuilders({ turnOff, value ,modifyEmail}: Props) {
   // const nextBtnAdd = () => {
   //   // setTabStateTR(false)
   //   //   console.log(token);
-      
+
   //   //    const res =  req_userBuilder_apply_become(token,'builder',buildData.toString());
-       
+
   //   //    setTabStateTR(false)
   //   //  }
   //   // setTabStateTR(false)
   // }
-  const nextBtnAdd = (token: string, buildData: any) => {
-    console.log(token);
+  const nextBtnAdd = useCallback((token: string, buildData: any) => {
+
 
     const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
 
     setTabStateTR(false)
-  }
+    res.then((res) => {
+      if (res.code === 100000) {
+        const resbui = getBaseInfo(token);
+        resbui.then((resbui) => {
+          if(res.code === 100000){
+          
+            const buildNum = resbui.data.profile.builder_status
+            editStateVal(buildNum)
+            
+            // resBuil.then(()=>{
+            // })
+            // console.log(buildNum);
+          }
+         
+
+        })
+      }
+
+    })
+
+  }, [])
   React.useEffect(() => {
     setEmail(value);
     setJoinBuilders(true)
     const t = getToken('atk');
     setToken(t);
-  }, [value]);
+    const a = getToken('address');
+    if (a) {
+      setWalletAddress(a);
+    }
+    
+  }, [value,walletAddress]);
 
   return (
     <>
-    {joinBuilders===true?
-    <>
-<div className={styles.containerBox}>
-        <div className={styles.container}>
-          <div className={styles.topBox}>
-            <span>Join Builders</span>
-            <span onClick={turnOff}><img src="/images/guanbi.png" alt="" /></span>
-          </div>
-          <div className={styles.emailBox}>
-            <p>Email</p>
-            <p>This mailbox also works for personal information</p>
-            <input
-              type="text"
-              placeholder="email"
-              value={email}
-              onInput={setEmailValue}
-              onFocus={() => {
-                if (email) {
-                  setEmailClear(true);
-                }
-              }}
-              onBlur={emailBlue}
-            />
-            <p className={styles.codeText}>Code</p>
-            <div className={styles.getCodeBox}>
-              <input
-                type="text"
-                placeholder="Code"
-                value={code}
-                onInput={setCodeValue}
-                onFocus={() => {
-                  if (code) {
-                    setCodeClear(true);
-                  }
-                }}
-                onBlur={codeBlue}
-              />
-              <span className={styles.a}></span>
-              {/* <div className={styles.n} onClick={GetCode}>Get code</div> */}
-              <div className={styles.n}> {sendCode}</div>
-             
+      {joinBuilders === true ?
+        <>
+          <div className={styles.containerBox}>
+            <div className={styles.container}>
+              <div className={styles.topBox}   onMouseDown={clickHeader}>
+                <span>Join Builders</span>
+                <span onClick={turnOff}><img src="/images/guanbi.png" alt="" /></span>
+              </div>
+              <div className={styles.emailBox}>
+                <p>Email</p>
+                <p>This mailbox also works for personal information</p>
+                <input
+                  type="text"
+                  placeholder="email"
+                  value={email}
+                  onInput={setEmailValue}
+                  onFocus={() => {
+                    if (email) {
+                      setEmailClear(true);
+                    }
+                  }}
+                  onBlur={emailBlue}
+                />
+                <p className={styles.codeText}>Code</p>
+                <div className={styles.getCodeBox}>
+                  <input
+                    type="text"
+                    placeholder="Code"
+                    value={code}
+                    onInput={setCodeValue}
+                    onFocus={() => {
+                      if (code) {
+                        setCodeClear(true);
+                      }
+                    }}
+                    onBlur={codeBlue}
+                  />
+                  <span className={styles.a}></span>
+                  {/* <div className={styles.n} onClick={GetCode}>Get code</div> */}
+                  <div className={styles.n}> {sendCode}</div>
+
+                </div>
+                <div className={styles.next} onClick={nextBtn}>Next</div>
+              </div>
             </div>
-            <div className={styles.next} onClick={nextBtn}>Next</div>
           </div>
-        </div>
-      </div>
-    </>
-    :''}
-      
+        </>
+        : ''}
+
       {tabStateTR === true ? <>
         <JoinBuildersAdd
           turnBuild={turnBuild}
           nextBtnAdd={nextBtnAdd}
+          clickHeader={dragJoin}
         />
       </> : ''}
     </>

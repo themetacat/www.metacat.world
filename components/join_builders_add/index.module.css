@@ -12,8 +12,22 @@
 }
 .containerBox{
     width: 100%;
-    position: relative;
+    /* position: relative; */
 }
+.warn {
+    color: rgba(255, 214, 70, 1);
+  }
+  .sub{
+   cursor: not-allowed;
+  }
+  .warnContent > img {
+    width: 14px;
+    height: 14px;
+  }
+  .warnContent {
+    min-height: 16px;
+    color: red;
+  }
 .topBox{
     /* height: 30px; */
     display: flex;

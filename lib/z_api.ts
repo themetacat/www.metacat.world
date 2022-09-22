@@ -1214,7 +1214,6 @@ class API {
       mode: 'cors',
 
     });
-    console.log(url,222);
     const json = await result.json();
    
     

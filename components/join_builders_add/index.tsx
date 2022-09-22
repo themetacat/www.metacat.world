@@ -12,9 +12,10 @@ interface Props {
   turnBuild?;
   nextBtnAdd?;
   value?: string;
+  clickHeader?;
 }
 
-export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
+export default function JoinBuildersAdd({ turnBuild, value, clickHeader,nextBtnAdd }: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState(null);
@@ -38,11 +39,8 @@ export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
     // input.oninput = function () {
     //   email.innerHTML = input;
     // }
-    console.log(e.nativeEvent.data, e);
 
-    console.log(subArr);
     subArr[index] = e.target.value
-    console.log(subArr);
 
     setSubArr([...subArr])
     // subArr[index]= value
@@ -68,7 +66,6 @@ export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
   }, []);
 
   const addBuild = () => {
-    console.log(subLength,);
     if (subArr.length > 2) {
       toast.error('不得超过三条数据');
       return false;
@@ -82,12 +79,8 @@ export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
     //   newArr.push(index)
 
     // }
-    // console.log(newArr, newNum);
-    // console.log(new Array(subLength), subLength);
     // setSubLength(newNum)
-    console.log(subArr);
     subArr.push([])
-    console.log(subArr);
 
     setSubArr([...subArr])
   }
@@ -100,7 +93,6 @@ export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
 
     // let newNumDel = subLength;
     // newNumDel - 1;
-    console.log(subArr, "dddddddddd", index);
 
     subArr.splice(index, 1)
 
@@ -126,7 +118,7 @@ export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
     <>
       <div className={styles.containerBox}>
         <div className={styles.container}>
-          <div className={styles.topBox}>
+          <div className={styles.topBox} onMouseDown={clickHeader}>
             <span>Join Builders</span>
             <span onClick={turnBuild}><img src="/images/guanbi.png" alt="" /></span>
           </div>
@@ -154,27 +146,37 @@ export default function JoinBuildersAdd({ turnBuild,value,nextBtnAdd }: Props) {
                     />
                     <>
                       <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
-                    </> : ''
+                    </>
+                    <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
+
+                      {
+                        item.toString() ? (item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null : null
+                      }
+
+                    </div>
+
                   </>
                 )
                 )
               }
-              {/* {
-                email !== '' ?
-                  <>
-                    <span className={styles.add} onClick={delBuild}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
-                    
-                  </> : ''
 
-              } */}
               <span onClick={addBuild} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
             </div>
             <p className={styles.send}>You can also send your works to our：
-              <img src="/images/youxiang.png" alt="" />
-              <img src="/images/ttt.png" alt="" />
+              <a
+                href="https://twitter.com/Metacat007"
+                target="_blank"
+                data-tip="Twitter"
+
+              > <img src="/images/youxiang.png" alt="" /></a>
+              <a
+                href="mailto:metacat@tutanota.com"
+                data-tip="metacat@tutanota.com"
+
+              ><img src="/images/ttt.png" alt="" /></a>
 
             </p>
-            <div className={styles.next} onClick={()=>{nextBtnAdd(token,subArr)}}>Submit</div>
+            <div className={styles.next} onClick={() => { nextBtnAdd(token, subArr) }}>Submit</div>
           </div>
         </div>
       </div>

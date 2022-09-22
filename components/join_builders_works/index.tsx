@@ -30,8 +30,8 @@ interface Props {
 
 export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, buildData, dataBuild, retProps, modifyEmail, emailState, }: Props) {
 
-  const [show, switchShow] = React.useState(false);
-  const [code, setCode] = React.useState('');
+  const [show, switchShow] = React.useState(0);
+  const [code, setCode] = React.useState(0);
   const [infoMsgLink, setInfoMsgLink] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [emailClear, setEmailClear] = React.useState(false);
@@ -66,7 +66,6 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
     // let buildData = null;
     // buildData = subArr;
     // const buildData=this.status'
-    console.log([...subArr], '66');
 
     setSubArr([...subArr])
   }, []);
@@ -87,11 +86,11 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
 
 
   const addBuildOther = () => {
-    console.log(subLength, subArr);
     if (subArr.length > 2) {
       toast.error('不得超过三条数据');
       return false;
     }
+
     // let newNum = subLength;
     // newNum+=1;
     // const newArr =[]
@@ -116,11 +115,11 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
     //   toast.error('不得小于一条数据');
     //   return false;
     // }
-    console.log(555555555, subLength);
+    // console.log(555555555, subLength);
 
     // let newNumDel = subLength;
     // newNumDel - 1;
-    console.log(subArr, "dddddddddd", index);
+    // console.log(subArr, "dddddddddd", index);
 
     subArr.splice(index, 1)
 
@@ -198,56 +197,35 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                         placeholder=""
                         value={item}
                         onInput={(e) => { setCodeValue(index, e, item) }}
-                        // onFocus={() => {
-                        //   if (code) {
-                        //     setCodeClear(true);
-                        //   }
-                        // }}
+
                         onBlur={() => {
 
-                          const linkBuildIndex = item.indexOf('http://')
-                          const linkBuildCom = item.indexOf('.com')
-                          if (linkBuildIndex === -1 || linkBuildCom === -1) {
-                            toast.error('请填写正确的link地址');
-                            return false;
-                          }
+
+
+                          //   const linkBuildIndex = item.indexOf('http://')
+                          //   const linkBuildCom = item.indexOf('.com')
+                          //   console.log(linkBuildIndex,565,linkBuildCom);
+                          //   if (linkBuildIndex === -1 || linkBuildCom === -1) {
+                          //     toast.error('Please fill in the correct link address');
+                          //     return false;
+                          //   }
+                          // }}
+
+
+
+
                         }}
-
-                        // onBlur={(index) => {
-
-                        //   if (item === '') {
-                        //     setInfoMsgLink(true)
-                        //     setInfoMsgFiles(false)
-                        //   } else if (item !== '') {
-                        //     setInfoMsgLink(false)
-                        //     const linkBuildIndex = item.indexOf('http://')
-                        //     const linkBuildCom = item.indexOf('.com')
-                        //     if (linkBuildIndex === -1 || linkBuildCom === -1) {
-                        //       console.log(
-                        //         linkBuildIndex, 1, linkBuildCom
-                        //       );
-                        //       setInfoMsgFiles(true)
-                        //     } else {
-                        //       setInfoMsgFiles(false)
-                        //     }
-                        //   } else {
-                        //     setInfoMsgLink(false)
-                        //     setInfoMsgFiles(false)
-                        //   }
-
-                        // }}
                       />
                       <>
                         <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                       </>
-                      {/* <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
+                      <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
+
                         {
-                          infoMsgLink === true ? <span className={styles.warn}>Please input building link</span> : null
+                          item.toString() ? (item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null : null
                         }
-                        {
-                          infoMsgFiles === true ? <span className={styles.warn}>Please fill in the correct link address</span> : null
-                        }
-                      </div> */}
+
+                      </div>
 
                     </>
                   )
@@ -258,11 +236,20 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                 <span onClick={addBuildOther} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
               </div>
               <p className={styles.send}>You can also send your works to our：
-                <img src="/images/youxiang.png" alt="" />
-                <img src="/images/ttt.png" alt="" />
+                <a
+                  href="https://twitter.com/Metacat007"
+                  target="_blank"
+                  data-tip="Twitter"
+
+                > <img src="/images/youxiang.png" alt="" /></a>
+                <a
+                  href="mailto:metacat@tutanota.com"
+                  data-tip="metacat@tutanota.com"
+
+                ><img src="/images/ttt.png" alt="" /></a>
 
               </p>
-              <div className={cn(styles.next, )} onClick={() => { retProps(token, subArr) }}>Submit</div>
+              <div className={cn(styles.next,)} onClick={() => { retProps(token, subArr) }}>Submit</div>
             </div>
           </div>
 

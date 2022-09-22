@@ -233,13 +233,14 @@ function ProfilePage(r) {
   const [emailBuilders, setEmailBuilders] = React.useState(false);
   const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
   const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
+  const [stateVal, setStateVal] = React.useState(false);
   const [initEmail, setInitEmail] = React.useState('');
   const [orginName, setOrginName] = React.useState('');
   const [country, setCountry] = React.useState('');
   // const [buildName, setBuildData] = React.useState('');
   const [buildAll, setBuildAll] = React.useState(null);
   const [buildInc, setBuildInc] = React.useState('add');
-  // const [buildLink, setBuildLink] = React.useState('');
+  const [walletAddress, setWalletAddress] = React.useState('');
   // const [buildFormat, setBuildFormat] = React.useState('');
   // const [buildFiles, setBuildFiles] = React.useState([]);
 
@@ -445,6 +446,27 @@ function ProfilePage(r) {
     },
     [refreshTK],
   );
+  const resultHandlerBu = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
+      // toast.error(msg);
+
+      return null;
+    },
+    [refreshTK],
+  );
 
   const changeNavTab = React.useCallback(
 
@@ -541,10 +563,13 @@ function ProfilePage(r) {
       const sta = res.data.profile.creator_status
       const emailState = res.data.profile.email
       const buildNum = res.data.profile.builder_status
+      const wallet = res.data.profile.address
       setNoWork(true)
       setStatue(sta)
       setBuildState(buildNum)
-      console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
+      setWalletAddress(wallet)
+
+      // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
 
       setEmailState(emailState)
       // console.log(res.data.profile.creator_status,99999);
@@ -579,7 +604,7 @@ function ProfilePage(r) {
       setWebsiteAddress(websiteUrl);
       state.setState({ profile });
     },
-    [resultHandler, statue, buildState],
+    [resultHandler, statue, buildState, walletAddress],
   );
 
   const reqWearablesData = React.useCallback(async () => {
@@ -622,13 +647,13 @@ function ProfilePage(r) {
 
   const addWork = React.useCallback(async (emailState) => {
 
-    if (emailState === null) {
+    if (emailState === null||emailState === '') {
       setJoinBuilders(true)
     } else if (emailState !== '') {
       setEmailBuilders(true)
       // this.props.emailState(this.props.emailState)
     }
-    console.log(joinBuilders, 55555, emailState);
+    // console.log(joinBuilders, 55555, emailState);
 
 
     // if(buildState){
@@ -648,6 +673,18 @@ function ProfilePage(r) {
   const turnOff = () => {
     setJoinBuilders(false)
     setEmailBuilders(false)
+    setStateVal(false)
+  }
+  const editStateVal = (state) => {
+    // console.log(state);
+    setStateVal(state)
+    setJoinBuilders(false)
+    const resBuil = req_building_list(walletAddress);
+    resBuil.then((resBuil) => {
+      if (resBuil.data) {
+        setDataBuildSource(resBuil.data)
+      }
+    })
   }
   const turnBuild = () => {
     setTabStateTR(false)
@@ -662,9 +699,9 @@ function ProfilePage(r) {
   // }
   // setTabStateTR(false)
 
-  const nextBtn = (token: string) => {
+  const nextBtn = (code, token: string) => {
     let result = null;
-    // result = await req_bind_ver_email_code(code.toString(), token);
+    result = req_bind_ver_email_code(code.toString(), token);
     if (result.code === 100000) {
       setJoinBuilders(false)
       setTabStateTR(true)
@@ -704,69 +741,76 @@ function ProfilePage(r) {
   //   setBuildData(arr)
   // }
   const retProps = React.useCallback((token: string, buildData: any) => {
-    console.log(buildData);
-  
-    const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
-    if(buildData.length === 0){
-          toast.error('请填写link地址');
+    // console.log(buildData);
+
+
+    if (buildData.length === 0) {
+      toast.error('Please fill in the link address');
       return false;
     }
-    // const linkArr = buildData.indexOf('Array(0)')
-    // console.log(linkArr);
-    
-    // if(linkArr === -1){
-    //   toast.error('请填写Link To Building');
-    //   return false;
-    // }
-    // if(buildState === 2){
-    //   console.log(buildState,6859);
+    let showIndex = false
+    // if (buildData) {
+    buildData.map((item) => {
+      // console.log(item);
+      const linkBuildIndex = item.indexOf('http://')
+      const linkBuildCom = item.indexOf('.com')
+      // console.log(linkBuildIndex, 5656, linkBuildCom);
+      if (linkBuildIndex === -1 || linkBuildCom === -1) {
+        showIndex = true
+        toast.error('Please fill in the correct link address');
+        return false;
+      }
+      // if(linkBuildIndex === -1 || linkBuildCom === -1){
+      //   // setShowIndex(true)
 
-    //   setBuilderSat(true)
-    // }
-    // if (buildData !== '') {
-    //   toast.error('请填写Link To Building');
-    //   return false;
-    // }
-    // const linkBuildIndex = buildData.indexOf('http://')
-    // const linkBuildCom = buildData.indexOf('.com')
-    // if (linkBuildIndex === -1 || linkBuildCom === -1) {
-    //   toast.error('请填写正确的link地址');
-    //   return false;
-    // }
-    setBuildState(2)
-    console.log(buildState, 6859);
-    // setTabStateTR(false)
-    // setEmailBuilders(false)
+      // }
+
+    })
+
+    // console.log(showIndex);
+
+    if (showIndex) {
+      return false;
+    }
+    const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
+
+    res.then((res) => {
+      // console.log(res);
+      setBuildState(2)
+    })
+
+    // console.log(buildState, 6859);
+    setTabStateTR(false)
+    setEmailBuilders(false)
   }
     ,
-    [buildState],
+    [buildState, walletAddress],
   );
 
   const reqBuilderData = React.useCallback(
-    async (token: string) => {
+    async (walletAddress: string) => {
       try {
-        console.log(token, 'token');
 
-        const res = await req_building_list(token);
-        console.log(res, 5959);
+        const res = await req_building_list(walletAddress);
+        // console.log(res, 5959);
 
 
-        const data = resultHandler(res, reqBuilderData);
-        console.log(data, 56569, res);
+        const data = resultHandlerBu(res, reqBuilderData);
+        // console.log(data, 56569, res);
 
 
         setLoading(false);
         if (!data) {
           return;
         }
-        console.log(data, 8989);
+        // console.log(data, 8989);
         setDataBuildSource(data);
         // changeNum(data, nav_Label.current);
       } catch {
         setError(true);
       }
     },
-    [resultHandler, routeTab, nav_Label, dataBuildSource],
+    [resultHandlerBu, routeTab, nav_Label, walletAddress,dataBuildSource],
   );
 
   const requireBuilder = React.useCallback(
@@ -805,13 +849,13 @@ function ProfilePage(r) {
 
   const DeleteBuild = React.useCallback((token, buildingLinkCon: string,) => {
 
-    console.log(buildingLinkCon, 558);
+    // console.log(buildingLinkCon, 558);
     const res = req_builder_del_self_building(token, buildingLinkCon)
-    console.log(res, 565656);
+    // console.log(res, 565656);
     res.then((res) => {
       toast(res.msg)
       if (res.code === 100000) {
-        const resBuil = req_building_list('0x79EF3DA763754387F06022Cf66c2668854B3389B');
+        const resBuil = req_building_list(walletAddress);
         resBuil.then((resBuil) => {
           if (resBuil.data) {
             setDataBuildSource(resBuil.data)
@@ -820,12 +864,12 @@ function ProfilePage(r) {
       }
     })
   },
-    [],
+    [walletAddress],
   );
   const EditBuild = async (buildingLinkCon: string) => {
     setBuildInc('edit')
     const res = await req_get_building_detail_info(buildingLinkCon)
-    console.log(res, buildingLinkCon);
+    // console.log(res, buildingLinkCon);
     if (res.data) {
       setBuildAll(res.data)
       setAddbuild(true)
@@ -834,14 +878,13 @@ function ProfilePage(r) {
 
   const closeBuild = () => {
     setAddbuild(false)
-    console.log(5454);
 
     // router.replace(`/profile?type=building`)
   }
 
   const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
     // setBuildInc(operationType)
-    console.log(buildInc, operationType, 54, nickName, 565656);
+    // console.log(buildInc, operationType, 54, nickName, 565656);
 
     if (nickName === '') {
       toast.error('请填写Building Name');
@@ -888,15 +931,15 @@ function ProfilePage(r) {
       // toast.error('请设置封面图');
       // return false;
     }
-    console.log(indexBuild);
+    // console.log(indexBuild);
 
     const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), files_link_cover.toString(), files_link_del.join(','));
-    console.log(res, subArrData);
-    console.log(files_link_cover, "files_link_cover");
+    // console.log(res, subArrData);
+    // console.log(files_link_cover, "files_link_cover");
 
     setAddbuild(false)
 
-    console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
+    // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
 
 
 
@@ -904,24 +947,24 @@ function ProfilePage(r) {
       // toast(res.msg)
       if (res.code === 100000) {
         toast(res.msg)
-        const resBuil = req_building_list('0x79EF3DA763754387F06022Cf66c2668854B3389B');
+        const resBuil = req_building_list(walletAddress);
 
         resBuil.then((resBuil) => {
           if (resBuil.data) {
             setDataBuildSource(resBuil.data)
-            console.log(resBuil.data, 96898)
+            // console.log(resBuil.data, 96898)
           }
 
         });
 
-        console.log(dataBuildSource, 6565);
+        // console.log(dataBuildSource, 6565);
       }
     });
 
 
 
   },
-    [resultHandler, routeTab, nav_Label, dataBuildSource, reqBuilderData, buildInc],
+    [resultHandlerBu, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
   );
 
   // console.log(req_building_list(''),5959);
@@ -1049,8 +1092,8 @@ function ProfilePage(r) {
       return (
         <>
           <div className={style.contentB}>
-            <div className={style.conAdd}>Add more works</div>
-            <div className={style.unload} onClick={unloadBuilders}>添加作品</div>
+            <div className={style.conAdd}>Add more works to let everyone know you better</div>
+            <div className={style.unload} onClick={unloadBuilders}>Add more works</div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
 
@@ -1081,6 +1124,7 @@ function ProfilePage(r) {
     loading,
     onRetry,
     buildState,
+    walletAddress,
     builderSat,
     changeNum,
     parcelsIds,
@@ -1292,13 +1336,18 @@ function ProfilePage(r) {
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
-    reqBuilderData('0x79EF3DA763754387F06022Cf66c2668854B3389B')
+    reqBuilderData(walletAddress)
 
-  }, [addbuild])
+  }, [addbuild,walletAddress])
 
   React.useEffect(() => {
+    const a = getToken('address');
+    if (a) {
+      setWalletAddress(a);
+    }
+
     setNavLabel('All')
-    req_building_list('0x79EF3DA763754387F06022Cf66c2668854B3389B')
+    req_building_list(walletAddress)
     const accessToken = getToken('atk');
     setRouteTab(r.router.query.type);
     reqWearablesData();
@@ -1317,6 +1366,7 @@ function ProfilePage(r) {
     requestData,
     builderSat,
     buildState,
+    walletAddress,
     requestPersonal,
     watcher_store,
     dataBuildSource,
@@ -1478,111 +1528,164 @@ function ProfilePage(r) {
   const drag = function (evt, dbele?) {
     dbele = document.querySelector('.addBuilding_content__GcPPZ')
     // ele.onmousedown = function (evt) {
-        //获取事件对象，兼容写法
-        var oEvent = evt || event;
-        var disX = oEvent.clientX - dbele.offsetLeft;
-        var disY = oEvent.clientY - dbele.offsetTop;
-        //实时改变位置
-        document.onmousemove = function (evts) {
-          console.log(evts);
-            var evtUp = evts;
-            var leftX = evtUp.clientX - disX;
-            var topY = evtUp.clientY - disY;
-            // 右边判断是否超出
-            
-            if (
-                leftX >
-                document.querySelector("#container").clientWidth - dbele.offsetWidth
-            ) {
-                leftX =
-                    document.body.clientWidth -
-                    dbele.offsetWidth;
-            }
-            // 左边判断是否超出
-            if (leftX < 0) {
-                leftX = 0;
-            }
-            if (
-                topY >
-                document.querySelector("#container").clientHeight -
-                dbele.offsetHeight
-            ) {
-                topY =
-                    document.body.clientHeight -
-                    dbele.offsetHeight;
-            }
-            if (topY < 0) {
-                topY = 0;
-            }
-            
-            dbele.style.left = leftX + "px";
-            dbele.style.marginLeft = 0 + "px";
-            dbele.style.marginTop = 0 + "px";
-            // dbele.style.marginBottom = 50 + "px";
-            dbele.style.top = topY + "px";
-            dbele.style.zIndex = "999999";
-        };
-        //停止拖动
-        document.onmouseup = function () {
-            document.onmousemove = null;
-            document.onmouseup = null;
-        };
-}
+    //获取事件对象，兼容写法
+    var oEvent = evt || event;
+    var disX = oEvent.clientX - dbele.offsetLeft;
+    var disY = oEvent.clientY - dbele.offsetTop;
+    //实时改变位置
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      var evtUp = evts;
+      var leftX = evtUp.clientX - disX;
+      var topY = evtUp.clientY - disY;
+      // 右边判断是否超出
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - dbele.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          dbele.offsetWidth;
+      }
+      // 左边判断是否超出
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        dbele.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          dbele.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      dbele.style.left = leftX + "px";
+      dbele.style.marginLeft = 0 + "px";
+      dbele.style.marginTop = 0 + "px";
+      // dbele.style.marginBottom = 50 + "px";
+      dbele.style.top = topY + "px";
+      dbele.style.zIndex = "999999";
+    };
+    //停止拖动
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
 
 
   const dragJoin = function (evt, dbele?) {
     dbele = document.querySelector('.join_builders_works_container2__VidgJ')
     // ele.onmousedown = function (evt) {
-        //获取事件对象，兼容写法
-        var oEvent = evt ;
-        var disX = oEvent.clientX - dbele.offsetLeft;
-        var disY = oEvent.clientY - dbele.offsetTop;
-        //实时改变位置
-        document.onmousemove = function (evts) {
-          console.log(evts);
-            var evtUp = evts;
-            var leftX = evtUp.clientX - disX;
-            var topY = evtUp.clientY - disY;
-            // 右边判断是否超出
-            
-            if (
-                leftX >
-                document.querySelector("#container").clientWidth - dbele.offsetWidth
-            ) {
-                leftX =
-                    document.body.clientWidth -
-                    dbele.offsetWidth;
-            }
-            // 左边判断是否超出
-            if (leftX < 0) {
-                leftX = 0;
-            }
-            if (
-                topY >
-                document.querySelector("#container").clientHeight -
-                dbele.offsetHeight
-            ) {
-                topY =
-                    document.body.clientHeight -
-                    dbele.offsetHeight;
-            }
-            if (topY < 0) {
-                topY = 0;
-            }
-            
-            dbele.style.left = leftX + "px";
-            dbele.style.marginLeft = 0 + "px";
-            dbele.style.marginTop = 0 + "px";
-            // dbele.style.marginBottom = 50 + "px";
-            dbele.style.top = topY + "px";
-            dbele.style.zIndex = "999999";
-        };
-        //停止拖动
-        document.onmouseup = function () {
-            document.onmousemove = null;
-            document.onmouseup = null;
-        };
-}
+    //获取事件对象，兼容写法
+    var oEvent = evt;
+    var disX = oEvent.clientX - dbele.offsetLeft;
+    var disY = oEvent.clientY - dbele.offsetTop;
+    //实时改变位置
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      var evtUp = evts;
+      var leftX = evtUp.clientX - disX;
+      var topY = evtUp.clientY - disY;
+      // 右边判断是否超出
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - dbele.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          dbele.offsetWidth;
+      }
+      // 左边判断是否超出
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        dbele.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          dbele.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      dbele.style.left = leftX + "px";
+      dbele.style.marginLeft = 0 + "px";
+      dbele.style.marginTop = 0 + "px";
+      // dbele.style.marginBottom = 50 + "px";
+      dbele.style.top = topY + "px";
+      dbele.style.zIndex = "999999";
+    };
+    //停止拖动
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
+  const dragHead = function (evt, dbele?) {
+    dbele = document.querySelector('.join_builders_container__31cSn')
+    // ele.onmousedown = function (evt) {
+    //获取事件对象，兼容写法
+    var oEvent = evt;
+    var disX = oEvent.clientX - dbele.offsetLeft;
+    var disY = oEvent.clientY - dbele.offsetTop;
+    //实时改变位置
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      var evtUp = evts;
+      var leftX = evtUp.clientX - disX;
+      var topY = evtUp.clientY - disY;
+      // 右边判断是否超出
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - dbele.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          dbele.offsetWidth;
+      }
+      // 左边判断是否超出
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        dbele.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          dbele.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      dbele.style.left = leftX + "px";
+      dbele.style.marginLeft = 0 + "px";
+      dbele.style.marginTop = 0 + "px";
+      // dbele.style.marginBottom = 50 + "px";
+      dbele.style.top = topY + "px";
+      dbele.style.zIndex = "999999";
+    };
+    //停止拖动
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
 
 
   const creatorDisplay = React.useCallback(() => {
@@ -2003,7 +2106,7 @@ function ProfilePage(r) {
             setManySetState(false);
           }}
           id='container'
-          className={cn('', style.bigPic, addbuild === true ? style.joinBuilders : '', joinBuilders === true ? style.joinBuilders : '', emailBuilders === true ? style.joinBuilders : '')}
+          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join : '',)}
         >
           <div className=" relative">
             <PageHeader
@@ -2077,38 +2180,41 @@ function ProfilePage(r) {
             </div>
           </div>
         ) : null}
-        {joinBuilders === true ? <>
-          {/* <div style={{backgroundColor:"#fff",opacity:"0.3"}}> */}
-          <JoinBuilders
-            turnOff={turnOff}
-            nextBtn={nextBtn}
 
-          />
-          {/* </div> */}
-        </> : ''}
         {/* {tabStateTR === true ? <>
         <JoinBuildersAdd
           turnBuild={turnBuild}
           nextBtnAdd={nextBtnAdd}
         />
       </> : ''} */}
-     
+
 
 
       </Page>
+      {joinBuilders === true ? <>
+        <JoinBuilders
+          turnOff={turnOff}
+          stateVal={stateVal}
+          editStateVal={editStateVal}
+          clickHeader={dragHead}
+        // nextBtn={nextBtn}
+
+        />
+      </> : ''}
       {emailBuilders === true ?
-          <>
-            <JoinBuildersWork
-              turnOff={turnOff}
-              retProps={retProps}
-              emailState={emailState}
-              clickHeader={dragJoin}
-            />
-            {/* <JoinBuildersAdd
+        <>
+          <JoinBuildersWork
+            turnOff={turnOff}
+            retProps={retProps}
+            emailState={emailState}
+            clickHeader={dragJoin}
+
+          />
+          {/* <JoinBuildersAdd
             turnBuild={turnBuild}
             nextBtnAdd={nextBtnAdd}
           /> */}
-          </> : ''}
+        </> : ''}
       {addbuild === true ?
         <>
           <AddBuildings
