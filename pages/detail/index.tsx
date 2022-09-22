@@ -52,11 +52,11 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
 
     const url = window.location.search;
-    let str ='';
+    let str = '';
     let strs = [];
     if (url.indexOf('?') !== -1) {
-       str = url.substr(1);
-       strs = str.split("building_link=");
+      str = url.substr(1);
+      strs = str.split("building_link=");
     }
 
     const res = await req_get_building_detail_info(strs[1]);
@@ -97,11 +97,11 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   }
   const editBuild = async (buildingLinkConB) => {
     const url = window.location.search;
-    let str ='';
+    let str = '';
     let strs = [];
     if (url.indexOf('?') !== -1) {
-       str = url.substr(1);
-       strs = str.split("building_link=");
+      str = url.substr(1);
+      strs = str.split("building_link=");
     }
     setAddbuild(true)
     const res = await req_get_building_detail_info(strs[1])
@@ -116,11 +116,11 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
   const visitBuild = (buildingLinkConV) => {
     const url = window.location.search;
-    let str ='';
+    let str = '';
     let strs = [];
     if (url.indexOf('?') !== -1) {
-       str = url.substr(1);
-       strs = str.split("building_link=");
+      str = url.substr(1);
+      strs = str.split("building_link=");
     }
     const res = req_get_building_detail_info(strs[1])
     // console.log(res, strs[1]);
@@ -163,18 +163,23 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     }
     if (files_link_cover === '') {
       // files_link_cover = subArrData[0]
-      let arrV = ''
-      arrV = subArrData[0]
-      files_link_cover = arrV
-      // toast.error('请设置封面图');
-      // return false;
+
+      // let arrV = ''
+      // arrV = subArrData[0]
+      // files_link_cover = arrV
+
+      toast.error('请设置封面图');
+      return false;
     }
     const indexBuild = subArrData.indexOf(files_link_cover)
     if (indexBuild === -1) {
       // files_link_cover = subArrData[0]
-     let arrV = ''
-     arrV = subArrData[0]
-     files_link_cover = arrV
+
+      //  let arrV = ''
+      //  arrV = subArrData[0]
+      //  files_link_cover = arrV
+      toast.error('请设置封面图');
+      return false;
     }
     // console.log(indexBuild);
 

@@ -647,7 +647,7 @@ function ProfilePage(r) {
 
   const addWork = React.useCallback(async (emailState) => {
 
-    if (emailState === null||emailState === '') {
+    if (emailState === null || emailState === '') {
       setJoinBuilders(true)
     } else if (emailState !== '') {
       setEmailBuilders(true)
@@ -752,13 +752,14 @@ function ProfilePage(r) {
     // if (buildData) {
     buildData.map((item) => {
       // console.log(item);
+    
       const linkBuildIndex = item.indexOf('http://')
       const linkBuildCom = item.indexOf('.com')
       // console.log(linkBuildIndex, 5656, linkBuildCom);
       if (linkBuildIndex === -1 || linkBuildCom === -1) {
         showIndex = true
-        toast.error('Please fill in the correct link address');
-        return false;
+        return toast.error('Please fill in the correct link address');
+        // return false;
       }
       // if(linkBuildIndex === -1 || linkBuildCom === -1){
       //   // setShowIndex(true)
@@ -810,7 +811,7 @@ function ProfilePage(r) {
         setError(true);
       }
     },
-    [resultHandlerBu, routeTab, nav_Label, walletAddress,dataBuildSource],
+    [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
   );
 
   const requireBuilder = React.useCallback(
@@ -922,23 +923,21 @@ function ProfilePage(r) {
     }
     if (files_link_cover === '') {
       // files_link_cover = subArrData[0]
-      let arrV = ''
-      arrV = subArrData[0]
-      files_link_cover = arrV
+      // let arrV = ''
+      // arrV = subArrData[0]
+      // files_link_cover = arrV
 
-      // var [files_link_cover] = subArrData
-      // var files_link_cover = subArrData[0]
-      // toast.error('请设置封面图');
-      // return false;
+      toast.error('请设置封面图');
+      return false;
     }
     const indexBuild = subArrData.indexOf(files_link_cover)
     if (indexBuild === -1) {
       // files_link_cover = subArrData[0]
-      let arrV = ''
-      arrV = subArrData[0]
-      files_link_cover = arrV
-      // toast.error('请设置封面图');
-      // return false;
+      // let arrV = ''
+      // arrV = subArrData[0]
+      // files_link_cover = arrV
+      toast.error('请设置封面图');
+      return false;
     }
     // console.log(indexBuild);
 
@@ -1092,11 +1091,11 @@ function ProfilePage(r) {
       // console.log(dataBuildSource.length,9889898989);
 
       return <Status status="AddBuilder" unloadBuilders={() => { unloadBuilders() }} />;
-    } 
+    }
     // else {
 
-      // }
-      if (buildState === 4 && dataBuildSource.length !== 0) {
+    // }
+    if (buildState === 4 && dataBuildSource.length !== 0) {
       //   // console.log(dataBuildSource,6565656);
 
       return (
@@ -1348,7 +1347,7 @@ function ProfilePage(r) {
 
     reqBuilderData(walletAddress)
 
-  }, [addbuild,walletAddress])
+  }, [addbuild, walletAddress])
 
   React.useEffect(() => {
     const a = getToken('address');
@@ -1536,10 +1535,10 @@ function ProfilePage(r) {
 
 
   const drag = function (evt, dbele?) {
-    dbele = document.querySelector('.addBuilding_content__GcPPZ'  || '')
+    dbele = document.querySelector('.addBuilding_content__GcPPZ' || '')
     // ele.onmousedown = function (evt) {
-   
-    const oEvent = evt ;
+
+    const oEvent = evt;
     const disX = oEvent.clientX - dbele.offsetLeft;
     const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
@@ -1572,12 +1571,16 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      dbele.style.left = `${leftX}` + "px";
-      dbele.style.marginLeft = `${0}` + "px";
-      dbele.style.marginTop = `${0}` + "px";
-      // dbele.style.marginBottom = 50 + "px";
-      dbele.style.top = `${topY}` + "px";
-      dbele.style.zIndex = `${99999}`;
+      if (dbele) {
+        dbele.style.left = leftX + "px";
+        dbele.style.marginLeft = 0 + "px";
+        dbele.style.marginTop = 0 + "px";
+        // dbele.style.marginBottom = 50 + "px";
+        dbele.style.top = topY + "px";
+        dbele.style.zIndex = "999999";
+      } else {
+        return false;
+      }
     };
     document.onmouseup = function () {
       document.onmousemove = null;
@@ -1589,9 +1592,9 @@ function ProfilePage(r) {
   const dragJoin = function (evt, dbele?) {
     dbele = document.querySelector('.join_builders_works_container2__VidgJ' || '')
     // ele.onmousedown = function (evt) {
-      const oEvent = evt;
-      const disX = oEvent.clientX - dbele.offsetLeft;
-      const disY = oEvent.clientY - dbele.offsetTop;
+    const oEvent = evt;
+    const disX = oEvent.clientX - dbele.offsetLeft;
+    const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
       const evtUp = evts;
@@ -1622,31 +1625,28 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      // dbele.style.left = leftX + "px";
-      // dbele.style.marginLeft = 0 + "px";
-      // dbele.style.marginTop = 0 + "px";
-      // // dbele.style.marginBottom = 50 + "px";
-      // dbele.style.top = topY + "px";
-      // dbele.style.zIndex = "999999";
-      dbele.style.left = `${leftX}` + "px";
-      dbele.style.marginLeft = `${0}` + "px";
-      dbele.style.marginTop = `${0}` + "px";
-      // dbele.style.marginBottom = 50 + "px";
-      dbele.style.top = `${topY}` + "px";
-      dbele.style.zIndex = `${99999}`;
+      if (dbele) {
+        dbele.style.left = leftX + "px";
+        dbele.style.marginLeft = 0 + "px";
+        dbele.style.marginTop = 0 + "px";
+        // dbele.style.marginBottom = 50 + "px";
+        dbele.style.top = topY + "px";
+        dbele.style.zIndex = "999999";
+      } else {
+        return false;
+      }
     };
-    //停止拖动
     document.onmouseup = function () {
       document.onmousemove = null;
       document.onmouseup = null;
     };
   }
   const dragHead = function (evt, dbele?) {
-    dbele = document.querySelector('.join_builders_container__31cSn'  || '')
+    dbele = document.querySelector('.join_builders_container__31cSn' || '')
     // ele.onmousedown = function (evt) {
-      const oEvent = evt;
-      const disX = oEvent.clientX - dbele.offsetLeft;
-      const disY = oEvent.clientY - dbele.offsetTop;
+    const oEvent = evt;
+    const disX = oEvent.clientX - dbele.offsetLeft;
+    const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
       const evtUp = evts;
@@ -1677,18 +1677,16 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      // dbele.style.left = leftX + "px";
-      // dbele.style.marginLeft = 0 + "px";
-      // dbele.style.marginTop = 0 + "px";
-      // // dbele.style.marginBottom = 50 + "px";
-      // dbele.style.top = topY + "px";
-      // dbele.style.zIndex = "999999";
-      dbele.style.left = `${leftX}` + "px";
-      dbele.style.marginLeft = `${0}` + "px";
-      dbele.style.marginTop = `${0}` + "px";
-      // dbele.style.marginBottom = 50 + "px";
-      dbele.style.top = `${topY}` + "px";
-      dbele.style.zIndex = `${99999}`;
+      if (dbele) {
+        dbele.style.left = leftX + "px";
+        dbele.style.marginLeft = 0 + "px";
+        dbele.style.marginTop = 0 + "px";
+        // dbele.style.marginBottom = 50 + "px";
+        dbele.style.top = topY + "px";
+        dbele.style.zIndex = "999999";
+      } else {
+        return false;
+      }
     };
     document.onmouseup = function () {
       document.onmousemove = null;
