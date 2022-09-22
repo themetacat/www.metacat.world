@@ -17,10 +17,10 @@
 
 .inputContent{
   background-color: rgba(0, 208, 236, 0.1);
-  position: relative;
+  /* position: relative; */
   padding: 0px 20px;
-  color: rgba(153, 153, 153, 1);
   border-radius: 6px;
+  color: rgba(153, 153, 153, 1);
   box-sizing: border-box;
   border: 0.5px solid rgba(0, 208, 236, 0.1);
   min-height: 44px;

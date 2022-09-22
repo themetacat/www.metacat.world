@@ -7,12 +7,13 @@ class API {
 
   constructor(url: string, key?: string) {
     this.url = url;
+    // this.url = 'http://8.130.23.16/api/v1';
     this.key = key;
   }
 
-  public async req_scence_list(page: number, count: number,query: string,
+  public async req_scence_list(page: number, count: number, query: string,
     type: string,) {
-      const search = qs.stringify({ page, count, query, type }, {  addQueryPrefix: true });
+    const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_dcl_scenes${search}`;
     // const url = `http://8.130.23.16/api/v1/get_dcl_scenes${search}`;
     const result = await fetch(url, {
@@ -24,7 +25,7 @@ class API {
 
     return json;
   }
-  
+
   // 设置单个或批量出租
 
   public async req_parcels_rent_out(
@@ -194,6 +195,30 @@ class API {
       method: 'get',
       mode: 'cors',
     });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_building_list(addr: string): Promise<any> {
+    const search = qs.stringify(
+      {
+        addr
+      },
+      { addQueryPrefix: true },
+    );
+    const url = `${this.url}/building/get_builder_buildings${search}`;
+
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+      // headers: {
+      //   Authorization: token,
+      //   'Content-Type': 'application/x-www-form-urlencoded',
+      // },
+    });
+
     const json = await result.json();
 
     return json;
@@ -1079,7 +1104,6 @@ class API {
     return json;
   }
 
-  //
 
   public async req_cv_top20_parcel() {
     const url = `${this.url}/get_cv_top20_parcel`;
@@ -1093,9 +1117,9 @@ class API {
     return json;
   }
 
-  public async req_space_buildings_list(page: number, count: number,    query: string,
+  public async req_space_buildings_list(page: number, count: number, query: string,
     type: string,) {
-      const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
+    const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_space_buildings${search}`;
     // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
     const result = await fetch(url, {
@@ -1143,6 +1167,85 @@ class API {
     return json;
   }
 
+  public async req_userBuilder_apply_become(token: string, join_type: string, representative_links: string) {
+    const search = qs.stringify({ join_type, representative_links }, { addQueryPrefix: false });
+    // const url = `http://8.130.23.16/api/v1/user/user_apply_become${search}`;
+    const url = `${this.url}/user/user_apply_become`;
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+
+  }
+
+
+  public async req_user_add_or_edit_building(
+    token: string,
+    operation_type: string,
+    building_name: string,
+    platform: string,
+    building_link: string,
+    building_desc: string,
+    building_format: string,
+    files_link_add: string,
+    files_link_cover: string,
+    files_link_del: string,
+  ) {
+    const search = qs.stringify({
+      operation_type,
+      building_name,
+      platform,
+      building_link,
+      building_desc,
+      building_format,
+      files_link_add,
+      files_link_cover,
+      files_link_del
+    }, { addQueryPrefix: false });
+
+    const url = `${this.url}/building/user_add_or_edit_building`;
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+    return json;
+
+  }
+
+  public async req_get_building_detail_info(building_link) {
+
+    const search = qs.stringify({building_link}, {addQueryPrefix: true });
+
+    const url = `${this.url}/building/get_building_detail_info${search}`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+
+    });
+    const json = await result.json();
+   
+    
+    return json;
+
+  }
+
+
+
   public async req_get_user_wearable(token: string) {
     // const url = 'http://8.130.23.16/api/v1/wearable/get_user_wearable';
     const url = `${this.url}/wearable/get_user_wearable`;
@@ -1184,6 +1287,26 @@ class API {
     return json;
   }
 
+  public async req_builder_del_self_building(
+    token: string, building_link: string
+  ) {
+    const search = qs.stringify({ building_link }, { addQueryPrefix: false });
+    const url = `${this.url}/building/builder_del_self_building`;
+
+    const result = await fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: search,
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   public async req_get_wearable_detail(id) {
     const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: true });
     // const url = `http://8.130.23.16/api/v1/wearable/get_wearable_detail${search}`;
@@ -1208,7 +1331,22 @@ class API {
 
     return json;
   }
+
+  public async req_platform() {
+    // const url = 'http://8.130.23.16/api/v1/user/get_all_country';
+    const url = `${this.url}/building/get_building_select_info`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
 }
+
+
+
 
 export default new API('https://api.metacat.world/api/v1');
 // http://8.130.23.16/api/v1

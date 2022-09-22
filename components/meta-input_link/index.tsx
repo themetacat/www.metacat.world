@@ -8,6 +8,7 @@ import style from './index.module.css';
 
 type Props = {
   label?: string;
+  placeholder?: string;
   onChangeHandler?: (evt) => void;
   onClearHandler?: () => void;
   value?: string;
@@ -15,15 +16,16 @@ type Props = {
   classname?: string;
   require?: boolean;
   requirePrefix?: boolean;
+  bold?: boolean;
   disable?: boolean;
+  name?: string;
   onBlur?: (valu) => void;
-  data?;
-  onClick?;
-  platform?: string;
+  clear?: (valu) => void;
 };
 
-export default function MeteSelectBuilding({
+export default function MeteInput({
   label,
+  placeholder,
   onChangeHandler,
   onClearHandler,
   value,
@@ -31,15 +33,15 @@ export default function MeteSelectBuilding({
   classname,
   require = false,
   requirePrefix = true,
+  bold = false,
   disable = false,
-  data,
+  name,
   onBlur,
-  onClick,
-  platform,
+  clear
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
-  const [arrowsState, setArrowsState] = React.useState(false);
+
   const onChange = React.useCallback(
     (dom) => {
       const temp = dom.target.value;
@@ -69,23 +71,16 @@ export default function MeteSelectBuilding({
     [null],
   );
 
-  const rander = React.useMemo(() => {
-    if (platform) {
-      return <>{platform}</>;
-    }
-    return <>{'请选择'}</>;
-  }, [platform]);
-
-  const clear = React.useCallback(() => {
-    setVal('');
-    setShowClear(false);
-    if (onClearHandler) {
-      onClearHandler();
-    }
-    if (onChangeHandler) {
-      onChangeHandler('');
-    }
-  }, [onClearHandler]);
+  // const clear = React.useCallback(() => {
+  //   setVal('');
+  //   setShowClear(false);
+  //   if (onClearHandler) {
+  //     onClearHandler();
+  //   }
+  //   if (onChangeHandler) {
+  //     onChangeHandler('');
+  //   }
+  // }, [onClearHandler]);
 
   const inputBlur = React.useCallback(() => {
     setShowClear(false);
@@ -99,12 +94,9 @@ export default function MeteSelectBuilding({
       setVal(value);
     }
   }, [val, value]);
-  // var box1 = document.getElementById('box1');
-  //     box1.onmouseover=function(){
-  //       setArrowsState(arrowsState);
-  //     }
+
   return (
-    <div className={cn('text-base relative', classname, style.metainput)}>
+    <div className={cn('text-base', classname, style.metainput)}>
       {label ? (
         <div className="mb-2">
           {require && requirePrefix && <span className={cn('mr-1', style.require)}>*</span>}
@@ -124,57 +116,45 @@ export default function MeteSelectBuilding({
             <img className={style.icon} src={prefix}></img>
           </span>
         ) : null}
-        <div
-          onClick={() => {
-            setArrowsState(!arrowsState);
-            // setArrowsState(true);
+        <input
+          type="text"
+          placeholder={placeholder}
+          name={name}
+          value={val}
+          onChange={onChange}
+          disabled={disable}
+          autoComplete="off"
+          onFocus={() => {
+            if (val) {
+              setShowClear(true);
+            }
           }}
-          style={{ width: "415px" }}
-          onMouseLeave={() => {
-            setTimeout(() => {
-              setArrowsState(false);
-            }, 4000);
-          }}
-        >
-          {rander}
-        </div>
+          onBlur={inputBlur}
+          className={cn(
+            ' text-sm',
+            bold ? 'font-medium' : '',
+            style.input,
+            disable ? style.disable : null,
+          )}
+        ></input>
+        {disable ? (
+          <CopyToClipboard text={val} onCopy={iconClick}>
+            <span className={cn('inline-flex items-center ml-5', style.icon)}>
+              <img
+                className={cn('cursor-pointer', 'inline-flex', style.icon)}
+                src="/images/v5/copy.png"
+              ></img>
+            </span>
+          </CopyToClipboard>
+        ) : (
+          <span className={cn('inline-flex items-center ml-5', style.icon)} onClick={clear}>
+            <img
+              className={cn('cursor-pointer', showClear ? 'inline-flex' : ' hidden', style.icon)}
+              src="/images/close.png"
+            ></img>
+          </span>
+        )}
       </div>
-      <img
-        src={`/images/${!arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`}
-        className={style.arrows}
-        onClick={() => {
-          setArrowsState(!arrowsState);
-          // setArrowsState(true);
-        }}
-        onMouseLeave={() => {
-          setTimeout(() => {
-            setArrowsState(false);
-          }, 4000);
-        }}
-      />
-      <ul className={cn(style.list, !arrowsState ? style.dn : null)}
-       onMouseEnter={() => {
-        setTimeout(() => {
-          setArrowsState(false);
-        }, 20000000);
-      }}
-      >
-        {data.map((i, index) => {
-          return (
-            <li
-              key={index}
-              value={i}
-              onClick={() => {
-                onClick(i);
-                setArrowsState(false);
-              }}
-              className={platform === i ? style.co : null}
-            >
-              {i}
-            </li>
-          );
-        })}
-      </ul>
     </div>
   );
 }

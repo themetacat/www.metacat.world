@@ -1,6 +1,7 @@
 .anPage {
-  min-width: 1440px;
-  overflow-x: scroll;
+  /* min-width: 1440px; */
+  /* overflow-x: scroll; */
+  /* overflow: hidden; */
 }
 
 .sign {
@@ -11,19 +12,45 @@
 .info {
   color: #fff;
 }
+.suport{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  align-items: center;
+  color: #666666;
+  margin-bottom: 12px;
+  margin-top:2px;
+}
 .content {
-  padding: 30px 0px;
+  /* padding: 30px 0px; */
+  /* z-index: 10003; */
   flex: 1 auto;
+  background: #000000;
+  position: absolute;
+  top: 16%;
+  left: 25%;
+  margin-left: -180px;
+  margin-top: -59px;
+  border-radius: 16px;
+
+}
+.require{
+  color: red;
 }
 
 .chartList {
   background-color: #000000;
   box-sizing: border-box;
-  min-height: 600px;
+  /* min-height: 600px; */
+  border-radius: 16px;
 }
+
 
 .bottomBorder {
   border-bottom: solid 1px rgba(0, 208, 236, 0.2);
+  padding: 20px 0px 15px 20px;
 }
 
 .avaterText {
@@ -62,6 +89,7 @@
 }
 .warnContent {
   min-height: 16px;
+  color: red;
 }
 
 .divide {
@@ -76,6 +104,8 @@
   background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
   opacity: 0.5;
   border-radius: 8px;
+  cursor: pointer;
+  margin-top: 30px;
 }
 
 .loading {
@@ -173,9 +203,11 @@
   font-size: 16px;
   color: #999999;
 }
-
+.warn {
+  color: rgba(255, 214, 70, 1);
+}
 .Introduction {
-  margin: 30px 0 10px 0;
+  /* margin: 30px 0 10px 0; */
 }
 
 .Introduction > .title {
@@ -184,6 +216,7 @@
   color: #999999;
 }
 .introductionField {
+  position: relative;
   width: 500px;
   height: 100px;
   background-color: #001518;
@@ -208,7 +241,7 @@
 }
 .introductionField > .right > textarea {
   resize: none;
-  width: 440px;
+  width: 480px;
   background: none;
   border: none;
   outline: none;
@@ -217,3 +250,43 @@
   height: 100px;
   padding: 10px 10px 10px 0;
 }
+.text{
+position: absolute;
+right:30px;
+bottom:12px;
+font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+}
+.text span:nth-child(1){
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  align-items: center;
+  color: #FFFFFF;
+}
+.text span:nth-child(2){
+  color: #333333;
+}
+.addPush{
+  width: 120px;
+  height: 120px;
+  left: 0px;
+  top: 0px;
+  background: #00D0EC;
+  background-image: url('/images/addbuild.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px;
+  opacity: 0.1;
+  border-radius: 6px;
+  margin-left: 8px;
+}
+/* .addPush:hover{
+ 
+
+ 
+  
+} */
