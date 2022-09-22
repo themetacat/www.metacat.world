@@ -1712,7 +1712,7 @@ export default function AnalyticsIndex(props) {
               </div>
               <div className={style.allLine}>
                 <AllPillarNum2
-                  id="allpillarNum"
+                  id="allpillarNum2"
                   textColor={style.allColor}
                   labelText="Number of Parcel Rent"
                   dataHandlder={req_num_of_rent}
