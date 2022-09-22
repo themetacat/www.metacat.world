@@ -206,8 +206,8 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
 
   const changeIntroductionValue = React.useCallback((e) => {
     setIntroduction(e.target.value);
-    let txt = document.getElementById("txt");
-    let countNumTxt = document.getElementById("countNum");
+    const txt = document.getElementById("txt");
+    const countNumTxt = document.getElementById("countNum");
     txt.addEventListener("keyup", function () {
       const value = e.target.value.length;
       setCountNum(value)
@@ -384,7 +384,7 @@ console.log(e);
                     require={true}
                     name={'Link To Building'}
                     bold={true}
-                    disable={buildAll?.building_link ? true : false}
+                    disable={buildAll?.building_link === buildAll?.building_link ? true : false}
                     value={linkBuild}
                     requirePrefix={false}
                     onChangeHandler={(val) => {

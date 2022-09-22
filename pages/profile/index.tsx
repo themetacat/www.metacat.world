@@ -764,7 +764,7 @@ function ProfilePage(r) {
       //   // setShowIndex(true)
 
       // }
-      return;
+      // return;
     })
 
     // console.log(showIndex);
@@ -921,7 +921,10 @@ function ProfilePage(r) {
       return false;
     }
     if (files_link_cover === '') {
-      files_link_cover = subArrData[0]
+      // files_link_cover = subArrData[0]
+      let arrV = ''
+      arrV = subArrData[0]
+      files_link_cover = arrV
 
       // var [files_link_cover] = subArrData
       // var files_link_cover = subArrData[0]
@@ -930,7 +933,10 @@ function ProfilePage(r) {
     }
     const indexBuild = subArrData.indexOf(files_link_cover)
     if (indexBuild === -1) {
-      files_link_cover = subArrData[0]
+      // files_link_cover = subArrData[0]
+      let arrV = ''
+      arrV = subArrData[0]
+      files_link_cover = arrV
       // toast.error('请设置封面图');
       // return false;
     }
@@ -952,9 +958,9 @@ function ProfilePage(r) {
         toast(resCON.msg)
         const resBuil = req_building_list(walletAddress);
 
-        resBuil.then((resBuil) => {
-          if (resBuil.data) {
-            setDataBuildSource(resBuil.data)
+        resBuil.then((resBuilCon) => {
+          if (resBuilCon.data) {
+            setDataBuildSource(resBuilCon.data)
             // console.log(resBuil.data, 96898)
           }
 
@@ -1530,15 +1536,15 @@ function ProfilePage(r) {
 
 
   const drag = function (evt, dbele?) {
-    dbele = document.querySelector('.addBuilding_content__GcPPZ')
+    dbele = document.querySelector('.addBuilding_content__GcPPZ'  || '')
     // ele.onmousedown = function (evt) {
    
-    let oEvent = evt ;
-    let disX = oEvent.clientX - dbele.offsetLeft;
-    let disY = oEvent.clientY - dbele.offsetTop;
+    const oEvent = evt ;
+    const disX = oEvent.clientX - dbele.offsetLeft;
+    const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      let evtUp = evts;
+      const evtUp = evts;
       let leftX = evtUp.clientX - disX;
       let topY = evtUp.clientY - disY;
 
@@ -1581,14 +1587,14 @@ function ProfilePage(r) {
 
 
   const dragJoin = function (evt, dbele?) {
-    dbele = document.querySelector('.join_builders_works_container2__VidgJ')
+    dbele = document.querySelector('.join_builders_works_container2__VidgJ' || '')
     // ele.onmousedown = function (evt) {
-    let oEvent = evt;
-    let disX = oEvent.clientX - dbele.offsetLeft;
-    let disY = oEvent.clientY - dbele.offsetTop;
+      const oEvent = evt;
+      const disX = oEvent.clientX - dbele.offsetLeft;
+      const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      let evtUp = evts;
+      const evtUp = evts;
       let leftX = evtUp.clientX - disX;
       let topY = evtUp.clientY - disY;
 
@@ -1630,14 +1636,14 @@ function ProfilePage(r) {
     };
   }
   const dragHead = function (evt, dbele?) {
-    dbele = document.querySelector('.join_builders_container__31cSn')
+    dbele = document.querySelector('.join_builders_container__31cSn'  || '')
     // ele.onmousedown = function (evt) {
-    let oEvent = evt;
-    let disX = oEvent.clientX - dbele.offsetLeft;
-    let disY = oEvent.clientY - dbele.offsetTop;
+      const oEvent = evt;
+      const disX = oEvent.clientX - dbele.offsetLeft;
+      const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      let evtUp = evts;
+      const evtUp = evts;
       let leftX = evtUp.clientX - disX;
       let topY = evtUp.clientY - disY;
 

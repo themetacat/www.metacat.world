@@ -16,11 +16,16 @@ import Footer from '../../components/footer';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 
 
-import { convert } from '../../common/utils';
+
 
 import style from './index.module.css';
 
 export default function buildingDetail({ buildingLinkCon, artist, id }) {
+  // const url = window.location.search;
+  // if (url.indexOf('?') !== -1) {
+  //   var str = url.substr(1);
+  //   var strs = str.split("building_link=");
+  // }
   const router = useRouter();
   const [buildFile, setBuildFile] = React.useState([])
   const [imgUrl, setImgUrl] = React.useState('')
@@ -28,7 +33,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   const [platformBuild, setPlatformBuild] = React.useState('')
   const [formatBuild, setFormatBuild] = React.useState('')
   const [buildStory, setBuildStory] = React.useState('')
-  const [token, setToken] = React.useState('');
+  const [tokenCon, setTokenCon] = React.useState('');
   const [addbuild, setAddbuild] = React.useState(false);
   const [buildAll, setBuildAll] = React.useState(null);
   const [buildInc, setBuildInc] = React.useState('edit');
@@ -38,10 +43,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     title: `BuildingDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-  const GoBack = () => {
-    // window.open(`https://www.metacat.world/profile?type=wearablelist`);
-    router.push(`/profile?type=wearablelist`);
-  };
+
 
   const closeBuild = () => {
     setAddbuild(false)
@@ -49,11 +51,12 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   const fn = async () => {
 
 
-
     const url = window.location.search;
+    let str ='';
+    let strs = [];
     if (url.indexOf('?') !== -1) {
-      var str = url.substr(1);
-      var strs = str.split("building_link=");
+       str = url.substr(1);
+       strs = str.split("building_link=");
     }
 
     const res = await req_get_building_detail_info(strs[1]);
@@ -72,34 +75,38 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     // console.log(res.data, 12, str, 3333, strs[1]);
   }
 
-  const deleteBuild = (token, buildingLinkCon) => {
+  const deleteBuild = (token, buildingLinkConVal) => {
     const url = window.location.search;
+    let str = url.substr(1);
+    let strs = str.split("building_link=");
     if (url.indexOf('?') !== -1) {
-      var str = url.substr(1);
-      var strs = str.split("building_link=");
+      // var str = url.substr(1);
+      // var strs = str.split("building_link=");
     }
     const res = req_builder_del_self_building(token, strs[1])
-    res.then((res) => {
-      if (res.code === 100000) {
-        toast(res.msg)
+    res.then((resB) => {
+      if (resB.code === 100000) {
+        toast(resB.msg)
         router.push(`/profile?type=building`);
       } else {
-        toast(res.msg)
+        toast(resB.msg)
       }
     })
 
     // console.log(res, 565656);
   }
-  const editBuild = async (buildingLinkCon) => {
+  const editBuild = async (buildingLinkConB) => {
     const url = window.location.search;
+    let str ='';
+    let strs = [];
     if (url.indexOf('?') !== -1) {
-      var str = url.substr(1);
-      var strs = str.split("building_link=");
+       str = url.substr(1);
+       strs = str.split("building_link=");
     }
     setAddbuild(true)
     const res = await req_get_building_detail_info(strs[1])
     setBuildPush(strs[1])
-    console.log(res, strs[1]);
+    // console.log(res, strs[1]);
     if (res.data) {
       setBuildAll(res.data)
       setAddbuild(true)
@@ -107,16 +114,18 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
   }
 
-  const visitBuild = (buildingLinkCon)=>{
+  const visitBuild = (buildingLinkConV) => {
     const url = window.location.search;
+    let str ='';
+    let strs = [];
     if (url.indexOf('?') !== -1) {
-      var str = url.substr(1);
-      var strs = str.split("building_link=");
+       str = url.substr(1);
+       strs = str.split("building_link=");
     }
-    const res =  req_get_building_detail_info(strs[1])
-    console.log(res, strs[1]);
+    const res = req_get_building_detail_info(strs[1])
+    // console.log(res, strs[1]);
     window.open(strs[1])
-    
+
   }
 
   const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
@@ -153,20 +162,24 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       return false;
     }
     if (files_link_cover === '') {
-      files_link_cover = subArrData[0]
+      // files_link_cover = subArrData[0]
+      let arrV = ''
+      arrV = subArrData[0]
+      files_link_cover = arrV
       // toast.error('请设置封面图');
       // return false;
     }
     const indexBuild = subArrData.indexOf(files_link_cover)
     if (indexBuild === -1) {
-      files_link_cover = subArrData[0]
-      // toast.error('请设置封面图');
-      // return false;
+      // files_link_cover = subArrData[0]
+     let arrV = ''
+     arrV = subArrData[0]
+     files_link_cover = arrV
     }
     // console.log(indexBuild);
 
     const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), files_link_cover.toString(), files_link_del.join(','));
-    console.log(res, subArrData);
+    // console.log(res, subArrData);
     // console.log(files_link_cover, "files_link_cover");
 
     setAddbuild(false)
@@ -175,10 +188,10 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
 
 
-    res.then((res) => {
+    res.then((resValue) => {
       // toast(res.msg)
-      if (res.code === 100000) {
-        toast(res.msg)
+      if (resValue.code === 100000) {
+        toast(resValue.msg)
         setImgUrl(files_link_cover)
         setBuildName(nickName)
         setPlatformBuild(platform)
@@ -199,14 +212,14 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
     fn()
     const t = getToken('atk');
-    setToken(t);
+    setTokenCon(t);
 
   }, [getToken])
 
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className={cn("bg-black relative", style.backImg)}>
-        <PageHeader className={cn('relative z-20')}  />
+        <PageHeader className={cn('relative z-20')} />
       </div>
       <div className={style.content}>
         <div className={style.boxCon}>
@@ -239,9 +252,9 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
               </div>
             </div>
             <div className={style.btnBox}>
-              <div className={style.btn1} onClick={() => { deleteBuild(token, buildingLinkCon) }}>Delete</div>
+              <div className={style.btn1} onClick={() => { deleteBuild(tokenCon, buildingLinkCon) }}>Delete</div>
               <div className={style.btn2} onClick={() => { editBuild(buildingLinkCon) }}>Edit</div>
-              <div className={style.btn3} onClick={()=>{visitBuild(buildingLinkCon)}}>Visit</div>
+              <div className={style.btn3} onClick={() => { visitBuild(buildingLinkCon) }}>Visit</div>
             </div>
           </div>
 

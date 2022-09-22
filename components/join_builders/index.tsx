@@ -52,14 +52,14 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
   const dragJoin = function (evt, dbele?) {
-    dbele = document.querySelector('.join_builders_add_container__JytZM')
+    dbele = document.querySelector('.join_builders_add_container__JytZM' || '')
     // ele.onmousedown = function (evt) {
-    let oEvent = evt;
-    let disX = oEvent.clientX - dbele.offsetLeft;
-    let disY = oEvent.clientY - dbele.offsetTop;
+    const oEvent = evt;
+    const disX = oEvent.clientX - dbele.offsetLeft;
+    const disY = oEvent.clientY - dbele.offsetTop;
     document.onmousemove = function (evts) {
       // console.log(evts);
-      let evtUp = evts;
+      const evtUp = evts;
       let leftX = evtUp.clientX - disX;
       let topY = evtUp.clientY - disY;
 
