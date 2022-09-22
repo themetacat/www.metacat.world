@@ -758,14 +758,14 @@ function ProfilePage(r) {
       // console.log(linkBuildIndex, 5656, linkBuildCom);
       if (linkBuildIndex === -1 || linkBuildCom === -1) {
         showIndex = true
-        return toast.error('Please fill in the correct link address');
-        // return false;
+        toast.error('Please fill in the correct link address');
+        return false;
       }
       // if(linkBuildIndex === -1 || linkBuildCom === -1){
       //   // setShowIndex(true)
 
       // }
-      // return;
+      return true;
     })
 
     // console.log(showIndex);
@@ -1571,16 +1571,16 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      if (dbele) {
-        dbele.style.left = leftX + "px";
-        dbele.style.marginLeft = 0 + "px";
-        dbele.style.marginTop = 0 + "px";
-        // dbele.style.marginBottom = 50 + "px";
-        dbele.style.top = topY + "px";
-        dbele.style.zIndex = "999999";
-      } else {
-        return false;
-      }
+      // if (dbele) {
+      //   dbele.style.left = leftX + "px";
+      //   dbele.style.marginLeft = 0 + "px";
+      //   dbele.style.marginTop = 0 + "px";
+      //   // dbele.style.marginBottom = 50 + "px";
+      //   dbele.style.top = topY + "px";
+      //   dbele.style.zIndex = "999999";
+      // } else {
+      //   return false;
+      // }
     };
     document.onmouseup = function () {
       document.onmousemove = null;
@@ -1625,16 +1625,16 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      if (dbele) {
-        dbele.style.left = leftX + "px";
-        dbele.style.marginLeft = 0 + "px";
-        dbele.style.marginTop = 0 + "px";
-        // dbele.style.marginBottom = 50 + "px";
-        dbele.style.top = topY + "px";
-        dbele.style.zIndex = "999999";
-      } else {
-        return false;
-      }
+      // if (dbele) {
+      //   dbele.style.left = leftX + "px";
+      //   dbele.style.marginLeft = 0 + "px";
+      //   dbele.style.marginTop = 0 + "px";
+      //   // dbele.style.marginBottom = 50 + "px";
+      //   dbele.style.top = topY + "px";
+      //   dbele.style.zIndex = "999999";
+      // } else {
+      //   return false;
+      // }
     };
     document.onmouseup = function () {
       document.onmousemove = null;
@@ -1677,16 +1677,16 @@ function ProfilePage(r) {
         topY = 0;
       }
 
-      if (dbele) {
-        dbele.style.left = leftX + "px";
-        dbele.style.marginLeft = 0 + "px";
-        dbele.style.marginTop = 0 + "px";
-        // dbele.style.marginBottom = 50 + "px";
-        dbele.style.top = topY + "px";
-        dbele.style.zIndex = "999999";
-      } else {
-        return false;
-      }
+      // if (dbele) {
+      //   dbele.style.left = leftX + "px";
+      //   dbele.style.marginLeft = 0 + "px";
+      //   dbele.style.marginTop = 0 + "px";
+      //   // dbele.style.marginBottom = 50 + "px";
+      //   dbele.style.top = topY + "px";
+      //   dbele.style.zIndex = "999999";
+      // } else {
+      //   return false;
+      // }
     };
     document.onmouseup = function () {
       document.onmousemove = null;

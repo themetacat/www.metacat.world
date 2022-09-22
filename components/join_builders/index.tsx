@@ -86,16 +86,16 @@ export default function JoinBuilders({ turnOff, stateVal,editStateVal,clickHeade
       if (topY < 0) {
         topY = 0;
       }
-      if (dbele) {
-        dbele.style.left = leftX + "px";
-        dbele.style.marginLeft = 0 + "px";
-        dbele.style.marginTop = 0 + "px";
-        // dbele.style.marginBottom = 50 + "px";
-        dbele.style.top = topY + "px";
-        dbele.style.zIndex = "999999";
-      } else {
-        return false;
-      }
+      // if (dbele) {
+      //   dbele.style.left = leftX + "px";
+      //   dbele.style.marginLeft = 0 + "px";
+      //   dbele.style.marginTop = 0 + "px";
+      //   // dbele.style.marginBottom = 50 + "px";
+      //   dbele.style.top = topY + "px";
+      //   dbele.style.zIndex = "999999";
+      // } else {
+      //   return false;
+      // }
     };
     document.onmouseup = function () {
       document.onmousemove = null;
