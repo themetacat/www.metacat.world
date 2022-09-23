@@ -208,10 +208,21 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       return false;
     }
     if (linkBuild !== '') {
-      let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
-      if(!reg.test(linkBuild)){
+      // const reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+      const reg = '^((https|http|ftp|rtsp|mms)?://)'
+                          + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+                          + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+                          + '|'
+                          + '([0-9a-z_!~*\'()-]+.)*'
+                          + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+                          + '[a-z]{2,6})'
+                          + '(:[0-9]{1,4})?'
+                          + '((/?)|'
+                          + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+                        const re = new RegExp(reg)
+      if (!re.test(linkBuild)) {
         toast.error("Not the correct URL, please pay attention to check");
-      return false;
+        return false;
       }
     }
     // const linkBuildIndex = linkBuild.indexOf('http://')
@@ -256,7 +267,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     // console.log(res, subArrData);
     // console.log(files_link_cover, "files_link_cover");
 
-  
+
 
     // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
 
@@ -268,7 +279,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       setAddbuild(true)
       if (resValue.code === 100000) {
         setAddbuild(false)
-        
+
         toast(resValue.msg)
         setImgUrl(imgCont)
         setBuildName(nickName)
@@ -278,13 +289,13 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
         setBuildFile(subArrData)
         // console.log(res.data.detail_files);
       }
-     
+
     });
 
 
 
   },
-    [buildInc,saveIcon],
+    [buildInc, saveIcon],
   );
 
   React.useEffect(() => {
@@ -297,73 +308,73 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
   return (
     <>
-    <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-    <div
+      <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
+        <div
           // onClick={() => {
           //   setManySetState(false);
           // }}
           id='container'
           className={cn('', style.bigPic, addbuild === true ? style.join : '',)}
         >
-      <div className={cn("bg-black relative", style.backImg)} >
-        <PageHeader className={cn('relative z-20')} />
-      </div>
-    
-      <div className={style.content}>
-        <div className={style.boxCon}>
-          <span className={style.mybuilding}>My Building</span>
-          <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
-          <span className={style.nameCon}>{buildName}</span>
-        </div>
-        <div className={style.container}>
-          <div className={style.conLeft}>
-            <img src={imgUrl} className={style.conLeft}></img>
-          </div>
-          <div className={style.conRight}>
-            <p className={style.buildName}>{buildName}</p>
-            <div className={style.message}>
-              <div className={style.first}>
-                <span className={style.platform}>Platform:</span>
-                <span className={style.instuor}>{platformBuild}</span>
-              </div>
-              <div className={style.first}>
-                <span className={style.platform}>Builder:</span>
-                <span className={style.instuor}>{buildName}</span>
-              </div>
-              <div className={style.first}>
-                <span className={style.platform}>Format:</span>
-                <span className={style.instuor}>{formatBuild}</span>
-              </div>
-              <div className={style.first}>
-                <span className={style.platform}>Building Story:</span>
-                <span className={style.instuor}>{buildStory}</span>
-              </div>
-            </div>
-            <div className={style.btnBox}>
-              <div className={style.btn1} onClick={() => { deleteBuild(tokenCon, buildingLinkCon) }}>Delete</div>
-              <div className={style.btn2} onClick={() => { editBuild(buildingLinkCon) }}>Edit</div>
-              <div className={style.btn3} onClick={() => { visitBuild(buildingLinkCon) }}>Visit</div>
-            </div>
+          <div className={cn("bg-black relative", style.backImg)} >
+            <PageHeader className={cn('relative z-20')} />
           </div>
 
-        </div>
-        <div className={style.buildDet}>
-          <div className={style.linellae}></div>
-          <div className={style.buildDetInco}>Building details</div>
-        </div>
-        {/* <div className={style.imgBox}> */}
-        <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5", style.imgBox)}>
-          {buildFile?.map((e) => {
-            return (
-              <img src={e}></img>
-            )
-          })}
-        </div>
-        </div>
-      </div>
+          <div className={style.content}>
+            <div className={style.boxCon}>
+              <span className={style.mybuilding}>My Building</span>
+              <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
+              <span className={style.nameCon}>{buildName}</span>
+            </div>
+            <div className={style.container}>
+              <div className={style.conLeft}>
+                <img src={imgUrl} className={style.conLeft}></img>
+              </div>
+              <div className={style.conRight}>
+                <p className={style.buildName}>{buildName}</p>
+                <div className={style.message}>
+                  <div className={style.first}>
+                    <span className={style.platform}>Platform:</span>
+                    <span className={style.instuor}>{platformBuild}</span>
+                  </div>
+                  <div className={style.first}>
+                    <span className={style.platform}>Builder:</span>
+                    <span className={style.instuor}>{buildName}</span>
+                  </div>
+                  <div className={style.first}>
+                    <span className={style.platform}>Format:</span>
+                    <span className={style.instuor}>{formatBuild}</span>
+                  </div>
+                  <div className={style.first}>
+                    <span className={style.platform}>Building Story:</span>
+                    <span className={style.instuor}>{buildStory}</span>
+                  </div>
+                </div>
+                <div className={style.btnBox}>
+                  <div className={style.btn1} onClick={() => { deleteBuild(tokenCon, buildingLinkCon) }}>Delete</div>
+                  <div className={style.btn2} onClick={() => { editBuild(buildingLinkCon) }}>Edit</div>
+                  <div className={style.btn3} onClick={() => { visitBuild(buildingLinkCon) }}>Visit</div>
+                </div>
+              </div>
 
-      <Footer />
-    </Page>
+            </div>
+            <div className={style.buildDet}>
+              <div className={style.linellae}></div>
+              <div className={style.buildDetInco}>Building details</div>
+            </div>
+            {/* <div className={style.imgBox}> */}
+            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5", style.imgBox)}>
+              {buildFile?.map((e) => {
+                return (
+                  <img src={e}></img>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
+        <Footer />
+      </Page>
       {addbuild === true ?
         <>
           <AddBuildings
@@ -375,7 +386,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
             saveIcon={saveIcon}
           />
         </> : ''}
-        </>
+    </>
   );
 }
 

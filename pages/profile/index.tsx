@@ -760,8 +760,20 @@ function ProfilePage(r) {
       //   return false;
       // }
       if (item !== '') {
-        let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
-        if(!reg.test(item)){
+        // let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+        // if(!reg.test(item)){
+          const reg = '^((https|http|ftp|rtsp|mms)?://)'
+          + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+          + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+          + '|'
+          + '([0-9a-z_!~*\'()-]+.)*'
+          + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+          + '[a-z]{2,6})'
+          + '(:[0-9]{1,4})?'
+          + '((/?)|'
+          + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+        const re = new RegExp(reg)
+        if (!re.test(item)) {
           toast.error("Not the correct URL, please pay attention to check");
         return false;
         }
