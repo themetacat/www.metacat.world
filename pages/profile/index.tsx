@@ -953,7 +953,7 @@ function ProfilePage(r) {
     // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
    
 
-
+    setSaveIcon(true)
     res.then((resCON) => {
       // toast(res.msg)
       setSaveIcon(true)

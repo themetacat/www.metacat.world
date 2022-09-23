@@ -104,7 +104,7 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
   }, [allCountry]);
 
   React.useEffect(() => {
-    console.log(buildAll);
+    // console.log(buildAll);
 
     // if(buildAll){
     setSubArr(buildAll?.detail_files ? [...buildAll?.detail_files] : [])
@@ -112,7 +112,7 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
     setFormat(buildAll?.building_format ? buildAll?.building_format : '')
     setCountNum(buildAll?.building_desc ? buildAll?.building_desc.length : '')
     // nickName  introduction   building_format
-    console.log(countNum);
+    // console.log(countNum);
     setShowClear(buildAll?.file_link_cover ? buildAll?.file_link_cover : '')
     setCoverImg(buildAll?.file_link_cover ? buildAll?.file_link_cover : '')
     setIntroduction(buildAll?.building_desc ? buildAll?.building_desc : '')
@@ -124,7 +124,7 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
 
   }, [buildAll]);
   React.useEffect(() => {
-    console.log(buildInc, buildInc === 'add');
+    // console.log(buildInc, buildInc === 'add');
 
     if (buildInc === 'add') {
       setSubArr([])
@@ -156,7 +156,7 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
     } else {
       setSaveVal(true)
     }
-console.log(saveIcon,55555);
+// console.log(saveIcon,55555);
   }, [nickName, linkBuild, platform, format, subArr, saveVal,saveIcon]);
 
 
@@ -216,7 +216,7 @@ console.log(saveIcon,55555);
     }
   }, [countNum]);
   const down = (e) => {
-    console.log(e);
+    // console.log(e);
 
   }
 
@@ -245,7 +245,7 @@ console.log(saveIcon,55555);
 
   const cover = (item) => {
     setCoverImg(item)
-    console.log(item, coverImg, "imgUrl");
+    // console.log(item, coverImg, "imgUrl");
 
   }
   const closeBuildCon = (index) => {
@@ -256,16 +256,16 @@ console.log(saveIcon,55555);
 
     // let newNumDel = subLength;
     // newNumDel - 1;
-    console.log(subArr, "dddddddddd", index, subLength);
+    // console.log(subArr, "dddddddddd", index, subLength);
     const delImgContent = delImgArr;
-    console.log(subArr[index], "index");
+    // console.log(subArr[index], "index");
     delImgContent.push(subArr[index])
     setDelImgArr(delImgContent)
-    console.log(delImgArr, "删除掉");
+    // console.log(delImgArr, "删除掉");
 
     subArr.splice(index, 1)
     // setSubLength(subArr.length)
-    console.log([...subArr], [...subArr].length,);
+    // console.log([...subArr], [...subArr].length,);
 
 
     setSubArr([...subArr])
@@ -275,9 +275,9 @@ console.log(saveIcon,55555);
   }
 
   const onClear = () => {
-    console.log(nickName);
+    // console.log(nickName);
     setNickName('');
-    console.log(nickName);
+    // console.log(nickName);
     setInfoMsg(true)
   }
   const onbuildAll = () => {
@@ -333,14 +333,14 @@ console.log(saveIcon,55555);
                   clear={onClear}
                   // onBlur={() => { myFunction }}
                   onBlur={(val) => {
-                    console.log(nickName.length);
+                    // console.log(nickName.length);
                     if (nickName === '') {
                       setInfoMsg(true)
                     } else {
                       setInfoMsg(false)
                     }
                     if (nickName.length > 200) {
-                      console.log(nickName.length, nickName.length > 200, toast);
+                      // console.log(nickName.length, nickName.length > 200, toast);
                       toast.error('Max text length 200');
                       return false;
                     }
@@ -364,7 +364,7 @@ console.log(saveIcon,55555);
                   platform={platform}
                   onClick={changeCountry}
                   onBlur={() => {
-                    console.log(platform, 5656565);
+                    // console.log(platform, 5656565);
                     if (platform === '') {
                       setInfoMsgPlatform(true)
                     } else {
@@ -450,7 +450,7 @@ console.log(saveIcon,55555);
                   platform={format}
                   onClick={changeFormat}
                   onBlur={() => {
-                    console.log(format, 5656565);
+                    // console.log(format, 5656565);
                     if (format === '') {
                       setInfoMsgFormat(true)
                     } else {

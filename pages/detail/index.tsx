@@ -38,6 +38,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   const [buildAll, setBuildAll] = React.useState(null);
   const [buildInc, setBuildInc] = React.useState('edit');
   const [buildPush, setBuildPush] = React.useState('');
+  const [saveIcon, setSaveIcon] = React.useState(false);
 
   const meta = {
     title: `BuildingDetail- ${SITE_NAME}`,
@@ -63,14 +64,14 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     const detailBuildInfo = res.data
 
     // setDetailBuildInfo(res.data)
-    console.log(detailBuildInfo);
+    // console.log(detailBuildInfo);
     setImgUrl(res.data.file_link_cover)
     setBuildName(res.data.building_name)
     setPlatformBuild(res.data.platform)
     setFormatBuild(res.data.building_format)
     setBuildStory(res.data.building_desc)
     setBuildFile(res.data.detail_files)
-    console.log(res.data.detail_files);
+    // console.log(res.data.detail_files);
 
     // console.log(res.data, 12, str, 3333, strs[1]);
   }
@@ -188,7 +189,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
   const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
     // setBuildInc(operationType)
-    console.log(buildInc, operationType, 21);
+    // console.log(buildInc, operationType, 21);
 
     if (nickName === '') {
       toast.error('Please fill in Building Name');
@@ -248,15 +249,19 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     // console.log(res, subArrData);
     // console.log(files_link_cover, "files_link_cover");
 
-    setAddbuild(false)
+  
 
     // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
 
 
-
+    setSaveIcon(true)
     res.then((resValue) => {
+      setSaveIcon(true)
       // toast(res.msg)
+      setAddbuild(true)
       if (resValue.code === 100000) {
+        setAddbuild(false)
+        
         toast(resValue.msg)
         setImgUrl(imgCont)
         setBuildName(nickName)
@@ -266,12 +271,13 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
         setBuildFile(subArrData)
         // console.log(res.data.detail_files);
       }
+     
     });
 
 
 
   },
-    [buildInc],
+    [buildInc,saveIcon],
   );
 
   React.useEffect(() => {
@@ -279,7 +285,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     fn()
     const t = getToken('atk');
     setTokenCon(t);
-
+    setSaveIcon(false)
   }, [getToken])
 
   return (
@@ -359,6 +365,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
             buildInc={buildInc}
             closeBuild={closeBuild}
             clickHeader={drag}
+            saveIcon={saveIcon}
           />
         </> : ''}
         </>
