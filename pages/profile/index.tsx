@@ -751,14 +751,25 @@ function ProfilePage(r) {
     buildData.map((item) => {
       // console.log(item);
 
-      const linkBuildIndex = item.indexOf('http://')
-      const linkBuildCom = item.indexOf('.com')
-      // console.log(linkBuildIndex, 5656, linkBuildCom);
-      if (linkBuildIndex === -1 || linkBuildCom === -1) {
-        showIndex = true
-        toast.error('Please fill in the correct link address');
+      // const linkBuildIndex = item.indexOf('http://')
+      // const linkBuildCom = item.indexOf('.com')
+      // // console.log(linkBuildIndex, 5656, linkBuildCom);
+      // if (linkBuildIndex === -1 || linkBuildCom === -1) {
+      //   showIndex = true
+      //   toast.error('Please fill in the correct link address');
+      //   return false;
+      // }
+      if (item !== '') {
+        let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+        if(!reg.test(item)){
+          toast.error("Not the correct URL, please pay attention to check");
         return false;
+        }
       }
+
+
+
+      
       // if(linkBuildIndex === -1 || linkBuildCom === -1){
       //   // setShowIndex(true)
 
@@ -909,12 +920,19 @@ function ProfilePage(r) {
       toast.error('Please fill in Link To Building');
       return false;
     }
-    const linkBuildIndex = linkBuild.indexOf('http://')
-    const linkBuildCom = linkBuild.indexOf('.com')
-    if (linkBuildIndex === -1 || linkBuildCom === -1) {
-      toast.error('Please fill in the correct address');
+    if (linkBuild !== '') {
+      let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+      if(!reg.test(linkBuild)){
+        toast.error("Not the correct URL, please pay attention to check");
       return false;
+      }
     }
+    // const linkBuildIndex = linkBuild.indexOf('http://')
+    // const linkBuildCom = linkBuild.indexOf('.com')
+    // if (linkBuildIndex === -1 || linkBuildCom === -1) {
+    //   toast.error('Please fill in the correct address');
+    //   return false;
+    // }
     if (format === '') {
       toast.error('Please choose Format of Building');
       return false;

@@ -33,7 +33,7 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
   //     document.addEventListener('scroll', listener);
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
-  const setEmailValue =(index, e, item) => {
+  const setEmailValue = (index, e, item) => {
 
     // const input = document.getElementById('input')
     // input.oninput = function () {
@@ -142,16 +142,29 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
                           setEmailClear(true);
                         }
                       }}
-                      onBlur={emailBlue}
+                      // onBlur={emailBlue}
+                      onBlur={() => {
+
+
+                        if (item !== '') {
+                          let reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+                          if (!reg.test(item)) {
+                            toast.error("Not the correct URL, please pay attention to check");
+                            return false;
+                          }
+                        }
+
+                      }}
+
                     />
                     <>
                       <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                     </>
                     <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
 
-                      {
+                      {/* {
                         (item.toString() && item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null
-                      }
+                      } */}
 
                     </div>
 

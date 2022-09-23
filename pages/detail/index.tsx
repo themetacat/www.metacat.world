@@ -207,12 +207,19 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       toast.error('Please fill in Link To Building');
       return false;
     }
-    const linkBuildIndex = linkBuild.indexOf('http://')
-    const linkBuildCom = linkBuild.indexOf('.com')
-    if (linkBuildIndex === -1 || linkBuildCom === -1) {
-      toast.error('Please fill in the correct address');
+    if (linkBuild !== '') {
+      let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+      if(!reg.test(linkBuild)){
+        toast.error("Not the correct URL, please pay attention to check");
       return false;
+      }
     }
+    // const linkBuildIndex = linkBuild.indexOf('http://')
+    // const linkBuildCom = linkBuild.indexOf('.com')
+    // if (linkBuildIndex === -1 || linkBuildCom === -1) {
+    //   toast.error('Please fill in the correct address');
+    //   return false;
+    // }
     if (format === '') {
       toast.error('Please choose Format of Building');
       return false;
@@ -346,7 +353,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
         </div>
         {/* <div className={style.imgBox}> */}
         <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5", style.imgBox)}>
-          {buildFile.map((e) => {
+          {buildFile?.map((e) => {
             return (
               <img src={e}></img>
             )

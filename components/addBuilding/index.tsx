@@ -156,8 +156,8 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
     } else {
       setSaveVal(true)
     }
-// console.log(saveIcon,55555);
-  }, [nickName, linkBuild, platform, format, subArr, saveVal,saveIcon]);
+    // console.log(saveIcon,55555);
+  }, [nickName, linkBuild, platform, format, subArr, saveVal, saveIcon]);
 
 
 
@@ -339,9 +339,9 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
                     } else {
                       setInfoMsg(false)
                     }
-                    if (nickName.length > 200) {
+                    if (nickName.length > 249) {
                       // console.log(nickName.length, nickName.length > 200, toast);
-                      toast.error('Max text length 200');
+                      toast.error('Max text length 249');
                       return false;
                     }
 
@@ -389,145 +389,156 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
                     }}
                     clear={onbuildAll}
                     onBlur={(val) => {
+                      console.log(linkBuild);
+                      
                       if (linkBuild === '') {
                         setInfoMsgLink(true)
                         setInfoMsgFiles(false)
                       } else if (linkBuild !== '') {
                         setInfoMsgLink(false)
-                        const linkBuildIndex = linkBuild.indexOf('http://')
-                        const linkBuildCom = linkBuild.indexOf('.com')
-                        if (linkBuildIndex === -1 || linkBuildCom === -1) {
+                        // const linkBuildIndex = linkBuild.indexOf('http://')
+                        // const linkBuildCom = linkBuild.indexOf('.com')
+                        // if (linkBuildIndex === -1 || linkBuildCom === -1) {
 
+                          // setInfoMsgFiles(true)
+                        // } else {
+                        //   setInfoMsgFiles(false)
+                        // }
+                        let reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+                        if (!reg.test(linkBuild)) {
                           setInfoMsgFiles(true)
-                        } else {
+                          // toast.error("Not the correct URL, please pay attention to check");
+                          return false;
+                        }else{
                           setInfoMsgFiles(false)
+                          
                         }
-                      } else {
+                    } else {
                         setInfoMsgLink(false)
                         setInfoMsgFiles(false)
                       }
 
                     }}
                   ></MeteInputBuildingLink>
-                  <div className={cn('flex items-center text-xs mt-1 mb-2', style.warnContent)}>
-                    {
-                      infoMsgLink === true ? <span className={style.warn}>Please input building link</span> : null
-                    }
-                    {
-                      infoMsgFiles === true ? <span className={style.warn}>Please fill in the correct address</span> : null
-                    }
+                <div className={cn('flex items-center text-xs mt-1 mb-2', style.warnContent)}>
+                  {
+                    infoMsgLink === true ? <span className={style.warn}>Please input building link</span> : null
+                  }
+                  {
+                    infoMsgFiles === true ? <span className={style.warn}>Please fill in the correct address</span> : null
+                  }
+                </div>
+              </div>
+              <div className={style.Introduction}>
+                <div className={style.title}>Building Story</div>
+              </div>
+              <div className={style.introductionField}>
+                <div className={style.right} style={{ marginLeft: "20px" }}>
+                  <textarea
+                    id='txt'
+                    placeholder="Please Input"
+                    value={introduction}
+                    maxLength={500}
+                    // onChange={setIntroduction}
+                    onInput={changeIntroductionValue}
+                    onKeyDown={(e) => { down(e) }}
+                  />
+                  <div className={style.text}>
+                    <span id='countNum'>{countNum}</span> <span>/500</span>
                   </div>
-                </div>
-                <div className={style.Introduction}>
-                  <div className={style.title}>Building Story</div>
-                </div>
-                <div className={style.introductionField}>
-                  <div className={style.right} style={{ marginLeft: "20px" }}>
-                    <textarea
-                      id='txt'
-                      placeholder="Please Input"
-                      value={introduction}
-                      maxLength={500}
-                      // onChange={setIntroduction}
-                      onInput={changeIntroductionValue}
-                      onKeyDown={(e) => { down(e) }}
-                    />
-                    <div className={style.text}>
-                      <span id='countNum'>{countNum}</span> <span>/500</span>
-                    </div>
 
-                  </div>
                 </div>
-                {/* <div className={style.country}>
+              </div>
+              {/* <div className={style.country}>
                     <div className={style.title}>Format of Building </div>
                   </div> */}
-                <MeteSelectFormat
-                  classname="mt-3"
-                  label="Format of Building"
-                  require={true}
-                  requirePrefix={false}
-                  data={allFormat}
-                  platform={format}
-                  onClick={changeFormat}
-                  onBlur={() => {
-                    // console.log(format, 5656565);
-                    if (format === '') {
-                      setInfoMsgFormat(true)
-                    } else {
-                      setInfoMsgFormat(false)
-                    }
-                  }}
-                ></MeteSelectFormat>
-                <div className={cn('flex items-center text-xs mt-1 mb-2', style.warnContent)}>
-                  {infoMsgFormat === true ? <span className={style.warn}>please choose platform</span> : null}
-                </div>
-                <div className={cn('self-start', style.avatar)}>
-                  <div className={cn(' items-center ', style.avaterText)}>
-                    <span className=" mr-2">Add Files</span>
-                    <span className={cn('mr-1', style.require)}>*</span>
-                    <p className={style.suport}>Supported formats:.jpeg,.png,.gif,≤10MB each,≤8 files</p>
-                    <ReactTooltip
-                      id="info"
-                      effect="solid"
-                      textColor="#AAAAAA"
-                      // className={style.pop}
-                      backgroundColor="#0F191B"
-                      border={false}
-                    >
-                      <div className={style.info}>
-                        Recommended 350px x 350px
-                        <br />
-                        Max Size: 1MB
-                      </div>
-                    </ReactTooltip>
-                  </div>
-                  <div className={cn("grid grid-cols-1 gap-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center")}
-                    style={{
-                      width: "500px",
-                    }}>
-                    {
-                      subArr?.map((item, index) =>
-                      (
-                        <>
-                          <UploadBuilding
-                            // imgUrl={avatarUrl || '/images/icon.png'}
-                            imgUrl={item}
-                            closeBuild={() => { closeBuildCon(index) }}
-                            cover={() => { cover(item) }}
-                            coverImg={coverImg}
-                            // afterUpload={uploadImage}
-                            afterUpload={(e) => { uploadImage(index, e, item) }}
-                            beginUpload={beginUpload}
-                            showClear={showClear}
-                          ></UploadBuilding>
-                        </>
-                      )
-                      )
-                    }
-                    <div className={style.addPush} onClick={addBuildOther}>
-                    </div>
-                  </div>
-                </div>
-
-                <button disabled={!saveVal} onClick={() => { Save(token, operationType, nickName, platform, linkBuild, introduction, format, subArr, coverImg, delImgArr) }} className={cn(
-                  'flex justify-center items-center text-base font-semibold',
-                  saveVal ? true : style.saveBtn,
-                  style.saveBtn2,
-                )}>
-                  {
-                    saveIcon === true ? <><img src='/images/saveIcon.gif'></img>
-                    </>:<>Save</>
+              <MeteSelectFormat
+                classname="mt-3"
+                label="Format of Building"
+                require={true}
+                requirePrefix={false}
+                data={allFormat}
+                platform={format}
+                onClick={changeFormat}
+                onBlur={() => {
+                  // console.log(format, 5656565);
+                  if (format === '') {
+                    setInfoMsgFormat(true)
+                  } else {
+                    setInfoMsgFormat(false)
                   }
-                  
-                </button>
-
-                {/* </form> */}
+                }}
+              ></MeteSelectFormat>
+              <div className={cn('flex items-center text-xs mt-1 mb-2', style.warnContent)}>
+                {infoMsgFormat === true ? <span className={style.warn}>please choose platform</span> : null}
               </div>
+              <div className={cn('self-start', style.avatar)}>
+                <div className={cn(' items-center ', style.avaterText)}>
+                  <span className=" mr-2">Add Files</span>
+                  <span className={cn('mr-1', style.require)}>*</span>
+                  <p className={style.suport}>Supported formats:.jpeg,.png,.gif,≤10MB each,≤8 files</p>
+                  <ReactTooltip
+                    id="info"
+                    effect="solid"
+                    textColor="#AAAAAA"
+                    // className={style.pop}
+                    backgroundColor="#0F191B"
+                    border={false}
+                  >
+                    <div className={style.info}>
+                      Recommended 350px x 350px
+                      <br />
+                      Max Size: 10MB
+                    </div>
+                  </ReactTooltip>
+                </div>
+                <div className={cn("grid grid-cols-1 gap-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center")}
+                  style={{
+                    width: "500px",
+                  }}>
+                  {
+                    subArr?.map((item, index) =>
+                    (
+                      <>
+                        <UploadBuilding
+                          // imgUrl={avatarUrl || '/images/icon.png'}
+                          imgUrl={item}
+                          closeBuild={() => { closeBuildCon(index) }}
+                          cover={() => { cover(item) }}
+                          coverImg={coverImg}
+                          // afterUpload={uploadImage}
+                          afterUpload={(e) => { uploadImage(index, e, item) }}
+                          beginUpload={beginUpload}
+                          showClear={showClear}
+                        ></UploadBuilding>
+                      </>
+                    )
+                    )
+                  }
+                  <div className={style.addPush} onClick={addBuildOther}>
+                  </div>
+                </div>
+              </div>
+
+              <button disabled={!saveVal} onClick={() => { Save(token, operationType, nickName, platform, linkBuild, introduction, format, subArr, coverImg, delImgArr) }} className={cn(
+                'flex justify-center items-center text-base font-semibold',
+                saveVal ? true : style.saveBtn,
+                style.saveBtn2,
+              )}>
+                {
+                  saveIcon === true ? <><img src='/images/saveIcon.gif'></img>
+                  </> : <>Save</>
+                }
+
+              </button>
+
+              {/* </form> */}
             </div>
           </div>
         </div>
-        {/* <Footer /> */}
-      </Page>
+        </div>
+      {/* <Footer /> */}
+    </Page>
     </>
   );
 }

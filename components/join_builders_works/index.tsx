@@ -40,7 +40,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   const [token, setToken] = React.useState('');
   const [infoMsgPlatform, setInfoMsgPlatform] = React.useState(false);
   // const [buildData, setBuildState] = React.useState([]);
-  const [subLength, setSubLength] = React.useState(0);
+  const [subLength, setSubLength] = React.useState(1);
   const [infoMsgFiles, setInfoMsgFiles] = React.useState(false);
   const [subArr, setSubArr] = React.useState([]);
   const time = React.useRef(60);
@@ -54,31 +54,21 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
 
-  const setCodeValue =(index, e, item) => {
+  const setCodeValue = React.useCallback((index, e, item) => {
     // setCode(e.target.value);
     // if (e.target.value) {
     //   setCodeClear(true);
     // } else {
     //   setCodeClear(false);
     // }
-    
-      subArr[index] = e.target.value
+
+    subArr[index] = e.target.value
     // let buildData = null;
     // buildData = subArr;
     // const buildData=this.status'
-    // console.log(newArr);
+
     setSubArr([...subArr])
-    // setSubArr((subArr)=>{
-    //   console.log('123');
-      
-    //   // const newArr = subArr
-    //   subArr[index] = e.target.value
-    //   console.log(subArr);
-      
-    //   return subArr
-    // })
-    //   console.log(subArr);
-    };
+  }, []);
 
   const setEmailValue = React.useCallback((e) => {
     setEmail(e.target.value);
@@ -101,7 +91,6 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
       return false;
     }
 
-
     // let newNum = subLength;
     // newNum+=1;
     // const newArr =[]
@@ -115,7 +104,6 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
 
     // setSubArr(newArr)
     subArr.push([])
-     
     // this.props.subArr
     // buildData([...subArr])
     setSubArr([...subArr])
@@ -123,20 +111,19 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   }
 
   const delBuild = (index) => {
-    if (subArr.length < 2) {
-      toast.error('不得小于一条数据');
-      return false;
-    }
+    // if (subLength < 1) {
+    //   toast.error('不得小于一条数据');
+    //   return false;
+    // }
+    // console.log(555555555, subLength);
 
     // let newNumDel = subLength;
     // newNumDel - 1;
+    // console.log(subArr, "dddddddddd", index);
 
     subArr.splice(index, 1)
- 
+
     setSubLength(subArr.length)
-    setSubArr([...subArr])
-
-
 
 
   }
@@ -213,7 +200,14 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
 
                         onBlur={() => {
 
-
+                          if (item !== '') {
+                            let reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+                            if (!reg.test(item)) {
+                              setInfoMsgFiles(true)
+                              toast.error("Not the correct URL, please pay attention to check");
+                              return false;
+                            }
+                          }
 
                           //   const linkBuildIndex = item.indexOf('http://')
                           //   const linkBuildCom = item.indexOf('.com')
@@ -233,10 +227,10 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                         <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                       </>
                       <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
-
-                        {
-                          (item.toString() && item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null
-                        }
+                        {/* 
+                      {
+                        item.toString()? <span className={styles.warn}>Please fill in the correct link address</span> : null 
+                      } */}
 
                       </div>
 
@@ -246,7 +240,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                 }
 
 
-                <button  onClick={addBuildOther} className={styles.add}><img src="/images/tianjia.png" alt="" /></button>
+                <span onClick={addBuildOther} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
               </div>
               <p className={styles.send}>You can also send your works to our：
                 <a
