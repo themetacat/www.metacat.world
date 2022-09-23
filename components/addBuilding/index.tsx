@@ -434,7 +434,7 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
                         if (!re.test(linkBuild)) {
                           setInfoMsgFiles(true)
                           // toast.error("Not the correct URL, please pay attention to check");
-                          return false;
+                          // return false;
                         } else {
                           setInfoMsgFiles(false)
 
