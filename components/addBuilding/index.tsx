@@ -30,12 +30,14 @@ import style from './index.module.css';
 import { convert, getToken } from '../../common/utils';
 import UploadBuilding from '../uploadBuilding';
 import MeteInputLimit from '../meta-input-limit';
+import { Button } from '@mui/material';
 
 
 
 interface Props {
 
   Save?;
+  saveIcon?;
   subArrData?;
   file_link_cover?;
   closeBuild?: () => void;
@@ -46,11 +48,12 @@ interface Props {
 }
 
 
-export default function AddBuildings({ Save, id,clickHeader,subArrData, file_link_cover, closeBuild, buildAll, buildInc }: Props) {
+export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrData, file_link_cover, closeBuild, buildAll, buildInc }: Props) {
   const meta = {
     title: `ProfileSetting - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
+
 
   const [infoMsg, setInfoMsg] = React.useState(false);
   const [infoMsgPlatform, setInfoMsgPlatform] = React.useState(false);
@@ -86,6 +89,7 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
   const [delImgArr, setDelImgArr] = React.useState([]);
   const [coverImg, setCoverImg] = React.useState('');
   const [showClear, setShowClear] = React.useState('');
+  const [saveVal, setSaveVal] = React.useState(false);
 
   const web3 = useWalletProvider();
 
@@ -144,26 +148,17 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
 
 
   }, [getToken]);
-  // React.useEffect(() => {
-  //   if (nickName === '') {
-  //     setInfoMsg(true)
-  //   } else {
-  //     setInfoMsg(false)
-  //   }
-  //   if (linkBuild === '') {
-  //     setInfoMsgLink(true)
-  //   } else {
-  //     setInfoMsgLink(false)
-  //   }
-  // }, [nickName,linkBuild]);
+  React.useEffect(() => {
+    if (nickName === '' || linkBuild === '' || platform === '' || format === '' || subArr.length === 0) {
+      setSaveVal(false)
+    } else {
+      setSaveVal(true)
+    }
+console.log(saveIcon,55555);
+  }, [nickName, linkBuild, platform, format, subArr, saveVal,saveIcon]);
 
 
-  // const submit = React.useCallback(
-  //   async (event) => {
 
-  //   },
-  //   [],
-  // );
 
 
   const uploadImage = React.useCallback((index, res, item) => {
@@ -219,7 +214,7 @@ export default function AddBuildings({ Save, id,clickHeader,subArrData, file_lin
     }
   }, [countNum]);
   const down = (e) => {
-console.log(e);
+    console.log(e);
 
   }
 
@@ -300,7 +295,7 @@ console.log(e);
   return (
     <>
       <Page className={cn('flex flex-col', style.anPage)} meta={meta}>
-      {/* <div className="bg-black relative">
+        {/* <div className="bg-black relative">
         <PageHeader className="relative z-10" active={'profile'} />
       </div> */}
         <div className={cn('main-content flex flex-col justify-center items-center', style.content)}>
@@ -311,7 +306,7 @@ console.log(e);
                 style.bottomBorder,
               )}
               onMouseDown={clickHeader}
-              // onmousedown={clickHeader}
+            // onmousedown={clickHeader}
             >
               <span>Upload the building</span>
               <span style={{ display: "inline-block", position: "absolute", right: "15px" }} onClick={closeBuild}><img src='/images/guanbi.png'></img></span>
@@ -400,9 +395,7 @@ console.log(e);
                         const linkBuildIndex = linkBuild.indexOf('http://')
                         const linkBuildCom = linkBuild.indexOf('.com')
                         if (linkBuildIndex === -1 || linkBuildCom === -1) {
-                          console.log(
-                            linkBuildIndex, 1, linkBuildCom
-                          );
+
                           setInfoMsgFiles(true)
                         } else {
                           setInfoMsgFiles(false)
@@ -419,7 +412,7 @@ console.log(e);
                       infoMsgLink === true ? <span className={style.warn}>Please input building link</span> : null
                     }
                     {
-                      infoMsgFiles === true ? <span className={style.warn}>Please fill in the link address</span> : null
+                      infoMsgFiles === true ? <span className={style.warn}>Please fill in the correct address</span> : null
                     }
                   </div>
                 </div>
@@ -513,10 +506,18 @@ console.log(e);
                     </div>
                   </div>
                 </div>
-                <div onClick={() => { Save(token, operationType, nickName, platform, linkBuild, introduction, format, subArr, coverImg, delImgArr) }} className={cn(
+
+                <button disabled={!saveVal} onClick={() => { Save(token, operationType, nickName, platform, linkBuild, introduction, format, subArr, coverImg, delImgArr) }} className={cn(
                   'flex justify-center items-center text-base font-semibold',
-                  style.saveBtn,
-                )}>save</div>
+                  saveVal ? true : style.saveBtn,
+                  style.saveBtn2,
+                )}>
+                  {
+                    saveIcon === true ? <><img src='/images/saveIcon.gif'></img>
+                    </>:<>Save</>
+                  }
+                  
+                </button>
 
                 {/* </form> */}
               </div>

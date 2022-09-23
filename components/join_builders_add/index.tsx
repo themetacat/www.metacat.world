@@ -33,7 +33,7 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
   //     document.addEventListener('scroll', listener);
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
-  const setEmailValue = React.useCallback((index, e, item) => {
+  const setEmailValue =(index, e, item) => {
 
     // const input = document.getElementById('input')
     // input.oninput = function () {
@@ -54,7 +54,7 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
     //   setEmailClear(false);
     // }
 
-  }, []);
+  }
 
   const setCodeValue = React.useCallback((e) => {
     setCode(e.target.value);
@@ -86,7 +86,7 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
   }
 
   const delBuild = (index) => {
-    if (subLength < 1) {
+    if (subArr.length < 2) {
       toast.error('不得小于一条数据');
       return false;
     }
@@ -148,9 +148,9 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
                       <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
                     </>
                     <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
-                 
+
                       {
-                        (item.toString()&&item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null 
+                        (item.toString() && item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null
                       }
 
                     </div>

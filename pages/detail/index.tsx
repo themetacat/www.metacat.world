@@ -75,6 +75,64 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     // console.log(res.data, 12, str, 3333, strs[1]);
   }
 
+  const drag = function (evt, dbele?) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.addBuilding_content__GcPPZ')
+    }
+
+    // ele.onmousedown = function (evt) {
+
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
+
   const deleteBuild = (token, buildingLinkConVal) => {
     const url = window.location.search;
     const str = url.substr(1);
@@ -133,57 +191,60 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     console.log(buildInc, operationType, 21);
 
     if (nickName === '') {
-      toast.error('请填写Building Name');
+      toast.error('Please fill in Building Name');
+      return false;
+    }
+    if (nickName.length > 200) {
+      toast.error('Max text length 200');
       return false;
     }
     if (platform === '') {
-      toast.error('请选择Platform');
+      toast.error('Please choose Platform');
       return false;
     }
     if (linkBuild === '') {
-      toast.error('请填写Link To Building');
+      toast.error('Please fill in Link To Building');
       return false;
     }
-    const linkBuildIndex = linkBuild.indexOf('http')
-    if (linkBuildIndex === -1) {
-      toast.error('请填写正确的link地址');
+    const linkBuildIndex = linkBuild.indexOf('http://')
+    const linkBuildCom = linkBuild.indexOf('.com')
+    if (linkBuildIndex === -1 || linkBuildCom === -1) {
+      toast.error('Please fill in the correct address');
       return false;
     }
     if (format === '') {
-      toast.error('请选择Format of Building');
+      toast.error('Please choose Format of Building');
       return false;
     }
     if (subArrData.length === 0) {
-      toast.error('请上传building文件');
+      toast.error(' Please upload the building file');
       return false;
     }
     if (subArrData.length === 0) {
-      toast.error('请上传building文件');
+      toast.error('Please upload the building file');
       return false;
     }
-    if (files_link_cover === '') {
+    let imgCont = files_link_cover
+    if (imgCont === '') {
+      [imgCont] = subArrData
       // files_link_cover = subArrData[0]
 
-      // let arrV = ''
-      // arrV = subArrData[0]
-      // files_link_cover = arrV
 
-      toast.error('请设置封面图');
-      return false;
+
+      // toast.error('请设置封面图');
+      // return false;
     }
-    const indexBuild = subArrData.indexOf(files_link_cover)
+    const indexBuild = subArrData.indexOf(imgCont)
     if (indexBuild === -1) {
       // files_link_cover = subArrData[0]
+      [imgCont] = subArrData
 
-      //  let arrV = ''
-      //  arrV = subArrData[0]
-      //  files_link_cover = arrV
-      toast.error('请设置封面图');
-      return false;
+      // toast.error('请设置封面图');
+      // return false;
     }
     // console.log(indexBuild);
 
-    const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), files_link_cover.toString(), files_link_del.join(','));
+    const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), imgCont.toString(), files_link_del.join(','));
     // console.log(res, subArrData);
     // console.log(files_link_cover, "files_link_cover");
 
@@ -197,7 +258,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
       // toast(res.msg)
       if (resValue.code === 100000) {
         toast(resValue.msg)
-        setImgUrl(files_link_cover)
+        setImgUrl(imgCont)
         setBuildName(nickName)
         setPlatformBuild(platform)
         setFormatBuild(format)
@@ -222,10 +283,19 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
   }, [getToken])
 
   return (
+    <>
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-      <div className={cn("bg-black relative", style.backImg)}>
+    <div
+          // onClick={() => {
+          //   setManySetState(false);
+          // }}
+          id='container'
+          className={cn('', style.bigPic, addbuild === true ? style.join : '',)}
+        >
+      <div className={cn("bg-black relative", style.backImg)} >
         <PageHeader className={cn('relative z-20')} />
       </div>
+    
       <div className={style.content}>
         <div className={style.boxCon}>
           <span className={style.mybuilding}>My Building</span>
@@ -276,19 +346,22 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
             )
           })}
         </div>
-        {addbuild === true ?
-          <>
-            <AddBuildings
-              Save={Save}
-              buildAll={buildAll}
-              buildInc={buildInc}
-              closeBuild={closeBuild}
-            />
-          </> : ''}
+        </div>
       </div>
 
       <Footer />
     </Page>
+      {addbuild === true ?
+        <>
+          <AddBuildings
+            Save={Save}
+            buildAll={buildAll}
+            buildInc={buildInc}
+            closeBuild={closeBuild}
+            clickHeader={drag}
+          />
+        </> : ''}
+        </>
   );
 }
 

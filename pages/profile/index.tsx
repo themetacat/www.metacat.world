@@ -241,7 +241,7 @@ function ProfilePage(r) {
   const [buildAll, setBuildAll] = React.useState(null);
   const [buildInc, setBuildInc] = React.useState('add');
   const [walletAddress, setWalletAddress] = React.useState('');
-  // const [buildFormat, setBuildFormat] = React.useState('');
+  const [saveIcon, setSaveIcon] = React.useState(false);
   // const [buildFiles, setBuildFiles] = React.useState([]);
 
   const Nav = [
@@ -750,7 +750,7 @@ function ProfilePage(r) {
     // if (buildData) {
     buildData.map((item) => {
       // console.log(item);
-    
+
       const linkBuildIndex = item.indexOf('http://')
       const linkBuildCom = item.indexOf('.com')
       // console.log(linkBuildIndex, 5656, linkBuildCom);
@@ -884,9 +884,17 @@ function ProfilePage(r) {
   const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
     // setBuildInc(operationType)
     // console.log(buildInc, operationType, 54, nickName, 565656);
+    // if (nickName === '' || platform === '' || linkBuild === '' || format === '' || subArrData.length === 0) {
+    //   setSaveVal(false)
+    // }else{
+    //   console.log(saveVal,11111);
+      
+    //   setSaveVal(true)
+    // }
 
+    
     if (nickName === '') {
-      toast.error('请填写Building Name');
+      toast.error('Please fill in Building Name');
       return false;
     }
     if (nickName.length > 200) {
@@ -894,32 +902,32 @@ function ProfilePage(r) {
       return false;
     }
     if (platform === '') {
-      toast.error('请选择Platform');
+      toast.error('Please choose Platform');
       return false;
     }
     if (linkBuild === '') {
-      toast.error('请填写Link To Building');
+      toast.error('Please fill in Link To Building');
       return false;
     }
     const linkBuildIndex = linkBuild.indexOf('http://')
     const linkBuildCom = linkBuild.indexOf('.com')
     if (linkBuildIndex === -1 || linkBuildCom === -1) {
-      toast.error('请填写正确的link地址');
+      toast.error('Please fill in the correct address');
       return false;
     }
     if (format === '') {
-      toast.error('请选择Format of Building');
+      toast.error('Please choose Format of Building');
       return false;
     }
     if (subArrData.length === 0) {
-      toast.error('请上传building文件');
+      toast.error(' Please upload the building file');
       return false;
     }
     if (subArrData.length === 0) {
-      toast.error('请上传building文件');
+      toast.error('Please upload the building file');
       return false;
     }
-    let imgCont = files_link_cover 
+    let imgCont = files_link_cover
     if (imgCont === '') {
       [imgCont] = subArrData
 
@@ -940,16 +948,19 @@ function ProfilePage(r) {
     // console.log(res, subArrData);
     // console.log(files_link_cover, "files_link_cover");
 
-    setAddbuild(false)
+
 
     // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
-
+   
 
 
     res.then((resCON) => {
       // toast(res.msg)
+      setSaveIcon(true)
       if (resCON.code === 100000) {
+      
         toast(resCON.msg)
+       setAddbuild(false)
         const resBuil = req_building_list(walletAddress);
 
         resBuil.then((resBuilCon) => {
@@ -964,10 +975,10 @@ function ProfilePage(r) {
       }
     });
 
-
+   
 
   },
-    [resultHandlerBu, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
+    [resultHandlerBu, saveIcon,routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
   );
 
   // const addWork = React.useCallback(async () => {
@@ -1343,15 +1354,20 @@ function ProfilePage(r) {
   const watcher_cardState = React.useCallback(() => {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
+//   useEffect(()=>{
+// console.log(saveVal,999999);
+//   },[saveVal])
   useEffect(() => {
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
     reqBuilderData(walletAddress)
 
-  }, [addbuild, walletAddress])
+
+  }, [addbuild, walletAddress,])
 
   React.useEffect(() => {
+    setSaveIcon(false)
     const a = getToken('address');
     if (a) {
       setWalletAddress(a);
@@ -1597,7 +1613,7 @@ function ProfilePage(r) {
   const dragJoin = function (evt, dbele) {
     let containerVal = dbele
     if (!dbele) {
-      containerVal = document.querySelector('.join_builders_add_container__JytZM')
+      containerVal = document.querySelector('.join_builders_works_container2__VidgJ')
     }
     // ele.onmousedown = function (evt) {
     const oEvent = evt;
@@ -2047,18 +2063,18 @@ function ProfilePage(r) {
                 >
                   {showOrHideState
                     ? showOrHide[wearablesNavState].map((item, index) => {
-                        return (
-                          <li
-                            className={style.showOrHideItem}
-                            key={index}
-                            onClick={() => {
-                              settingShowOrHide(item.type);
-                            }}
-                          >
-                            {item.label}
-                          </li>
-                        );
-                      })
+                      return (
+                        <li
+                          className={style.showOrHideItem}
+                          key={index}
+                          onClick={() => {
+                            settingShowOrHide(item.type);
+                          }}
+                        >
+                          {item.label}
+                        </li>
+                      );
+                    })
                     : null}
                 </ul>
               </div>
@@ -2237,6 +2253,7 @@ function ProfilePage(r) {
           <AddBuildings
             id='addBuilding'
             Save={Save}
+            saveIcon={saveIcon}
             buildAll={buildAll}
             buildInc={buildInc}
             closeBuild={closeBuild}
