@@ -215,7 +215,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                               + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
                             const re = new RegExp(reg)
                             if (!re.test(item)) {
-                              setInfoMsgFiles(true)
+                              // setInfoMsgFiles(true)
                               toast.error("Not the correct URL, please pay attention to check");
                               return false;
                             }
@@ -229,10 +229,6 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                           //     return false;
                           //   }
                           // }}
-
-
-
-
                         }}
                       />
                       <>

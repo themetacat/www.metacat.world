@@ -748,7 +748,7 @@ function ProfilePage(r) {
     }
     const showIndex = false
     // if (buildData) {
-    buildData.map((item) => {
+    buildData?.map((item) => {
       // console.log(item);
 
       // const linkBuildIndex = item.indexOf('http://')
