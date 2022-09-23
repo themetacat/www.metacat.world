@@ -18,7 +18,7 @@ interface Props {
   afterUpload?: (event) => void;
 }
 
-export default function UploadImg({ imgUrl, cover,coverImg, closeBuild, showClear, afterUpload, beginUpload }: Props) {
+export default function uploadBuilding({ imgUrl, cover,coverImg, closeBuild, showClear, afterUpload, beginUpload }: Props) {
   const multipartUpload = React.useCallback(
     async (file) => {
       const names = file.name.split('.');
@@ -68,8 +68,8 @@ export default function UploadImg({ imgUrl, cover,coverImg, closeBuild, showClea
         return;
       }
       const size = file.size / 1024 / 1024;
-      if (size >= 1) {
-        toast.error('Max size: 1M');
+      if (size >= 10) {
+        toast.error('Max size: 10M');
         return;
       }
       if (beginUpload) {

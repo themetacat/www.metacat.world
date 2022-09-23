@@ -432,11 +432,11 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
                           + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
                         const re = new RegExp(reg)
                         if (!re.test(linkBuild)) {
-                          setInfoMsgFiles(true)
-                          // toast.error("Not the correct URL, please pay attention to check");
-                          // return false;
-                        } else {
-                          setInfoMsgFiles(false)
+                          // setInfoMsgFiles(true)
+                          toast.error("Not the correct URL, please pay attention to check");
+                          return false;
+                        // } else {
+                        //   setInfoMsgFiles(false)
 
                         }
                       } else {
