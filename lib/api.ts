@@ -80,11 +80,13 @@ class API {
   }
 
   public async getTopicDetail(id: number): Promise<any> {
+   
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/get_topic_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
-
+    // console.log(url,55555);
+   
     return json;
   }
 

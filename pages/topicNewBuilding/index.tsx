@@ -67,7 +67,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   const [parcelList, setParcelList] = React.useState(convert(parcel_list));
   const [wearableList, setWearableList] = React.useState(convert(wearable_list));
   const [originParcelList, setOriginParcelList] = React.useState(convert(parcel_list));
-  const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
+  // const [trafficList, setTrafficList] = React.useState(convert(traffic_list));
   const [wearables, setWearables] = React.useState(wearable);
   const [originWearables, setOriginWearables] = React.useState(wearable);
   const [fixedState, setFixedState] = React.useState(false);
@@ -84,6 +84,8 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
 
   const requestData = React.useCallback(
     async (topicId: string | string[]) => {
+      // console.log(topicId,2);
+      
       setLoading(true);
       setError(false);
       try {
@@ -96,11 +98,11 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
         const {
           base_info: baseInfoRes,
           parcel_list: parcelListRes,
-          traffic_list: trafficLists,
+          // traffic_list: trafficLists,
         } = res.data;
         setBaseInfo(convert(baseInfoRes));
-        // setParcelList(convert(parcelListRes));
-        setTrafficList(convert(trafficLists));
+        setParcelList(convert(parcelListRes));
+        // setTrafficList(convert(trafficLists));
         setLoading(false);
       } catch (err) {
         setError(true);
@@ -289,12 +291,12 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
           <div className={style.parcel}>
             {parcelList?.length > 0 ? (
               <div>
-                {trafficList?.length !== 0 ? (
+                {/* {trafficList?.length !== 0 ? (
                   <div className={style.title}>
                     <div></div>
                     <p>Buildings</p>
                   </div>
-                ) : null}
+                ) : null} */}
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-7 gap-8 pb-7 justify-center">
                   {parcelList.map((card, idx) => {
                     return <Card {...card} key={idx} hasTypeTag={false} ></Card>;
@@ -322,7 +324,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
 
 
    
-  }, [navState, wearables, parcelList, trafficList, search, wearableList, router.query.address]);
+  }, [navState, wearables, parcelList, search, wearableList, router.query.address]);
 
   React.useEffect(() => {
     const listener = () => {

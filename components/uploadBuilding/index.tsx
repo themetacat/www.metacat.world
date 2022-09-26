@@ -39,14 +39,14 @@ export default function uploadBuilding({ imgUrl, cover,coverImg, closeBuild, sho
             afterUpload({ success: false });
           }
         });
-      console.log(fileName, file, 558);
+      // console.log(fileName, file, 558);
 
     },
     [afterUpload],
   );
 
   const imgClick = () => {
-    console.log(imgUrl);
+    // console.log(imgUrl);
     cover(imgUrl)
   }
 

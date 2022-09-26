@@ -59,6 +59,8 @@ export default function Index(props) {
   const [buildingData, setBuildingData] = React.useState([]);
   const [creatorData, setCreatorData] = React.useState([]);
   const [learnData, setLearnData] = React.useState([]);
+  const [addState, setAddState] = React.useState('');
+  const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [showModalBuilder, setShowModalBuilder] = React.useState(false);
   const [barColor, setBarColor] = React.useState([194, 157, 135]);
@@ -131,6 +133,10 @@ export default function Index(props) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
+      // console.log(res.data.profile.address, 2);
+      setAddState(res.data.profile.address)
+      // console.log(addState);
+
       const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
@@ -139,7 +145,7 @@ export default function Index(props) {
       state.setState({ profile: pro });
       setProfile(profile);
     },
-    [resultHandler],
+    [resultHandler, addState],
   );
 
   const requestLearnData = React.useCallback(async () => {
@@ -158,8 +164,14 @@ export default function Index(props) {
     window.open(url);
   }, []);
 
-  const jumpToUrlEnt = ()=>{
+  const jumpToUrlEnt = () => {
     router.replace(`/profile?type=building`)
+    // console.log(addState);
+    // if(addState === '' || addState === null){
+    //   setJoinBuilders(true)
+    // }else{
+    //   setJoinBuilders(true)
+    // }
   }
 
   React.useEffect(() => {
@@ -167,7 +179,19 @@ export default function Index(props) {
     if (accessToken) {
       requestPersonal(accessToken);
     }
-  }, [requestPersonal]);
+
+  }, [requestPersonal, addState]);
+
+  // React.useEffect(() => {
+  //   const a = getToken('address');
+  //   if (a) {
+  //     setAddState(a);
+  //   }
+  //   console.log(a);
+
+  //   // const c = contact.filter((i) => i.address);
+  //   // setC(c);
+  // }, []);
 
   React.useEffect(() => {
     if (
@@ -178,7 +202,6 @@ export default function Index(props) {
       // window.location.href="移动端url";
     } else {
       // window.location.href="pc端url";
-      // console.log('pc');
       // window.location.href = "http://www.taobao.com";
     }
     requestFloorData();
@@ -186,6 +209,13 @@ export default function Index(props) {
     requestBuildingData();
     requestWearableData();
   }, [null]);
+
+  const turnOff = () => {
+    setJoinBuilders(false)
+
+  }
+
+
 
   return (
     <Page meta={meta}>
@@ -321,10 +351,10 @@ export default function Index(props) {
                       // onClick={() => {
                       //   jumpToUrl('/profile?type=parcellist');
                       // }}
-                      // onClick={jumpToUrlEnt}
-                      onClick={() => {
-                        setShowModalBuilder(true);
-                      }}
+                      onClick={jumpToUrlEnt}
+                      // onClick={() => {
+                      //   setShowModalBuilder(true);
+                      // }}
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                     >
                       JOIN BUILDERS
@@ -391,13 +421,22 @@ export default function Index(props) {
           }}
           type={'Creators'}
         ></JoinModal>
-        <JoinModal
-          show={showModalBuilder}
-          setClose={(x) => {
-            setShowModalBuilder(x);
-          }}
-          type={'Builders'}
-        ></JoinModal>
+        {
+          joinBuilders === true ?
+            <>
+              <JoinModalBuild
+                turnOff={turnOff}
+              // retProps={retProps}
+              // clickHeader={dragJoin}
+              // show={showModalBuilder}
+              // setClose={(x) => {
+              //   setShowModalBuilder(x);
+              // }}
+              // type={'Builders'}
+              ></JoinModalBuild>
+            </>
+            : null
+        }
 
         <Toaster
           toastOptions={{

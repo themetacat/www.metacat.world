@@ -84,12 +84,12 @@ export default function Builders() {
     getTop();
     requestData();
     const a = getToken('address');
-    console.log(a,656);
+    // console.log(a,656);
     
     if (a) {
       setWalletAddress(a);
     }
-    console.log(walletAddress,66666666);
+    // console.log(walletAddress,66666666);
   }, [requestData, getTop,walletAddress]);
 
   const onTabChange = React.useCallback((t) => {
@@ -98,6 +98,7 @@ export default function Builders() {
   }, []);
 
   const toTopic = React.useCallback((id, c) => {
+    
     window.open(`/topic/${id}?type=buildings`);
   }, []);
   const toTopicNewBuilding = () => {
