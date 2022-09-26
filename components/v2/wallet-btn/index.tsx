@@ -37,6 +37,7 @@ interface IProfileData {
     avatar: string;
     email: string;
     creatorStatus: number;
+    builderStatus: number;
   };
 }
 
@@ -49,6 +50,7 @@ const INITIAL_STATE: IProfileData = {
     avatar: null,
     email: null,
     creatorStatus: 0,
+    builderStatus: 0,
   },
 };
 
@@ -385,7 +387,7 @@ export default function WalletBtn({
         state.setState({
           accessToken: '',
           refreshToken: '',
-          profile: { address: null, nickName: null, avatar: null, email: '', creatorStatus: 1 },
+          profile: { address: null, nickName: null, avatar: null, email: '', creatorStatus: 1 ,builderStatus:1},
         });
         // const res = await req_user_logout(accessToken);
         // console.log(res)

@@ -89,6 +89,13 @@ border-radius: 4px;
   margin: 0 auto;
   margin-bottom: 30px;
 }
+.cardList3 {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 1200px; */
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
 .cls {
   margin-right: 15px;
   margin-bottom: 15px;

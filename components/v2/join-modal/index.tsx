@@ -13,6 +13,7 @@ import {
   req_bind_send_email,
   req_bind_ver_email_code,
   req_user_apply_become,
+  req_userBuilder_apply_become,
 } from '../../../service/z_api';
 
 interface Props {
@@ -127,8 +128,8 @@ export default function Modal({ show, setClose, type }: Props) {
   }, [inputEmail]);
 
   const submit = useCallback(async () => {
-    // console.log("是我需要的点击事件ma");
-    
+    console.log("是我需要的点击事件ma", profile, "lll", type);
+
     if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     if (!inputAddress && !profile?.address) {
       toast.error(`wallet address can't be empty`);
@@ -152,6 +153,45 @@ export default function Modal({ show, setClose, type }: Props) {
       }
     } else {
       const res = await req_bind_ver_email_code(verCode, t, 'creator');
+      if (res.code === 100000) {
+        toast.success('Submitted successfully');
+        setOpen(false);
+        requestPersonal(t);
+      } else {
+        toast.error('Submitted error');
+      }
+    }
+  }, [verCode, profile, inputEmail, verCode]);
+  const submitBuilder = useCallback(async () => {
+    console.log(profile, 555555, profile.email);
+
+    // if (profile?.builderStatus === 1 || profile?.builderStatus === 4) return;
+    // if (!inputAddress && !profile?.address) {
+    //   toast.error(`wallet address can't be empty`);
+    //   return;
+    // }
+    // console.log(888888);
+
+    // if (!inputEmail && !profile?.email) {
+    //   toast.error(`email address can't be empty`);
+    //   return;
+    // }
+    // if (!verCode) {
+    //   toast.error(`code can't be empty`);
+    //   return;
+    // }
+    const t = getToken('atk');
+    console.log(t);
+
+    if (profile?.email) {
+      const res = await req_userBuilder_apply_become(t, 'builder', '');
+      if (res.code === 100000) {
+        toast.success('Submitted successfully');
+        setOpen(false);
+        requestPersonal(t);
+      }
+    } else {
+      const res = await req_bind_ver_email_code(verCode, t, 'builder');
       if (res.code === 100000) {
         toast.success('Submitted successfully');
         setOpen(false);
@@ -293,18 +333,24 @@ export default function Modal({ show, setClose, type }: Props) {
                     ></MeteInput>
                   </div>
                 )}
+                {/* {
+                  profile?.email !== null && profile?.email !== '' ? '' :  */}
                 <div
+                  // onClick={type === 'Creators' ? submit : submitBuilder}
                   onClick={submit}
                   className={`mt-7 h-10 rounded-lg flex justify-center items-center text-base font-semibold event-hand  bg-gradient-to-r from-mainDark to-mainLight text-black${(profile?.creatorStatus === 1 || profile?.creatorStatus === 3) &&
-                      inputAddress &&
-                      inputEmail &&
-                      verCode
-                      ? ''
-                      : ' opacity50'
+                    inputAddress &&
+                    inputEmail &&
+                    verCode
+                    ? ''
+                    : ' opacity50'
                     }`}
                 >
                   Submit
+
                 </div>
+
+                {/* } */}
               </Dialog.Panel>
             </Transition.Child>
           </div>

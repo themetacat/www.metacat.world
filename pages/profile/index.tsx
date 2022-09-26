@@ -2283,7 +2283,6 @@ function ProfilePage(r) {
             retProps={retProps}
             emailState={emailStateVal}
             clickHeader={dragJoin}
-
           />
           {/* <JoinBuildersAdd
             turnBuild={turnBuild}

@@ -16,6 +16,7 @@ import AvaterPopList from '../components/v2/avater-pop-list';
 import CarouseSinglePic from '../components/v2/carousel-single-pic';
 import EventCardLearn from '../components/v2/event-card-learn';
 import JoinModal from '../components/v2/join-modal';
+import JoinModalBuild from '../components/join_builders_works';
 
 import { state } from '../components/v2/wallet-btn';
 
@@ -59,6 +60,7 @@ export default function Index(props) {
   const [creatorData, setCreatorData] = React.useState([]);
   const [learnData, setLearnData] = React.useState([]);
   const [showModal, setShowModal] = React.useState(false);
+  const [showModalBuilder, setShowModalBuilder] = React.useState(false);
   const [barColor, setBarColor] = React.useState([194, 157, 135]);
 
   const refreshTK = React.useCallback(async () => {
@@ -319,7 +321,10 @@ export default function Index(props) {
                       // onClick={() => {
                       //   jumpToUrl('/profile?type=parcellist');
                       // }}
-                      onClick={jumpToUrlEnt}
+                      // onClick={jumpToUrlEnt}
+                      onClick={() => {
+                        setShowModalBuilder(true);
+                      }}
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                     >
                       JOIN BUILDERS
@@ -385,6 +390,13 @@ export default function Index(props) {
             setShowModal(x);
           }}
           type={'Creators'}
+        ></JoinModal>
+        <JoinModal
+          show={showModalBuilder}
+          setClose={(x) => {
+            setShowModalBuilder(x);
+          }}
+          type={'Builders'}
         ></JoinModal>
 
         <Toaster

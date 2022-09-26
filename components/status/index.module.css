@@ -1,6 +1,10 @@
 .baseImg{
   width: 181px;
-  height: 120px;
+  /* height: 120px; */
+}
+.baseImgCon{
+  width: 181px;
+  /* height: 120px; */
 }
 .retry{
   width: 86px;

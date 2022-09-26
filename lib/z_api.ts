@@ -6,7 +6,8 @@ class API {
   private key?: string;
 
   constructor(url: string, key?: string) {
-    this.url = 'http://8.130.23.16/api/v1';
+    // this.url = 'http://8.130.23.16/api/v1';
+    this.url = url;
     this.key = key;
   }
 
@@ -1070,6 +1071,17 @@ class API {
     return json;
   }
 
+  public async req_buid_builders_buildingList() {
+    const url = `${this.url}/building/get_all_builders`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 9.7 获取 Wearable creator 数据接口
   public async req_wearable_creators() {
     const url = `${this.url}/wearable/get_wearable_creators`;
@@ -1102,6 +1114,21 @@ class API {
 
     return json;
   }
+
+  public async req_newBuilding_detail(address: string) {
+    const search = qs.stringify({ address }, { addQueryPrefix: true });
+    const url = `${this.url}/get_new_topic_detail${search}`;
+    // const url1 = `http://8.130.23.16/api/v1/get_topic_detail${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+
 
 
   public async req_cv_top20_parcel() {

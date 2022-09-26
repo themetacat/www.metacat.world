@@ -1056,6 +1056,17 @@ export const req_buid_builders_list = async () => {
   return json;
 };
 
+export const req_buid_builders_buildingList = async () => {
+  const url = '/api/get_build_builders_buildingList';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 9.7 获取 Wearable creator 数据接口
 
 export const req_wearable_creators = async () => {
@@ -1080,6 +1091,23 @@ export const req_topic_detail = async (id: number, creator: string) => {
     search = qs.stringify({ creator }, { addQueryPrefix: true });
   }
   const url = `/api/get_topic_detail${search}`;
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+// 4.2 获取 Topic 详情页信息接口
+
+export const req_newBuilding_detail = async (address: string) => {
+
+  const search = qs.stringify({ address }, { addQueryPrefix: true });
+  const url = `/api/get_newBuilding_detail${search}`;
+
 
   const result = await fetch(url, {
     method: 'get',
