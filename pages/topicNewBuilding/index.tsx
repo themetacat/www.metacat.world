@@ -28,7 +28,7 @@ import ProfileIconLabel from '../../components/profile-icon-label';
 import { getTopicDetail, refreshToken, getBaseInfo } from '../../service';
 import { req_newBuilding_detail } from '../../service/z_api';
 
-import { v4 as uuid } from 'uuid';
+
 
 import api from '../../lib/z_api';
 
