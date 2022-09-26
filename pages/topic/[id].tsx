@@ -172,6 +172,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   }, []);
 
   React.useEffect(() => {
+    
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -245,7 +246,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           <div className={style.parcel}>
             {parcelList.length > 0 ? (
               <div>
-                {trafficList.length !== 0 ? (
+                {trafficList?.length !== 0 ? (
                   <div className={style.title}>
                     <div></div>
                     <p>Buildings</p>

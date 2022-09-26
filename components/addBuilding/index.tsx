@@ -403,7 +403,7 @@ export default function AddBuildings({ Save, saveIcon, id, clickHeader, subArrDa
                     }}
                     clear={onbuildAll}
                     onBlur={(val) => {
-                      console.log(linkBuild);
+                      // console.log(linkBuild);
 
                       if (linkBuild === '') {
                         setInfoMsgLink(true)

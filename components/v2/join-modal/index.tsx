@@ -128,7 +128,7 @@ export default function Modal({ show, setClose, type }: Props) {
   }, [inputEmail]);
 
   const submit = useCallback(async () => {
-    console.log("是我需要的点击事件ma", profile, "lll", type);
+    // console.log("是我需要的点击事件ma", profile, "lll", type);
 
     if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     if (!inputAddress && !profile?.address) {
@@ -181,7 +181,7 @@ export default function Modal({ show, setClose, type }: Props) {
     //   return;
     // }
     const t = getToken('atk');
-    console.log(t);
+    // console.log(t);
 
     if (profile?.email) {
       const res = await req_userBuilder_apply_become(t, 'builder', '');

@@ -226,7 +226,7 @@ export const getSandboxOwnerStats = async (world?: string) => {
   const url = `/api/cv_sandbox_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getChartNftworlds = async (world?: string) => {
@@ -234,7 +234,7 @@ export const getChartNftworlds = async (world?: string) => {
   const url = `/api/cv_chartNftworlds_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getchartOtherside = async (world?: string) => {
@@ -242,7 +242,7 @@ export const getchartOtherside = async (world?: string) => {
   const url = `/api/cv_getchartOtherside_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getchartSomniumSpace = async (world?: string) => {
@@ -250,7 +250,7 @@ export const getchartSomniumSpace = async (world?: string) => {
   const url = `/api/cv_getchartSomniumSpace_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getchartWebb = async (world?: string) => {
@@ -258,7 +258,7 @@ export const getchartWebb = async (world?: string) => {
   const url = `/api/cv_getChartcv_getchartWebb_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 

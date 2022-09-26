@@ -30,7 +30,6 @@ export default function Switch({ onActive, options, defaultValue, id, className,
   const changeActive = React.useCallback(
     
     (acitveItem) => {
-    console.log(11111111);
       setActive(acitveItem.value);
       if (onActive) {
         onActive(acitveItem.value);
