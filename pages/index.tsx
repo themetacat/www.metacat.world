@@ -202,7 +202,6 @@ export default function Index(props) {
       // window.location.href="移动端url";
     } else {
       // window.location.href="pc端url";
-      // console.log('pc');
       // window.location.href = "http://www.taobao.com";
     }
     requestFloorData();
