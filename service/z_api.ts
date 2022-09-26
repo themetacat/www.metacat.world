@@ -178,6 +178,30 @@ export const req_rent_cardList = async (
   return json;
 };
 
+
+export const req_building_list = async (addr:string) => {
+  const search = qs.stringify(
+    {
+      addr
+    },
+    { addQueryPrefix: true },
+  );
+  const url = `/api/get_owned_building_list${search}`;
+  
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    // headers: {
+    //   Authorization: token,
+    //   'Content-Type': 'application/x-www-form-urlencoded',
+    // },
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
 // 12.1 获取当前登录者 Decentraland 地块列表接口
 
 export const req_dcl_parcel_list = async (token: string) => {
@@ -1032,6 +1056,17 @@ export const req_buid_builders_list = async () => {
   return json;
 };
 
+export const req_buid_builders_buildingList = async () => {
+  const url = '/api/get_build_builders_buildingList';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 9.7 获取 Wearable creator 数据接口
 
 export const req_wearable_creators = async () => {
@@ -1066,6 +1101,23 @@ export const req_topic_detail = async (id: number, creator: string) => {
   return json;
 };
 
+// 4.2 获取 Topic 详情页信息接口
+
+export const req_newBuilding_detail = async (address: string) => {
+
+  const search = qs.stringify({ address }, { addQueryPrefix: true });
+  const url = `/api/get_newBuilding_detail${search}`;
+
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 //
 
 export const req_cv_top20_parcel = async () => {
@@ -1081,9 +1133,9 @@ export const req_cv_top20_parcel = async () => {
   return json;
 };
 
-export const req_space_buildings_list = async (page: number, count: number,query: string,
+export const req_space_buildings_list = async (page: number, count: number, query: string,
   type: string,) => {
-    const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
+  const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
   const url = `/api/get_cv_space_buildings${search}`;
   const result = await fetch(url, {
     method: 'get',
@@ -1095,9 +1147,9 @@ export const req_space_buildings_list = async (page: number, count: number,query
   return json;
 };
 
-export const req_scence_list = async(page: number, count: number,query: string,
-  type: string,)  => {
-    const search = qs.stringify({ page, count, query, type }, {  addQueryPrefix: true });
+export const req_scence_list = async (page: number, count: number, query: string,
+  type: string,) => {
+  const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
   const url = `/api/get_dece_sence${search}`;
   const result = await fetch(url, {
     method: 'get',
@@ -1151,6 +1203,82 @@ export const req_user_apply_become = async (join_type: string, token: string) =>
 
   return json;
 };
+
+export const req_userBuilder_apply_become = async (token: string,join_type: string, representative_links: string ) => {
+  
+  const search = qs.stringify({ join_type, representative_links } ,{ addQueryPrefix: false });
+  
+  const url = `api/user_userBuilder_become`;
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: search,
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+
+export const req_user_add_or_edit_building = async ( token: string,
+    operationType:string,
+    building_name: string, 
+    platform:string,
+    building_link:string,
+    building_desc:string,
+    building_format:string,
+    files_link_add:string,
+    files_link_cover:string,
+    files_link_del:string,
+  )=> {
+  
+  const search = qs.stringify({   
+    operationType,
+    building_name, 
+    platform,
+    building_link,
+    building_desc,
+    building_format,
+    files_link_add,
+    files_link_cover,
+    files_link_del} ,{ addQueryPrefix: false });
+  
+  const url = `api/user_add_or_edit_building`;
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: search,
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_get_building_detail_info = async ( building_link)=> {
+  
+  const search = qs.stringify({   
+    building_link:building_link
+  } ,{ addQueryPrefix: true });
+  
+  const url = `api/user_building_detail_info${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  
+  const json = await result.json();
+
+  return json;
+};
+
 
 export const req_get_user_wearable = async (token: string) => {
   const url = '/api/get_user_wearable';
@@ -1209,6 +1337,34 @@ export const req_all_country = async () => {
     mode: 'cors',
   });
 
+  const json = await result.json();
+
+  return json;
+};
+export const req_platform = async () => {
+  const url = '/api/get_platform';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_builder_del_self_building = async (token: string,building_link: string) => {
+  const search = qs.stringify({  building_link }, { addQueryPrefix: false });
+  const url = `/api/builder_del_self_building`;
+  const result = await fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: search,
+  });
   const json = await result.json();
 
   return json;

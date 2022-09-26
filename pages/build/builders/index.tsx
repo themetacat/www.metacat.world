@@ -9,7 +9,9 @@ import TopJumper from '../../../components/jump-to-top';
 import Footer from '../../../components/footer';
 import Status from '../../../components/status';
 
-import { req_buid_builders_list } from '../../../service/z_api';
+import { convert, getToken, setToken } from '../../../common/utils';
+
+import { req_buid_builders_list, req_buid_builders_buildingList } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -45,9 +47,11 @@ export default function Builders() {
   const [navState, setNavState] = React.useState('Institutions');
   const [institutions, setInstitutions] = React.useState([]);
   const [individuals, setIndividuals] = React.useState([]);
+  const [newBuilding, setNewBuilding] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [fixedState, setFixedState] = React.useState(false);
   const [anchor, setAnchor] = React.useState(false);
+  const [walletAddress, setWalletAddress] = React.useState('');
   const meta = {
     title: `Build - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -59,6 +63,10 @@ export default function Builders() {
     if (result.code === 100000) {
       setInstitutions(result.data.institution);
       setIndividuals(result.data.individuals);
+    }
+    const resultBuilding = await req_buid_builders_buildingList();
+    if (result.code === 100000) {
+      setNewBuilding(resultBuilding.data);
     }
     setLoading(false);
   }, []);
@@ -75,7 +83,14 @@ export default function Builders() {
   React.useEffect(() => {
     getTop();
     requestData();
-  }, [requestData, getTop]);
+    const a = getToken('address');
+    console.log(a,656);
+    
+    if (a) {
+      setWalletAddress(a);
+    }
+    console.log(walletAddress,66666666);
+  }, [requestData, getTop,walletAddress]);
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
@@ -85,6 +100,12 @@ export default function Builders() {
   const toTopic = React.useCallback((id, c) => {
     window.open(`/topic/${id}?type=buildings`);
   }, []);
+  const toTopicNewBuilding = () => {
+    // window.open(`/topicNewBuilding/?addr=${addr}`);
+    window.open(`/topicNewBuilding?address=${walletAddress}`);
+    // console.log(walletAddress);
+    
+  };
 
   const reander1 = React.useMemo(() => {
     if (loading) {
@@ -105,12 +126,16 @@ export default function Builders() {
     }
     return (
       <>
+        {newBuilding.map((item, idx) => {
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopicNewBuilding}></InfoCard>;
+        })}
         {individuals.map((item, idx) => {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
         })}
       </>
     );
-  }, [loading, individuals, toTopic]);
+  }, [loading, individuals, newBuilding, toTopic]);
+
 
   React.useEffect(() => {
     const listener = () => {
@@ -212,6 +237,7 @@ export default function Builders() {
           </div>
         </div>
         <TopJumper classname={style.jumper}></TopJumper>
+
         <div className={style.cardList}>{reander2}</div>
         <Footer></Footer>
       </Page>

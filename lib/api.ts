@@ -7,7 +7,10 @@ class API {
   private key?: string;
 
   constructor(url: string, key?: string) {
+
+    
     this.url = url;
+    // this.url = 'http://8.130.23.16/api/v1';
     this.key = key;
   }
 
@@ -79,6 +82,15 @@ class API {
   public async getTopicDetail(id: number): Promise<any> {
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/get_topic_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getNewBuildingDetail(id: number): Promise<any> {
+    const search = qs.stringify({ id }, { addQueryPrefix: true });
+    const url = `${this.url}/get_new_topic_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -378,6 +390,7 @@ class API {
 
   public async getBaseInfo(token: string): Promise<any> {
     const url = `${this.url}/user/get_base_info`;
+    // const url = `http://8.130.23.16/api/v1/user/get_base_info`;
     const res = await fetch(url, {
       method: 'get',
       headers: {

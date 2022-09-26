@@ -75,7 +75,7 @@ export default function DaoWebglCard({
     }
   }, [tabState, id, address]);
 
-  const init = React.useCallback(() => {
+  const init = React.useCallback(() => {  
     const scene = new Scene();
 
     const containerId = `webgl${graphicId}`;

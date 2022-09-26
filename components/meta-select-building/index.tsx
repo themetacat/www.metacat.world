@@ -19,7 +19,7 @@ type Props = {
   onBlur?: (valu) => void;
   data?;
   onClick?;
-  country?: string;
+  platform?: string;
 };
 
 export default function MeteSelectBuilding({
@@ -35,7 +35,7 @@ export default function MeteSelectBuilding({
   data,
   onBlur,
   onClick,
-  country,
+  platform,
 }: Props) {
   const [val, setVal] = React.useState(value || '');
   const [showClear, setShowClear] = React.useState(false);
@@ -70,11 +70,11 @@ export default function MeteSelectBuilding({
   );
 
   const rander = React.useMemo(() => {
-    if (country) {
-      return <>{country}</>;
+    if (platform) {
+      return <>{platform}</>;
     }
-    return <>{'Select Country'}</>;
-  }, [country]);
+    return <>{'请选择'}</>;
+  }, [platform]);
 
   const clear = React.useCallback(() => {
     setVal('');
@@ -127,15 +127,16 @@ export default function MeteSelectBuilding({
         <div
           onClick={() => {
             setArrowsState(!arrowsState);
+            // setArrowsState(true);
           }}
-          style={{width:"415px"}}
-          onMouseOut={() => {
+          style={{ width: "415px" }}
+          onMouseLeave={() => {
             setTimeout(() => {
               setArrowsState(false);
-            }, 2000);
+            }, 4000);
           }}
         >
-         {rander}
+          {rander}
         </div>
       </div>
       <img
@@ -143,14 +144,21 @@ export default function MeteSelectBuilding({
         className={style.arrows}
         onClick={() => {
           setArrowsState(!arrowsState);
+          // setArrowsState(true);
         }}
-        onMouseOut={() => {
+        onMouseLeave={() => {
           setTimeout(() => {
             setArrowsState(false);
-          }, 2000);
+          }, 4000);
         }}
       />
-      <ul className={cn(style.list, !arrowsState ? style.dn : null)}>
+      <ul className={cn(style.list, !arrowsState ? style.dn : null)}
+       onMouseEnter={() => {
+        setTimeout(() => {
+          setArrowsState(false);
+        }, 20000000);
+      }}
+      >
         {data.map((i, index) => {
           return (
             <li
@@ -160,7 +168,7 @@ export default function MeteSelectBuilding({
                 onClick(i);
                 setArrowsState(false);
               }}
-              className={country === i ? style.co : null}
+              className={platform === i ? style.co : null}
             >
               {i}
             </li>

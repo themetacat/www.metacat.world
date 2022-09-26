@@ -3,15 +3,19 @@ import cn from 'classnames';
 
 import { toast } from 'react-hot-toast';
 
+import { getToken } from '../../common/utils';
+
 import styles from './index.module.css';
 
 interface Props {
   classname?: string;
   turnBuild?;
   nextBtnAdd?;
+  value?: string;
+  clickHeader?;
 }
 
-export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
+export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtnAdd }: Props) {
   const [show, switchShow] = React.useState(false);
   const [code, setCode] = React.useState('');
   const [email, setEmail] = React.useState(null);
@@ -19,7 +23,8 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   const [codeClear, setCodeClear] = React.useState(false);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [subLength, setSubLength] = React.useState(1);
-  const [subArr, setSubArr] = React.useState([1]);
+  const [subArr, setSubArr] = React.useState([]);
+  const [token, setToken] = React.useState('');
 
   //   React.useEffect(() => {
   //     const listener = () => {
@@ -28,13 +33,19 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   //     document.addEventListener('scroll', listener);
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
-  const setEmailValue = React.useCallback((e) => {
+  const setEmailValue = (index, e, item) => {
 
-    const input = document.getElementById('input')
-    input.oninput = function () {
-      email.innerHTML = input;
-    }
+    // const input = document.getElementById('input')
+    // input.oninput = function () {
+    //   email.innerHTML = input;
+    // }
 
+    subArr[index] = e.target.value
+
+    setSubArr([...subArr])
+    // subArr[index]= value
+
+    // e.nativeEvent.data
 
     // setEmail(e.target.value);
     // if (e.target.value) {
@@ -43,7 +54,8 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
     //   setEmailClear(false);
     // }
 
-  }, []);
+  }
+
   const setCodeValue = React.useCallback((e) => {
     setCode(e.target.value);
     if (e.target.value) {
@@ -54,40 +66,39 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
   }, []);
 
   const addBuild = () => {
-    console.log(subLength,);
-    if (subLength > 9) {
-      toast.error('不得超过九条数据');
+    if (subArr.length > 2) {
+      toast.error('不得超过三条数据');
       return false;
     }
 
-    let newNum = subLength;
-    newNum += 1;
-    const newArr = []
-    for (let index = 0; index < newNum; index += 1) {
-      newArr.push(index)
 
-    }
-    console.log(newArr, newNum);
-    console.log(new Array(subLength), subLength);
-    setSubLength(newNum)
-
-    setSubArr(newArr)
-
-  }
-
-  const delBuild = () => {
-    console.log(555555555,subLength);
-    // let newNumDel = subLength;
-    // newNumDel-=1;
+    // let newNum = subLength;
+    // newNum += 1;
     // const newArr = []
-    // for (let index = 0; index < newNumDel; index -= 1) {
+    // for (let index = 0; index < newNum; index += 1) {
     //   newArr.push(index)
 
     // }
-    // setSubLength(newNumDel)
+    // setSubLength(newNum)
+    subArr.push([])
 
-    // setSubArr(newArr)
-    
+    setSubArr([...subArr])
+  }
+
+  const delBuild = (index) => {
+    if (subArr.length < 2) {
+      toast.error('不得小于一条数据');
+      return false;
+    }
+
+    // let newNumDel = subLength;
+    // newNumDel - 1;
+
+    subArr.splice(index, 1)
+
+    setSubLength(subArr.length)
+
+
   }
 
   const codeBlue = React.useCallback(() => {
@@ -97,13 +108,17 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
     setEmailClear(false);
   }, []);
 
+  React.useEffect(() => {
 
+    const t = getToken('atk');
+    setToken(t);
+  }, [value]);
 
   return (
     <>
       <div className={styles.containerBox}>
         <div className={styles.container}>
-          <div className={styles.topBox}>
+          <div className={styles.topBox} onMouseDown={clickHeader}>
             <span>Join Builders</span>
             <span onClick={turnBuild}><img src="/images/guanbi.png" alt="" /></span>
           </div>
@@ -119,38 +134,74 @@ export default function JoinBuildersAdd({ turnBuild, nextBtnAdd }: Props) {
                       style={{ marginBottom: "10px" }}
                       type="text"
                       placeholder=""
-                      value={email}
-                      onInput={setEmailValue}
+                      value={item}
+                      onInput={(e) => { setEmailValue(index, e, item) }}
+                      // onInput={setEmailValue}
                       onFocus={() => {
                         if (email) {
                           setEmailClear(true);
                         }
                       }}
-                      onBlur={emailBlue}
+                      // onBlur={emailBlue}
+                      onBlur={() => {
+
+
+                        if (item !== '') {
+                          //   let reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+                          //   if (!reg.test(item)) {
+                          const reg = '^((https|http|ftp|rtsp|mms)?://)'
+                            + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+                            + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+                            + '|'
+                            + '([0-9a-z_!~*\'()-]+.)*'
+                            + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+                            + '[a-z]{2,6})'
+                            + '(:[0-9]{1,4})?'
+                            + '((/?)|'
+                            + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+                          const re = new RegExp(reg)
+                          if (!re.test(item)) {
+                            toast.error("Not the correct URL, please pay attention to check");
+                            return false;
+                          }
+                        }
+
+                      }}
+
                     />
                     <>
-                      <span className={styles.add} onClick={delBuild}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
-                    </> : ''
+                      <span className={styles.add} onClick={() => { delBuild(index) }}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
+                    </>
+                    <div className={cn('flex items-center text-xs mt-1 mb-2', styles.warnContent)}>
+
+                      {/* {
+                        (item.toString() && item.indexOf('http://') === -1 || item.indexOf('.com') === -1) ? <span className={styles.warn}>Please fill in the correct link address</span> : null
+                      } */}
+
+                    </div>
+
                   </>
                 )
                 )
               }
-              {/* {
-                email !== '' ?
-                  <>
-                    <span className={styles.add} onClick={delBuild}><img src="/images/tianjia.png" alt="" style={{ transform: 'rotate(140deg)' }} /></span>
-                    
-                  </> : ''
 
-              } */}
               <span onClick={addBuild} className={styles.add}><img src="/images/tianjia.png" alt="" /></span>
             </div>
             <p className={styles.send}>You can also send your works to our：
-              <img src="/images/youxiang.png" alt="" />
-              <img src="/images/ttt.png" alt="" />
+              <a
+                href="https://twitter.com/Metacat007"
+                target="_blank"
+                data-tip="Twitter"
+
+              > <img src="/images/youxiang.png" alt="" /></a>
+              <a
+                href="mailto:metacat@tutanota.com"
+                data-tip="metacat@tutanota.com"
+
+              ><img src="/images/ttt.png" alt="" /></a>
 
             </p>
-            <div className={styles.next} onClick={nextBtnAdd}>Submit</div>
+            <div className={styles.next} onClick={() => { nextBtnAdd(token, subArr) }}>Submit</div>
           </div>
         </div>
       </div>
