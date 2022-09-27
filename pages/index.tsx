@@ -28,6 +28,7 @@ import {
   req_sales_amount_percent,
   req_sales_amount_stack,
   req_learn_article_list,
+  req_userBuilder_apply_become,
 } from '../service/z_api';
 
 import style from './index.module.css';
@@ -60,6 +61,9 @@ export default function Index(props) {
   const [creatorData, setCreatorData] = React.useState([]);
   const [learnData, setLearnData] = React.useState([]);
   const [addState, setAddState] = React.useState('');
+  const [emailState, setEmailState] = React.useState(null);
+  const [buildStateVal, setBuildStateVal] = React.useState(1);
+  const [createrStateVal, setCreaterStateVal] = React.useState(null);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [showModalBuilder, setShowModalBuilder] = React.useState(false);
@@ -133,9 +137,14 @@ export default function Index(props) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
-      // console.log(res.data.profile.address, 2);
+      console.log(res);
       setAddState(res.data.profile.address)
-      // console.log(addState);
+      setEmailState(res.data.profile.email)
+      setBuildStateVal(res.data.profile.builder_status)
+      console.log(buildStateVal);
+
+      setCreaterStateVal(res.data.profile.creator_status)
+      console.log(addState, 22222222222, buildStateVal, createrStateVal, emailState);
 
       const data = resultHandler(res, requestPersonal);
       if (!data) {
@@ -144,8 +153,9 @@ export default function Index(props) {
       const { profile: pro } = data;
       state.setState({ profile: pro });
       setProfile(profile);
-    },
-    [resultHandler, addState],
+    }
+    ,
+    [resultHandler, addState, emailState, buildStateVal, createrStateVal],
   );
 
   const requestLearnData = React.useCallback(async () => {
@@ -175,25 +185,20 @@ export default function Index(props) {
   }
 
   React.useEffect(() => {
+    console.log(buildStateVal, 999999999999999);
+
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
     }
+    console.log(emailState);
 
-  }, [requestPersonal, addState]);
+  }, []);
 
-  // React.useEffect(() => {
-  //   const a = getToken('address');
-  //   if (a) {
-  //     setAddState(a);
-  //   }
-  //   console.log(a);
 
-  //   // const c = contact.filter((i) => i.address);
-  //   // setC(c);
-  // }, []);
 
   React.useEffect(() => {
+
     if (
       navigator.userAgent.match(
         /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i,
@@ -209,20 +214,67 @@ export default function Index(props) {
     requestLearnData();
     requestBuildingData();
     requestWearableData();
-  }, [null]);
+  }, []);
 
   const turnOff = () => {
     setJoinBuilders(false)
 
   }
+  const retProps = React.useCallback(async (token: string, buildData: any) => {
+    if (buildData.length === 0) {
+      toast.error('Please fill in the link address');
+      return false;
+    }
+    const showIndex = false
+    buildData?.map((item) => {
+      if (item !== '') {
+        const reg = '^((https|http|ftp|rtsp|mms)?://)'
+          + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+          + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+          + '|'
+          + '([0-9a-z_!~*\'()-]+.)*'
+          + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+          + '[a-z]{2,6})'
+          + '(:[0-9]{1,4})?'
+          + '((/?)|'
+          + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+        const re = new RegExp(reg)
+        if (!re.test(item)) {
+          toast.error("Not the correct URL, please pay attention to check");
+          return false;
+        }
+      }
+      return true;
+    })
+    if (showIndex) {
+      return false;
+    }
+    const res = await req_userBuilder_apply_become(token, 'builder', buildData.toString());
+    toast(res.msg)
+    if (res?.code === 100000) {
+      router.replace('/profile?type=building')
+      setJoinBuilders(false)
+    } else {
+      setJoinBuilders(false)
+    }
 
+    // res.then((resV) => {
+    //   // setBuildState(2)
+    //   console.log(resV.code);
+
+    // setTabStateTR(false)
+    // setEmailBuilders(false)
+  }
+    ,
+    [],
+  );
 
 
   return (
-    <Page meta={meta}>
-      <Layout>
-        <div>
-          <div className="bg-black">
+    <Page meta={meta} >
+      <Layout className={cn('', joinBuilders === true ? style.aa : null)}>
+        <div >
+          <div className={cn("bg-black",)} >
             <div className="main-content pb-12">
               <div className="flex justify-between items-end pt-12 pb-7">
                 <span className="text-white font-bold text-2xl">Analytics</span>
@@ -332,14 +384,14 @@ export default function Index(props) {
               <div className="flex justify-start items-end pt-12 pb-7">
                 <span className="text-white font-bold text-2xl">Buildings</span>
               </div>
-              <div className=" mt-6 flex justify-between items-center mb-7">
+              <div className={cn(" mt-6 flex justify-between items-center mb-7 relative",)} >
                 <CarouseSinglePic imgs={builderCarouselList}></CarouseSinglePic>
                 <div className=" ml-28">
                   <AvaterPopList avaters={buildingData} type="buildings"></AvaterPopList>
                   <div className=" text-4xl font-medium text-white my-12 text-center">
                     About metaverse buildings, about metaverse builders.
                   </div>
-                  <div className="flex justify-around items-center text-xl font-semibold">
+                  <div className="flex justify-around items-center text-xl font-semibold ">
                     <div
                       onClick={() => {
                         jumpToUrl('https://www.metacat.world/build/builders');
@@ -352,14 +404,38 @@ export default function Index(props) {
                       // onClick={() => {
                       //   jumpToUrl('/profile?type=parcellist');
                       // }}
-                      onClick={jumpToUrlEnt}
-                      // onClick={() => {
-                      //   setShowModalBuilder(true);
-                      // }}
+                      // onClick={jumpToUrlEnt}
+                      onClick={() => {
+                        console.log(addState, 22, emailState, 6666666, buildStateVal);
+
+                        if (buildStateVal === 1) {
+                          if (addState && emailState) {
+                            console.log("两个都有啊");
+                            setJoinBuilders(true)
+                          } else if (!addState || !emailState) {
+                            console.log("你想要啥");
+                            setShowModalBuilder(true);
+                          }
+                        } else if (buildStateVal !== 1) {
+                          toast.error('You have become builder')
+                        }
+                      }}
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                     >
                       JOIN BUILDERS
                     </div>
+                    {
+                      joinBuilders === true ?
+                        <div>
+                          <JoinModalBuild
+                            turnOff={turnOff}
+                            retProps={retProps}
+                            // clickHeader={dragJoin}
+                            emailState={emailState}
+                          ></JoinModalBuild>
+                        </div>
+                        : null
+                    }
                   </div>
                 </div>
               </div>
@@ -389,8 +465,18 @@ export default function Index(props) {
                     <div
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                       onClick={() => {
-                        setShowModal(true);
-                      }}
+                        // setShowModal(true);
+                        console.log(createrStateVal);
+
+                        if (createrStateVal === 1) {
+                          setShowModal(true);
+                        } else if (createrStateVal === 4)
+                          router.replace('/profile?type=wearablelist')
+                        else if (createrStateVal !== 1 ||createrStateVal !== 4) {
+                          toast.error('You have become creater')
+                        }
+                      }
+                      }
                     >
                       JOIN CREATORS
                     </div>
@@ -417,27 +503,40 @@ export default function Index(props) {
         </div>
         <JoinModal
           show={showModal}
+          // buildStateVal={buildStateVal}
           setClose={(x) => {
             setShowModal(x);
           }}
+          setcreaterState={(x) => {
+            setCreaterStateVal(x)
+          }}
+          setEmail={(x) => {
+            setEmailState(x)
+          }}
+          setbuildState={(x) => {
+            setBuildStateVal(x)
+          }}
           type={'Creators'}
         ></JoinModal>
-        {
-          joinBuilders === true ?
-            <>
-              <JoinModalBuild
-                turnOff={turnOff}
-              // retProps={retProps}
-              // clickHeader={dragJoin}
-              // show={showModalBuilder}
-              // setClose={(x) => {
-              //   setShowModalBuilder(x);
-              // }}
-              // type={'Builders'}
-              ></JoinModalBuild>
-            </>
-            : null
-        }
+        <JoinModal
+          show={showModalBuilder}
+          emailState={emailState}
+          buildStateVal={buildStateVal}
+          setClose={(y) => {
+            setShowModalBuilder(y);
+          }}
+          setEmail={(x) => {
+            setEmailState(x)
+          }}
+          setcreaterState={(x) => {
+            setCreaterStateVal(x)
+          }}
+          setbuildState={(x) => {
+            setBuildStateVal(x)
+          }}
+          type={'Builders'}
+        ></JoinModal>
+
 
         <Toaster
           toastOptions={{
@@ -450,7 +549,7 @@ export default function Index(props) {
           }}
         />
       </Layout>
-    </Page>
+    </Page >
   );
 }
 

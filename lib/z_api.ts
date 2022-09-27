@@ -1195,6 +1195,7 @@ class API {
 
   public async req_userBuilder_apply_become(token: string, join_type: string, representative_links: string) {
     const search = qs.stringify({ join_type, representative_links }, { addQueryPrefix: false });
+    
     // const url = `http://8.130.23.16/api/v1/user/user_apply_become${search}`;
     const url = `${this.url}/user/user_apply_become`;
     const result = await fetch(url, {
