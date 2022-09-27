@@ -250,7 +250,7 @@ export default function Index(props) {
       return false;
     }
     const res = await req_userBuilder_apply_become(token, 'builder', buildData.toString());
-    toast(res.msg)
+    // toast(res.msg)
     if (res?.code === 100000) {
       router.replace('/profile?type=building')
       setJoinBuilders(false)
@@ -466,13 +466,13 @@ export default function Index(props) {
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                       onClick={() => {
                         // setShowModal(true);
-                        // console.log(createrStateVal);
+                        console.log(createrStateVal);
 
                         if (createrStateVal === 1) {
                           setShowModal(true);
                         } else if (createrStateVal === 4)
                           router.replace('/profile?type=wearablelist')
-                        else if (createrStateVal !== 1 ||createrStateVal !== 4) {
+                        else if (createrStateVal !== 1) {
                           toast.error('You have become creater')
                         }
                       }
@@ -508,6 +508,8 @@ export default function Index(props) {
             setShowModal(x);
           }}
           setcreaterState={(x) => {
+            console.log(x);
+            
             setCreaterStateVal(x)
           }}
           setEmail={(x) => {
