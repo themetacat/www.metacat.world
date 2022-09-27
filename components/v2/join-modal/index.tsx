@@ -49,7 +49,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
   const [codeState, setCodeState] = useState('Get code');
   const [joinBuilders, setJoinBuilders] = useState(false);
   // const [buildStateVal, setBuildStateVal] = useState(1);
-  const [token, setTokenState] = useState(null);
+  const [tokenVal, setTokenState] = useState(null);
   const timeId = useRef(null);
   const timer = useRef(60);
 
@@ -232,7 +232,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
 
     if (profile?.email) {
 
-      const res = await req_userBuilder_apply_become(token, 'creator', '');
+      const res = await req_userBuilder_apply_become(tokenVal, 'creator', '');
       if (res.code) {
         // toast.success('Submitted successfully');
         toast(res.msg);
@@ -263,7 +263,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
             // const rest = await req_userBuilder_apply_become(token, 'builder', '');
             // if (rest.code === 100000) {
               requestPersonal(t);
-              const resGetBageInfo = await getBaseInfo(token)
+              const resGetBageInfo = await getBaseInfo(tokenVal)
     
               console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
     
@@ -316,7 +316,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
     // setJoinBuilders(true)
     const t = getToken('atk');
     if (profile?.email) {
-      const res = await req_userBuilder_apply_become(token, 'builder', '');
+      const res = await req_userBuilder_apply_become(tokenVal, 'builder', '');
       if (res.code) {
         // toast.success('Submitted successfully');
         toast(res.msg);
@@ -347,7 +347,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
             // const rest = await req_userBuilder_apply_become(token, 'builder', '');
             // if (rest.code === 100000) {
               requestPersonal(t);
-              const resGetBageInfo = await getBaseInfo(token)
+              const resGetBageInfo = await getBaseInfo(tokenVal)
     
               console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
     
