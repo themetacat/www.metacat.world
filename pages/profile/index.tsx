@@ -739,29 +739,13 @@ function ProfilePage(r) {
   //   setBuildData(arr)
   // }
   const retProps = React.useCallback((token: string, buildData: any) => {
-    // console.log(buildData);
-
-
     if (buildData.length === 0) {
       toast.error('Please fill in the link address');
       return false;
     }
     const showIndex = false
-    // if (buildData) {
     buildData?.map((item) => {
-      // console.log(item);
-
-      // const linkBuildIndex = item.indexOf('http://')
-      // const linkBuildCom = item.indexOf('.com')
-      // // console.log(linkBuildIndex, 5656, linkBuildCom);
-      // if (linkBuildIndex === -1 || linkBuildCom === -1) {
-      //   showIndex = true
-      //   toast.error('Please fill in the correct link address');
-      //   return false;
-      // }
       if (item !== '') {
-        // let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
-        // if(!reg.test(item)){
           const reg = '^((https|http|ftp|rtsp|mms)?://)'
           + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
           + '(([0-9]{1,3}.){3}[0-9]{1,3}'
@@ -778,30 +762,16 @@ function ProfilePage(r) {
         return false;
         }
       }
-
-
-
-      
-      // if(linkBuildIndex === -1 || linkBuildCom === -1){
-      //   // setShowIndex(true)
-
-      // }
       return true;
     })
-
-    // console.log(showIndex);
-
     if (showIndex) {
       return false;
     }
     const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
 
     res.then((resV) => {
-      // console.log(res);
       setBuildState(2)
     })
-
-    // console.log(buildState, 6859);
     setTabStateTR(false)
     setEmailBuilders(false)
   }

@@ -54,7 +54,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   //     return () => document.removeEventListener('scroll', listener);
   //   }, [show]);
 
-  const setCodeValue = React.useCallback((index, e, item) => {
+  const setCodeValue = (index, e, item) => {
     // setCode(e.target.value);
     // if (e.target.value) {
     //   setCodeClear(true);
@@ -68,7 +68,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
     // const buildData=this.status'
 
     setSubArr([...subArr])
-  }, []);
+  };
 
   const setEmailValue = React.useCallback((e) => {
     setEmail(e.target.value);
@@ -136,6 +136,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   }, []);
 
   React.useEffect(() => {
+console.log(email);
 
     setEmail(value);
     const t = getToken('atk');
@@ -144,7 +145,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
 
   return (
     <>
-      <div className={styles.containerBox}>
+      <div className={cn('bg-gray-500',styles.containerBox,)}>
         <div className={styles.container2}>
           <div className={styles.topBox} onMouseDown={clickHeader}>
             <span>Join Builders</span>
@@ -156,7 +157,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
             <input
               style={{ marginBottom: "10px" }}
               type="text"
-              placeholder={emailState || "email"}
+              placeholder={emailState || "email" }
               disabled={emailState}
               value={email}
               onInput={setEmailValue}
