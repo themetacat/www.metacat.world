@@ -137,14 +137,14 @@ export default function Index(props) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
-      console.log(res);
+      // console.log(res);
       setAddState(res.data.profile.address)
       setEmailState(res.data.profile.email)
       setBuildStateVal(res.data.profile.builder_status)
-      console.log(buildStateVal);
+      // console.log(buildStateVal);
 
       setCreaterStateVal(res.data.profile.creator_status)
-      console.log(addState, 22222222222, buildStateVal, createrStateVal, emailState);
+      // console.log(addState, 22222222222, buildStateVal, createrStateVal, emailState);
 
       const data = resultHandler(res, requestPersonal);
       if (!data) {
@@ -185,13 +185,13 @@ export default function Index(props) {
   }
 
   React.useEffect(() => {
-    console.log(buildStateVal, 999999999999999);
+    // console.log(buildStateVal, 999999999999999);
 
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
     }
-    console.log(emailState);
+    // console.log(emailState);
 
   }, []);
 
@@ -406,14 +406,14 @@ export default function Index(props) {
                       // }}
                       // onClick={jumpToUrlEnt}
                       onClick={() => {
-                        console.log(addState, 22, emailState, 6666666, buildStateVal);
+                        // console.log(addState, 22, emailState, 6666666, buildStateVal);
 
                         if (buildStateVal === 1) {
                           if (addState && emailState) {
-                            console.log("两个都有啊");
+                            // console.log("两个都有啊");
                             setJoinBuilders(true)
                           } else if (!addState || !emailState) {
-                            console.log("你想要啥");
+                            // console.log("你想要啥");
                             setShowModalBuilder(true);
                           }
                         } else if (buildStateVal !== 1) {
@@ -466,7 +466,7 @@ export default function Index(props) {
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                       onClick={() => {
                         // setShowModal(true);
-                        console.log(createrStateVal);
+                        // console.log(createrStateVal);
 
                         if (createrStateVal === 1) {
                           setShowModal(true);

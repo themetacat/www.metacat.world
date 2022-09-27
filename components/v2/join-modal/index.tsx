@@ -137,7 +137,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
   }, [inputEmail]);
 
   const submit = useCallback(async () => {
-    console.log("是我需要的点击事件ma", profile, "lll", type);
+    // console.log("是我需要的点击事件ma", profile, "lll", type);
 
     // if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     // if (!inputAddress && !profile?.address) {
@@ -173,7 +173,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
   }, [verCode, profile, inputEmail, verCode]);
 
   const submitBuilder = useCallback(async () => {
-    console.log(profile, 555555, profile.email);
+    // console.log(profile, 555555, profile.email);
 
     if (profile?.builderStatus === 1 || profile?.builderStatus === 4) return;
     if (!inputAddress && !profile?.address) {
@@ -213,7 +213,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
 
 
   const buttonSecond = useCallback(async () => {
-    console.log("第二步");
+    // console.log("第二步");
 
     // if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     // if (!inputAddress && !profile?.address) {
@@ -265,16 +265,16 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
               requestPersonal(t);
               const resGetBageInfo = await getBaseInfo(tokenVal)
     
-              console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
+              // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
     
               if (resGetBageInfo.code === 100000) {
                 // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
-                //zaizhe 
+         
                 setEmail(resGetBageInfo.data.profile.email);
                 setbuildState(resGetBageInfo.data.profile.builder_status);
                 setcreaterState(resGetBageInfo.data.profile.creator_status);
-                buildStateVal === resGetBageInfo.data.profile.builder_status
-                console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
+           
+                // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
     
               }
               setOpen(false);
@@ -297,7 +297,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
 
 
   const buttonSecondBuilder = useCallback(async () => {
-    console.log("第二步builder");
+    // console.log("第二步builder");
 
     // if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     // if (!inputAddress && !profile?.address) {
@@ -349,15 +349,15 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
               requestPersonal(t);
               const resGetBageInfo = await getBaseInfo(tokenVal)
     
-              console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
+              // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
     
               if (resGetBageInfo.code === 100000) {
                 // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
-                //zaizhe 
+                
                 setEmail(resGetBageInfo.data.profile.email);
                 setbuildState(resGetBageInfo.data.profile.builder_status);
-                buildStateVal === resGetBageInfo.data.profile.builder_status
-                console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
+            
+                // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
     
               }
               setOpen(false);
