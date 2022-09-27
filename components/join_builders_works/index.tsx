@@ -253,14 +253,14 @@ console.log(email);
               </div>
               <p className={styles.send}>You can also send your works to our：
                 <a
+                
+                  href="mailto:metacat@tutanota.com"
+                  data-tip="metacat@tutanota.com"
+                > <img src="/images/youxiang.png" alt="" /></a>
+                <a
                   href="https://twitter.com/Metacat007"
                   target="_blank"
                   data-tip="Twitter"
-
-                > <img src="/images/youxiang.png" alt="" /></a>
-                <a
-                  href="mailto:metacat@tutanota.com"
-                  data-tip="metacat@tutanota.com"
 
                 ><img src="/images/ttt.png" alt="" /></a>
 
