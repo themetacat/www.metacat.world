@@ -197,7 +197,7 @@ function ProfilePage(r) {
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
-  const [statue, setStatue] = React.useState(1);
+  const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
   const [buildState, setBuildState] = React.useState(null);
   const [cartData, setCartData] = React.useState([]);
@@ -1090,7 +1090,7 @@ function ProfilePage(r) {
     tabState,
     reqDclData,
   ]);
-  const addWorkWerable = React.useCallback(async () => {
+  const addWorkWerable = () => {
     console.log(55,);
     setShowModal(true)
     // if (emailState === null || emailState === '') {
@@ -1100,16 +1100,10 @@ function ProfilePage(r) {
     //   // this.props.emailState(this.props.emailState)
     // }
     // // console.log(joinBuilders, 55555, emailState);
-
-
-    // // if(buildState){
-
-    // // }
-
-  }, [joinBuilders, emailStateVal, emailStateWearable])
+  }
 
   const renderWerable = React.useMemo(() => {
-    // console.log(statue);
+    console.log(statue);
 
     if (loading) {
       return <Status status="loading" />;
@@ -1118,15 +1112,107 @@ function ProfilePage(r) {
       return <Status retry={onRetry} status="error" />;
     }
     if (statue === 1) {
-      return <Status addWorkWerable={() => { addWorkWerable() }} status="emptyWerable" />;
+      return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
+
     }
     if (statue === 2) {
+      console.log(reqWearablesData);
 
-      return <Status status="waitBuilder" />;
+      // reqWearablesData()
+      // return <Status status="waitBuilder" />;
 
+      return (
+        <>
+          <div className={style.wearablesContainer}>
+            <div className={style.title}>
+              <div className={style.wearables}></div>
+              <div className={style.texteated}>Wearables Created</div>
+            </div>
+            <div className={style.wearablesNav}>
+              <div className={style.left}>
+                {wearablesNav.map((item, index) => {
+                  return (
+                    <>
+                      <div
+                        onClick={() => {
+                          setWearablesNavState(item.type);
+                          wearablesState.current = item.type;
+                          setShowOrHideState(false);
+                          if (item.type === 'all') {
+                            setWearablesCreatorsData(wearablesCreatorsOriginData);
+                          }
+                          if (item.type === 'shown') {
+                            setWearablesCreatorsData(wearablesShowData);
+                          }
+                          if (item.type === 'hidden') {
+                            setWearablesCreatorsData(wearablesHideData);
+                          }
+                        }}
+                        className={cn(
+                          style.wearablesNavItem,
+                          wearablesNavState === item.type ? style.wearableNavAction : null,
+                        )}
+                        key={uuid()}
+                      >
+                        {/* <div className={style.mmm}> */}
+                        <div>
+                          {item.label}
+                          {/* <span>{item.label}</span> */}
+                          <span style={{ marginLeft: '2px' }}>
+                            {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+                            {item.type === 'shown' ? wearablesShowData.length : null}
+                            {item.type === 'hidden' ? wearablesHideData.length : null}
+                          </span>
+                        </div>
 
+                        {/* </div> */}
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+              <div
+                className={style.right}
+                onClick={() => {
+                  setShowOrHideState(!showOrHideState);
+                }}
+              >
+                <img src="/images/Settings.png" />
+                <div>Batch setting</div>
+                <ul
+                  className={
+                    wearablesNavState === 'all' && showOrHideState
+                      ? style.showOrHideList
+                      : style.showOrHideList1
+                  }
+                >
+                  {showOrHideState
+                    ? showOrHide[wearablesNavState].map((item, index) => {
+                      return (
+                        <li
+                          className={style.showOrHideItem}
+                          key={index}
+                          onClick={() => {
+                            settingShowOrHide(item.type);
+                          }}
+                        >
+                          {item.label}
+                        </li>
+                      );
+                    })
+                    : null}
+                </ul>
+              </div>
+            </div>
+            <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
+          </div>
+        </>
+      )
     }
-  }, [statue, emailStateWearable])
+  }, [statue,
+    error,
+    loading,
+    onRetry])
 
   const renderBuilding = React.useMemo(() => {
 
@@ -1410,6 +1496,8 @@ function ProfilePage(r) {
   }, [addbuild, walletAddress,])
 
   React.useEffect(() => {
+
+
     setSaveIcon(false)
     const a = getToken('address');
     if (a) {
@@ -1546,6 +1634,8 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
+    console.log(wearablesCreatorsData);
+    
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -1999,25 +2089,25 @@ function ProfilePage(r) {
       }
     }
     if (routeTab === 'wearablelist') {
-      // console.log(statue);
-      return (
-        <>
 
-          <>
-            <div className={style.buildingContainer}>
-              <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
-                {/* {renderWerable} */}
-                <div className={style.createrCont}>
-                  <span className={style.join}>Join Creators to show your works</span>
-                  <span className={style.apply}>Apply</span>
-                </div>
-              </div>
-            </div>
-          </>
-          : <></>
+      // return (
+      //   <>
 
-        </>
-      )
+      //     <>
+      //       <div className={style.buildingContainer}>
+      //         <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
+      //           {renderWerable}
+      //           {/* <div className={style.createrCont}>
+      //             <span className={style.join}>Join Creators to show your works</span>
+      //             <span className={style.apply}>Apply</span>
+      //           </div> */}
+      //         </div>
+      //       </div>
+      //     </>
+      //     : <></>
+
+      //   </>
+      // )
       // if(statue===1){
       // return (
       //   <>
@@ -2058,93 +2148,93 @@ function ProfilePage(r) {
           </div>
           <div className={cls} />
         </div> */
-      //   return (
-      //     <>
-      //     <div className={style.wearablesContainer}>
-      //       <div className={style.title}>
-      //         <div className={style.wearables}></div>
-      //         <div className={style.texteated}>Wearables Created</div>
-      //       </div>
-      //       <div className={style.wearablesNav}>
-      //         <div className={style.left}>
-      //           {wearablesNav.map((item, index) => {
-      //             return (
-      //               <>
-      //                 <div
-      //                   onClick={() => {
-      //                     setWearablesNavState(item.type);
-      //                     wearablesState.current = item.type;
-      //                     setShowOrHideState(false);
-      //                     if (item.type === 'all') {
-      //                       setWearablesCreatorsData(wearablesCreatorsOriginData);
-      //                     }
-      //                     if (item.type === 'shown') {
-      //                       setWearablesCreatorsData(wearablesShowData);
-      //                     }
-      //                     if (item.type === 'hidden') {
-      //                       setWearablesCreatorsData(wearablesHideData);
-      //                     }
-      //                   }}
-      //                   className={cn(
-      //                     style.wearablesNavItem,
-      //                     wearablesNavState === item.type ? style.wearableNavAction : null,
-      //                   )}
-      //                   key={uuid()}
-      //                 >
-      //                   {/* <div className={style.mmm}> */}
-      //                   <div>
-      //                     {item.label}
-      //                     {/* <span>{item.label}</span> */}
-      //                     <span style={{ marginLeft: '2px' }}>
-      //                       {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-      //                       {item.type === 'shown' ? wearablesShowData.length : null}
-      //                       {item.type === 'hidden' ? wearablesHideData.length : null}
-      //                     </span>
-      //                   </div>
+        return (
+          <>
+          <div className={style.wearablesContainer}>
+            <div className={style.title}>
+              <div className={style.wearables}></div>
+              <div className={style.texteated}>Wearables Created</div>
+            </div>
+            <div className={style.wearablesNav}>
+              <div className={style.left}>
+                {wearablesNav.map((item, index) => {
+                  return (
+                    <>
+                      <div
+                        onClick={() => {
+                          setWearablesNavState(item.type);
+                          wearablesState.current = item.type;
+                          setShowOrHideState(false);
+                          if (item.type === 'all') {
+                            setWearablesCreatorsData(wearablesCreatorsOriginData);
+                          }
+                          if (item.type === 'shown') {
+                            setWearablesCreatorsData(wearablesShowData);
+                          }
+                          if (item.type === 'hidden') {
+                            setWearablesCreatorsData(wearablesHideData);
+                          }
+                        }}
+                        className={cn(
+                          style.wearablesNavItem,
+                          wearablesNavState === item.type ? style.wearableNavAction : null,
+                        )}
+                        key={uuid()}
+                      >
+                        {/* <div className={style.mmm}> */}
+                        <div>
+                          {item.label}
+                          {/* <span>{item.label}</span> */}
+                          <span style={{ marginLeft: '2px' }}>
+                            {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+                            {item.type === 'shown' ? wearablesShowData.length : null}
+                            {item.type === 'hidden' ? wearablesHideData.length : null}
+                          </span>
+                        </div>
 
-      //                   {/* </div> */}
-      //                 </div>
-      //               </>
-      //             );
-      //           })}
-      //         </div>
-      //         <div
-      //           className={style.right}
-      //           onClick={() => {
-      //             setShowOrHideState(!showOrHideState);
-      //           }}
-      //         >
-      //           <img src="/images/Settings.png" />
-      //           <div>Batch setting</div>
-      //           <ul
-      //             className={
-      //               wearablesNavState === 'all' && showOrHideState
-      //                 ? style.showOrHideList
-      //                 : style.showOrHideList1
-      //             }
-      //           >
-      //             {showOrHideState
-      //               ? showOrHide[wearablesNavState].map((item, index) => {
-      //                 return (
-      //                   <li
-      //                     className={style.showOrHideItem}
-      //                     key={index}
-      //                     onClick={() => {
-      //                       settingShowOrHide(item.type);
-      //                     }}
-      //                   >
-      //                     {item.label}
-      //                   </li>
-      //                 );
-      //               })
-      //               : null}
-      //           </ul>
-      //         </div>
-      //       </div>
-      //       <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
-      //     </div>
-      //   </>
-      // );
+                        {/* </div> */}
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+              <div
+                className={style.right}
+                onClick={() => {
+                  setShowOrHideState(!showOrHideState);
+                }}
+              >
+                <img src="/images/Settings.png" />
+                <div>Batch setting</div>
+                <ul
+                  className={
+                    wearablesNavState === 'all' && showOrHideState
+                      ? style.showOrHideList
+                      : style.showOrHideList1
+                  }
+                >
+                  {showOrHideState
+                    ? showOrHide[wearablesNavState].map((item, index) => {
+                      return (
+                        <li
+                          className={style.showOrHideItem}
+                          key={index}
+                          onClick={() => {
+                            settingShowOrHide(item.type);
+                          }}
+                        >
+                          {item.label}
+                        </li>
+                      );
+                    })
+                    : null}
+                </ul>
+              </div>
+            </div>
+            <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
+          </div>
+        </>
+      );
     }
 
     if (routeTab === 'building') {

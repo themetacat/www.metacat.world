@@ -82,16 +82,16 @@ export default function Status({ status, retry, addWork, addWorkWerable, unloadB
   if (status === 'emptyWerable') {
 
     return (
-      <div className={cn(commonCls)}>
-        <img src="/images/default-image.png" className={style.baseImgCon} />
-        <span className={cn("", style.mmt)}>Join Creators to show your works</span>
-        <span className={cn("mt-4 text-xl font-semibold", style.nowork)} onClick={addWorkWerable}>Add your work</span>
-      </div>
-      // <div className={style.createrCont}>
-      //   {/* <img src="/images/default-image.png" className={style.baseImgCon} /> */}
-      //   <span className={style.join}>Join Creators to show your works</span>
-      //   <span className={style.apply} onClick={addWorkWerable}>Apply</span>
+      // <div className={cn(commonCls)}>
+      //   <img src="/images/default-image.png" className={style.baseImgCon} />
+      //   <span className={cn("", style.mmt)}>Join Creators to show your works</span>
+      //   <span className={cn("mt-4 text-xl font-semibold", style.nowork)} onClick={addWorkWerable}>Add your work</span>
       // </div>
+      <div className={style.createrCont}>
+        {/* <img src="/images/default-image.png" className={style.baseImgCon} /> */}
+        <span className={style.join}>Join Creators to show your works</span>
+        <span className={style.apply} onClick={addWorkWerable}>Apply</span>
+      </div>
     );
   }
 
