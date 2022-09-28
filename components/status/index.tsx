@@ -7,13 +7,14 @@ import cn from 'classnames';
 import style from './index.module.css';
 
 interface Props {
-  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search'| 'emptyBuilding' | 'waitBuilder' | 'AddBuilder';
+  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search' | 'emptyBuilding' | 'waitBuilder' | 'AddBuilder' | 'emptyWerable';
   mini?: boolean;
   retry?: () => void;
   addWork?: () => void;
+  addWorkWerable?: () => void;
   unloadBuilders?: () => void;
 }
-export default function Status({ status, retry,addWork, unloadBuilders,mini = false }: Props) {
+export default function Status({ status, retry, addWork, addWorkWerable, unloadBuilders, mini = false }: Props) {
   const router = useRouter();
 
   const commonCls = cn(
@@ -72,9 +73,25 @@ export default function Status({ status, retry,addWork, unloadBuilders,mini = fa
     return (
       <div className={cn(commonCls)}>
         <img src="/images/default-image.png" className={style.baseImgCon} />
-        <span className={cn("",style.mmt)}>Join Builders to show your works</span>
-        <span className={cn("mt-4 text-xl font-semibold",style.nowork)} onClick={addWork}>Add your work</span>
+        <span className={cn("", style.mmt)}>Join Builders to show your works</span>
+        <span className={cn("mt-4 text-xl font-semibold", style.nowork)} onClick={addWork}>Add your work</span>
       </div>
+    );
+  }
+
+  if (status === 'emptyWerable') {
+
+    return (
+      <div className={cn(commonCls)}>
+        <img src="/images/default-image.png" className={style.baseImgCon} />
+        <span className={cn("", style.mmt)}>Join Creators to show your works</span>
+        <span className={cn("mt-4 text-xl font-semibold", style.nowork)} onClick={addWorkWerable}>Add your work</span>
+      </div>
+      // <div className={style.createrCont}>
+      //   {/* <img src="/images/default-image.png" className={style.baseImgCon} /> */}
+      //   <span className={style.join}>Join Creators to show your works</span>
+      //   <span className={style.apply} onClick={addWorkWerable}>Apply</span>
+      // </div>
     );
   }
 
@@ -82,7 +99,7 @@ export default function Status({ status, retry,addWork, unloadBuilders,mini = fa
     return (
       <div className={cn(commonCls)}>
         <img src="/images/default-image.png" className={style.baseImgCon} />
-        <span className={cn("mt-4 text-xl font-semibold",style.waitBuilder)} >Waiting for confirmation to show as a Builder……</span>
+        <span className={cn("mt-4 text-xl font-semibold", style.waitBuilder)} >Waiting for confirmation to show as a Builder……</span>
       </div>
     );
   }
@@ -91,7 +108,7 @@ export default function Status({ status, retry,addWork, unloadBuilders,mini = fa
       <div className={cn(commonCls)}>
         <img src="/images/default-image.png" className={style.baseImgCon} />
         <span className="mt-4 text-xl font-semibold">No works</span>
-        <span className={cn("mt-4 text-xl font-semibold",style.nowork)} onClick={unloadBuilders}>Add your work</span>
+        <span className={cn("mt-4 text-xl font-semibold", style.nowork)} onClick={unloadBuilders}>Add your work</span>
       </div>
     );
   }

@@ -35,6 +35,7 @@ import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
 import BaseBarDece from '../../components/parcel-basebardece';
 import TrafficBar from '../../components/parcel-traffic_bar';
+import JoinModal from '../../components/v2/join-modal';
 import Creator from '../../components/creator';
 import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
@@ -187,6 +188,7 @@ function ProfilePage(r) {
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
+  const [showModal, setShowModal] = React.useState(false);
   const [nickNameVal, setNickNameVla] = React.useState('');
   const [introductionText, setIntroduction] = React.useState('');
   const [countryAddress, setcountry] = React.useState('');
@@ -195,9 +197,9 @@ function ProfilePage(r) {
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
-  const [statue, setStatue] = React.useState(null);
+  const [statue, setStatue] = React.useState(1);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
-  const [buildState, setBuildState] = React.useState(1);
+  const [buildState, setBuildState] = React.useState(null);
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -243,6 +245,9 @@ function ProfilePage(r) {
   const [walletAddress, setWalletAddress] = React.useState('');
   const [saveIcon, setSaveIcon] = React.useState(false);
   // const [buildFiles, setBuildFiles] = React.useState([]);
+  const [createrStateVal, setCreaterStateVal] = React.useState(null);
+  const [emailStateWearable, setEmailStateWearable] = React.useState(null);
+  const [buildStateWearable, setBuildStateVal] = React.useState(1);
 
   const Nav = [
     {
@@ -558,15 +563,16 @@ function ProfilePage(r) {
     async (token: string) => {
       const res = await getBaseInfo(token);
 
-      const sta = res.data.profile.creator_status
+      // const sta = res.data.profile.creator_status
       const emailState = res.data.profile.email
       const buildNum = res.data.profile.builder_status
       const wallet = res.data.profile.address
       setNoWork(true)
-      setStatue(sta)
+      setStatue(res.data.profile.creator_status)
       setBuildState(buildNum)
       setWalletAddress(wallet)
-
+      setCreaterStateVal(res.data.profile.creator_status)
+      setEmailStateWearable(res.data.profile.email)
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
 
       setEmailStateVal(emailState)
@@ -746,7 +752,7 @@ function ProfilePage(r) {
     const showIndex = false
     buildData?.map((item) => {
       if (item !== '') {
-          const reg = '^((https|http|ftp|rtsp|mms)?://)'
+        const reg = '^((https|http|ftp|rtsp|mms)?://)'
           + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
           + '(([0-9]{1,3}.){3}[0-9]{1,3}'
           + '|'
@@ -759,7 +765,7 @@ function ProfilePage(r) {
         const re = new RegExp(reg)
         if (!re.test(item)) {
           toast.error("Not the correct URL, please pay attention to check");
-        return false;
+          return false;
         }
       }
       return true;
@@ -881,11 +887,11 @@ function ProfilePage(r) {
     //   setSaveVal(false)
     // }else{
     //   console.log(saveVal,11111);
-      
+
     //   setSaveVal(true)
     // }
 
-    
+
     if (nickName === '') {
       toast.error('Please fill in Building Name');
       return false;
@@ -905,7 +911,7 @@ function ProfilePage(r) {
     if (linkBuild !== '') {
       // let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
       // if(!reg.test(linkBuild)){
-        const reg = '^((https|http|ftp|rtsp|mms)?://)'
+      const reg = '^((https|http|ftp|rtsp|mms)?://)'
         + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
         + '(([0-9]{1,3}.){3}[0-9]{1,3}'
         + '|'
@@ -916,9 +922,9 @@ function ProfilePage(r) {
         + '((/?)|'
         + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
       const re = new RegExp(reg)
-      if(!re.test(linkBuild)){
+      if (!re.test(linkBuild)) {
         toast.error("Not the correct URL, please pay attention to check");
-      return false;
+        return false;
       }
     }
     // const linkBuildIndex = linkBuild.indexOf('http://')
@@ -963,16 +969,16 @@ function ProfilePage(r) {
 
 
     // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
-   
+
 
     setSaveIcon(true)
     res.then((resCON) => {
       // toast(res.msg)
       setSaveIcon(true)
       if (resCON.code === 100000) {
-      
+
         toast(resCON.msg)
-       setAddbuild(false)
+        setAddbuild(false)
         const resBuil = req_building_list(walletAddress);
 
         resBuil.then((resBuilCon) => {
@@ -987,10 +993,10 @@ function ProfilePage(r) {
       }
     });
 
-   
+
 
   },
-    [resultHandlerBu, saveIcon,routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
+    [resultHandlerBu, saveIcon, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
   );
 
   // const addWork = React.useCallback(async () => {
@@ -1084,19 +1090,45 @@ function ProfilePage(r) {
     tabState,
     reqDclData,
   ]);
+  const addWorkWerable = React.useCallback(async (emailStateWearable) => {
+    console.log(55,emailStateWearable);
+    setShowModal(true)
+    // if (emailState === null || emailState === '') {
+    //   setJoinBuilders(true)
+    // } else if (emailState !== '') {
+    //   setEmailBuilders(true)
+    //   // this.props.emailState(this.props.emailState)
+    // }
+    // // console.log(joinBuilders, 55555, emailState);
 
-  // const DeleteBuild = ()=>{
-  //   console.log(558);
 
-  // }
-  // const EditBuild = ()=>{
-  //   console.log('EditBuild');
-  //   setAddbuild(true)
+    // // if(buildState){
 
-  // }
-  // const openCon =  React.useCallback(async () => {
-  //   setAddbuild(true)
-  // }, [])
+    // // }
+
+  }, [joinBuilders, emailStateVal,emailStateWearable])
+
+  const renderWerable = React.useMemo(() => {
+    console.log(statue);
+
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (statue === 1) {
+      return <Status addWorkWerable={() => { addWorkWerable(emailStateWearable) }} status="emptyWerable" />;
+    }
+    if (statue === 2) {
+      console.log("");
+      
+      // return <Status status="waitBuilder" />;
+      // return <Status addWorkWerable={() => { addWorkWerable(emailStateWearable) }} status="emptyWerable" />;
+
+    }
+  }, [statue,emailStateWearable])
+
   const renderBuilding = React.useMemo(() => {
 
     if (loading) {
@@ -1365,9 +1397,9 @@ function ProfilePage(r) {
   const watcher_cardState = React.useCallback(() => {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
-//   useEffect(()=>{
-// console.log(saveVal,999999);
-//   },[saveVal])
+  //   useEffect(()=>{
+  // console.log(saveVal,999999);
+  //   },[saveVal])
   useEffect(() => {
     // const accessToken = getToken('atk');
     // console.log(accessToken);
@@ -1404,6 +1436,7 @@ function ProfilePage(r) {
     requestData,
     builderSat,
     buildState,
+    statue,
     walletAddress,
     requestPersonal,
     watcher_store,
@@ -1966,7 +1999,20 @@ function ProfilePage(r) {
       }
     }
     if (routeTab === 'wearablelist') {
-
+      // console.log(statue);
+      return (
+        <>
+          {/* {buildState === 2 ? */}
+          <>
+            <div className={style.buildingContainer}>
+              <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderWerable}
+              </div>
+            </div>
+          </>
+          : <></>
+          {/* } */}
+        </>
+      )
       // if(statue===1){
       // return (
       //   <>
@@ -1985,9 +2031,8 @@ function ProfilePage(r) {
 
 
 
-      return (
-        <>
-          {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
+
+      {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item) => {
@@ -2008,92 +2053,93 @@ function ProfilePage(r) {
           </div>
           <div className={cls} />
         </div> */}
+      //   return (
+      //     <>
+      //     <div className={style.wearablesContainer}>
+      //       <div className={style.title}>
+      //         <div className={style.wearables}></div>
+      //         <div className={style.texteated}>Wearables Created</div>
+      //       </div>
+      //       <div className={style.wearablesNav}>
+      //         <div className={style.left}>
+      //           {wearablesNav.map((item, index) => {
+      //             return (
+      //               <>
+      //                 <div
+      //                   onClick={() => {
+      //                     setWearablesNavState(item.type);
+      //                     wearablesState.current = item.type;
+      //                     setShowOrHideState(false);
+      //                     if (item.type === 'all') {
+      //                       setWearablesCreatorsData(wearablesCreatorsOriginData);
+      //                     }
+      //                     if (item.type === 'shown') {
+      //                       setWearablesCreatorsData(wearablesShowData);
+      //                     }
+      //                     if (item.type === 'hidden') {
+      //                       setWearablesCreatorsData(wearablesHideData);
+      //                     }
+      //                   }}
+      //                   className={cn(
+      //                     style.wearablesNavItem,
+      //                     wearablesNavState === item.type ? style.wearableNavAction : null,
+      //                   )}
+      //                   key={uuid()}
+      //                 >
+      //                   {/* <div className={style.mmm}> */}
+      //                   <div>
+      //                     {item.label}
+      //                     {/* <span>{item.label}</span> */}
+      //                     <span style={{ marginLeft: '2px' }}>
+      //                       {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+      //                       {item.type === 'shown' ? wearablesShowData.length : null}
+      //                       {item.type === 'hidden' ? wearablesHideData.length : null}
+      //                     </span>
+      //                   </div>
 
-          <div className={style.wearablesContainer}>
-            <div className={style.title}>
-              <div className={style.wearables}></div>
-              <div className={style.texteated}>Wearables Created</div>
-            </div>
-            <div className={style.wearablesNav}>
-              <div className={style.left}>
-                {wearablesNav.map((item, index) => {
-                  return (
-                    <>
-                      <div
-                        onClick={() => {
-                          setWearablesNavState(item.type);
-                          wearablesState.current = item.type;
-                          setShowOrHideState(false);
-                          if (item.type === 'all') {
-                            setWearablesCreatorsData(wearablesCreatorsOriginData);
-                          }
-                          if (item.type === 'shown') {
-                            setWearablesCreatorsData(wearablesShowData);
-                          }
-                          if (item.type === 'hidden') {
-                            setWearablesCreatorsData(wearablesHideData);
-                          }
-                        }}
-                        className={cn(
-                          style.wearablesNavItem,
-                          wearablesNavState === item.type ? style.wearableNavAction : null,
-                        )}
-                        key={uuid()}
-                      >
-                        {/* <div className={style.mmm}> */}
-                        <div>
-                          {item.label}
-                          {/* <span>{item.label}</span> */}
-                          <span style={{ marginLeft: '2px' }}>
-                            {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-                            {item.type === 'shown' ? wearablesShowData.length : null}
-                            {item.type === 'hidden' ? wearablesHideData.length : null}
-                          </span>
-                        </div>
-
-                        {/* </div> */}
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-              <div
-                className={style.right}
-                onClick={() => {
-                  setShowOrHideState(!showOrHideState);
-                }}
-              >
-                <img src="/images/Settings.png" />
-                <div>Batch setting</div>
-                <ul
-                  className={
-                    wearablesNavState === 'all' && showOrHideState
-                      ? style.showOrHideList
-                      : style.showOrHideList1
-                  }
-                >
-                  {showOrHideState
-                    ? showOrHide[wearablesNavState].map((item, index) => {
-                      return (
-                        <li
-                          className={style.showOrHideItem}
-                          key={index}
-                          onClick={() => {
-                            settingShowOrHide(item.type);
-                          }}
-                        >
-                          {item.label}
-                        </li>
-                      );
-                    })
-                    : null}
-                </ul>
-              </div>
-            </div>
-            <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
-          </div>
-        </>
-      );
+      //                   {/* </div> */}
+      //                 </div>
+      //               </>
+      //             );
+      //           })}
+      //         </div>
+      //         <div
+      //           className={style.right}
+      //           onClick={() => {
+      //             setShowOrHideState(!showOrHideState);
+      //           }}
+      //         >
+      //           <img src="/images/Settings.png" />
+      //           <div>Batch setting</div>
+      //           <ul
+      //             className={
+      //               wearablesNavState === 'all' && showOrHideState
+      //                 ? style.showOrHideList
+      //                 : style.showOrHideList1
+      //             }
+      //           >
+      //             {showOrHideState
+      //               ? showOrHide[wearablesNavState].map((item, index) => {
+      //                 return (
+      //                   <li
+      //                     className={style.showOrHideItem}
+      //                     key={index}
+      //                     onClick={() => {
+      //                       settingShowOrHide(item.type);
+      //                     }}
+      //                   >
+      //                     {item.label}
+      //                   </li>
+      //                 );
+      //               })
+      //               : null}
+      //           </ul>
+      //         </div>
+      //       </div>
+      //       <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
+      //     </div>
+      //   </>
+      // );
     }
 
     if (routeTab === 'building') {
@@ -2132,6 +2178,7 @@ function ProfilePage(r) {
     manySetLabel,
     renderContent,
     renderBuilding,
+    renderWerable,
     dataSource,
     dataBuildSource,
     reqBuilderData,
@@ -2150,7 +2197,7 @@ function ProfilePage(r) {
             setManySetState(false);
           }}
           id='container'
-          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join : '',)}
+          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join1 : '',)}
         >
           <div className=" relative">
             <PageHeader
@@ -2270,6 +2317,26 @@ function ProfilePage(r) {
             clickHeader={drag}
           />
         </> : ''}
+      <JoinModal
+        emailState={emailStateWearable}
+        show={showModal}
+        // buildStateVal={buildStateVal}
+        setClose={(x) => {
+          setShowModal(x);
+        }}
+        setcreaterState={(x) => {
+          console.log(x);
+
+          setCreaterStateVal(x)
+        }}
+        setEmail={(x) => {
+          setEmailStateWearable(x)
+        }}
+        setbuildState={(x) => {
+          setBuildStateVal(x)
+        }}
+        type={'Creators'}
+      ></JoinModal>
     </>
   );
 }
