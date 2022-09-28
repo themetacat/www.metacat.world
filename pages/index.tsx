@@ -113,6 +113,60 @@ export default function Index(props) {
     },
     [refreshTK],
   );
+  const dragJoin = function (evt, dbele) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_works_container2__VidgJ')
+    }
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
 
   const requestFloorData = React.useCallback(async () => {
     const res = await getFloorPrice();
@@ -186,7 +240,7 @@ export default function Index(props) {
 
   React.useEffect(() => {
     // console.log(buildStateVal, 999999999999999);
-
+   
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -271,10 +325,11 @@ export default function Index(props) {
 
 
   return (
-    <Page meta={meta} >
-      <Layout className={cn('', joinBuilders === true ? style.aa : null)}>
-        <div >
-          <div className={cn("bg-black",)} >
+    <Page meta={meta} className={cn('')} >
+      <Layout>
+      {/* , joinBuilders === true ? style.aa : null */}
+        <div className={cn("bg-gray-500",)} >
+          <div className={cn("bg-black")} >
             <div className="main-content pb-12">
               <div className="flex justify-between items-end pt-12 pb-7">
                 <span className="text-white font-bold text-2xl">Analytics</span>
@@ -411,7 +466,8 @@ export default function Index(props) {
                         if (buildStateVal === 1) {
                           if (addState && emailState) {
                             // console.log("两个都有啊");
-                            setJoinBuilders(true)
+                            // setJoinBuilders(true)
+                            router.replace(`/profile?type=building`)
                           } else if (!addState || !emailState) {
                             // console.log("你想要啥");
                             setShowModalBuilder(true);
@@ -424,7 +480,7 @@ export default function Index(props) {
                     >
                       JOIN BUILDERS
                     </div>
-                    {
+                    {/* {
                       joinBuilders === true ?
                         <div>
                           <JoinModalBuild
@@ -435,7 +491,7 @@ export default function Index(props) {
                           ></JoinModalBuild>
                         </div>
                         : null
-                    }
+                    } */}
                   </div>
                 </div>
               </div>
@@ -466,13 +522,13 @@ export default function Index(props) {
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                       onClick={() => {
                         // setShowModal(true);
-                        console.log(createrStateVal);
+                        // console.log(createrStateVal);
 
                         if (createrStateVal === 1) {
                           setShowModal(true);
                         } else if (createrStateVal === 4)
                           router.replace('/profile?type=wearablelist')
-                        else if (createrStateVal !== 1 ||createrStateVal !== 4) {
+                        else if (createrStateVal !== 1 || createrStateVal !== 4) {
                           toast.error('You have become creater')
                         }
                       }
@@ -509,7 +565,7 @@ export default function Index(props) {
           }}
           setcreaterState={(x) => {
             console.log(x);
-            
+
             setCreaterStateVal(x)
           }}
           setEmail={(x) => {
