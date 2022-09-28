@@ -471,7 +471,7 @@ export default function Index(props) {
                           setShowModal(true);
                         } else if (createrStateVal === 4)
                           router.replace('/profile?type=wearablelist')
-                        else if (createrStateVal !== 1) {
+                        else if (createrStateVal !== 1 ||createrStateVal !== 4) {
                           toast.error('You have become creater')
                         }
                       }
