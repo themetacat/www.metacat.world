@@ -325,20 +325,25 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
       const res = await req_userBuilder_apply_become(tokenVal, 'builder', '');
       if (res.code) {
         // toast.success('Submitted successfully');
-        toast(res.msg);
-
+        // toast(res.msg);
+        // if (res.code === 1000000) {
+        // const rest = await req_userBuilder_apply_become(token, 'builder', '');
+        // if (rest.code === 100000) {
         requestPersonal(t);
-        // const resGetBageInfo = await getBaseInfo(token)
-        // console.log(444444444444);
+        const resGetBageInfo = await getBaseInfo(tokenVal)
 
-        // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");a
+        // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
 
-        // if (resGetBageInfo.code === 100000) {
-        //   // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
-        //   console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
+        if (resGetBageInfo.code === 100000) {
+          // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
 
-        // }
-        // emailState === resGetBageInfo.data.profile.email
+          setEmail(resGetBageInfo.data.profile.email);
+          setbuildState(resGetBageInfo.data.profile.builder_status);
+          setcreaterState(resGetBageInfo.data.profile.creator_status);
+
+          // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
+
+        }
         setOpen(false);
       }
     } else {
