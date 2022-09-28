@@ -1090,8 +1090,8 @@ function ProfilePage(r) {
     tabState,
     reqDclData,
   ]);
-  const addWorkWerable = React.useCallback(async (emailStateWearable) => {
-    console.log(55,emailStateWearable);
+  const addWorkWerable = React.useCallback(async () => {
+    console.log(55,);
     setShowModal(true)
     // if (emailState === null || emailState === '') {
     //   setJoinBuilders(true)
@@ -1106,10 +1106,10 @@ function ProfilePage(r) {
 
     // // }
 
-  }, [joinBuilders, emailStateVal,emailStateWearable])
+  }, [joinBuilders, emailStateVal, emailStateWearable])
 
   const renderWerable = React.useMemo(() => {
-    console.log(statue);
+    // console.log(statue);
 
     if (loading) {
       return <Status status="loading" />;
@@ -1118,16 +1118,15 @@ function ProfilePage(r) {
       return <Status retry={onRetry} status="error" />;
     }
     if (statue === 1) {
-      return <Status addWorkWerable={() => { addWorkWerable(emailStateWearable) }} status="emptyWerable" />;
+      return <Status addWorkWerable={() => { addWorkWerable() }} status="emptyWerable" />;
     }
     if (statue === 2) {
-      console.log("");
-      
-      // return <Status status="waitBuilder" />;
-      // return <Status addWorkWerable={() => { addWorkWerable(emailStateWearable) }} status="emptyWerable" />;
+
+      return <Status status="waitBuilder" />;
+
 
     }
-  }, [statue,emailStateWearable])
+  }, [statue, emailStateWearable])
 
   const renderBuilding = React.useMemo(() => {
 
@@ -2003,15 +2002,20 @@ function ProfilePage(r) {
       // console.log(statue);
       return (
         <>
-          {/* {buildState === 2 ? */}
+
           <>
             <div className={style.buildingContainer}>
-              <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderWerable}
+              <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
+                {/* {renderWerable} */}
+                <div className={style.createrCont}>
+                  <span className={style.join}>Join Creators to show your works</span>
+                  <span className={style.apply}>Apply</span>
+                </div>
               </div>
             </div>
           </>
           : <></>
-          {/* } */}
+
         </>
       )
       // if(statue===1){
@@ -2033,7 +2037,7 @@ function ProfilePage(r) {
 
 
 
-      {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
+      /* <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item) => {
@@ -2053,7 +2057,7 @@ function ProfilePage(r) {
             <div className={cls} />
           </div>
           <div className={cls} />
-        </div> */}
+        </div> */
       //   return (
       //     <>
       //     <div className={style.wearablesContainer}>
