@@ -1098,7 +1098,6 @@ function ProfilePage(r) {
     // console.log(55, tokenWearable);
     setShowModal(true)
     const res = getBaseInfo(tokenWearable);
-    //res 是能拿到接口返回的东西  但是你只是拿到了 你没设置啊
     res.then((resWeable) => {
       setaddressWerVal(resWeable.data.profile.address);
       setemailWearVal(resWeable.data.profile.email);
