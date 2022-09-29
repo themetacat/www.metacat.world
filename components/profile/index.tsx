@@ -122,7 +122,7 @@ export default function Profile({
             {email ? (
               <ProfileIconLabel
                 label={`Email`}
-                // link={email}
+                link={"mailto:metacat@tutanota.com"}
                 icon="/images/008email.png"
                 prefix={true}
                 isLink={true}
