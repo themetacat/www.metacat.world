@@ -236,7 +236,7 @@ export default function DaoWebglCard({
         {!type && model && model.show_status ? (
           <div className={styles.showOrHide} onClick={changeShowOrHide}>
             {
-               saveIconVal == model.id? <img src='/images/saveIcon.gif' ></img> : null
+               saveIconVal === model.id? <img src='/images/saveIcon.gif' ></img> : null
             }
             {
             model && model.show_status === 2 ?
