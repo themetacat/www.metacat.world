@@ -494,9 +494,9 @@ export default function Modal({ show, setbuildState, addressWearable, emaileWear
     const t = getToken('atk');
     setTokenState(t)
 
-    console.log(addressWearable, "profile?.address");
+    // console.log(profile?.address, "profile?.address",addressWearable);
 
-    setConnect(profile?.address !== null || addressWearable !== null);
+    setConnect(profile?.address !== null );
 
 
     return () => {
@@ -505,7 +505,7 @@ export default function Modal({ show, setbuildState, addressWearable, emaileWear
         timeId.current = null;
       }
     };
-  }, [profile, buildStateVal, emailState,addressWearable]);
+  }, [profile, buildStateVal, emailState, addressWearable]);
 
 
 
@@ -607,14 +607,14 @@ export default function Modal({ show, setbuildState, addressWearable, emaileWear
                       }}
                     ></MeteInput>
                   </div>
-                  {profile?.email ? null : (
+                  {profile?.email || emaileWearable ? null : (
                     <div className=" mt-5  text-left">
                       <div className=" text-base font-medium text-gray-400">Code</div>
                       <MeteInput
                         require={true}
                         name={'email'}
                         bold={true}
-                        disable={profile?.email !== null || emaileWearable!==null}
+                        disable={profile?.email !== null || emaileWearable !== null}
                         value={verCode || ''}
                         classname={'mt-2'}
                         needSuffix={true}
