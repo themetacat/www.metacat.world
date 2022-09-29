@@ -1120,9 +1120,7 @@ function ProfilePage(r) {
       return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
 
     }
-    if (statue === 2) {
 
-    }
   }, [statue,
     error,
     loading,
@@ -1552,7 +1550,6 @@ function ProfilePage(r) {
         );
       }
       setWearablesSleceteIdList([...wearablesSleceteIdList]);
-      //这个是点击方法吗 我能说我不是在这里面设置的嘛。。。 在哪设置的
     },
     [wearablesSleceteIdList],
   );
