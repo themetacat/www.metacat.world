@@ -577,7 +577,7 @@ function ProfilePage(r) {
       // setCreaterStateVal(res.data.profile.creator_status)
       setEmailStateWearable(res.data.profile.email)
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
-      console.log(statue, "setEmailStateWearable");
+      // console.log(statue, "setEmailStateWearable");
 
       setEmailStateVal(emailState)
       // console.log(res.data.profile.creator_status,99999);
@@ -1095,7 +1095,7 @@ function ProfilePage(r) {
     reqDclData,
   ]);
   const addWorkWerable = () => {
-    console.log(55, tokenWearable);
+    // console.log(55, tokenWearable);
     setShowModal(true)
     const res = getBaseInfo(tokenWearable);
     //res 是能拿到接口返回的东西  但是你只是拿到了 你没设置啊
@@ -1107,7 +1107,7 @@ function ProfilePage(r) {
   }
 
   const renderWerable = React.useMemo(() => {
-    console.log(statue);
+    // console.log(statue);
 
     if (loading) {
       return <Status status="loading" />;
@@ -1120,7 +1120,7 @@ function ProfilePage(r) {
 
     }
     if (statue === 2) {
-      console.log(reqWearablesData);
+      // console.log(reqWearablesData);
 
       // reqWearablesData()
       // return <Status status="waitBuilder" />;
@@ -2442,7 +2442,7 @@ function ProfilePage(r) {
           setShowModal(x);
         }}
         setcreaterState={(x) => {
-          console.log(x);
+          // console.log(x);
 
           setStatue(x)
         }}

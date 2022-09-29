@@ -260,7 +260,7 @@ export default function Modal({ show, setbuildState, addressWearable, emaileWear
 
 
   const buttonSecond = useCallback(async () => {
-    console.log("第二步", profile?.email);
+    // console.log("第二步", profile?.email);
 
     // if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     // if (!inputAddress && !profile?.address) {
