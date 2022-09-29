@@ -20,7 +20,7 @@ const TAB = [
     type: 'creators',
   },
   {
-    label: 'WearableDao',
+    label: 'WearableDAO',
     type: 'wearabledao',
   },
 ];

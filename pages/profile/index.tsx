@@ -208,6 +208,7 @@ function ProfilePage(r) {
   const [selectedIds, setSelectedIds] = React.useState([]);
   const [rent_set_state, set_rent_set_state] = React.useState(false);
   const [status, set_status] = React.useState('');
+  const [saveIconVal, setSaveIconVal] = React.useState(false);
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
   const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'parcellist');
@@ -223,6 +224,7 @@ function ProfilePage(r) {
   const [wearablesNavState, setWearablesNavState] = React.useState('all');
   const wearablesState = React.useRef(null);
   const [showOrHideState, setShowOrHideState] = React.useState(false);
+  // const [showOrHideStateConent, setShowOrHideStateConent] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
   const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
   // const [ownerData, setOwnerData] = React.useState([]);
@@ -1119,98 +1121,7 @@ function ProfilePage(r) {
 
     }
     if (statue === 2) {
-      // console.log(reqWearablesData);
 
-      // reqWearablesData()
-      // return <Status status="waitBuilder" />;
-
-      // return (
-      //   <>
-      //     <div className={style.wearablesContainer}>
-      //       <div className={style.title}>
-      //         <div className={style.wearables}></div>
-      //         <div className={style.texteated}>Wearables Created</div>
-      //       </div>
-      //       <div className={style.wearablesNav}>
-      //         <div className={style.left}>
-      //           {wearablesNav.map((item, index) => {
-      //             return (
-      //               <>
-      //                 <div
-      //                   onClick={() => {
-      //                     setWearablesNavState(item.type);
-      //                     wearablesState.current = item.type;
-      //                     setShowOrHideState(false);
-      //                     if (item.type === 'all') {
-      //                       setWearablesCreatorsData(wearablesCreatorsOriginData);
-      //                     }
-      //                     if (item.type === 'shown') {
-      //                       setWearablesCreatorsData(wearablesShowData);
-      //                     }
-      //                     if (item.type === 'hidden') {
-      //                       setWearablesCreatorsData(wearablesHideData);
-      //                     }
-      //                   }}
-      //                   className={cn(
-      //                     style.wearablesNavItem,
-      //                     wearablesNavState === item.type ? style.wearableNavAction : null,
-      //                   )}
-      //                   key={uuid()}
-      //                 >
-      //                   {/* <div className={style.mmm}> */}
-      //                   <div>
-      //                     {item.label}
-      //                     {/* <span>{item.label}</span> */}
-      //                     <span style={{ marginLeft: '2px' }}>
-      //                       {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-      //                       {item.type === 'shown' ? wearablesShowData.length : null}
-      //                       {item.type === 'hidden' ? wearablesHideData.length : null}
-      //                     </span>
-      //                   </div>
-
-      //                   {/* </div> */}
-      //                 </div>
-      //               </>
-      //             );
-      //           })}
-      //         </div>
-      //         <div
-      //           className={style.right}
-      //           onClick={() => {
-      //             setShowOrHideState(!showOrHideState);
-      //           }}
-      //         >
-      //           <img src="/images/Settings.png" />
-      //           <div>Batch setting</div>
-      //           <ul
-      //             className={
-      //               wearablesNavState === 'all' && showOrHideState
-      //                 ? style.showOrHideList
-      //                 : style.showOrHideList1
-      //             }
-      //           >
-      //             {showOrHideState
-      //               ? showOrHide[wearablesNavState].map((item, index) => {
-      //                 return (
-      //                   <li
-      //                     className={style.showOrHideItem}
-      //                     key={index}
-      //                     onClick={() => {
-      //                       settingShowOrHide(item.type);
-      //                     }}
-      //                   >
-      //                     {item.label}
-      //                   </li>
-      //                 );
-      //               })
-      //               : null}
-      //           </ul>
-      //         </div>
-      //       </div>
-      //       <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
-      //     </div>
-      //   </>
-      // )
     }
   }, [statue,
     error,
@@ -1606,17 +1517,22 @@ function ProfilePage(r) {
           wearablesShowOrHide,
         );
       }
-      // console.log(result, wearablesShowOrHide, stat);
+      setSaveIconVal(id)
+
       if (result.code === 100000) {
+
         if (wearablesShowOrHide === 2 || stat === 2) {
           toast.success('Successfully hidden!');
         }
         if (wearablesShowOrHide === 1 || stat === 1) {
           toast.success('Successfully shown!');
         }
+
       } else {
         toast.error('Failed!');
       }
+      setSaveIconVal(null)
+
       setWearablesShowOrHideState(false);
       setWearablesShowOrHide(0);
       setWearablesSleceteIdList([]);
@@ -1636,6 +1552,7 @@ function ProfilePage(r) {
         );
       }
       setWearablesSleceteIdList([...wearablesSleceteIdList]);
+      //这个是点击方法吗 我能说我不是在这里面设置的嘛。。。 在哪设置的
     },
     [wearablesSleceteIdList],
   );
@@ -1654,6 +1571,7 @@ function ProfilePage(r) {
           <DaoModelList2
             models={wearablesCreatorsData}
             token={refreshTK()}
+            saveIconVal={saveIconVal}
             wearablesShowOrHideState={wearablesShowOrHideState}
             wearablesShowOrHide={wearablesShowOrHide}
             length={wearablesCreatorsData.length}
@@ -2221,6 +2139,11 @@ function ProfilePage(r) {
                     onClick={() => {
                       setShowOrHideState(!showOrHideState);
                     }}
+                    onMouseLeave={() => {
+                      setTimeout(() => {
+                        setShowOrHideState(false);
+                      }, 2000);
+                    }}
                   >
                     <img src="/images/Settings.png" />
                     <div>Batch setting</div>
@@ -2230,6 +2153,9 @@ function ProfilePage(r) {
                           ? style.showOrHideList
                           : style.showOrHideList1
                       }
+                      onMouseLeave={() => {
+                        setShowOrHideState(false);
+                      }}
                     >
                       {showOrHideState
                         ? showOrHide[wearablesNavState].map((item, index) => {
@@ -2240,6 +2166,7 @@ function ProfilePage(r) {
                               onClick={() => {
                                 settingShowOrHide(item.type);
                               }}
+
                             >
                               {item.label}
                             </li>
@@ -2384,6 +2311,10 @@ function ProfilePage(r) {
               }}
             >
               {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
+              {/* {
+                    saveIcon === true ? <><img src='/images/saveIcon.gif'></img>
+                    </> : <>Save</>
+                  } */}
             </div>
           </div>
         ) : null}

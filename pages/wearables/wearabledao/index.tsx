@@ -40,7 +40,7 @@ const TAB = [
     replace: '/wearables',
   },
   {
-    label: 'WearableDao',
+    label: 'WearableDAO',
     type: 'wearabledao',
     replace: '/wearables/wearabledao',
   },
@@ -218,13 +218,13 @@ export default function Wearables(props) {
             {navState === 'okx' ? (
               <>
                 <UserAvatar
-                  avatar="/images/v5/WearableDao.png"
-                  name="WearableDao"
+                  avatar="/images/v5/WearableDAO.png"
+                  name="WearableDAO"
                   contact={[
                     {
                       icon: '/images/twitter.svg',
                       label: 'Twitter',
-                      address: 'https://twitter.com/WearableDao',
+                      address: 'https://twitter.com/WearableDAO',
                     },
                     {
                       icon: '/images/discord.svg',
@@ -254,13 +254,13 @@ export default function Wearables(props) {
             ) : null}
             {navState === 'chinesered' ? (
               <UserAvatar
-                avatar="/images/v5/WearableDao.png"
-                name="WearableDao"
+                avatar="/images/v5/WearableDAO.png"
+                name="WearableDAO"
                 contact={[
                   {
                     icon: '/images/v5/Twitter.png',
                     label: 'Twitter',
-                    address: 'https://twitter.com/WearableDao',
+                    address: 'https://twitter.com/WearableDAO',
                   },
                   {
                     icon: '/images/icon/discord.png',
@@ -283,7 +283,7 @@ export default function Wearables(props) {
                   {
                     icon: '/images/v5/Twitter.png',
                     label: 'Twitter',
-                    address: 'https://twitter.com/WearableDao',
+                    address: 'https://twitter.com/WearableDAO',
                   },
                 ]}
               ></UserAvatar>
@@ -295,16 +295,17 @@ export default function Wearables(props) {
               3D wearables for invited KOLs.`
               : null}
             {navState === 'chinesered'
-              ? `WearableDao was co-founded by MetaCat, MetaEstate and MetaLandscape to design and produce Wearables in Metaverse.`
+              ? `WearableDAO was co-founded by MetaCat, MetaEstate and MetaLandscape to design and produce Wearables in Metaverse.`
               : null}
             {navState === 'pfp'
-              ? 'The PFP Metaverse Carnival, co-hosted by WearableDao, MetaEstate, MetaCat, MetaLandscape, and TingDao, will be grandly launched on May 20! The most interesting part of this event is that everyone can make their favorite NFTs into Wearables and wear them by participating in the event, so that NFTs can live.'
+              ? 'The PFP Metaverse Carnival, co-hosted by WearableDAO, MetaEstate, MetaCat, MetaLandscape, and TingDao, will be grandly launched on May 20! The most interesting part of this event is that everyone can make their favorite NFTs into Wearables and wear them by participating in the event, so that NFTs can live.'
               : null}
           </div>
         </div>
       </div>
-      <div className={cn(style.navCOntainer, fixedState ? style.fix3 : null)}>
+      <div className={cn(style.navCOntainer)}>
         <div className={style.nav}>
+        {/* , fixedState ? style.fix3 : null */}
           {nav.map((item, idx) => {
             return (
               <div
@@ -325,7 +326,7 @@ export default function Wearables(props) {
           className={cn(
             'flex justify-center items-center',
             style.search,
-            fixedState ? style.fix4 : null,
+            // fixedState ? style.fix4 : null,
           )}
         >
           <MeteInput

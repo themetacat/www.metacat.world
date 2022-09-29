@@ -10,6 +10,7 @@ type Props = {
   models?;
   tabState?;
   id?;
+  saveIconVal?;
   name?;
   token?;
   wearablesShowOrHideState?;
@@ -27,6 +28,7 @@ export default function DaoModelList({
   tabState,
   id,
   name,
+  saveIconVal,
   token,
   wearablesShowOrHideState,
   wearablesShowOrHide,
@@ -50,7 +52,6 @@ export default function DaoModelList({
     const offset = offY === null ? 800 : offY;
     // async canvas and container window
     if (window.scrollY > offset + 200) {
-      // console.log(offset);
       canvaRef.current.style.transform = `translateY(${window.scrollY - offset}px)`;
     } else {
       canvaRef.current.style.transform = `translateY(0px)`;
@@ -139,6 +140,7 @@ export default function DaoModelList({
           wearablesSleceteIdList={wearablesSleceteIdList}
           onClick={onClick}
           id={id}
+          saveIconVal={saveIconVal}
           model={model}
           batchShowOrHide={batchShowOrHide}
           name={name}

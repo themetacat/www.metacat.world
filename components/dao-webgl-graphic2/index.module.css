@@ -140,8 +140,8 @@ color: #FFFFFF;
   font-family: 'Roboto';
   font-style: normal;
   align-items: center;
-  color: #01DAD9;
-  background: #0F403F;
+  display: flex;
+  padding-left: 35%;
 }
 .shade {
   background: #000000;
