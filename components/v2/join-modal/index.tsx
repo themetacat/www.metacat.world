@@ -31,10 +31,12 @@ interface Props {
   canSumbit?: boolean;
   email?: string;
   buildStateVal?;
+  addressWearable?;
+  emaileWearable?;
   emailState?;
 }
 
-export default function Modal({ show, setbuildState, setcreaterState, setClose, setEmail, type, emailState, buildStateVal }: Props) {
+export default function Modal({ show, setbuildState, addressWearable, emaileWearable, setcreaterState, setClose, setEmail, type, emailState, buildStateVal }: Props) {
   const router = useRouter();
   const profileData = state.useState('profile');
   const { profile } = profileData;
@@ -258,7 +260,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
 
 
   const buttonSecond = useCallback(async () => {
-    // console.log("第二步", profile?.email);
+    console.log("第二步", profile?.email);
 
     // if (profile?.creatorStatus === 2 || profile?.creatorStatus === 4) return;
     // if (!inputAddress && !profile?.address) {
@@ -273,71 +275,71 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
     //   toast.error(`code can't be empty`);
     //   return;
     // }
-    // const t = getToken('atk');
+    const t = getToken('atk');
 
-    // if (profile?.email) {
+    if (profile?.email) {
 
-    //   const res = await req_userBuilder_apply_become(tokenVal, 'creator', '');
-    //   if (res.code) {
-    //     // toast.success('Submitted successfully');
+      const res = await req_userBuilder_apply_become(tokenVal, 'creator', '');
+      if (res.code) {
+        // toast.success('Submitted successfully');
 
-    //     toast(res.msg);
-    //     // if (res.code === 1000000) {
-    //     // const rest = await req_userBuilder_apply_become(token, 'builder', '');
-    //     // if (rest.code === 100000) {
-    //     requestPersonal(t);
-    //     const resGetBageInfo = await getBaseInfo(tokenVal)
+        toast(res.msg);
+        // if (res.code === 1000000) {
+        // const rest = await req_userBuilder_apply_become(token, 'builder', '');
+        // if (rest.code === 100000) {
+        requestPersonal(t);
+        const resGetBageInfo = await getBaseInfo(tokenVal)
 
-    //     // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
+        // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
 
-    //     if (resGetBageInfo.code === 100000) {
-    //       // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
+        if (resGetBageInfo.code === 100000) {
+          // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
 
-    //       setEmail(resGetBageInfo.data.profile.email);
-    //       setbuildState(resGetBageInfo.data.profile.builder_status);
-    //       setcreaterState(resGetBageInfo.data.profile.creator_status);
+          setEmail(resGetBageInfo.data.profile.email);
+          setbuildState(resGetBageInfo.data.profile.builder_status);
+          setcreaterState(resGetBageInfo.data.profile.creator_status);
 
-    //       // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
+          // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
 
-    //     }
-    //     setOpen(false);
-    //   }
-    // } else {
-    //   const res = await req_bind_ver_email_code(verCode, t, 'creator');
-    //   if (res.code === 100000) {
-    //     toast.success('Submitted successfully');
-    //     requestPersonal(t);
-    //     if (res.code) {
-    //       // toast.success('Submitted successfully');
-    //       // toast(res.msg);
-    //       // if (res.code === 1000000) {
-    //       // const rest = await req_userBuilder_apply_become(token, 'builder', '');
-    //       // if (rest.code === 100000) {
-    //       requestPersonal(t);
-    //       const resGetBageInfo = await getBaseInfo(tokenVal)
+        }
+        setOpen(false);
+      }
+    } else {
+      const res = await req_bind_ver_email_code(verCode, t, 'creator');
+      if (res.code === 100000) {
+        toast.success('Submitted successfully');
+        requestPersonal(t);
+        if (res.code) {
+          // toast.success('Submitted successfully');
+          // toast(res.msg);
+          // if (res.code === 1000000) {
+          // const rest = await req_userBuilder_apply_become(token, 'builder', '');
+          // if (rest.code === 100000) {
+          requestPersonal(t);
+          const resGetBageInfo = await getBaseInfo(tokenVal)
 
-    //       // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
+          // console.log(resGetBageInfo.data.profile.builder_status, "就是你要的");
 
-    //       if (resGetBageInfo.code === 100000) {
-    //         // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
+          if (resGetBageInfo.code === 100000) {
+            // setBuildStateVal(resGetBageInfo.data.profile.builder_status)
 
-    //         setEmail(resGetBageInfo.data.profile.email);
-    //         setbuildState(resGetBageInfo.data.profile.builder_status);
-    //         setcreaterState(resGetBageInfo.data.profile.creator_status);
+            setEmail(resGetBageInfo.data.profile.email);
+            setbuildState(resGetBageInfo.data.profile.builder_status);
+            setcreaterState(resGetBageInfo.data.profile.creator_status);
 
-    //         // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
+            // console.log(resGetBageInfo.data.profile.builder_status, 555556666666);
 
-    //       }
-    //       setOpen(false);
-    //       // }
-    //       // }
+          }
+          setOpen(false);
+          // }
+          // }
 
 
-    //     }
-    //   } else {
-    //     toast.error('Submitted error');
-    //   }
-    // }
+        }
+      } else {
+        toast.error('Submitted error');
+      }
+    }
   }, [verCode, profile, inputEmail, verCode]);
 
   const turnOff = () => {
@@ -492,8 +494,9 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
     const t = getToken('atk');
     setTokenState(t)
 
+    console.log(addressWearable, "profile?.address");
 
-    setConnect(profile?.address !== null);
+    setConnect(profile?.address !== null || addressWearable !== null);
 
 
     return () => {
@@ -502,7 +505,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
         timeId.current = null;
       }
     };
-  }, [profile, buildStateVal, emailState]);
+  }, [profile, buildStateVal, emailState,addressWearable]);
 
 
 
@@ -565,9 +568,9 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
                       <MeteInput
                         require={true}
                         name={'address'}
-                        disable={profile?.address !== null}
+                        disable={profile?.address !== null || addressWearable !== null}
                         bold={true}
-                        value={inputAddress || profile?.address || ''}
+                        value={inputAddress || profile?.address || '' || addressWearable}
                         classname={`${connect ? 'w-full' : 'flex-1 mr-3 max-w-sm'}`}
                         onChangeHandler={(val) => {
                           setInputAddress(val);
@@ -587,7 +590,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
                   </div>
                   <div className=" mt-5  text-left">
                     <div className=" text-base font-medium text-gray-400">Email</div>
-                    {profile?.email ? null : (
+                    {profile?.email || emaileWearable ? null : (
                       <div className=" text-xs font-normal text-gray-400">
                         This mailbox works for personal information
                       </div>
@@ -596,8 +599,8 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
                       require={true}
                       name={'email'}
                       bold={true}
-                      disable={profile?.email !== null && profile?.email !== ''}
-                      value={inputEmail || profile?.email || ''}
+                      disable={profile?.email !== null && profile?.email !== '' || emaileWearable !== null && emaileWearable !== ''}
+                      value={inputEmail || profile?.email || '' || emaileWearable}
                       classname={'mt-2'}
                       onChangeHandler={(val) => {
                         setInputEmail(val);
@@ -611,7 +614,7 @@ export default function Modal({ show, setbuildState, setcreaterState, setClose, 
                         require={true}
                         name={'email'}
                         bold={true}
-                        disable={profile?.address === null}
+                        disable={profile?.email !== null || emaileWearable!==null}
                         value={verCode || ''}
                         classname={'mt-2'}
                         needSuffix={true}

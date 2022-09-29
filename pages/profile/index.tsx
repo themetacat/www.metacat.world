@@ -247,7 +247,10 @@ function ProfilePage(r) {
   // const [buildFiles, setBuildFiles] = React.useState([]);
   const [createrStateVal, setCreaterStateVal] = React.useState(null);
   const [emailStateWearable, setEmailStateWearable] = React.useState(null);
+  const [tokenWearable, setTokenWearable] = React.useState(null);
   const [buildStateWearable, setBuildStateVal] = React.useState(1);
+  const [addressWearable, setaddressWerVal] = React.useState(null);
+  const [emaileWearable, setemailWearVal] = React.useState(null);
 
   const Nav = [
     {
@@ -571,9 +574,10 @@ function ProfilePage(r) {
       setStatue(res.data.profile.creator_status)
       setBuildState(buildNum)
       setWalletAddress(wallet)
-      setCreaterStateVal(res.data.profile.creator_status)
+      // setCreaterStateVal(res.data.profile.creator_status)
       setEmailStateWearable(res.data.profile.email)
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
+      console.log(statue, "setEmailStateWearable");
 
       setEmailStateVal(emailState)
       // console.log(res.data.profile.creator_status,99999);
@@ -1091,15 +1095,15 @@ function ProfilePage(r) {
     reqDclData,
   ]);
   const addWorkWerable = () => {
-    console.log(55,);
+    console.log(55, tokenWearable);
     setShowModal(true)
-    // if (emailState === null || emailState === '') {
-    //   setJoinBuilders(true)
-    // } else if (emailState !== '') {
-    //   setEmailBuilders(true)
-    //   // this.props.emailState(this.props.emailState)
-    // }
-    // // console.log(joinBuilders, 55555, emailState);
+    const res = getBaseInfo(tokenWearable);
+    //res 是能拿到接口返回的东西  但是你只是拿到了 你没设置啊
+    res.then((resWeable) => {
+      setaddressWerVal(resWeable.data.profile.address);
+      setemailWearVal(resWeable.data.profile.email);
+
+    })
   }
 
   const renderWerable = React.useMemo(() => {
@@ -1507,6 +1511,7 @@ function ProfilePage(r) {
     setNavLabel('All')
     req_building_list(walletAddress)
     const accessToken = getToken('atk');
+    setTokenWearable(accessToken)
     setRouteTab(r.router.query.type);
     reqWearablesData();
     requestPersonal(accessToken);
@@ -1519,6 +1524,7 @@ function ProfilePage(r) {
     watcher_cardState();
     if (!accessToken) window.location.href = '/';
   }, [
+    tokenWearable,
     navLabel,
     getToken,
     requestData,
@@ -1530,6 +1536,7 @@ function ProfilePage(r) {
     watcher_store,
     dataBuildSource,
     // reqBuilderData,
+    addressWearable,
     reqDclData,
     r.router.query.type,
     routeTab,
@@ -1634,8 +1641,7 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
-    console.log(wearablesCreatorsData);
-    
+
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -2097,10 +2103,7 @@ function ProfilePage(r) {
       //       <div className={style.buildingContainer}>
       //         <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
       //           {renderWerable}
-      //           {/* <div className={style.createrCont}>
-      //             <span className={style.join}>Join Creators to show your works</span>
-      //             <span className={style.apply}>Apply</span>
-      //           </div> */}
+
       //         </div>
       //       </div>
       //     </>
@@ -2127,7 +2130,23 @@ function ProfilePage(r) {
 
 
 
-      /* <div className={cn('tab-list flex mt-5', style.allHeight)}>
+
+      return (
+        <>
+          {statue === 1 ? <>
+            <div className={style.createrCont}>
+              <span className={style.join}>Join Creators to show your works</span>
+              <span className={style.apply} onClick={addWorkWerable}>Apply</span>
+            </div>
+          </> : null}
+          {statue === 2 ? <>
+            <div className={style.createrCont}>
+              <span className={style.join}>Waiting to become a creator</span>
+            </div>
+          </> : null}
+
+
+          {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
             {TAB.map((item) => {
@@ -2147,9 +2166,7 @@ function ProfilePage(r) {
             <div className={cls} />
           </div>
           <div className={cls} />
-        </div> */
-        return (
-          <>
+        </div>  */}
           <div className={style.wearablesContainer}>
             <div className={style.title}>
               <div className={style.wearables}></div>
@@ -2198,38 +2215,43 @@ function ProfilePage(r) {
                   );
                 })}
               </div>
-              <div
-                className={style.right}
-                onClick={() => {
-                  setShowOrHideState(!showOrHideState);
-                }}
-              >
-                <img src="/images/Settings.png" />
-                <div>Batch setting</div>
-                <ul
-                  className={
-                    wearablesNavState === 'all' && showOrHideState
-                      ? style.showOrHideList
-                      : style.showOrHideList1
-                  }
-                >
-                  {showOrHideState
-                    ? showOrHide[wearablesNavState].map((item, index) => {
-                      return (
-                        <li
-                          className={style.showOrHideItem}
-                          key={index}
-                          onClick={() => {
-                            settingShowOrHide(item.type);
-                          }}
-                        >
-                          {item.label}
-                        </li>
-                      );
-                    })
-                    : null}
-                </ul>
-              </div>
+              {
+                statue === 1 || statue === 2 ? null :
+                  <div
+                    className={style.right}
+                    onClick={() => {
+                      setShowOrHideState(!showOrHideState);
+                    }}
+                  >
+                    <img src="/images/Settings.png" />
+                    <div>Batch setting</div>
+                    <ul
+                      className={
+                        wearablesNavState === 'all' && showOrHideState
+                          ? style.showOrHideList
+                          : style.showOrHideList1
+                      }
+                    >
+                      {showOrHideState
+                        ? showOrHide[wearablesNavState].map((item, index) => {
+                          return (
+                            <li
+                              className={style.showOrHideItem}
+                              key={index}
+                              onClick={() => {
+                                settingShowOrHide(item.type);
+                              }}
+                            >
+                              {item.label}
+                            </li>
+                          );
+                        })
+                        : null}
+                    </ul>
+                  </div>
+
+              }
+
             </div>
             <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
           </div>
@@ -2413,16 +2435,16 @@ function ProfilePage(r) {
           />
         </> : ''}
       <JoinModal
-        emailState={emailStateWearable}
+        emaileWearable={emaileWearable}
+        addressWearable={addressWearable}
         show={showModal}
-        // buildStateVal={buildStateVal}
         setClose={(x) => {
           setShowModal(x);
         }}
         setcreaterState={(x) => {
           console.log(x);
 
-          setCreaterStateVal(x)
+          setStatue(x)
         }}
         setEmail={(x) => {
           setEmailStateWearable(x)
