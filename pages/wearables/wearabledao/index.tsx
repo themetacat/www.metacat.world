@@ -218,7 +218,7 @@ export default function Wearables(props) {
             {navState === 'okx' ? (
               <>
                 <UserAvatar
-                  avatar="/images/v5/WearableDAO.png"
+                  avatar="/images/v5/WearableDao.png"
                   name="WearableDAO"
                   contact={[
                     {
@@ -254,7 +254,7 @@ export default function Wearables(props) {
             ) : null}
             {navState === 'chinesered' ? (
               <UserAvatar
-                avatar="/images/v5/WearableDAO.png"
+                avatar="/images/v5/WearableDao.png"
                 name="WearableDAO"
                 contact={[
                   {
