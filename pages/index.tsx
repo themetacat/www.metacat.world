@@ -63,7 +63,7 @@ export default function Index(props) {
   const [addState, setAddState] = React.useState('');
   const [emailState, setEmailState] = React.useState(null);
   const [buildStateVal, setBuildStateVal] = React.useState(1);
-  const [createrStateVal, setCreaterStateVal] = React.useState(null);
+  const [createrStateVal, setCreaterStateVal] = React.useState(1);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const [showModalBuilder, setShowModalBuilder] = React.useState(false);
@@ -191,14 +191,14 @@ export default function Index(props) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
+        // console.log(res,9999999999999);
       // console.log(res);
-      setAddState(res.data.profile.address)
-      setEmailState(res.data.profile.email)
-      setBuildStateVal(res.data.profile.builder_status)
-      // console.log(buildStateVal);
+      setAddState(res.data?.profile?.address)
+      setEmailState(res.data?.profile?.email)
+      setBuildStateVal(res.data?.profile?.builder_status)
+   
 
-      setCreaterStateVal(res.data.profile.creator_status)
-      // console.log(addState, 22222222222, buildStateVal, createrStateVal, emailState);
+      setCreaterStateVal(res.data?.profile?.creator_status)
 
       const data = resultHandler(res, requestPersonal);
       if (!data) {
@@ -245,13 +245,14 @@ export default function Index(props) {
     if (accessToken) {
       requestPersonal(accessToken);
     }
-    // console.log(emailState);
+    // console.log(requestPersonal(accessToken));
 
   }, []);
 
 
 
   React.useEffect(() => {
+// console.log(createrStateVal);
 
     if (
       navigator.userAgent.match(
@@ -461,7 +462,7 @@ export default function Index(props) {
                       // }}
                       // onClick={jumpToUrlEnt}
                       onClick={() => {
-                        // console.log(addState, 22, emailState, 6666666, buildStateVal);
+                        // console.log(buildStateVal);
 
                         if (buildStateVal === 1) {
                           if (addState && emailState) {
@@ -528,7 +529,7 @@ export default function Index(props) {
                           setShowModal(true);
                         } else if (createrStateVal === 4)
                           router.replace('/profile?type=wearablelist')
-                        else if (createrStateVal !== 1 || createrStateVal !== 4) {
+                        else  {
                           toast.error('You have become creater')
                         }
                       }
@@ -564,7 +565,7 @@ export default function Index(props) {
             setShowModal(x);
           }}
           setcreaterState={(x) => {
-            console.log(x);
+            // console.log(x);
 
             setCreaterStateVal(x)
           }}
