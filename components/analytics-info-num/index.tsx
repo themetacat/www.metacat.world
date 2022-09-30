@@ -84,7 +84,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
     
     let newVal;
     if(val){
-      if(type=='keys'){
+      if(type==='keys'){
         newVal = Object.keys(val)[idx];
     console.log(newVal);
   }else{

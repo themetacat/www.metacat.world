@@ -115,7 +115,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
     
     let newVal;
     if(val){
-      if(type=='keys'){
+      if(type==='keys'){
         newVal = Object.keys(val)[idx];
     console.log(newVal);
   }else{
