@@ -355,7 +355,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         className={cn(
           'flex justify-center items-center flex-1',
           style.search,
-          fixedState ? f1 : null,
+        
         )}
       >
         <MeteInput
