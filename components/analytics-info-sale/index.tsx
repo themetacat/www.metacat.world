@@ -38,6 +38,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   // }, [])
   const requestData = React.useCallback(async () => {
     const res: any = await getWorldsStatsSale();
+    // console.log(res, "res1");
 
     const result = convert(res.data);
 
@@ -47,8 +48,13 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
     res.data.monthly.usd.forEach((item) => {
       if (!obj[item.name]) {
         obj[item.name] = {};
+        obj[item.name].time = {}
       }
-      obj[item.name][item.time] = item.value;
+      // obj[item.name][item.time] = item.value;
+
+      obj[item.name].time[item.time] = item.value
+
+
       return obj;
     });
     res.data.monthly.total_usd_sale_per.forEach((item) => {
@@ -74,7 +80,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
         arr.push({ [name]: obj[name] });
       }
     });
+    // console.log(obj, Object.keys(obj['Total Sales'].time));
+
     setArrDataSource(obj);
+
   }, [null]);
 
   React.useEffect(() => {
@@ -107,8 +116,12 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.08</div>
+              <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
+                arrdataSource && Object?.keys(arrdataSource['Total Sales']?.time)[0]
+              }</div>
             </th>
+            {/* } */}
+            {/* })} */}
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
               onMouseEnter={() => {
@@ -118,7 +131,9 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.07</div>
+              <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
+                arrdataSource && Object?.keys(arrdataSource['Total Sales']?.time)[1]
+              }</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -140,8 +155,13 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                 setIndex(null);
               }}
             >
-              <div className={style.right}>% of Total sales in 2022.08</div>
+              <div className={style.right}>% of Total sales in
+                {Object?.keys(arrdataSource).length === 0 ? null :
+                  arrdataSource && Object?.keys(arrdataSource['Total Sales']?.time)[0]
+                }
+              </div>
             </th>
+
           </tr>
           {Object.keys(arrdataSource).map((item, idx) => {
             return (
@@ -174,14 +194,9 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn(style.leftContext, style.font1)}>
-                      {/* {formatNum(item.totalLandOwner, false)} */}
-                      {/* {Object.keys(item).map((o) => {
-                        return (<span>{o}</span>)
-                      })} */}
                       {<span>{item}</span>}
                     </div>
                   </th>
-
                   <th
                     className={cn(
                       '',
@@ -199,14 +214,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {/* ${Object.keys(item).map((o) => {
-                        return item[o]["2022.07"]
-                      })} */}
-                      {/* ${arrdataSource[item]["2022.08"]} */}$
-                      {formatNum(arrdataSource[item]['2022.08'], false)}
+                      {/* ${Object.values(arrdataSource[item].time)[0]} */}
+                      ${formatNum(Object.values(arrdataSource[item].time)[0] as number, false)}
                     </div>
                   </th>
-
                   <th
                     className={cn(
                       '',
@@ -224,10 +235,11 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     }}
                   >
                     <div className={cn('justify-end', style.right, style.leftContext)}>
-                      {/* ${arrdataSource[item]["2022.07"]} */}$
-                      {formatNum(arrdataSource[item]['2022.07'], false)}
+                      {/* $ {Object.values(arrdataSource[item].time)[1]} */}
+                      ${formatNum(Object.values(arrdataSource[item].time)[1] as number, false)}
                     </div>
                   </th>
+
                   <th
                     className={cn(
                       '',

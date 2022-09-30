@@ -1515,25 +1515,28 @@ function ProfilePage(r) {
         );
       }
       setSaveIconVal(id)
+        if (result.code === 100000) {
 
-      if (result.code === 100000) {
+          if (wearablesShowOrHide === 2 || stat === 2) {
+            toast.success('Successfully hidden!');
+          }
+          if (wearablesShowOrHide === 1 || stat === 1) {
+            toast.success('Successfully shown!');
+          }
 
-        if (wearablesShowOrHide === 2 || stat === 2) {
-          toast.success('Successfully hidden!');
+        } else {
+          toast.error('Failed!');
         }
-        if (wearablesShowOrHide === 1 || stat === 1) {
-          toast.success('Successfully shown!');
-        }
 
-      } else {
-        toast.error('Failed!');
-      }
-      setSaveIconVal(null)
+        setWearablesShowOrHideState(false);
+        setWearablesShowOrHide(0);
+        setWearablesSleceteIdList([]);
+        reqWearablesData();
+        setSaveIconVal(null)
 
-      setWearablesShowOrHideState(false);
-      setWearablesShowOrHide(0);
-      setWearablesSleceteIdList([]);
-      reqWearablesData();
+     
+
+
     },
     [wearablesShowOrHide, wearablesSleceteIdList, reqWearablesData],
   );
