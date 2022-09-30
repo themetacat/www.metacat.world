@@ -57,8 +57,10 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
       res.data.monthly.usd.forEach(item => {
         if (!obj[item.name]) {
           obj[item.name] = {}
+          obj[item.name].time = {}
         }
-        obj[item.name][item.time] = item.value;
+        // obj[item.name][item.time] = item.value;
+        obj[item.name].time[item.time] = item.value
         return obj;
       })
       res.data.monthly.usd_percent.forEach(item => {
@@ -74,8 +76,10 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
       res.data.monthly.eth.forEach(item => {
         if (!obj[item.name]) {
           obj[item.name] = {}
+          obj[item.name].time = {}
         }
-        obj[item.name][item.time] = item.value;
+        // obj[item.name][item.time] = item.value;
+        obj[item.name].time[item.time] = item.value
         return obj;
       })
       res.data.monthly.eth_percent.forEach(item => {
@@ -174,7 +178,9 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.08</div>
+              <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
+                arrdataSource && Object?.keys(arrdataSource["Otherside"]?.time)[0]
+              }</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -185,7 +191,9 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.07</div>
+              <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
+                arrdataSource && Object?.keys(arrdataSource["Otherside"]?.time)[1]
+              }</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -211,6 +219,7 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
             </th> */}
           </tr>
           {Object.keys(arrdataSource).map((item, idx) => {
+            console.log(Object.values(arrdataSource), 333);
             return (
               <>
                 <tr
@@ -273,12 +282,15 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                       {
                         priceShowType === 'ETH' ?
                           <>
-                            <span style={{ marginRight: "0.75rem", display: "inline-block" }}>{arrdataSource[item]["2022.08"]}</span>{priceShowType}
+                            <span style={{ marginRight: "0.75rem", display: "inline-block" }}>{Object.values(arrdataSource[item].time)[0]}</span>{priceShowType}
                           </> :
                           <>
                             <span style={{ marginRight: "0.75rem", display: "inline-block" }}>
-                              {formatNum(arrdataSource[item]["2022.08"], false)}
+                              {formatNum(Object.values(arrdataSource[item].time)[0] as number, false)}
                             </span>{priceShowType}
+
+
+                            {/* ${Object.values(arrdataSource[item].time)[0]}{priceShowType} */}
                           </>
                       }
 
@@ -305,11 +317,12 @@ export default function AnalyticsAverage({ options, priceOptions, labelText, tex
                       {
                         priceShowType === 'ETH' ?
                           <>
-                            <span style={{ marginRight: "0.75rem", display: "inline-block" }}>{arrdataSource[item]["2022.07"]}</span>{priceShowType}
+                            <span style={{ marginRight: "0.75rem", display: "inline-block" }}>{Object.values(arrdataSource[item].time)[1]}</span>{priceShowType}
+
                           </> :
                           <>
                             <span style={{ marginRight: "0.75rem", display: "inline-block" }}>
-                              {formatNum(arrdataSource[item]["2022.07"], false)}
+                              {formatNum(Object.values(arrdataSource[item].time)[1] as number, false)}
                             </span>{priceShowType}
                           </>
                       }

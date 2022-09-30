@@ -44,8 +44,10 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
     res.data.monthly.sales_data.forEach(item => {
       if (!obj[item.name]) {
         obj[item.name] = {}
+        obj[item.name].time = {}
       }
-      obj[item.name][item.time] = item.value;
+      // obj[item.name][item.time] = item.value;
+      obj[item.name].time[item.time] = item.value
       return obj;
     })
     res.data.monthly.percent.forEach(item => {
@@ -104,7 +106,9 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.08</div>
+              <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
+                arrdataSource && Object?.keys(arrdataSource['Otherside']?.time)[0]
+              }</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -115,7 +119,11 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.right}>2022.07</div>
+              <div className={style.right}>
+                <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
+                  arrdataSource && Object?.keys(arrdataSource['Otherside']?.time)[1]
+                }</div>
+              </div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -141,6 +149,8 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
             </th> */}
           </tr>
           {Object.keys(arrdataSource).map((item, idx) => {
+           console.log(Object?.keys(arrdataSource),2222);
+            
             return (
               <>
                 <tr
@@ -200,7 +210,9 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                         return item[o]["2022.07"]
                       })} */}
                       {/* {arrdataSource[item]["2022.08"]} */}
-                      {formatNum(arrdataSource[item]["2022.08"], false)}
+                      {/* {formatNum(arrdataSource[item]["2022.08"], false)} */}
+                      {/* {Object.values(arrdataSource[item].time)[0]} */}
+                      {formatNum(Object.values(arrdataSource[item].time)[0] as number, false)}
                     </div>
                   </th>
 
@@ -225,7 +237,9 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                         return item[o]["2022.08"]
                       })} */}
                       {/* {arrdataSource[item]["2022.07"]} */}
-                      {formatNum(arrdataSource[item]["2022.07"], false)}
+                      {/* {formatNum(arrdataSource[item]["2022.07"], false)} */}
+                      {/* {Object.values(arrdataSource[item].time)[1]} */}
+                      {formatNum(Object.values(arrdataSource[item].time)[1] as number, false)}
                     </div>
                   </th>
                   <th
