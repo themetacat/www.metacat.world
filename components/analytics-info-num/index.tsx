@@ -74,19 +74,19 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
     });
     setArrDataSource(Object.keys(obj))
     setArrDataSourceList(obj)
-    console.log(obj);
+    // console.log(obj);
     
     setArrDataSourceValue(Object.values(obj))
   }, [null]);
 
   const retObjValue =(val,idx,type)=>{
-    console.log(val);
+    // console.log(val);
     
     let newVal;
     if(val){
       if(type==='keys'){
         newVal = Object.keys(val)[idx];
-    console.log(newVal);
+    // console.log(newVal);
   }else{
         newVal = Object.values(val)[idx];
       }
@@ -173,7 +173,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
             </th> */}
           </tr>
           {arrdataSource?.map((item, idx) => {
-           console.log(arrdataSource,arrdataSource[0],2222);
+          //  console.log(arrdataSource,arrdataSource[0],2222);
             
             return (
               <>

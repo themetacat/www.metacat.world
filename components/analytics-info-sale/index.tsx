@@ -38,7 +38,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   // }, [])
   const requestData = React.useCallback(async () => {
     const res: any = await getWorldsStatsSale();
-    console.log(res, "res1");
+    // console.log(res, "res1");
 
     const result = convert(res.data);
 
@@ -80,7 +80,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
         arr.push({ [name]: obj[name] });
       }
     });
-    console.log(obj, Object.keys(obj['Total Sales'].time));
+    // console.log(obj, Object.keys(obj['Total Sales'].time));
 
     setArrDataSource(obj);
 
