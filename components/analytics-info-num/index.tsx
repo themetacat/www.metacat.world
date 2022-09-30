@@ -24,7 +24,9 @@ type Props = {
 
 export default function AnalyticsAverage({ options, labelText, textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
-  const [arrdataSource, setArrDataSource] = React.useState([] || {});
+  const [arrdataSource, setArrDataSource] = React.useState(null);
+  const [arrdataSourceList, setArrDataSourceList] = React.useState(null);
+  const [arrdataSourceValue, setArrDataSourceValue] = React.useState([]);
   const [totaldataSource, setTotalDataSource] = React.useState([]);
   const [usdPercent, setUsdPercent] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
@@ -32,6 +34,8 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
   const [index, setIndex] = React.useState(null);
   const [backNum, setBackNum] = React.useState(null);
   const obj = {}
+  const Otherside = arrdataSource?.Otherside;
+  // const OthersideVal = arrdataSourceValue?.Otherside;
   // React.useEffect(() => {
   //   getWorldsNum().then((data) => {
   //     setalldata(data);
@@ -68,11 +72,31 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
         arr.push({ [name]: obj[name] })
       }
     });
-    setArrDataSource(obj)
-
+    setArrDataSource(Object.keys(obj))
+    setArrDataSourceList(obj)
+    console.log(obj);
+    
+    setArrDataSourceValue(Object.values(obj))
   }, [null]);
 
-  React.useEffect(() => {
+  const retObjValue =(val,idx,type)=>{
+    console.log(val);
+    
+    let newVal;
+    if(val){
+      if(type=='keys'){
+        newVal = Object.keys(val)[idx];
+    console.log(newVal);
+  }else{
+        newVal = Object.values(val)[idx];
+      }
+    }else{
+      newVal = ''
+    }
+    
+    return newVal
+  }
+    React.useEffect(() => {
     requestData();
     // setBackNum('backNum');
   }, [null]);
@@ -106,8 +130,8 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                 setIndex(null);
               }}
             >
-              <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
-                arrdataSource && Object?.keys(arrdataSource['Otherside']?.time)[0]
+              <div className={style.right}>{arrdataSourceList?.length === 0 ? null :
+        arrdataSourceList &&retObjValue(arrdataSourceList.Otherside?.time,0,'keys')
               }</div>
             </th>
             <th
@@ -120,8 +144,8 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
               }}
             >
               <div className={style.right}>
-                <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
-                  arrdataSource && Object?.keys(arrdataSource['Otherside']?.time)[1]
+                <div className={style.right}>{arrdataSourceList?.length === 0 ? null :
+                  arrdataSourceList &&retObjValue(arrdataSourceList.Otherside?.time,1,'keys')
                 }</div>
               </div>
             </th>
@@ -148,8 +172,8 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
               <div className={style.right}>% of Total sales in 202207</div>
             </th> */}
           </tr>
-          {Object.keys(arrdataSource).map((item, idx) => {
-           console.log(Object?.keys(arrdataSource),2222);
+          {arrdataSource?.map((item, idx) => {
+           console.log(arrdataSource,arrdataSource[0],2222);
             
             return (
               <>
@@ -212,7 +236,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       {/* {arrdataSource[item]["2022.08"]} */}
                       {/* {formatNum(arrdataSource[item]["2022.08"], false)} */}
                       {/* {Object.values(arrdataSource[item].time)[0]} */}
-                      {formatNum(Object.values(arrdataSource[item].time)[0] as number, false)}
+                      {formatNum(retObjValue(arrdataSourceValue[idx]?.time,0,'') as number, false)}
                     </div>
                   </th>
 
@@ -239,7 +263,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       {/* {arrdataSource[item]["2022.07"]} */}
                       {/* {formatNum(arrdataSource[item]["2022.07"], false)} */}
                       {/* {Object.values(arrdataSource[item].time)[1]} */}
-                      {formatNum(Object.values(arrdataSource[item].time)[1] as number, false)}
+                      {formatNum(retObjValue(arrdataSourceValue[idx]?.time,1,'') as number, false)}
                     </div>
                   </th>
                   <th
@@ -250,7 +274,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       style.bg2,
                       index === idx ? style.hoverBg : null,
                       bgState === 'whales' ? style.hoverBg : null,
-                      arrdataSource[item].percent * 100 > 0 ? style.rightText : style.redTextCol,
+                      arrdataSourceList&&  arrdataSourceList[item]?.percent* 100 > 0 ? style.rightText : style.redTextCol,
                     )}
                     onMouseEnter={() => {
                       setBgState('whales');
@@ -271,7 +295,7 @@ export default function AnalyticsAverage({ options, labelText, textColor }: Prop
                       {/* {Object.keys(item).map((o) => {
                         return Math.round(item[o].percent* 100)
                       })}% */}
-                      {(arrdataSource[item].percent * 100).toFixed(2)}%
+                      {(arrdataSourceList&&arrdataSourceList[item]?.percent * 100)?.toFixed(2)}%
                     </div>
                   </th>
                 </tr>
