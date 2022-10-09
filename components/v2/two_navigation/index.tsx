@@ -18,7 +18,7 @@ export default function TwoNavigation({
 }: Props) {
   return (
     <div className={cn(' rounded', style.base, location, style[widthType])}>
-      {options.map((item, index) => {
+      {options?.map((item, index) => {
         return (
           <div
             key={index}

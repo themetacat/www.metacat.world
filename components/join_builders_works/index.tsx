@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 import cn from 'classnames';
 
 
@@ -136,7 +137,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   }, []);
 
   React.useEffect(() => {
-console.log(email);
+    console.log(email);
 
     setEmail(value);
     const t = getToken('atk');
@@ -145,7 +146,8 @@ console.log(email);
 
   return (
     <>
-      <div className={cn('bg-gray-500',styles.containerBox,)}>
+      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+      <div className={cn(',', styles.containerBox,)}>
         <div className={styles.container2}>
           <div className={styles.topBox} onMouseDown={clickHeader}>
             <span>Join Builders</span>
@@ -157,7 +159,7 @@ console.log(email);
             <input
               style={{ marginBottom: "10px" }}
               type="text"
-              placeholder={emailState || "email" }
+              placeholder={emailState || "email"}
               disabled={emailState}
               value={email}
               onInput={setEmailValue}
@@ -253,7 +255,7 @@ console.log(email);
               </div>
               <p className={styles.send}>You can also send your works to our：
                 <a
-                
+
                   href="mailto:metacat@tutanota.com"
                   data-tip="metacat@tutanota.com"
                 > <img src="/images/youxiang.png" alt="" /></a>

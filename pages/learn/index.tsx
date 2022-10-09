@@ -7,7 +7,8 @@ import style from './index.module.css';
 import PagiNation from '../../components/pagination';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Search from '../../components/search';
@@ -201,7 +202,7 @@ function Learn(r) {
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
-      <div className="bg-black relative">
+      <div className={cn("bg-black relative",fixedState === true ? style.a:null)} >
         <PageHeader className="relative z-10" active={'learn'} />
       </div>
       <div className={style.containerBanner}>

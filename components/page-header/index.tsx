@@ -13,7 +13,7 @@ type Props = {
   active?: string;
   className?: string;
 };
-// 首页 二级页
+// 二级页
 const build = [
   {
     label: 'Builders',
@@ -38,7 +38,7 @@ const wearable = [
     link: '/wearables',
   },
   {
-    label: 'WearableDao',
+    label: 'WearableDAO',
     type: 'wearabledao',
     link: '/wearables/wearabledao?type=chinesered',
   },
@@ -382,3 +382,5 @@ export default function PageHeader({ active, className }: Props) {
     </header>
   );
 }
+
+

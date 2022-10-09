@@ -8,7 +8,7 @@ import HeatMapCard from '../heatmap-card';
 import { convert } from '../../../common/utils';
 
 // import Logo from './icons/icon-logo';
-import PageHeader from '../page-header';
+import PageHeader from '../../top-navigation';
 import Footer from '../../footer';
 import Carousel from '../carousel';
 

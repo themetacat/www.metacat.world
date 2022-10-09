@@ -8,7 +8,8 @@ import { req_get_building_detail_info, req_builder_del_self_building, req_user_a
 import { getToken } from '../../common/utils';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import CardBuilding from '../../components/cardBuilding';
 import AddBuildings from '../../components/addBuilding';
 import Footer from '../../components/footer';
@@ -210,16 +211,16 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
     if (linkBuild !== '') {
       // const reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
       const reg = '^((https|http|ftp|rtsp|mms)?://)'
-                          + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
-                          + '(([0-9]{1,3}.){3}[0-9]{1,3}'
-                          + '|'
-                          + '([0-9a-z_!~*\'()-]+.)*'
-                          + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
-                          + '[a-z]{2,6})'
-                          + '(:[0-9]{1,4})?'
-                          + '((/?)|'
-                          + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
-                        const re = new RegExp(reg)
+        + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+        + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+        + '|'
+        + '([0-9a-z_!~*\'()-]+.)*'
+        + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+        + '[a-z]{2,6})'
+        + '(:[0-9]{1,4})?'
+        + '((/?)|'
+        + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+      const re = new RegExp(reg)
       if (!re.test(linkBuild)) {
         toast.error("Not the correct URL, please pay attention to check");
         return false;

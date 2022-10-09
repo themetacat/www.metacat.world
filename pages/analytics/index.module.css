@@ -1,5 +1,6 @@
 .signBack {
-  height: 270px;
+  /* height: 270px; */
+  height: 315px;
 }
 
 .anPage {
@@ -7,7 +8,10 @@
   overflow-x: scroll;
   overflow-y: hidden;
 }
-
+.a{
+  display: none;
+  background-color: red;
+}
 .sign {
   width: 1087px;
   height: 125px;

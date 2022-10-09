@@ -18,7 +18,7 @@
   font-weight: 500;
 }
 .selectDiv {
-  z-index: 1005;
+  /* z-index: 1005; */
   cursor: pointer;
   position: relative;
   min-width: 80px;

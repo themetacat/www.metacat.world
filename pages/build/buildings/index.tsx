@@ -3,7 +3,8 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
 import TopicDetailCardBuildings from '../../../components/topic-detail-card-Buildings';
@@ -123,13 +124,14 @@ export default function TopicIndex() {
 
   return (
     <Page className="min-h-screen" meta={meta}>
+         <div className={cn(fixedState ? style.fix1 : null)}>
+            <PageHeader className={cn('')} active={'Build'} />
+          </div>
       <div className={cn('bg-black relative', style.backImage)}>
         <div className={style.topCon}>
-          <div className={cn(fixedState ? style.fix1 : null)}>
-            <PageHeader className={cn('relative z-20')} active={'Build'} />
-          </div>
+       
           <div
-            className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
+            className={cn('tab-list flex  mt-5', style.allHeight, fixedState ? style.fix2 : null)}
             id="switch"
           >
             <div className={cls}></div>

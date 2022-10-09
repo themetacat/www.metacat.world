@@ -6,13 +6,17 @@
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
 }
 .border {
-  margin-bottom: 2px;
+  margin-top: 2px;
   box-sizing: border-box;
   width: 110px;
-  height: 44px;
+  height: 32px;
   color: #999999;
   background: rgba(0, 208, 236, 0.1);
   cursor: pointer;
+  border-radius: 8px;
+}
+.a{
+  display: none;
 }
 .aboslute{
   position:fixed;

@@ -107,7 +107,7 @@ export default function ChartSelecter({
           />
         ) : null}
       </div>
-      <ul className={cn('absolute list-none ml-5 right-0 mt-2', show ? '' : style.show)}>
+      <ul className={cn('absolute list-none ml-5 ', show ? '' : style.show)}>
         {options.map((x) => {
           return (
             <li

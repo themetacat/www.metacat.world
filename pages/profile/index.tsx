@@ -11,7 +11,8 @@ import { useRouter, withRouter } from 'next/router';
 import { join } from 'path/posix';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
@@ -35,6 +36,7 @@ import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
 import BaseBarDece from '../../components/parcel-basebardece';
 import TrafficBar from '../../components/parcel-traffic_bar';
+import JoinModal from '../../components/v2/join-modal';
 import Creator from '../../components/creator';
 import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
@@ -187,6 +189,7 @@ function ProfilePage(r) {
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
+  const [showModal, setShowModal] = React.useState(false);
   const [nickNameVal, setNickNameVla] = React.useState('');
   const [introductionText, setIntroduction] = React.useState('');
   const [countryAddress, setcountry] = React.useState('');
@@ -197,7 +200,7 @@ function ProfilePage(r) {
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
-  const [buildState, setBuildState] = React.useState(1);
+  const [buildState, setBuildState] = React.useState(null);
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -206,6 +209,7 @@ function ProfilePage(r) {
   const [selectedIds, setSelectedIds] = React.useState([]);
   const [rent_set_state, set_rent_set_state] = React.useState(false);
   const [status, set_status] = React.useState('');
+  const [saveIconVal, setSaveIconVal] = React.useState(false);
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
   const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'parcellist');
@@ -221,6 +225,7 @@ function ProfilePage(r) {
   const [wearablesNavState, setWearablesNavState] = React.useState('all');
   const wearablesState = React.useRef(null);
   const [showOrHideState, setShowOrHideState] = React.useState(false);
+  // const [showOrHideStateConent, setShowOrHideStateConent] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
   const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
   // const [ownerData, setOwnerData] = React.useState([]);
@@ -243,6 +248,12 @@ function ProfilePage(r) {
   const [walletAddress, setWalletAddress] = React.useState('');
   const [saveIcon, setSaveIcon] = React.useState(false);
   // const [buildFiles, setBuildFiles] = React.useState([]);
+  const [createrStateVal, setCreaterStateVal] = React.useState(null);
+  const [emailStateWearable, setEmailStateWearable] = React.useState(null);
+  const [tokenWearable, setTokenWearable] = React.useState(null);
+  const [buildStateWearable, setBuildStateVal] = React.useState(1);
+  const [addressWearable, setaddressWerVal] = React.useState(null);
+  const [emaileWearable, setemailWearVal] = React.useState(null);
 
   const Nav = [
     {
@@ -558,16 +569,18 @@ function ProfilePage(r) {
     async (token: string) => {
       const res = await getBaseInfo(token);
 
-      const sta = res.data.profile.creator_status
+      // const sta = res.data.profile.creator_status
       const emailState = res.data.profile.email
       const buildNum = res.data.profile.builder_status
       const wallet = res.data.profile.address
       setNoWork(true)
-      setStatue(sta)
+      setStatue(res.data.profile.creator_status)
       setBuildState(buildNum)
       setWalletAddress(wallet)
-
+      // setCreaterStateVal(res.data.profile.creator_status)
+      setEmailStateWearable(res.data.profile.email)
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
+      // console.log(statue, "setEmailStateWearable");
 
       setEmailStateVal(emailState)
       // console.log(res.data.profile.creator_status,99999);
@@ -746,7 +759,7 @@ function ProfilePage(r) {
     const showIndex = false
     buildData?.map((item) => {
       if (item !== '') {
-          const reg = '^((https|http|ftp|rtsp|mms)?://)'
+        const reg = '^((https|http|ftp|rtsp|mms)?://)'
           + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
           + '(([0-9]{1,3}.){3}[0-9]{1,3}'
           + '|'
@@ -759,7 +772,7 @@ function ProfilePage(r) {
         const re = new RegExp(reg)
         if (!re.test(item)) {
           toast.error("Not the correct URL, please pay attention to check");
-        return false;
+          return false;
         }
       }
       return true;
@@ -881,11 +894,11 @@ function ProfilePage(r) {
     //   setSaveVal(false)
     // }else{
     //   console.log(saveVal,11111);
-      
+
     //   setSaveVal(true)
     // }
 
-    
+
     if (nickName === '') {
       toast.error('Please fill in Building Name');
       return false;
@@ -905,7 +918,7 @@ function ProfilePage(r) {
     if (linkBuild !== '') {
       // let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
       // if(!reg.test(linkBuild)){
-        const reg = '^((https|http|ftp|rtsp|mms)?://)'
+      const reg = '^((https|http|ftp|rtsp|mms)?://)'
         + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
         + '(([0-9]{1,3}.){3}[0-9]{1,3}'
         + '|'
@@ -916,9 +929,9 @@ function ProfilePage(r) {
         + '((/?)|'
         + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
       const re = new RegExp(reg)
-      if(!re.test(linkBuild)){
+      if (!re.test(linkBuild)) {
         toast.error("Not the correct URL, please pay attention to check");
-      return false;
+        return false;
       }
     }
     // const linkBuildIndex = linkBuild.indexOf('http://')
@@ -963,16 +976,16 @@ function ProfilePage(r) {
 
 
     // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
-   
+
 
     setSaveIcon(true)
     res.then((resCON) => {
       // toast(res.msg)
       setSaveIcon(true)
       if (resCON.code === 100000) {
-      
+
         toast(resCON.msg)
-       setAddbuild(false)
+        setAddbuild(false)
         const resBuil = req_building_list(walletAddress);
 
         resBuil.then((resBuilCon) => {
@@ -987,10 +1000,10 @@ function ProfilePage(r) {
       }
     });
 
-   
+
 
   },
-    [resultHandlerBu, saveIcon,routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
+    [resultHandlerBu, saveIcon, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
   );
 
   // const addWork = React.useCallback(async () => {
@@ -1084,19 +1097,36 @@ function ProfilePage(r) {
     tabState,
     reqDclData,
   ]);
+  const addWorkWerable = () => {
+    // console.log(55, tokenWearable);
+    setShowModal(true)
+    const res = getBaseInfo(tokenWearable);
+    res.then((resWeable) => {
+      setaddressWerVal(resWeable.data.profile.address);
+      setemailWearVal(resWeable.data.profile.email);
 
-  // const DeleteBuild = ()=>{
-  //   console.log(558);
+    })
+  }
 
-  // }
-  // const EditBuild = ()=>{
-  //   console.log('EditBuild');
-  //   setAddbuild(true)
+  const renderWerable = React.useMemo(() => {
+    // console.log(statue);
 
-  // }
-  // const openCon =  React.useCallback(async () => {
-  //   setAddbuild(true)
-  // }, [])
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (statue === 1) {
+      return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
+
+    }
+
+  }, [statue,
+    error,
+    loading,
+    onRetry])
+
   const renderBuilding = React.useMemo(() => {
 
     if (loading) {
@@ -1366,9 +1396,9 @@ function ProfilePage(r) {
   const watcher_cardState = React.useCallback(() => {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
-//   useEffect(()=>{
-// console.log(saveVal,999999);
-//   },[saveVal])
+  //   useEffect(()=>{
+  // console.log(saveVal,999999);
+  //   },[saveVal])
   useEffect(() => {
     // const accessToken = getToken('atk');
     // console.log(accessToken);
@@ -1379,6 +1409,8 @@ function ProfilePage(r) {
   }, [addbuild, walletAddress,])
 
   React.useEffect(() => {
+
+
     setSaveIcon(false)
     const a = getToken('address');
     if (a) {
@@ -1388,6 +1420,7 @@ function ProfilePage(r) {
     setNavLabel('All')
     req_building_list(walletAddress)
     const accessToken = getToken('atk');
+    setTokenWearable(accessToken)
     setRouteTab(r.router.query.type);
     reqWearablesData();
     requestPersonal(accessToken);
@@ -1400,16 +1433,19 @@ function ProfilePage(r) {
     watcher_cardState();
     if (!accessToken) window.location.href = '/';
   }, [
+    tokenWearable,
     navLabel,
     getToken,
     requestData,
     builderSat,
     buildState,
+    statue,
     walletAddress,
     requestPersonal,
     watcher_store,
     dataBuildSource,
     // reqBuilderData,
+    addressWearable,
     reqDclData,
     r.router.query.type,
     routeTab,
@@ -1480,21 +1516,29 @@ function ProfilePage(r) {
           wearablesShowOrHide,
         );
       }
-      // console.log(result, wearablesShowOrHide, stat);
-      if (result.code === 100000) {
-        if (wearablesShowOrHide === 2 || stat === 2) {
-          toast.success('Successfully hidden!');
+      setSaveIconVal(id)
+        if (result.code === 100000) {
+
+          if (wearablesShowOrHide === 2 || stat === 2) {
+            toast.success('Successfully hidden!');
+          }
+          if (wearablesShowOrHide === 1 || stat === 1) {
+            toast.success('Successfully shown!');
+          }
+
+        } else {
+          toast.error('Failed!');
         }
-        if (wearablesShowOrHide === 1 || stat === 1) {
-          toast.success('Successfully shown!');
-        }
-      } else {
-        toast.error('Failed!');
-      }
-      setWearablesShowOrHideState(false);
-      setWearablesShowOrHide(0);
-      setWearablesSleceteIdList([]);
-      reqWearablesData();
+
+        setWearablesShowOrHideState(false);
+        setWearablesShowOrHide(0);
+        setWearablesSleceteIdList([]);
+        reqWearablesData();
+        setSaveIconVal(null)
+
+     
+
+
     },
     [wearablesShowOrHide, wearablesSleceteIdList, reqWearablesData],
   );
@@ -1514,6 +1558,7 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
+
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -1527,6 +1572,7 @@ function ProfilePage(r) {
           <DaoModelList2
             models={wearablesCreatorsData}
             token={refreshTK()}
+            saveIconVal={saveIconVal}
             wearablesShowOrHideState={wearablesShowOrHideState}
             wearablesShowOrHide={wearablesShowOrHide}
             length={wearablesCreatorsData.length}
@@ -1968,6 +2014,21 @@ function ProfilePage(r) {
     }
     if (routeTab === 'wearablelist') {
 
+      // return (
+      //   <>
+
+      //     <>
+      //       <div className={style.buildingContainer}>
+      //         <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
+      //           {renderWerable}
+
+      //         </div>
+      //       </div>
+      //     </>
+      //     : <></>
+
+      //   </>
+      // )
       // if(statue===1){
       // return (
       //   <>
@@ -1986,8 +2047,23 @@ function ProfilePage(r) {
 
 
 
+
+
       return (
         <>
+          {statue === 1 ? <>
+            <div className={style.createrCont}>
+              <span className={style.join}>Join Creators to show your works</span>
+              <span className={style.apply} onClick={addWorkWerable}>Apply</span>
+            </div>
+          </> : null}
+          {statue === 2 ? <>
+            <div className={style.createrCont}>
+              <span className={style.join}>Waiting to become a creator</span>
+            </div>
+          </> : null}
+
+
           {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
           <div className={cls}></div>
           <div className="main-content flex px-0">
@@ -2008,8 +2084,7 @@ function ProfilePage(r) {
             <div className={cls} />
           </div>
           <div className={cls} />
-        </div> */}
-
+        </div>  */}
           <div className={style.wearablesContainer}>
             <div className={style.title}>
               <div className={style.wearables}></div>
@@ -2058,38 +2133,52 @@ function ProfilePage(r) {
                   );
                 })}
               </div>
-              <div
-                className={style.right}
-                onClick={() => {
-                  setShowOrHideState(!showOrHideState);
-                }}
-              >
-                <img src="/images/Settings.png" />
-                <div>Batch setting</div>
-                <ul
-                  className={
-                    wearablesNavState === 'all' && showOrHideState
-                      ? style.showOrHideList
-                      : style.showOrHideList1
-                  }
-                >
-                  {showOrHideState
-                    ? showOrHide[wearablesNavState].map((item, index) => {
-                      return (
-                        <li
-                          className={style.showOrHideItem}
-                          key={index}
-                          onClick={() => {
-                            settingShowOrHide(item.type);
-                          }}
-                        >
-                          {item.label}
-                        </li>
-                      );
-                    })
-                    : null}
-                </ul>
-              </div>
+              {
+                statue === 1 || statue === 2 ? null :
+                  <div
+                    className={style.right}
+                    onClick={() => {
+                      setShowOrHideState(!showOrHideState);
+                    }}
+                    onMouseLeave={() => {
+                      setTimeout(() => {
+                        setShowOrHideState(false);
+                      }, 2000);
+                    }}
+                  >
+                    <img src="/images/Settings.png" />
+                    <div>Batch setting</div>
+                    <ul
+                      className={
+                        wearablesNavState === 'all' && showOrHideState
+                          ? style.showOrHideList
+                          : style.showOrHideList1
+                      }
+                      onMouseLeave={() => {
+                        setShowOrHideState(false);
+                      }}
+                    >
+                      {showOrHideState
+                        ? showOrHide[wearablesNavState].map((item, index) => {
+                          return (
+                            <li
+                              className={style.showOrHideItem}
+                              key={index}
+                              onClick={() => {
+                                settingShowOrHide(item.type);
+                              }}
+
+                            >
+                              {item.label}
+                            </li>
+                          );
+                        })
+                        : null}
+                    </ul>
+                  </div>
+
+              }
+
             </div>
             <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
           </div>
@@ -2133,6 +2222,7 @@ function ProfilePage(r) {
     manySetLabel,
     renderContent,
     renderBuilding,
+    renderWerable,
     dataSource,
     dataBuildSource,
     reqBuilderData,
@@ -2151,7 +2241,7 @@ function ProfilePage(r) {
             setManySetState(false);
           }}
           id='container'
-          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join : '',)}
+          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join1 : '',)}
         >
           <div className=" relative">
             <PageHeader
@@ -2222,6 +2312,10 @@ function ProfilePage(r) {
               }}
             >
               {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
+              {/* {
+                    saveIcon === true ? <><img src='/images/saveIcon.gif'></img>
+                    </> : <>Save</>
+                  } */}
             </div>
           </div>
         ) : null}
@@ -2271,6 +2365,26 @@ function ProfilePage(r) {
             clickHeader={drag}
           />
         </> : ''}
+      <JoinModal
+        emaileWearable={emaileWearable}
+        addressWearable={addressWearable}
+        show={showModal}
+        setClose={(x) => {
+          setShowModal(x);
+        }}
+        setcreaterState={(x) => {
+          // console.log(x);
+
+          setStatue(x)
+        }}
+        setEmail={(x) => {
+          setEmailStateWearable(x)
+        }}
+        setbuildState={(x) => {
+          setBuildStateVal(x)
+        }}
+        type={'Creators'}
+      ></JoinModal>
     </>
   );
 }

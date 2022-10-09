@@ -18,6 +18,7 @@ interface Props {
   tabState?;
   id?;
   name?;
+  saveIconVal;
   token?;
   wearablesShowOrHideState?;
   wearablesShowOrHide?;
@@ -57,6 +58,7 @@ export default function DaoWebglCard({
   wearablesShowOrHideState,
   wearablesShowOrHide,
   onClick,
+  saveIconVal,
   wearablesSleceteIdList,
   batchShowOrHide,
   type,
@@ -65,6 +67,7 @@ export default function DaoWebglCard({
   const router = useRouter();
   const sceneRef = React.useRef(null);
   const [selecete, setSelecete] = React.useState(false);
+  // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(() => {
     if (type === 'topic') {
       router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
@@ -75,7 +78,7 @@ export default function DaoWebglCard({
     }
   }, [tabState, id, address]);
 
-  const init = React.useCallback(() => {  
+  const init = React.useCallback(() => {
     const scene = new Scene();
 
     const containerId = `webgl${graphicId}`;
@@ -162,6 +165,7 @@ export default function DaoWebglCard({
     //     toast.error("Failed!")
     //   }
     batchShowOrHide(model.id, model.show_status === 1 ? 2 : 1);
+    // setSaveIcon
   }, []);
   React.useEffect(() => {
     if (wearablesSleceteIdList && wearablesSleceteIdList.findIndex((i) => model.id === i) !== -1) {
@@ -231,7 +235,17 @@ export default function DaoWebglCard({
         </div>
         {!type && model && model.show_status ? (
           <div className={styles.showOrHide} onClick={changeShowOrHide}>
-            {model && model.show_status === 2 ? `Show` : `Hide`}
+            {
+               saveIconVal === model.id? <img src='/images/saveIcon.gif' ></img> : null
+            }
+            {
+            model && model.show_status === 2 ?
+              <>Show</>
+              : `Hide`
+
+            }
+
+
           </div>
         ) : null}
 
