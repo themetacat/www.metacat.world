@@ -8,6 +8,7 @@ import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
 import TwoNav from '../two_nav';
 import style from './index.module.css';
+import { useEffect } from 'react';
 
 type Props = {
   active?: string;
@@ -167,6 +168,7 @@ export default function PageHeader({ active, className }: Props) {
   const [analyticState, setAnalyticState] = React.useState(false);
   const [ParcelsState, setParcelsState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
+  const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -179,33 +181,43 @@ export default function PageHeader({ active, className }: Props) {
   const placeDataSet = () => {
     setParcelsState(!ParcelsState)
   }
-  console.log(active);
-  
+
+  useEffect(() => {
+    let offsetWidth
+    offsetWidth = document.querySelector('.top-navigation_header__VFID6')?.clientWidth
+    console.log(offsetWidth,document);
+    setOffsetWidthNum(offsetWidth)
+    console.log(offsetWidthNum, 8898,);
+    console.log(offsetWidthNum <= 1200);
+  }, [])
   return (
     <header
-      className={cn('w-full flex justify-center fixed items-start pointer-events-none',style.head)}
+      className={cn('w-full flex   justify-center fixed items-start pointer-events-none',
+        offsetWidthNum <= 1200 ? style.headNum : style.head,
+      )}
     >
       <div
         className={cn(
-          ' flex justify-center items-center pointer-events-none w-full',
-          style.header,
+          ' flex items-center pointer-events-none w-full',
+          offsetWidthNum <= 1200 ? style.headNum : style.header,
         )}
       >
-        <div className={cn("flex ", style.imgCon)}>
+        <div className={cn("flex ", offsetWidthNum <= 1200 ? style.imgIcon1 : null)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
             <img className={cn('', style.metaImg)} src="/images/beijingtu/meta1.png"></img>
           </Link>
         </div>
-        <div className={cn("flex flex-grow ", style.headerTop)}>
+        <div className={cn("flex ", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null
+        )}>
           <div
             className={cn(
               'text-xl  text-gray-400 cursor-pointer hover:text-white pointer-events-auto',
-              active === '/' ? style.active : null, style.nameCon, style.rightCon
+              active === '/' ? style.active : null, style.nameCon, style.rightCon1
             )}
           >
             <Link href="/" prefetch>
-            <span className={cn('',active === '/' ? style.active : null)}>Home</span>
+              <span className={cn('', active === '/' ? style.active : null,)}>Home</span>
             </Link>
           </div>
           {/* <div
@@ -233,11 +245,11 @@ export default function PageHeader({ active, className }: Props) {
           >
 
             {/* <Link href={'/analytics'} prefetch> */}
-            <span className={cn('',analyticState === true? style.active : null,active === 'analytics' ? style.active : null,)}>Analytics</span>
-           
+            <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,)}>Analytics</span>
+
             {/* </Link> */}
             {
-              analyticState === false ? <img src='/images/icon/shang.png'  style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px",  marginLeft: "5.67px" }}></img>
+              analyticState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
             }
 
             {analyticState ? (
@@ -263,11 +275,11 @@ export default function PageHeader({ active, className }: Props) {
           // }}
           >
             {/* <Link href={'/heatmap?type=cryptovoxels'} prefetch> */}
-            <span className={cn('',heatmapState === true? style.active : null,active === 'heatmap' ? style.active : null,)}>Heatmap</span>
-            
+            <span className={cn('', heatmapState === true ? style.active : null, active === 'heatmap' ? style.active : null,)}>Heatmap</span>
+
             {/* </Link> */}
             {
-              heatmapState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px",  marginLeft: "5.67px" }}></img>
+              heatmapState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
             }
             {heatmapState ? (
               <TwoNav options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
@@ -289,10 +301,10 @@ export default function PageHeader({ active, className }: Props) {
             onClick={placeDataSet}
           >
             {/* <Link href="/parcels?tab=cryptovoxels" prefetch> */}
-            <span className={cn('',ParcelsState === true? style.active : null,active === '/parcels' ? style.active : null,)}>Place</span>
-            
+            <span className={cn('', ParcelsState === true ? style.active : null, active === '/parcels' ? style.active : null,)}>Place</span>
+
             {
-              ParcelsState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px",  marginLeft: "5.67px" }}></img>
+              ParcelsState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
             }
             {/* </Link> */}
             {ParcelsState ? (
@@ -326,9 +338,9 @@ export default function PageHeader({ active, className }: Props) {
           // }}
           >
             {/* <Link href={'/build/builders'} prefetch> */}
-            <span className={cn('',buildState === true? style.active : null,active === 'Build' ? style.active : null,)}>Build</span>
+            <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Build</span>
             {
-              buildState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px",  marginLeft: "5.67px" }}></img>
+              buildState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
             }
             {/* </Link> */}
             {buildState ? (
@@ -357,10 +369,10 @@ export default function PageHeader({ active, className }: Props) {
           // }}
           >
             {/* <Link href={'/wearables'} prefetch> */}
-            <span className={cn('',wearableState === true? style.active : null,active === 'wearables' ? style.active : null,)}>Wearables</span>
-            
+            <span className={cn('', wearableState === true ? style.active : null, active === 'wearables' ? style.active : null,)}>Wearables</span>
+
             {
-              wearableState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px",  marginLeft: "5.67px" }}></img>
+              wearableState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
             }
             {/* </Link> */}
             {wearableState ? (
@@ -379,7 +391,7 @@ export default function PageHeader({ active, className }: Props) {
             )}
           >
             <Link href={'/learn?type=articles'} prefetch>
-            <span className={cn('',active === 'learn' ? style.active : null)}>Learn</span>  
+              <span className={cn('', active === 'learn' ? style.active : null)}>Learn</span>
             </Link>
           </div>
           {/* <div
@@ -402,9 +414,9 @@ export default function PageHeader({ active, className }: Props) {
             demo
           </Link>
         </div> */}
-  
+
         </div>
-    
+
         <div
           className={cn(
             'text-xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
@@ -412,7 +424,7 @@ export default function PageHeader({ active, className }: Props) {
             style.connectBox
           )}
         >
-            <div className={style.imgIcon}><img src='/images/Frame.png'></img></div>
+          <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}><img src='/images/Frame.png'></img></div>
           <WalletBtn></WalletBtn>
         </div>
 
