@@ -3,7 +3,8 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
 import TopicDetailCard from '../../../components/topic-detail-card';

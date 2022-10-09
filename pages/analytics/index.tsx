@@ -8,7 +8,8 @@ import dynamic from 'next/dynamic';
 
 import Page from '../../components/page';
 
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 
 import Footer from '../../components/footer';
 
@@ -1841,6 +1842,7 @@ export default function AnalyticsIndex(props) {
   }, [fixedState]);
 
   React.useEffect(() => {
+    
     const listener = () => {
       if (
         document.querySelector('.myClassName') &&
@@ -1859,8 +1861,12 @@ export default function AnalyticsIndex(props) {
 
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
+      <div  className={cn('',headerNav ==='single'&& fixedStateAll=== true ? style.a:null)}>
+      <PageHeader  active={'analytics'}/>
+      </div>
+     
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'analytics'} />
+       
         <div
           className={cn(
             'main-content flex justify-center items-end relative z-10 pointer-events-none',

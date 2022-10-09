@@ -4,7 +4,8 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Footer from '../../../components/footer';
 import ModelList from '../../../components/model-list';
 import UserAvatar from '../../../components/user-avatar';
@@ -180,10 +181,11 @@ export default function Wearables(props) {
 
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-      <div className={cn("bg-black relative",style.backImage)}>
-        <div className={fixedState ? style.fix1 : null}>
+       <div className={fixedState ? style.fix1 : null}>
           <PageHeader className="relative z-10" active={'wearables'} />
         </div>
+      <div className={cn("bg-black relative",style.backImage)}>
+       
         <div
           className={cn('tab-list flex mt-5', style.allHeight, fixedState ? style.fix2 : null)}
           id="switch"

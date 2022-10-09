@@ -15,6 +15,9 @@
   cursor: pointer;
   border-radius: 8px;
 }
+.a{
+  display: none;
+}
 .aboslute{
   position:fixed;
   height: 42px;

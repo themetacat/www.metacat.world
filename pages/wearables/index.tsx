@@ -3,7 +3,8 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import Tab from '../../components/tab';
 import InfoCard from '../../components/info_card';
 import Footer from '../../components/footer';
@@ -89,12 +90,12 @@ export default function Wearables() {
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className="min-h-screen" meta={meta}>
-      <div className={cn('bg-black relative', style.backImage)}>
-        <div className={cn(' relative', fixedState ? style.fix1 : null)}>
+        <div className={cn('', fixedState ? style.fix1 : null)}>
           <PageHeader className="relative z-10" active={'wearables'} />
         </div>
+      <div className={cn('bg-black relative', style.backImage)}>
         <div className={cn(' relative mt-5', fixedState ? style.fix2 : null)} id="switch">
-          <div className={cn('tab-list flex', style.allHeight)}>
+          <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
             <div className="main-content flex px-0">
               {TAB.map((item, index) => {

@@ -15,7 +15,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Footer from '../../../components/footer';
 
 import api from '../../../lib/api';
