@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
 
@@ -8,7 +8,6 @@ import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
 import TwoNav from '../two_nav';
 import style from './index.module.css';
-import { useEffect } from 'react';
 
 type Props = {
   active?: string;
@@ -183,8 +182,7 @@ export default function PageHeader({ active, className }: Props) {
   }
 
   useEffect(() => {
-    let offsetWidth
-    offsetWidth = document.querySelector('.top-navigation_header__VFID6')?.clientWidth
+     const offsetWidth = document.querySelector('.top-navigation_header__VFID6')?.clientWidth
     // console.log(offsetWidth,document);
     setOffsetWidthNum(offsetWidth)
     // console.log(offsetWidthNum, 8898,);
