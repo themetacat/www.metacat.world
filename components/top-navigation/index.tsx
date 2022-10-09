@@ -183,30 +183,30 @@ export default function PageHeader({ active, className }: Props) {
 
   useEffect(() => {
      const offsetWidth = document.querySelector('.top-navigation_header__VFID6')?.clientWidth
-    // console.log(offsetWidth,document);
+    console.log(offsetWidth);
     setOffsetWidthNum(offsetWidth)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
   }, [])
   return (
     <header
-      className={cn('w-full flex   justify-center fixed items-start pointer-events-none',
+      className={cn('w-full flex flex-glow  justify-center fixed items-start pointer-events-none',
         offsetWidthNum <= 1200 ? style.headNum : style.head,
       )}
     >
       <div
         className={cn(
-          ' flex items-center pointer-events-none w-full',
+          ' flex items-center  pointer-events-none w-full flex-flow',
           offsetWidthNum <= 1200 ? style.headNum : style.header,
         )}
       >
-        <div className={cn("flex ", offsetWidthNum <= 1200 ? style.imgIcon1 : null)}>
+        <div className={cn("flex flex-flow", offsetWidthNum <= 1200 ? style.imgIcon1 : null)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
-            <img className={cn('', style.metaImg)} src="/images/beijingtu/meta1.png"></img>
+            <img className={cn('flex-flow', style.metaImg)} src="/images/beijingtu/meta1.png"></img>
           </Link>
         </div>
-        <div className={cn("flex ", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null
+        <div className={cn("flex flex-flow", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null
         )}>
           <div
             className={cn(

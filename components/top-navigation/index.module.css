@@ -32,13 +32,14 @@ flex-flow: row;
   background-repeat: no-repeat;
   height: 60px;
   position: relative;
-  flex-grow: 1;
-  justify-content: center;
+  /* flex-grow: 1; */
+  /* justify-content: center; */
 }
 .metaImg{
   /* margin-top: 15px; */
   width: 100px;
   height: 30.89px;
+  margin-left: 30px;
 }
 .imgCon{
   margin-left: 16.85px;
