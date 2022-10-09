@@ -185,10 +185,10 @@ export default function PageHeader({ active, className }: Props) {
   useEffect(() => {
     let offsetWidth
     offsetWidth = document.querySelector('.top-navigation_header__VFID6')?.clientWidth
-    console.log(offsetWidth,document);
+    // console.log(offsetWidth,document);
     setOffsetWidthNum(offsetWidth)
-    console.log(offsetWidthNum, 8898,);
-    console.log(offsetWidthNum <= 1200);
+    // console.log(offsetWidthNum, 8898,);
+    // console.log(offsetWidthNum <= 1200);
   }, [])
   return (
     <header
