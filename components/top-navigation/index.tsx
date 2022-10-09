@@ -8,7 +8,6 @@ import WalletBtn from '../wallet-btn';
 import TwoNavigation from '../two_navigation';
 import TwoNav from '../two_nav';
 import style from './index.module.css';
-import { rotate } from '@antv/g2/lib/util/transform';
 
 type Props = {
   active?: string;
