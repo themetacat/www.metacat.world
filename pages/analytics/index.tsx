@@ -260,9 +260,7 @@ const hNav = [
 
 export default function AnalyticsIndex(props) {
  
-  // React.useEffect(()=>{
-  //   console.log(props,"1234")
-  // },[])
+
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
