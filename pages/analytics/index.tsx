@@ -1830,7 +1830,7 @@ export default function AnalyticsIndex(props) {
     const listener = () => {
       if (
         document.getElementById('switch') &&
-        document.getElementById('switch').getBoundingClientRect().top <= 10 &&
+        // document.getElementById('switch').getBoundingClientRect().top <= 10 &&
         window.scrollY > 200
       ) {
         setFixedState(true);
