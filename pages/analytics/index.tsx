@@ -260,9 +260,7 @@ const hNav = [
 
 export default function AnalyticsIndex(props) {
  
-  // React.useEffect(()=>{
-  //   console.log(props,"1234")
-  // },[])
+
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -1830,7 +1828,7 @@ export default function AnalyticsIndex(props) {
     const listener = () => {
       if (
         document.getElementById('switch') &&
-        document.getElementById('switch').getBoundingClientRect().top <= 10 &&
+        // document.getElementById('switch').getBoundingClientRect().top <= 10 &&
         window.scrollY > 200
       ) {
         setFixedState(true);

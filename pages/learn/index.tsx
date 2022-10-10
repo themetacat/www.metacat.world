@@ -184,11 +184,17 @@ function Learn(r) {
   }, [requestData, r.router.query.type, page, count, showType]);
 
   React.useEffect(() => {
+    
+    
     const listener = () => {
+      // console.log(fixedState,document.querySelector('#myClassName').getBoundingClientRect().top,222);
+      // console.log(document.querySelector('#myClassName').getBoundingClientRect().top,window.scrollY);
+      
       if (
-        document.querySelector('.myClassName') &&
-        document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 200
+        // document.querySelector('#myClassName') &&
+        // document.querySelector('#myClassName').getBoundingClientRect().top >= 10 
+        // && window.scrollY > 200
+        document.getElementById('myClassName') && window.scrollY > 90
       ) {
         setFixedState(true);
       } else {
@@ -197,18 +203,18 @@ function Learn(r) {
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedState]);
+  }, []);
 
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
-      <div className={cn("bg-black relative",fixedState === true ? style.a:null)} >
+      <div className={cn("bg-black relative",fixedState? style.a:null)} >
         <PageHeader className="relative z-10" active={'learn'} />
       </div>
       <div className={style.containerBanner}>
         <img src="/images/LearnBanner.png" className={style.banner} />
       </div>
-      <div className={cn('tab-list flex mt-5 myClassName', style.allHeight,fixedState ? style.aboslute : null)}>
+      <div id='myClassName' className={cn('tab-list flex mt-5 myClassName', fixedState  ? style.aboslute :null, style.allHeight)}>
         <div className={cls}></div>
         <div className={cn('main-content flex px-0', style.r)}>
           {REPORTTAB.map((item) => {
