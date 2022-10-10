@@ -9,6 +9,12 @@
   border-bottom: rgba(255,255,255,0.1) solid 1px;
   background: #000;
 }
+.option:nth-child(1){
+  border-radius: 4px 4px 0px 0px;
+}
+.option:last-child{
+  border-radius:0px 0px 4px 4px ;
+}
 .option:hover {
   color: #fff;
   font-weight: 500;

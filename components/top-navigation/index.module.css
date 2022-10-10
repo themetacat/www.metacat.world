@@ -22,12 +22,13 @@ margin-right: 39.66px;
 margin-top: 10.34px;
 }
 .headNum{
+  background-image: url("/images/imgConent/Mask group.png");
 z-index:99999;
 justify-content: left;
 flex-flow: row;
 }
 .header{
-  background-image: url("/images/beijingtu/Mask group.png");
+  background-image: url("/images/imgConent/Mask group.png");
   background-size:cover;
   background-repeat: no-repeat;
   height: 60px;
@@ -37,8 +38,10 @@ flex-flow: row;
 }
 .metaImg{
   /* margin-top: 15px; */
-  width: 100px;
-  height: 30.89px;
+  /* width: 100px;
+  height: 30.89px; */
+  width: 40%;
+  height: 30%;
   margin-left: 30px;
 }
 .imgCon{
@@ -51,15 +54,28 @@ flex-flow: row;
   width: 30px;
 }
 .headerTop{
-  margin-left: 35px;
- 
+  margin-left: -8%;
+ width: 80%;
+}
+.one{
+  width: 20%;
 }
 .headsa{
   flex-flow: row;
-  width: 580px;
+  width: 50%;
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+.headsa::-webkit-scrollbar{
+  background-color: #fff;
+  border-radius: 8px;
+  height: 10px;
+}
+.headsa::-webkit-scrollbar-thumb{
+
+  background-color: #00dcd5;
+  border-radius: 8px;
 }
 .base {
   z-index: 10002;
@@ -69,7 +85,7 @@ flex-flow: row;
 .location {
   position: absolute;
   right: -48px;
-  bottom: -115px;
+  bottom: -110px;
   /* bottom: -90px; */
   z-index: 99;
   background-color: #0f191b;
@@ -78,8 +94,8 @@ flex-flow: row;
 .parcels {
   border-radius: 4px;
   position: absolute;
-  left: 445px;
-  top:63px;
+  left:-60px;
+  bottom: -110px;
   z-index: 99;
   background-color: #0f191b;
 
@@ -96,7 +112,16 @@ flex-flow: row;
   position: absolute;
   /* left: 387px;
   bottom: 128px; */
-  top: 52px;
+  top: 39px;
+  left: -50px;
+  background-color: #0f191b;
+  border-radius: 4px;
+}
+.locationLearn{
+  position: absolute;
+  /* left: 387px;
+  bottom: 128px; */
+  top: 39px;
   left: -50px;
   background-color: #0f191b;
   border-radius: 4px;
@@ -104,7 +129,7 @@ flex-flow: row;
 .location4 {
   position: absolute;
   left: -50px;
-  top: 52px;
+  top: 39px;
   /* bottom: 27px; */
   background-color: #0f191b;
   border-radius: 4px;

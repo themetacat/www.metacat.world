@@ -22,11 +22,11 @@ import { req_learn_article_list, req_learn_report_list } from '../../service/z_a
 
 const REPORTTAB = [
   {
-    label: 'Articles',
+    label: 'Insight',
     type: 'articles',
   },
   {
-    label: 'MetaCat Report',
+    label: 'Report',
     type: 'report',
   },
 ];
