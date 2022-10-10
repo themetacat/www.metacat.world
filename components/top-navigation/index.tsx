@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
 
@@ -41,6 +41,18 @@ const wearable = [
     label: 'WearableDAO',
     type: 'wearabledao',
     link: '/wearables/wearabledao?type=chinesered',
+  },
+];
+const learn = [
+  {
+    label: 'Insight',
+    type: 'Insight',
+    link: 'learn?type=articles',
+  },
+  {
+    label: 'Report',
+    type: 'Report',
+    link: '/learn?type=report',
   },
 ];
 const parcels = [
@@ -162,15 +174,18 @@ const analyticsData = [
 
 
 export default function PageHeader({ active, className }: Props) {
+  const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
   const [analyticState, setAnalyticState] = React.useState(false);
   const [ParcelsState, setParcelsState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
+  const [learnState, setLearnState] = React.useState(false);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
+
   const analyticsDataSet = () => {
     setAnalyticState(!analyticState)
   }
@@ -182,28 +197,29 @@ export default function PageHeader({ active, className }: Props) {
   }
 
   useEffect(() => {
-     const offsetWidth = document.querySelector('.top-navigation_header__VFID6')?.clientWidth
-    console.log(offsetWidth);
-    setOffsetWidthNum(offsetWidth)
+
+    
+    setOffsetWidthNum(headerRef?.current?.clientWidth)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
   }, [])
   return (
     <header
-      className={cn('w-full flex flex-glow  justify-center fixed items-start pointer-events-none',
+      className={cn('w-full flex flex-glow  justify-center fixed items-start ',
         offsetWidthNum <= 1200 ? style.headNum : style.head,
       )}
+      ref={headerRef}
     >
       <div
         className={cn(
-          ' flex items-center  pointer-events-none w-full flex-flow',
+          ' flex items-center  w-full flex-flow',
           offsetWidthNum <= 1200 ? style.headNum : style.header,
         )}
       >
-        <div className={cn("flex flex-flow", offsetWidthNum <= 1200 ? style.imgIcon1 : null)}>
+        <div className={cn(" flex-flow", style.one,offsetWidthNum <= 1200 ? style.imgIcon1 : null)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
-            <img className={cn('flex-flow', style.metaImg)} src="/images/beijingtu/meta1.png"></img>
+            <img className={cn('flex-flow', style.metaImg)} src="/images/imgConent/meta1.png"></img>
           </Link>
         </div>
         <div className={cn("flex flex-flow", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null
@@ -233,21 +249,21 @@ export default function PageHeader({ active, className }: Props) {
               // analyticState === true ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
-            onClick={analyticsDataSet}
-          // onMouseEnter={() => {
-          //   setAnalyticState(true);
-          // }}
-          // onMouseLeave={() => {
-          //   setAnalyticState(false);
-          // }}
+            // onClick={analyticsDataSet}
+            onMouseEnter={() => {
+              setAnalyticState(true);
+            }}
+            onMouseLeave={() => {
+              setAnalyticState(false);
+            }}
           >
 
-            {/* <Link href={'/analytics'} prefetch> */}
-            <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,)}>Analytics</span>
+            <Link href={'/analytics'} prefetch>
+              <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,)}>Analytics</span>
 
-            {/* </Link> */}
+            </Link>
             {
-              analyticState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
+              analyticState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
             }
 
             {analyticState ? (
@@ -264,20 +280,20 @@ export default function PageHeader({ active, className }: Props) {
               'text-xl flex text-gray-400 relative hover:text-white active:text-white cursor-pointer pointer-events-auto',
               active === 'heatmap' ? style.active : null, style.nameCon, style.rightCon
             )}
-            onClick={heatmapDataSet}
-          // onMouseEnter={() => {
-          //   setHeatmapState(true);
-          // }}
-          // onMouseLeave={() => {
-          //   setHeatmapState(false);
-          // }}
+            // onClick={heatmapDataSet}
+            onMouseEnter={() => {
+              setHeatmapState(true);
+            }}
+            onMouseLeave={() => {
+              setHeatmapState(false);
+            }}
           >
-            {/* <Link href={'/heatmap?type=cryptovoxels'} prefetch> */}
-            <span className={cn('', heatmapState === true ? style.active : null, active === 'heatmap' ? style.active : null,)}>Heatmap</span>
+            <Link href={'/heatmap?type=cryptovoxels'} prefetch>
+              <span className={cn('', heatmapState === true ? style.active : null, active === 'heatmap' ? style.active : null,)}>Heatmap</span>
 
-            {/* </Link> */}
+            </Link>
             {
-              heatmapState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
+              heatmapState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
             }
             {heatmapState ? (
               <TwoNav options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
@@ -286,25 +302,25 @@ export default function PageHeader({ active, className }: Props) {
 
           <div
             className={cn(
-              'text-xl flex text-gray-400 cursor-pointer hover:text-white pointer-events-auto',
+              'text-xl flex text-gray-400 relative cursor-pointer hover:text-white pointer-events-auto',
               active === '/parcels' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
-            // onMouseEnter={() => {
-            //   setParcelsState(true);
-            // }}
-            // onMouseLeave={() => {
-            //   setParcelsState(false);
-            // }}
-            onClick={placeDataSet}
+            onMouseEnter={() => {
+              setParcelsState(true);
+            }}
+            onMouseLeave={() => {
+              setParcelsState(false);
+            }}
+          // onClick={placeDataSet}
           >
-            {/* <Link href="/parcels?tab=cryptovoxels" prefetch> */}
-            <span className={cn('', ParcelsState === true ? style.active : null, active === '/parcels' ? style.active : null,)}>Place</span>
-
+            <Link href="/parcels?tab=cryptovoxels" prefetch>
+              <span className={cn('', ParcelsState === true ? style.active : null, active === '/parcels' ? style.active : null,)}>Place</span>
+            </Link>
             {
-              ParcelsState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
+              ParcelsState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
             }
-            {/* </Link> */}
+
             {ParcelsState ? (
               // <TwoNav
               //   options={parcels}
@@ -325,22 +341,23 @@ export default function PageHeader({ active, className }: Props) {
               active === 'Build' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
-            onClick={() => {
-              setBuildState(!buildState);
+            // onClick={() => {
+            //   setBuildState(!buildState);
+            // }}
+            onMouseEnter={() => {
+              setBuildState(true);
             }}
-          // onMouseEnter={() => {
-          //   setBuildState(true);
-          // }}
-          // onMouseLeave={() => {
-          //   setBuildState(false);
-          // }}
+            onMouseLeave={() => {
+              setBuildState(false);
+            }}
           >
-            {/* <Link href={'/build/builders'} prefetch> */}
-            <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Build</span>
+            <Link href='/build/builders' prefetch>
+              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Build</span>
+            </Link>
             {
-              buildState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
+              buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
             }
-            {/* </Link> */}
+
             {buildState ? (
               <TwoNavigation
                 options={build}
@@ -356,23 +373,23 @@ export default function PageHeader({ active, className }: Props) {
               active === 'wearables' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
-            onClick={() => {
-              setWearableState(!wearableState);
+            // onClick={() => {
+            //   setWearableState(!wearableState);
+            // }}
+            onMouseEnter={() => {
+              setWearableState(true);
             }}
-          // onMouseEnter={() => {
-          //   setWearableState(true);
-          // }}
-          // onMouseLeave={() => {
-          //   setWearableState(false);
-          // }}
+            onMouseLeave={() => {
+              setWearableState(false);
+            }}
           >
-            {/* <Link href={'/wearables'} prefetch> */}
-            <span className={cn('', wearableState === true ? style.active : null, active === 'wearables' ? style.active : null,)}>Wearables</span>
-
+            <Link href={'/wearables'} prefetch>
+              <span className={cn('', wearableState === true ? style.active : null, active === 'wearables' ? style.active : null,)}>Wearables</span>
+            </Link>
             {
-              wearableState === false ? <img src='/images/icon/shang.png' className={style.asImg} style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "5.67px" }}></img>
+              wearableState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
             }
-            {/* </Link> */}
+
             {wearableState ? (
               <TwoNavigation
                 options={wearable}
@@ -383,14 +400,31 @@ export default function PageHeader({ active, className }: Props) {
           </div>
           <div
             className={cn(
-              'text-xl  text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex text-gray-400 relative hover:text-white active:text-white cursor-pointer pointer-events-auto',
               active === 'learn' ? style.active : null,
               style.nameCon
             )}
+            onMouseEnter={() => {
+              setLearnState(true);
+            }}
+            onMouseLeave={() => {
+              setLearnState(false);
+            }}
           >
             <Link href={'/learn?type=articles'} prefetch>
               <span className={cn('', active === 'learn' ? style.active : null)}>Learn</span>
             </Link>
+            {
+              learnState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
+            }
+
+            {learnState ? (
+              <TwoNavigation
+                options={learn}
+                className={style.cn2}
+                location={style.locationLearn}
+              ></TwoNavigation>
+            ) : null}
           </div>
           {/* <div
           className={cn(

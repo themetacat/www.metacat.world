@@ -268,9 +268,11 @@ export default function AnalyticsIndex(props) {
     description: META_DESCRIPTION,
   };
   const router = useRouter();
+  const headerRef = React.useRef(null)
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStateAll, setFixedStateAll] = React.useState(false);
+  const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
     setShowType(newType); 
@@ -1780,7 +1782,7 @@ export default function AnalyticsIndex(props) {
                 options={types}
                 defaultValue={showType}
                 id="switch"
-                className={style.aboslute}
+                className={ offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
                 fixedS={fixedState}
               ></Switch>
             {/* </div> */}
@@ -1842,7 +1844,7 @@ export default function AnalyticsIndex(props) {
   }, [fixedState]);
 
   React.useEffect(() => {
-    
+    setOffsetWidthNum(headerRef?.current?.clientWidth)
     const listener = () => {
       if (
         document.querySelector('.myClassName') &&
@@ -1857,12 +1859,12 @@ export default function AnalyticsIndex(props) {
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedStateAll]);
+  }, [fixedStateAll,offsetWidthNum]);
 
   return (
-    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
-      <div  className={cn('',headerNav ==='single'&& fixedStateAll=== true ? style.a:null)}>
-      <PageHeader  active={'analytics'}/>
+    <Page className={cn('min-h-screen',  offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
+      <div  className={cn('',headerNav ==='single'&& fixedStateAll=== true ? style.a:null)} ref={headerRef}>
+      <PageHeader  active={'analytics relative'} />
       </div>
      
       <div className="bg-black relative">

@@ -8,10 +8,12 @@
   overflow-x: scroll;
   overflow-y: hidden;
 }
-.a{
-  display: none;
-  background-color: red;
+.anPage1{
+  min-width: 1200px;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
+
 .sign {
   width: 1087px;
   height: 125px;
@@ -73,14 +75,24 @@
   background-color: #111a1b;
 }
 
-
-.aboslute {
+.headNum{
   position:fixed;
   height: 42px;
+  width: 95%;
   z-index: 99879;
   background-color: #111a1b;
   border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
-  top:0px;
+  top:36px;
+  margin: 0px auto 0;
+}
+.aboslute {
+  position:fixed;
+  height: 42px;
+  width: 95%;
+  z-index: 99879;
+  background-color: #111a1b;
+  border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
+  top:60px;
   margin: 0px auto 0;
 }
 .abosluteAll {

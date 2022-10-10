@@ -83,7 +83,7 @@ React.useEffect(()=>{
           return (
             <SwiperSlide
               className={cn(
-                'box-border w-12 py-2 px-4 font-semibold text-white',
+                'box-border w-12  font-semibold text-white',
                 style.base,
                 item.value === active ? style.active : '',
                 item.value === 'sandbox' ? style.p1 : null,
