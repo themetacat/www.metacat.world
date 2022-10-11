@@ -6,6 +6,7 @@ type Props = {
   cls?: string;
   country?: string;
   discord?: string;
+  identity?: string;
   logo_url: string;
   name?: string;
   topic_id?: number;
@@ -21,6 +22,7 @@ export default function InfoCard({
   country,
   discord,
   logo_url,
+  identity,
   name,
   topic_id,
   twitter,
@@ -42,6 +44,7 @@ export default function InfoCard({
         </div>
         <div className={style.name}>{name}</div>
         {country ? <div className={style.area}>Country : {country}</div> : null}
+        {identity ? <div className={style.identity}>Identity : {identity}</div> : null}
       </div>
       <div className={style.bottom}>
         {website ? (

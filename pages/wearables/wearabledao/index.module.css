@@ -6,7 +6,7 @@
 }
 .backImage{
   background-image: url('/images/imgConent/biaotilan.png');
-  padding-top: 76px;
+  padding-top: 90px;
 }
 
 .anPage {
@@ -44,6 +44,7 @@
 }
 
 .desc {
+  height: 34px;
   text-align: center;
   font-family: 'Inter';
   font-style: normal;
@@ -112,7 +113,7 @@
 .navCOntainer {
   width: 100%;
   /* height: 60px; */
-  background: #111a1b;
+  /* background: #111a1b; */
 }
 .nav {
   width: 1200px;
@@ -124,33 +125,38 @@
 
 .item {
  padding-bottom: 6px;
-  margin-right: 50px;
-  line-height: 60px;
-  box-sizing: border-box;
+  /* margin-right: 50px; */
+  background: rgba(255, 255, 255, 0.05);
   font-family: 'PingFang SC';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-  color: #999999;
+  color: #aaaaaa;
   cursor: pointer;
+  border-radius: 8px 8px 0px 0px;
+  padding: 9px 30px 9px 30px;
 }
 .item:hover {
-  color: #fff;
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #000000;
+  filter: brightness(125%);
 }
-/* .item:active{
-  background-color: red
-} */
+
+
+.item:active{
+  filter: brightness(75%);
+}
 .action {
-  border-bottom: 4px solid #00decf;
-  color: #fff;
+  color: #000000;
   font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  /* background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); */
-  border-radius: 2px;
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  border-radius: 8px 8px 0px 0px;
+  padding: 9px 30px 9px 30px;
 }
 
 .fix1 {

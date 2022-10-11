@@ -352,7 +352,7 @@ export default function PageHeader({ active, className }: Props) {
             }}
           >
             <Link href='/build/builders' prefetch>
-              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Build</span>
+              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Creator</span>
             </Link>
             {
               buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
@@ -367,7 +367,7 @@ export default function PageHeader({ active, className }: Props) {
             ) : null}
           </div>
 
-          <div
+          {/* <div
             className={cn(
               'text-xl flex  text-gray-400 hover:text-white relative  active:text-white cursor-pointer pointer-events-auto',
               active === 'wearables' ? style.active : null,
@@ -397,7 +397,7 @@ export default function PageHeader({ active, className }: Props) {
                 location={style.location2}
               ></TwoNavigation>
             ) : null}
-          </div>
+          </div> */}
           <div
             className={cn(
               'text-xl flex text-gray-400 relative hover:text-white active:text-white cursor-pointer pointer-events-auto',

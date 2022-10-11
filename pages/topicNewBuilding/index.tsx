@@ -62,7 +62,15 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   const [error, setError] = React.useState(false);
   const [baseInfo, setBaseInfo] = React.useState(convert(base_info));
   const [baseInfoContent, setBaseInfoContent] = React.useState('');
-  const [baseInfoContentDetail, setBaseInfoContentDetail] = React.useState(null);
+  const [navBox, setNavBox] = React.useState([
+    {
+      label: 'Buildings',
+      type: 'buildings',
+    },
+    {
+      label: 'Wearables',
+      type: 'wearables',
+    },]);
   const [avatarContent, setAvatarContent] = React.useState('');
   const [countryContent, setCountryContent] = React.useState('');
   const [parcelList, setParcelList] = React.useState(convert(parcel_list));
@@ -86,7 +94,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   const requestData = React.useCallback(
     async (topicId: string | string[]) => {
       // console.log(topicId,2);
-      
+
       setLoading(true);
       setError(false);
       try {
@@ -201,7 +209,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
       const { profile } = data;
       state.setState({ profile });
     },
-    [resultHandler, baseInfoContent, avatarContent, countryContent, buildingsContainer],
+    [resultHandler, baseInfoContent, walletAddress, avatarContent, countryContent, buildingsContainer],
   );
 
   const changeNav = React.useCallback((t) => {
@@ -211,13 +219,40 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
 
 
   React.useEffect(() => {
+    if (parcelList?.length === 0) {
+      setNavState('wearables')
+      setNavBox([{
+        label: 'Wearables',
+        type: 'wearables',
+      }])
+    } else if (wearableList?.length === 0) {
+      setNavBox([{
+        label: 'Buildings',
+        type: 'buildings',
+      },])
+    } else if (parcelList?.length !== 0 || wearableList?.length !== 0) {
+      setNavBox([{
+        label: 'Buildings',
+        type: 'buildings',
+      },
+      {
+        label: 'Wearables',
+        type: 'wearables',
+      }])
+    }
+
+    console.log(navBox, "navBox");
+
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
     }
-    const a = getToken('address');
-    if (a) {
-      setWalletAddress(a);
+    let strAdd = router.asPath
+    const newAdd = strAdd.split('=')[1]
+
+    // const a = getToken('address');
+    if (newAdd) {
+      setWalletAddress(newAdd);
     }
 
   }, [requestPersonal, walletAddress,]);
@@ -264,6 +299,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   }, [searchText, parcelList, navState, originWearables, wearableList]);
 
   const rander = React.useMemo(() => {
+    console.log(parcelList?.length);
 
     if (navState === 'buildings') {
 
@@ -306,13 +342,13 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
               </div>
             ) : null}
           </div>
-          {renderStatus}
+          {/* {renderStatus} */}
         </div>
       );
     }
     if (navState === 'wearables') {
-    
-      
+
+
       return (
         <div className={style.wearable}>
           <DaoModelListBuilding
@@ -321,10 +357,11 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
             address={router.query.address}
           ></DaoModelListBuilding>
         </div>
-      )}
+      )
+    }
 
 
-   
+
   }, [navState, wearables, parcelList, search, wearableList, router.query.address]);
 
   React.useEffect(() => {
@@ -418,10 +455,12 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
         <div className={cn(style.nav, fixedState ? style.fix2 : null)}>
           <div className={style.navCOntainer}>
             <div className={style.nav}>
-              {nav.map((item, idx) => {
+              {navBox.map((item, idx) => {
+                console.log(item);
+
                 return (
                   <div
-                    className={cn(style.item, navState === item.type ? style.action : null)}
+                    className={cn(style.item, navState === item.type ? style.action : null,)}
                     key={idx}
                     onClick={() => {
                       changeNav(item.type);
@@ -429,6 +468,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
                     }}
                   >
                     {item.label}
+                    {/* {parcelList?.length === 0 ? '' : ''} */}
                   </div>
                 );
               })}
