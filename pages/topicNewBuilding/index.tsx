@@ -247,7 +247,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
     if (accessToken) {
       requestPersonal(accessToken);
     }
-    let strAdd = router.asPath
+    const strAdd = router.asPath
     const newAdd = strAdd.split('=')[1]
 
     // const a = getToken('address');
