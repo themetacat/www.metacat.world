@@ -56,7 +56,7 @@ export default function Card({
           error="/images/default-cover.png"
         ></CoverImg>
         {
-          typeState && <span className={style.typeIcon}>{type}</span>
+          typeState && <span className={style.typeIcon}>{typeState}</span>
         }
       </div>
       <div className={cn('p-5 flex-1', style.content)}>

@@ -1244,7 +1244,6 @@ function ProfilePage(r) {
     [rent_set_state, manyChange],
   );
 
-
   const requireData = React.useCallback(
     async (token) => {
       const res = await getBaseInfo(token);

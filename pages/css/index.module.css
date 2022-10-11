@@ -1,82 +1,72 @@
-.bottomLine {
-  position: relative;
-  z-index: 1;
-  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+.contentHeader {
+  margin-top: 30px;
+  border-bottom: 1px solid rgba(0, 208, 236, 0.1);
 }
 .allHeight {
-  height: 48px;
-}
-.imgContanier {
-  width: 100%;
-  height: 216px;
-  overflow: hidden;
-  background-color: #000;
-}
-.imgContanier .title {
-  margin-top: 50px;
-  color: #ddd;
-  font-weight: 900;
-  font-size: 60px;
-  text-align: center;
-}
-.imgContanier .text {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto;
-  margin-top: 20px;
-}
-.imgContanier .text .t {
-  margin: 0 50px;
-  color: #999;
-  font-weight: 400;
-  font-size: 14px;
-}
-.imgContanier .text .hengxian {
-  width: 300px;
-  height: 1px;
-  margin-top: 10px;
-  background-color: #999;
-}
-.cardList {
-  display: flex;
-  flex-wrap: wrap;
-  width: 1200px;
-  margin: 50px auto 30px;
+  padding-top: 90px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
 .cls {
-  margin-right: 15px;
-  margin-bottom: 15px;
-}
-.cls:nth-child(3n) {
-  margin-right: 0;
-}
-.backImage {
-  background-image: url('/images/imgConent/biaotilan.png');
-}
-.jumper {
-  right: 8% !important;
-  bottom: 30% !important;
-}
-.fix1 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 11;
   width: 100%;
-  margin: 0 auto;
-  background: #000;
-  opacity: 1;
+  height: 46px;
+  background-image: url('/images/Mask groupbeijingtutu.png');
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
-.fix2 {
+.boxCon {
+  position: absolute;
+  right: 0px;
+  bottom: 3px;
+}
+.aboslute {
   position: fixed;
-  top: 76px;
-  left: 0;
-  z-index: 9;
+  z-index: 9999;
+  background-color: #000;
+  background-image: url('/images/imgConent/buildersBeiJingTu.png');
+  top: 3px;
+  margin: 0px auto 0;
   width: 100%;
-  margin: 0 auto;
-  background: #000;
 }
-x;
+.content {
+  min-height: 650px;
+  margin-top: 20px;
+}
+.boxCon1 {
+  margin-right: 455px;
+}
+.mapContanier {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 660px;
+  margin-bottom: 50px;
+  padding: 15px;
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-shadow: inset 0 0 15px rgba(24, 255, 241, 0.3);
+}
+.mapBack {
+  position: absolute;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+}
+.builders {
+  font-size: 25px;
+}
+.analytics {
+  height: 50px;
+  padding: 12px 20px;
+  color: #0f191b;
+  font-size: 18px;
+  background-color: #ffcf5f;
+}
+.analyticsMore {
+  color: #666666;
+  font-size: 14px;
+  cursor: pointer;
+}
+.more {
+  color: #999999;
+  font-size: 16px;
   cursor: pointer;
 }
 .more > img {

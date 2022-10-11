@@ -263,7 +263,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                     <div className={cn('justify-end', style.right, style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         console.log(o,item,11111111111111);
-                        return Math.round(item[o].percent * 100)
+                        return (item[o].percent * 100)
                       })}% */}
                       {/* {arrdataSource[item].percent * 100}% */}
                       {(arrdataSource[item].percent * 100).toFixed(2)}%

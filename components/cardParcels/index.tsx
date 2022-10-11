@@ -14,11 +14,13 @@ type Props = {
   openseaUrl?: string;
   hasTypeTag?: boolean;
   world?: string;
+  coverImg:string;
   typeState?: string;
 };
 
 export default function Card({
   coverImgUrl,
+  coverImg,
   name,
   description,
   type,
@@ -52,7 +54,7 @@ export default function Card({
         ) : null}
         <CoverImg
           className={style.img}
-          img={coverImgUrl}
+          img={coverImgUrl||coverImg}
           error="/images/default-cover.png"
         ></CoverImg>
         {
