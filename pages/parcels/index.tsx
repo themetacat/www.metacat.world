@@ -502,20 +502,55 @@ export default function Index(props) {
     },
     [tabState, searchText, typeState],
   );
-
+  useEffect(() => {
+    onTypeChangeHandler('All')
+  }, [])
   const onTypeChangeHandler = React.useCallback(
-    async (type: string) => {
+    async (type: string,
+      // page,
+      // query = '',
+    ) => {
       setTypeState(type);
+      console.log(type, tabState, subTabState);
+      if (type === 'Free Space') {
+        const data = await requestData({
+          tab: tabState,
+          subTab: 'space',
+          page: 1,
+          query: '',
+          type: '',
+          needUpdateTypeList: true,
+        });
+        // console.log(data);
 
-      const data = await requestData({
-        tab: tabState,
-        subTab: subTabState,
-        page: 1,
-        query: searchText,
-        type,
-      });
+        setDataSource(data);
+      } else if(type === 'Scene'){
+        const data = await requestData({
+          tab: tabState,
+          subTab: 'scene',
+          page: 1,
+          query: '',
+          type: '',
+          needUpdateTypeList: true,
+        });
+        // console.log(data);
 
-      setDataSource(data);
+        setDataSource(data);
+      }
+      else {
+        // onSubTabChange('parcel')
+
+        const data = await requestData({
+          tab: tabState,
+          subTab: subTabState,
+          page: 1,
+          query: searchText,
+          type,
+        });
+
+        setDataSource(data);
+      }
+
     },
     [tabState, subTabState, searchText],
   );
@@ -638,7 +673,7 @@ export default function Index(props) {
       if (dataSource.length === 0) {
         return <Status status="empty" />;
       }
-      
+
       return (
         <>
           <div
@@ -647,9 +682,20 @@ export default function Index(props) {
               style.bottomContent,
             )}
           >
-            {dataSource.map((card, idx) => {
-              return <Card {...card} typeState={typeState} key={uuid()}></Card>;
-            })}
+            {
+              typeState == 'Free Space' ||typeState == 'Scene'?
+                <>
+                  {dataSource.map((card, idx) => {
+                    return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
+                  })}
+                </>
+                : <>
+                  {dataSource.map((card, idx) => {
+                    return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+                  })}
+                </>
+            }
+
           </div>
           <div className={style.pagiNation}>
             <PagiNation
@@ -1669,6 +1715,7 @@ export default function Index(props) {
 
   React.useEffect(() => {
     setTypeState('All');
+    // onTabChange('All')
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -1721,13 +1768,13 @@ export default function Index(props) {
           </div>
           <div
             className={cn(
-              'tab-list flex myClassName ',
+              'tab-list flex myClassName main-content relative',
               style.allHeight,
-              // fixedState ? style.aboslute : null
+              fixedState ? style.aboslute : null
             )}
           >
-            <div className={cls}></div>
-            <div className="main-content flex px-0 relative">
+            {fixedState === true ? <div style={{ marginRight: "457px" }}></div> : null}
+            <div className="flex px-0 relative">
               <div
                 className={cn(
                   'p absolute z-40 flex justify-start items-center',
@@ -1771,9 +1818,9 @@ export default function Index(props) {
                         label={item.label}
                         icon={item.icon}
                         isMini={true}
-                        //          id="switch"
-                        // className={style.aboslute}
-                        // fixedS={fixedState}
+                      //          id="switch"
+                      // className={style.aboslute}
+                      // fixedS={fixedState}
                       />
                     </SwiperSlide>
                   );
@@ -1792,12 +1839,14 @@ export default function Index(props) {
               </div>
               <div className={cls} />
             </div>
-            <div className={cls} />
+            <div className={cn('', style.boxCon, fixedState ? style.boxCon1 : null)} >
+              <Search text={searchText} onSearch={onSearchHandler}></Search>
+            </div>
           </div>
         </div>
         <div className="main-content">
-          <div className={cn('flex justify-between items-center ', style.contentHeader)}>
-            <div className="flex">
+          {/* <div className={cn('flex justify-between items-center ', style.contentHeader)}> */}
+            {/* <div className="flex">
               {tabState === 'cryptovoxels'
                 ? SUBTAB.map((item, index) => {
                     if (item) {
@@ -1880,12 +1929,15 @@ export default function Index(props) {
             {subTabState === 'scene' ? (
               <Search text={searchText} onSearch={onSearchScene}></Search>
             ) : null}
-          </div>
+          </div> */}
 
           <div className={cn('', style.content)}>
-            {subTabState === 'parcel' && (
-              <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
-            )}
+            {/* {subTabState === 'parcel' && ( */}
+            {tabState === 'cryptovoxels'||tabState === 'decentraland' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+              </div>
+            ):''}
             {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}
             {subTabState === 'scene' && dataSource.length === 0 && <ScenceBuilding />}
 
