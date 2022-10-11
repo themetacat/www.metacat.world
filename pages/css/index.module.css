@@ -3,7 +3,7 @@
   border-bottom: 1px solid rgba(0, 208, 236, 0.1);
 }
 .allHeight {
-  padding-top: 46px;
+  padding-top: 90px;
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
@@ -20,9 +20,10 @@
 }
 .aboslute {
   position: fixed;
-  z-index: 99999999;
-  background-color: #111a1b;
-  top: 72px;
+  z-index: 9999;
+  background-color: #000;
+  background-image: url('/images/imgConent/buildersBeiJingTu.png');
+  top: 3px;
   margin: 0px auto 0;
   width: 100%;
 }
@@ -96,7 +97,7 @@
   margin-top: 20px;
 }
 .containerBox {
-  background-image: url('/images/beijingtu/parcelBeiJingtu.png');
+  background-image: url('/images/imgConent/parcelBeiJingtu.png');
 }
 .pagiNation {
   margin-bottom: 30px !important;
@@ -138,7 +139,7 @@
   margin: 0 auto;
   background: #000;
   opacity: 1;
-  background-image: url('/images/beijingtu/parcelBeiJingtu.png');
+  background-image: url('/images/imgConent/parcelBeiJingtu.png');
 }
 .active {
   color: #fff;

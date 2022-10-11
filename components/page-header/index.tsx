@@ -13,7 +13,7 @@ type Props = {
   active?: string;
   className?: string;
 };
-// 首页 二级页
+// 二级页
 const build = [
   {
     label: 'Builders',
@@ -382,3 +382,5 @@ export default function PageHeader({ active, className }: Props) {
     </header>
   );
 }
+
+

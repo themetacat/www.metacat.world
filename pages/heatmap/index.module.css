@@ -7,7 +7,8 @@
 }
 
 .container{
-  background-image: url('/images/beijingtu/biaotilan.png');
+  background-image: url('/images/imgConent/biaotilan.png');
+  margin-top: 60px;
 }
 
 .allHeight {
@@ -19,10 +20,13 @@
 }
 
 .mapContanier {
-  z-index: 1001;
+  /* z-index: 1001; */
   /* height: calc(100vh - 172px - 68px - 76px); */
   height: calc(100vh - 165px);
 }
 .full {
   height: 100vh;
+}
+.aaa{
+  z-index: 99999 !important;
 }

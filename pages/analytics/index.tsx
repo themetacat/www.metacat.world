@@ -8,7 +8,8 @@ import dynamic from 'next/dynamic';
 
 import Page from '../../components/page';
 
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 
 import Footer from '../../components/footer';
 
@@ -259,17 +260,17 @@ const hNav = [
 
 export default function AnalyticsIndex(props) {
  
-  // React.useEffect(()=>{
-  //   console.log(props,"1234")
-  // },[])
+
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
   const router = useRouter();
+  const headerRef = React.useRef(null)
   const [showType, setShowType] = React.useState(props.query.type || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStateAll, setFixedStateAll] = React.useState(false);
+  const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
     setShowType(newType); 
@@ -1779,7 +1780,7 @@ export default function AnalyticsIndex(props) {
                 options={types}
                 defaultValue={showType}
                 id="switch"
-                className={style.aboslute}
+                className={ offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
                 fixedS={fixedState}
               ></Switch>
             {/* </div> */}
@@ -1827,7 +1828,7 @@ export default function AnalyticsIndex(props) {
     const listener = () => {
       if (
         document.getElementById('switch') &&
-        document.getElementById('switch').getBoundingClientRect().top <= 10 &&
+        // document.getElementById('switch').getBoundingClientRect().top <= 10 &&
         window.scrollY > 200
       ) {
         setFixedState(true);
@@ -1841,6 +1842,7 @@ export default function AnalyticsIndex(props) {
   }, [fixedState]);
 
   React.useEffect(() => {
+    setOffsetWidthNum(headerRef?.current?.clientWidth)
     const listener = () => {
       if (
         document.querySelector('.myClassName') &&
@@ -1855,12 +1857,16 @@ export default function AnalyticsIndex(props) {
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedStateAll]);
+  }, [fixedStateAll,offsetWidthNum]);
 
   return (
-    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
+    <Page className={cn('min-h-screen',  offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
+      <div  className={cn('',headerNav ==='single'&& fixedStateAll=== true ? style.a:null)} ref={headerRef}>
+      <PageHeader  active={'analytics relative'} />
+      </div>
+     
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'analytics'} />
+       
         <div
           className={cn(
             'main-content flex justify-center items-end relative z-10 pointer-events-none',

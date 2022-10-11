@@ -6,15 +6,16 @@
 .allHeight {
   /* height: 48px; */
   border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
+  padding-top: 76px;
 }
 .jumper {
   right: 8% !important;
   bottom: 30% !important;
 }
 .backImage{
-  background-image: url('/images/beijingtu/biaotilan.png') !important;
+  background-image: url('/images/imgConent/biaotilan.png') !important;
 
-  /* background-image: url('/images/beijingtu/buildersBeiJingTu.png') !important; */
+  /* background-image: url('/images/imgConent/buildersBeiJingTu.png') !important; */
 }
 .bannerContainer {
   display: flex;
@@ -110,17 +111,18 @@ border-radius: 4px;
   width: 100%;
   background: #000;
   margin: 0 auto;
-  background-image: url('/images/beijingtu/buildersBeiJingTu.png')
+  background-image: url('/images/imgConent/buildersBeiJingTu.png')
 }
 .fix2 {
   position: fixed;
-  top: 76px;
+  /* top: 60px; */
+  padding-top: 0px;
   left: 0;
   width: 100%;
   background: #000;
   margin: 0 auto;
   z-index: 9;
-  background-image: url('/images/beijingtu/buildersBeiJingTu.png')
+  background-image: url('/images/imgConent/buildersBeiJingTu.png')
 }
 .fix3 {
   position: fixed;

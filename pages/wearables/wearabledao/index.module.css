@@ -1,11 +1,12 @@
 .signBack {
   /* height: 286px; */
   /* background-color: black; */
-  /* background-image: url('/images/beijingtu/biaotilan.png'); */
+  /* background-image: url('/images/imgConent/biaotilan.png'); */
   margin-top: 30px;
 }
 .backImage{
-  background-image: url('/images/beijingtu/biaotilan.png');
+  background-image: url('/images/imgConent/biaotilan.png');
+  padding-top: 76px;
 }
 
 .anPage {
@@ -104,6 +105,7 @@
 
 .allHeight {
   /* height: 48px; */
+  /* padding-top: 76px; */
   border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
 }
 
@@ -159,17 +161,18 @@
   background: #000;
   z-index: 21;
   margin: 0 auto;
-  background-image: url('/images/beijingtu/biaotilan.png')
+  background-image: url('/images/imgConent/biaotilan.png')
 }
 .fix2 {
   position: fixed;
-  top: 76px;
+  top: 60px;
   left: 0;
+  padding-top: 36px;
   width: 100%;
   background: #000;
   margin: 0 auto;
   z-index: 20;
-  background-image: url('/images/beijingtu/biaotilan.png')
+  background-image: url('/images/imgConent/biaotilan.png')
 }
 .fix3 {
   position: fixed;

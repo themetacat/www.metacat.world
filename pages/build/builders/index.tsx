@@ -2,7 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import InfoCard from '../../../components/info_card';
 import Tab from '../../../components/tab';
 import TopJumper from '../../../components/jump-to-top';
@@ -158,10 +159,11 @@ export default function Builders() {
   return (
     <>
       <Page className="min-h-screen" meta={meta}>
-        <div className={cn('bg-black relative', style.backImage)}>
-          <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
-            <PageHeader className="relative z-20" active={'Build'} />
+      <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
+            <PageHeader className="" active={'Build'} />
           </div>
+        <div className={cn('bg-black relative  mt-5', style.backImage)}>
+        
           <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
             <div className={cn('tab-list flex ', style.allHeight)}>
               <div className={cls}></div>

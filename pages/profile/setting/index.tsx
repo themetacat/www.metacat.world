@@ -9,7 +9,8 @@ import Router from 'next/router';
 import { toast } from 'react-hot-toast';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Footer from '../../../components/footer';
 import MeteInput from '../../../components/meta-input';
 import { state } from '../../../components/wallet-btn';

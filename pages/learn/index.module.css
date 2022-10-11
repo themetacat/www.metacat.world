@@ -15,12 +15,22 @@
   cursor: pointer;
   border-radius: 8px;
 }
+.containerBanner{
+  margin-top: 60px;
+}
+.a{
+  position: fixed;
+  top: 0px;
+  background-image: url('/images/imgConent/Mask\ group.png');
+
+}
 .aboslute{
   position:fixed;
-  height: 42px;
+  height: 61px;
   z-index: 99999999;
   background-color: #111a1b;
-  top:0px;
+  top:60px;
+  padding-top: 16px;
   margin: 0px auto 0;
   width: 100%;
 }

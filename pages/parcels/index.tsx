@@ -25,7 +25,8 @@ import Card from '../../components/cardParcels';
 import CardSpace from '../../components/cardSpaace';
 import SwiperTag from '../../components/swiper-tag';
 import SwiperTagParcels from '../../components/swiper-tagParcels';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import SpaceBuilding from './spacebuildings';
 import ScenceBuilding from './scencebuildings';
 import PagiNation from '../../components/paginationParcels';
@@ -1765,8 +1766,8 @@ export default function Index(props) {
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
         <div className={style.containerBox}>
-          <div className={cn(' relative myClassName', fixedState ? style.fix1 : null)}>
-            <PageHeader className="relative z-10" active={'/parcels'} />
+          <div className={cn('  myClassName', fixedState ? style.fix1 : null)} style={{zIndex:"99999"}}>
+            <PageHeader className="relative" active={'/parcels'} />
           </div>
           <div
             className={cn(
