@@ -502,9 +502,7 @@ export default function Index(props) {
     },
     [tabState, searchText, typeState],
   );
-  useEffect(() => {
-    onTypeChangeHandler('All')
-  }, [])
+ 
   const onTypeChangeHandler = React.useCallback(
     async (type: string,
       // page,
@@ -554,6 +552,10 @@ export default function Index(props) {
     },
     [tabState, subTabState, searchText],
   );
+
+  useEffect(() => {
+    onTypeChangeHandler('All')
+  }, [])
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
@@ -683,7 +685,7 @@ export default function Index(props) {
             )}
           >
             {
-              typeState == 'Free Space' ||typeState == 'Scene'?
+              typeState === 'Free Space' ||typeState === 'Scene'?
                 <>
                   {dataSource.map((card, idx) => {
                     return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
