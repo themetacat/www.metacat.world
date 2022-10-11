@@ -80,9 +80,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
         arr.push({ [name]: obj[name] })
       }
     });
-
     setArrDataSource(obj)
+    
   }, [null]);
+
 
   React.useEffect(() => {
     requestData();
@@ -188,6 +189,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                       {<span>{item}</span>}
                     </div>
                   </th>
+              
                   <th
                     className={cn(
                       '',
@@ -291,9 +293,10 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
                   </th>
 
                 </tr>
+                
               </>
             );
-
+           
           })}
 
         </tbody>

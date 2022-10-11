@@ -1229,9 +1229,9 @@ function Map({
   }, [stc, changeStaticType, changeMapType, staticList, arrowsState]);
 
   const selecterRander = React.useMemo(() => {
+    
     return (
       <div className={cn('flex justify-between items-center', style.picker)} 
-     
       >
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter
