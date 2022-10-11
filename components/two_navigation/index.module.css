@@ -21,3 +21,12 @@
 .item:last-child {
   border: 0;
 }
+.item::before{
+  position: absolute;
+  content: '';
+  left: calc(50% - 5px);
+  top: -10px;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid #0f191b;
+}

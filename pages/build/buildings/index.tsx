@@ -11,13 +11,11 @@ import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
 import TopJumper from '../../../components/jump-to-top';
 
-
 import AnimationBack from '../../../components/animation-back';
 
 import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
-
 
 import { getBuilderList } from '../../../service';
 
@@ -125,47 +123,73 @@ export default function TopicIndex() {
 
   return (
     <Page className="min-h-screen" meta={meta}>
-      <div className={cn("bg-black relative",style.backImage)}>
+      <div className={cn('bg-black relative', style.backImage)}>
         <div className={style.topCon}>
-        <div className={cn(fixedState ? style.fix1 : null,)}>
-          <PageHeader className={cn('relative z-20')} active={'Build'} />
-        </div>
-        <div
-          className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
-          id="switch"
-        >
-          <div className={cls}></div>
-          <div className="main-content flex px-0">
-            {TAB.map((item, index) => {
-              return (
-                <Tab
-                  active={tabState === item.type}
-                  key={item.label}
-                  icon={null}
-                  label={item.label}
-                  isMini={true}
-                  onClick={() => {
-                    onTabChange(item.type);
-                  }}
-                />
-              );
-            })}
+          <div className={cn(fixedState ? style.fix1 : null)}>
+            <PageHeader className={cn('relative z-20')} active={'Build'} />
+          </div>
+          <div
+            className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
+            id="switch"
+          >
+            <div className={cls}></div>
+            <div className="main-content flex px-0">
+              {TAB.map((item, index) => {
+                return (
+                  <Tab
+                    active={tabState === item.type}
+                    key={item.label}
+                    icon={null}
+                    label={item.label}
+                    isMini={true}
+                    onClick={() => {
+                      onTabChange(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
             <div className={cls} />
           </div>
-          <div className={cls} />
         </div>
-        </div>
-        <div
+        {/* <div
           className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
         >
           <img src="/images/buildingsBanner.png" className={style.sign}></img>
+        </div> */}
+        <div className={style.imgContanier}>
+          <div className={style.title}>Featured Buildings</div>
+          <div className={style.text}>
+            <div className={style.hengxian}></div>
+            <div className={style.t}>
+              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS.
+              {/* EXCELLENT &nbsp;&nbsp;
+              BUILDINGS &nbsp;&nbsp;
+              ARE&nbsp;&nbsp;&nbsp;
+              GATHERED&nbsp;&nbsp;
+              ACCORDING&nbsp;&nbsp;
+              TO&nbsp;&nbsp;&nbsp;
+              THE&nbsp;&nbsp;&nbsp;
+              LANDOWNERS&nbsp;&nbsp;
+              OR&nbsp;&nbsp;&nbsp;
+              ARCHITECTS&nbsp;&nbsp; */}
+            </div>
+            {/* <div className={style.t}>Excellent buildings are gathered according to the landowners or architects.</div> */}
+            <div className={style.hengxian}></div>
+          </div>
         </div>
       </div>
       <TopJumper classname={style.jumper}></TopJumper>
       <div className={cn('main-content', style.content)}>
         {builders.length > 0 ? (
           <>
-            <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-8  justify-center",style.buildingsCon)}>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center',
+                style.buildingsCon,
+              )}
+            >
               {builders.map((card, idx) => {
                 return <TopicDetailCardBuildings {...card} key={idx}></TopicDetailCardBuildings>;
               })}
@@ -179,11 +203,9 @@ export default function TopicIndex() {
           </>
         ) : null}
         {renderStatus}
-       
       </div>
-    
+
       <Footer />
-    
     </Page>
   );
 }

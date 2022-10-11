@@ -62,8 +62,9 @@
 .zoomButton {
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.8) !important;
-  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
+  background: rgba(0, 0, 0, 0.8);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  border-radius: 4px 4px 0px 0px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -79,6 +80,28 @@
 .zoomButton:active {
   filter: brightness(75%);
 }
+
+.zoomButtonrEACT{
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  border-radius:0px 0px 4px 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.zoomButtonrEACT:hover {
+  filter: brightness(125%);
+}
+
+.zoomButtonrEACT:active {
+  filter: brightness(75%);
+}
+
+.zoomButtonrEACT > img {
+  width: 18px;
+}
 .disable {
   filter: brightness(25%);
 }
@@ -89,8 +112,9 @@
   left: 460px;
   width: 40px;
   height: 40px;
-  background: rgba(0, 0, 0, 0.8) !important;
-  border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
+  background: rgba(0, 0, 0, 0.8);
+border: 0.5px solid rgba(1, 218, 217, 0.6);
+border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -106,6 +130,7 @@
 .fullBtn:active {
   filter: brightness(75%);
 }
+
 
 .legend {
   position: absolute;

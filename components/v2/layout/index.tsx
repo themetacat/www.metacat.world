@@ -53,6 +53,12 @@ const mediaData = [
     type: 'substrata',
     link: '/heatmap?type=substrata',
   },
+  {
+    label: 'Tz1and',
+    icon: '/images/tz1and.png',
+    type: 'tz1and',
+    link: '/heatmap?type=tz1and',
+  },
 ];
 
 const PriceMap = [
@@ -62,6 +68,7 @@ const PriceMap = [
   'somniumspace',
   'cryptovoxels',
   'substrata',
+  'tz1and',
 ];
 
 const Traffic = ['decentraland', 'cryptovoxels'];
@@ -93,7 +100,7 @@ export default function Layout({
   const t = useTranslations('navigation');
 
   const jumpToMap = React.useCallback((item, mapType) => {
-    window.open(`https://www.metacat.world${item.link}&static=${mapType}`);
+    window.open(`https://www.metacat.world${item.link}&static=${mapType}`); // https://www.metacat.world${item.link}&static=${mapType}
   }, []);
 
   const requsetHeatMapData = React.useCallback(async () => {

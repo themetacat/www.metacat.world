@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
 import toast, { Toaster } from 'react-hot-toast';
@@ -15,6 +16,7 @@ import AvaterPopList from '../components/v2/avater-pop-list';
 import CarouseSinglePic from '../components/v2/carousel-single-pic';
 import EventCardLearn from '../components/v2/event-card-learn';
 import JoinModal from '../components/v2/join-modal';
+import JoinModalBuild from '../components/join_builders_works';
 
 import { state } from '../components/v2/wallet-btn';
 
@@ -26,6 +28,7 @@ import {
   req_sales_amount_percent,
   req_sales_amount_stack,
   req_learn_article_list,
+  req_userBuilder_apply_become,
 } from '../service/z_api';
 
 import style from './index.module.css';
@@ -48,7 +51,7 @@ export default function Index(props) {
     title: `Home - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
-
+  const router = useRouter();
   const [builderCarouselList, setBuilderCarouselList] = React.useState([]);
   const [creatorCarouselList, setCreatorCarouselList] = React.useState([]);
   const [profile, setProfile] = React.useState(null);
@@ -57,7 +60,13 @@ export default function Index(props) {
   const [buildingData, setBuildingData] = React.useState([]);
   const [creatorData, setCreatorData] = React.useState([]);
   const [learnData, setLearnData] = React.useState([]);
+  const [addState, setAddState] = React.useState('');
+  const [emailState, setEmailState] = React.useState(null);
+  const [buildStateVal, setBuildStateVal] = React.useState(1);
+  const [createrStateVal, setCreaterStateVal] = React.useState(1);
+  const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
+  const [showModalBuilder, setShowModalBuilder] = React.useState(false);
   const [barColor, setBarColor] = React.useState([194, 157, 135]);
 
   const refreshTK = React.useCallback(async () => {
@@ -104,6 +113,60 @@ export default function Index(props) {
     },
     [refreshTK],
   );
+  const dragJoin = function (evt, dbele) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_works_container2__VidgJ')
+    }
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
 
   const requestFloorData = React.useCallback(async () => {
     const res = await getFloorPrice();
@@ -128,6 +191,15 @@ export default function Index(props) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
+        // console.log(res,9999999999999);
+      // console.log(res);
+      setAddState(res.data?.profile?.address)
+      setEmailState(res.data?.profile?.email)
+      setBuildStateVal(res.data?.profile?.builder_status)
+   
+
+      setCreaterStateVal(res.data?.profile?.creator_status)
+
       const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
@@ -135,8 +207,9 @@ export default function Index(props) {
       const { profile: pro } = data;
       state.setState({ profile: pro });
       setProfile(profile);
-    },
-    [resultHandler],
+    }
+    ,
+    [resultHandler, addState, emailState, buildStateVal, createrStateVal],
   );
 
   const requestLearnData = React.useCallback(async () => {
@@ -155,14 +228,32 @@ export default function Index(props) {
     window.open(url);
   }, []);
 
+  const jumpToUrlEnt = () => {
+    router.replace(`/profile?type=building`)
+    // console.log(addState);
+    // if(addState === '' || addState === null){
+    //   setJoinBuilders(true)
+    // }else{
+    //   setJoinBuilders(true)
+    // }
+  }
+
   React.useEffect(() => {
+    // console.log(buildStateVal, 999999999999999);
+   
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
     }
-  }, [requestPersonal]);
+    // console.log(requestPersonal(accessToken));
+
+  }, []);
+
+
 
   React.useEffect(() => {
+// console.log(createrStateVal);
+
     if (
       navigator.userAgent.match(
         /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i,
@@ -171,20 +262,74 @@ export default function Index(props) {
       // window.location.href="移动端url";
     } else {
       // window.location.href="pc端url";
-      // console.log('pc');
       // window.location.href = "http://www.taobao.com";
     }
     requestFloorData();
     requestLearnData();
     requestBuildingData();
     requestWearableData();
-  }, [null]);
+  }, []);
+
+  const turnOff = () => {
+    setJoinBuilders(false)
+
+  }
+  const retProps = React.useCallback(async (token: string, buildData: any) => {
+    if (buildData.length === 0) {
+      toast.error('Please fill in the link address');
+      return false;
+    }
+    const showIndex = false
+    buildData?.map((item) => {
+      if (item !== '') {
+        const reg = '^((https|http|ftp|rtsp|mms)?://)'
+          + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+          + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+          + '|'
+          + '([0-9a-z_!~*\'()-]+.)*'
+          + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+          + '[a-z]{2,6})'
+          + '(:[0-9]{1,4})?'
+          + '((/?)|'
+          + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+        const re = new RegExp(reg)
+        if (!re.test(item)) {
+          toast.error("Not the correct URL, please pay attention to check");
+          return false;
+        }
+      }
+      return true;
+    })
+    if (showIndex) {
+      return false;
+    }
+    const res = await req_userBuilder_apply_become(token, 'builder', buildData.toString());
+    // toast(res.msg)
+    if (res?.code === 100000) {
+      router.replace('/profile?type=building')
+      setJoinBuilders(false)
+    } else {
+      setJoinBuilders(false)
+    }
+
+    // res.then((resV) => {
+    //   // setBuildState(2)
+    //   console.log(resV.code);
+
+    // setTabStateTR(false)
+    // setEmailBuilders(false)
+  }
+    ,
+    [],
+  );
+
 
   return (
-    <Page meta={meta}>
+    <Page meta={meta} className={cn('')} >
       <Layout>
-        <div>
-          <div className="bg-black">
+      {/* , joinBuilders === true ? style.aa : null */}
+        <div className={cn("bg-gray-500",)} >
+          <div className={cn("bg-black")} >
             <div className="main-content pb-12">
               <div className="flex justify-between items-end pt-12 pb-7">
                 <span className="text-white font-bold text-2xl">Analytics</span>
@@ -294,14 +439,14 @@ export default function Index(props) {
               <div className="flex justify-start items-end pt-12 pb-7">
                 <span className="text-white font-bold text-2xl">Buildings</span>
               </div>
-              <div className=" mt-6 flex justify-between items-center mb-7">
+              <div className={cn(" mt-6 flex justify-between items-center mb-7 relative",)} >
                 <CarouseSinglePic imgs={builderCarouselList}></CarouseSinglePic>
                 <div className=" ml-28">
                   <AvaterPopList avaters={buildingData} type="buildings"></AvaterPopList>
                   <div className=" text-4xl font-medium text-white my-12 text-center">
                     About metaverse buildings, about metaverse builders.
                   </div>
-                  <div className="flex justify-around items-center text-xl font-semibold">
+                  <div className="flex justify-around items-center text-xl font-semibold ">
                     <div
                       onClick={() => {
                         jumpToUrl('https://www.metacat.world/build/builders');
@@ -311,13 +456,42 @@ export default function Index(props) {
                       EXPLORE BUILDERS
                     </div>
                     <div
+                      // onClick={() => {
+                      //   jumpToUrl('/profile?type=parcellist');
+                      // }}
+                      // onClick={jumpToUrlEnt}
                       onClick={() => {
-                        jumpToUrl('https://forms.gle/LKgT89B884yk2gAK7');
+                        // console.log(buildStateVal);
+
+                        if (buildStateVal === 1) {
+                          if (addState && emailState) {
+                            // console.log("两个都有啊");
+                            // setJoinBuilders(true)
+                            router.replace(`/profile?type=building`)
+                          } else if (!addState || !emailState) {
+                            // console.log("你想要啥");
+                            setShowModalBuilder(true);
+                          }
+                        } else if (buildStateVal !== 1) {
+                          toast.error('You have become builder')
+                        }
                       }}
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                     >
                       JOIN BUILDERS
                     </div>
+                    {/* {
+                      joinBuilders === true ?
+                        <div>
+                          <JoinModalBuild
+                            turnOff={turnOff}
+                            retProps={retProps}
+                            // clickHeader={dragJoin}
+                            emailState={emailState}
+                          ></JoinModalBuild>
+                        </div>
+                        : null
+                    } */}
                   </div>
                 </div>
               </div>
@@ -347,8 +521,18 @@ export default function Index(props) {
                     <div
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
                       onClick={() => {
-                        setShowModal(true);
-                      }}
+                        // setShowModal(true);
+                        // console.log(createrStateVal);
+
+                        if (createrStateVal === 1) {
+                          setShowModal(true);
+                        } else if (createrStateVal === 4)
+                          router.replace('/profile?type=wearablelist')
+                        else  {
+                          toast.error('You have become creater')
+                        }
+                      }
+                      }
                     >
                       JOIN CREATORS
                     </div>
@@ -375,11 +559,42 @@ export default function Index(props) {
         </div>
         <JoinModal
           show={showModal}
+          // buildStateVal={buildStateVal}
           setClose={(x) => {
             setShowModal(x);
           }}
+          setcreaterState={(x) => {
+            // console.log(x);
+
+            setCreaterStateVal(x)
+          }}
+          setEmail={(x) => {
+            setEmailState(x)
+          }}
+          setbuildState={(x) => {
+            setBuildStateVal(x)
+          }}
           type={'Creators'}
         ></JoinModal>
+        <JoinModal
+          show={showModalBuilder}
+          emailState={emailState}
+          buildStateVal={buildStateVal}
+          setClose={(y) => {
+            setShowModalBuilder(y);
+          }}
+          setEmail={(x) => {
+            setEmailState(x)
+          }}
+          setcreaterState={(x) => {
+            setCreaterStateVal(x)
+          }}
+          setbuildState={(x) => {
+            setBuildStateVal(x)
+          }}
+          type={'Builders'}
+        ></JoinModal>
+
 
         <Toaster
           toastOptions={{
@@ -392,7 +607,7 @@ export default function Index(props) {
           }}
         />
       </Layout>
-    </Page>
+    </Page >
   );
 }
 

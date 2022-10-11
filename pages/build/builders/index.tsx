@@ -9,7 +9,9 @@ import TopJumper from '../../../components/jump-to-top';
 import Footer from '../../../components/footer';
 import Status from '../../../components/status';
 
-import { req_buid_builders_list } from '../../../service/z_api';
+import { convert, getToken, setToken } from '../../../common/utils';
+
+import { req_buid_builders_list, req_buid_builders_buildingList } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -45,9 +47,11 @@ export default function Builders() {
   const [navState, setNavState] = React.useState('Institutions');
   const [institutions, setInstitutions] = React.useState([]);
   const [individuals, setIndividuals] = React.useState([]);
+  const [newBuilding, setNewBuilding] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [fixedState, setFixedState] = React.useState(false);
   const [anchor, setAnchor] = React.useState(false);
+  const [walletAddress, setWalletAddress] = React.useState('');
   const meta = {
     title: `Build - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -59,6 +63,10 @@ export default function Builders() {
     if (result.code === 100000) {
       setInstitutions(result.data.institution);
       setIndividuals(result.data.individuals);
+    }
+    const resultBuilding = await req_buid_builders_buildingList();
+    if (result.code === 100000) {
+      setNewBuilding(resultBuilding.data);
     }
     setLoading(false);
   }, []);
@@ -75,7 +83,14 @@ export default function Builders() {
   React.useEffect(() => {
     getTop();
     requestData();
-  }, [requestData, getTop]);
+    const a = getToken('address');
+    // console.log(a,656);
+    
+    if (a) {
+      setWalletAddress(a);
+    }
+    // console.log(walletAddress,66666666);
+  }, [requestData, getTop,walletAddress]);
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
@@ -83,8 +98,15 @@ export default function Builders() {
   }, []);
 
   const toTopic = React.useCallback((id, c) => {
+    
     window.open(`/topic/${id}?type=buildings`);
   }, []);
+  const toTopicNewBuilding = () => {
+    // window.open(`/topicNewBuilding/?addr=${addr}`);
+    window.open(`/topicNewBuilding?address=${walletAddress}`);
+    // console.log(walletAddress);
+    
+  };
 
   const reander1 = React.useMemo(() => {
     if (loading) {
@@ -105,12 +127,16 @@ export default function Builders() {
     }
     return (
       <>
+        {newBuilding.map((item, idx) => {
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopicNewBuilding}></InfoCard>;
+        })}
         {individuals.map((item, idx) => {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
         })}
       </>
     );
-  }, [loading, individuals, toTopic]);
+  }, [loading, individuals, newBuilding, toTopic]);
+
 
   React.useEffect(() => {
     const listener = () => {
@@ -132,38 +158,50 @@ export default function Builders() {
   return (
     <>
       <Page className="min-h-screen" meta={meta}>
-
-      <div className={cn("bg-black relative",style.backImage)}>
-        <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
-          <PageHeader className="relative z-20" active={'Build'} />
-        </div>
-        <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
-          <div className={cn('tab-list flex ', style.allHeight)}>
-            <div className={cls}></div>
-            <div className={cn("main-content flex px-0")}>
-              {TAB.map((item, index) => {
-                return (
-                  <Tab
-                    active={tabState === item.type}
-                    key={item.label}
-                    icon={null}
-                    label={item.label}
-                    isMini={true}
-                    onClick={() => {
-                      onTabChange(item.type);
-                    }}
-                  />
-                );
-              })}
+        <div className={cn('bg-black relative', style.backImage)}>
+          <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
+            <PageHeader className="relative z-20" active={'Build'} />
+          </div>
+          <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
+            <div className={cn('tab-list flex ', style.allHeight)}>
+              <div className={cls}></div>
+              <div className={cn('main-content flex px-0')}>
+                {TAB.map((item, index) => {
+                  return (
+                    <Tab
+                      active={tabState === item.type}
+                      key={item.label}
+                      icon={null}
+                      label={item.label}
+                      isMini={true}
+                      onClick={() => {
+                        onTabChange(item.type);
+                      }}
+                    />
+                  );
+                })}
+                <div className={cls} />
+              </div>
               <div className={cls} />
             </div>
-            <div className={cls} />
+          </div>
+          {/* <div className={style.bannerContainer}>
+          <img src="/images/buildersBanner.png" />
+
+        </div> */}
+          <div className={style.imgContanier}>
+            <div className={style.title}>Builders</div>
+            <div className={style.text}>
+              <div className={style.hengxian}></div>
+              <div className={style.t}>
+                I N &nbsp;&nbsp;&nbsp; M E T A V E R S E &nbsp;&nbsp;&nbsp; W E &nbsp;&nbsp;&nbsp; B
+                U I L D &nbsp;&nbsp;&nbsp;
+              </div>
+              {/* <div className={style.t}>In Metaverse we Creator</div> */}
+              <div className={style.hengxian}></div>
+            </div>
           </div>
         </div>
-        <div className={style.bannerContainer}>
-          <img src="/images/buildersBanner.png" />
-        </div>
-       </div>
         {/* <div className={cn(style.nav, fixedState ? style.fix3 : null)}>
           <div className={style.navcontainer}>
             {anchorNav.map((i, idx) => {
@@ -200,6 +238,7 @@ export default function Builders() {
           </div>
         </div>
         <TopJumper classname={style.jumper}></TopJumper>
+
         <div className={style.cardList}>{reander2}</div>
         <Footer></Footer>
       </Page>

@@ -1,12 +1,13 @@
 .card {
   min-width: 290px;
-  min-height: 364px;
+  min-height: 396px;
   padding: 15px !important;
   /* 辅-亮绿 */
   background: rgba(255, 255, 255, 0.05);
   border: 0.5px solid rgba(255, 255, 255,0.3);
   box-sizing: border-box;
   border-radius: 12px;
+  position: relative;
   box-shadow: inset 0px 0px 15px rgba(255,255,255,0.15);
 }
 .card:hover {
@@ -69,25 +70,52 @@
   object-fit: cover;
 }
 .description {
-  /* display: -webkit-box; */
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  font-size: 12px;
-  font-weight: 400;
-  font-family: PingFang SC;
-  width: 235px;
-  height: 27px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: wrap;
-  font-family: 'PingFang SC';
-  font-style: normal;
-  line-height: 15px;
-  /* display: flex; */
-  align-items: center;
-  color: #DDDDDD;
+  display: flex;
+  background: #0F403F;
+  /* height: 28px; */
+  position: absolute;
+  /* bottom:0px; */
+  width: 258px;
+  /* margin-left: -15px; */
+  cursor: pointer;
+  margin-bottom: 15px;
+  margin-top: -20px;
 }
+.Delete{
+  margin-left: 45px;
+  margin-right: 45px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  color: #01DAD9;
+}
+.Edit{
+  padding-left: 53px;
+  height: 14px;
+  margin-right: 53px;
+  margin-top: 6px;
+  border-left: 0.5px solid #C4C4C4;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  /* line-height: 16px; */
+  display: flex;
+  align-items: center;
+  color: #01DAD9;
+}
+/* .i{
+  width: 14px;
+  display: inline-block;
+  height: 14px;
+  background: red;
+  line-height: 14px;
+} */
+
 .typeIcon{
   position: absolute;
   left:0px;

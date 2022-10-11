@@ -172,6 +172,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   }, []);
 
   React.useEffect(() => {
+    
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -222,7 +223,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     if (navState === 'buildings') {
       return (
         <div className={cn('main-content')}>
-          <div className={style.teaffic}>
+          {/* <div className={style.teaffic}>
             {trafficList.length !== 0 ? (
               <div>
                 <div className={cn(style.title, style.tb)}>
@@ -240,12 +241,12 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
                 </BaseChart>
               </div>
             ) : null}
-          </div>
+          </div> */}
 
           <div className={style.parcel}>
             {parcelList.length > 0 ? (
               <div>
-                {trafficList.length !== 0 ? (
+                {trafficList?.length !== 0 ? (
                   <div className={style.title}>
                     <div></div>
                     <p>Buildings</p>
@@ -354,7 +355,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         className={cn(
           'flex justify-center items-center flex-1',
           style.search,
-          fixedState ? f1 : null,
+        
         )}
       >
         <MeteInput

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
@@ -7,11 +7,15 @@ import { toast } from 'react-hot-toast';
 import { className } from 'babylonjs/index';
 
 import { useRouter, withRouter } from 'next/router';
+
+import { join } from 'path/posix';
+
 import Page from '../../components/page';
 import PageHeader from '../../components/page-header';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
+import ChangeEmail from '../../components/changeEmail';
 import Tab4 from '../../components/tab4';
 import Status from '../../components/status';
 import Card from '../../components/parcels-card';
@@ -31,9 +35,14 @@ import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
 import BaseBarDece from '../../components/parcel-basebardece';
 import TrafficBar from '../../components/parcel-traffic_bar';
+import JoinModal from '../../components/v2/join-modal';
 import Creator from '../../components/creator';
 import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
+import JoinBuilders from '../../components/join_builders';
+import JoinBuildersAdd from '../../components/join_builders_add';
+import AddBuildings from '../../components/addBuilding';
+import JoinBuildersWork from '../../components/join_builders_works';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -41,6 +50,7 @@ import { useWalletProvider } from '../../components/web3modal';
 import { convert, getToken, setToken } from '../../common/utils';
 
 import { getBaseInfo, refreshToken, getParcelList2 } from '../../service';
+
 
 import {
   req_parcels_cancel,
@@ -54,14 +64,25 @@ import {
   req_deceData_parcel_traffic_daily,
   req_dece_parcel_traffic_list,
   req_dece_parcel_traffic,
+  req_building_list,
   req_cv_parcel_traffic_list,
   req_get_user_wearable,
   req_set_wearable_show_status,
+  req_bind_ver_email_code,
+  req_userBuilder_apply_become,
+  req_user_add_or_edit_building,
+  req_get_building_detail_info,
+  req_builder_del_self_building,
 } from '../../service/z_api';
+
+
+// console.log(req_building_list('0x79EF3DA763754387F06022Cf66c2668854B3389B'));
+
 
 
 
 import style from './index.module.css';
+
 
 
 const TABData = [
@@ -102,10 +123,10 @@ const TAB3 = [
     label: 'My Wearables',
     type: 'wearablelist',
   },
-  // {
-  //   label: 'Building',
-  //   type: 'building',
-  // },
+  {
+    label: 'My Buildings',
+    type: 'building',
+  },
   // {
   //   label: 'SALES REPORT',
   // },
@@ -160,12 +181,15 @@ function ProfilePage(r) {
   const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const [noWork, setNoWork] = React.useState(false);
+  const [builderSat, setBuilderSat] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
   const [dataBuildSource, setDataBuildSource] = React.useState([]);
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const [nickName, setNickName] = React.useState('');
+  const [showModal, setShowModal] = React.useState(false);
+  const [nickNameVal, setNickNameVla] = React.useState('');
   const [introductionText, setIntroduction] = React.useState('');
   const [countryAddress, setcountry] = React.useState('');
   const [twitterAddress, setTwitterAddress] = React.useState('');
@@ -173,7 +197,9 @@ function ProfilePage(r) {
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('cryptovoxels');
   const [tabState, setTabState] = React.useState('cryptovoxels');
-  const [statue, setStatue] = React.useState(1);
+  const [statue, setStatue] = React.useState(null);
+  const [emailStateVal, setEmailStateVal] = React.useState(null);
+  const [buildState, setBuildState] = React.useState(null);
   const [cartData, setCartData] = React.useState([]);
   const [manySetState, setManySetState] = React.useState(false);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -182,19 +208,23 @@ function ProfilePage(r) {
   const [selectedIds, setSelectedIds] = React.useState([]);
   const [rent_set_state, set_rent_set_state] = React.useState(false);
   const [status, set_status] = React.useState('');
+  const [saveIconVal, setSaveIconVal] = React.useState(false);
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
   const [routeTab, setRouteTab] = React.useState(r.router.query.type || 'parcellist');
   const [email, setEmail] = React.useState(null);
+  const [addbuild, setAddbuild] = React.useState(false);
 
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
-  const [tabStateTR, setTabStateTR] = React.useState('All');
+  const [tabStateTR, setTabStateTR] = React.useState(false);
   const [creatorState, setCreatorState] = React.useState(false);
+  const [modifyEmail, setModifyEmail] = React.useState(false);
 
   const [navLabel, setNavLabel] = React.useState('All');
   const [wearablesNavState, setWearablesNavState] = React.useState('all');
   const wearablesState = React.useRef(null);
   const [showOrHideState, setShowOrHideState] = React.useState(false);
+  // const [showOrHideStateConent, setShowOrHideStateConent] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
   const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
   // const [ownerData, setOwnerData] = React.useState([]);
@@ -203,8 +233,26 @@ function ProfilePage(r) {
   const [wearablesHideData, setWearablesHideData] = React.useState([]);
 
   const [wearablesShowOrHideState, setWearablesShowOrHideState] = React.useState(false);
+  const [joinBuilders, setJoinBuilders] = React.useState(false);
+  const [emailBuilders, setEmailBuilders] = React.useState(false);
   const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
   const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
+  const [stateVal, setStateVal] = React.useState(false);
+  const [initEmail, setInitEmail] = React.useState('');
+  const [orginName, setOrginName] = React.useState('');
+  const [country, setCountry] = React.useState('');
+  // const [buildName, setBuildData] = React.useState('');
+  const [buildAll, setBuildAll] = React.useState(null);
+  const [buildInc, setBuildInc] = React.useState('add');
+  const [walletAddress, setWalletAddress] = React.useState('');
+  const [saveIcon, setSaveIcon] = React.useState(false);
+  // const [buildFiles, setBuildFiles] = React.useState([]);
+  const [createrStateVal, setCreaterStateVal] = React.useState(null);
+  const [emailStateWearable, setEmailStateWearable] = React.useState(null);
+  const [tokenWearable, setTokenWearable] = React.useState(null);
+  const [buildStateWearable, setBuildStateVal] = React.useState(1);
+  const [addressWearable, setaddressWerVal] = React.useState(null);
+  const [emaileWearable, setemailWearVal] = React.useState(null);
 
   const Nav = [
     {
@@ -373,7 +421,6 @@ function ProfilePage(r) {
         store.setState(() => ({ type: 'cv' }));
       }
       if (tab === 'decentraland') {
-
         setDclDataSource(orginData.parcelList);
         store.setState(() => ({ type: 'dcl' }));
       }
@@ -408,12 +455,32 @@ function ProfilePage(r) {
     },
     [refreshTK],
   );
+  const resultHandlerBu = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
+      // toast.error(msg);
+
+      return null;
+    },
+    [refreshTK],
+  );
 
   const changeNavTab = React.useCallback(
-    
     (nav_label, index = 0) => {
       // console.log(nav_label,222222222222222);
-      
+
       // setNavLabel(navLabel);
       setNavLabel(nav_label);
       setCardState(false);
@@ -421,7 +488,7 @@ function ProfilePage(r) {
       nav_Label.current = nav_label;
       // changeNum(dataSource, nav_label);
       // console.log(Nav);
-      
+
       const set_nav = Nav.map((item, i) => {
         if (index === i) return { ...item, state: 1 };
         return { ...item, state: 0 };
@@ -495,13 +562,30 @@ function ProfilePage(r) {
     [resultHandler, tabState, nav_Label],
   );
 
+
+
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
+
+      // const sta = res.data.profile.creator_status
+      const emailState = res.data.profile.email
+      const buildNum = res.data.profile.builder_status
+      const wallet = res.data.profile.address
+      setNoWork(true)
       setStatue(res.data.profile.creator_status)
+      setBuildState(buildNum)
+      setWalletAddress(wallet)
+      // setCreaterStateVal(res.data.profile.creator_status)
+      setEmailStateWearable(res.data.profile.email)
+      // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
+      // console.log(statue, "setEmailStateWearable");
+
+      setEmailStateVal(emailState)
       // console.log(res.data.profile.creator_status,99999);
-      
+
       // const statue = res.data.profile.creator_status;
+
       const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
@@ -523,15 +607,16 @@ function ProfilePage(r) {
       setAvatarUrl(ava);
       setCreatorsState(creatorStatus);
       setAddress(addr);
-      setNickName(name);
+      setNickNameVla(name);
       setIntroduction(m);
       setcountry(n);
       setTwitterAddress(twitterName);
       setWebsiteAddress(websiteUrl);
       state.setState({ profile });
     },
-    [resultHandler],
+    [resultHandler, statue, buildState, walletAddress],
   );
+
   const reqWearablesData = React.useCallback(async () => {
     const result = await req_get_user_wearable(await refreshTK());
     if (result.code === 100000) {
@@ -565,7 +650,370 @@ function ProfilePage(r) {
     if (accessToken && tabState === 'decentraland') {
       reqDclData(accessToken);
     }
+    // if (accessToken && routeTab === 'building') {
+    //   reqBuilderData(accessToken);
+    // }
   }, [requestData, getToken, reqDclData]);
+
+  const addWork = React.useCallback(async (emailState) => {
+
+    if (emailState === null || emailState === '') {
+      setJoinBuilders(true)
+    } else if (emailState !== '') {
+      setEmailBuilders(true)
+      // this.props.emailState(this.props.emailState)
+    }
+    // console.log(joinBuilders, 55555, emailState);
+
+
+    // if(buildState){
+
+    // }
+
+  }, [joinBuilders, emailStateVal])
+
+  const unloadBuilders = React.useCallback(async () => {
+    setAddbuild(true)
+    // router.replace('profile/addBuilding')
+    setBuildInc('add')
+    setBuildAll([])
+  }, [])
+
+
+  const turnOff = () => {
+    setJoinBuilders(false)
+    setEmailBuilders(false)
+    setStateVal(false)
+  }
+  const editStateVal = (statev) => {
+    // console.log(state);
+    setStateVal(statev)
+    setJoinBuilders(false)
+    const resBuil = req_building_list(walletAddress);
+    resBuil.then((resBuilV) => {
+      if (resBuilV.data) {
+        setDataBuildSource(resBuilV.data)
+      }
+    })
+  }
+  const turnBuild = () => {
+    setTabStateTR(false)
+  }
+  // const nextBtnAdd = (token: string, buildData: any) => {
+  //   console.log(token);
+
+  //   const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
+
+  //   setTabStateTR(false)
+  //   setEmailBuilders(false)
+  // }
+  // setTabStateTR(false)
+
+  const nextBtn = (code, token: string) => {
+    let result = null;
+    result = req_bind_ver_email_code(code.toString(), token);
+    if (result.code === 100000) {
+      setJoinBuilders(false)
+      setTabStateTR(true)
+    }
+  }
+  // const nextBtn = React.useCallback(async () => {
+  //   if (!email && !code) return;
+  //   let result = null;
+
+  //   if (modifyEmail) {
+  //     // result = await req_modify_old_email_ver_code(code.toString(), token);
+  //     // if (result.code === 100000) {
+  //     //   closeEmail('modify');
+  //     // } else if (result.code === 100013) {
+  //     //   toast.error('Invalid verification code');
+  //     // } else {
+  //     //   toast.error('Verification code error');
+  //     // }
+  //   } else {
+  //     result = await req_bind_ver_email_code(code.toString(), token);
+  //     if (result.code === 100000) {
+  //       // closeEmail('bind');
+  //     } else if (result.code === 100013) {
+  //       toast.error('Invalid verification code');
+  //     } else {
+  //       toast.error('Verification code error');
+  //     }
+  //   }
+  //   setCode('');
+  //   setCodeClear(false);
+  //   setCodeState('getCode');
+  //   clearInterval(timeId.current);
+  //   time.current = 60;
+  // }, [email, code, modifyEmail]);
+  // const retProps =(arr)=>{
+  //   console.log(arr);
+  //   setBuildData(arr)
+  // }
+  const retProps = React.useCallback((token: string, buildData: any) => {
+    if (buildData.length === 0) {
+      toast.error('Please fill in the link address');
+      return false;
+    }
+    const showIndex = false
+    buildData?.map((item) => {
+      if (item !== '') {
+        const reg = '^((https|http|ftp|rtsp|mms)?://)'
+          + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+          + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+          + '|'
+          + '([0-9a-z_!~*\'()-]+.)*'
+          + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+          + '[a-z]{2,6})'
+          + '(:[0-9]{1,4})?'
+          + '((/?)|'
+          + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+        const re = new RegExp(reg)
+        if (!re.test(item)) {
+          toast.error("Not the correct URL, please pay attention to check");
+          return false;
+        }
+      }
+      return true;
+    })
+    if (showIndex) {
+      return false;
+    }
+    const res = req_userBuilder_apply_become(token, 'builder', buildData.toString());
+
+    res.then((resV) => {
+      setBuildState(2)
+    })
+    setTabStateTR(false)
+    setEmailBuilders(false)
+  }
+    ,
+    [buildState, walletAddress],
+  );
+
+  const reqBuilderData = React.useCallback(
+    async (walletAddressVal: string) => {
+      try {
+
+        const res = await req_building_list(walletAddressVal);
+        // console.log(res, 5959);
+
+
+        const data = resultHandlerBu(res, reqBuilderData);
+        // console.log(data, 56569, res);
+
+
+        setLoading(false);
+        if (!data) {
+          return;
+        }
+        // console.log(data, 8989);
+        setDataBuildSource(data);
+        // changeNum(data, nav_Label.current);
+      } catch {
+        setError(true);
+      }
+    },
+    [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
+  );
+
+  const requireBuilder = React.useCallback(
+    async (token) => {
+      const res = await req_get_building_detail_info(token);
+      const data = resultHandler(res, requireBuilder);
+      // if (data) {
+      //   const profile = convert(data.profile);
+      //   const {
+      //     address: addr,
+      //     nickName: name,
+      //     avatar,
+      //     links,
+      //     email: e,
+      //     country: c,
+      //     introduction: i,
+      //   } = profile;
+      //   const { twitterName, websiteUrl } = links;
+      //   setAvatarUrl(avatar);
+      //   setInitEmail(e);
+      //   if (e) {
+      //     setEmail(e);
+      //   }
+      //   setCountry(c);
+      //   setIntroduction(i);
+      //   setAddress(addr);
+      //   setNickNameVla(name);
+      //   setOrginName(name);
+      //   setTwitterAddress(twitterName);
+      //   setWebsiteAddress(websiteUrl);
+      //   state.setState({ profile });
+      // }
+    },
+    [resultHandler],
+  );
+
+  const DeleteBuild = React.useCallback((token, buildingLinkCon: string,) => {
+
+    // console.log(buildingLinkCon, 558);
+    const res = req_builder_del_self_building(token, buildingLinkCon)
+    // console.log(res, 565656);
+    res.then((resC) => {
+      toast(resC.msg)
+      if (resC.code === 100000) {
+        const resBuil = req_building_list(walletAddress);
+        resBuil.then((resBuilvAL) => {
+          if (resBuilvAL.data) {
+            setDataBuildSource(resBuilvAL.data)
+          }
+        })
+      }
+    })
+  },
+    [walletAddress],
+  );
+  const EditBuild = async (buildingLinkCon: string) => {
+    setBuildInc('edit')
+    const res = await req_get_building_detail_info(buildingLinkCon)
+    // console.log(res, buildingLinkCon);
+    if (res.data) {
+      setBuildAll(res.data)
+      setAddbuild(true)
+    }
+  }
+
+  const closeBuild = () => {
+    setAddbuild(false)
+
+    // router.replace(`/profile?type=building`)
+  }
+
+  const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
+    // setBuildInc(operationType)
+    // console.log(buildInc, operationType, 54, nickName, 565656);
+    // if (nickName === '' || platform === '' || linkBuild === '' || format === '' || subArrData.length === 0) {
+    //   setSaveVal(false)
+    // }else{
+    //   console.log(saveVal,11111);
+
+    //   setSaveVal(true)
+    // }
+
+
+    if (nickName === '') {
+      toast.error('Please fill in Building Name');
+      return false;
+    }
+    if (nickName.length > 200) {
+      toast.error('Max text length 200');
+      return false;
+    }
+    if (platform === '') {
+      toast.error('Please choose Platform');
+      return false;
+    }
+    if (linkBuild === '') {
+      toast.error('Please fill in Link To Building');
+      return false;
+    }
+    if (linkBuild !== '') {
+      // let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+      // if(!reg.test(linkBuild)){
+      const reg = '^((https|http|ftp|rtsp|mms)?://)'
+        + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
+        + '(([0-9]{1,3}.){3}[0-9]{1,3}'
+        + '|'
+        + '([0-9a-z_!~*\'()-]+.)*'
+        + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
+        + '[a-z]{2,6})'
+        + '(:[0-9]{1,4})?'
+        + '((/?)|'
+        + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
+      const re = new RegExp(reg)
+      if (!re.test(linkBuild)) {
+        toast.error("Not the correct URL, please pay attention to check");
+        return false;
+      }
+    }
+    // const linkBuildIndex = linkBuild.indexOf('http://')
+    // const linkBuildCom = linkBuild.indexOf('.com')
+    // if (linkBuildIndex === -1 || linkBuildCom === -1) {
+    //   toast.error('Please fill in the correct address');
+    //   return false;
+    // }
+    if (format === '') {
+      toast.error('Please choose Format of Building');
+      return false;
+    }
+    if (subArrData.length === 0) {
+      toast.error(' Please upload the building file');
+      return false;
+    }
+    if (subArrData.length === 0) {
+      toast.error('Please upload the building file');
+      return false;
+    }
+    let imgCont = files_link_cover
+    if (imgCont === '') {
+      [imgCont] = subArrData
+
+      // toast.error('请设置封面图');
+      // return false;
+    }
+    const indexBuild = subArrData.indexOf(imgCont)
+
+    if (indexBuild === -1) {
+      // files_link_cover = subArrData[0]
+      [imgCont] = subArrData
+      // toast.error('请设置封面图');
+      // return false;
+    }
+    // console.log(indexBuild);
+
+    const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), imgCont.toString(), files_link_del.join(','));
+    // console.log(res, subArrData);
+    // console.log(files_link_cover, "files_link_cover");
+
+
+
+    // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
+
+
+    setSaveIcon(true)
+    res.then((resCON) => {
+      // toast(res.msg)
+      setSaveIcon(true)
+      if (resCON.code === 100000) {
+
+        toast(resCON.msg)
+        setAddbuild(false)
+        const resBuil = req_building_list(walletAddress);
+
+        resBuil.then((resBuilCon) => {
+          if (resBuilCon.data) {
+            setDataBuildSource(resBuilCon.data)
+            // console.log(resBuil.data, 96898)
+          }
+
+        });
+
+        // console.log(dataBuildSource, 6565);
+      }
+    });
+
+
+
+  },
+    [resultHandlerBu, saveIcon, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
+  );
+
+  // const addWork = React.useCallback(async () => {
+  //   console.log('hhhhhhhhhhhhhhhhhhh');
+  //   // <JoinBuilders/>
+  //   // joinBuilders
+  //   setJoinBuilders(true);
+  //   console.log(joinBuilders, 5555555555);
+
+  //   // renderssssContent
+  // }, [joinBuilders]);
 
   const select = React.useCallback(
     (id, ids) => {
@@ -648,44 +1096,104 @@ function ProfilePage(r) {
     tabState,
     reqDclData,
   ]);
-  const renderBuilding = React.useMemo(() => {
+  const addWorkWerable = () => {
+    // console.log(55, tokenWearable);
+    setShowModal(true)
+    const res = getBaseInfo(tokenWearable);
+    res.then((resWeable) => {
+      setaddressWerVal(resWeable.data.profile.address);
+      setemailWearVal(resWeable.data.profile.email);
+
+    })
+  }
+
+  const renderWerable = React.useMemo(() => {
+    // console.log(statue);
+
     if (loading) {
       return <Status status="loading" />;
     }
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
-    if (dataBuildSource.length === 0) {
-      return <Status status="emptyBuilding" />;
+    if (statue === 1) {
+      return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
+
     }
+
+  }, [statue,
+    error,
+    loading,
+    onRetry])
+
+  const renderBuilding = React.useMemo(() => {
+
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (buildState === 1) {
+      return <Status addWork={() => { addWork(emailStateVal) }} status="emptyBuilding" />;
+    }
+    if (buildState === 2) {
+      return <Status status="waitBuilder" />;
+
+    }
+    if (buildState === 4 && dataBuildSource.length === 0) {
+      // console.log(dataBuildSource.length,9889898989);
+
+      return <Status status="AddBuilder" unloadBuilders={() => { unloadBuilders() }} />;
+    }
+    // else {
+
+    // }
+    if (buildState === 4 && dataBuildSource.length !== 0) {
+      //   // console.log(dataBuildSource,6565656);
+
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
-          {dataBuildSource.map((card) => {
-            return (
-              <CardBuilding
-                {...card}
-                parcelsIds={parcelsIds}
-                state={cardState}
-                key={uuid()}
-                selectedIds={selectedIds}
-                onClick={(id, ids) => {
-                  select(id, ids);
-                }}
-              ></CardBuilding>
-            );
-          })}
-        </div>
+        <>
+          <div className={style.contentB}>
+            <div className={style.conAdd}>Add more works to let everyone know you better</div>
+            <div className={style.unload} onClick={unloadBuilders}>Add more works</div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+
+            {dataBuildSource.map((card) => {
+              return (
+                <CardBuilding
+                  {...card}
+                  parcelsIds={parcelsIds}
+                  state={cardState}
+                  key={uuid()}
+                  selectedIds={selectedIds}
+                  EditBuild={EditBuild}
+                  DeleteBuild={DeleteBuild}
+                  onClick={(id, ids) => {
+                    select(id, ids);
+                  }}
+                ></CardBuilding>
+              );
+            })}
+          </div>
+        </>
       );
+    }
+
   }, [
     error,
     dataBuildSource,
     loading,
     onRetry,
+    buildState,
+    walletAddress,
+    builderSat,
     changeNum,
     parcelsIds,
     setCardState,
     tabState,
-    reqDclData,
+    reqBuilderData,
   ]);
 
   // 批量设置
@@ -734,6 +1242,57 @@ function ProfilePage(r) {
     },
     [rent_set_state, manyChange],
   );
+
+  const requireData = React.useCallback(
+    async (token) => {
+      const res = await getBaseInfo(token);
+      const data = resultHandler(res, requireData);
+      if (data) {
+        const profile = convert(data.profile);
+        const {
+          address: addr,
+          nickName: name,
+          // avatar,
+          links,
+          email: e,
+          country: c,
+          introduction: i,
+        } = profile;
+        const { twitterName, websiteUrl } = links;
+        setAvatarUrl(avatar);
+        setInitEmail(e);
+        if (e) {
+          setEmail(e);
+        }
+        setCountry(c);
+        setIntroduction(i);
+        setAddress(addr);
+        setNickNameVla(name);
+        setOrginName(name);
+        setTwitterAddress(twitterName);
+        setWebsiteAddress(websiteUrl);
+        state.setState({ profile });
+      }
+    },
+    [resultHandler],
+  );
+
+  const closeEmail = React.useCallback((t) => {
+    setEmailStateVal(false);
+    const accessToken = getToken('atk');
+
+    if (t === 'bind') {
+      toast.success('Binding succeeded');
+    }
+    if (t === 'modify') {
+      setModifyEmail(false);
+      setEmailStateVal(true);
+    }
+
+    if (accessToken) {
+      requireData(accessToken);
+    }
+  }, []);
 
   const req_event = React.useCallback(async () => {
     if (selectedIds.length === 0) return;
@@ -835,32 +1394,62 @@ function ProfilePage(r) {
   const watcher_cardState = React.useCallback(() => {
     setCardState(s.parcels_cardState);
   }, [s.parcels_cardState]);
+  //   useEffect(()=>{
+  // console.log(saveVal,999999);
+  //   },[saveVal])
+  useEffect(() => {
+    // const accessToken = getToken('atk');
+    // console.log(accessToken);
 
- 
+    reqBuilderData(walletAddress)
+
+
+  }, [addbuild, walletAddress,])
+
   React.useEffect(() => {
+
+
+    setSaveIcon(false)
+    const a = getToken('address');
+    if (a) {
+      setWalletAddress(a);
+    }
+
     setNavLabel('All')
+    req_building_list(walletAddress)
     const accessToken = getToken('atk');
+    setTokenWearable(accessToken)
     setRouteTab(r.router.query.type);
     reqWearablesData();
     requestPersonal(accessToken);
+    requireBuilder(accessToken)
     if (tabState === 'cryptovoxels') requestData(accessToken);
     if (tabState === 'decentraland') reqDclData(accessToken);
+    // if(routeTab === 'building')reqBuilderData(accessToken);
     watcher_store();
     watcher_store_status();
     watcher_cardState();
     if (!accessToken) window.location.href = '/';
   }, [
+    tokenWearable,
     navLabel,
     getToken,
     requestData,
+    builderSat,
+    buildState,
+    statue,
+    walletAddress,
     requestPersonal,
     watcher_store,
+    dataBuildSource,
+    // reqBuilderData,
+    addressWearable,
     reqDclData,
     r.router.query.type,
     routeTab,
     tabState,
     reqWearablesData,
-  ],);
+  ]);
 
   const tag1 = () => {
     if (label === 'Cancel lease for multiple') return 'Cancel leased';
@@ -925,21 +1514,29 @@ function ProfilePage(r) {
           wearablesShowOrHide,
         );
       }
-      // console.log(result, wearablesShowOrHide, stat);
-      if (result.code === 100000) {
-        if (wearablesShowOrHide === 2 || stat === 2) {
-          toast.success('Successfully hidden!');
+      setSaveIconVal(id)
+        if (result.code === 100000) {
+
+          if (wearablesShowOrHide === 2 || stat === 2) {
+            toast.success('Successfully hidden!');
+          }
+          if (wearablesShowOrHide === 1 || stat === 1) {
+            toast.success('Successfully shown!');
+          }
+
+        } else {
+          toast.error('Failed!');
         }
-        if (wearablesShowOrHide === 1 || stat === 1) {
-          toast.success('Successfully shown!');
-        }
-      } else {
-        toast.error('Failed!');
-      }
-      setWearablesShowOrHideState(false);
-      setWearablesShowOrHide(0);
-      setWearablesSleceteIdList([]);
-      reqWearablesData();
+
+        setWearablesShowOrHideState(false);
+        setWearablesShowOrHide(0);
+        setWearablesSleceteIdList([]);
+        reqWearablesData();
+        setSaveIconVal(null)
+
+     
+
+
     },
     [wearablesShowOrHide, wearablesSleceteIdList, reqWearablesData],
   );
@@ -959,7 +1556,7 @@ function ProfilePage(r) {
     [wearablesSleceteIdList],
   );
   const creatorsReander = React.useMemo(() => {
-   
+
     if (wearablesCreatorsData.length === 0) {
       return (
         <div className={style.totop}>
@@ -973,6 +1570,7 @@ function ProfilePage(r) {
           <DaoModelList2
             models={wearablesCreatorsData}
             token={refreshTK()}
+            saveIconVal={saveIconVal}
             wearablesShowOrHideState={wearablesShowOrHideState}
             wearablesShowOrHide={wearablesShowOrHide}
             length={wearablesCreatorsData.length}
@@ -1008,6 +1606,178 @@ function ProfilePage(r) {
   //   }
   // }, [ownerData]);
 
+
+  const drag = function (evt, dbele?) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.addBuilding_content__GcPPZ')
+    }
+
+    // ele.onmousedown = function (evt) {
+
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
+
+
+  const dragJoin = function (evt, dbele) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_works_container2__VidgJ')
+    }
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
+  const dragHead = function (evt, dbele?) {
+    let containerVal = dbele
+    if (!dbele) {
+      containerVal = document.querySelector('.join_builders_container__31cSn')
+    }
+
+    // ele.onmousedown = function (evt) {
+    const oEvent = evt;
+    const disX = oEvent.clientX - containerVal.offsetLeft;
+    const disY = oEvent.clientY - containerVal.offsetTop;
+    document.onmousemove = function (evts) {
+      // console.log(evts);
+      const evtUp = evts;
+      let leftX = evtUp.clientX - disX;
+      let topY = evtUp.clientY - disY;
+
+      if (
+        leftX >
+        document.querySelector("#container").clientWidth - containerVal.offsetWidth
+      ) {
+        leftX =
+          document.body.clientWidth -
+          containerVal.offsetWidth;
+      }
+      if (leftX < 0) {
+        leftX = 0;
+      }
+      if (
+        topY >
+        document.querySelector("#container").clientHeight -
+        containerVal.offsetHeight
+      ) {
+        topY =
+          document.body.clientHeight -
+          containerVal.offsetHeight;
+      }
+      if (topY < 0) {
+        topY = 0;
+      }
+
+      if (containerVal) {
+        containerVal.style.left = `${leftX}px`;
+        containerVal.style.marginLeft = "0px";
+        containerVal.style.marginTop = "0px";
+        // containerVal.style.marginBottom = 50 + "px";
+        containerVal.style.top = `${topY}px`;
+        containerVal.style.zIndex = "999999";
+      } else {
+        return false;
+      }
+    };
+    document.onmouseup = function () {
+      document.onmousemove = null;
+      document.onmouseup = null;
+    };
+  }
+
+
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
   }, []);
@@ -1026,7 +1796,7 @@ function ProfilePage(r) {
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
             <div className={cls}></div>
-            <div className={cn("main-content flex px-0", style.tabtext)} >
+            <div className={cn('main-content flex px-0', style.tabtext)}>
               {TABData.map((item) => {
                 return (
                   <Tab4
@@ -1051,16 +1821,16 @@ function ProfilePage(r) {
               {nav.map((item, index) => {
                 return (
                   <>
-                  <ParcelsTab
-                    dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
-                    label={item.label}
-                    state={item.state}
-                    num={item.num}
-                    key={item.label}
-                    onClick={() => {
-                      changeNavTab(item.label, index);
-                    }}
-                  />
+                    <ParcelsTab
+                      dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
+                      label={item.label}
+                      state={item.state}
+                      num={item.num}
+                      key={item.label}
+                      onClick={() => {
+                        changeNavTab(item.label, index);
+                      }}
+                    />
                   </>
                 );
               })}
@@ -1068,7 +1838,9 @@ function ProfilePage(r) {
           </div>
           {/* 导航结束 */}
           {/* 卡片开始 */}
-          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderContent}</div>
+          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: '-20px' }}>
+            {renderContent}
+          </div>
 
           {/* 卡片结束 */}
           {tag2()}
@@ -1084,12 +1856,12 @@ function ProfilePage(r) {
       );
     }
     if (routeTab === 'trafficreport') {
-      if (showType === "cryptovoxels") {
+      if (showType === 'cryptovoxels') {
         return (
           <>
             <div className={cn('tab-list flex mt-5', style.allHeight)}>
               <div className={cls}></div>
-              <div className={cn("main-content flex px-0", style.tabtext)}>
+              <div className={cn('main-content flex px-0', style.tabtext)}>
                 {REPORTTAB.map((item) => {
                   return (
                     <Tab4
@@ -1109,7 +1881,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart >
+              <BaseChart>
                 <BaseBar
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1166,7 +1938,7 @@ function ProfilePage(r) {
           </>
         );
       }
-      if (showType === "decentraland") {
+      if (showType === 'decentraland') {
         return (
           <>
             <div className={cn('tab-list flex ', style.allHeight)}>
@@ -1191,7 +1963,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart >
+              <BaseChart>
                 <BaseBarDece
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1235,51 +2007,85 @@ function ProfilePage(r) {
               </BaseChart>
             </div>
           </>
-        )
-
+        );
       }
     }
     if (routeTab === 'wearablelist') {
+
+      // return (
+      //   <>
+
+      //     <>
+      //       <div className={style.buildingContainer}>
+      //         <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
+      //           {renderWerable}
+
+      //         </div>
+      //       </div>
+      //     </>
+      //     : <></>
+
+      //   </>
+      // )
       // if(statue===1){
-      //   return(
-      //     <div className={style.createrCont}>
-      //       <span className={style.join}>Join Creators to show your works</span>
-      //       <span className={style.apply}>Apply</span>
-      //     </div>
-      //   )
+      // return (
+      //   <>
+      //     {statue === 1 ?
+      //       <div className={style.createrCont}>
+      //         <span className={style.join}>Join Creators to show your works</span>
+      //         <span className={style.apply}>Apply</span>
+      //       </div>
+      //       :
+      //       <>
+
+      //       </>}
+      //   </>
+      // )
       // }else{
-     
-       
-      // }
+
+
+
+
+
       return (
         <>
-          {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
-            <div className={cls}></div>
-            <div className="main-content flex px-0">
-              {TAB.map((item) => {
-                return (
-                  <Tab
-                    active={tabState === item.type}
-                    isMini={true}
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    onClick={() => {
-                      onTabChange(item.type);
-                    }}
-                  />
-                );
-              })}
-              <div className={cls} />
+          {statue === 1 ? <>
+            <div className={style.createrCont}>
+              <span className={style.join}>Join Creators to show your works</span>
+              <span className={style.apply} onClick={addWorkWerable}>Apply</span>
             </div>
+          </> : null}
+          {statue === 2 ? <>
+            <div className={style.createrCont}>
+              <span className={style.join}>Waiting to become a creator</span>
+            </div>
+          </> : null}
+
+
+          {/* <div className={cn('tab-list flex mt-5', style.allHeight)}>
+          <div className={cls}></div>
+          <div className="main-content flex px-0">
+            {TAB.map((item) => {
+              return (
+                <Tab
+                  active={tabState === item.type}
+                  isMini={true}
+                  key={item.label}
+                  label={item.label}
+                  icon={item.icon}
+                  onClick={() => {
+                    onTabChange(item.type);
+                  }}
+                />
+              );
+            })}
             <div className={cls} />
-          </div> */}
-       
+          </div>
+          <div className={cls} />
+        </div>  */}
           <div className={style.wearablesContainer}>
             <div className={style.title}>
-              <div className={style.wearables}
-
-              ></div>
+              <div className={style.wearables}></div>
               <div className={style.texteated}>Wearables Created</div>
             </div>
             <div className={style.wearablesNav}>
@@ -1287,90 +2093,119 @@ function ProfilePage(r) {
                 {wearablesNav.map((item, index) => {
                   return (
                     <>
-                 
-                    <div
-                      onClick={() => {
-                        setWearablesNavState(item.type);
-                        wearablesState.current = item.type;
-                        setShowOrHideState(false);
-                        if (item.type === 'all') {
-                          setWearablesCreatorsData(wearablesCreatorsOriginData);
-                        }
-                        if (item.type === 'shown') {
-                          setWearablesCreatorsData(wearablesShowData);
-                        }
-                        if (item.type === 'hidden') {
-                          setWearablesCreatorsData(wearablesHideData);
-                        }
-                      }}
-                      className={cn(
-                        style.wearablesNavItem,
-                        wearablesNavState === item.type ? style.wearableNavAction : null,
-                      )}
-                      key={uuid()}
-                    >
-                      {/* <div className={style.mmm}> */}
-                      <div >{item.label}
-                        {/* <span>{item.label}</span> */}
-                        <span style={{ marginLeft: "2px" }}>
-                          {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
-                          {item.type === 'shown' ? wearablesShowData.length : null}
-                          {item.type === 'hidden' ? wearablesHideData.length : null}
-                        </span>
-                      </div>
+                      <div
+                        onClick={() => {
+                          setWearablesNavState(item.type);
+                          wearablesState.current = item.type;
+                          setShowOrHideState(false);
+                          if (item.type === 'all') {
+                            setWearablesCreatorsData(wearablesCreatorsOriginData);
+                          }
+                          if (item.type === 'shown') {
+                            setWearablesCreatorsData(wearablesShowData);
+                          }
+                          if (item.type === 'hidden') {
+                            setWearablesCreatorsData(wearablesHideData);
+                          }
+                        }}
+                        className={cn(
+                          style.wearablesNavItem,
+                          wearablesNavState === item.type ? style.wearableNavAction : null,
+                        )}
+                        key={uuid()}
+                      >
+                        {/* <div className={style.mmm}> */}
+                        <div>
+                          {item.label}
+                          {/* <span>{item.label}</span> */}
+                          <span style={{ marginLeft: '2px' }}>
+                            {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+                            {item.type === 'shown' ? wearablesShowData.length : null}
+                            {item.type === 'hidden' ? wearablesHideData.length : null}
+                          </span>
+                        </div>
 
-                      {/* </div> */}
-                    </div>
-                 </> 
-                 );
+                        {/* </div> */}
+                      </div>
+                    </>
+                  );
                 })}
               </div>
-              <div
-                className={style.right}
-                onClick={() => {
-                  setShowOrHideState(!showOrHideState);
-                }}
-              >
-                <img src="/images/Settings.png" />
-                <div>Batch setting</div>
-                <ul
-                  className={
-                    wearablesNavState === 'all' && showOrHideState
-                      ? style.showOrHideList
-                      : style.showOrHideList1
-                  }
-                >
-                  {showOrHideState
-                    ? showOrHide[wearablesNavState].map((item, index) => {
-                      return (
-                        <li
-                          className={style.showOrHideItem}
-                          key={index}
-                          onClick={() => {
-                            settingShowOrHide(item.type);
-                          }}
-                        >
-                          {item.label}
-                        </li>
-                      );
-                    })
-                    : null}
-                </ul>
-              </div>
+              {
+                statue === 1 || statue === 2 ? null :
+                  <div
+                    className={style.right}
+                    onClick={() => {
+                      setShowOrHideState(!showOrHideState);
+                    }}
+                    onMouseLeave={() => {
+                      setTimeout(() => {
+                        setShowOrHideState(false);
+                      }, 2000);
+                    }}
+                  >
+                    <img src="/images/Settings.png" />
+                    <div>Batch setting</div>
+                    <ul
+                      className={
+                        wearablesNavState === 'all' && showOrHideState
+                          ? style.showOrHideList
+                          : style.showOrHideList1
+                      }
+                      onMouseLeave={() => {
+                        setShowOrHideState(false);
+                      }}
+                    >
+                      {showOrHideState
+                        ? showOrHide[wearablesNavState].map((item, index) => {
+                          return (
+                            <li
+                              className={style.showOrHideItem}
+                              key={index}
+                              onClick={() => {
+                                settingShowOrHide(item.type);
+                              }}
+
+                            >
+                              {item.label}
+                            </li>
+                          );
+                        })
+                        : null}
+                    </ul>
+                  </div>
+
+              }
+
             </div>
             <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
           </div>
         </>
       );
     }
-    if(routeTab === 'building'){
-      return(
+
+    if (routeTab === 'building') {
+      return (
         <>
-        <div className={style.buildingContainer}>
-        <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}</div>
-        </div>
+          {/* {buildState === 2 ? */}
+          <>
+            <div className={style.buildingContainer}>
+              <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+              </div>
+            </div>
+          </>
+          : <></>
+          {/* } */}
         </>
       )
+      // return (
+      //   <>
+      //     <div className={style.buildingContainer}>
+      //       <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+      //       </div>
+      //     </div>
+      //   </>
+      // )
 
     }
   }, [
@@ -1385,93 +2220,170 @@ function ProfilePage(r) {
     manySetLabel,
     renderContent,
     renderBuilding,
+    renderWerable,
     dataSource,
     dataBuildSource,
+    reqBuilderData,
     tabState,
     routeTab,
     creatorsReander,
   ]);
 
   return (
-    <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
-      <div
-        onClick={() => {
-          setManySetState(false);
-        }}
-        className={style.bigPic}
+    <>
+      <Page className={cn('min-h-screen', style.anPage,)} meta={meta}
       >
-        <div className=" relative">
-          <PageHeader className="relative z-10" active={'profile'} />
-        </div>
+        {/* joinBuilders === true?style.joinBuilders:'' */}
+        <div
+          onClick={() => {
+            setManySetState(false);
+          }}
+          id='container'
+          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join1 : '',)}
+        >
+          <div className=" relative">
+            <PageHeader
+              className="relative z-10" active={'profile'} />
+          </div>
 
-        <div className={cn(' flex flex-col justify-center items-center')}>
-          <Profile
-            avater={avatar}
-            address={address}
-            creatorsState={creatorsState}
-            twitter={twitterAddress}
-            home={websiteAddress}
-            country={countryAddress}
-            name={nickName}
+          <div className={cn(' flex flex-col justify-center items-center', style.profileCon)}>
+            <Profile
+              avater={avatar}
+              address={address}
+              creatorsState={creatorsState}
+              twitter={twitterAddress}
+              home={websiteAddress}
+              country={countryAddress}
+              name={nickNameVal}
+              email={email}
+              onClick={creatorDisplay}
+              classname="main-content"
+            ></Profile>
+            <div className={style.intor}>{introductionText}</div>
+            <div className={cn(style.tablebg)}>
+              <div className={cn(style.tableList)}>
+                {TAB3.map((item) => {
+                  return (
+                    <Tab3
+                      label={item.label}
+                      key={item.label}
+                      active={routeTab === item.type}
+                      onClick={() => {
+                        changeTab3(item.label, item.type);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            {randerCardList}
+            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
+          </div>
+        </div>
+        {creatorState ? (
+          <Creator
+            onClick={changeCreatorState}
+            token={refreshTK()}
             email={email}
-            onClick={creatorDisplay}
-            classname="main-content"
-          ></Profile>
-          <div className={style.intor}>{introductionText}</div>
-          <div className={cn(style.tablebg)}>
-            <div className={cn(style.tableList)}>
-              {TAB3.map((item) => {
-                return (
-                  <Tab3
-                    label={item.label}
-                    key={item.label}
-                    active={routeTab === item.type}
-                    onClick={() => {
-                      changeTab3(item.label, item.type);
-                    }}
-                  />
-                );
-              })}
+            address={address}
+          ></Creator>
+        ) : null}
+
+        {wearablesShowOrHideState ? (
+          <div className={style.settingShowOrHide}>
+            {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
+              } selected`}
+            <div
+              onClick={() => {
+                setWearablesShowOrHideState(false);
+                setWearablesShowOrHide(0);
+                setWearablesSleceteIdList([]);
+              }}
+              className={style.close}
+            >
+              Close
+            </div>
+            <div
+              className={style.showOrHide}
+              onClick={() => {
+                batchShowOrHide();
+              }}
+            >
+              {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
+              {/* {
+                    saveIcon === true ? <><img src='/images/saveIcon.gif'></img>
+                    </> : <>Save</>
+                  } */}
             </div>
           </div>
-          {randerCardList}
-          <div style={{ width: "100%" }}><Footer /></div>
-        </div>
-      </div>
-      {creatorState ? (
-        <Creator
-          onClick={changeCreatorState}
-          token={refreshTK()}
-          email={email}
-          address={address}
-        ></Creator>
-      ) : null}
+        ) : null}
 
-      {wearablesShowOrHideState ? (
-        <div className={style.settingShowOrHide}>
-          {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
-            } selected`}
-          <div
-            onClick={() => {
-              setWearablesShowOrHideState(false);
-              setWearablesShowOrHide(0);
-              setWearablesSleceteIdList([]);
-            }}
-            className={style.close}
-          >
-            Close
-          </div>
-          <div
-            className={style.showOrHide}
-            onClick={() => {
-              batchShowOrHide();
-            }}
-          >
-            {wearablesShowOrHide !== 1 ? 'Hide' : 'Show'}
-          </div>
-        </div>
-      ) : null}
-    </Page>
+        {/* {tabStateTR === true ? <>
+        <JoinBuildersAdd
+          turnBuild={turnBuild}
+          nextBtnAdd={nextBtnAdd}
+        />
+      </> : ''} */}
+
+
+
+      </Page>
+      {joinBuilders === true ? <>
+        <JoinBuilders
+          turnOff={turnOff}
+          stateVal={stateVal}
+          editStateVal={editStateVal}
+          clickHeader={dragHead}
+        // nextBtn={nextBtn}
+
+        />
+      </> : ''}
+      {emailBuilders === true ?
+        <>
+          <JoinBuildersWork
+            turnOff={turnOff}
+            retProps={retProps}
+            emailState={emailStateVal}
+            clickHeader={dragJoin}
+          />
+          {/* <JoinBuildersAdd
+            turnBuild={turnBuild}
+            nextBtnAdd={nextBtnAdd}
+          /> */}
+        </> : ''}
+      {addbuild === true ?
+        <>
+          <AddBuildings
+            id='addBuilding'
+            Save={Save}
+            saveIcon={saveIcon}
+            buildAll={buildAll}
+            buildInc={buildInc}
+            closeBuild={closeBuild}
+            clickHeader={drag}
+          />
+        </> : ''}
+      <JoinModal
+        emaileWearable={emaileWearable}
+        addressWearable={addressWearable}
+        show={showModal}
+        setClose={(x) => {
+          setShowModal(x);
+        }}
+        setcreaterState={(x) => {
+          // console.log(x);
+
+          setStatue(x)
+        }}
+        setEmail={(x) => {
+          setEmailStateWearable(x)
+        }}
+        setbuildState={(x) => {
+          setBuildStateVal(x)
+        }}
+        type={'Creators'}
+      ></JoinModal>
+    </>
   );
 }
 

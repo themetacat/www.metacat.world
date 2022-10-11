@@ -41,9 +41,9 @@ export default function Profile({
     },
     [null],
   );
-const heaDortrait =()=>{
-  router.replace(`/profile/setting`);
-}
+  const heaDortrait = () => {
+    router.replace(`/profile/setting`);
+  };
 
   const toTopic = React.useCallback(() => {
     if (address) {
@@ -52,9 +52,12 @@ const heaDortrait =()=>{
   }, [address]);
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
-      <div className={cn(" justify-between items-center",style.container)}>
+      <div className={cn(' justify-between items-center', style.container)}>
         <div style={{ textAlign: 'center' }} onClick={heaDortrait}>
-          <img className={style.avater} src={avater || '/images/logo.png'}></img>
+          <img
+            className={style.avater}
+            src={avater || '/images/metacat_default_cover_img.png'}
+          ></img>
         </div>
 
         <div className={cn('ml-8', style.info)}>
@@ -92,11 +95,7 @@ const heaDortrait =()=>{
               <div className={style.cd} onClick={toTopic}>{` My creator page >`}</div>
             ) : null} */}
           </div>
-          <div className={style.cony}>
-          {
-            country ? <>Area: {country}</> : null
-          }
-          </div>
+          <div className={style.cony}>{country ? <>Area: {country}</> : null}</div>
           <div className={cn('flex justify-start items-center', style.links)}>
             {twitter ? (
               <ProfileIconLabel
@@ -123,7 +122,7 @@ const heaDortrait =()=>{
             {email ? (
               <ProfileIconLabel
                 label={`Email`}
-                // link={email}
+                link={email}
                 icon="/images/008email.png"
                 prefix={true}
                 isLink={true}
@@ -131,7 +130,6 @@ const heaDortrait =()=>{
               ></ProfileIconLabel>
             ) : null}
           </div>
-
         </div>
         {/* {introduction ? <div style={{ color: "red" }}>{introduction}</div> : null} */}
 

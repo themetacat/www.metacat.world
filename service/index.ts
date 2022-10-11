@@ -20,7 +20,6 @@ export const getCVParcelList = async (page: number, count: number, query: string
   return json;
 };
 
-
 export const getDCLEventList = async (cursor: number, count: number) => {
   const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
   const url = `/api/dcl-event-list${search}`;
@@ -227,7 +226,7 @@ export const getSandboxOwnerStats = async (world?: string) => {
   const url = `/api/cv_sandbox_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getChartNftworlds = async (world?: string) => {
@@ -235,7 +234,7 @@ export const getChartNftworlds = async (world?: string) => {
   const url = `/api/cv_chartNftworlds_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getchartOtherside = async (world?: string) => {
@@ -243,7 +242,7 @@ export const getchartOtherside = async (world?: string) => {
   const url = `/api/cv_getchartOtherside_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getchartSomniumSpace = async (world?: string) => {
@@ -251,7 +250,7 @@ export const getchartSomniumSpace = async (world?: string) => {
   const url = `/api/cv_getchartSomniumSpace_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 export const getchartWebb = async (world?: string) => {
@@ -259,7 +258,7 @@ export const getchartWebb = async (world?: string) => {
   const url = `/api/cv_getChartcv_getchartWebb_stats${params}`;
   const res = await fetch(url);
   const json = await res.json();
-  console.log(json);
+  // console.log(json);
   return json;
 };
 
@@ -510,5 +509,22 @@ export const getDclTrafficMap = async () => {
   const res = await fetch(url);
 
   const json = await res.json();
+  return json;
+};
+
+export const getTzLandPriceMap = async () => {
+  const url = `/api/get_tz1and_price_map`;
+  const result = await fetch(url);
+  const json = await result.json();
+
+  return json;
+};
+
+export const getTzLandParcelDetail = async (tokenId: string) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/get_tz1and_parcel_detail${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+
   return json;
 };

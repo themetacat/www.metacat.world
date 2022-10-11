@@ -1229,10 +1229,8 @@ function Map({
   }, [stc, changeStaticType, changeMapType, staticList, arrowsState]);
 
   const selecterRander = React.useMemo(() => {
-    
     return (
-      <div className={cn('flex justify-between items-center', style.picker)} 
-      >
+      <div className={cn('flex justify-between items-center', style.picker)}>
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter
           mini={style.change}
@@ -1256,43 +1254,44 @@ function Map({
   return (
     <div className={style.mapContainer} onClick={onClick}>
       <div className={style.container}>
-        <div className={style.bg}></div>
-        {selecterRander}
-        {mapType.current === 'PRICE' ? (
-          <div className={cn('flex justify-center items-center', style.helper)}>
-            <div
-              data-tip
-              data-for="info"
-              data-place="bottom"
-              className={cn('relative flex justify-center items-center', style.helperInfo)}
-            >
-              <img src="/images/helper.png"></img>
-            </div>
-            <ReactTooltip
-              id="info"
-              effect="solid"
-              textColor="#AAAAAA"
-              // className={style.pop}
-              backgroundColor="#0F191B"
-              border={false}
-            >
-              <div className={style.info}>
-                The brighter the area, the higher the average price in the selected time frame.The
-                first/second level show the average parcel sale USD in island/suburb, the third
-                level (and above) show the cumulative sale USD of the parcel.
+        <div className={style.bg}>
+          {selecterRander}
+          {mapType.current === 'PRICE' ? (
+            <div className={cn('flex justify-center items-center', style.helper)}>
+              <div
+                data-tip
+                data-for="info"
+                data-place="bottom"
+                className={cn('relative flex justify-center items-center', style.helperInfo)}
+              >
+                <img src="/images/helper.png"></img>
               </div>
-            </ReactTooltip>
+              <ReactTooltip
+                id="info"
+                effect="solid"
+                textColor="#AAAAAA"
+                // className={style.pop}
+                backgroundColor="#0F191B"
+                border={false}
+              >
+                <div className={style.info}>
+                  The brighter the area, the higher the average price in the selected time frame.The
+                  first/second level show the average parcel sale USD in island/suburb, the third
+                  level (and above) show the cumulative sale USD of the parcel.
+                </div>
+              </ReactTooltip>
+            </div>
+          ) : (
+            <></>
+          )}
+          <div
+            className={style.arrows}
+            onClick={() => {
+              setArrowsState(!arrowsState);
+            }}
+          >
+            <img src={`/images/${arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`} />
           </div>
-        ) : (
-          <></>
-        )}
-        <div
-          className={style.arrows}
-          onClick={() => {
-            setArrowsState(!arrowsState);
-          }}
-        >
-          <img src={`/images/${arrowsState ? 'Frame-down.png' : 'Frame-up.png'}`} />
         </div>
       </div>
       <div className={cn(style.topList, arrowsState ? style.dn : null)}>
@@ -1314,7 +1313,7 @@ function Map({
               ></img>
             </div>
             <div
-              className={cn('flex justify-center items-center', style.zoomButton)}
+              className={cn('flex justify-center items-center', style.zoomButtonrEACT)}
               onClick={() => {
                 zoomButtonClick('zoomOut');
               }}

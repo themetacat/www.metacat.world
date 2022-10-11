@@ -207,7 +207,7 @@ export default function Web3ModalProvider({
       getAccountAssets(addr, cid);
       return result;
     } catch (err) {
-      console.log('onConnect error: ', err);
+      // console.log('onConnect error: ', err);
     }
   };
 

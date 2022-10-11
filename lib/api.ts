@@ -7,7 +7,10 @@ class API {
   private key?: string;
 
   constructor(url: string, key?: string) {
+
+    
     this.url = url;
+    // this.url = 'http://8.130.23.16/api/v1';
     this.key = key;
   }
 
@@ -24,8 +27,6 @@ class API {
 
     return json;
   }
-
-
 
   public async getCVEventList(cursor: number, count: number): Promise<any> {
     const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
@@ -55,6 +56,8 @@ class API {
   ): Promise<any> {
     const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_dcl_parcel_list${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_dcl_parcel_list${search}`;
+    
 
     const res = await fetch(url);
     const json = await res.json();
@@ -79,8 +82,19 @@ class API {
   }
 
   public async getTopicDetail(id: number): Promise<any> {
+   
     const search = qs.stringify({ id }, { addQueryPrefix: true });
     const url = `${this.url}/get_topic_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+    // console.log(url,55555);
+   
+    return json;
+  }
+
+  public async getNewBuildingDetail(id: number): Promise<any> {
+    const search = qs.stringify({ id }, { addQueryPrefix: true });
+    const url = `${this.url}/get_new_topic_detail${search}`;
     const res = await fetch(url);
     const json = await res.json();
 
@@ -188,7 +202,7 @@ class API {
   public async getDecentralandStats(): Promise<any> {
     const url = `${this.url}/get_dcl_traffic_stats`;
     const res = await fetch(url);
-    const json = await res.json(); 
+    const json = await res.json();
 
     return json;
   }
@@ -380,6 +394,7 @@ class API {
 
   public async getBaseInfo(token: string): Promise<any> {
     const url = `${this.url}/user/get_base_info`;
+    // const url = `http://8.130.23.16/api/v1/user/get_base_info`;
     const res = await fetch(url, {
       method: 'get',
       headers: {
@@ -620,8 +635,26 @@ class API {
     const json = await res.json();
     return json;
   }
+
+  public async getTzLandPriceMap(): Promise<any> {
+    const url = `${this.url}/get_tz1and_price_map`;
+    const result = await fetch(url);
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async getTzLandParcelDetail(tokenId: string): Promise<any> {
+    const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });
+    const url = `${this.url}/get_tz1and_parcel_detail${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
 }
 
 export default new API('https://api.metacat.world/api/v1');
+// export default new API('http://8.130.23.16/api/v1');
 // http://8.130.23.16/
 // https://api.metacat.world

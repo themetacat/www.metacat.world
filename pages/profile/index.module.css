@@ -29,7 +29,48 @@ min-height: 17px;
   box-sizing: border-box;
   min-height: 650px;
 }
+.contentB{
+  display: flex;
+  margin-top: 20.5px;
+  margin-bottom: 20px;
+  background: #01DAD9;
+  opacity: 0.8;
+  border-radius: 6px;
+  position: relative;
+ 
+}
+.unload:hover{
+  filter: brightness(125%);
+}
+.conAdd{
+  padding: 12px 0px 12px 20px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  align-items: center;
+  color: #FFFFFF;
+}
+.unload{
+  position: absolute;
+  right: 20px;
+  padding: 4px 21px 4px 21px;
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  border-radius: 4px;
+  margin-top: 10px;
+  /* width: 90px; */
+height: 25px;
+text-align: center;
+font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+align-items: center;
+text-align: center;
+text-transform: capitalize;
 
+color: #0F191B;
+}
 .bottomBorder {
   border-bottom: solid 1px rgba(0, 208, 236, 0.2);
 }
@@ -76,7 +117,9 @@ min-height: 17px;
   width: 1px;
   background-color: rgba(0, 208, 236, 0.2);
 }
-
+.profileCon{
+  z-index: 2;
+}
 .saveBtn {
   width: 134px;
   height: 52px;
@@ -87,7 +130,9 @@ min-height: 17px;
 .bottomLine {
   /* border-bottom: 1px solid #012a30; */
 }
-
+.addBlock{
+  display: none;
+}
 .contentHeader {
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.1);
 }
@@ -192,6 +237,7 @@ min-height: 17px;
   width: 15px;
   height: 15px;
   margin-top: 5px;
+  position: relative;
 }
 
 .nav_right_item > .left {
@@ -360,14 +406,13 @@ min-height: 17px;
 }
 .wearablesNavItem {
   display: flex;
+  width: auto !important;
   /* margin: 0px 25px 0px 0px; */
+  padding: 4px 15px;
   margin-right: 25px;
   font-size: 12px;
   cursor: pointer;
   box-sizing: border-box;
-  /* background-color: red; */
-  /* height: 100%; */
-  /* line-height: 44px; */
 }
 
 .wearablesNavItem > div {
@@ -380,21 +425,27 @@ min-height: 17px;
 }
 .wearablesNavItem:hover > div {
   color: #000;
-  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
-  padding: 4px 15px 4px 15px;
+  /* background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); */
+  /* padding: 4px 15px 4px 15px; */
   /* margin: 0px 0px 0px 25px; */
 }
-.wearablesNavItem:hover   > div > span {
+ .wearablesNavItem:hover   > div > span { 
+  padding: 0px !important;
   color: #000;
-}
+} 
 .wearablesNavItem:hover{
   filter: brightness(125%);
+   background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); 
+  color: #000 !important;
+  border-radius: 2px;
 }
 .wearablesNavItem:active{
   filter: brightness(75%);
 }
 .wearablesNavItem :hover{
   /* background-color: blue; */
+  /* background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%); */
+  /* color: #000; */
 }
 .wearableNavAction {
   /* border-bottom: 2px solid#00d0ec; */
@@ -426,6 +477,7 @@ text-align: center;
   right: 20px;
   bottom: -83px;
   z-index: 99;
+ 
 }
 .showOrHideList1 {
   position: absolute;
@@ -438,11 +490,17 @@ text-align: center;
   height: 41px;
   background-color: #000;
   line-height: 41px;
-  padding-left: 12px;
   color: #999999;
   font-size: 12px;
+  text-align: center;
   cursor: pointer;
   border-bottom: 1px solid #0f191b;
+}
+.showOrHideItem:nth-child(1){
+  border-radius: 4px 4px 0px 0px;
+}
+.showOrHideItem:nth-child(2){
+  border-radius: 0px 0px 4px 4px;
 }
 .showOrHideItem:hover {
   color: #fff;
@@ -553,4 +611,19 @@ color: #FFFFFF;
   right: 20px;
   top: 10px;
   color: #0F191B;
+}
+.join{
+  width:100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.3);
+  /* opacity: 0.1; */
+}
+.join1{
+  width:100%;
+  height: 100%;
+  /* background-color: rgba(255,255,255,0.3); */
+  /* opacity: 0.1; */
+}
+.joinBuildersFooter{
+  display: none;
 }

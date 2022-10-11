@@ -65,6 +65,12 @@ const MENU = [
     type: 'operation',
   },
   {
+    label: 'My Buildings',
+    icon: '/images/icon/buildingIcon.png',
+    value: '/profile?type=building',
+    type: 'operation',
+  },
+  {
     label: 'Sign Out',
     icon: '/images/v5/Signout.png',
     value: 'resetApp',
