@@ -8,7 +8,7 @@
   /* padding: 20px; */
 }
 .card {
-  padding: 15px 15.79px 15px 15px;
+  padding: 15px 15px 15px 15px;
   max-width: 385px;
   /* background: rgba(0, 236, 222, 0.05); */
   /* 辅-亮绿 */
@@ -66,7 +66,7 @@
 }
 
 .title{
-  max-width: 250px;
+  max-width: 180px;
   font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 500;

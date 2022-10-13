@@ -259,7 +259,7 @@ const hNav = [
 ];
 
 export default function AnalyticsIndex(props) {
- 
+
 
   const meta = {
     title: `Analytics - ${SITE_NAME}`,
@@ -273,11 +273,10 @@ export default function AnalyticsIndex(props) {
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
-    setShowType(newType); 
+    setShowType(newType);
+
     // router.replace(`/analytics?type=${newType}`);
-    if(newType===undefined){
-      router.replace('/analytics');
-    }else{
+    if (newType) {
       router.replace(`/analytics?type=${newType}`);
     }
   }, []);
@@ -286,11 +285,12 @@ export default function AnalyticsIndex(props) {
 
   const changeHeaderNav = React.useCallback(
     (nav) => {
+
       if (nav === 'single') {
         router.replace('/analytics?type=cryptovoxels')
         // router.replace(`/analytics?type=${showType}`);
         setHeaderNav(nav);
-        
+
       }
       if (nav === 'all') {
         router.replace(`/analytics`);
@@ -460,7 +460,7 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
-   
+
     if (showType === 'decentraland') {
       return (
         <>
@@ -1136,7 +1136,7 @@ export default function AnalyticsIndex(props) {
                 label: 'ETH',
                 value: 'eth',
               },
-         
+
             ]}
             tabState={showType}
           ></StackBarZ>
@@ -1646,7 +1646,7 @@ export default function AnalyticsIndex(props) {
               <div className={cn('w-full h-auto mt-7', style.tableBox)}>
                 <div className={style.tabContainer}>
                   <AnalyticsAverage options={types} labelText={'Average Parcel Price'} textColor={style.allColor}
-                     priceOptions={[
+                    priceOptions={[
                       {
                         label: 'USD',
                         value: 'USD',
@@ -1658,7 +1658,7 @@ export default function AnalyticsIndex(props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={style.tabContainer} style={{marginLeft:"20px"}}>
+                <div className={style.tabContainer} style={{ marginLeft: "20px" }}>
                   <AnalyticsInfoNum options={types} labelText={'Number Of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
               </div>
@@ -1711,7 +1711,7 @@ export default function AnalyticsIndex(props) {
                     },
                   ]}
                 ></AllPillarNum>
-                
+
               </div>
               <div className={style.allLine}>
                 <AllPillarNum2
@@ -1751,18 +1751,18 @@ export default function AnalyticsIndex(props) {
                     //   value: 'yearly',
                     // },
                   ]}
-                  // priceOptions={[
-                  //   {
-                  //     label: 'USD',
-                  //     value: 'usd',
-                  //   },
-                  //   {
-                  //     label: 'ETH',
-                  //     value: 'eth',
-                  //   },
-                  // ]}
+                // priceOptions={[
+                //   {
+                //     label: 'USD',
+                //     value: 'usd',
+                //   },
+                //   {
+                //     label: 'ETH',
+                //     value: 'eth',
+                //   },
+                // ]}
                 ></AllPillarNum2>
-                
+
               </div>
             </div>
           </div>
@@ -1775,14 +1775,14 @@ export default function AnalyticsIndex(props) {
         <>
           <div className={cn(style.tmbg,)}>
             {/* <div className={cn(style.bg)}> */}
-              <Switch
-                onActive={changeType}
-                options={types}
-                defaultValue={showType}
-                id="switch"
-                className={ offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
-                fixedS={fixedState}
-              ></Switch>
+            <Switch
+              onActive={changeType}
+              options={types}
+              defaultValue={showType}
+              id="switch"
+              className={offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
+              fixedS={fixedState}
+            ></Switch>
             {/* </div> */}
           </div>
           <div className={cn('flex flex-col justify-center items-center', style.content)}>
@@ -1791,17 +1791,17 @@ export default function AnalyticsIndex(props) {
                 'w-full mt-7 p-5 flex flex-col justify-start items-center',
                 style.chartList,
               )}
-              style={{marginTop:"25px"}}
+              style={{ marginTop: "25px" }}
             >
               {renderChartList}
             </div>
           </div>
-        <JumpToAnalytics></JumpToAnalytics>
+          <JumpToAnalytics></JumpToAnalytics>
         </>
       );
     }
   }, [headerNav, changeType, renderChartList, fixedState]);
-  
+
 
   // const Top = React.useCallback(() => {
   //   Dtop.current =
@@ -1817,6 +1817,7 @@ export default function AnalyticsIndex(props) {
   // }, [Top, Dtop.current])
 
   React.useEffect(() => {
+
     if (props.query.type) {
       setHeaderNav(hNav[1].type);
     } else {
@@ -1829,7 +1830,7 @@ export default function AnalyticsIndex(props) {
       if (
         document.getElementById('switch') &&
         // document.getElementById('switch').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 200
+        window.scrollY > 350
       ) {
         setFixedState(true);
       } else {
@@ -1850,23 +1851,24 @@ export default function AnalyticsIndex(props) {
         window.scrollY > 350
       ) {
         setFixedStateAll(true);
-        
+
       } else {
         setFixedStateAll(false);
       }
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedStateAll,offsetWidthNum]);
+  }, [fixedStateAll, offsetWidthNum]);
+console.log(headerNav,"headerNav",fixedStateAll);
 
   return (
-    <Page className={cn('min-h-screen',  offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
-      <div  className={cn('',headerNav ==='single'&& fixedStateAll=== true ? style.a:null)} ref={headerRef}>
-      <PageHeader  active={'analytics relative'} />
+    <Page className={cn('min-h-screen', offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
+      <div className={cn('', fixedStateAll === true ? style.a : null)} ref={headerRef}>
+        <PageHeader active={'analytics'} />
       </div>
-     
+
       <div className="bg-black relative">
-       
+
         <div
           className={cn(
             'main-content flex justify-center items-end relative z-10 pointer-events-none',
@@ -1875,20 +1877,20 @@ export default function AnalyticsIndex(props) {
         >
           <img src="/images/analyticsBack.png" className={style.sign}></img>
         </div>
-        <div className={cn('myClassName',style.headerNav,
-      
+        <div className={cn('myClassName', style.headerNav,
+
         )}>
-          <div 
-          className={cn(style.navContainer, )}>
+          <div
+            className={cn(style.navContainer,)}>
             {hNav.map((nav) => {
               return (
                 <div
-                  className={cn(headerNav === nav.type ? style.nav : style.n, )}
+                  className={cn(headerNav === nav.type ? style.nav : style.n,)}
                   onClick={() => {
                     changeHeaderNav(nav.type);
                   }}
                   id='navContainer'
-                  
+
                 >
                   {nav.value}
                 </div>

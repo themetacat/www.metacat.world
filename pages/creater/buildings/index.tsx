@@ -58,7 +58,7 @@ export default function TopicIndex() {
   const cls = cn('flex-1', style.bottomLine);
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/build/${t}`);
+    router.replace(`/creater/${t}`);
   }, []);
 
   const requestData = React.useCallback(async (page: number, count: number) => {
@@ -131,7 +131,7 @@ export default function TopicIndex() {
         <div className={style.topCon}>
        
           <div
-            className={cn('tab-list flex  mt-5', style.allHeight, fixedState ? style.fix2 : null)}
+            className={cn('tab-list flex ', fixedState ? style.fix2 :  style.allHeight,)}
             id="switch"
           >
             <div className={cls}></div>

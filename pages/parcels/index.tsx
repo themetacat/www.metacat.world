@@ -260,12 +260,10 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
-    // console.log(tab,
-    //   subTab,
-    //   page,
-    //   query,
+    // console.log(tab,11,
+    //   subTab,22,
     //   type);
-
+setSearchText('')
     try {
       if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
@@ -503,14 +501,29 @@ export default function Index(props) {
     },
     [tabState, searchText, typeState],
   );
- 
+
   const onTypeChangeHandler = React.useCallback(
     async (type: string,
       // page,
       // query = '',
     ) => {
       setTypeState(type);
-      console.log(type, tabState, subTabState);
+      // setSubTabState('')
+      // if (searchText !=='') {
+      //   setSearchText('')
+      //   const data = await requestData({
+      //     tab: tabState,
+      //     subTab: '',
+      //     page: 1,
+      //     query: '',
+      //     type,
+      //   });
+
+      //   setDataSource(data);
+      // }else{
+        
+      // }
+      setSearchText('')
       if (type === 'Free Space') {
         const data = await requestData({
           tab: tabState,
@@ -521,9 +534,9 @@ export default function Index(props) {
           needUpdateTypeList: true,
         });
         // console.log(data);
-
         setDataSource(data);
-      } else if(type === 'Scene'){
+      } else if (type === 'Scene') {
+    
         const data = await requestData({
           tab: tabState,
           subTab: 'scene',
@@ -538,7 +551,6 @@ export default function Index(props) {
       }
       else {
         // onSubTabChange('parcel')
-
         const data = await requestData({
           tab: tabState,
           subTab: subTabState,
@@ -576,6 +588,8 @@ export default function Index(props) {
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
+      // console.log(type);
+
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
@@ -598,7 +612,7 @@ export default function Index(props) {
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
-        subTab: subTabState,
+        subTab: 'space',
         query: text,
         page: 1,
         type: typeState,
@@ -618,7 +632,7 @@ export default function Index(props) {
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
-        subTab: subTabState,
+        subTab: 'scene',
         query: text,
         page: 1,
         type: typeState,
@@ -686,7 +700,7 @@ export default function Index(props) {
             )}
           >
             {
-              typeState === 'Free Space' ||typeState === 'Scene'?
+              typeState === 'Free Space' || typeState === 'Scene' ?
                 <>
                   {dataSource.map((card, idx) => {
                     return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
@@ -1766,7 +1780,7 @@ export default function Index(props) {
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
         <div className={style.containerBox}>
-          <div className={cn('  myClassName', fixedState ? style.fix1 : null)} style={{zIndex:"99999"}}>
+          <div className={cn('  myClassName', fixedState ? style.fix1 : null)} style={{ zIndex: "99999" }}>
             <PageHeader className="relative" active={'/parcels'} />
           </div>
           <div
@@ -1776,7 +1790,7 @@ export default function Index(props) {
               fixedState ? style.aboslute : null
             )}
           >
-            {fixedState === true ? <div style={{ marginRight: "457px" }}></div> : null}
+            {fixedState === true ? <div style={{ marginRight: "19%" }}></div> : null}
             <div className="flex px-0 relative">
               <div
                 className={cn(
@@ -1843,13 +1857,22 @@ export default function Index(props) {
               <div className={cls} />
             </div>
             <div className={cn('', style.boxCon, fixedState ? style.boxCon1 : null)} >
-              <Search text={searchText} onSearch={onSearchHandler}></Search>
+
+              {typeState === 'Free Space' ? (
+                <Search text={searchText} onSearch={onSearchSpace}></Search>
+              ) : null}
+              {typeState === 'Scene' ? (
+                <Search text={searchText} onSearch={onSearchScene}></Search>
+              ) : null}
+              {typeState !== 'Free Space' && typeState !== 'Scene' ?
+                <Search text={searchText} onSearch={onSearchHandler}></Search>
+                : null}
             </div>
           </div>
         </div>
         <div className="main-content">
           {/* <div className={cn('flex justify-between items-center ', style.contentHeader)}> */}
-            {/* <div className="flex">
+          {/* <div className="flex">
               {tabState === 'cryptovoxels'
                 ? SUBTAB.map((item, index) => {
                     if (item) {
@@ -1936,11 +1959,11 @@ export default function Index(props) {
 
           <div className={cn('', style.content)}>
             {/* {subTabState === 'parcel' && ( */}
-            {tabState === 'cryptovoxels'||tabState === 'decentraland' ? (
+            {tabState === 'cryptovoxels' || tabState === 'decentraland' ? (
               <div style={{ marginTop: "20px" }}>
                 <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
               </div>
-            ):''}
+            ) : ''}
             {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}
             {subTabState === 'scene' && dataSource.length === 0 && <ScenceBuilding />}
 

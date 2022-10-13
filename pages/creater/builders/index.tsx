@@ -67,7 +67,6 @@ export default function Builders() {
       setIndividuals(result.data.individuals);
     }
     const resultBuilding = await req_buid_builders_buildingList();
-    console.log(resultBuilding.data, "resultBuilding");
 
     if (result.code === 100000) {
       setNewBuilding(resultBuilding.data);
@@ -93,14 +92,13 @@ export default function Builders() {
     if (a) {
       setWalletAddress(a);
     }
-    console.log(walletAddress, 99999999999);
 
     // console.log(walletAddress,66666666);
   }, [requestData, getTop, walletAddress]);
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/build/${t}`);
+    router.replace(`/creater/${t}`);
   }, []);
 
   const toTopic = React.useCallback((id, item) => {
@@ -170,10 +168,10 @@ export default function Builders() {
         <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
           <PageHeader className="" active={'Build'} />
         </div>
-        <div className={cn('bg-black relative  mt-5', style.backImage)}>
+        <div className={cn('bg-black relative', style.backImage)}>
 
-          <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
-            <div className={cn('tab-list flex ', style.allHeight)}>
+          <div className={cn('', )} id="switch">
+            <div className={cn('tab-list flex ', fixedState ? style.fix2 : style.allHeight,)}>
               <div className={cls}></div>
               <div className={cn('main-content flex px-0')}>
                 {TAB.map((item, index) => {

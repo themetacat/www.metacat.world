@@ -214,7 +214,7 @@ function Learn(r) {
       <div className={style.containerBanner}>
         <img src="/images/LearnBanner.png" className={style.banner} />
       </div>
-      <div id='myClassName' className={cn('tab-list flex mt-5 myClassName', fixedState  ? style.aboslute :null, style.allHeight)}>
+      <div id='myClassName' className={cn('tab-list flex myClassName', fixedState  ? style.aboslute :null, style.allHeight)}>
         <div className={cls}></div>
         <div className={cn('main-content flex px-0', style.r)}>
           {REPORTTAB.map((item) => {

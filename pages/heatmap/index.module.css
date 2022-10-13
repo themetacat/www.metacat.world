@@ -8,11 +8,11 @@
 
 .container{
   background-image: url('/images/imgConent/biaotilan.png');
-  margin-top: 60px;
+  /* padding-top: 60px; */
 }
 
 .allHeight {
-  height: 48px;
+  padding-top: 48px;
 }
 
 .content {
