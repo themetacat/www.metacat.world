@@ -6,6 +6,14 @@
   border-radius: 12px 12px 0 0;
   
 }
+.lable{
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 22px;
+color: #AAAAAA;
+}
 
 .miniActive:active{
   font-family: 'PingFang SC';
@@ -23,7 +31,7 @@
   font-size: 16px;
   line-height: 22px;
   box-sizing: border-box;
-  padding: 9px 30px!important;
+  padding: 9px 30px !important;
   width: auto;
   color: #aaaaaa;
   min-height: 40px;

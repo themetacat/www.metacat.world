@@ -15,7 +15,7 @@
   position: absolute !important;
   top: 20px;
   left: 20px;
-  z-index: 1005;
+  z-index: 20;
   background-color: rgba(15, 25, 27, 1);
   color: #fff;
   text-align: center;
@@ -225,13 +225,13 @@ border-radius: 4px;
   position: absolute;
   background: #000000;
   opacity: 0.7;
-  z-index: 999;
+  z-index: 20;
 }
 .arrows {
   position: absolute;
   left: 358px;
   top: 38px;
-  z-index: 1005;
+  z-index: 20;
   cursor: pointer;
 }
 .arrows > img {

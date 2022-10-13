@@ -299,7 +299,6 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   }, [searchText, parcelList, navState, originWearables, wearableList]);
 
   const rander = React.useMemo(() => {
-    console.log(parcelList?.length);
 
     if (navState === 'buildings') {
 

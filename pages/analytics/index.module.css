@@ -87,13 +87,21 @@
 }
 .aboslute {
   position:fixed;
-  height: 42px;
+  /* height: 42px; */
   width: 95%;
   z-index: 99879;
   background-color: #111a1b;
   border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
   top:60px;
+  padding-top: 48px;
   margin: 0px auto 0;
+}
+.a{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 999999;
+  /* top：0; */
 }
 .abosluteAll {
   /* margin-left: 17% !important; */
