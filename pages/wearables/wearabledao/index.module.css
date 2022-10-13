@@ -121,6 +121,7 @@
   display: flex;
   border-bottom: 1px solid rgba(0, 208, 236,0.1);
   margin-top: 20px;
+  z-index: 9999999 !important;
 }
 
 .item {
@@ -182,9 +183,14 @@
 }
 .fix3 {
   position: fixed;
-  top: 124px;
+  top: 60px;
   left: 0;
   width: 100%;
+  padding-top: 30px;
+  padding-left: 18%;
+  background: #000;
+  z-index: 999999999;
+     background-image: url('/images/imgConent/buildersBeiJingTu.png');
   margin: 0 auto;
   z-index: 21;
 }

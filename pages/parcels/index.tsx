@@ -1790,12 +1790,12 @@ export default function Index(props) {
           <div
             className={cn(
               'tab-list flex myClassName main-content relative',
-
-              fixedState ? style.aboslute : style.allHeight,
+              style.allHeight
+              // fixedState ? style.aboslute : style.allHeight,
             )}
           >
 
-            {fixedState === true ? <div className={offsetWidthNum <= 1200 ? style.headNum : style.headNumx}></div> : null}
+            {fixedState === true ? <div className={offsetWidthNum <= 1200 ? style.headNumx : style.headNum}></div> : null}
             <div className="flex px-0 relative">
               <div
                 className={cn(

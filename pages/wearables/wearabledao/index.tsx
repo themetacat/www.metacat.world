@@ -169,7 +169,7 @@ export default function Wearables(props) {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 90) {
+      if (document.getElementById('switch') && window.scrollY > 350) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -179,9 +179,11 @@ export default function Wearables(props) {
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
+  
+
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-      <div className={fixedState ? style.fix1 : null}>
+      <div className={fixedState ? style.fix1 : null} id='switch'>
         <PageHeader className="relative z-10" active={'Build'} />
       </div>
       <div className={cn("bg-black relative", style.backImage)}>
@@ -304,8 +306,8 @@ export default function Wearables(props) {
               : null}
           </div>
           <div className={cn(style.navCOntainer)}>
-            <div className={style.nav}>
-              {/* , fixedState ? style.fix3 : null */}
+            <div className={cn('',style.nav, fixedState ? style.fix3 : null)}>
+              {/*  */}
               {nav.map((item, idx) => {
                 return (
                   <div
