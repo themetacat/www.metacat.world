@@ -165,7 +165,7 @@ export default function TopicIndex() {
           <div className={style.text}>
             <div className={style.hengxian}></div>
             <div className={style.t}>
-              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS.
+              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS
               {/* EXCELLENT &nbsp;&nbsp;
               BUILDINGS &nbsp;&nbsp;
               ARE&nbsp;&nbsp;&nbsp;

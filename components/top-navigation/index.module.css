@@ -38,6 +38,9 @@ flex-flow: row;
   background-size:cover;
   background-repeat: no-repeat;
   height: 60px;
+  z-index:99999;
+  position: fixed;
+  top: 0px;
   /* min-width:1440px ; */
   position: relative;
   /* flex-grow: 1; */

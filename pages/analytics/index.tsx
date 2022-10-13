@@ -1859,7 +1859,7 @@ export default function AnalyticsIndex(props) {
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
   }, [fixedStateAll, offsetWidthNum]);
-console.log(headerNav,"headerNav",fixedStateAll);
+// console.log(headerNav,"headerNav",fixedStateAll);
 
   return (
     <Page className={cn('min-h-screen', offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
