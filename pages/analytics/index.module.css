@@ -77,12 +77,13 @@
 
 .headNum{
   position:fixed;
-  height: 42px;
+  /* height: 42px; */
   width: 95%;
   z-index: 99879;
   background-color: #111a1b;
   border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
-  top:36px;
+  top:60px;
+  padding-top: 32px;
   margin: 0px auto 0;
 }
 .aboslute {
