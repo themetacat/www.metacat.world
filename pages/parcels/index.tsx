@@ -218,6 +218,7 @@ const SUBTABZ2 = [
 
 export default function Index(props) {
   const router = useRouter();
+  const headerRef = React.useRef(null)
 
   const meta = {
     title: `Home - ${SITE_NAME}`,
@@ -232,6 +233,7 @@ export default function Index(props) {
   // const [subSpaceState, setSubSpaceState] = React.useState(props.query.subTab || 'space');
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
+  const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [searchText, setSearchText] = React.useState(props.query.search || '');
   const [typeState, setTypeState] = React.useState(props.query.type || 'All');
   const [typeList, setTypeList] = React.useState([]);
@@ -263,7 +265,7 @@ export default function Index(props) {
     // console.log(tab,11,
     //   subTab,22,
     //   type);
-setSearchText('')
+    setSearchText('')
     try {
       if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
@@ -374,6 +376,8 @@ setSearchText('')
   };
 
   React.useEffect(() => {
+    setOffsetWidthNum(headerRef?.current?.clientWidth)
+    
     const listener = () => {
       if (
         document.querySelector('.myClassName') &&
@@ -387,7 +391,7 @@ setSearchText('')
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedState]);
+  }, [fixedState,offsetWidthNum]);
 
   const onTabChange = async (tab) => {
     // console.log(tab, 222222222);
@@ -521,7 +525,7 @@ setSearchText('')
 
       //   setDataSource(data);
       // }else{
-        
+
       // }
       setSearchText('')
       if (type === 'Free Space') {
@@ -536,7 +540,7 @@ setSearchText('')
         // console.log(data);
         setDataSource(data);
       } else if (type === 'Scene') {
-    
+
         const data = await requestData({
           tab: tabState,
           subTab: 'scene',
@@ -1779,18 +1783,19 @@ setSearchText('')
           </>
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
-        <div className={style.containerBox}>
+        <div className={style.containerBox} ref={headerRef}>
           <div className={cn('  myClassName', fixedState ? style.fix1 : null)} style={{ zIndex: "99999" }}>
             <PageHeader className="relative" active={'/parcels'} />
           </div>
           <div
             className={cn(
               'tab-list flex myClassName main-content relative',
-              style.allHeight,
-              fixedState ? style.aboslute : null
+
+              fixedState ? style.aboslute : style.allHeight,
             )}
           >
-            {fixedState === true ? <div style={{ marginRight: "12%" }}></div> : null}
+
+            {fixedState === true ? <div className={offsetWidthNum <= 1200 ? style.headNum : style.headNumx}></div> : null}
             <div className="flex px-0 relative">
               <div
                 className={cn(
@@ -1856,7 +1861,8 @@ setSearchText('')
               </div>
               <div className={cls} />
             </div>
-            <div className={cn('', style.boxCon, fixedState ? style.boxCon1 : null)} >
+            <div className={cn('', style.boxCon, fixedState===true ? style.boxCon1 : null,
+             offsetWidthNum <= 1200 ? style.boxCon2 : null )} >
 
               {typeState === 'Free Space' ? (
                 <Search text={searchText} onSearch={onSearchSpace}></Search>
