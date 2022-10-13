@@ -503,7 +503,7 @@ export default function PageHeader({ active, className }: Props) {
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>
           : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>} */}
-        <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>
+        {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
 
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
         <Toaster
