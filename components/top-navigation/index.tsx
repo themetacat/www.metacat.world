@@ -233,7 +233,7 @@ export default function PageHeader({ active, className }: Props) {
     >
       <div
         className={cn(
-          ' flex items-center   w-full flex-flow',
+          ' flex items-center  w-full flex-flow',
           style.header,
         )}
       >

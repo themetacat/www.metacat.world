@@ -1790,7 +1790,7 @@ setSearchText('')
               fixedState ? style.aboslute : null
             )}
           >
-            {fixedState === true ? <div style={{ marginRight: "19%" }}></div> : null}
+            {fixedState === true ? <div style={{ marginRight: "12%" }}></div> : null}
             <div className="flex px-0 relative">
               <div
                 className={cn(

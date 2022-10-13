@@ -11,6 +11,13 @@
 .headText {
   font-size: 46px;
 }
+.a{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 999999;
+  /* top：0; */
+}
 
 .delive {
   width: 40px;
