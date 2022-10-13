@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
-import Search from '../../components/searchHome';
+import Search from '../searchHome';
 import TwoNavigation from '../two_navigation';
 import TwoNav from '../two_nav';
 import style from './index.module.css';
