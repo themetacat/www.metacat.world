@@ -1,0 +1,215 @@
+
+.logo {
+  width: 36px;
+  height: 30px;
+  background: transparent;
+}
+.active {
+  color: #fff;
+}
+.old {
+  color: #fff;
+}
+.showStateVal{
+  display: none;
+}
+.imgIcon{
+  /* width: 20.01px; */
+  /* height: 20.55px; */
+margin-right: 39.66px;
+/* margin-top: 10.34px; */
+}
+.imgIcon1{
+  margin-right: 270px;
+}
+.imgIco1{
+
+margin-right: 39.66px;
+margin-top: 10.34px;
+}
+.headNum{
+  background-image: url("/images/imgConent/Mask group.png");
+z-index:99999;
+justify-content: left;
+flex-flow: row;
+}
+.header{
+  background-image: url("/images/imgConent/Mask group.png");
+  background-size:cover;
+  background-repeat: no-repeat;
+  height: 60px;
+  z-index:99999;
+  position: fixed;
+  top: 0px;
+  /* min-width:1440px ; */
+  position: relative;
+  /* flex-grow: 1; */
+  /* justify-content: center; */
+}
+.metaImg{
+  /* margin-top: 15px; */
+  /* width: 100px;
+  height: 30.89px; */
+  width: 44%;
+  height: 30%;
+  margin-left: 30px;
+}
+.imgCon{
+  margin-left: 16.85px;
+}
+.home1{
+  width: 60px;
+}
+.imgIconNum{
+  width: 30px;
+}
+.headerTop{
+  margin-left: -6%;
+ width: 80%;
+}
+.one{
+  width: 20%;
+}
+.headsa{
+  flex-flow: row;
+  width: 50%;
+  /* white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden; */
+}
+/* .headsa::-webkit-scrollbar{
+  background-color: #fff;
+  border-radius: 8px;
+  height: 10px;
+}
+.headsa::-webkit-scrollbar-thumb{
+
+  background-color: #00dcd5;
+  border-radius: 8px;
+} */
+.base {
+  z-index: 10002;
+  width: 1400px;
+  height: 60px;
+}
+.location {
+  position: absolute;
+  right: -48px;
+  bottom: -110px;
+  /* bottom: -90px; */
+  z-index: 99999 !important;
+  background-color: #0f191b;
+  border-radius: 4px;
+}
+.parcels {
+  border-radius: 4px;
+  position: absolute;
+  left:-60px;
+  bottom: -110px;
+  z-index: 99999 !important;
+  background-color: #0f191b;
+
+}
+.location2 {
+  position: absolute;
+  right: -25px;
+  bottom: -110px;
+  z-index: 99999 !important;
+  border-radius: 4px;
+  background-color: #0f191b;
+}
+.location3 {
+  position: absolute;
+  z-index: 99999 !important;
+  /* left: 387px;
+  bottom: 128px; */
+  top: 39px;
+  left: -50px;
+  background-color: #0f191b;
+  border-radius: 4px;
+}
+.locationLearn{
+  position: absolute;
+  /* left: 387px;
+  bottom: 128px; */
+  top: 39px;
+  left: -50px;
+  z-index: 99999 !important;
+  background-color: #0f191b;
+  border-radius: 4px;
+}
+.location4 {
+  position: absolute;
+  left: -50px;
+  top: 39px;
+  z-index: 99999 !important;
+  /* bottom: 27px; */
+  background-color: #0f191b;
+  border-radius: 4px;
+}
+.head{
+  z-index: 999999;
+  flex-grow: 1;
+}
+.cn {
+  width: 176px;
+  z-index: 999999;
+}
+.cn1 {
+  width: 176px;
+}
+
+.cn2 {
+  width: 154px;
+}
+.z {
+  z-index: 99;
+  /* margin-left: 45px; */
+  vertical-align: middle;
+}
+.nameCon{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  color: #AAAAAA;
+  padding-top: 5px;
+}
+.rightCon{
+  margin-right: 41.67px;
+}
+.rightCon1{
+  margin-right: 45px;
+}
+.connectBox{
+  position: absolute;
+  right:160px;
+  justify-content: end;
+  display: flex;
+}
+.connectBox1{
+  margin-right: 423px;
+  display: flex;
+}
+.wallbtn{
+  position: absolute;
+  right:30px;
+}
+.frame{
+  width: 17.01px;
+  height: 17.55px;
+  position: absolute;
+  right:196.66px;
+}
+.frame:hover{
+  filter: brightness(125%);
+}
+.closePop:hover{
+  filter: brightness(125%);
+}
+.closePop{
+width: 16px;
+height: 16px;
+margin-top: 13px;
+}

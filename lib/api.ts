@@ -56,6 +56,8 @@ class API {
   ): Promise<any> {
     const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_dcl_parcel_list${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_dcl_parcel_list${search}`;
+    
 
     const res = await fetch(url);
     const json = await res.json();
@@ -652,6 +654,7 @@ class API {
   }
 }
 
-export default new API('https://api.metacat.world/api/v1');
+// export default new API('https://api.metacat.world/api/v1');
+export default new API('http://8.130.23.16/api/v1');
 // http://8.130.23.16/
 // https://api.metacat.world

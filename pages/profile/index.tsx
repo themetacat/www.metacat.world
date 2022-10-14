@@ -11,7 +11,8 @@ import { useRouter, withRouter } from 'next/router';
 import { join } from 'path/posix';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
@@ -2241,7 +2242,7 @@ function ProfilePage(r) {
           id='container'
           className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join1 : '',)}
         >
-          <div className=" relative">
+          <div className=" relative" >
             <PageHeader
               className="relative z-10" active={'profile'} />
           </div>

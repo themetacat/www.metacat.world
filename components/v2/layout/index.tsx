@@ -8,7 +8,7 @@ import HeatMapCard from '../heatmap-card';
 import { convert } from '../../../common/utils';
 
 // import Logo from './icons/icon-logo';
-import PageHeader from '../page-header';
+import PageHeader from '../../top-navigation';
 import Footer from '../../footer';
 import Carousel from '../carousel';
 
@@ -95,6 +95,7 @@ export default function Layout({
   const router = useRouter();
   const [carouselList, setCarouselList] = React.useState([]);
   const [trafficTags, setTrafficTags] = React.useState([]);
+  const [fixedStateAll, setFixedStateAll] = React.useState(false);
   const [priceTags, setPriceTags] = React.useState([]);
   const { pathname } = router;
   const t = useTranslations('navigation');
@@ -130,9 +131,26 @@ export default function Layout({
     setTrafficTags(arr2);
   }, [null]);
 
+  React.useEffect(() => {
+    const listener = () => {
+      if (
+        document.getElementById('switch') &&
+        // document.getElementById('switch').getBoundingClientRect().top <= 10 &&
+        window.scrollY > 0
+      ) {
+        setFixedStateAll(true);
+      } else {
+        setFixedStateAll(false);
+      }
+
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, [fixedStateAll]);
+
   return (
     <>
-      {!hideNav && <PageHeader className=" relative z-10" active={pathname} />}
+      {!hideNav &&  <div id="switch" className={cn('', fixedStateAll === true ? style.a : null)}> <PageHeader className=" relative fixed z-10" active={pathname} /></div>}
       <div className={cn('min-h-screen z-0', 'w-full')}>
         <div
           className={cn(
@@ -145,7 +163,7 @@ export default function Layout({
           )}
           style={{ zIndex: 1 }}
         >
-          <div className={cn(' pt-32')}>
+          <div className={cn(' pt-20')}>
             <div className={cn(' text-white text-2xl font-bold flex main-content justify-start')}>
               Heatmap
             </div>

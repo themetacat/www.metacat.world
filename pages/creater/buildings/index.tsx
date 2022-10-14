@@ -3,7 +3,8 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
 import TopicDetailCardBuildings from '../../../components/topic-detail-card-Buildings';
@@ -57,7 +58,7 @@ export default function TopicIndex() {
   const cls = cn('flex-1', style.bottomLine);
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/build/${t}`);
+    router.replace(`/creater/${t}`);
   }, []);
 
   const requestData = React.useCallback(async (page: number, count: number) => {
@@ -111,7 +112,7 @@ export default function TopicIndex() {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 90) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -123,13 +124,16 @@ export default function TopicIndex() {
 
   return (
     <Page className="min-h-screen" meta={meta}>
+         <div className={cn(fixedState ? style.fix1 : null)}>
+            <PageHeader className={cn('')} active={'Build'} />
+          </div>
       <div className={cn('bg-black relative', style.backImage)}>
         <div className={style.topCon}>
-          <div className={cn(fixedState ? style.fix1 : null)}>
-            <PageHeader className={cn('relative z-20')} active={'Build'} />
-          </div>
+       
           <div
-            className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
+            className={cn('tab-list flex ', style.allHeight
+            // fixedState ? style.fix2 :  style.allHeight,
+            )}
             id="switch"
           >
             <div className={cls}></div>
@@ -163,7 +167,7 @@ export default function TopicIndex() {
           <div className={style.text}>
             <div className={style.hengxian}></div>
             <div className={style.t}>
-              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS.
+              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS
               {/* EXCELLENT &nbsp;&nbsp;
               BUILDINGS &nbsp;&nbsp;
               ARE&nbsp;&nbsp;&nbsp;

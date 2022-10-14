@@ -4,7 +4,8 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import Footer from '../../../components/footer';
 import ModelList from '../../../components/model-list';
 import UserAvatar from '../../../components/user-avatar';
@@ -168,7 +169,7 @@ export default function Wearables(props) {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 90) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -178,13 +179,16 @@ export default function Wearables(props) {
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
+  
+
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-      <div className={cn("bg-black relative",style.backImage)}>
-        <div className={fixedState ? style.fix1 : null}>
-          <PageHeader className="relative z-10" active={'wearables'} />
-        </div>
-        <div
+      <div className={fixedState ? style.fix1 : null} id='switch'>
+        <PageHeader className="relative z-10" active={'Build'} />
+      </div>
+      <div className={cn("bg-black relative", style.backImage)}>
+
+        {/* <div
           className={cn('tab-list flex mt-5', style.allHeight, fixedState ? style.fix2 : null)}
           id="switch"
         >
@@ -207,7 +211,7 @@ export default function Wearables(props) {
             <div className={cls} />
           </div>
           <div className={cls} />
-        </div>
+        </div> */}
         <div
           className={cn(
             'main-content flex flex-col justify-center items-center relative z-10 text-white ',
@@ -218,7 +222,7 @@ export default function Wearables(props) {
             {navState === 'okx' ? (
               <>
                 <UserAvatar
-                  avatar="/images/v5/WearableDao.png"
+                  avatar="/images/imgConent/Wearable Dao.png"
                   name="WearableDAO"
                   contact={[
                     {
@@ -254,7 +258,7 @@ export default function Wearables(props) {
             ) : null}
             {navState === 'chinesered' ? (
               <UserAvatar
-                avatar="/images/v5/WearableDao.png"
+                avatar="/images/imgConent/Wearable Dao.png"
                 name="WearableDAO"
                 contact={[
                   {
@@ -301,11 +305,30 @@ export default function Wearables(props) {
               ? 'The PFP Metaverse Carnival, co-hosted by WearableDAO, MetaEstate, MetaCat, MetaLandscape, and TingDao, will be grandly launched on May 20! The most interesting part of this event is that everyone can make their favorite NFTs into Wearables and wear them by participating in the event, so that NFTs can live.'
               : null}
           </div>
+          <div className={cn(style.navCOntainer)}>
+            <div className={cn('',style.nav, 
+            // fixedState ? style.fix3 : null
+            )}>
+              {/*  */}
+              {nav.map((item, idx) => {
+                return (
+                  <div
+                    className={cn(style.item, navState === item.type ? style.action : null)}
+                    key={idx}
+                    onClick={() => {
+                      changeNav(item.type);
+                    }}
+                  >
+                    {item.label}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
-      <div className={cn(style.navCOntainer)}>
+      {/* <div className={cn(style.navCOntainer)}>
         <div className={style.nav}>
-        {/* , fixedState ? style.fix3 : null */}
           {nav.map((item, idx) => {
             return (
               <div
@@ -320,7 +343,7 @@ export default function Wearables(props) {
             );
           })}
         </div>
-      </div>
+      </div> */}
       <div className={cn('main-content flex flex-col justify-start items-center', style.content)}>
         <div
           className={cn(
@@ -355,7 +378,7 @@ export default function Wearables(props) {
         {renderContent}
         <TopJumper classname={style.jumper}></TopJumper>
       </div>
-    
+
       <Footer />
     </Page>
   );

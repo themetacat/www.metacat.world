@@ -1,27 +1,27 @@
 .miniActive {
-  background-color: rgba(0, 236, 222, 0.05);
-  background: linear-gradient(90deg, #00d0ec, #00ecb3);
-  border-bottom: transparent;
-  border-radius: 12px 12px 0 0;
-  font-family: 'PingFang SC';
-  font-style: normal;
+  color: #000 !important;
   font-weight: 500;
   font-size: 16px;
-  line-height: 22px;
-  color: #000000 !important;
-}
-.miniNormal {
   font-family: 'PingFang SC';
   font-style: normal;
+  line-height: 22px;
+  background: linear-gradient(90deg, #00d0ec, #00ecb3);
+  background-color: rgba(0, 236, 222, 0.05);
+  border-bottom: transparent;
+  border-radius: 12px 12px 0 0;
+}
+.miniNormal {
+  box-sizing: border-box;
+  width: auto;
+  margin-right: 0 !important;
+  padding: 9px 30px !important;
+  color: #aaa;
   font-weight: 400;
   font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
   line-height: 22px;
-  box-sizing: border-box;
-  padding: 9px 30px!important;
-  width: auto;
-  color: #aaaaaa;
   background: hsla(0, 0%, 100%, 0.05);
-  margin-right: 0!important;
 }
 .miniNormal:hover {
   color: #000;
@@ -30,14 +30,14 @@
   position: relative;
   z-index: 1;
   height: 100%;
-  padding: 7px 30px 7px 30px !important;
-  border-radius: 8px 8px 0px 0px;
+  padding: 9px 30px 9px 30px !important;
+  border-radius: 8px 8px 0 0;
 }
 .miniBase:hover {
-  text-align: center;
-  color: #000 !important;
   width: auto;
+  color: #000 !important;
   font-weight: 400;
+  text-align: center;
   background: linear-gradient(90deg, #00d0ec, #00ecb3);
   cursor: pointer;
 }
@@ -49,12 +49,12 @@
 }
 .miniActive > .miniCanHover,
 .miniCanHover:hover {
-  font-family: 'PingFang SC';
-  font-style: normal;
+  color: #000;
   font-weight: 500;
   font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
   line-height: 22px;
-  color: #000000;
 }
 .miniActive > .miniCanHover > .miniTabIcon,
 .miniCanHover:hover > .miniTabIcon {
@@ -66,10 +66,10 @@
   border-radius: 16px;
 }
 .miniCanHover {
-  font-family: 'PingFang SC';
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
   line-height: 22px;
 }
 .active {

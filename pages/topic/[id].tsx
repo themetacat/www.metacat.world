@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import BaseInfo from '../../components/base-info';
 import Card from '../../components/card';
 import Status from '../../components/status';
@@ -279,7 +280,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 350) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -292,7 +293,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   return (
     <Page className="min-h-screen flex flex-col" meta={meta}>
       <div className="bg-black relative">
-        <div className={fixedState ? style.fix1 : null}>
+        <div className={fixedState ? style.fix1 : null} id='switch'>
           <PageHeader
             className="relative z-10"
             active={navState === 'buildings' ? 'Build' : 'wearables'}
@@ -329,7 +330,9 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         </div>
       </div>
       {parcel_list && wearable ? (
-        <div className={cn(style.nav, fixedState ? style.fix2 : null)}>
+        <div className={cn(style.nav, 
+        // fixedState ? style.fix2 : null
+        )}>
           <div className={style.navCOntainer}>
             <div className={style.nav}>
               {nav.map((item, idx) => {

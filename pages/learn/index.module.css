@@ -1,6 +1,7 @@
 .allHeight {
   position: relative;
-  height: 48px;
+  /* height: 36px; */
+/* margin-top: 36px; */
 }
 .bottomLine {
   border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
@@ -15,13 +16,28 @@
   cursor: pointer;
   border-radius: 8px;
 }
+.containerBanner{
+  /* margin-top: 60px; */
+  margin-bottom: 36px;
+}
+
+.a{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background-image: url('/images/imgConent/Mask\ group.png');
+  z-index: 999999 !important;
+}
 .aboslute{
   position:fixed;
-  height: 42px;
-  z-index: 99999999;
+  /* height: 36px;x */
+  z-index: 999990;
+  background-image: url('/images/imgConent/Mask\ group.png');
   background-color: #111a1b;
-  top:0px;
-  margin: 0px auto 0;
+  top:60px;
+  padding-top:45px;
+
+  /* margin: 0px auto 0; */
   width: 100%;
 }
 
@@ -41,6 +57,7 @@
 .r {
   position: relative;
   z-index: 10px;
+  
 }
 .right {
   float: right;

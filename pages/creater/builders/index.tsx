@@ -2,7 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import Page from '../../../components/page';
-import PageHeader from '../../../components/page-header';
+// import PageHeader from '../../../components/page-header';
+import PageHeader from '../../../components/top-navigation';
 import InfoCard from '../../../components/info_card';
 import Tab from '../../../components/tab';
 import TopJumper from '../../../components/jump-to-top';
@@ -11,7 +12,7 @@ import Status from '../../../components/status';
 
 import { convert, getToken, setToken } from '../../../common/utils';
 
-import { req_buid_builders_list, req_buid_builders_buildingList } from '../../../service/z_api';
+import { req_buid_builders_list, req_buid_builders_buildingList, req_newBuilding_detail } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -61,12 +62,15 @@ export default function Builders() {
     setLoading(true);
     const result = await req_buid_builders_list();
     if (result.code === 100000) {
+
       setInstitutions(result.data.institution);
       setIndividuals(result.data.individuals);
     }
     const resultBuilding = await req_buid_builders_buildingList();
+
     if (result.code === 100000) {
       setNewBuilding(resultBuilding.data);
+      // setWalletAddress(resultBuilding.data)
     }
     setLoading(false);
   }, []);
@@ -84,28 +88,31 @@ export default function Builders() {
     getTop();
     requestData();
     const a = getToken('address');
-    // console.log(a,656);
-    
+
     if (a) {
       setWalletAddress(a);
     }
+
     // console.log(walletAddress,66666666);
-  }, [requestData, getTop,walletAddress]);
+  }, [requestData, getTop, walletAddress]);
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/build/${t}`);
+    router.replace(`/creater/${t}`);
   }, []);
 
-  const toTopic = React.useCallback((id, c) => {
-    
-    window.open(`/topic/${id}?type=buildings`);
+  const toTopic = React.useCallback((id, item) => {
+    if (item?.name === 'WearableDAO') {
+      router.replace('/wearables/wearabledao?type=chinesered')
+    } else {
+      window.open(`/topic/${id}?type=buildings`);
+    }
+ 
   }, []);
-  const toTopicNewBuilding = () => {
-    // window.open(`/topicNewBuilding/?addr=${addr}`);
-    window.open(`/topicNewBuilding?address=${walletAddress}`);
-    // console.log(walletAddress);
-    
+  const toTopicNewBuilding = (item) => {
+
+    window.open(`/topicNewBuilding?address=${item.address}`);
+
   };
 
   const reander1 = React.useMemo(() => {
@@ -115,7 +122,7 @@ export default function Builders() {
     return (
       <>
         {institutions.map((item, idx) => {
-          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })}
       </>
     );
@@ -128,7 +135,7 @@ export default function Builders() {
     return (
       <>
         {newBuilding.map((item, idx) => {
-          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopicNewBuilding}></InfoCard>;
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopicNewBuilding(item)} ></InfoCard>;
         })}
         {individuals.map((item, idx) => {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
@@ -140,7 +147,7 @@ export default function Builders() {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 90) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         if (!anchor) {
           setFixedState(true);
         } else {
@@ -158,12 +165,15 @@ export default function Builders() {
   return (
     <>
       <Page className="min-h-screen" meta={meta}>
+        <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
+          <PageHeader className="" active={'Build'} />
+        </div>
         <div className={cn('bg-black relative', style.backImage)}>
-          <div className={cn(' z-10', fixedState ? style.fix1 : null)}>
-            <PageHeader className="relative z-20" active={'Build'} />
-          </div>
-          <div className={cn('', fixedState ? style.fix2 : null)} id="switch">
-            <div className={cn('tab-list flex ', style.allHeight)}>
+
+          <div className={cn('', )} id="switch">
+            <div className={cn('tab-list flex ', style.allHeight,
+            // fixedState ? style.fix2 : style.allHeight,
+            )}>
               <div className={cls}></div>
               <div className={cn('main-content flex px-0')}>
                 {TAB.map((item, index) => {
@@ -193,10 +203,7 @@ export default function Builders() {
             <div className={style.title}>Builders</div>
             <div className={style.text}>
               <div className={style.hengxian}></div>
-              <div className={style.t}>
-                I N &nbsp;&nbsp;&nbsp; M E T A V E R S E &nbsp;&nbsp;&nbsp; W E &nbsp;&nbsp;&nbsp; B
-                U I L D &nbsp;&nbsp;&nbsp;
-              </div>
+              <div className={style.t}>IN METAVERSE WE BUILD</div>
               {/* <div className={style.t}>In Metaverse we Creator</div> */}
               <div className={style.hengxian}></div>
             </div>

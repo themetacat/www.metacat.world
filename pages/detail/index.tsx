@@ -8,7 +8,8 @@ import { req_get_building_detail_info, req_builder_del_self_building, req_user_a
 import { getToken } from '../../common/utils';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import CardBuilding from '../../components/cardBuilding';
 import AddBuildings from '../../components/addBuilding';
 import Footer from '../../components/footer';

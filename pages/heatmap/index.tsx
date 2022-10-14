@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Status from '../../components/status';
@@ -105,6 +105,8 @@ export default function MapPage(props) {
   );
 
   useEffect(() => {
+    console.log(fullScreen);
+    
     if (router.query.type) {
       setMapType(router.query.type);
     } else {
@@ -251,14 +253,18 @@ export default function MapPage(props) {
 
   return (
     <Page className="min-h-screen" meta={meta}>
+      
       {fullScreen ? null : (
         <>
+          <div style={{ zIndex: "9999999" }}>
+            <PageHeader className={cn("relative ",style.aaa)} active={'heatmap'} />
+          </div>
           <div className={style.container}>
-            <div className="relative">
-              <PageHeader className="relative z-10" active={'heatmap'} />
-            </div>
+            {/* <div className="relative"> */}
 
-            <div className={cn('tab-list flex mt-5', style.allHeight)}>
+            {/* </div> */}
+
+            <div className={cn('tab-list flex', style.allHeight)}>
               <div className={cls}></div>
               <div className="main-content flex px-0">
                 {TAB.map((item, index) => {

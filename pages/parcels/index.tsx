@@ -25,7 +25,8 @@ import Card from '../../components/cardParcels';
 import CardSpace from '../../components/cardSpaace';
 import SwiperTag from '../../components/swiper-tag';
 import SwiperTagParcels from '../../components/swiper-tagParcels';
-import PageHeader from '../../components/page-header';
+// import PageHeader from '../../components/page-header';
+import PageHeader from '../../components/top-navigation';
 import SpaceBuilding from './spacebuildings';
 import ScenceBuilding from './scencebuildings';
 import PagiNation from '../../components/paginationParcels';
@@ -217,6 +218,7 @@ const SUBTABZ2 = [
 
 export default function Index(props) {
   const router = useRouter();
+  const headerRef = React.useRef(null)
 
   const meta = {
     title: `Home - ${SITE_NAME}`,
@@ -231,6 +233,7 @@ export default function Index(props) {
   // const [subSpaceState, setSubSpaceState] = React.useState(props.query.subTab || 'space');
   const [totalPage, setTotalPage] = React.useState(1);
   const [noData, setNoData] = React.useState(false);
+  const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [searchText, setSearchText] = React.useState(props.query.search || '');
   const [typeState, setTypeState] = React.useState(props.query.type || 'All');
   const [typeList, setTypeList] = React.useState([]);
@@ -259,12 +262,10 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
-    // console.log(tab,
-    //   subTab,
-    //   page,
-    //   query,
+    // console.log(tab,11,
+    //   subTab,22,
     //   type);
-
+    setSearchText('')
     try {
       if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
@@ -375,11 +376,13 @@ export default function Index(props) {
   };
 
   React.useEffect(() => {
+    setOffsetWidthNum(headerRef?.current?.clientWidth)
+    
     const listener = () => {
       if (
         document.querySelector('.myClassName') &&
         document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 200
+        window.scrollY > 0
       ) {
         setFixedState(true);
       } else {
@@ -388,7 +391,7 @@ export default function Index(props) {
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedState]);
+  }, [fixedState,offsetWidthNum]);
 
   const onTabChange = async (tab) => {
     // console.log(tab, 222222222);
@@ -504,21 +507,72 @@ export default function Index(props) {
   );
 
   const onTypeChangeHandler = React.useCallback(
-    async (type: string) => {
+    async (type: string,
+      // page,
+      // query = '',
+    ) => {
       setTypeState(type);
+      // setSubTabState('')
+      // if (searchText !=='') {
+      //   setSearchText('')
+      //   const data = await requestData({
+      //     tab: tabState,
+      //     subTab: '',
+      //     page: 1,
+      //     query: '',
+      //     type,
+      //   });
 
-      const data = await requestData({
-        tab: tabState,
-        subTab: subTabState,
-        page: 1,
-        query: searchText,
-        type,
-      });
+      //   setDataSource(data);
+      // }else{
 
-      setDataSource(data);
+      // }
+      setSearchText('')
+      if (type === 'Free Space') {
+        const data = await requestData({
+          tab: tabState,
+          subTab: 'space',
+          page: 1,
+          query: '',
+          type: '',
+          needUpdateTypeList: true,
+        });
+        // console.log(data);
+        setDataSource(data);
+      } else if (type === 'Scene') {
+
+        const data = await requestData({
+          tab: tabState,
+          subTab: 'scene',
+          page: 1,
+          query: '',
+          type: '',
+          needUpdateTypeList: true,
+        });
+        // console.log(data);
+
+        setDataSource(data);
+      }
+      else {
+        // onSubTabChange('parcel')
+        const data = await requestData({
+          tab: tabState,
+          subTab: subTabState,
+          page: 1,
+          query: searchText,
+          type,
+        });
+
+        setDataSource(data);
+      }
+
     },
     [tabState, subTabState, searchText],
   );
+
+  useEffect(() => {
+    onTypeChangeHandler('All')
+  }, [])
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
@@ -538,6 +592,8 @@ export default function Index(props) {
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
+      // console.log(type);
+
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
@@ -560,7 +616,7 @@ export default function Index(props) {
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
-        subTab: subTabState,
+        subTab: 'space',
         query: text,
         page: 1,
         type: typeState,
@@ -580,7 +636,7 @@ export default function Index(props) {
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
-        subTab: subTabState,
+        subTab: 'scene',
         query: text,
         page: 1,
         type: typeState,
@@ -638,7 +694,7 @@ export default function Index(props) {
       if (dataSource.length === 0) {
         return <Status status="empty" />;
       }
-      
+
       return (
         <>
           <div
@@ -647,9 +703,20 @@ export default function Index(props) {
               style.bottomContent,
             )}
           >
-            {dataSource.map((card, idx) => {
-              return <Card {...card} typeState={typeState} key={uuid()}></Card>;
-            })}
+            {
+              typeState === 'Free Space' || typeState === 'Scene' ?
+                <>
+                  {dataSource.map((card, idx) => {
+                    return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
+                  })}
+                </>
+                : <>
+                  {dataSource.map((card, idx) => {
+                    return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+                  })}
+                </>
+            }
+
           </div>
           <div className={style.pagiNation}>
             <PagiNation
@@ -1669,6 +1736,7 @@ export default function Index(props) {
 
   React.useEffect(() => {
     setTypeState('All');
+    // onTabChange('All')
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -1715,19 +1783,20 @@ export default function Index(props) {
           </>
         ) : null} */}
         {/* <div className={cn(' bg-black', style.cls)}></div> */}
-        <div className={style.containerBox}>
-          <div className={cn(' relative myClassName', fixedState ? style.fix1 : null)}>
-            <PageHeader className="relative z-10" active={'/parcels'} />
+        <div className={style.containerBox} ref={headerRef}>
+          <div className={cn('  myClassName', fixedState ? style.fix1 : null)} style={{ zIndex: "99999" }}>
+            <PageHeader className="relative" active={'/parcels'} />
           </div>
           <div
             className={cn(
-              'tab-list flex myClassName ',
-              style.allHeight,
-              // fixedState ? style.aboslute : null
+              'tab-list flex myClassName main-content relative',
+              style.allHeight
+              // fixedState ? style.aboslute : style.allHeight,
             )}
           >
-            <div className={cls}></div>
-            <div className="main-content flex px-0 relative">
+
+            {fixedState === true ? <div className={offsetWidthNum <= 1200 ? style.headNumx : style.headNum}></div> : null}
+            <div className="flex px-0 relative">
               <div
                 className={cn(
                   'p absolute z-40 flex justify-start items-center',
@@ -1771,9 +1840,9 @@ export default function Index(props) {
                         label={item.label}
                         icon={item.icon}
                         isMini={true}
-                        //          id="switch"
-                        // className={style.aboslute}
-                        // fixedS={fixedState}
+                      //          id="switch"
+                      // className={style.aboslute}
+                      // fixedS={fixedState}
                       />
                     </SwiperSlide>
                   );
@@ -1792,12 +1861,24 @@ export default function Index(props) {
               </div>
               <div className={cls} />
             </div>
-            <div className={cls} />
+            <div className={cn('', style.boxCon, fixedState===true ? style.boxCon1 : null,
+             offsetWidthNum <= 1200 ? style.boxCon2 : null )} >
+
+              {typeState === 'Free Space' ? (
+                <Search text={searchText} onSearch={onSearchSpace}></Search>
+              ) : null}
+              {typeState === 'Scene' ? (
+                <Search text={searchText} onSearch={onSearchScene}></Search>
+              ) : null}
+              {typeState !== 'Free Space' && typeState !== 'Scene' ?
+                <Search text={searchText} onSearch={onSearchHandler}></Search>
+                : null}
+            </div>
           </div>
         </div>
         <div className="main-content">
-          <div className={cn('flex justify-between items-center ', style.contentHeader)}>
-            <div className="flex">
+          {/* <div className={cn('flex justify-between items-center ', style.contentHeader)}> */}
+          {/* <div className="flex">
               {tabState === 'cryptovoxels'
                 ? SUBTAB.map((item, index) => {
                     if (item) {
@@ -1880,12 +1961,15 @@ export default function Index(props) {
             {subTabState === 'scene' ? (
               <Search text={searchText} onSearch={onSearchScene}></Search>
             ) : null}
-          </div>
+          </div> */}
 
           <div className={cn('', style.content)}>
-            {subTabState === 'parcel' && (
-              <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
-            )}
+            {/* {subTabState === 'parcel' && ( */}
+            {tabState === 'cryptovoxels' || tabState === 'decentraland' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+              </div>
+            ) : ''}
             {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}
             {subTabState === 'scene' && dataSource.length === 0 && <ScenceBuilding />}
 

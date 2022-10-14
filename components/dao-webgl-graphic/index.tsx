@@ -150,7 +150,7 @@ export default function DaoWebglCard({ graphicId, initFinish, model, tabState, i
 
   return (
     <div
-      className={cn('z-10 ', styles.card)}
+      className={cn('', styles.card)}
       onMouseEnter={() => {
         triggerModelRotation(true);
       }}
