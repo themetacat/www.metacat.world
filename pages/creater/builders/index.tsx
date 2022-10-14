@@ -102,10 +102,12 @@ export default function Builders() {
   }, []);
 
   const toTopic = React.useCallback((id, item) => {
+    console.log(item?.name);
+    
     if (item?.name === 'WearableDAO') {
       router.replace('/wearables/wearabledao?type=chinesered')
-    } else {
-      window.open(`/topic/${id}?type=buildings`);
+    }else {
+      window.open(`/topic/${item.topic_id}?type=buildings`);
     }
  
   }, []);
@@ -122,6 +124,7 @@ export default function Builders() {
     return (
       <>
         {institutions.map((item, idx) => {
+          
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })}
       </>
