@@ -102,10 +102,9 @@ export default function Builders() {
   }, []);
 
   const toTopic = React.useCallback((id, item) => {
-    console.log(item?.name);
     
     if (item?.name === 'WearableDAO') {
-      router.replace('/wearables/wearabledao?type=chinesered')
+      window.open('/wearables/wearabledao?type=chinesered')
     }else {
       window.open(`/topic/${item.topic_id}?type=buildings`);
     }
@@ -116,6 +115,9 @@ export default function Builders() {
     window.open(`/topicNewBuilding?address=${item.address}`);
 
   };
+  const toTopicNew = (id)=>{
+    window.open(`/topic/${id}?type=buildings`);
+  }
 
   const reander1 = React.useMemo(() => {
     if (loading) {
@@ -141,7 +143,7 @@ export default function Builders() {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopicNewBuilding(item)} ></InfoCard>;
         })}
         {individuals.map((item, idx) => {
-          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopic}></InfoCard>;
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={toTopicNew}></InfoCard>;
         })}
       </>
     );
