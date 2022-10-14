@@ -194,7 +194,7 @@ function Learn(r) {
         // document.querySelector('#myClassName') &&
         // document.querySelector('#myClassName').getBoundingClientRect().top >= 10 
         // && window.scrollY > 200
-        document.getElementById('myClassName') && window.scrollY > 90
+        document.getElementById('myClassName') && window.scrollY > 0
       ) {
         setFixedState(true);
       } else {
