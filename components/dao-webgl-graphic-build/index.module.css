@@ -1,11 +1,12 @@
 .graphic {
   min-height: 260px;
   text-align: center;
-  margin: 15px 15px 0px 15px;
+  /* margin: 15px 15px 0px 15px; */
   width: 260px;
   border-radius: 6px 6px 0px 0px;
 }
 .card {
+  padding: 15px;
   max-width: 385px;
   background: rgba(0, 236, 222, 0.05);
   background: rgba(255, 255, 255, 0.05);
@@ -27,7 +28,7 @@
 .footer {
   background-color: rgba(0, 0, 0, 0.2);
   width: 260px;
-  margin: 0px 15px 0px 15px;
+  /* margin: 0px 15px 0px 15px; */
   position: relative;
   padding:15px 19.08px 10px 15px;
 }

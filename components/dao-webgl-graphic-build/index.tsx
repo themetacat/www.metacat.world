@@ -66,13 +66,13 @@ export default function DaoWebglCard({
   const sceneRef = React.useRef(null);
   const [selecete, setSelecete] = React.useState(false);
   const goToDetail = React.useCallback(() => {
-    // if (type === 'topicNewBuilding') {
-    //   router.replace(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
-    //   // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
-    // } else {
-    //   // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
-    //   window.open(`/wearables/detail/${model.id}?type=${'mywearables'}`);
-    // }
+    if (type === 'topicNewBuilding') {
+      router.replace(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
+      // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
+    } else {
+      // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
+      window.open(`/wearables/detail/${model.id}?type=${'mywearables'}`);
+    }
   }, [tabState, id, address]);
 
   const init = React.useCallback(() => {  
@@ -172,6 +172,7 @@ export default function DaoWebglCard({
     }
   }, [wearablesSleceteIdList]);
 
+
   return (
     <>
       <div
@@ -204,12 +205,13 @@ export default function DaoWebglCard({
         ) : null}
         <div className="relative">
           <div id={`webgl${graphicId}`} className={styles.graphic}></div>
-          {model && model.coverImg ? (
+          {model && model.openseaUrl ? (
+           
             <img
               src="/images/Nomal.png"
               className={cn('absolute z-20', styles.opese)}
               onClick={() => {
-                window.open(model.coverImg);
+                window.open(model.openseaUrl);
               }}
             ></img>
           ) : null}
