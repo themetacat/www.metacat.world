@@ -136,7 +136,7 @@ export default function Layout({
       if (
         document.getElementById('switch') &&
         // document.getElementById('switch').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 350
+        window.scrollY > 0
       ) {
         setFixedStateAll(true);
       } else {

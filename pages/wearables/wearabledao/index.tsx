@@ -169,7 +169,7 @@ export default function Wearables(props) {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 350) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -306,7 +306,9 @@ export default function Wearables(props) {
               : null}
           </div>
           <div className={cn(style.navCOntainer)}>
-            <div className={cn('',style.nav, fixedState ? style.fix3 : null)}>
+            <div className={cn('',style.nav, 
+            // fixedState ? style.fix3 : null
+            )}>
               {/*  */}
               {nav.map((item, idx) => {
                 return (

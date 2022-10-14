@@ -365,7 +365,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 350) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         setFixedState(true);
       } else {
         setFixedState(false);

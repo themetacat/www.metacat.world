@@ -1848,7 +1848,7 @@ export default function AnalyticsIndex(props) {
       if (
         document.querySelector('.myClassName') &&
         document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 350
+        window.scrollY > 0
       ) {
         setFixedStateAll(true);
 
@@ -1863,7 +1863,7 @@ export default function AnalyticsIndex(props) {
 
   return (
     <Page className={cn('min-h-screen', offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
-      <div className={cn('', fixedStateAll === true ? style.a : null)} ref={headerRef}>
+      <div  className={cn('myClassName', fixedStateAll === true ? style.a : null)} ref={headerRef}>
         <PageHeader active={'analytics'} />
       </div>
 
@@ -1877,7 +1877,7 @@ export default function AnalyticsIndex(props) {
         >
           <img src="/images/analyticsBack.png" className={style.sign}></img>
         </div>
-        <div className={cn('myClassName', style.headerNav,
+        <div className={cn('', style.headerNav,
 
         )}>
           <div

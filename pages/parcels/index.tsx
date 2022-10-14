@@ -382,7 +382,7 @@ export default function Index(props) {
       if (
         document.querySelector('.myClassName') &&
         document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-        window.scrollY > 200
+        window.scrollY > 0
       ) {
         setFixedState(true);
       } else {

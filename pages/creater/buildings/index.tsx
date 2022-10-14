@@ -112,7 +112,7 @@ export default function TopicIndex() {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 90) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         setFixedState(true);
       } else {
         setFixedState(false);
@@ -131,7 +131,9 @@ export default function TopicIndex() {
         <div className={style.topCon}>
        
           <div
-            className={cn('tab-list flex ', fixedState ? style.fix2 :  style.allHeight,)}
+            className={cn('tab-list flex ', style.allHeight
+            // fixedState ? style.fix2 :  style.allHeight,
+            )}
             id="switch"
           >
             <div className={cls}></div>

@@ -147,7 +147,7 @@ export default function Builders() {
 
   React.useEffect(() => {
     const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 90) {
+      if (document.getElementById('switch') && window.scrollY > 0) {
         if (!anchor) {
           setFixedState(true);
         } else {
@@ -171,7 +171,9 @@ export default function Builders() {
         <div className={cn('bg-black relative', style.backImage)}>
 
           <div className={cn('', )} id="switch">
-            <div className={cn('tab-list flex ', fixedState ? style.fix2 : style.allHeight,)}>
+            <div className={cn('tab-list flex ', style.allHeight,
+            // fixedState ? style.fix2 : style.allHeight,
+            )}>
               <div className={cls}></div>
               <div className={cn('main-content flex px-0')}>
                 {TAB.map((item, index) => {
