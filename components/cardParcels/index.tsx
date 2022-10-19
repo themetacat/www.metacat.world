@@ -7,39 +7,47 @@ import style from './index.module.css';
 
 type Props = {
   coverImgUrl?: string;
+  cover_img?: string;
   name?: string;
   description?: string;
   type?: string;
   parcelPageUrl?: string;
   openseaUrl?: string;
+  detail_url?: string;
   hasTypeTag?: boolean;
   world?: string;
-  coverImg:string;
+  coverImg: string;
   typeState?: string;
 };
 
 export default function Card({
   coverImgUrl,
   coverImg,
+  cover_img,
   name,
   description,
   type,
   openseaUrl,
+  detail_url,
   parcelPageUrl,
   hasTypeTag = true,
   world,
   typeState
 }: Props) {
   const jumpToOpenC = React.useCallback(
+
+
     (event) => {
       event.stopPropagation();
-      window.open(openseaUrl);
+      console.log(detail_url, "detail_url");
     },
     [openseaUrl],
   );
   const jumpToParcel = React.useCallback(() => {
-    window.open(parcelPageUrl);
-  }, [parcelPageUrl]);
+    window.open(parcelPageUrl || detail_url);
+    window.open(openseaUrl);
+
+  }, [parcelPageUrl, detail_url]);
 
   return (
     <div
@@ -54,7 +62,7 @@ export default function Card({
         ) : null}
         <CoverImg
           className={style.img}
-          img={coverImgUrl||coverImg}
+          img={coverImgUrl || coverImg ||cover_img}
           error="/images/default-cover.png"
         ></CoverImg>
         {
@@ -66,7 +74,7 @@ export default function Card({
           <div className={cn("text-xl font-semibold truncate flex-1 mr-3", style.name)} title={name}>
             {name}
           </div>
-          {openseaUrl ? (
+          {openseaUrl || detail_url ? (
             <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
           ) : null}
 

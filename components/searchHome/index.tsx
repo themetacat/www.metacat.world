@@ -21,8 +21,14 @@ export default function Search({ text, onSearch, showState,type }: Props) {
   }, [null]);
 
   const search = React.useCallback(() => {
-    console.log("dianlea");
-    router.replace(`/searchDetail`)
+    console.log(123456,value);
+    if(value){
+      router.replace(`/searchDetail?value=${value}`)
+    }else{
+      router.replace(`/searchDetail`)
+    }
+    
+   
     if (!show) {
       setShow(true);
       showState(true)

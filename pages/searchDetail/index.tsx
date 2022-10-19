@@ -15,16 +15,18 @@ import Page from '../../components/page';
 import PageHeader from '../../components/top-navigation';
 import Search from '../../components/searchHome';
 import Footer from '../../components/footer';
+import LearnCard from '../../components/learnCard';
 import Profile from '../../components/profile';
 import InfoCard from '../../components/info_card';
 import Tab from '../../components/tab';
 import ChangeEmail from '../../components/changeEmail';
 import Tab4 from '../../components/tab4';
 import Status from '../../components/status';
-import Card from '../../components/parcels-card';
+// import Card from '../../components/parcels-card';
+import Card from '../../components/cardParcels';
 import CardBuilding from '../../components/cardBuilding';
 import DclCard from '../../components/parcels-dcl-card';
-import Tab3 from '../../components/tab3';
+import Tab5 from '../../components/tab5';
 import ParcelsTab from '../../components/parcels-tab';
 import RentSet from '../../components/parcels_rent_set';
 import Popup from '../../components/popup';
@@ -39,7 +41,7 @@ import BaseBar from '../../components/parcel-base-bar';
 import BaseBarDece from '../../components/parcel-basebardece';
 import TrafficBar from '../../components/parcel-traffic_bar';
 import JoinModal from '../../components/v2/join-modal';
-import Creator from '../../components/creator';
+// import Creator from '../../components/Creator';
 import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
 import JoinBuilders from '../../components/join_builders';
@@ -52,7 +54,7 @@ import { useWalletProvider } from '../../components/web3modal';
 
 import { convert, getToken, setToken } from '../../common/utils';
 
-import { getBaseInfo, refreshToken, getParcelList2 } from '../../service';
+import { getBaseInfo, refreshToken, getParcelList2, getSearchDetail } from '../../service';
 
 
 import {
@@ -85,6 +87,7 @@ import {
 
 
 import style from './index.module.css';
+import { useRef } from 'react';
 
 
 
@@ -92,12 +95,12 @@ const TABData = [
   {
     label: 'Voxels',
     icon: '/images/cvLogo.png',
-    type: 'cryptovoxels',
+    type: 'Voxels',
   },
   {
     label: 'Decentraland',
     icon: '/images/Decentraland.jpg',
-    type: 'decentraland',
+    type: 'Decentraland',
   },
 ];
 const TABDataCreater = [
@@ -110,22 +113,11 @@ const TABDataCreater = [
     type: 'wearable',
   },
 ]
-const REPORTTAB = [
-  {
-    label: 'Voxels',
-    icon: '/images/cvLogo.png',
-    type: 'cryptovoxels',
-  },
-  {
-    label: 'Decentraland',
-    icon: '/images/Decentraland.jpg',
-    type: 'decentraland',
-  },
-];
+
 
 const TAB3 = [
   {
-    label: 'Place',
+    label: '1111111',
     type: 'Place',
   },
   {
@@ -134,11 +126,11 @@ const TAB3 = [
   },
   {
     label: 'Creator',
-    type: 'creator',
+    type: 'Creator',
   },
   {
     label: 'Learn',
-    type: 'learn',
+    type: 'Learn',
   },
 
 ];
@@ -187,15 +179,25 @@ function searchDetail(r) {
     title: `Profile - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
+  const headerRef = React.useRef(null)
+  const clientRef: any = useRef(null);
+  const scrollRef: any = useRef(null);
 
   const router = useRouter();
   const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
   const [loading, setLoading] = React.useState(false);
+  const [showCon, setSwitchShow] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const [fixedState, setFixedState] = React.useState(false);
   const [noWork, setNoWork] = React.useState(false);
-  const [searchText, setSearchText] = React.useState('');
+  const [searchText, setSearchText] = React.useState(null);
   const [builderSat, setBuilderSat] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
+  const [dataSourceTwo, setDataSourceTwo] = React.useState([]);
+  const [dataSourceCreBuilder, setDataSourceCreBuilder] = React.useState([]);
+  const [dataSourceLearn, setDataSourceLearn] = React.useState([]);
+  const [dataSourceCreWear, setDataSourceCreWear] = React.useState([]);
+  const [typeState, setTypeState] = React.useState('');
   const [dataBuildSource, setDataBuildSource] = React.useState([]);
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
@@ -207,8 +209,8 @@ function searchDetail(r) {
   const [twitterAddress, setTwitterAddress] = React.useState('');
   const [websiteAddress, setWebsiteAddress] = React.useState('');
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
-  const [showType, setShowType] = React.useState('cryptovoxels');
-  const [tabState, setTabState] = React.useState('cryptovoxels');
+  const [showType, setShowType] = React.useState('Voxels');
+  const [tabState, setTabState] = React.useState('Voxels');
   const [tabStateCreater, setTabStateCreater] = React.useState('builder');
   const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
@@ -244,13 +246,16 @@ function searchDetail(r) {
   const [wearablesCreatorsOriginData, setWearablesCreatorsOriginData] = React.useState([]);
   const [wearablesShowData, setWearablesShowData] = React.useState([]);
   const [wearablesHideData, setWearablesHideData] = React.useState([]);
+  const [menuDataTwoArrCon, setMenuDataTwoArrCon] = React.useState([]);
 
   const [wearablesShowOrHideState, setWearablesShowOrHideState] = React.useState(false);
   const [joinBuilders, setJoinBuilders] = React.useState(false);
   const [emailBuilders, setEmailBuilders] = React.useState(false);
   const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
   const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
-  const [stateVal, setStateVal] = React.useState(false);
+  const [stateVal, setStateVal] = React.useState([]);
+  const [valueCount, setValueCount] = React.useState([]);
+  const [valueCountCreater, setValueCountCreater] = React.useState([]);
   const [initEmail, setInitEmail] = React.useState('');
   const [orginName, setOrginName] = React.useState('');
   const [country, setCountry] = React.useState('');
@@ -266,7 +271,9 @@ function searchDetail(r) {
   const [buildStateWearable, setBuildStateVal] = React.useState(1);
   const [addressWearable, setaddressWerVal] = React.useState(null);
   const [emaileWearable, setemailWearVal] = React.useState(null);
-
+  const [pageNum, setPage] = React.useState(1);
+  const [pageSize, setPageSize] = React.useState(20);
+  const a1 = useRef(null)
   const Nav = [
     {
       label: 'All',
@@ -297,6 +304,12 @@ function searchDetail(r) {
   const [manySetLabel, setManySetLabel] = React.useState(all_many_set);
   const cls = cn('flex-1', style.bottomLine);
 
+
+
+
+
+
+
   const refreshTK = React.useCallback(async () => {
     const rToken = getToken('rtk');
     if (rToken) {
@@ -322,9 +335,14 @@ function searchDetail(r) {
 
   const changeTab3 = React.useCallback(
     async (l, t) => {
-      console.log(l,111,t);
-      
-      setTabState('Place');
+      // console.log(l, 111, showTab, tabState);
+      if (l === 'Creator') {
+        setShowTab('Builder')
+      }
+      setTabState('Voxels')
+      setTabStateCreater('Builder')
+
+      // setTabState('Place');
       setShowTab(l);
       setRouteTab(t);
       // router.replace(`/profile?type=${t}`);
@@ -341,22 +359,22 @@ function searchDetail(r) {
       setSelectedIds([]);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
-      if (tab === 'cryptovoxels') {
-        setDataSource(orginData.parcelList);
-        store.setState(() => ({ type: 'cv' }));
-      }
-      if (tab === 'decentraland') {
-        setDataSource(orginData.parcelList);
-        store.setState(() => ({ type: 'dcl' }));
-      }
+      // if (tab === 'Voxels') {
+      //   setDataSource(orginData.parcelList);
+      //   store.setState(() => ({ type: 'cv' }));
+      // }
+      // if (tab === 'Decentraland') {
+      //   setDataSource(orginData.parcelList);
+      //   store.setState(() => ({ type: 'dcl' }));
+      // }
     },
     [orginData, tabState],
   );
   const onTabChangeCreater = React.useCallback(
     async (tab) => {
       // setShowType(tab);
-      console.log(tab);
-      
+      // console.log(tab);
+
       if (tabStateCreater === tab) return;
       // setLoading(true);
       setTabStateCreater(tab);
@@ -369,8 +387,8 @@ function searchDetail(r) {
         // store.setState(() => ({ type: 'cv' }));
       }
       if (tab === 'wearable') {
-        console.log("storestorestorestorestorestore");
-        
+        // console.log("storestorestorestorestorestore");
+
         // setDclDataSource(orginData.parcelList);
         // store.setState(() => ({ type: 'dcl' }));
       }
@@ -485,7 +503,7 @@ function searchDetail(r) {
         if (!data) {
           return;
         }
-        setDataSource(data.parcelList);
+        // setDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
       } catch {
         setError(true);
@@ -503,7 +521,7 @@ function searchDetail(r) {
         if (!data) {
           return;
         }
-        setDclDataSource(data.parcelList);
+        // setDclDataSource(data.parcelList);
         changeNum(data.parcelList, nav_Label.current);
       } catch {
         setError(true);
@@ -594,10 +612,10 @@ function searchDetail(r) {
 
   const onRetry = React.useCallback(async () => {
     const accessToken = getToken('atk');
-    if (accessToken && tabState === 'cryptovoxels') {
+    if (accessToken && tabState === 'Voxels') {
       requestData(accessToken);
     }
-    if (accessToken && tabState === 'decentraland') {
+    if (accessToken && tabState === 'Decentraland') {
       reqDclData(accessToken);
     }
     // if (accessToken && routeTab === 'building') {
@@ -607,12 +625,7 @@ function searchDetail(r) {
 
 
 
-  const unloadBuilders = React.useCallback(async () => {
-    setAddbuild(true)
-    // router.replace('profile/addBuilding')
-    setBuildInc('add')
-    setBuildAll([])
-  }, [])
+
 
 
 
@@ -676,170 +689,9 @@ function searchDetail(r) {
     [resultHandler],
   );
 
-  const DeleteBuild = React.useCallback((token, buildingLinkCon: string,) => {
-
-    // console.log(buildingLinkCon, 558);
-    const res = req_builder_del_self_building(token, buildingLinkCon)
-    // console.log(res, 565656);
-    res.then((resC) => {
-      toast(resC.msg)
-      if (resC.code === 100000) {
-        const resBuil = req_building_list(walletAddress);
-        resBuil.then((resBuilvAL) => {
-          if (resBuilvAL.data) {
-            setDataBuildSource(resBuilvAL.data)
-          }
-        })
-      }
-    })
-  },
-    [walletAddress],
-  );
-  const EditBuild = async (buildingLinkCon: string) => {
-    setBuildInc('edit')
-    const res = await req_get_building_detail_info(buildingLinkCon)
-    // console.log(res, buildingLinkCon);
-    if (res.data) {
-      setBuildAll(res.data)
-      setAddbuild(true)
-    }
-  }
-
-  const closeBuild = () => {
-    setAddbuild(false)
-
-    // router.replace(`/profile?type=building`)
-  }
-
-  const Save = React.useCallback((token: string, operationType: string, nickName: string, platform: string, linkBuild: string, introduction: string, format: string, subArrData, files_link_cover: string, files_link_del,) => {
-    // setBuildInc(operationType)
-    // console.log(buildInc, operationType, 54, nickName, 565656);
-    // if (nickName === '' || platform === '' || linkBuild === '' || format === '' || subArrData.length === 0) {
-    //   setSaveVal(false)
-    // }else{
-    //   console.log(saveVal,11111);
-
-    //   setSaveVal(true)
-    // }
 
 
-    if (nickName === '') {
-      toast.error('Please fill in Building Name');
-      return false;
-    }
-    if (nickName.length > 200) {
-      toast.error('Max text length 200');
-      return false;
-    }
-    if (platform === '') {
-      toast.error('Please choose Platform');
-      return false;
-    }
-    if (linkBuild === '') {
-      toast.error('Please fill in Link To Building');
-      return false;
-    }
-    if (linkBuild !== '') {
-      // let reg=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
-      // if(!reg.test(linkBuild)){
-      const reg = '^((https|http|ftp|rtsp|mms)?://)'
-        + '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?'
-        + '(([0-9]{1,3}.){3}[0-9]{1,3}'
-        + '|'
-        + '([0-9a-z_!~*\'()-]+.)*'
-        + '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].'
-        + '[a-z]{2,6})'
-        + '(:[0-9]{1,4})?'
-        + '((/?)|'
-        + '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$';
-      const re = new RegExp(reg)
-      if (!re.test(linkBuild)) {
-        toast.error("Not the correct URL, please pay attention to check");
-        return false;
-      }
-    }
-    // const linkBuildIndex = linkBuild.indexOf('http://')
-    // const linkBuildCom = linkBuild.indexOf('.com')
-    // if (linkBuildIndex === -1 || linkBuildCom === -1) {
-    //   toast.error('Please fill in the correct address');
-    //   return false;
-    // }
-    if (format === '') {
-      toast.error('Please choose Format of Building');
-      return false;
-    }
-    if (subArrData.length === 0) {
-      toast.error(' Please upload the building file');
-      return false;
-    }
-    if (subArrData.length === 0) {
-      toast.error('Please upload the building file');
-      return false;
-    }
-    let imgCont = files_link_cover
-    if (imgCont === '') {
-      [imgCont] = subArrData
-
-      // toast.error('请设置封面图');
-      // return false;
-    }
-    const indexBuild = subArrData.indexOf(imgCont)
-
-    if (indexBuild === -1) {
-      // files_link_cover = subArrData[0]
-      [imgCont] = subArrData
-      // toast.error('请设置封面图');
-      // return false;
-    }
-    // console.log(indexBuild);
-
-    const res = req_user_add_or_edit_building(token, buildInc, nickName, platform, linkBuild, introduction, format, subArrData.join(','), imgCont.toString(), files_link_del.join(','));
-    // console.log(res, subArrData);
-    // console.log(files_link_cover, "files_link_cover");
-
-
-
-    // console.log(buildInc, nickName, platform, linkBuild, introduction, format, subArrData, 558, res);
-
-
-    setSaveIcon(true)
-    res.then((resCON) => {
-      // toast(res.msg)
-      setSaveIcon(true)
-      if (resCON.code === 100000) {
-
-        toast(resCON.msg)
-        setAddbuild(false)
-        const resBuil = req_building_list(walletAddress);
-
-        resBuil.then((resBuilCon) => {
-          if (resBuilCon.data) {
-            setDataBuildSource(resBuilCon.data)
-            // console.log(resBuil.data, 96898)
-          }
-
-        });
-
-        // console.log(dataBuildSource, 6565);
-      }
-    });
-
-
-
-  },
-    [resultHandlerBu, saveIcon, routeTab, nav_Label, dataBuildSource, reqBuilderData, walletAddress, buildInc],
-  );
-
-  // const addWork = React.useCallback(async () => {
-  //   console.log('hhhhhhhhhhhhhhhhhhh');
-  //   // <JoinBuilders/>
-  //   // joinBuilders
-  //   setJoinBuilders(true);
-  //   console.log(joinBuilders, 5555555555);
-
-  //   // renderssssContent
-  // }, [joinBuilders]);
-
+  // console.log(dataSource, "1111111111111111", tabState, "2222222", dclDataSource);
   const select = React.useCallback(
     (id, ids) => {
       if (ids.findIndex((item) => item === id) === -1) return;
@@ -858,54 +710,52 @@ function searchDetail(r) {
   );
 
   const renderContent = React.useMemo(() => {
-    console.log(tabState,"tabState");
-    
-    if (loading) {
-      return <Status status="loading" />;
-    }
-    if (error) {
-      return <Status retry={onRetry} status="error" />;
-    }
-    if (cartData.length === 0) {
-      return <Status status="empty" />;
-    }
-    if (tabState === 'cryptovoxels') {
+    // console.log(tabState, "tabState");
+
+    // if (loading) {
+    //   return <Status status="loading" />;
+    // }
+    // if (error) {
+    //   return <Status retry={onRetry} status="error" />;
+    // }
+    // if (dataSource.length === 0) {
+    //   return <Status status="empty" />;
+    // }
+    if (tabState === 'Voxels') {
+      // console.log(tabState);
+
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
           {dataSource.map((card) => {
             return (
-              <Card
-                {...card}
-                parcelsIds={parcelsIds}
-                state={cardState}
-                key={uuid()}
-                selectedIds={selectedIds}
-                onClick={(id, ids) => {
-                  select(id, ids);
-                }}
-              ></Card>
+              <>
+                <Card {...card} key={uuid()} typeState={card.type}></Card>
+              </>
             );
           })}
+          {showModal === false ?
+            <><img src='/images/saveIcon.gif'></img> </>
+            :
+            <>
+              {/* 123{dataSourceTwo.toString()} */}
+              {dataSourceTwo.map((card) => (
+                <>
+                  <Card {...card} key={uuid()} typeState={card.type}></Card>
+                </>
+              ))}
+
+            </>
+          }
         </div>
       );
     }
-    if (tabState === 'decentraland') {
+    if (tabState === 'Decentranland') {
       return (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
             {dclDataSource.map((card) => {
               return (
-                <DclCard
-                  {...card}
-                  parcelsIds={parcelsIds}
-                  state={cardState}
-                  key={uuid()}
-                  y
-                  selectedIds={selectedIds}
-                  onClick={(id, ids) => {
-                    select(id, ids);
-                  }}
-                ></DclCard>
+                <Card {...card} key={uuid()} typeState={card.type}></Card>
               );
             })}
           </div>
@@ -924,8 +774,8 @@ function searchDetail(r) {
     reqDclData,
   ]);
   const renderContentCreater = React.useMemo(() => {
-    console.log(tabStateCreater);
-    
+    // console.log(tabStateCreater);
+
     if (loading) {
       return <Status status="loading" />;
     }
@@ -935,32 +785,35 @@ function searchDetail(r) {
     if (cartData.length === 0) {
       return <Status status="empty" />;
     }
-    if (tabStateCreater === 'builder') {
+    if (tabStateCreater === 'Builder') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
-          {dataSource.map((card) => {
+          {dataSourceCreBuilder.map((item, idx) => {
             return (
-              <Card
-                {...card}
-                parcelsIds={parcelsIds}
-                state={cardState}
-                key={uuid()}
-                selectedIds={selectedIds}
-                onClick={(id, ids) => {
-                  select(id, ids);
-                }}
-              ></Card>
+              <InfoCard cls={style.cls} {...item} key={idx}
+              // onClick={() => toTopic(idx, item)}
+              ></InfoCard>
+              // <Card
+              //   {...card}
+              //   parcelsIds={parcelsIds}
+              //   state={cardState}
+              //   key={uuid()}
+              //   selectedIds={selectedIds}
+              //   onClick={(id, ids) => {
+              //     select(id, ids);
+              //   }}
+              // ></Card>
             );
           })}
         </div>
       );
     }
     if (tabStateCreater === 'wearable') {
-      console.log("切换了");
-      
+      // console.log("切换了");
+
       return (
         <>
-        <div>655555</div>
+          <div>655555</div>
           {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
             {dclDataSource.map((card) => {
               return (
@@ -994,7 +847,7 @@ function searchDetail(r) {
   ]);
   const addWorkWerable = () => {
     // console.log(55, tokenWearable);
-    setShowModal(true)
+    // setShowModal(true)
     const res = getBaseInfo(tokenWearable);
     res.then((resWeable) => {
       setaddressWerVal(resWeable.data.profile.address);
@@ -1030,14 +883,27 @@ function searchDetail(r) {
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
- 
-    if (routeTab === 'learn') {
+
+    if (routeTab === 'Learn') {
       //   // console.log(dataBuildSource,6565656);
 
       return (
         <>
-         <div>learn</div>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5">
+
+            {/* <div>Learn</div> */}
+            {/* <LearnCard/> */}
+            {/* 123 */}
+            {
+              dataSourceLearn.map((item, idx) => {
+                // console.log(card,8888888888);
+
+                // console.log(dataSourceLearn,9999999);
+
+                return (<LearnCard {...item} key={idx} />)
+              })
+            }
+            {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
             {dataBuildSource.map((card) => {
               return (
                 <CardBuilding
@@ -1055,7 +921,7 @@ function searchDetail(r) {
               );
             })}
           </div> */}
-        
+          </div>
         </>
       );
     }
@@ -1142,22 +1008,6 @@ function searchDetail(r) {
     [resultHandler],
   );
 
-  const closeEmail = React.useCallback((t) => {
-    setEmailStateVal(false);
-    const accessToken = getToken('atk');
-
-    if (t === 'bind') {
-      toast.success('Binding succeeded');
-    }
-    if (t === 'modify') {
-      setModifyEmail(false);
-      setEmailStateVal(true);
-    }
-
-    if (accessToken) {
-      requireData(accessToken);
-    }
-  }, []);
 
 
 
@@ -1198,13 +1048,87 @@ function searchDetail(r) {
   //   },[saveVal])
   useEffect(() => {
     setTabStateCreater('builder')
+    setTabState('Voxels')
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
     reqBuilderData(walletAddress)
 
 
+
   }, [addbuild, walletAddress,])
+  // console.log(headerRef.current?.scrollHeight);
+  // console.log(showCon);
+
+
+
+  React.useEffect(() => {
+
+    if (router.query.value) {
+      setSearchText(router.query.value);
+      onSearchHandler(router?.query?.value, 1, pageSize, '')
+    }
+
+  }, [router.query.value])
+
+  React.useEffect(() => {
+    if (!router.query.value) {
+      onSearchHandlerDetail('', pageNum, pageSize, '')
+    }
+
+// console.log(document.querySelector('body'));
+
+
+    let timeCount;
+    const scrollChange = () => {
+      // console.log(document.getElementById('a1').scrollTop,"document.getElementById('countTatal').scrollTop");
+      //     console.log(showCon);
+      // console.log(window?.innerHeight,888);
+
+      // console.log(document?.getElementById('countTatal')?.scrollTop, 11111);
+      // console.log(document.querySelector('.myClassName')?.scrollTop, 2222);
+
+      // console.log(window.scrollY);
+      // let scrollHeight = document.getElementsByTagName('body')[0].scrollHeight
+      // let clientHeight = document.querySelector('.myClassName').clientHeight
+      // let scrollTop =document.querySelector('.myClassName')?.scrollTop
+      // // console.log( scrollHeight,clientHeight,scrollTop);
+      // // console.log( document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop);
+      // console.log(clientHeight,scrollTop,scrollHeight);
+      
+      // console.log(window.scrollY);
+      
+      // const listener = () => {
+      // console.log(151515151515);
+      // if (document.querySelector('.myClassName')?.scrollTop && document.querySelector('.myClassName')?.scrollTop > 1900) {
+      //   if (showCon === false) {
+
+      //     setSwitchShow(true)
+      //     if (!showModal) {
+      //       dataSourceTwoDetail('', 2, 20, '')
+      //     }
+
+      //     onSearchHandlerDetail('', pageNum, 8, '')
+      //   }
+
+      // }
+      // else {
+      //   setSwitchShow(false)
+      // }
+      // };
+      document.addEventListener('scroll', scrollChange);
+      return () => document.removeEventListener('scroll', scrollChange);
+    }
+
+
+    window.addEventListener('scroll', scrollChange, true)
+    // scrollChange()
+    return () => {
+      window.removeEventListener('scroll', scrollChange, false)
+    }
+
+  }, [])
+
 
   React.useEffect(() => {
 
@@ -1214,7 +1138,7 @@ function searchDetail(r) {
     if (a) {
       setWalletAddress(a);
     }
-console.log(r.router.query.type,"r.router.query.type");
+    // console.log(r.router.query.type,"r.router.query.type");
 
     setNavLabel('All')
     req_building_list(walletAddress)
@@ -1224,8 +1148,8 @@ console.log(r.router.query.type,"r.router.query.type");
     reqWearablesData();
     requestPersonal(accessToken);
     requireBuilder(accessToken)
-    if (tabState === 'cryptovoxels') requestData(accessToken);
-    if (tabState === 'decentraland') reqDclData(accessToken);
+    if (tabState === 'Voxels') requestData(accessToken);
+    if (tabState === 'Decentraland') reqDclData(accessToken);
     // if(routeTab === 'building')reqBuilderData(accessToken);
     watcher_store();
     watcher_store_status();
@@ -1293,10 +1217,7 @@ console.log(r.router.query.type,"r.router.query.type");
     return <div></div>;
   };
 
-  const settingShowOrHide = React.useCallback((t) => {
-    setWearablesShowOrHideState(true);
-    setWearablesShowOrHide(t === 'showServeral' ? 1 : 2);
-  }, []);
+
 
   const batchShowOrHide = React.useCallback(
     async (id = null, stat = null) => {
@@ -1311,26 +1232,26 @@ console.log(r.router.query.type,"r.router.query.type");
         );
       }
       setSaveIconVal(id)
-        if (result.code === 100000) {
+      if (result.code === 100000) {
 
-          if (wearablesShowOrHide === 2 || stat === 2) {
-            toast.success('Successfully hidden!');
-          }
-          if (wearablesShowOrHide === 1 || stat === 1) {
-            toast.success('Successfully shown!');
-          }
-
-        } else {
-          toast.error('Failed!');
+        if (wearablesShowOrHide === 2 || stat === 2) {
+          toast.success('Successfully hidden!');
+        }
+        if (wearablesShowOrHide === 1 || stat === 1) {
+          toast.success('Successfully shown!');
         }
 
-        setWearablesShowOrHideState(false);
-        setWearablesShowOrHide(0);
-        setWearablesSleceteIdList([]);
-        reqWearablesData();
-        setSaveIconVal(null)
+      } else {
+        toast.error('Failed!');
+      }
 
-     
+      setWearablesShowOrHideState(false);
+      setWearablesShowOrHide(0);
+      setWearablesSleceteIdList([]);
+      reqWearablesData();
+      setSaveIconVal(null)
+
+
 
 
     },
@@ -1405,15 +1326,66 @@ console.log(r.router.query.type,"r.router.query.type");
 
 
   const randerCardList = React.useMemo(() => {
-    console.log(routeTab,tabState);
-    
+    // console.log(routeTab,tabState);
+
+    const scroll = (e) => {
+      // console.log(e,"222222");
+
+      // // console.log('scrollscrollscrollscrollscrollscroll')
+      // console.log(document.querySelector('.myClassName')?.scrollTop);
+      // //   if(document.querySelector('.myClassName')?.scrollTop>868){
+      // // console.log('触底')
+      // //   }
+      // let timeCount;
+      // if (timeCount) {
+      //   clearTimeout(timeCount);
+      // }
+
+      // timeCount = setTimeout(() => {
+        // onSearchHandlerDetail('', pageNum, 20, '')
+        if (dataSource.length) {
+          // console.log('触底')
+          let { scrollTop, scrollHeight, clientHeight } = e.target;
+          // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
+          console.log(scrollTop , clientHeight ,scrollTop + clientHeight , scrollHeight,window.innerHeight,scrollTop + clientHeight >= scrollHeight-1);
+          if (scrollTop + clientHeight >= scrollHeight-1) {
+            // if (showModal) {
+              console.log('这时候刷新');
+            //  setTimeout(() => {
+              onSearchHandlerDetail('', pageNum, 20, '')
+            //  }, 1000);
+
+            // }
+          } else {
+            setShowModal(false)
+
+          }
+          
+          if (scrollTop + clientHeight >= scrollHeight-20) {
+            // console.log('滚动');
+            
+            //   setSwitchShow(true)
+            //   if(!showModal){
+            // onSearchHandlerDetail('', pageNum, 20, '')
+            //   }
+            // onSearchHandlerDetail('', pageNum, 20, '')
+            // setDataSource(res.data.Place.Voxels)
+
+          }
+        }
+
+      // }, 1000);
+
+
+    }
+
     if (routeTab === 'Place') {
       return (
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}></div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {TABData.map((item) => {
+              {menuDataTwoArrCon.map((item) => {
                 return (
                   <Tab4
                     active={tabState === item.type}
@@ -1431,8 +1403,8 @@ console.log(r.router.query.type,"r.router.query.type");
             </div>
             <div className={cls} />
           </div>
-      
-          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: '-20px' }}>
+
+          <div onScroll={scroll} className={cn('main-content myClassName', style.content)} style={{ marginTop: "20px", marginBottom: "30px",paddingBottom:'2px' }}>
             {renderContent}
           </div>
 
@@ -1450,11 +1422,11 @@ console.log(r.router.query.type,"r.router.query.type");
       );
     }
     if (routeTab === 'Event') {
-      return(
+      return (
         // <div>5555555</div>
-        <div className={style.allHeight1}><EventDetail/><EventDetail/></div>
+        <div className={style.allHeight1}><EventDetail /><EventDetail /></div>
       )
-      // if (showType === 'cryptovoxels') {
+      // if (showType === 'Voxels') {
       //   return (
       //     <>
       //       <div className={cn('tab-list flex mt-5', style.allHeight)}>
@@ -1536,7 +1508,7 @@ console.log(r.router.query.type,"r.router.query.type");
       //     </>
       //   );
       // }
-      // if (showType === 'decentraland') {
+      // if (showType === 'Decentraland') {
       //   return (
       //     <>
       //       <div className={cn('tab-list flex ', style.allHeight)}>
@@ -1608,16 +1580,16 @@ console.log(r.router.query.type,"r.router.query.type");
       //   );
       // }
     }
-    if (routeTab === 'creator') {
+    if (routeTab === 'Creator') {
       return (
         <>
-         {/* {institutions.map((item, idx) => {
+          {/* {institutions.map((item, idx) => {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })} */}
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}></div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {TABDataCreater.map((item) => {
+              {(valueCountCreater || TABDataCreater).map((item) => {
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
@@ -1634,19 +1606,21 @@ console.log(r.router.query.type,"r.router.query.type");
             </div>
             <div className={cls} />
           </div>
-      
-        {renderContentCreater}
-       </>
+
+          <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
+            {renderContentCreater}
+          </div>
+        </>
       );
     }
 
-    if (routeTab === 'learn') {
+    if (routeTab === 'Learn') {
       return (
         <>
           {/* {buildState === 2 ? */}
           <>
             <div className={style.buildingContainer}>
-              <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+              <div onScroll={scroll} className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
               </div>
             </div>
           </>
@@ -1677,28 +1651,140 @@ console.log(r.router.query.type,"r.router.query.type");
     creatorsReander,
   ]);
 
-  const onSearchHandler = React.useCallback(
-    async (text: string) => {
-      setSearchText(text);
-      // console.log(showStateVal,'sasd');
+  const onSearchHandlerDetail = async (query: string,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+      setShowModal(true)
 
-      // const data = await requestData({
-      //   tab: tabState,
-      //   subTab: subTabState,
-      //   query: text,
-      //   page: 1,
-      //   type: typeState,
-      //   needUpdateTypeList: true,
-      // });
+    const res = await getSearchDetail(query, page, per_page, search_item);
+    console.log(res, "res");
+    setShowModal(false)
 
-      // setDataSource(data);
-    },
-    []
-  );
+    if (res.code === 100000) {
+      let data = res.data.menu_one;
+      let dataCreater = res.data.Creator.menu_two;
+      let countNum = res.data.item_count;
+      let MenuDataTwo = res.data.Place.menu_two;
+      // let dataList  = dataSource;
+
+
+      let dataList = dataSource;
+      dataList.push(...res.data.Place.Voxels)
+      // console.log(dataList, "dataList");
+
+      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
+
+      // setDataSourceTwo(dataList)
+      setDataSource(dataList)
+      // setDataSource(res.data.Place.Voxels)
+
+      let dataListBuilder = dataSourceCreBuilder;
+      dataListBuilder.push(...res.data.Creator.Builder)
+      setDataSourceCreBuilder(dataListBuilder)
+      // setDataSourceCreBuilder(res.data.Creator.Builder)
+
+
+ let dataListLearn = dataSourceLearn;
+ dataListLearn.push(...res.data.Learn.data)
+      setDataSourceLearn(dataListLearn)
+      // setDataSourceLearn(res.data.Learn.data)
+      // console.log(dataSourceLearn, 222523);
+
+      // setDataSourceTwo(res.data.Place.Voxels)
+      let dataListDece = dclDataSource;
+      dataListDece.push(...res.data.Place.Decentranland)
+      setDclDataSource(dataListDece)
+      // setDclDataSource(res.data.Place.Decentranland)
+      let newPage = pageNum + 1
+      // console.log(newPage);
+      setPage(newPage)
+      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
+
+      let arr = []
+      let MenuDataTwoArr = []
+      let valCountCreater = []
+      for (const key in dataCreater) {
+        // console.log(valueCount);
+        let obj = {
+          label: dataCreater[key],
+          type: dataCreater[key],
+          // count: countNum[data[key]],
+        }
+
+        valCountCreater.push(obj)
+        // console.log(valCountCreater, "valCountCreater");
+      }
+      setValueCountCreater(valCountCreater)
+
+      for (const keys in MenuDataTwo) {
+        let objMenuTwo = {
+          label: MenuDataTwo[keys],
+          type: MenuDataTwo[keys],
+          // icon: MenuDataTwo[keys],
+        }
+        MenuDataTwoArr.push(objMenuTwo)
+        // console.log(MenuDataTwoArr);
+
+      }
+      setMenuDataTwoArrCon(MenuDataTwoArr)
+
+      for (const key in data) {
+        // console.log(valueCount);
+        let obj = {
+          label: data[key],
+          type: data[key],
+          count: countNum[data[key]],
+        }
+
+        arr.push(obj)
+        // console.log(arr);
+      }
+
+
+      setValueCount(arr)
+    }
+  }
+
+  const dataSourceTwoDetail = async (query: string,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+    const res = await getSearchDetail(searchText || query, page, per_page, search_item);
+    // let dataList  = dataSourceTwo;
+    // dataList.push(res.data.Place.Voxels)
+    // setDataSourceTwo(dataList)
+    // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
+    setShowModal(true)
+    // setDataSourceTwo(res.data.Place.Voxels)
+    setDataSource(res.data.Place.Voxels)
+
+  }
+
+ 
+
+  const onSearchHandler = async (query,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+    // console.log('打印了打印了', query);
+
+    const res = await getSearchDetail(query, page, per_page, search_item);
+    setDataSource(res.data.Place.Voxels)
+    // const res = getSearchDetail(query);
+  }
+
+
+
+  // console.log(window);
+
+
+
+
 
   return (
     <>
-      <Page className={cn('min-h-screen', style.anPage,)} meta={meta}
+      <Page className={cn('min-h-screen ', style.anPage,)} meta={meta}
       >
         {/* joinBuilders === true?style.joinBuilders:'' */}
         <div
@@ -1706,39 +1792,46 @@ console.log(r.router.query.type,"r.router.query.type");
             setManySetState(false);
           }}
           id='container'
-          className={cn('', style.bigPic, addbuild === true ? style.join : '', joinBuilders === true ? style.join : '', emailBuilders === true ? style.join1 : '',)}
+          className={cn('', style.bigPic)}
         >
-          <div className=" relative">
+          <div className={cn(" fixed", style.a, fixedState ? style.fix1 : null)} id='switch' >
             <PageHeader
               className="relative z-10" active={'profile'} />
           </div>
 
-          <div className={cn(' flex flex-col justify-center items-center', style.profileCon)}>
-           
-        
-            <div className={cn(style.tablebg)}> 
-            <div className={cn('',style.searchBoxVal)}> <Search text={searchText}  onSearch={onSearchHandler}></Search></div>
-           
+          <div id='countTatal' ref={headerRef}
+            className={cn(' flex flex-col justify-center items-center ', style.profileCon)}>
+
+
+            <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
+              <div className={cn('', style.searchBoxVal)}>
+                <Search text={searchText} onSearch={() => { onSearchHandler }}></Search>
+              </div>
+
+
+
               <div className={cn(style.tableList)}>
-                {TAB3.map((item) => {
+                {valueCount.map((item) => {
                   return (
-                    <Tab3
+                    <Tab5
                       label={item.label}
                       key={item.label}
                       active={routeTab === item.type}
+                      count={item.count}
                       onClick={() => {
                         changeTab3(item.label, item.type);
                       }}
                     />
+                    // <>{item}</>
                   );
                 })}
               </div>
             </div>
             {randerCardList}
-            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
+            <div id='footer' style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
           </div>
         </div>
-    
+
 
         {/* {wearablesShowOrHideState ? (
           <div className={style.settingShowOrHide}>
@@ -1775,7 +1868,7 @@ console.log(r.router.query.type,"r.router.query.type");
 
 
       </Page>
-   
+
     </>
   );
 }

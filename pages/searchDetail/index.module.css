@@ -4,6 +4,7 @@
   overflow-y: scroll;
 }
 
+
 .sign {
   width: 1087px;
   height: 125px;
@@ -117,8 +118,17 @@ color: #0F191B;
   width: 1px;
   background-color: rgba(0, 208, 236, 0.2);
 }
+#countTatal{
+  height: 1150px;
+}
 .profileCon{
   z-index: 2;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
+  /* height: 1150px; */
+  padding-top: 60px;
+  /* background-color: #00d0ec; */
+  
 }
 .searchBoxVal{
   margin-bottom: 30px;
@@ -158,20 +168,47 @@ color: #0F191B;
 }
 
 .content {
-  min-height: 650px;
+  /* height: 650px; */
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 1650px;
 }
 .bigPic{
-  background: url('/images/Mask.png') no-repeat;
-  height: 200px;
+  /* background: url('/images/Mask.png') no-repeat; */
+  height: 60px;
+}
+.fix1{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 999999;
+    /* top：0; */
+}
+.a{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 999999;
+  /* top：0; */
 }
 
+
 .tablebg {
+  /* background: url('/images/Mask.png') no-repeat; */
   width: 100%;
-  margin-top: 90px;
+  /* padding-top: 335px; */
+  /* padding-top: 131%; */
+  /* padding-top: 106%; */
   /* height: 60px; */
   /* background-color: #001518; */
 }
+.tablebg1{
+  background: url('/images/Mask.png') no-repeat;
+  width: 100%;
+  padding-top:30px;
+}
 .tableList {
+
   width: 1200px;
   margin: 0 auto;
   height:40px;

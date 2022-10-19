@@ -10,6 +10,12 @@ import TwoNavigation from '../two_navigation';
 import TwoNav from '../two_nav';
 import style from './index.module.css';
 
+
+import { getSearchDetail } from '../../service';
+
+
+
+
 type Props = {
   active?: string;
   className?: string;
@@ -190,34 +196,40 @@ export default function PageHeader({ active, className }: Props) {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
 
-  const analyticsDataSet = () => {
-    setAnalyticState(!analyticState)
-  }
-  const heatmapDataSet = () => {
-    setHeatmapState(!heatmapState)
-  }
-  const placeDataSet = () => {
-    setParcelsState(!ParcelsState)
+
+  const onSearchHandler =(query: string,
+    page:number,
+    per_page:number,
+    search_item:string)=>{
+    console.log(888);
+    const res =  getSearchDetail(query,page,per_page,search_item);
+    console.log(res, "res");
   }
 
-  const onSearchHandler = React.useCallback(
-    async (text: string) => {
-      setSearchText(text);
-      // console.log(showStateVal,'sasd');
+  // const onSearchHandler = React.useCallback(
+  //   async (query = '', text: string) => {
+  //     console.log("66666666666");
 
-      // const data = await requestData({
-      //   tab: tabState,
-      //   subTab: subTabState,
-      //   query: text,
-      //   page: 1,
-      //   type: typeState,
-      //   needUpdateTypeList: true,
-      // });
+  //     setSearchText(text);
+  //     // console.log(showStateVal,'sasd');
+  //     // console.log(getSearchDetail('metaverse'),"metaverse");
+  //     const res = await getSearchDetail("metaverse");
+  //     console.log(res, "res");
 
-      // setDataSource(data);
-    },
-    []
-  );
+  //     // const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+  //     // const data = await requestData({
+  //     //   tab: tabState,
+  //     //   subTab: subTabState,
+  //     //   query: text,
+  //     //   page: 1,
+  //     //   type: typeState,
+  //     //   needUpdateTypeList: true,
+  //     // });
+
+  //     // setDataSource(data);
+  //   },
+  //   []
+  // );
   useEffect(() => {
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
@@ -237,7 +249,7 @@ export default function PageHeader({ active, className }: Props) {
           style.header,
         )}
       >
-        <div className={cn(" flex-flow", style.one, )}>
+        <div className={cn(" flex-flow", style.one,)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
             <img className={cn('flex-flow', style.metaImg)} src="/images/imgConent/meta1.png"></img>
@@ -489,7 +501,7 @@ export default function PageHeader({ active, className }: Props) {
         </div> */}
 
         </div>
-        {/* {showStateVal === true ?
+        {showStateVal === true ?
           <div
             className={cn(
               'text-xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
@@ -498,11 +510,13 @@ export default function PageHeader({ active, className }: Props) {
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler}></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={()=>{
+              onSearchHandler
+            }}></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>
-          : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>} */}
+          : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>}
         {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
 
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
