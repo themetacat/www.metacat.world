@@ -855,13 +855,13 @@ function searchDetail(r) {
 
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
-          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type}/>);})}
           {showModal === false ?
             <><img src='/images/saveIcon.gif'></img> </>
             :
             <>
               {/* 123{dataSourceTwo.toString()} */}
-              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
+              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type}/>))}
 
             </>
           }
@@ -872,7 +872,7 @@ function searchDetail(r) {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
           {dclDataSource.map((card) => {
-            return (<Card {...card} key={uuid()} typeState={card.type} />);
+            return (<Card {...card} key={uuid()} typeState={card.type}/>);
           })}
         </div>
       );

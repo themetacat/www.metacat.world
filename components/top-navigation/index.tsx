@@ -197,12 +197,12 @@ export default function PageHeader({ active, className }: Props) {
   }, []);
 
 
-  const onSearchHandler =(query: string,
-    page:number,
-    per_page:number,
-    search_item:string)=>{
+  const onSearchHandler = (query: string,
+    page: number,
+    per_page: number,
+    search_item: string) => {
     console.log(888);
-    const res =  getSearchDetail(query,page,per_page,search_item);
+    const res = getSearchDetail(query, page, per_page, search_item);
     console.log(res, "res");
   }
 
@@ -510,9 +510,7 @@ export default function PageHeader({ active, className }: Props) {
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={()=>{
-              onSearchHandler
-            }}></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler}></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>
