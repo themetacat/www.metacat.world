@@ -6,7 +6,7 @@ import style from './index.module.css';
 
 type Props = {
   text?: string;
-  onSearch?: (value) => void;
+  onSearch?;
   type?: string;
   showState?: (value) => void;
 };

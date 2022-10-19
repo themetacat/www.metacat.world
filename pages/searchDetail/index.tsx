@@ -1,4 +1,4 @@
-import React, { useEffect ,useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
@@ -427,7 +427,7 @@ function searchDetail(r) {
     page: number,
     per_page: number,
     search_item: string) => {
-      setShowModal(true)
+    setShowModal(true)
 
     const res = await getSearchDetail(query, page, per_page, search_item);
     console.log(res, "res");
@@ -457,8 +457,8 @@ function searchDetail(r) {
       // setDataSourceCreBuilder(res.data.Creator.Builder)
 
 
- const dataListLearn = dataSourceLearn;
- dataListLearn.push(...res.data.Learn.data)
+      const dataListLearn = dataSourceLearn;
+      dataListLearn.push(...res.data.Learn.data)
       setDataSourceLearn(dataListLearn)
       // setDataSourceLearn(res.data.Learn.data)
       // console.log(dataSourceLearn, 222523);
@@ -488,8 +488,8 @@ function searchDetail(r) {
       //   // console.log(valCountCreater, "valCountCreater");
       // }
 
-      Object.keys(dataCreater).forEach(key=>{
-         const obj = {
+      Object.keys(dataCreater).forEach(key => {
+        const obj = {
           label: dataCreater[key],
           type: dataCreater[key],
           // count: countNum[data[key]],
@@ -508,7 +508,7 @@ function searchDetail(r) {
       //   // console.log(MenuDataTwoArr);
 
       // }
-      Object.keys(MenuDataTwo).forEach(keys=>{
+      Object.keys(MenuDataTwo).forEach(keys => {
         const objMenuTwo = {
           label: MenuDataTwo[keys],
           type: MenuDataTwo[keys],
@@ -529,7 +529,7 @@ function searchDetail(r) {
       //   arr.push(obj)
       //   // console.log(arr);
       // }
-      Object.keys(data).forEach(key=>{
+      Object.keys(data).forEach(key => {
         const obj = {
           label: data[key],
           type: data[key],
@@ -857,9 +857,7 @@ function searchDetail(r) {
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
           {dataSource.map((card) => {
             return (
-           
-                <Card {...card} key={uuid()} typeState={card.type} />
-           
+              <Card {...card} key={uuid()} typeState={card.type} />
             );
           })}
           {showModal === false ?
@@ -868,9 +866,7 @@ function searchDetail(r) {
             <>
               {/* 123{dataSourceTwo.toString()} */}
               {dataSourceTwo.map((card) => (
-          
-                  <Card {...card} key={uuid()} typeState={card.type} />
-          
+                <Card {...card} key={uuid()} typeState={card.type} />
               ))}
 
             </>
@@ -880,15 +876,13 @@ function searchDetail(r) {
     }
     if (tabState === 'Decentranland') {
       return (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
-            {dclDataSource.map((card) => {
-              return (
-                <Card {...card} key={uuid()} typeState={card.type} />
-              );
-            })}
-          </div>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
+          {dclDataSource.map((card) => {
+            return (
+              <Card {...card} key={uuid()} typeState={card.type} />
+            );
+          })}
+        </div>
       );
     }
   }, [
@@ -1205,7 +1199,7 @@ function searchDetail(r) {
       onSearchHandlerDetail('', pageNum, pageSize, '')
     }
 
-// console.log(document.querySelector('body'));
+    // console.log(document.querySelector('body'));
 
 
     const scrollChange = () => {
@@ -1223,9 +1217,9 @@ function searchDetail(r) {
       // // console.log( scrollHeight,clientHeight,scrollTop);
       // // console.log( document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop);
       // console.log(clientHeight,scrollTop,scrollHeight);
-      
+
       // console.log(window.scrollY);
-      
+
       // const listener = () => {
       // console.log(151515151515);
       // if (document.querySelector('.myClassName')?.scrollTop && document.querySelector('.myClassName')?.scrollTop > 1900) {
@@ -1470,37 +1464,37 @@ function searchDetail(r) {
       // }
 
       // timeCount = setTimeout(() => {
-        // onSearchHandlerDetail('', pageNum, 20, '')
-        if (dataSource.length) {
-          // console.log('触底')
-          const { scrollTop, scrollHeight, clientHeight } = e.target;
-          // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
-          console.log(scrollTop , clientHeight ,scrollTop + clientHeight , scrollHeight,window.innerHeight,scrollTop + clientHeight >= scrollHeight-1);
-          if (scrollTop + clientHeight >= scrollHeight-1) {
-            // if (showModal) {
-              console.log('这时候刷新');
-            //  setTimeout(() => {
-              onSearchHandlerDetail('', pageNum, 20, '')
-            //  }, 1000);
+      // onSearchHandlerDetail('', pageNum, 20, '')
+      if (dataSource.length) {
+        // console.log('触底')
+        const { scrollTop, scrollHeight, clientHeight } = e.target;
+        // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
+        console.log(scrollTop, clientHeight, scrollTop + clientHeight, scrollHeight, window.innerHeight, scrollTop + clientHeight >= scrollHeight - 1);
+        if (scrollTop + clientHeight >= scrollHeight - 1) {
+          // if (showModal) {
+          console.log('这时候刷新');
+          //  setTimeout(() => {
+          onSearchHandlerDetail('', pageNum, 20, '')
+          //  }, 1000);
 
-            // }
-          } else {
-            setShowModal(false)
+          // }
+        } else {
+          setShowModal(false)
 
-          }
-          
-          if (scrollTop + clientHeight >= scrollHeight-20) {
-            // console.log('滚动');
-            
-            //   setSwitchShow(true)
-            //   if(!showModal){
-            // onSearchHandlerDetail('', pageNum, 20, '')
-            //   }
-            // onSearchHandlerDetail('', pageNum, 20, '')
-            // setDataSource(res.data.Place.Voxels)
-
-          }
         }
+
+        if (scrollTop + clientHeight >= scrollHeight - 20) {
+          // console.log('滚动');
+
+          //   setSwitchShow(true)
+          //   if(!showModal){
+          // onSearchHandlerDetail('', pageNum, 20, '')
+          //   }
+          // onSearchHandlerDetail('', pageNum, 20, '')
+          // setDataSource(res.data.Place.Voxels)
+
+        }
+      }
 
       // }, 1000);
 
@@ -1532,7 +1526,7 @@ function searchDetail(r) {
             <div className={cls} />
           </div>
 
-          <div onScroll={scroll} className={cn('main-content myClassName', style.content)} style={{ marginTop: "20px", marginBottom: "30px",paddingBottom:'2px' }}>
+          <div onScroll={scroll} className={cn('main-content myClassName', style.content)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
             {renderContent}
           </div>
 
@@ -1796,9 +1790,9 @@ function searchDetail(r) {
 
   }
 
- 
 
- 
+
+
 
 
 
@@ -1831,7 +1825,7 @@ function searchDetail(r) {
 
             <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
               <div className={cn('', style.searchBoxVal)}>
-                <Search text={searchText} onSearch={() => { onSearchHandler }}></Search>
+                <Search text={searchText} onSearch={onSearchHandler}></Search>
               </div>
 
 
