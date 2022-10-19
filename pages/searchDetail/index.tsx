@@ -476,42 +476,67 @@ function searchDetail(r) {
       const arr = []
       const MenuDataTwoArr = []
       const valCountCreater = []
-      for (const key in dataCreater) {
-        // console.log(valueCount);
-        const obj = {
+      // for (const key in dataCreater) {
+      //   // console.log(valueCount);
+      //   const obj = {
+      //     label: dataCreater[key],
+      //     type: dataCreater[key],
+      //     // count: countNum[data[key]],
+      //   }
+
+      //   valCountCreater.push(obj)
+      //   // console.log(valCountCreater, "valCountCreater");
+      // }
+
+      Object.keys(dataCreater).forEach(key=>{
+         const obj = {
           label: dataCreater[key],
           type: dataCreater[key],
           // count: countNum[data[key]],
         }
-
         valCountCreater.push(obj)
-        // console.log(valCountCreater, "valCountCreater");
-      }
+      })
       setValueCountCreater(valCountCreater)
 
-      for (const keys in MenuDataTwo) {
+      // for (const keys in MenuDataTwo) {
+      //   const objMenuTwo = {
+      //     label: MenuDataTwo[keys],
+      //     type: MenuDataTwo[keys],
+      //     // icon: MenuDataTwo[keys],
+      //   }
+      //   MenuDataTwoArr.push(objMenuTwo)
+      //   // console.log(MenuDataTwoArr);
+
+      // }
+      Object.keys(MenuDataTwo).forEach(keys=>{
         const objMenuTwo = {
           label: MenuDataTwo[keys],
           type: MenuDataTwo[keys],
           // icon: MenuDataTwo[keys],
         }
         MenuDataTwoArr.push(objMenuTwo)
-        // console.log(MenuDataTwoArr);
-
-      }
+      })
       setMenuDataTwoArrCon(MenuDataTwoArr)
 
-      for (const key in data) {
-        // console.log(valueCount);
+      // for (const key in data) {
+      //   // console.log(valueCount);
+      //   const obj = {
+      //     label: data[key],
+      //     type: data[key],
+      //     count: countNum[data[key]],
+      //   }
+
+      //   arr.push(obj)
+      //   // console.log(arr);
+      // }
+      Object.keys(data).forEach(key=>{
         const obj = {
           label: data[key],
           type: data[key],
           count: countNum[data[key]],
         }
-
         arr.push(obj)
-        // console.log(arr);
-      }
+      })
 
 
       setValueCount(arr)
@@ -832,9 +857,9 @@ function searchDetail(r) {
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
           {dataSource.map((card) => {
             return (
-              <>
-                <Card {...card} key={uuid()} typeState={card.type}></Card>
-              </>
+           
+                <Card {...card} key={uuid()} typeState={card.type} />
+           
             );
           })}
           {showModal === false ?
@@ -843,9 +868,9 @@ function searchDetail(r) {
             <>
               {/* 123{dataSourceTwo.toString()} */}
               {dataSourceTwo.map((card) => (
-                <>
-                  <Card {...card} key={uuid()} typeState={card.type}></Card>
-                </>
+          
+                  <Card {...card} key={uuid()} typeState={card.type} />
+          
               ))}
 
             </>
@@ -859,7 +884,7 @@ function searchDetail(r) {
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
             {dclDataSource.map((card) => {
               return (
-                <Card {...card} key={uuid()} typeState={card.type}></Card>
+                <Card {...card} key={uuid()} typeState={card.type} />
               );
             })}
           </div>
