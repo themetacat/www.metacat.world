@@ -1865,7 +1865,7 @@ export default function Index(props) {
              offsetWidthNum <= 1200 ? style.boxCon2 : null )} >
 
               {typeState === 'Free Space' ? (
-                <renderContent text={searchText} onSearch={onSearchSpace}></Search>
+                <Search text={searchText} onSearch={onSearchSpace}></Search>
               ) : null}
               {typeState === 'Scene' ? (
                 <Search text={searchText} onSearch={onSearchScene}></Search>
