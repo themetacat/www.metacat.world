@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect ,useRef} from 'react';
 
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
@@ -87,7 +87,6 @@ import {
 
 
 import style from './index.module.css';
-import { useRef } from 'react';
 
 
 
@@ -423,6 +422,102 @@ function searchDetail(r) {
     },
     [refreshTK],
   );
+
+  const onSearchHandlerDetail = async (query: string,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+      setShowModal(true)
+
+    const res = await getSearchDetail(query, page, per_page, search_item);
+    console.log(res, "res");
+    setShowModal(false)
+
+    if (res.code === 100000) {
+      const data = res.data.menu_one;
+      const dataCreater = res.data.Creator.menu_two;
+      const countNum = res.data.item_count;
+      const MenuDataTwo = res.data.Place.menu_two;
+      // const dataList  = dataSource;
+
+
+      const dataList = dataSource;
+      dataList.push(...res.data.Place.Voxels)
+      // console.log(dataList, "dataList");
+
+      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
+
+      // setDataSourceTwo(dataList)
+      setDataSource(dataList)
+      // setDataSource(res.data.Place.Voxels)
+
+      const dataListBuilder = dataSourceCreBuilder;
+      dataListBuilder.push(...res.data.Creator.Builder)
+      setDataSourceCreBuilder(dataListBuilder)
+      // setDataSourceCreBuilder(res.data.Creator.Builder)
+
+
+ const dataListLearn = dataSourceLearn;
+ dataListLearn.push(...res.data.Learn.data)
+      setDataSourceLearn(dataListLearn)
+      // setDataSourceLearn(res.data.Learn.data)
+      // console.log(dataSourceLearn, 222523);
+
+      // setDataSourceTwo(res.data.Place.Voxels)
+      const dataListDece = dclDataSource;
+      dataListDece.push(...res.data.Place.Decentranland)
+      setDclDataSource(dataListDece)
+      // setDclDataSource(res.data.Place.Decentranland)
+      const newPage = pageNum + 1
+      // console.log(newPage);
+      setPage(newPage)
+      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
+
+      const arr = []
+      const MenuDataTwoArr = []
+      const valCountCreater = []
+      for (const key in dataCreater) {
+        // console.log(valueCount);
+        const obj = {
+          label: dataCreater[key],
+          type: dataCreater[key],
+          // count: countNum[data[key]],
+        }
+
+        valCountCreater.push(obj)
+        // console.log(valCountCreater, "valCountCreater");
+      }
+      setValueCountCreater(valCountCreater)
+
+      for (const keys in MenuDataTwo) {
+        const objMenuTwo = {
+          label: MenuDataTwo[keys],
+          type: MenuDataTwo[keys],
+          // icon: MenuDataTwo[keys],
+        }
+        MenuDataTwoArr.push(objMenuTwo)
+        // console.log(MenuDataTwoArr);
+
+      }
+      setMenuDataTwoArrCon(MenuDataTwoArr)
+
+      for (const key in data) {
+        // console.log(valueCount);
+        const obj = {
+          label: data[key],
+          type: data[key],
+          count: countNum[data[key]],
+        }
+
+        arr.push(obj)
+        // console.log(arr);
+      }
+
+
+      setValueCount(arr)
+    }
+  }
+
   const resultHandlerBu = React.useCallback(
     (res, callback) => {
       const { code, msg, data } = res;
@@ -625,7 +720,16 @@ function searchDetail(r) {
 
 
 
+  const onSearchHandler = async (query,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+    // console.log('打印了打印了', query);
 
+    const res = await getSearchDetail(query, page, per_page, search_item);
+    setDataSource(res.data.Place.Voxels)
+    // const res = getSearchDetail(query);
+  }
 
 
 
@@ -1079,7 +1183,6 @@ function searchDetail(r) {
 // console.log(document.querySelector('body'));
 
 
-    let timeCount;
     const scrollChange = () => {
       // console.log(document.getElementById('a1').scrollTop,"document.getElementById('countTatal').scrollTop");
       //     console.log(showCon);
@@ -1089,9 +1192,9 @@ function searchDetail(r) {
       // console.log(document.querySelector('.myClassName')?.scrollTop, 2222);
 
       // console.log(window.scrollY);
-      // let scrollHeight = document.getElementsByTagName('body')[0].scrollHeight
-      // let clientHeight = document.querySelector('.myClassName').clientHeight
-      // let scrollTop =document.querySelector('.myClassName')?.scrollTop
+      // const scrollHeight = document.getElementsByTagName('body')[0].scrollHeight
+      // const clientHeight = document.querySelector('.myClassName').clientHeight
+      // const scrollTop =document.querySelector('.myClassName')?.scrollTop
       // // console.log( scrollHeight,clientHeight,scrollTop);
       // // console.log( document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop);
       // console.log(clientHeight,scrollTop,scrollHeight);
@@ -1336,7 +1439,7 @@ function searchDetail(r) {
       // //   if(document.querySelector('.myClassName')?.scrollTop>868){
       // // console.log('触底')
       // //   }
-      // let timeCount;
+      // const timeCount;
       // if (timeCount) {
       //   clearTimeout(timeCount);
       // }
@@ -1345,7 +1448,7 @@ function searchDetail(r) {
         // onSearchHandlerDetail('', pageNum, 20, '')
         if (dataSource.length) {
           // console.log('触底')
-          let { scrollTop, scrollHeight, clientHeight } = e.target;
+          const { scrollTop, scrollHeight, clientHeight } = e.target;
           // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
           console.log(scrollTop , clientHeight ,scrollTop + clientHeight , scrollHeight,window.innerHeight,scrollTop + clientHeight >= scrollHeight-1);
           if (scrollTop + clientHeight >= scrollHeight-1) {
@@ -1651,107 +1754,14 @@ function searchDetail(r) {
     creatorsReander,
   ]);
 
-  const onSearchHandlerDetail = async (query: string,
-    page: number,
-    per_page: number,
-    search_item: string) => {
-      setShowModal(true)
 
-    const res = await getSearchDetail(query, page, per_page, search_item);
-    console.log(res, "res");
-    setShowModal(false)
-
-    if (res.code === 100000) {
-      let data = res.data.menu_one;
-      let dataCreater = res.data.Creator.menu_two;
-      let countNum = res.data.item_count;
-      let MenuDataTwo = res.data.Place.menu_two;
-      // let dataList  = dataSource;
-
-
-      let dataList = dataSource;
-      dataList.push(...res.data.Place.Voxels)
-      // console.log(dataList, "dataList");
-
-      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-
-      // setDataSourceTwo(dataList)
-      setDataSource(dataList)
-      // setDataSource(res.data.Place.Voxels)
-
-      let dataListBuilder = dataSourceCreBuilder;
-      dataListBuilder.push(...res.data.Creator.Builder)
-      setDataSourceCreBuilder(dataListBuilder)
-      // setDataSourceCreBuilder(res.data.Creator.Builder)
-
-
- let dataListLearn = dataSourceLearn;
- dataListLearn.push(...res.data.Learn.data)
-      setDataSourceLearn(dataListLearn)
-      // setDataSourceLearn(res.data.Learn.data)
-      // console.log(dataSourceLearn, 222523);
-
-      // setDataSourceTwo(res.data.Place.Voxels)
-      let dataListDece = dclDataSource;
-      dataListDece.push(...res.data.Place.Decentranland)
-      setDclDataSource(dataListDece)
-      // setDclDataSource(res.data.Place.Decentranland)
-      let newPage = pageNum + 1
-      // console.log(newPage);
-      setPage(newPage)
-      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
-
-      let arr = []
-      let MenuDataTwoArr = []
-      let valCountCreater = []
-      for (const key in dataCreater) {
-        // console.log(valueCount);
-        let obj = {
-          label: dataCreater[key],
-          type: dataCreater[key],
-          // count: countNum[data[key]],
-        }
-
-        valCountCreater.push(obj)
-        // console.log(valCountCreater, "valCountCreater");
-      }
-      setValueCountCreater(valCountCreater)
-
-      for (const keys in MenuDataTwo) {
-        let objMenuTwo = {
-          label: MenuDataTwo[keys],
-          type: MenuDataTwo[keys],
-          // icon: MenuDataTwo[keys],
-        }
-        MenuDataTwoArr.push(objMenuTwo)
-        // console.log(MenuDataTwoArr);
-
-      }
-      setMenuDataTwoArrCon(MenuDataTwoArr)
-
-      for (const key in data) {
-        // console.log(valueCount);
-        let obj = {
-          label: data[key],
-          type: data[key],
-          count: countNum[data[key]],
-        }
-
-        arr.push(obj)
-        // console.log(arr);
-      }
-
-
-      setValueCount(arr)
-    }
-  }
 
   const dataSourceTwoDetail = async (query: string,
     page: number,
     per_page: number,
     search_item: string) => {
     const res = await getSearchDetail(searchText || query, page, per_page, search_item);
-    // let dataList  = dataSourceTwo;
+    // const dataList  = dataSourceTwo;
     // dataList.push(res.data.Place.Voxels)
     // setDataSourceTwo(dataList)
     // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
@@ -1763,16 +1773,7 @@ function searchDetail(r) {
 
  
 
-  const onSearchHandler = async (query,
-    page: number,
-    per_page: number,
-    search_item: string) => {
-    // console.log('打印了打印了', query);
-
-    const res = await getSearchDetail(query, page, per_page, search_item);
-    setDataSource(res.data.Place.Voxels)
-    // const res = getSearchDetail(query);
-  }
+ 
 
 
 
