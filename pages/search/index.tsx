@@ -477,7 +477,6 @@ function search(r) {
       // setDataSourceTwo(dataList)
 
       // setDataSource(res.data.Place.Voxels)
-console.log(dataSourceCreBuilder,'dataSourceCreBuilder');
 
       const dataListBuilder = dataSourceCreBuilder;
       if (res.data?.Creator?.Builder.length > 0) {
