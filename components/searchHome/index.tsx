@@ -22,7 +22,7 @@ export default function Search({ text, setVal,onSearch, showState,type }: Props)
   }, [null]);
 
   const search = React.useCallback(() => {
-    console.log(123456,value);
+    // console.log(123456,value);
     if(value){
       // setVal(value)
       router.replace(`/search?q=${value}`)

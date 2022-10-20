@@ -50,6 +50,7 @@ flex-flow: row;
   /* margin-top: 15px; */
   /* width: 100px;
   height: 30.89px; */
+  cursor: pointer;
   width: 44%;
   height: 30%;
   margin-left: 30px;
@@ -191,7 +192,7 @@ flex-flow: row;
 .connectBox1{
   /* margin-right: 423px; */
   display: flex;
-  margin-left: 15%;
+  margin-left: 13%;
 }
 .wallbtn{
   position: absolute;

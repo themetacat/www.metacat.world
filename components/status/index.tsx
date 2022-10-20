@@ -7,7 +7,7 @@ import cn from 'classnames';
 import style from './index.module.css';
 
 interface Props {
-  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search' | 'emptyBuilding' | 'waitBuilder' | 'AddBuilder' | 'emptyWerable';
+  status: 'loading' | 'error' | 'success' | 'coming' | 'empty' | 'search' | 'emptyBuilding' | 'waitBuilder' | 'AddBuilder' | 'emptyWerable' |'loadingDetail';
   mini?: boolean;
   retry?: () => void;
   addWork?: () => void;
@@ -25,6 +25,15 @@ export default function Status({ status, retry, addWork, addWorkWerable, unloadB
     return (
       <div className={cn(commonCls, 'animate-spin')}>
         <img src="/images/loading.png" className="animate-spin w-8 h-8" />
+      </div>
+    );
+  }
+
+  if (status === 'loadingDetail') {
+    return (
+      <div className={cn(commonCls)}>
+        <img src="/images/default-image.png" className={style.baseImgCon} />
+        <span className="mt-4 text-xl font-semibold">NO SEARCH RESULTS</span>
       </div>
     );
   }
