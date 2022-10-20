@@ -104,12 +104,9 @@ const TABData = [
 const TABDataCreater = [
   {
     label: 'Builder',
-    type: 'builder',
+    type: 'Builder',
   },
-  {
-    label: 'Wearable',
-    type: 'wearable',
-  },
+ 
 ]
 
 
@@ -174,7 +171,7 @@ const showOrHide = {
 function search(r) {
   const nav_Label = React.useRef(null);
   const meta = {
-    title: `Profile - ${SITE_NAME}`,
+    title: `Search - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
   const headerRef = React.useRef(null)
@@ -209,7 +206,7 @@ function search(r) {
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('Voxels');
   const [tabState, setTabState] = React.useState('Voxels');
-  const [tabStateCreater, setTabStateCreater] = React.useState('builder');
+  const [tabStateCreater, setTabStateCreater] = React.useState('Builder');
   const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
   const [buildState, setBuildState] = React.useState(null);
@@ -480,6 +477,7 @@ function search(r) {
       // setDataSourceTwo(dataList)
 
       // setDataSource(res.data.Place.Voxels)
+console.log(dataSourceCreBuilder,'dataSourceCreBuilder');
 
       const dataListBuilder = dataSourceCreBuilder;
       if (res.data?.Creator?.Builder.length > 0) {
@@ -1006,15 +1004,15 @@ function search(r) {
   const renderContentCreater = React.useMemo(() => {
     // console.log(tabStateCreater);
 
-    if (loading) {
-      return <Status status="loadingDetail" />;
-    }
-    if (error) {
-      return <Status retry={onRetry} status="error" />;
-    }
-    if (cartData.length === 0) {
-      return <Status status="empty" />;
-    }
+    // if (loading) {
+    //   return <Status status="loadingDetail" />;
+    // }
+    // if (error) {
+    //   return <Status retry={onRetry} status="error" />;
+    // }
+    // if (cartData.length === 0) {
+    //   return <Status status="empty" />;
+    // }
     if (tabStateCreater === 'Builder') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
@@ -1277,7 +1275,7 @@ function search(r) {
   // console.log(saveVal,999999);
   //   },[saveVal])
   useEffect(() => {
-    setTabStateCreater('builder')
+    setTabStateCreater('Builder')
     setTabState('Voxels')
     // const accessToken = getToken('atk');
     // console.log(accessToken);
@@ -1846,9 +1844,9 @@ function search(r) {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })} */}
           <div className={cn('tab-list flex ', style.allHeight)}>
-            {/* <div className={cls}></div> */}
+            {/* <div className={cls}>valueCountCreater || </div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(valueCountCreater || TABDataCreater).map((item) => {
+              {(TABDataCreater).map((item) => {
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
