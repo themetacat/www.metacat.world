@@ -1265,19 +1265,20 @@ function search(r) {
   // console.log(showCon);
 
 
+console.log(router,2222);
 
   React.useEffect(() => {
 
-    if (router.query.value !== '') {
-      setSearchText(router.query.value);
-      onSearchHandler(router?.query?.value, pageNum, pageSize, '')
+    if (router.query.q !== '') {
+      setSearchText(router.query.q);
+      onSearchHandler(router?.query?.q, pageNum, pageSize, '')
     }
 
-  }, [router.query.value, searchText])
+  }, [router.query.q, searchText])
   // console.log(router.query.value,"router.query.value");
 
   React.useEffect(() => {
-    if (router.query.value === '') {
+    if (router.query.q === '') {
       onSearchHandlerDetail('', pageNum, pageSize, '')
     }
 
