@@ -1587,9 +1587,8 @@ function search(r) {
       return (
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
-            {/* <div className={cls}></div> */}
+            {/* <div className={cls}>menuDataTwoArrCon</div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {/* menuDataTwoArrCon     TABData*/}
               {(TABData).map((item) => {
 
                 return (
