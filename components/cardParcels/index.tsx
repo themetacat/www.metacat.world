@@ -74,7 +74,7 @@ export default function Card({
           <div className={cn("text-xl font-semibold truncate flex-1 mr-3", style.name)} title={name}>
             {name}
           </div>
-          {openseaUrl || detail_url ? (
+          {openseaUrl  ? (
             <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
           ) : null}
 

@@ -9,9 +9,10 @@ type Props = {
   onSearch?;
   type?: string;
   showState?: (value) => void;
+  setVal?: (value) => void;
 };
 
-export default function Search({ text, onSearch, showState,type }: Props) {
+export default function Search({ text, setVal,onSearch, showState,type }: Props) {
   const router = useRouter();
   const [value, setValue] = useState(text);
   const [show, setShow] = useState(true);
@@ -23,9 +24,10 @@ export default function Search({ text, onSearch, showState,type }: Props) {
   const search = React.useCallback(() => {
     console.log(123456,value);
     if(value){
-      router.replace(`/searchDetail?value=${value}`)
+      // setVal(value)
+      router.replace(`/search?q=${value}`)
     }else{
-      router.replace(`/searchDetail`)
+      router.replace(`/search`)
     }
     
    

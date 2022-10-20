@@ -189,16 +189,17 @@ flex-flow: row;
   display: flex;
 }
 .connectBox1{
-  margin-right: 423px;
+  /* margin-right: 423px; */
   display: flex;
+  margin-left: 15%;
 }
 .wallbtn{
   position: absolute;
   right:30px;
 }
 .frame{
-  width: 17.01px;
-  height: 17.55px;
+  width: 24.01px;
+  height: 24.55px;
   position: absolute;
   right:196.66px;
 }

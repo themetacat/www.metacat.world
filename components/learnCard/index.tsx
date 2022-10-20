@@ -42,8 +42,8 @@ export default function LearnCard({
   );
 
   const jumpToDetail = React.useCallback(() => {
-    window.open(eventDetailUrl);
-  }, [eventDetailUrl]);
+    window.open(link_url);
+  }, [link_url]);
 
   const inTimeLine = React.useCallback(() => {
     if (!activityTime) {

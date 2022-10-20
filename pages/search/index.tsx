@@ -97,7 +97,7 @@ const TABData = [
     type: 'Voxels',
   },
   {
-    label: 'Decentraland',
+    label: 'Decentranland',
     icon: '/images/Decentraland.jpg',
     type: 'Decentraland',
   },
@@ -172,7 +172,7 @@ const showOrHide = {
     },
   ],
 };
-function searchDetail(r) {
+function search(r) {
   const nav_Label = React.useRef(null);
   const meta = {
     title: `Profile - ${SITE_NAME}`,
@@ -353,19 +353,32 @@ function searchDetail(r) {
     async (tab) => {
       if (tabState === tab) return;
       setLoading(true);
+      // console.log(tab);
+
       setTabState(tab);
       setParcelsIds([]);
       setSelectedIds([]);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
-      // if (tab === 'Voxels') {
-      //   setDataSource(orginData.parcelList);
-      //   store.setState(() => ({ type: 'cv' }));
-      // }
-      // if (tab === 'Decentraland') {
-      //   setDataSource(orginData.parcelList);
-      //   store.setState(() => ({ type: 'dcl' }));
-      // }
+      // console.log(tab, 99999999, tabState);
+      // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
+      // const res =  getSearchDetail(query, page, per_page, search_item);
+      if (tab === 'Voxels') {
+        // console.log(11);
+
+        // setDataSource(orginData.parcelList);
+        // store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'Decentraland') {
+        // console.log(22);
+        // const dataListDece = dclDataSource;
+        // if (res.data.Place?.Decentranland !== []) {
+        //   dataListDece?.push(...res.data.Place?.Decentranland)
+        // setDclDataSource(dataListDece)
+        // } else {
+        //   setDclDataSource([])
+        // }
+      }
     },
     [orginData, tabState],
   );
@@ -430,43 +443,66 @@ function searchDetail(r) {
     setShowModal(true)
 
     const res = await getSearchDetail(query, page, per_page, search_item);
-    console.log(res, "res");
+    // console.log(res, "res");
     setShowModal(false)
 
     if (res.code === 100000) {
-      const data = res.data.menu_one;
-      const dataCreater = res.data.Creator.menu_two;
-      const countNum = res.data.item_count;
-      const MenuDataTwo = res.data.Place.menu_two;
+      const data = res.data?.menu_one;
+      const dataCreater = res.data?.Creator?.menu_two;
+      const countNum = res.data?.item_count;
+      const MenuDataTwo = res.data?.Place?.menu_two;
       // const dataList  = dataSource;
 
 
       const dataList = dataSource;
-      dataList.push(...res.data.Place.Voxels)
+      if (res.data?.Place?.Voxels !== []) {
+        dataList?.push(...res.data?.Place?.Voxels)
+        setDataSource(dataList)
+      } else {
+        setDataSource([])
+      }
+
       // console.log(dataList, "dataList");
 
       // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
 
       // setDataSourceTwo(dataList)
-      setDataSource(dataList)
+
       // setDataSource(res.data.Place.Voxels)
 
       const dataListBuilder = dataSourceCreBuilder;
-      dataListBuilder.push(...res.data.Creator.Builder)
-      setDataSourceCreBuilder(dataListBuilder)
+      if (res.data?.Creator?.Builder !== []) {
+        dataListBuilder?.push(...res.data?.Creator?.Builder)
+        setDataSourceCreBuilder(dataListBuilder)
+      } else {
+        setDataSourceCreBuilder([])
+      }
+
       // setDataSourceCreBuilder(res.data.Creator.Builder)
 
 
       const dataListLearn = dataSourceLearn;
-      dataListLearn.push(...res.data.Learn.data)
-      setDataSourceLearn(dataListLearn)
+      if (res.data?.Learn?.data !== []) {
+        dataListLearn?.push(...res.data?.Learn?.data)
+        setDataSourceLearn(dataListLearn)
+      } else {
+        setDataSourceLearn([])
+      }
+
       // setDataSourceLearn(res.data.Learn.data)
       // console.log(dataSourceLearn, 222523);
 
       // setDataSourceTwo(res.data.Place.Voxels)
       const dataListDece = dclDataSource;
-      dataListDece.push(...res.data.Place.Decentranland)
-      setDclDataSource(dataListDece)
+      if (res.data.Place?.Decentranland !== []) {
+        dataListDece?.push(...res.data.Place?.Decentranland)
+        // console.log(dataListDece);
+
+        setDclDataSource(dataListDece)
+      } else {
+        setDclDataSource([])
+      }
+
       // setDclDataSource(res.data.Place.Decentranland)
       const newPage = pageNum + 1
       // console.log(newPage);
@@ -487,16 +523,18 @@ function searchDetail(r) {
       //   valCountCreater.push(obj)
       //   // console.log(valCountCreater, "valCountCreater");
       // }
+      if (dataCreater) {
+        Object.keys(dataCreater).forEach(key => {
+          const obj = {
+            label: dataCreater[key],
+            type: dataCreater[key],
+            // count: countNum[data[key]],
+          }
+          valCountCreater.push(obj)
+        })
+        setValueCountCreater(valCountCreater)
+      }
 
-      Object.keys(dataCreater).forEach(key => {
-        const obj = {
-          label: dataCreater[key],
-          type: dataCreater[key],
-          // count: countNum[data[key]],
-        }
-        valCountCreater.push(obj)
-      })
-      setValueCountCreater(valCountCreater)
 
       // for (const keys in MenuDataTwo) {
       //   const objMenuTwo = {
@@ -751,8 +789,50 @@ function searchDetail(r) {
     search_item: string) => {
     // console.log('打印了打印了', query);
 
-    const res = await getSearchDetail(query, page, per_page, search_item);
-    setDataSource(res.data.Place.Voxels)
+    const res = await getSearchDetail(searchText || query, 1, per_page, search_item);
+
+    // console.log(res, "res");
+
+    if (res.data?.Place?.menu_two !== []) {
+      setMenuDataTwoArrCon(res.data?.Place?.menu_two)
+    } else {
+      setMenuDataTwoArrCon([])
+    }
+
+    if (res.data?.Creator?.menu_two !== []) {
+      setValueCountCreater(res.data?.Creator?.menu_two)
+    } else {
+      setValueCountCreater([])
+    }
+
+    if (res.data?.menu_one !== []) {
+      setValueCount(res.data?.menu_one)
+    } else {
+      setValueCount([])
+    }
+    if (res.data.Place?.Voxels !== []) {
+      setDataSource(res.data.Place.Voxels)
+    } else {
+      setDataSource([])
+    }
+    if (res.data.Learn?.data !== []) {
+      setDataSourceLearn(res.data?.Learn?.data)
+    } else {
+      setDataSourceLearn([])
+    }
+    if (res.data?.Creator?.Builder !== []) {
+      setDataSourceCreBuilder(res.data?.Creator?.Builder)
+    } else {
+      setDataSourceCreBuilder([])
+    }
+    if (res.data?.Place?.Decentranland !== []) {
+      setDclDataSource(res.data?.Place?.Decentranland)
+
+    } else {
+      setDclDataSource([])
+    }
+
+
     // const res = getSearchDetail(query);
   }
 
@@ -818,7 +898,18 @@ function searchDetail(r) {
     [resultHandler],
   );
 
+  const toTopic = React.useCallback((id, item) => {
+    if (item?.name === 'WearableDAO') {
+      window.open('/wearables/wearabledao?type=chinesered')
+    }
+    if (item.topic_id) {
+      window.open(`/topic/${id}?type=buildings`);
+    } else if (item.address) {
+      window.open(`/topicNewBuilding?address=${item.address}`);
+    } 
+  }, []);
 
+ 
 
   // console.log(dataSource, "1111111111111111", tabState, "2222222", dclDataSource);
   const select = React.useCallback(
@@ -839,7 +930,6 @@ function searchDetail(r) {
   );
 
   const renderContent = React.useMemo(() => {
-    // console.log(tabState, "tabState");
 
     // if (loading) {
     //   return <Status status="loading" />;
@@ -851,28 +941,27 @@ function searchDetail(r) {
     //   return <Status status="empty" />;
     // }
     if (tabState === 'Voxels') {
-      // console.log(tabState);
 
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
-          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type}/>);})}
+          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
           {showModal === false ?
             <><img src='/images/saveIcon.gif'></img> </>
             :
             <>
-              {/* 123{dataSourceTwo.toString()} */}
-              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type}/>))}
+              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
 
             </>
           }
         </div>
       );
     }
-    if (tabState === 'Decentranland') {
+    if (tabState === 'Decentraland') {
+      // Decentranland
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 ">
           {dclDataSource.map((card) => {
-            return (<Card {...card} key={uuid()} typeState={card.type}/>);
+            return (<Card {...card} key={uuid()} typeState={card.type} />);
           })}
         </div>
       );
@@ -903,10 +992,10 @@ function searchDetail(r) {
     if (tabStateCreater === 'Builder') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
-          {dataSourceCreBuilder.map((item, idx) => {
+          {dataSourceCreBuilder?.map((item, idx) => {
             return (
               <InfoCard cls={style.cls} {...item} key={idx}
-              // onClick={() => toTopic(idx, item)}
+                onClick={() => toTopic(idx, item)}
               ></InfoCard>
               // <Card
               //   {...card}
@@ -1010,7 +1099,7 @@ function searchDetail(r) {
             {/* <LearnCard/> */}
             {/* 123 */}
             {
-              dataSourceLearn.map((item, idx) => {
+              dataSourceLearn?.map((item, idx) => {
                 // console.log(card,8888888888);
 
                 // console.log(dataSourceLearn,9999999);
@@ -1179,15 +1268,16 @@ function searchDetail(r) {
 
   React.useEffect(() => {
 
-    if (router.query.value) {
+    if (router.query.value !== '') {
       setSearchText(router.query.value);
-      onSearchHandler(router?.query?.value, 1, pageSize, '')
+      onSearchHandler(router?.query?.value, pageNum, pageSize, '')
     }
 
-  }, [router.query.value])
+  }, [router.query.value, searchText])
+  // console.log(router.query.value,"router.query.value");
 
   React.useEffect(() => {
-    if (!router.query.value) {
+    if (router.query.value === '') {
       onSearchHandlerDetail('', pageNum, pageSize, '')
     }
 
@@ -1461,12 +1551,12 @@ function searchDetail(r) {
         // console.log('触底')
         const { scrollTop, scrollHeight, clientHeight } = e.target;
         // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
-        console.log(scrollTop, clientHeight, scrollTop + clientHeight, scrollHeight, window.innerHeight, scrollTop + clientHeight >= scrollHeight - 1);
+        // console.log(scrollTop, clientHeight, scrollTop + clientHeight, scrollHeight, window.innerHeight, scrollTop + clientHeight >= scrollHeight - 1);
         if (scrollTop + clientHeight >= scrollHeight - 1) {
           // if (showModal) {
           console.log('这时候刷新');
           //  setTimeout(() => {
-          onSearchHandlerDetail('', pageNum, 20, '')
+          onSearchHandlerDetail(searchText, pageNum, 20, '')
           //  }, 1000);
 
           // }
@@ -1499,7 +1589,9 @@ function searchDetail(r) {
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}></div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {menuDataTwoArrCon.map((item) => {
+              {/* menuDataTwoArrCon     TABData*/}
+              {(TABData).map((item) => {
+
                 return (
                   <Tab4
                     active={tabState === item.type}
@@ -1885,4 +1977,4 @@ function searchDetail(r) {
   );
 }
 
-export default withRouter(searchDetail);
+export default withRouter(search);
