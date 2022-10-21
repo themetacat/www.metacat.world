@@ -1,7 +1,7 @@
 .anPage {
-  min-width: 1440px;
+  /* min-width: 1440px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: scroll; */
 }
 
 
@@ -126,7 +126,7 @@ color: #0F191B;
   /* overflow-y: scroll;
   overflow-x: hidden; */
   /* height: 1150px; */
-  padding-top: 60px;
+  /* padding-top: 60px; */
   /* background-color: #00d0ec; */
   
 }
@@ -170,8 +170,38 @@ color: #0F191B;
 .content {
   /* height: 650px; */
   overflow-x: hidden;
-  overflow-y: scroll;
-  height: 1650px;
+  overflow-y: overlay;
+  height: 1450px;
+  
+}
+
+.content::web-kit-scrollbar{
+  scrollbar-base-color: transparent;
+  scrollbar-darkshadow-color: transparent;
+  scrollbar-highlight-color: transparent;
+  scrollbar-face-color: transparent;
+}
+
+.content::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* 滚动槽 */
+.content::-webkit-scrollbar-track {
+  border-radius: 10px;
+  -webkit-box-shadow: inset006pxrgba(0, 0, 0, 0.3);
+}
+
+/* 滚动条滑块 */
+.content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  -webkit-box-shadow: inset006pxrgba(0, 0, 0, 0.5);
+}
+
+.content::-webkit-scrollbar-corner {
+  width: 0;
+  height: 0;
 }
 .bigPic{
   /* background: url('/images/Mask.png') no-repeat; */
@@ -187,7 +217,7 @@ color: #0F191B;
 .a{
   position: fixed;
   top: 0px;
-  width: 100%;
+  width: 99%;
   z-index: 999999;
   /* top：0; */
 }

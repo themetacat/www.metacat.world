@@ -204,7 +204,7 @@ export default function PageHeader({ active, className }: Props) {
     search_item: string) => {
     console.log(888);
     const res = getSearchDetail(searchText ||query, page, per_page, search_item);
-    // console.log(res, "res");
+    console.log(res, "res");
   }
 
   // const onSearchHandler = React.useCallback(
