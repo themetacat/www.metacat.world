@@ -989,6 +989,8 @@ function search(r) {
 
         setemptyStatus(true)
         setloadingDetail(true)
+      }else{
+        setloadingDetail(false)
       }
 
     }
@@ -1553,6 +1555,7 @@ function search(r) {
     navLabel,
     getToken,
     requestData,
+    loadingDetail,
     builderSat,
     buildState,
     statue,
@@ -1752,7 +1755,7 @@ function search(r) {
 
           onSearchHandler(searchText, pageNum, 20, '', false)
         } else {
-
+          //  onSearchHandler(searchText, pageNum, 20, '', false)
           onSearchHandlerDetail('', pageNum, 20, '')
         }
         //  }, 1000);
@@ -2119,10 +2122,13 @@ function search(r) {
           <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
-                // console.log('执行几遍');
-
+                // console.log('执行几遍',router.query.q);
+                // console.log(loadingDetail,1111111111)
                 if (!router.query.q) {
                   setDataSource([])
+                  setDataSourceLearn([])
+                  setDataSourceCreWear([])
+                  setDataBuildSource([])
                   onSearchHandler('', 1, pageSize, '', false)
                 } else {
                   setSearchText(router.query.q);
@@ -2134,21 +2140,28 @@ function search(r) {
 
 
             <div className={cn(style.tableList)}>
-              {valueCount.map((item) => {
-                // console.log(valueCount,22222222);
-                return (
-                  <Tab5
-                    label={item.label}
-                    key={item.label}
-                    active={routeTab === item.type}
-                    count={item.count}
-                    onClick={() => {
-                      changeTab3(item.label, item.type);
-                    }}
-                  />
-                  // <>{item}</>
-                );
-              })}
+              {
+             
+                
+                loadingDetail === true ? null :
+                  <>
+                    {valueCount.map((item) => {
+                      // console.log(valueCount,22222222);
+                      return (
+                        <Tab5
+                          label={item.label}
+                          key={item.label}
+                          active={routeTab === item.type}
+                          count={item.count}
+                          onClick={() => {
+                            changeTab3(item.label, item.type);
+                          }}
+                        />
+                        // <>{item}</>
+                      );
+                    })}
+                  </>
+              }
             </div>
           </div>
           {randerCardList}
