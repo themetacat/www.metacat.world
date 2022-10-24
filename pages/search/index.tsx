@@ -2110,7 +2110,7 @@ function search(r) {
           className={cn('', style.bigPic)}
         > */}
         <div id='myClassName' className={cn("bg-black relative", fixedState ? style.a : null)} >
-          <PageHeader className="relative z-10" active={'learn'} />
+          <PageHeader className="relative z-10" />
         </div>
 
         <div id='countTatal' ref={headerRef}
