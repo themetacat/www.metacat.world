@@ -282,10 +282,6 @@ export default function Event(props) {
         setSubTabState(subTab);
         onTabChange(tab);
         requestData(1, 20)
-
-
-
-
         const scrollChange = () => {
 
             const scrollHeight = document.querySelector('.detailName')?.scrollHeight
@@ -310,26 +306,6 @@ export default function Event(props) {
             window.removeEventListener('scroll', scrollChange, false)
         }
     }, [router.query.tab]);
-    // console.log(tabState, "tabState",fixedState);
-
-    // React.useEffect(() => {
-    //     console.log(document.getElementById('myClassName'),window.scrollY ,fixedState);
-    //     // setFixedState(true);
-    //     const listener = () => {
-    //         if (
-    //             // document.querySelector('.myClassName') &&
-    //             // document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-    //             // window.scrollY > 0
-    //             document.getElementById('myClassName') && window.scrollY >= 0
-    //         ) {
-    //             setFixedState(true);
-    //         } else {
-    //             setFixedState(false);
-    //         }
-    //     };
-    //     document.addEventListener('scroll', listener);
-    //     return () => document.removeEventListener('scroll', listener);
-    // }, [fixedState]);
 
 
     React.useEffect(() => {
