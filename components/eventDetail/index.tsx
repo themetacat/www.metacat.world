@@ -2,29 +2,57 @@ import React, { useState, useEffect } from 'react';
 import SearchInput from 'react-search-input';
 import cn from 'classnames';
 import style from './index.module.css';
+import CoverImg from '../cover-img';
 
 type Props = {
   text?: string;
-  onSearch?: (value) => void;
+  onClinkDetail?: (value) => void;
   type?: string;
+  activity_time?;
+  cover_img?;
+  description?;
+  event_detail_url?;
+  event_parcel_url?;
+  name?;
+  status?;
 };
 
-export default function Search({ text, onSearch, type }: Props) {
+export default function Search({ text, onClinkDetail, type,
+  activity_time,
+  cover_img,
+  description,
+  event_detail_url,
+  event_parcel_url,
+  name,
+  status,
+}: Props) {
   const [value, setValue] = useState(text);
   const [show, setShow] = useState(false);
+
+  const detailInston = () => {
+    window.open(event_detail_url)
+
+  }
 
   useEffect(() => {
     setValue(text);
   }, [text]);
 
   return (
-    <div className={style.container}>
-      <div><img src='/images/unnamed.png' className={style.imgBox}></img></div>
+    <div className={style.container} onClick={detailInston}>
+      {/* <img src={cover_img} className={style.imgBox}></img> */}
+      <CoverImg
+        className={style.imgBox}
+        img={cover_img}
+        error="/images/default-cover.png"
+      ></CoverImg>
       <div className={style.content}>
-        <div className={style.instron}>SuperDelicious</div>
-        <div className={style.showDetail}>Activity time：2021/12/11/13:20 -- 2021/12/12/14:00</div>
-        <div className={style.introduce}>Gallery of Kerb and DaisyCoco. Random nuggets of digital madness from our little studio in the middle of nowhere.</div>
-        <div className={style.btnBox}>Entry</div>
+        <div className={style.instron}><span>{name}</span></div>
+        <div className={style.showDetail}>Activity time：{activity_time}</div>
+        <div className={style.introduce}>
+          <span>{description}</span>
+        </div>
+        <div className={style.btnBox} onClick={onClinkDetail}>Entry</div>
       </div>
     </div>
   );

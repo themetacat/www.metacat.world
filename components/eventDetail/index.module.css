@@ -25,10 +25,13 @@
     font-weight: 600;
     font-size: 18px;
     line-height: 25px;
-    display: flex;
     align-items: center;
     color: #FFFFFF;
     bottom: 2px;
+    width: 100%;
+    white-space: nowrap;
+     text-overflow:ellipsis;
+    overflow:hidden;
 }
 .showDetail{
     font-family: 'PingFang SC';
@@ -47,9 +50,16 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 17px;
-    display: flex;
     align-items: center;
     color: #AAAAAA;
+    /* white-space: nowrap; */
+    text-overflow: ellipsis;
+    overflow:hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden;
+    /* height: 40px; */
 }
 .btnBox{
     margin-top: 10px;

@@ -33,6 +33,30 @@ export const getSearchDetail = async ( query: string,
   return json;
 };
 
+export const getEventList = async (  
+  cursor:number ,
+  count:number,) => {
+  const search = qs.stringify({cursor,count}, { addQueryPrefix: true });
+  const url = `/api/get_event_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getDclEventList = async (  
+  cursor:number ,
+  count:number,) => {
+  const search = qs.stringify({cursor,count}, { addQueryPrefix: true });
+  const url = `/api/get_dcl_event_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getDCLEventList = async (cursor: number, count: number) => {
   const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
   const url = `/api/dcl-event-list${search}`;

@@ -77,6 +77,20 @@ const parcels = [
     icon: '/images/Decentraland.jpg',
   },
 ];
+const eventList = [
+  {
+    label: 'Voxels',
+    type: 'voxelsParcels',
+    link: '/event?tab=cryptovoxels',
+    icon: '/images/cvLogo.png',
+  },
+  {
+    label: 'Decentraland',
+    type: 'decentraParcels',
+    link: '/event?tab=decentraland',
+    icon: '/images/Decentraland.jpg',
+  },
+];
 const heatmapData = [
   {
     label: 'Otherside',
@@ -188,6 +202,7 @@ export default function PageHeader({ active, className }: Props) {
   const [analyticState, setAnalyticState] = React.useState(false);
   const [searchText, setSearchText] = React.useState('');
   const [ParcelsState, setParcelsState] = React.useState(false);
+  const [EventState, setEventState] = React.useState(false);
   const [wearableState, setWearableState] = React.useState(false);
   const [learnState, setLearnState] = React.useState(false);
   const [showStateVal, setShowStateVal] = React.useState(null);
@@ -374,6 +389,45 @@ export default function PageHeader({ active, className }: Props) {
               // ></TwoNav>
               <TwoNavigation
                 options={parcels}
+                className={style.cn}
+                location={style.parcels}
+              ></TwoNavigation>
+            ) : null}
+          </div>
+
+          <div
+            className={cn(
+              'text-xl flex text-gray-400 relative cursor-pointer hover:text-white pointer-events-auto',
+              active === '/event' ? style.active : null,
+              style.z, style.nameCon, style.rightCon
+            )}
+            onMouseEnter={() => {
+              setEventState(true);
+            }}
+            onMouseLeave={() => {
+              setEventState(false);
+            }}
+          // onClick={placeDataSet}  
+          >
+            <Link href="/event?tab=cryptovoxels" prefetch>
+              <span className={cn('', EventState === true ? style.active : null, active === '/event' ? style.active : null,)}>Event</span>
+            </Link>
+
+            {
+              EventState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            }
+            {
+              EventState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
+            }
+
+            {EventState ? (
+              // <TwoNav
+              //   options={parcels}
+              //   className={style.cn}
+              //   location={style.parcels}
+              // ></TwoNav>
+              <TwoNavigation
+                options={eventList}
                 className={style.cn}
                 location={style.parcels}
               ></TwoNavigation>

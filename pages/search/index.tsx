@@ -101,6 +101,24 @@ const TABData = [
     type: 'Decentraland',
   },
 ];
+const TABDataEvent = [
+  {
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
+    type: 'Voxels',
+  },
+  {
+    label: 'Decentranland',
+    icon: '/images/Decentraland.jpg',
+    type: 'Decentraland',
+  },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/heatmap?type=somniumspace',
+  },
+];
 const TABDataCreater = [
   {
     label: 'Builder',
@@ -206,6 +224,7 @@ function search(r) {
   const [websiteAddress, setWebsiteAddress] = React.useState('');
   const [orginData, setOrginData] = React.useState({ parcelList: [] });
   const [showType, setShowType] = React.useState('Voxels');
+  const [tabStateEvent, setTabStateEvent] = React.useState('Voxels');
   const [tabState, setTabState] = React.useState('Voxels');
   const [tabStateCreater, setTabStateCreater] = React.useState('Builder');
   const [statue, setStatue] = React.useState(null);
@@ -245,16 +264,16 @@ function search(r) {
   const [menuDataTwoArrCon, setMenuDataTwoArrCon] = React.useState([]);
 
   const [wearablesShowOrHideState, setWearablesShowOrHideState] = React.useState(false);
-  const [joinBuilders, setJoinBuilders] = React.useState(false);
-  const [emailBuilders, setEmailBuilders] = React.useState(false);
+
   const [wearablesShowOrHide, setWearablesShowOrHide] = React.useState(null);
   const [wearablesSleceteIdList, setWearablesSleceteIdList] = React.useState([]);
-  const [stateVal, setStateVal] = React.useState([]);
+  const [eventCvList, setEventCvList] = React.useState([]);
+  const [eventDclList, setEventDclList] = React.useState([]);
+  const [eventSomList, setEventSomList] = React.useState([]);
   const [valueCount, setValueCount] = React.useState([]);
   const [valueCountCreater, setValueCountCreater] = React.useState([]);
-  const [initEmail, setInitEmail] = React.useState('');
-  const [orginName, setOrginName] = React.useState('');
-  const [country, setCountry] = React.useState('');
+  const [valueCountEvent, setValueCountEvent] = React.useState([]);
+
   // const [buildName, setBuildData] = React.useState('');
   const [buildAll, setBuildAll] = React.useState(null);
   const [buildInc, setBuildInc] = React.useState('add');
@@ -337,7 +356,7 @@ function search(r) {
       }
       setTabState('Voxels')
       setTabStateCreater('Builder')
-
+      setTabStateEvent('Voxels')
       // setTabState('Place');
       setShowTab(l);
       setRouteTab(t);
@@ -378,6 +397,42 @@ function search(r) {
       }
     },
     [orginData, tabState],
+  );
+  const onTabChangeEvent = React.useCallback(
+    async (tab) => {
+      if (tabStateEvent === tab) return;
+      // setLoading(true);
+      console.log(tab);
+
+      setTabStateEvent(tab);
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
+      // console.log(tab, 99999999, tabState);
+      // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
+      // const res =  getSearchDetail(query, page, per_page, search_item);
+      if (tab === 'Voxels') {
+        // console.log(11);
+
+        // setDataSource(orginData.parcelList);
+        // store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'Decentraland') {
+        // console.log(22);
+        // const dataListDece = dclDataSource;
+        // if (res.data.Place?.Decentranland !== []) {
+        //   dataListDece?.push(...res.data.Place?.Decentranland)
+        // setDclDataSource(dataListDece)
+        // } else {
+        //   setDclDataSource([])
+        // }
+      }
+      if (tab === 'somniumspace') {
+
+      }
+    },
+    [orginData, tabStateEvent],
   );
   const onTabChangeCreater = React.useCallback(
     async (tab) => {
@@ -437,9 +492,16 @@ function search(r) {
     page: number,
     per_page: number,
     search_item: string) => {
+      // setDataSource([])
+      //             setDataSourceLearn([])
+      //             setDataSourceCreWear([])
+      //             setDataBuildSource([])
+      //             setEventDclList([])
+      //             setEventSomList([])
+      //             setEventCvList([])
     setShowModal(true)
     const newPage = pageNum + 1
-    // console.log(newPage);
+
     setPage(newPage)
 
     const res = await getSearchDetail(query, page, per_page, search_item);
@@ -449,6 +511,7 @@ function search(r) {
     if (res.code === 100000) {
       const data = res.data?.menu_one;
       const dataCreater = res.data?.Creator?.menu_two;
+      const dataEvent = res.data?.Event?.menu_two;
       const countNum = res.data?.item_count;
       const MenuDataTwo = res.data?.Place?.menu_two;
       // const dataList  = dataSource;
@@ -472,6 +535,7 @@ function search(r) {
         setDataSource(dataList)
       }
 
+
       // console.log(dataList, "dataList");
 
       // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
@@ -493,6 +557,22 @@ function search(r) {
         dataListLearn?.push(...res.data?.Learn?.data)
         setDataSourceLearn(dataListLearn)
       }
+      const dataListEventCv = eventCvList;
+      if (res.data?.Event?.Voxels.length > 0) {
+        dataListEventCv?.push(...res.data?.Event?.Voxels)
+        setEventCvList(dataListEventCv)
+      }
+      const dataListEventDcl = eventDclList;
+      if (res.data?.Event?.Decentranland.length > 0) {
+        dataListEventDcl?.push(...res.data?.Event?.Decentranland)
+        setEventDclList(dataListEventDcl)
+      }
+      const dataListEventSom = eventSomList;
+      if (res.data?.Event?.Somniumspace.length > 0) {
+        dataListEventSom?.push(...res.data?.Event?.Somniumspace)
+        setEventSomList(dataListEventSom)
+      }
+
 
       // setDataSourceLearn(res.data.Learn.data)
       // console.log(dataSourceLearn, 222523);
@@ -513,6 +593,7 @@ function search(r) {
 
       const MenuDataTwoArr = []
       const valCountCreater = []
+      const valCountEvent = []
       // for (const key in dataCreater) {
       //   // console.log(valueCount);
       //   const obj = {
@@ -535,6 +616,23 @@ function search(r) {
         })
         setValueCountCreater(valCountCreater)
       }
+
+
+
+      if (dataEvent) {
+        Object?.keys(dataEvent).forEach(key => {
+          const objEvent = {
+            label: dataEvent[key],
+            type: dataEvent[key],
+            // count: countNum[data[key]],
+          }
+          valCountEvent.push(objEvent)
+          console.log(objEvent);
+
+        })
+        setValueCountEvent(valCountEvent)
+      }
+      console.log(valueCountEvent, 9999999999999);
 
 
       // for (const keys in MenuDataTwo) {
@@ -802,59 +900,13 @@ function search(r) {
     // console.log(router.query.q || query);
 
     const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
-    // const data = res.data?.menu_one;
-    // const countNum = res.data?.item_count;
-    // const arr = []
-    // Object.keys(data).forEach(key => {
-    //   const obj = {
-    //     label: data[key],
-    //     type: data[key],
-    //     count: countNum[data[key]],
-    //   }
-    //   arr.push(obj)
-    // })
 
-
-    // setValueCount(arr)
-    // // if (res.data?.menu_one.length !== 0) {
-    // //   // console.log(33333, 2222);
-    // //   setValueCount(res.data?.menu_one)
-    // // } else {
-    // //   // console.log(111111111111, 2222);
-    // //   setValueCount([])
-    // // }
-    // // console.log(res, "res");
-
-    // if (res.data?.Place?.menu_two.length > 0) {
-    //   setMenuDataTwoArrCon(res.data?.Place?.menu_two)
-    // }
-
-    // if (res.data?.Creator?.menu_two.length > 0) {
-    //   setValueCountCreater(res.data?.Creator?.menu_two)
-    // }
-
-
-    // if (res.data.Place?.Voxels.length > 0) {
-    //   setDataSource(res.data.Place.Voxels)
-    // }
-    // if (res.data.Learn?.data.length > 0) {
-    //   setDataSourceLearn(res.data?.Learn?.data)
-    // }
-    // if (res.data?.Creator?.Builder.length > 0) {
-    //   setDataSourceCreBuilder(res.data?.Creator?.Builder)
-    // }
-    // if (res.data?.Place?.Decentranland.length > 0) {
-    //   setDclDataSource(res.data?.Place?.Decentranland)
-
-    // }
-
-
-    // const res = getSearchDetail(query);
     setShowModal(false)
     if (res.code === 100000) {
       const data = res.data?.menu_one;
       const dataCreater = res.data?.Creator?.menu_two;
       const countNum = res.data?.item_count;
+      const dataEvent = res.data?.Event?.menu_two;
       const MenuDataTwo = res.data?.Place?.menu_two;
       // const dataList  = dataSource;
       const arr = []
@@ -896,6 +948,23 @@ function search(r) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
       }
+
+      const dataListEventCv = eventCvList;
+      if (res.data?.Event?.Voxels.length > 0) {
+        dataListEventCv?.push(...res.data?.Event?.Voxels)
+
+        setEventCvList(dataListEventCv)
+      }
+      const dataListEventDcl = eventDclList;
+      if (res.data?.Event?.Decentranland?.length > 0) {
+        dataListEventDcl?.push(...res.data?.Event?.Decentranland)
+        setEventDclList(dataListEventDcl)
+      }
+      const dataListEventSom = eventSomList;
+      if (res.data?.Event?.Somniumspace?.length > 0) {
+        dataListEventSom?.push(...res.data?.Event?.Somniumspace)
+        setEventSomList(dataListEventSom)
+      }
       // setDataSourceCreBuilder(res.data.Creator.Builder)
 
 
@@ -924,6 +993,7 @@ function search(r) {
 
       const MenuDataTwoArr = []
       const valCountCreater = []
+      const valCountEvent = []
       // for (const key in dataCreater) {
       //   // console.log(valueCount);
       //   const obj = {
@@ -958,6 +1028,23 @@ function search(r) {
       //   // console.log(MenuDataTwoArr);
 
       // }
+
+
+      if (dataEvent) {
+        Object?.keys(dataEvent).forEach(key => {
+          const objEvent = {
+            label: dataEvent[key],
+            type: dataEvent[key],
+            // count: countNum[data[key]],
+          }
+          valCountEvent.push(objEvent)
+          // console.log(objEvent);
+
+        })
+        setValueCountEvent(valCountEvent)
+      }
+      // console.log(valueCountEvent, 9999999999999);
+
       if (MenuDataTwo) {
         Object?.keys(MenuDataTwo).forEach(keys => {
           const objMenuTwo = {
@@ -989,7 +1076,7 @@ function search(r) {
 
         setemptyStatus(true)
         setloadingDetail(true)
-      }else{
+      } else {
         setloadingDetail(false)
       }
 
@@ -1071,24 +1158,6 @@ function search(r) {
 
 
 
-  // console.log(dataSource, "1111111111111111", tabState, "2222222", dclDataSource);
-  const select = React.useCallback(
-    (id, ids) => {
-      if (ids.findIndex((item) => item === id) === -1) return;
-      if (selectedIds.findIndex((item) => item === id) !== -1) {
-        selectedIds.splice(
-          selectedIds.findIndex((item) => item === id),
-          1,
-        );
-        setSelectedIds([...selectedIds]);
-      } else {
-        selectedIds.push(id);
-        setSelectedIds([...selectedIds]);
-      }
-    },
-    [state, selectedIds],
-  );
-
   const renderContent = React.useMemo(() => {
 
     if (loading) {
@@ -1132,6 +1201,71 @@ function search(r) {
     dataSource,
     loading,
     onRetry,
+    changeNum,
+    valueCount,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
+  ]);
+  const onClinkCvDetail = (card) => {
+
+  }
+  const renderContentEvent = React.useMemo(() => {
+    // console.log(tabStateEvent);
+
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (loadingDetail === true) {
+
+      return <Status status="loadingDetail" />;
+    }
+    if (tabStateEvent === 'Voxels') {
+
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+          {eventCvList.map((card, idx) => {
+            return < EventDetail key={idx} {...card} onClinkDetail={() => {
+              onClinkCvDetail(card)
+            }} />;
+          })}
+        </div>
+      );
+    }
+    if (tabStateEvent === 'Decentraland') {
+      // Decentranland
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+          {eventDclList.map((card, idx) => {
+            return (< EventDetail key={idx} {...card} onClinkDetail={() => {
+              onClinkCvDetail(card)
+            }} />);
+          })}
+        </div>
+      );
+    }
+    if (tabStateEvent === 'somniumspace') {
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+          {eventSomList.map((card, idx) => {
+            return (< EventDetail key={idx} {...card} onClinkDetail={() => {
+              onClinkCvDetail(card)
+            }} />);
+          })}
+        </div>
+      );
+    }
+  }, [
+    error,
+    loading,
+    onRetry,
+    eventCvList,
+    eventDclList,
+    eventSomList,
     changeNum,
     valueCount,
     parcelsIds,
@@ -1202,7 +1336,6 @@ function search(r) {
     }
   }, [
     error,
-    dataSource,
     loading,
     onRetry,
     changeNum,
@@ -1415,6 +1548,7 @@ function search(r) {
   useEffect(() => {
     setTabStateCreater('Builder')
     setTabState('Voxels')
+    setTabStateEvent('Voxels')
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
@@ -1439,11 +1573,20 @@ function search(r) {
     // if (searchText !== null) {
     //   onSearchHandlerDetail('', pageNum, pageSize, '')
     // }
+    console.log(!router.query.q);
+    
     if (!router.query.q) {
+      
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
     } else {
-      setDataSource([])
+           setDataSource([])
+                  setDataSourceLearn([])
+                  setDataSourceCreWear([])
+                  setDataBuildSource([])
+                  setEventDclList([])
+                  setEventSomList([])
+                  setEventCvList([])
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
     }
@@ -1750,11 +1893,12 @@ function search(r) {
         //  setTimeout(() => {
         // console.log(searchText, 'console.log(searchText);');
         if (searchText !== '') {
-
-          // console.log('有没有');
+          console.log('有没有');
 
           onSearchHandler(searchText, pageNum, 20, '', false)
         } else {
+          console.log(1111111111111111111111);
+
           //  onSearchHandler(searchText, pageNum, 20, '', false)
           onSearchHandlerDetail('', pageNum, 20, '')
         }
@@ -1837,162 +1981,39 @@ function search(r) {
     }
     if (routeTab === 'Event') {
       return (
-        // <div>5555555</div>
-        <div className={style.allHeight1}><EventDetail /><EventDetail /></div>
+        //   // <div>5555555</div>
+        //   <div className={style.allHeight1}><EventDetail /><EventDetail /></div>
+
+        <>
+
+          <div className={cn('tab-list flex ', style.allHeight)}>
+            {/* <div className={cls}>valueCountEvent||</div> */}
+            <div className={cn('main-content flex px-0', style.tabtext)}>
+              {(TABDataEvent).map((item) => {
+                return (
+                  <Tab4
+                    active={tabStateEvent === item.type}
+                    isMini={true}
+                    key={item.label}
+                    icon={item.icon}
+                    label={item.label}
+                    onClick={() => {
+                      onTabChangeEvent(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+
+          <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
+            {renderContentEvent}
+          </div>
+
+        </>
       )
-      // if (showType === 'Voxels') {
-      //   return (
-      //     <>
-      //       <div className={cn('tab-list flex mt-5', style.allHeight)}>
-      //         <div className={cls}></div>
-      //         <div className={cn('main-content flex px-0', style.tabtext)}>
-      //           {REPORTTAB.map((item) => {
-      //             return (
-      //               <Tab4
-      //                 active={tabState === item.type}
-      //                 isMini={true}
-      //                 key={item.label}
-      //                 label={item.label}
-      //                 icon={item.icon}
-      //                 onClick={() => {
-      //                   onTabChangeTR(item.type);
-      //                 }}
-      //               />
-      //             );
-      //           })}
-      //           <div className={cls} />
-      //         </div>
-      //         <div className={cls} />
-      //       </div>
-      //       <div className={cn(style.content)}>
-      //         <BaseChart>
-      //           <BaseBar
-      //             id={'parcel1'}
-      //             labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
-      //             dataHandlder={req_cv_parcel_traffic}
-      //             barWidth={20}
-      //             limit={21}
-      //             textColor={style.nftColor}
-      //             token={refreshTK()}
-      //           ></BaseBar>
-      //         </BaseChart>
-      //         {/* <BaseChart className=" my-5">
-      //           <TrafficBar
-      //             id={'parcel3'}
-      //             labelText={'DAILY TRAFFIC'}
-      //             dataHandlder={req_cv_parcel_traffic_list}
-      //             barWidth={20}
-      //             limit={21}
-      //             textColor={style.nftColor}
-      //             token={refreshTK()}
-      //           ></TrafficBar>
-      //         </BaseChart> */}
-      //         <BaseChart className=" my-5" type={true}>
-      //           <PieChart
-      //             id="piechart2"
-      //             labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
-      //             dataHandlder={req_cv_parcel_traffic_daily}
-      //             token={refreshTK()}
-      //             textColor={style.nftColor}
-      //             options={[
-      //               {
-      //                 label: 'Day',
-      //                 value: 'day',
-      //               },
-      //               {
-      //                 label: 'Week',
-      //                 value: 'week',
-      //               },
-      //               {
-      //                 label: 'Month',
-      //                 value: 'month',
-      //               },
-      //             ]}
-      //           ></PieChart>
-      //         </BaseChart>
-      //         <BaseChart className=" my-5" type={true}>
-      //           <ProfileDetail
-      //             label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
-      //             dataHandlder={req_cv_parcel_month_traffic_detail}
-      //             token={refreshTK()}
-      //             textColor={style.nftColor}
-      //           ></ProfileDetail>
-      //         </BaseChart>
-      //       </div>
-      //     </>
-      //   );
-      // }
-      // if (showType === 'Decentraland') {
-      //   return (
-      //     <>
-      //       <div className={cn('tab-list flex ', style.allHeight)}>
-      //         <div className={cls}></div>
-      //         <div className="main-content flex px-0">
-      //           {REPORTTAB.map((item) => {
-      //             return (
-      //               <Tab4
-      //                 active={tabState === item.type}
-      //                 isMini={true}
-      //                 key={item.label}
-      //                 label={item.label}
-      //                 icon={item.icon}
-      //                 onClick={() => {
-      //                   onTabChangeTR(item.type);
-      //                 }}
-      //               />
-      //             );
-      //           })}
-      //           <div className={cls} />
-      //         </div>
-      //         <div className={cls} />
-      //       </div>
-      //       <div className={cn(style.content)}>
-      //         <BaseChart>
-      //           <BaseBarDece
-      //             id={'parcel1'}
-      //             labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
-      //             dataHandlder={req_dece_parcel_traffic}
-      //             barWidth={20}
-      //             limit={21}
-      //             textColor={style.deceColor}
-      //             token={refreshTK()}
-      //           ></BaseBarDece>
-      //         </BaseChart>
-      //         <BaseChart className=" my-5" type={true}>
-      //           <PieChartDece
-      //             id="piechart2"
-      //             labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
-      //             dataHandlder={req_deceData_parcel_traffic_daily}
-      //             token={refreshTK()}
-      //             textColor={style.deceColor}
-      //             options={[
-      //               {
-      //                 label: 'Day',
-      //                 value: 'day',
-      //               },
-      //               {
-      //                 label: 'Week',
-      //                 value: 'week',
-      //               },
-      //               {
-      //                 label: 'Month',
-      //                 value: 'month',
-      //               },
-      //             ]}
-      //           ></PieChartDece>
-      //         </BaseChart>
-      //         <BaseChart className=" my-5" type={true}>
-      //           <ProfileDetailDece
-      //             label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
-      //             dataHandlder={req_dece_parcel_traffic_list}
-      //             token={refreshTK()}
-      //             textColor={style.deceColor}
-      //           ></ProfileDetailDece>
-      //         </BaseChart>
-      //       </div>
-      //     </>
-      //   );
-      // }
     }
     if (routeTab === 'Creator') {
       return (
@@ -2056,6 +2077,7 @@ function search(r) {
     manySetLabel,
     loadingDetail,
     renderContent,
+    renderContentEvent,
     renderBuilding,
     renderWerable,
     dataSource,
@@ -2122,13 +2144,16 @@ function search(r) {
           <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
-                // console.log('执行几遍',router.query.q);
+                console.log('执行几遍', !router.query.q);
                 // console.log(loadingDetail,1111111111)
                 if (!router.query.q) {
                   setDataSource([])
                   setDataSourceLearn([])
                   setDataSourceCreWear([])
                   setDataBuildSource([])
+                  setEventDclList([])
+                  setEventSomList([])
+                  setEventCvList([])
                   onSearchHandler('', 1, pageSize, '', false)
                 } else {
                   setSearchText(router.query.q);
@@ -2141,8 +2166,8 @@ function search(r) {
 
             <div className={cn(style.tableList)}>
               {
-             
-                
+
+
                 loadingDetail === true ? null :
                   <>
                     {valueCount.map((item) => {
