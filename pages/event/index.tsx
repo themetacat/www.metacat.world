@@ -135,6 +135,7 @@ export default function Event(props) {
     const [fixedState, setFixedState] = React.useState(false);
     const [tabPercent, setTabPercent] = React.useState(0);
     const [showModal, setShowModal] = React.useState(false);
+    const [anchor, setAnchor] = React.useState(false);
     const [eventDclList, setEventDclList] = React.useState([]);
     const [eventCvList, setEventCvList] = React.useState([]);
     const [pageNum, setPage] = useState(1);
@@ -311,32 +312,49 @@ export default function Event(props) {
     }, [router.query.tab]);
     // console.log(tabState, "tabState",fixedState);
 
+    // React.useEffect(() => {
+    //     console.log(document.getElementById('myClassName'),window.scrollY ,fixedState);
+    //     // setFixedState(true);
+    //     const listener = () => {
+    //         if (
+    //             // document.querySelector('.myClassName') &&
+    //             // document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+    //             // window.scrollY > 0
+    //             document.getElementById('myClassName') && window.scrollY >= 0
+    //         ) {
+    //             setFixedState(true);
+    //         } else {
+    //             setFixedState(false);
+    //         }
+    //     };
+    //     document.addEventListener('scroll', listener);
+    //     return () => document.removeEventListener('scroll', listener);
+    // }, [fixedState]);
+
+
     React.useEffect(() => {
-        // console.log(document.getElementById('myClassName'),window.scrollY ,fixedState);
-        setFixedState(true);
         const listener = () => {
-            if (
-                // document.querySelector('.myClassName') &&
-                // document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-                // window.scrollY > 0
-                document.getElementById('myClassName') && window.scrollY >= 0
-            ) {
-                setFixedState(true);
+          if (document.getElementById('switch') && window.scrollY > 0) {
+            if (!anchor) {
+              setFixedState(true);
             } else {
-                setFixedState(false);
+              setAnchor(false);
             }
+          } else {
+            setFixedState(false);
+          }
         };
         document.addEventListener('scroll', listener);
         return () => document.removeEventListener('scroll', listener);
-    }, [fixedState]);
+      }, [fixedState, anchor]);
 
     return (
         <Page meta={meta} className={cn('detailName', style.detailName)}>
             {/* <Layout> */}
             <div className={style.containerBox} ref={headerRef}>
-                <div id='myClassName' className={cn('myClassName', fixedState === true ? style.fix1 : null)} style={{ zIndex: "99999" }}>
-                    <PageHeader className="relative" active={'/event'} />
-                </div>
+            <div  id="switch" className={cn(' z-10', fixedState ? style.fix1 : null)}>
+          <PageHeader className="" active={'/event'} />
+        </div>
                 <div
                     className={cn(
                         'tab-list flex  main-content relative',
