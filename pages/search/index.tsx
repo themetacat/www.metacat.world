@@ -402,7 +402,7 @@ function search(r) {
     async (tab) => {
       if (tabStateEvent === tab) return;
       // setLoading(true);
-      console.log(tab);
+      // console.log(tab);
 
       setTabStateEvent(tab);
       setParcelsIds([]);
@@ -429,7 +429,7 @@ function search(r) {
         // }
       }
       if (tab === 'somniumspace') {
-
+  // console.log(22);
       }
     },
     [orginData, tabStateEvent],
@@ -879,7 +879,7 @@ function search(r) {
 
 
 
-  const onSearchHandler = async (query,
+  const onSearchHandler = React.useCallback(async (query,
     page: number,
     per_page: number,
     search_item: string,
@@ -1081,7 +1081,7 @@ function search(r) {
       }
 
     }
-  }
+  }, [router.query.q]);
 
 
 
@@ -1209,7 +1209,13 @@ function search(r) {
     reqDclData,
   ]);
   const onClinkCvDetail = (card) => {
-
+    window.open(card.event_parcel_url);
+  }
+  const onClinkDclDetail = (card) => {
+    window.open(card.event_parcel_url);
+  }
+  const onClinkSomDetail = (card) => {
+    window.open(card.event_parcel_url);
   }
   const renderContentEvent = React.useMemo(() => {
     // console.log(tabStateEvent);
@@ -1242,7 +1248,7 @@ function search(r) {
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
           {eventDclList.map((card, idx) => {
             return (< EventDetail key={idx} {...card} onClinkDetail={() => {
-              onClinkCvDetail(card)
+              onClinkDclDetail(card)
             }} />);
           })}
         </div>
@@ -1253,7 +1259,7 @@ function search(r) {
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
           {eventSomList.map((card, idx) => {
             return (< EventDetail key={idx} {...card} onClinkDetail={() => {
-              onClinkCvDetail(card)
+              onClinkSomDetail(card)
             }} />);
           })}
         </div>
@@ -1573,7 +1579,7 @@ function search(r) {
     // if (searchText !== null) {
     //   onSearchHandlerDetail('', pageNum, pageSize, '')
     // }
-    console.log(!router.query.q);
+    // console.log(!router.query.q,"hahahah",router.query.q);
     
     if (!router.query.q) {
       
@@ -1893,11 +1899,11 @@ function search(r) {
         //  setTimeout(() => {
         // console.log(searchText, 'console.log(searchText);');
         if (searchText !== '') {
-          console.log('有没有');
+          // console.log('有没有',searchText);
 
           onSearchHandler(searchText, pageNum, 20, '', false)
         } else {
-          console.log(1111111111111111111111);
+          // console.log(1111111111111111111111);
 
           //  onSearchHandler(searchText, pageNum, 20, '', false)
           onSearchHandlerDetail('', pageNum, 20, '')
@@ -2144,8 +2150,9 @@ function search(r) {
           <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
-                console.log('执行几遍', !router.query.q);
+                // console.log(!router.query.q,'执行几遍', router.query.q);
                 // console.log(loadingDetail,1111111111)
+                setSearchText(router.query.q);
                 if (!router.query.q) {
                   setDataSource([])
                   setDataSourceLearn([])
@@ -2154,9 +2161,11 @@ function search(r) {
                   setEventDclList([])
                   setEventSomList([])
                   setEventCvList([])
-                  onSearchHandler('', 1, pageSize, '', false)
-                } else {
                   setSearchText(router.query.q);
+                  onSearchHandler(router.query.q, 1, pageSize, '', false)
+                } else {
+                  setSearchText('');
+                  onSearchHandler('', 1, pageSize, '', false)
                   // onSearchHandler(router.query.q, 1, pageSize, '',false)
                 }
               }} ></Search>

@@ -3,10 +3,12 @@ import cn from 'classnames';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import style from './index.module.less';
-import Page from '../../components/page';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import style from './index.module.less';
+import Page from '../../components/page';
+
+
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import PageHeader from '../../components/top-navigation';
 import Footer from '../../components/footer';
@@ -143,7 +145,7 @@ export default function Event(props) {
     }, [pageNum])
     const cls = cn('flex-1', style.bottomLine);
 
-    const requestData = async (page, count) => {
+    const requestData = async (page, countNum) => {
 
 
 
@@ -252,9 +254,7 @@ export default function Event(props) {
                 <>
                     <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
                         {eventCvList.map((card, idx) => {
-                            return < EventDetail key={idx} {...card} onClinkDetail={() => {
-                                onClinkCvDetail(card)
-                            }} />;
+                            return < EventDetail {...card} onClinkDetail={() => { onClinkCvDetail(card) }} />;
                         })}
                         {/* {
                             showModal ? <div style={{ marginLeft: "100%", width: "20px", height: "20px" }}>  <img src='/images/saveIcon.gif'></img> </div> :
@@ -314,14 +314,17 @@ export default function Event(props) {
             window.removeEventListener('scroll', scrollChange, false)
         }
     }, [router.query.tab]);
-    console.log(tabState, "tabState");
+    // console.log(tabState, "tabState",fixedState);
 
     React.useEffect(() => {
+        // console.log(document.getElementById('myClassName'),window.scrollY ,fixedState);
+        setFixedState(true);
         const listener = () => {
             if (
-                document.querySelector('.myClassName') &&
-                document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
-                window.scrollY > 0
+                // document.querySelector('.myClassName') &&
+                // document.querySelector('.myClassName').getBoundingClientRect().top <= 10 &&
+                // window.scrollY > 0
+                document.getElementById('myClassName') && window.scrollY >= 0
             ) {
                 setFixedState(true);
             } else {
@@ -336,7 +339,7 @@ export default function Event(props) {
         <Page meta={meta} className={cn('detailName', style.detailName)}>
             {/* <Layout> */}
             <div className={style.containerBox} ref={headerRef}>
-                <div className={cn('  myClassName', fixedState ? style.fix1 : null)} style={{ zIndex: "99999" }}>
+                <div id='myClassName' className={cn('myClassName', fixedState === true ? style.fix1 : null)} style={{ zIndex: "99999" }}>
                     <PageHeader className="relative" active={'/event'} />
                 </div>
                 <div
