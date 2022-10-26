@@ -256,11 +256,6 @@ export default function Event(props) {
                         {eventCvList.map((card, idx) => {
                             return < EventDetail {...card} onClinkDetail={() => { onClinkCvDetail(card) }} />;
                         })}
-                        {/* {
-                            showModal ? <div style={{ marginLeft: "100%", width: "20px", height: "20px" }}>  <img src='/images/saveIcon.gif'></img> </div> :
-                                null
-                        } */}
-
                     </div>
                 </>
             )
