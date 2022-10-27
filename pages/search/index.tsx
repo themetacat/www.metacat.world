@@ -101,9 +101,10 @@ const TABData = [
     type: 'Decentraland',
   },
 ];
-const TABobj ={
-  Voxels:'/images/cvLogo.png',
-  Decentranland:'/images/Decentraland.jpg',
+const TABobj = {
+  Voxels: '/images/cvLogo.png',
+  Decentranland: '/images/Decentraland.jpg',
+  Somniumspace:'/images/somniumspace.png',
 }
 const TABDataEvent = [
   {
@@ -289,6 +290,7 @@ function search(r) {
   const [tokenWearable, setTokenWearable] = React.useState(null);
   const [buildStateWearable, setBuildStateVal] = React.useState(1);
   const [addressWearable, setaddressWerVal] = React.useState(null);
+  const [subTabState, setSubTabState] = React.useState('Voxels');
   const [emptyStatus, setemptyStatus] = React.useState(false);
   const [pageNum, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(20);
@@ -373,30 +375,31 @@ function search(r) {
     async (tab) => {
       if (tabState === tab) return;
       // setLoading(true);
-      // console.log(tab);
 
-      setTabState(tab);
+
       setParcelsIds([]);
       setSelectedIds([]);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
-      // console.log(tab, 99999999, tabState);
-      // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
-      // const res =  getSearchDetail(query, page, per_page, search_item);
+
+ 
+  
+      setTabState(tab);
+
+
+
       if (tab === 'Voxels') {
-        // console.log(11);
 
         // setDataSource(orginData.parcelList);
         // store.setState(() => ({ type: 'cv' }));
       }
-      if (tab === 'Decentraland') {
-        // console.log(22);
+      if (tab === 'Decentranland') {
         // const dataListDece = dclDataSource;
         // if (res.data.Place?.Decentranland !== []) {
         //   dataListDece?.push(...res.data.Place?.Decentranland)
         // setDclDataSource(dataListDece)
         // } else {
-        //   setDclDataSource([])
+        // setDclDataSource(eventDclList)
         // }
       }
     },
@@ -406,24 +409,18 @@ function search(r) {
     async (tab) => {
       if (tabStateEvent === tab) return;
       // setLoading(true);
-      // console.log(tab);
 
       setTabStateEvent(tab);
       setParcelsIds([]);
       setSelectedIds([]);
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
-      // console.log(tab, 99999999, tabState);
-      // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
-      // const res =  getSearchDetail(query, page, per_page, search_item);
       if (tab === 'Voxels') {
-        // console.log(11);
 
         // setDataSource(orginData.parcelList);
         // store.setState(() => ({ type: 'cv' }));
       }
-      if (tab === 'Decentraland') {
-        // console.log(22);
+      if (tab === 'Decentranland') {
         // const dataListDece = dclDataSource;
         // if (res.data.Place?.Decentranland !== []) {
         //   dataListDece?.push(...res.data.Place?.Decentranland)
@@ -433,7 +430,7 @@ function search(r) {
         // }
       }
       if (tab === 'somniumspace') {
-        // console.log(22);
+           //   setDclDataSource([])
       }
     },
     [orginData, tabStateEvent],
@@ -441,7 +438,7 @@ function search(r) {
   const onTabChangeCreater = React.useCallback(
     async (tab) => {
       // setShowType(tab);
-      // console.log(tab);
+     
 
       if (tabStateCreater === tab) return;
       // setLoading(true);
@@ -455,7 +452,6 @@ function search(r) {
         // store.setState(() => ({ type: 'cv' }));
       }
       if (tab === 'wearable') {
-        // console.log("storestorestorestorestorestore");
 
         // setDclDataSource(orginData.parcelList);
         // store.setState(() => ({ type: 'dcl' }));
@@ -509,7 +505,6 @@ function search(r) {
     setPage(newPage)
 
     const res = await getSearchDetail(query, page, per_page, search_item);
-    // console.log(res, "res");
     setShowModal(false)
 
     if (res.code === 100000) {
@@ -529,9 +524,7 @@ function search(r) {
         arr.push(obj)
       })
 
-
       setValueCount(arr)
-
 
       const dataList = dataSource;
       if (res.data?.Place?.Voxels.length > 0) {
@@ -539,22 +532,11 @@ function search(r) {
         setDataSource(dataList)
       }
 
-
-      // console.log(dataList, "dataList");
-
-      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-
-      // setDataSourceTwo(dataList)
-
-      // setDataSource(res.data.Place.Voxels)
-
       const dataListBuilder = dataSourceCreBuilder;
       if (res.data?.Creator?.Builder.length > 0) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
       }
-      // setDataSourceCreBuilder(res.data.Creator.Builder)
-
 
       const dataListLearn = dataSourceLearn;
       if (res.data?.Learn?.data.length > 0) {
@@ -577,44 +559,22 @@ function search(r) {
         setEventSomList(dataListEventSom)
       }
 
-
-      // setDataSourceLearn(res.data.Learn.data)
-      // console.log(dataSourceLearn, 222523);
-
-      // setDataSourceTwo(res.data.Place.Voxels)
       const dataListDece = dclDataSource;
       if (res.data.Place?.Decentranland.length > 0) {
         dataListDece?.push(...res.data.Place?.Decentranland)
-        // console.log(dataListDece);
-
         setDclDataSource(dataListDece)
       }
-
-      // setDclDataSource(res.data.Place.Decentranland)
-
-      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
 
 
       const MenuDataTwoArr = []
       const valCountCreater = []
       const valCountEvent = []
-      // for (const key in dataCreater) {
-      //   // console.log(valueCount);
-      //   const obj = {
-      //     label: dataCreater[key],
-      //     type: dataCreater[key],
-      //     // count: countNum[data[key]],
-      //   }
-
-      //   valCountCreater.push(obj)
-      //   // console.log(valCountCreater, "valCountCreater");
-      // }
+     
       if (dataCreater) {
         Object?.keys(dataCreater).forEach(key => {
           const obj = {
             label: dataCreater[key],
             type: dataCreater[key],
-            // count: countNum[data[key]],
           }
           valCountCreater.push(obj)
         })
@@ -628,7 +588,7 @@ function search(r) {
           const objEvent = {
             label: dataEvent[key],
             type: dataEvent[key],
-            // count: countNum[data[key]],
+             icon: TABobj[dataEvent[key]],
           }
           valCountEvent.push(objEvent)
           console.log(objEvent);
@@ -636,27 +596,15 @@ function search(r) {
         })
         setValueCountEvent(valCountEvent)
       }
-      console.log(valueCountEvent, 9999999999999);
 
-
-      // for (const keys in MenuDataTwo) {
-      //   const objMenuTwo = {
-      //     label: MenuDataTwo[keys],
-      //     type: MenuDataTwo[keys],
-      //     // icon: MenuDataTwo[keys],
-      //   }
-      //   MenuDataTwoArr.push(objMenuTwo)
-      //   // console.log(MenuDataTwoArr);
-
-      // }
       if (MenuDataTwo) {
         Object?.keys(MenuDataTwo).forEach(keys => {
           console.log(TABobj[MenuDataTwo[keys]]);
-          
+
           const objMenuTwo = {
             label: MenuDataTwo[keys],
             type: MenuDataTwo[keys],
-            // icon: MenuDataTwo[keys],
+            icon: TABobj[MenuDataTwo[keys]],
           }
           MenuDataTwoArr.push(objMenuTwo)
         })
@@ -664,17 +612,6 @@ function search(r) {
       }
 
 
-      // for (const key in data) {
-      //   // console.log(valueCount);
-      //   const obj = {
-      //     label: data[key],
-      //     type: data[key],
-      //     count: countNum[data[key]],
-      //   }
-
-      //   arr.push(obj)
-      //   // console.log(arr);
-      // }
       if (!res.data?.item_count && !res.data?.menu_one) {
         setemptyStatus(true)
       }
@@ -698,7 +635,6 @@ function search(r) {
         return null;
       }
 
-      // toast.error(msg);
 
       return null;
     },
@@ -707,7 +643,6 @@ function search(r) {
 
   const changeNavTab = React.useCallback(
     (nav_label, index = 0) => {
-      // console.log(nav_label,222222222222222);
 
       // setNavLabel(navLabel);
       setNavLabel(nav_label);
@@ -715,13 +650,11 @@ function search(r) {
       setManySetState(false);
       nav_Label.current = nav_label;
       // changeNum(dataSource, nav_label);
-      // console.log(Nav);
 
       const set_nav = Nav.map((item, i) => {
         if (index === i) return { ...item, state: 1 };
         return { ...item, state: 0 };
       });
-      // console.log(set_nav);
       setNav(set_nav);
     },
     [Nav, setCardState, setManySetState, setNavLabel, setNav, dataSource, cartData],
@@ -966,8 +899,8 @@ function search(r) {
         dataListEventDcl?.push(...res.data?.Event?.Decentranland)
         setEventDclList(dataListEventDcl)
       }
-      // console.log(eventDclList,"eventDclList",tabState);
-      
+
+
       const dataListEventSom = eventSomList;
       if (res.data?.Event?.Somniumspace?.length > 0) {
         dataListEventSom?.push(...res.data?.Event?.Somniumspace)
@@ -1043,7 +976,7 @@ function search(r) {
           const objEvent = {
             label: dataEvent[key],
             type: dataEvent[key],
-            // count: countNum[data[key]],
+             icon: TABobj[dataEvent[key]],
           }
           valCountEvent.push(objEvent)
           // console.log(objEvent);
@@ -1585,9 +1518,9 @@ function search(r) {
   // }, [])
 
   React.useEffect(() => {
-    // console.log('执行', router?.query?.q,);
+    // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
-    if (router.query.q) {
+    if (window.location.search) {
       setDataSource([])
       setDataSourceLearn([])
       setDataSourceCreWear([])
@@ -1598,15 +1531,15 @@ function search(r) {
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
 
-    
+
     } else if (router?.query?.q === undefined) {
-        // return
-        setSearchText('');
-        onSearchHandler('', 1, 20, '', false)
+      // return
+      setSearchText('');
+      onSearchHandler('', 1, 20, '', false)
       // setSearchText('');
       // onSearchHandler('', 1, 20, '', false)
     }
-  }, [router?.query?.q,])
+  }, [router?.query?.q])
   // console.log(router.query.value,"router.query.value");
 
   React.useEffect(() => {
@@ -1615,69 +1548,17 @@ function search(r) {
 
 
     const scrollChange = () => {
-      // console.log(document.getElementById('a1').scrollTop,"document.getElementById('countTatal').scrollTop");
-      //     console.log(showCon);
-      // console.log(window?.innerHeight,888);
-
-      // console.log(document?.getElementById('countTatal')?.scrollTop, 11111);
-      // console.log(document.querySelector('.myClassName')?.scrollTop, 2222);
-
-      // console.log(window.scrollY);
-      // const scrollHeight = document.getElementsByTagName('body')[0].scrollHeight
-      // const clientHeight = document.querySelector('.myClassName').clientHeight
-      // const scrollTop =document.querySelector('.myClassName')?.scrollTop
-      // // console.log( scrollHeight,clientHeight,scrollTop);
-      // // console.log( document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop);
-      // console.log(clientHeight,scrollTop,scrollHeight);
-
-      // console.log(window.scrollY);
-
-      // const listener = () => {
-      // console.log(151515151515);
-      // if (document.querySelector('.myClassName')?.scrollTop && document.querySelector('.myClassName')?.scrollTop > 1900) {
-      //   if (showCon === false) {
-
-      //     setSwitchShow(true)
-      //     if (!showModal) {
-      //       dataSourceTwoDetail('', 2, 20, '')
-      //     }
-
-      //     onSearchHandlerDetail('', pageNum, 8, '')
-      //   }
-
-      // }
-      // else {
-      //   setSwitchShow(false)
-      // }
-      // };
+     
       document.addEventListener('scroll', scrollChange);
       return () => document.removeEventListener('scroll', scrollChange);
     }
-
-
     window.addEventListener('scroll', scrollChange, true)
-    // scrollChange()
     return () => {
       window.removeEventListener('scroll', scrollChange, false)
     }
 
   }, [])
 
-
-
-
-  // const requestPersonal = React.useCallback(
-  //   async (token: string) => {
-  //     const res = await getBaseInfo(token);
-  //     const data = resultHandler(res, requestPersonal);
-  //     if (!data) {
-  //       return;
-  //     }
-  //     const { profile } = data;
-  //     state.setState({ profile });
-  //   },
-  //   [resultHandler],
-  // );
 
 
 
@@ -1690,25 +1571,12 @@ function search(r) {
     if (a) {
       setWalletAddress(a);
     }
-    // console.log(r.router.query.type,"r.router.query.type");
 
     setNavLabel('All')
-    // req_building_list(walletAddress)
-    // const accessToken = getToken('atk');
-    // console.log(11111111111111,accessToken);
-
-    // setTokenWearable(accessToken)
-    // // setRouteTab(r.router.query.type);
-    // reqWearablesData();
-    // requestPersonal(accessToken);
-    // requireBuilder(accessToken)
-    // if (tabState === 'Voxels') requestData(accessToken);
-    // if (tabState === 'Decentraland') reqDclData(accessToken);
-    // if(routeTab === 'building')reqBuilderData(accessToken);
+    
     watcher_store();
     watcher_store_status();
     watcher_cardState();
-    // if (!accessToken) window.location.href = '/'; //判断登录状态跳转
   }, [
     tokenWearable,
     navLabel,
@@ -1884,62 +1752,26 @@ function search(r) {
     // console.log(routeTab,tabState);
 
     const scroll = (e) => {
-      // console.log(e,"222222");
-
-      // // console.log('scrollscrollscrollscrollscrollscroll')
-      // console.log(document.querySelector('.myClassName')?.scrollTop);
-      // //   if(document.querySelector('.myClassName')?.scrollTop>868){
-      // // console.log('触底')
-      // //   }
-      // const timeCount;
-      // if (timeCount) {
-      //   clearTimeout(timeCount);
-      // }
-
-      // timeCount = setTimeout(() => {
-      // onSearchHandlerDetail('', pageNum, 20, '')
-      // if (dataSource.length) {
-      // console.log('触底')
+    
       const { scrollTop, scrollHeight, clientHeight } = e.target;
-      // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
-      // console.log(scrollTop, clientHeight, scrollTop + clientHeight, scrollHeight, window.innerHeight, scrollTop + clientHeight >= scrollHeight - 1);
+     
       if (scrollTop + clientHeight >= scrollHeight - 20) {
-        // if (showModal) {
-        // console.log('这时候刷新');
-        //  setTimeout(() => {
-        // console.log(searchText, 'console.log(searchText);');
+     
         if (searchText !== '') {
-          // console.log('有没有',searchText);
 
           onSearchHandler(searchText, pageNum, 20, '', false)
         } else {
-          // console.log(1111111111111111111111);
-
-          //  onSearchHandler(searchText, pageNum, 20, '', false)
           onSearchHandlerDetail('', pageNum, 20, '')
         }
-        //  }, 1000);
-
-        // }
       } else {
         setShowModal(false)
 
-        // }
-
         if (scrollTop + clientHeight >= scrollHeight - 20) {
-          // console.log('滚动');
-
-          //   setSwitchShow(true)
-          //   if(!showModal){
-          // onSearchHandlerDetail('', pageNum, 20, '')
-          //   }
-          // onSearchHandlerDetail('', pageNum, 20, '')
-          // setDataSource(res.data.Place.Voxels)
+       
 
         }
       }
 
-      // }, 1000);
 
 
     }
@@ -1948,13 +1780,12 @@ function search(r) {
       return (
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
-            {/* <div className={cls}>menuDataTwoArrCon</div> */}
+            {/* <div className={cls}>menuDataTwoArrCon||TABData</div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
               {
                 loadingDetail === true ? null :
                   <>
-                    {(menuDataTwoArrCon||TABData).map((item) => {
-
+                    {(menuDataTwoArrCon || TABData).map((item) => {
                       return (
                         <Tab4
                           active={tabState === item.type}
@@ -1976,10 +1807,23 @@ function search(r) {
           </div>
 
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
-            {/* {
-               !valueCount ?
-            } */}
-            {renderContent}
+
+            {/* {renderContent} */}
+            {tabState === 'Voxels' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+              </div>
+              : null
+            }
+            {/* {tabState} */}
+            {tabState === 'Decentranland' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {dclDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
           </div>
 
           {/* 卡片结束 */}
@@ -2005,7 +1849,7 @@ function search(r) {
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}>valueCountEvent||</div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(valueCountEvent||TABDataEvent).map((item) => {
+              {(valueCountEvent || TABDataEvent).map((item) => {
                 return (
                   <Tab4
                     active={tabStateEvent === item.type}
@@ -2025,7 +1869,41 @@ function search(r) {
           </div>
 
           <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
-            {renderContentEvent}
+            {/* {renderContentEvent} */}
+            {/* {tabStateEvent} */}
+            {
+              tabStateEvent === 'Voxels' ?
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+                  {eventCvList.map((card, idx) => {
+                    return < EventDetail key={idx} {...card} onClinkDetail={() => {
+                      onClinkCvDetail(card)
+                    }} />;
+                  })}
+                </div>
+                : null
+            }
+            {
+              tabStateEvent === 'Decentranland' ?
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+                  {eventDclList.map((card, idx) => {
+                    return (< EventDetail key={idx} {...card} onClinkDetail={() => {
+                      onClinkDclDetail(card)
+                    }} />);
+                  })}
+                </div>
+                : null
+            }
+            {
+              tabStateEvent === 'Somniumspace' ?
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+                  {eventSomList.map((card, idx) => {
+                    return (< EventDetail key={idx} {...card} onClinkDetail={() => {
+                      onClinkSomDetail(card)
+                    }} />);
+                  })}
+                </div>
+                : null
+            }
           </div>
 
         </>
@@ -2105,22 +1983,6 @@ function search(r) {
   ]);
 
 
-
-  const dataSourceTwoDetail = async (query: string,
-    page: number,
-    per_page: number,
-    search_item: string) => {
-    const res = await getSearchDetail(searchText || query, page, per_page, search_item);
-    // const dataList  = dataSourceTwo;
-    // dataList.push(res.data.Place.Voxels)
-    // setDataSourceTwo(dataList)
-    // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-    setShowModal(true)
-    // setDataSourceTwo(res.data.Place.Voxels)
-    setDataSource(res.data.Place.Voxels)
-
-  }
-
   React.useEffect(() => {
     const listener = () => {
       if (
@@ -2161,21 +2023,21 @@ function search(r) {
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
-                console.log(val,router.query.q);
+                // console.log(val, router.query.q);
                 setDataSource([])
-                
+
                 // console.log(loadingDetail,1111111111)
                 // setSearchText(router.query.q);
                 // if (!router.query.q) {
-                  setDataSource([])
-                  setDataSourceLearn([])
-                  setDataSourceCreWear([])
-                  setDataBuildSource([])
-                  setEventDclList([])
-                  setEventSomList([])
-                  setEventCvList([])
-                  setSearchText(val);
-                  // onSearchHandler(window.location.search, 1, pageSize, '', false)
+                setDataSource([])
+                setDataSourceLearn([])
+                setDataSourceCreWear([])
+                setDataBuildSource([])
+                setEventDclList([])
+                setEventSomList([])
+                setEventCvList([])
+                setSearchText(val);
+                // onSearchHandler(window.location.search, 1, pageSize, '', false)
                 // } else {
                 //   setSearchText('');
                 //   // onSearchHandler('', 1, pageSize, '', false)
