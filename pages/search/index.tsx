@@ -104,7 +104,7 @@ const TABData = [
 const TABobj = {
   Voxels: '/images/cvLogo.png',
   Decentranland: '/images/Decentraland.jpg',
-  Somniumspace:'/images/somniumspace.png',
+  Somniumspace: '/images/somniumspace.png',
 }
 const TABDataEvent = [
   {
@@ -382,8 +382,8 @@ function search(r) {
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
 
- 
-  
+
+
       setTabState(tab);
 
 
@@ -430,7 +430,7 @@ function search(r) {
         // }
       }
       if (tab === 'somniumspace') {
-           //   setDclDataSource([])
+        //   setDclDataSource([])
       }
     },
     [orginData, tabStateEvent],
@@ -438,7 +438,7 @@ function search(r) {
   const onTabChangeCreater = React.useCallback(
     async (tab) => {
       // setShowType(tab);
-     
+
 
       if (tabStateCreater === tab) return;
       // setLoading(true);
@@ -569,7 +569,7 @@ function search(r) {
       const MenuDataTwoArr = []
       const valCountCreater = []
       const valCountEvent = []
-     
+
       if (dataCreater) {
         Object?.keys(dataCreater).forEach(key => {
           const obj = {
@@ -587,8 +587,7 @@ function search(r) {
         Object?.keys(dataEvent).forEach(key => {
           const objEvent = {
             label: dataEvent[key],
-            type: dataEvent[key],
-             icon: TABobj[dataEvent[key]],
+            type: dataEvent[key], icon: TABobj[dataEvent[key]],
           }
           valCountEvent.push(objEvent)
           console.log(objEvent);
@@ -975,9 +974,7 @@ function search(r) {
         Object?.keys(dataEvent).forEach(key => {
           const objEvent = {
             label: dataEvent[key],
-            type: dataEvent[key],
-             icon: TABobj[dataEvent[key]],
-          }
+            type: dataEvent[key],icon: TABobj[dataEvent[key]],}
           valCountEvent.push(objEvent)
           // console.log(objEvent);
 
@@ -1548,7 +1545,7 @@ function search(r) {
 
 
     const scrollChange = () => {
-     
+
       document.addEventListener('scroll', scrollChange);
       return () => document.removeEventListener('scroll', scrollChange);
     }
@@ -1573,7 +1570,7 @@ function search(r) {
     }
 
     setNavLabel('All')
-    
+
     watcher_store();
     watcher_store_status();
     watcher_cardState();
@@ -1752,11 +1749,11 @@ function search(r) {
     // console.log(routeTab,tabState);
 
     const scroll = (e) => {
-    
+
       const { scrollTop, scrollHeight, clientHeight } = e.target;
-     
+
       if (scrollTop + clientHeight >= scrollHeight - 20) {
-     
+
         if (searchText !== '') {
 
           onSearchHandler(searchText, pageNum, 20, '', false)
@@ -1766,10 +1763,10 @@ function search(r) {
       } else {
         setShowModal(false)
 
-        if (scrollTop + clientHeight >= scrollHeight - 20) {
-       
+        // if (scrollTop + clientHeight >= scrollHeight - 20) {
 
-        }
+
+        // }
       }
 
 
