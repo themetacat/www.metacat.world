@@ -90,6 +90,12 @@ const eventList = [
     link: '/event?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/event?tab=somniumspace',
+  },
 ];
 const heatmapData = [
   {
@@ -429,7 +435,7 @@ export default function PageHeader({ active, className }: Props) {
               <TwoNavigation
                 options={eventList}
                 className={style.cn}
-                location={style.parcels}
+                location={style.eventList}
               ></TwoNavigation>
             ) : null}
           </div>

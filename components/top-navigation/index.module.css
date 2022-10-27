@@ -111,6 +111,15 @@ flex-flow: row;
   background-color: #0f191b;
 
 }
+.eventList {
+  border-radius: 4px;
+  position: absolute;
+  left:-60px;
+  bottom: -160px;
+  z-index: 99999 !important;
+  background-color: #0f191b;
+
+}
 .location2 {
   position: absolute;
   right: -25px;

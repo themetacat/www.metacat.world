@@ -17,7 +17,7 @@ import Tab from '../../components/hometabParcels';
 import Layout from '../../components/layoutParcels';
 import EventDetail from '../../components/eventDetail';
 
-import { getEventList, getDclEventList } from '../../service';
+import { getEventList, getDclEventList, getSomEventList } from '../../service';
 
 type Props = {
     name?: string;
@@ -49,11 +49,11 @@ const TAB = [
     //   icon: '/images/home-icon.svg',
     //   type: 'sandbox',
     // },
-    // {
-    //   label: 'Somnium Space',
-    //   icon: '/images/somniumspace.png',
-    //   type: 'somniumspace',
-    // },
+    {
+        label: 'Somnium Space',
+        icon: '/images/somniumspace.png',
+        type: 'somniumspace',
+    },
     // {
     //   label: 'NFT Worlds',
     //   icon: '/images/worlds.svg',
@@ -130,6 +130,8 @@ export default function Event(props) {
         title: `Event - ${SITE_NAME}`,
         description: META_DESCRIPTION,
     };
+    // console.log(props.query.tab);
+
     const [tabState, setTabState] = React.useState(props.query.tab || 'cryptovoxels');
     const [subTabState, setSubTabState] = React.useState(props.query.subTab || 'parcel');
     const [fixedState, setFixedState] = React.useState(false);
@@ -137,9 +139,11 @@ export default function Event(props) {
     const [showModal, setShowModal] = React.useState(false);
     const [anchor, setAnchor] = React.useState(false);
     const [eventDclList, setEventDclList] = React.useState([]);
+    const [eventSomList, setEvenSomList] = React.useState([]);
     const [eventCvList, setEventCvList] = React.useState([]);
-    const [pageNum, setPage] = useState(1);
-    const [pageNumDec, setPageDec] = useState(1);
+    const [pageNum, setPage] = useState(0);
+    const [pageNumDec, setPageDec] = useState(0);
+    const [pageNumSom, setPageSom] = useState(0);
     const [count, setCount] = React.useState(20);
     useEffect(() => {
         // console.log(pageNum, 333);
@@ -149,59 +153,107 @@ export default function Event(props) {
     const requestData = async (page, countNum) => {
 
 
+        console.log(tabState);
 
         if (tabState === 'cryptovoxels') {
             let mynum = pageNum
+            // console.log(mynum, 999);
             setPage((num) => {
                 mynum = num
                 return num + 1
             })
-            // console.log(mynum,999);
-            const res = await getEventList(mynum * count + 1, count)
+            console.log(mynum,999);
+            // console.log(mynum, mynum * count + 1, count);
+
+            const res = await getEventList(mynum*count + 1, count)
             // console.log(pageNum, 777);
             setShowModal(true)
             // let num = pageNum 
             // props.isSetPage(num)
             if (res.code === 100000) {
-                setEventCvList(res.data.event_list);
+
+                // setEventCvList(res.data.event_list);
                 // console.log(res, "res");
                 const dataList = eventCvList;
-                if (res.data.event_list.length > 0) {
+                // if (res.data.event_list.length > 0) {
                     dataList?.push(...res?.data?.event_list)
                     setEventCvList(dataList)
-                }
+                // }
 
             }
             setShowModal(false)
             // console.log(newPage);
 
-        } else {
+        } else if (tabState === 'decentraland') {
             let mynumDel = pageNumDec
             setPageDec((num) => {
                 mynumDel = num
                 return num + 1
             })
-            const resDel = await getDclEventList(mynumDel * count + 1, count)
+            const resDel = await getDclEventList(mynumDel*count + 1, count)
             setShowModal(true)
             if (resDel.code === 100000) {
-                setEventDclList(resDel.data.event_list);
+             
+                // setEventDclList(resDel.data.event_list);
                 // console.log(resDel.data.event_list, "resDelList.data.event_list");
                 // console.log(eventDclList);
                 const dataList1 = eventDclList;
-                if (resDel.data.event_list.length > 0) {
+                // if (resDel.data.event_list.length > 0) {
                     dataList1?.push(...resDel?.data?.event_list)
                     setEventDclList(dataList1)
-                }
+                // }
+                console.log(eventDclList);
             }
             setShowModal(false)
 
+        } else if (tabState === 'somniumspace') {
+            let mynumSom = pageNumSom
+            setPageSom((num) => {
+                mynumSom = num
+                return num + 1
+            })
+            // console.log(mynumSom, 89989);
+            // console.log(eventSomList.length);
+
+            // const resSom = await getSomEventList(1,20)
+            const resSom = await getSomEventList(mynumSom*count, count)
+            // console.log(getSomEventList(1,20),8888);
+            // console.log(resSom?.data?.event_list);
+            setShowModal(true)
+            if (resSom.code === 100000) {
+                // setEvenSomList(resSom.data.event_list);
+                // console.log(resDel.data.event_list, "resDelList.data.event_list");
+                // console.log(eventSomList);
+
+
+                const dataListSom = eventSomList;
+                // if (resSom.data.event_list.length > 0) {
+                // if(eventSomList?.length==0){
+                //     console.log('执行');
+                //     console.log(resSom.data.event_list);
+
+                //     setEvenSomList(resSom.data.event_list);
+                // }else{
+                dataListSom?.push(...resSom?.data?.event_list)
+                // console.log(dataListSom);
+
+                setEvenSomList(dataListSom)
+                // }
+                // }else if(resSom.data.event_list.length == 0){
+                // // setEvenSomList(resSom.data.event_list);
+                // setEvenSomList(dataListSom)
+                // }
+            }
+            setShowModal(false)
         }
 
     }
 
 
     const onTabChange = async (tab) => {
-
+        setPageSom(0)
+        setPageDec(0)
+        setPage(0)
         let subIndex;
         if (tabState === 'cryptovoxels') {
             subIndex = SUBTAB.findIndex((item) => item.type === subTabState);
@@ -213,30 +265,19 @@ export default function Event(props) {
         setTabState(tab);
         let sub = '';
         if (tab === 'cryptovoxels') {
-            sub = SUBTAB[subIndex].type;
-            setSubTabState(SUBTAB[subIndex].type);
+            // sub = SUBTAB[subIndex].type;
+            // setSubTabState(SUBTAB[subIndex].type);
             router.replace(`/event?tab=cryptovoxels`);
         } else if (tab === 'decentraland') {
-            sub = SUBTAB[subIndex].type;
-            setSubTabState(SUBTABDECE[subIndex].type);
+            // sub = SUBTAB[subIndex].type;
+            // setSubTabState(SUBTABDECE[subIndex].type);
             router.replace(`/event?tab=decentraland`);
+        } else if (tab === 'somniumspace') {
+            // sub = SUBTAB[subIndex].type;
+            // setSubTabState(SUBTABDECE[subIndex].type);
+            router.replace(`/event?tab=somniumspace`);
         }
-        // if (subTabState === 'map') {
-        //   sub = 'parcel';
-        //   setSubTabState(sub);
-        // }
-        // setSearchText('');
-        // setTypeState('All');
-        // nextCursor.current = 1;
-        // const data = await requestData({
-        //   tab,
-        //   subTab: sub,
-        //   page: 1,
-        //   query: '',
-        //   type: '',
-        //   needUpdateTypeList: true,
-        // });
-        // setDataSource(data);
+    
     };
 
     // console.log(tabState, 9999999999);
@@ -249,6 +290,7 @@ export default function Event(props) {
 
     const renderContent = React.useMemo(() => {
 
+        console.log(eventSomList);
 
         if (tabState === 'cryptovoxels') {
             return (
@@ -272,7 +314,22 @@ export default function Event(props) {
                 </>
             )
         }
-    }, [tabState, eventDclList, eventCvList])
+        // if (tabState === 'somniumspace') {
+        //     return (
+        //         <>
+        //             <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
+        //                 {eventSomList&&eventSomList.map((card, item) => {
+        //                     return < EventDetail {...card} onClinkDetail={() => { onClinkDclDetail(card) }} />;
+        //                 })}
+        //             </div>
+        //         </>
+        //     )
+        // }
+    }, [tabState, eventDclList, eventCvList, eventSomList])
+
+    // React.useEffect(()=>{
+    //     requestData(1, 20)
+    // },[])
 
     useEffect(() => {
 
@@ -310,27 +367,27 @@ export default function Event(props) {
 
     React.useEffect(() => {
         const listener = () => {
-          if (document.getElementById('switch') && window.scrollY > 0) {
-            if (!anchor) {
-              setFixedState(true);
+            if (document.getElementById('switch') && window.scrollY > 0) {
+                if (!anchor) {
+                    setFixedState(true);
+                } else {
+                    setAnchor(false);
+                }
             } else {
-              setAnchor(false);
+                setFixedState(false);
             }
-          } else {
-            setFixedState(false);
-          }
         };
         document.addEventListener('scroll', listener);
         return () => document.removeEventListener('scroll', listener);
-      }, [fixedState, anchor]);
+    }, [fixedState, anchor]);
 
     return (
         <Page meta={meta} className={cn('detailName', style.detailName)}>
             {/* <Layout> */}
             <div className={style.containerBox} ref={headerRef}>
-            <div  id="switch" className={cn(' z-10', fixedState ? style.fix1 : null)}>
-          <PageHeader className="" active={'/event'} />
-        </div>
+                <div id="switch" className={cn(' z-10', fixedState ? style.fix1 : null)}>
+                    <PageHeader className="" active={'/event'} />
+                </div>
                 <div
                     className={cn(
                         'tab-list flex  main-content relative',
@@ -358,7 +415,7 @@ export default function Event(props) {
                                 return (
                                     <div
                                         className={cn(
-                                            'box-border w-12 font-semibold text-white flex',
+                                            ' flex',
                                             style.baseCON,
                                             tabState === item.type ? style.active : null,
                                         )}
@@ -388,7 +445,43 @@ export default function Event(props) {
                 </div>
                 <div className="main-content">
 
-                    {renderContent}
+                    {/* {renderContent} */}
+                    {
+                      
+                        
+                        tabState === 'decentraland' ?
+                            <>
+                                <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
+                                    {eventDclList&&eventDclList.map((card, item) => {
+                                        return < EventDetail {...card} onClinkDetail={() => { onClinkDclDetail(card) }} />;
+                                    })}
+                                </div>
+                            </>
+                            : ''
+                    }
+                    {
+                        tabState === 'cryptovoxels' ?
+                            <>
+                                <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
+                                    {eventCvList&&eventCvList.map((card, idx) => {
+                                        return < EventDetail {...card} onClinkDetail={() => { onClinkCvDetail(card) }} />;
+                                    })}
+                                </div>
+                            </>
+                            : ''
+                    }
+                    {
+                        tabState === 'somniumspace' ?
+                            <>
+                                <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
+                                    {eventSomList && eventSomList.map((card, item) => {
+                                        return < EventDetail {...card} onClinkDetail={() => { onClinkDclDetail(card) }} />;
+                                    })}
+                                </div>
+                            </>
+                            : ''
+                    }
+
                 </div>
             </div>
 

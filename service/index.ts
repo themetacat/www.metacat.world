@@ -57,6 +57,18 @@ export const getDclEventList = async (
   return json;
 };
 
+export const getSomEventList = async (  
+  cursor:number ,
+  count:number,) => {
+  const search = qs.stringify({cursor,count}, { addQueryPrefix: true });
+  const url = `/api/get_som_event_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getDCLEventList = async (cursor: number, count: number) => {
   const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
   const url = `/api/dcl-event-list${search}`;

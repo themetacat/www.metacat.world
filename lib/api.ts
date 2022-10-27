@@ -69,6 +69,19 @@ class API {
     return json;
   }
 
+  public async getSomEventList(
+    cursor:number ,
+    count:number,
+  ): Promise<any> {
+    const search = qs.stringify({cursor,count}, { addQueryPrefix: true });
+    const url = `${this.url}/get_somniumspace_event_list${search}`;
+    // const url = `https://api.metacat.world/api/v1/get_cv_event_list${search}`
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   
 
   public async getCVEventList(cursor: number, count: number): Promise<any> {
