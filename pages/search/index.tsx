@@ -1596,17 +1596,12 @@ function search(r) {
       onSearchHandler(router.query.q, 1, 20, '', false)
 
     
-    } else {
-
-      if (router?.query?.q === undefined) {
+    } else if (router?.query?.q === undefined) {
         // return
         setSearchText('');
         onSearchHandler('', 1, 20, '', false)
-      }
       // setSearchText('');
       // onSearchHandler('', 1, 20, '', false)
-     
-
     }
   }, [router?.query?.q,])
   // console.log(router.query.value,"router.query.value");
