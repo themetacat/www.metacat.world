@@ -101,10 +101,9 @@ const TABData = [
     type: 'Decentraland',
   },
 ];
-const TABobj = {
-  Voxels: '/images/cvLogo.png',
-  Decentranland: '/images/Decentraland.jpg',
-  Somniumspace: '/images/somniumspace.png',
+const TABobj ={
+  Voxels:'/images/cvLogo.png',
+  Decentranland:'/images/Decentraland.jpg',
 }
 const TABDataEvent = [
   {
@@ -291,7 +290,6 @@ function search(r) {
   const [buildStateWearable, setBuildStateVal] = React.useState(1);
   const [addressWearable, setaddressWerVal] = React.useState(null);
   const [emptyStatus, setemptyStatus] = React.useState(false);
-  const [subTabState, setSubTabState] = React.useState('cryptovoxels');
   const [pageNum, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(20);
   const a1 = useRef(null)
@@ -370,974 +368,966 @@ function search(r) {
     },
     [showTab],
   );
-  // console.log(routeTab, "routeTab");
 
   const onTabChange = React.useCallback(
     async (tab) => {
       if (tabState === tab) return;
       // setLoading(true);
-      // console.log(tab, tabState,menuDataTwoArrCon);
+      // console.log(tab);
 
       setTabState(tab);
       setParcelsIds([]);
       setSelectedIds([]);
-      setEventDclList([])
       setCardState(false);
       store.setState(() => ({ parcels_cardState: false, id: null }));
-      // let subIndex;
-      // if (routeTab === 'Place') {
-      //   if (tab === 'Voxels')
-      //     subIndex = menuDataTwoArrCon.findIndex((item) => item.type === subTabState);
-      // } else if (tab === 'Decentranland') {
-      //   subIndex = menuDataTwoArrCon.findIndex((item) => item.type === subTabState);
-      // }
-      // subIndex = subIndex === -1 ? 0 : subIndex;
-    // } else if (routeTab === 'Event') {
-    //   subIndex = menuDataTwoArrCon.findIndex((item) => item.type === subTabState);
-    // } else if (routeTab === 'Creator') {
-    //   subIndex = menuDataTwoArrCon.findIndex((item) => item.type === subTabState);
-    // } else if (routeTab === 'Learn') {
-    //   subIndex = menuDataTwoArrCon.findIndex((item) => item.type === subTabState);
-    // }
-  // console.log(subIndex, "subIndex");
+      // console.log(tab, 99999999, tabState);
+      // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
+      // const res =  getSearchDetail(query, page, per_page, search_item);
+      if (tab === 'Voxels') {
+        // console.log(11);
 
-  // if (tab === 'Voxels') {
-  //   // console.log(11);
-  //   // router.replace(`/search?tab=cryptovoxels`);
-  //   // setDataSource(orginData.parcelList);
-  //   // store.setState(() => ({ type: 'cv' }));
-  // }
-  // if (tab === 'Decentraland') {
-
-  // }
-},
-[orginData, tabState],
+        // setDataSource(orginData.parcelList);
+        // store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'Decentraland') {
+        // console.log(22);
+        // const dataListDece = dclDataSource;
+        // if (res.data.Place?.Decentranland !== []) {
+        //   dataListDece?.push(...res.data.Place?.Decentranland)
+        // setDclDataSource(dataListDece)
+        // } else {
+        //   setDclDataSource([])
+        // }
+      }
+    },
+    [orginData, tabState],
   );
-const onTabChangeEvent = React.useCallback(
-  async (tab) => {
-    if (tabStateEvent === tab) return;
-    // setLoading(true);
-    // console.log(tab);
+  const onTabChangeEvent = React.useCallback(
+    async (tab) => {
+      if (tabStateEvent === tab) return;
+      // setLoading(true);
+      // console.log(tab);
 
-    setTabStateEvent(tab);
-    setParcelsIds([]);
-    setSelectedIds([]);
-    setCardState(false);
-    store.setState(() => ({ parcels_cardState: false, id: null }));
-    // console.log(tab, 99999999, tabState);
-    // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
-    // const res =  getSearchDetail(query, page, per_page, search_item);
-    if (tab === 'Voxels') {
-      // console.log(11);
+      setTabStateEvent(tab);
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
+      // console.log(tab, 99999999, tabState);
+      // onSearchHandlerDetail('', pageNum, pageSize, '')//这掉接口
+      // const res =  getSearchDetail(query, page, per_page, search_item);
+      if (tab === 'Voxels') {
+        // console.log(11);
 
-      // setDataSource(orginData.parcelList);
-      // store.setState(() => ({ type: 'cv' }));
-    }
-    if (tab === 'Decentraland') {
-      // console.log(22);
-      // const dataListDece = dclDataSource;
-      // if (res.data.Place?.Decentranland !== []) {
-      //   dataListDece?.push(...res.data.Place?.Decentranland)
-      // setDclDataSource(dataListDece)
-      // } else {
-      //   setDclDataSource([])
+        // setDataSource(orginData.parcelList);
+        // store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'Decentraland') {
+        // console.log(22);
+        // const dataListDece = dclDataSource;
+        // if (res.data.Place?.Decentranland !== []) {
+        //   dataListDece?.push(...res.data.Place?.Decentranland)
+        // setDclDataSource(dataListDece)
+        // } else {
+        //   setDclDataSource([])
+        // }
+      }
+      if (tab === 'somniumspace') {
+        // console.log(22);
+      }
+    },
+    [orginData, tabStateEvent],
+  );
+  const onTabChangeCreater = React.useCallback(
+    async (tab) => {
+      // setShowType(tab);
+      // console.log(tab);
+
+      if (tabStateCreater === tab) return;
+      // setLoading(true);
+      setTabStateCreater(tab);
+      // setParcelsIds([]);
+      // setSelectedIds([]);
+      // setCardState(false);
+      // store.setState(() => ({ parcels_cardState: false, id: null }));
+      if (tab === 'builder') {
+        // setDataSource(orginData.parcelList);
+        // store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'wearable') {
+        // console.log("storestorestorestorestorestore");
+
+        // setDclDataSource(orginData.parcelList);
+        // store.setState(() => ({ type: 'dcl' }));
+      }
+    },
+    [orginData, tabStateCreater],
+  );
+
+  // const onTabChangeTR = React.useCallback((i) => {
+
+  //   setTabStateTR(i);
+
+  // }, []);
+
+  const resultHandler = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
+      toast.error(msg);
+
+      return null;
+    },
+    [refreshTK],
+  );
+
+  const onSearchHandlerDetail = async (query,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+    // setDataSource([])
+    //             setDataSourceLearn([])
+    //             setDataSourceCreWear([])
+    //             setDataBuildSource([])
+    //             setEventDclList([])
+    //             setEventSomList([])
+    //             setEventCvList([])
+    setShowModal(true)
+    const newPage = pageNum + 1
+
+    setPage(newPage)
+
+    const res = await getSearchDetail(query, page, per_page, search_item);
+    // console.log(res, "res");
+    setShowModal(false)
+
+    if (res.code === 100000) {
+      const data = res.data?.menu_one;
+      const dataCreater = res.data?.Creator?.menu_two;
+      const dataEvent = res.data?.Event?.menu_two;
+      const countNum = res.data?.item_count;
+      const MenuDataTwo = res.data?.Place?.menu_two;
+      // const dataList  = dataSource;
+      const arr = []
+      Object.keys(data).forEach(key => {
+        const obj = {
+          label: data[key],
+          type: data[key],
+          count: countNum[data[key]],
+        }
+        arr.push(obj)
+      })
+
+
+      setValueCount(arr)
+
+
+      const dataList = dataSource;
+      if (res.data?.Place?.Voxels.length > 0) {
+        dataList?.push(...res.data?.Place?.Voxels)
+        setDataSource(dataList)
+      }
+
+
+      // console.log(dataList, "dataList");
+
+      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
+
+      // setDataSourceTwo(dataList)
+
+      // setDataSource(res.data.Place.Voxels)
+
+      const dataListBuilder = dataSourceCreBuilder;
+      if (res.data?.Creator?.Builder.length > 0) {
+        dataListBuilder?.push(...res.data?.Creator?.Builder)
+        setDataSourceCreBuilder(dataListBuilder)
+      }
+      // setDataSourceCreBuilder(res.data.Creator.Builder)
+
+
+      const dataListLearn = dataSourceLearn;
+      if (res.data?.Learn?.data.length > 0) {
+        dataListLearn?.push(...res.data?.Learn?.data)
+        setDataSourceLearn(dataListLearn)
+      }
+      const dataListEventCv = eventCvList;
+      if (res.data?.Event?.Voxels.length > 0) {
+        dataListEventCv?.push(...res.data?.Event?.Voxels)
+        setEventCvList(dataListEventCv)
+      }
+      const dataListEventDcl = eventDclList;
+      if (res.data?.Event?.Decentranland.length > 0) {
+        dataListEventDcl?.push(...res.data?.Event?.Decentranland)
+        setEventDclList(dataListEventDcl)
+      }
+      const dataListEventSom = eventSomList;
+      if (res.data?.Event?.Somniumspace.length > 0) {
+        dataListEventSom?.push(...res.data?.Event?.Somniumspace)
+        setEventSomList(dataListEventSom)
+      }
+
+
+      // setDataSourceLearn(res.data.Learn.data)
+      // console.log(dataSourceLearn, 222523);
+
+      // setDataSourceTwo(res.data.Place.Voxels)
+      const dataListDece = dclDataSource;
+      if (res.data.Place?.Decentranland.length > 0) {
+        dataListDece?.push(...res.data.Place?.Decentranland)
+        // console.log(dataListDece);
+
+        setDclDataSource(dataListDece)
+      }
+
+      // setDclDataSource(res.data.Place.Decentranland)
+
+      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
+
+
+      const MenuDataTwoArr = []
+      const valCountCreater = []
+      const valCountEvent = []
+      // for (const key in dataCreater) {
+      //   // console.log(valueCount);
+      //   const obj = {
+      //     label: dataCreater[key],
+      //     type: dataCreater[key],
+      //     // count: countNum[data[key]],
+      //   }
+
+      //   valCountCreater.push(obj)
+      //   // console.log(valCountCreater, "valCountCreater");
       // }
+      if (dataCreater) {
+        Object?.keys(dataCreater).forEach(key => {
+          const obj = {
+            label: dataCreater[key],
+            type: dataCreater[key],
+            // count: countNum[data[key]],
+          }
+          valCountCreater.push(obj)
+        })
+        setValueCountCreater(valCountCreater)
+      }
+
+
+
+      if (dataEvent) {
+        Object?.keys(dataEvent).forEach(key => {
+          const objEvent = {
+            label: dataEvent[key],
+            type: dataEvent[key],
+            // count: countNum[data[key]],
+          }
+          valCountEvent.push(objEvent)
+          console.log(objEvent);
+
+        })
+        setValueCountEvent(valCountEvent)
+      }
+      console.log(valueCountEvent, 9999999999999);
+
+
+      // for (const keys in MenuDataTwo) {
+      //   const objMenuTwo = {
+      //     label: MenuDataTwo[keys],
+      //     type: MenuDataTwo[keys],
+      //     // icon: MenuDataTwo[keys],
+      //   }
+      //   MenuDataTwoArr.push(objMenuTwo)
+      //   // console.log(MenuDataTwoArr);
+
+      // }
+      if (MenuDataTwo) {
+        Object?.keys(MenuDataTwo).forEach(keys => {
+          console.log(TABobj[MenuDataTwo[keys]]);
+          
+          const objMenuTwo = {
+            label: MenuDataTwo[keys],
+            type: MenuDataTwo[keys],
+            // icon: MenuDataTwo[keys],
+          }
+          MenuDataTwoArr.push(objMenuTwo)
+        })
+        setMenuDataTwoArrCon(MenuDataTwoArr)
+      }
+
+
+      // for (const key in data) {
+      //   // console.log(valueCount);
+      //   const obj = {
+      //     label: data[key],
+      //     type: data[key],
+      //     count: countNum[data[key]],
+      //   }
+
+      //   arr.push(obj)
+      //   // console.log(arr);
+      // }
+      if (!res.data?.item_count && !res.data?.menu_one) {
+        setemptyStatus(true)
+      }
+
     }
-    if (tab === 'somniumspace') {
-      // console.log(22);
-    }
-  },
-  [orginData, tabStateEvent],
-);
-const onTabChangeCreater = React.useCallback(
-  async (tab) => {
-    // setShowType(tab);
-    // console.log(tab);
 
-    if (tabStateCreater === tab) return;
-    // setLoading(true);
-    setTabStateCreater(tab);
-    // setParcelsIds([]);
-    // setSelectedIds([]);
-    // setCardState(false);
-    // store.setState(() => ({ parcels_cardState: false, id: null }));
-    if (tab === 'builder') {
-      // setDataSource(orginData.parcelList);
-      // store.setState(() => ({ type: 'cv' }));
-    }
-    if (tab === 'wearable') {
-      // console.log("storestorestorestorestorestore");
+  }
 
-      // setDclDataSource(orginData.parcelList);
-      // store.setState(() => ({ type: 'dcl' }));
-    }
-  },
-  [orginData, tabStateCreater],
-);
+  const resultHandlerBu = React.useCallback(
+    (res, callback) => {
+      const { code, msg, data } = res;
+      if (code === 100000) {
+        return convert(data);
+      }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
 
-// const onTabChangeTR = React.useCallback((i) => {
+      // toast.error(msg);
 
-//   setTabStateTR(i);
-
-// }, []);
-
-const resultHandler = React.useCallback(
-  (res, callback) => {
-    const { code, msg, data } = res;
-    if (code === 100000) {
-      return convert(data);
-    }
-    if (code === 100003) {
-      refreshTK().then((token) => {
-        if (token && callback) {
-          callback(token);
-        }
-      });
       return null;
-    }
+    },
+    [refreshTK],
+  );
 
-    toast.error(msg);
+  const changeNavTab = React.useCallback(
+    (nav_label, index = 0) => {
+      // console.log(nav_label,222222222222222);
 
-    return null;
-  },
-  [refreshTK],
-);
+      // setNavLabel(navLabel);
+      setNavLabel(nav_label);
+      setCardState(false);
+      setManySetState(false);
+      nav_Label.current = nav_label;
+      // changeNum(dataSource, nav_label);
+      // console.log(Nav);
 
-const onSearchHandlerDetail = async (query,
-  page: number,
-  per_page: number,
-  search_item: string) => {
-  // setDataSource([])
-  //             setDataSourceLearn([])
-  //             setDataSourceCreWear([])
-  //             setDataBuildSource([])
-  //             setEventDclList([])
-  //             setEventSomList([])
-  //             setEventCvList([])
-  setShowModal(true)
-  const newPage = pageNum + 1
-
-  setPage(newPage)
-
-  const res = await getSearchDetail(query, page, per_page, search_item);
-  // console.log(res, "res");
-  setShowModal(false)
-
-  if (res.code === 100000) {
-    const data = res.data?.menu_one;
-    const dataCreater = res.data?.Creator?.menu_two;
-    const dataEvent = res.data?.Event?.menu_two;
-    const countNum = res.data?.item_count;
-    const MenuDataTwo = res.data?.Place?.menu_two;
-    // const dataList  = dataSource;
-    const arr = []
-    Object.keys(data).forEach(key => {
-      const obj = {
-        label: data[key],
-        type: data[key],
-        count: countNum[data[key]],
-      }
-      arr.push(obj)
-    })
-
-
-    setValueCount(arr)
-
-
-    const dataList = dataSource;
-    if (res.data?.Place?.Voxels.length > 0) {
-      dataList?.push(...res.data?.Place?.Voxels)
-      setDataSource(dataList)
-    }
-
-
-    // console.log(dataList, "dataList");
-
-    // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-
-    // setDataSourceTwo(dataList)
-
-    // setDataSource(res.data.Place.Voxels)
-
-    const dataListBuilder = dataSourceCreBuilder;
-    if (res.data?.Creator?.Builder.length > 0) {
-      dataListBuilder?.push(...res.data?.Creator?.Builder)
-      setDataSourceCreBuilder(dataListBuilder)
-    }
-    // setDataSourceCreBuilder(res.data.Creator.Builder)
-
-
-    const dataListLearn = dataSourceLearn;
-    if (res.data?.Learn?.data.length > 0) {
-      dataListLearn?.push(...res.data?.Learn?.data)
-      setDataSourceLearn(dataListLearn)
-    }
-    const dataListEventCv = eventCvList;
-    if (res.data?.Event?.Voxels.length > 0) {
-      dataListEventCv?.push(...res.data?.Event?.Voxels)
-      setEventCvList(dataListEventCv)
-    }
-    const dataListEventDcl = eventDclList;
-    if (res.data?.Event?.Decentranland.length > 0) {
-      dataListEventDcl?.push(...res.data?.Event?.Decentranland)
-      setEventDclList(dataListEventDcl)
-    }
-    const dataListEventSom = eventSomList;
-    if (res.data?.Event?.Somniumspace.length > 0) {
-      dataListEventSom?.push(...res.data?.Event?.Somniumspace)
-      setEventSomList(dataListEventSom)
-    }
-
-
-    // setDataSourceLearn(res.data.Learn.data)
-    // console.log(dataSourceLearn, 222523);
-
-    // setDataSourceTwo(res.data.Place.Voxels)
-    const dataListDece = dclDataSource;
-    if (res.data.Place?.Decentranland.length > 0) {
-      dataListDece?.push(...res.data.Place?.Decentranland)
-      // console.log(dataListDece);
-
-      setDclDataSource(dataListDece)
-    }
-
-    // setDclDataSource(res.data.Place.Decentranland)
-
-    // console.log(dclDataSource, "dataSourcedataSourcedataSource");
-
-
-    const MenuDataTwoArr = []
-    const valCountCreater = []
-    const valCountEvent = []
-    // for (const key in dataCreater) {
-    //   // console.log(valueCount);
-    //   const obj = {
-    //     label: dataCreater[key],
-    //     type: dataCreater[key],
-    //     // count: countNum[data[key]],
-    //   }
-
-    //   valCountCreater.push(obj)
-    //   // console.log(valCountCreater, "valCountCreater");
-    // }
-    if (dataCreater) {
-      Object?.keys(dataCreater).forEach(key => {
-        const obj = {
-          label: dataCreater[key],
-          type: dataCreater[key],
-          // count: countNum[data[key]],
-        }
-        valCountCreater.push(obj)
-      })
-      setValueCountCreater(valCountCreater)
-    }
-
-
-
-    if (dataEvent) {
-      Object?.keys(dataEvent).forEach(key => {
-        const objEvent = {
-          label: dataEvent[key],
-          type: dataEvent[key],
-          icon: TABobj[dataEvent[key]],
-        }
-        valCountEvent.push(objEvent)
-        // console.log(objEvent);
-
-      })
-      setValueCountEvent(valCountEvent)
-    }
-    // console.log(valueCountEvent, 9999999999999);
-
-
-    // for (const keys in MenuDataTwo) {
-    //   const objMenuTwo = {
-    //     label: MenuDataTwo[keys],
-    //     type: MenuDataTwo[keys],
-    //     // icon: MenuDataTwo[keys],
-    //   }
-    //   MenuDataTwoArr.push(objMenuTwo)
-    //   // console.log(MenuDataTwoArr);
-
-    // }
-    if (MenuDataTwo) {
-      Object?.keys(MenuDataTwo).forEach(keys => {
-        console.log(TABobj[MenuDataTwo[keys]]);
-
-        const objMenuTwo = {
-          label: MenuDataTwo[keys],
-          type: MenuDataTwo[keys],
-          icon: TABobj[MenuDataTwo[keys]],
-        }
-        MenuDataTwoArr.push(objMenuTwo)
-      })
-      setMenuDataTwoArrCon(MenuDataTwoArr)
-    }
-
-
-    // for (const key in data) {
-    //   // console.log(valueCount);
-    //   const obj = {
-    //     label: data[key],
-    //     type: data[key],
-    //     count: countNum[data[key]],
-    //   }
-
-    //   arr.push(obj)
-    //   // console.log(arr);
-    // }
-    if (!res.data?.item_count && !res.data?.menu_one) {
-      setemptyStatus(true)
-    }
-
-  }
-
-}
-
-const resultHandlerBu = React.useCallback(
-  (res, callback) => {
-    const { code, msg, data } = res;
-    if (code === 100000) {
-      return convert(data);
-    }
-    if (code === 100003) {
-      refreshTK().then((token) => {
-        if (token && callback) {
-          callback(token);
-        }
+      const set_nav = Nav.map((item, i) => {
+        if (index === i) return { ...item, state: 1 };
+        return { ...item, state: 0 };
       });
-      return null;
-    }
+      // console.log(set_nav);
+      setNav(set_nav);
+    },
+    [Nav, setCardState, setManySetState, setNavLabel, setNav, dataSource, cartData],
+  );
 
-    // toast.error(msg);
+  // 过滤数组 拿到每一项对应的数量
+  const changeNum = React.useCallback(
+    (data, current_label = 'All') => {
+      if (current_label === 'All') {
+        const current_all = data.slice();
+        setCartData(current_all);
+      }
+      if (current_label === 'For rent') {
+        const current_forRent = data.filter((item) => item.status === 'for_rent');
+        setCartData(current_forRent);
+      }
+      if (current_label === 'Leased') {
+        const current_leased = data.filter((item) => item.status === 'leased');
+        setCartData(current_leased);
+      }
+      if (current_label === 'Not for rent') {
+        const notForRent = data.filter((item) => item.status === 'not_for_rent');
+        setCartData(notForRent);
+      }
+      if (nav_Label.current === null) {
+        changeNavTab('All');
+      }
+    },
+    [Nav, setCartData, navLabel, setLabel, setNavLabel, cartData],
+  );
 
-    return null;
-  },
-  [refreshTK],
-);
+  const requestData = React.useCallback(
+    async (token: string) => {
+      setLoading(true);
+      try {
+        const res = await getParcelList2(token);
+        const data = resultHandler(res, requestData);
+        setLoading(false);
+        if (!data) {
+          return;
+        }
+        // setDataSource(data.parcelList);
+        changeNum(data.parcelList, nav_Label.current);
+      } catch {
+        setError(true);
+      }
+    },
+    [resultHandler, tabState, nav_Label],
+  );
 
-const changeNavTab = React.useCallback(
-  (nav_label, index = 0) => {
-    // console.log(nav_label,222222222222222);
+  const reqDclData = React.useCallback(
+    async (token: string) => {
+      try {
+        const res = await req_dcl_parcel_list(token);
+        const data = resultHandler(res, reqDclData);
+        setLoading(false);
+        if (!data) {
+          return;
+        }
+        // setDclDataSource(data.parcelList);
+        changeNum(data.parcelList, nav_Label.current);
+      } catch {
+        setError(true);
+      }
+    },
+    [resultHandler, tabState, nav_Label],
+  );
 
-    // setNavLabel(navLabel);
-    setNavLabel(nav_label);
-    setCardState(false);
-    setManySetState(false);
-    nav_Label.current = nav_label;
-    // changeNum(dataSource, nav_label);
-    // console.log(Nav);
 
-    const set_nav = Nav.map((item, i) => {
-      if (index === i) return { ...item, state: 1 };
-      return { ...item, state: 0 };
-    });
-    // console.log(set_nav);
-    setNav(set_nav);
-  },
-  [Nav, setCardState, setManySetState, setNavLabel, setNav, dataSource, cartData],
-);
 
-// 过滤数组 拿到每一项对应的数量
-const changeNum = React.useCallback(
-  (data, current_label = 'All') => {
-    if (current_label === 'All') {
-      const current_all = data.slice();
-      setCartData(current_all);
-    }
-    if (current_label === 'For rent') {
-      const current_forRent = data.filter((item) => item.status === 'for_rent');
-      setCartData(current_forRent);
-    }
-    if (current_label === 'Leased') {
-      const current_leased = data.filter((item) => item.status === 'leased');
-      setCartData(current_leased);
-    }
-    if (current_label === 'Not for rent') {
-      const notForRent = data.filter((item) => item.status === 'not_for_rent');
-      setCartData(notForRent);
-    }
-    if (nav_Label.current === null) {
-      changeNavTab('All');
-    }
-  },
-  [Nav, setCartData, navLabel, setLabel, setNavLabel, cartData],
-);
+  const requestPersonal = React.useCallback(
+    async (token: string) => {
+      const res = await getBaseInfo(token);
 
-const requestData = React.useCallback(
-  async (token: string) => {
-    setLoading(true);
-    try {
-      const res = await getParcelList2(token);
-      const data = resultHandler(res, requestData);
-      setLoading(false);
+      // const sta = res.data.profile.creator_status
+      const emailState = res.data.profile.email
+      const buildNum = res.data.profile.builder_status
+      const wallet = res.data.profile.address
+      setNoWork(true)
+      setStatue(res.data.profile.creator_status)
+      setBuildState(buildNum)
+      setWalletAddress(wallet)
+      // setCreaterStateVal(res.data.profile.creator_status)
+      setEmailStateWearable(res.data.profile.email)
+      // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
+      // console.log(statue, "setEmailStateWearable");
+
+      setEmailStateVal(emailState)
+      // console.log(res.data.profile.creator_status,99999);
+
+      // const statue = res.data.profile.creator_status;
+
+      const data = resultHandler(res, requestPersonal);
       if (!data) {
         return;
       }
-      // setDataSource(data.parcelList);
-      changeNum(data.parcelList, nav_Label.current);
-    } catch {
-      setError(true);
-    }
-  },
-  [resultHandler, tabState, nav_Label],
-);
+      const { profile } = data;
+      const {
+        address: addr,
+        nickName: name,
+        introduction: m,
+        country: n,
+        avatar: ava,
+        links,
+        email: e,
+        creatorStatus,
+      } = profile;
+      const { twitterName, websiteUrl } = links;
+      setToken('address', addr);
+      setEmail(e);
+      setAvatarUrl(ava);
+      setCreatorsState(creatorStatus);
+      setAddress(addr);
+      setNickNameVla(name);
+      setIntroduction(m);
+      setcountry(n);
+      setTwitterAddress(twitterName);
+      setWebsiteAddress(websiteUrl);
+      state.setState({ profile });
+    },
+    [resultHandler, statue, buildState, walletAddress],
+  );
 
-const reqDclData = React.useCallback(
-  async (token: string) => {
-    try {
-      const res = await req_dcl_parcel_list(token);
-      const data = resultHandler(res, reqDclData);
-      setLoading(false);
-      if (!data) {
-        return;
+  const reqWearablesData = React.useCallback(async () => {
+    const result = await req_get_user_wearable(await refreshTK());
+    if (result.code === 100000) {
+      const show = result.data.filter((i) => {
+        return i.show_status === 1;
+      });
+      const hide = result.data.filter((i) => {
+        return i.show_status === 2;
+      });
+      // console.log(wearablesState.current);
+      if (wearablesState.current === 'all') {
+        setWearablesCreatorsData(result.data);
+      } else if (wearablesState.current === 'shown') {
+        setWearablesCreatorsData(show);
+      } else if (wearablesState.current === 'hidden') {
+        setWearablesCreatorsData(hide);
+      } else {
+        setWearablesCreatorsData(result.data);
       }
-      // setDclDataSource(data.parcelList);
-      changeNum(data.parcelList, nav_Label.current);
-    } catch {
-      setError(true);
+      setWearablesCreatorsOriginData(result.data);
+      setWearablesShowData(show);
+      setWearablesHideData(hide);
     }
-  },
-  [resultHandler, tabState, nav_Label],
-);
+  }, [refreshTK]);
 
-
-
-const requestPersonal = React.useCallback(
-  async (token: string) => {
-    const res = await getBaseInfo(token);
-
-    // const sta = res.data.profile.creator_status
-    const emailState = res.data.profile.email
-    const buildNum = res.data.profile.builder_status
-    const wallet = res.data.profile.address
-    setNoWork(true)
-    setStatue(res.data.profile.creator_status)
-    setBuildState(buildNum)
-    setWalletAddress(wallet)
-    // setCreaterStateVal(res.data.profile.creator_status)
-    setEmailStateWearable(res.data.profile.email)
-    // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
-    // console.log(statue, "setEmailStateWearable");
-
-    setEmailStateVal(emailState)
-    // console.log(res.data.profile.creator_status,99999);
-
-    // const statue = res.data.profile.creator_status;
-
-    const data = resultHandler(res, requestPersonal);
-    if (!data) {
-      return;
+  const onRetry = React.useCallback(async () => {
+    const accessToken = getToken('atk');
+    if (accessToken && tabState === 'Voxels') {
+      requestData(accessToken);
     }
-    const { profile } = data;
-    const {
-      address: addr,
-      nickName: name,
-      introduction: m,
-      country: n,
-      avatar: ava,
-      links,
-      email: e,
-      creatorStatus,
-    } = profile;
-    const { twitterName, websiteUrl } = links;
-    setToken('address', addr);
-    setEmail(e);
-    setAvatarUrl(ava);
-    setCreatorsState(creatorStatus);
-    setAddress(addr);
-    setNickNameVla(name);
-    setIntroduction(m);
-    setcountry(n);
-    setTwitterAddress(twitterName);
-    setWebsiteAddress(websiteUrl);
-    state.setState({ profile });
-  },
-  [resultHandler, statue, buildState, walletAddress],
-);
-
-const reqWearablesData = React.useCallback(async () => {
-  const result = await req_get_user_wearable(await refreshTK());
-  if (result.code === 100000) {
-    const show = result.data.filter((i) => {
-      return i.show_status === 1;
-    });
-    const hide = result.data.filter((i) => {
-      return i.show_status === 2;
-    });
-    // console.log(wearablesState.current);
-    if (wearablesState.current === 'all') {
-      setWearablesCreatorsData(result.data);
-    } else if (wearablesState.current === 'shown') {
-      setWearablesCreatorsData(show);
-    } else if (wearablesState.current === 'hidden') {
-      setWearablesCreatorsData(hide);
-    } else {
-      setWearablesCreatorsData(result.data);
+    if (accessToken && tabState === 'Decentraland') {
+      reqDclData(accessToken);
     }
-    setWearablesCreatorsOriginData(result.data);
-    setWearablesShowData(show);
-    setWearablesHideData(hide);
-  }
-}, [refreshTK]);
-
-const onRetry = React.useCallback(async () => {
-  const accessToken = getToken('atk');
-  if (accessToken && tabState === 'Voxels') {
-    requestData(accessToken);
-  }
-  if (accessToken && tabState === 'Decentraland') {
-    reqDclData(accessToken);
-  }
-  // if (accessToken && routeTab === 'building') {
-  //   reqBuilderData(accessToken);
-  // }
-}, [requestData, getToken, reqDclData]);
-
-
-
-const onSearchHandler = React.useCallback(async (query,
-  page: number,
-  per_page: number,
-  search_item: string,
-  isCli: boolean) => {
-  // console.log('打印了打印了', query);
-  // setPage(1)
-  // console.log('调用几遍',);
-
-  const newPage = page + 1
-  // console.log(newPage, page);
-
-  setPage(newPage)
-
-
-  setShowModal(true)
-  // console.log(newPage);
-  // setPage(newPage)
-  // console.log(router.query.q || query);
-
-  const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
-
-  setShowModal(false)
-  if (res.code === 100000) {
-    const data = res.data?.menu_one;
-    const dataCreater = res.data?.Creator?.menu_two;
-    const countNum = res.data?.item_count;
-    const dataEvent = res.data?.Event?.menu_two;
-    const MenuDataTwo = res.data?.Place?.menu_two;
-    // const dataList  = dataSource;
-    const arr = []
-    Object.keys(data).forEach(key => {
-      const obj = {
-        label: data[key],
-        type: data[key],
-        count: countNum[data[key]],
-      }
-      arr.push(obj)
-    })
-
-
-    setValueCount(arr)
-
-
-    const dataList = isCli ? [] : dataSource;
-
-    // console.log(dataList, page, res.data.Place.Voxels);
-
-
-    if (res.data?.Place?.Voxels.length > 0) {
-      dataList?.push(...res.data?.Place?.Voxels)
-      // console.log(dataList);
-
-      setDataSource(dataList)
-    }
-
-    // console.log(dataList, "dataList");
-
-    // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-
-    // setDataSourceTwo(dataList)
-
-    // setDataSource(res.data.Place.Voxels)
-
-    const dataListBuilder = dataSourceCreBuilder;
-    if (res.data?.Creator?.Builder.length > 0) {
-      dataListBuilder?.push(...res.data?.Creator?.Builder)
-      setDataSourceCreBuilder(dataListBuilder)
-    }
-
-    const dataListEventCv = eventCvList;
-    if (res.data?.Event?.Voxels?.length > 0) {
-      dataListEventCv?.push(...res.data?.Event?.Voxels)
-
-      setEventCvList(dataListEventCv)
-    }
-    const dataListEventDcl = eventDclList;
-    if (res.data?.Event?.Decentranland?.length > 0) {
-      dataListEventDcl?.push(...res.data?.Event?.Decentranland)
-      setEventDclList(dataListEventDcl)
-    }
-    const dataListEventSom = eventSomList;
-    if (res.data?.Event?.Somniumspace?.length > 0) {
-      dataListEventSom?.push(...res.data?.Event?.Somniumspace)
-      setEventSomList(dataListEventSom)
-    }
-    // setDataSourceCreBuilder(res.data.Creator.Builder)
-
-
-    const dataListLearn = dataSourceLearn;
-    if (res.data?.Learn?.data.length > 0) {
-      dataListLearn?.push(...res.data?.Learn?.data)
-      setDataSourceLearn(dataListLearn)
-    }
-
-    // setDataSourceLearn(res.data.Learn.data)
-    // console.log(dataSourceLearn, 222523);
-
-    // setDataSourceTwo(res.data.Place.Voxels)
-    const dataListDece = dclDataSource;
-    if (res.data.Place?.Decentranland.length > 0) {
-      dataListDece?.push(...res.data.Place?.Decentranland)
-      // console.log(dataListDece);
-
-      setDclDataSource(dataListDece)
-    }
-
-    // setDclDataSource(res.data.Place.Decentranland)
-
-    // console.log(dclDataSource, "dataSourcedataSourcedataSource");
-
-
-    const MenuDataTwoArr = []
-    const valCountCreater = []
-    const valCountEvent = []
-    // for (const key in dataCreater) {
-    //   // console.log(valueCount);
-    //   const obj = {
-    //     label: dataCreater[key],
-    //     type: dataCreater[key],
-    //     // count: countNum[data[key]],
-    //   }
-
-    //   valCountCreater.push(obj)
-    //   // console.log(valCountCreater, "valCountCreater");
+    // if (accessToken && routeTab === 'building') {
+    //   reqBuilderData(accessToken);
     // }
-    if (dataCreater) {
-      Object?.keys(dataCreater).forEach(key => {
+  }, [requestData, getToken, reqDclData]);
+
+
+
+  const onSearchHandler = React.useCallback(async (query,
+    page: number,
+    per_page: number,
+    search_item: string,
+    isCli: boolean) => {
+    // console.log('打印了打印了', query);
+    // setPage(1)
+    console.log('调用几遍',);
+
+    const newPage = page + 1
+    // console.log(newPage, page);
+
+    setPage(newPage)
+
+
+    setShowModal(true)
+    // console.log(newPage);
+    // setPage(newPage)
+    // console.log(router.query.q || query);
+
+    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
+
+    setShowModal(false)
+    if (res.code === 100000) {
+      const data = res.data?.menu_one;
+      const dataCreater = res.data?.Creator?.menu_two;
+      const countNum = res.data?.item_count;
+      const dataEvent = res.data?.Event?.menu_two;
+      const MenuDataTwo = res.data?.Place?.menu_two;
+      // const dataList  = dataSource;
+      const arr = []
+      Object.keys(data).forEach(key => {
         const obj = {
-          label: dataCreater[key],
-          type: dataCreater[key],
-          // count: countNum[data[key]],
+          label: data[key],
+          type: data[key],
+          count: countNum[data[key]],
         }
-        valCountCreater.push(obj)
+        arr.push(obj)
       })
-      setValueCountCreater(valCountCreater)
-    }
 
 
-    // for (const keys in MenuDataTwo) {
-    //   const objMenuTwo = {
-    //     label: MenuDataTwo[keys],
-    //     type: MenuDataTwo[keys],
-    //     // icon: MenuDataTwo[keys],
-    //   }
-    //   MenuDataTwoArr.push(objMenuTwo)
-    //   // console.log(MenuDataTwoArr);
-
-    // }
+      setValueCount(arr)
 
 
-    if (dataEvent) {
-      Object?.keys(dataEvent).forEach(key => {
-        const objEvent = {
-          label: dataEvent[key],
-          type: dataEvent[key],
-          icon: TABobj[dataEvent[key]],
-        }
-        valCountEvent.push(objEvent)
-        // console.log(objEvent);
+      const dataList = isCli ? [] : dataSource;
 
-      })
-      setValueCountEvent(valCountEvent)
-    }
-    // console.log(valueCountEvent, 9999999999999);
-
-    if (MenuDataTwo) {
-      Object?.keys(MenuDataTwo).forEach(keys => {
-        const objMenuTwo = {
-          label: MenuDataTwo[keys],
-          type: MenuDataTwo[keys],
-          icon: TABobj[MenuDataTwo[keys]],
-        }
-        MenuDataTwoArr.push(objMenuTwo)
-      })
-      setMenuDataTwoArrCon(MenuDataTwoArr)
-    }
+      // console.log(dataList, page, res.data.Place.Voxels);
 
 
-    // for (const key in data) {
-    //   // console.log(valueCount);
-    //   const obj = {
-    //     label: data[key],
-    //     type: data[key],
-    //     count: countNum[data[key]],
-    //   }
+      if (res.data?.Place?.Voxels.length > 0) {
+        dataList?.push(...res.data?.Place?.Voxels)
+        // console.log(dataList);
 
-    //   arr.push(obj)
-    //   // console.log(arr);
-    // }
-    // console.log(dataSource,dclDataSource);
-    // console.log(res.data, res.data?.item_count && res.data?.menu_one);
-
-    if ((res.data?.item_count && res.data?.menu_one).length === 0) {
-
-      setemptyStatus(true)
-      setloadingDetail(true)
-    } else {
-      setloadingDetail(false)
-    }
-
-  }
-}, [router.query.q]);
-
-
-
-const reqBuilderData = React.useCallback(
-  async (walletAddressVal: string) => {
-    try {
-
-      const res = await req_building_list(walletAddressVal);
-      // console.log(res, 5959);
-
-
-      const data = resultHandlerBu(res, reqBuilderData);
-      // console.log(data, 56569, res);
-
-
-      setLoading(false);
-      if (!data) {
-        return;
+        setDataSource(dataList)
       }
-      // console.log(data, 8989);
-      setDataBuildSource(data);
-      // changeNum(data, nav_Label.current);
-    } catch {
-      setError(true);
+
+      // console.log(dataList, "dataList");
+
+      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
+
+      // setDataSourceTwo(dataList)
+
+      // setDataSource(res.data.Place.Voxels)
+
+      const dataListBuilder = dataSourceCreBuilder;
+      if (res.data?.Creator?.Builder.length > 0) {
+        dataListBuilder?.push(...res.data?.Creator?.Builder)
+        setDataSourceCreBuilder(dataListBuilder)
+      }
+
+      const dataListEventCv = eventCvList;
+      if (res.data?.Event?.Voxels?.length > 0) {
+        dataListEventCv?.push(...res.data?.Event?.Voxels)
+
+        setEventCvList(dataListEventCv)
+      }
+      const dataListEventDcl = eventDclList;
+      if (res.data?.Event?.Decentranland?.length > 0) {
+        dataListEventDcl?.push(...res.data?.Event?.Decentranland)
+        setEventDclList(dataListEventDcl)
+      }
+      const dataListEventSom = eventSomList;
+      if (res.data?.Event?.Somniumspace?.length > 0) {
+        dataListEventSom?.push(...res.data?.Event?.Somniumspace)
+        setEventSomList(dataListEventSom)
+      }
+      // setDataSourceCreBuilder(res.data.Creator.Builder)
+
+
+      const dataListLearn = dataSourceLearn;
+      if (res.data?.Learn?.data.length > 0) {
+        dataListLearn?.push(...res.data?.Learn?.data)
+        setDataSourceLearn(dataListLearn)
+      }
+
+      // setDataSourceLearn(res.data.Learn.data)
+      // console.log(dataSourceLearn, 222523);
+
+      // setDataSourceTwo(res.data.Place.Voxels)
+      const dataListDece = dclDataSource;
+      if (res.data.Place?.Decentranland.length > 0) {
+        dataListDece?.push(...res.data.Place?.Decentranland)
+        // console.log(dataListDece);
+
+        setDclDataSource(dataListDece)
+      }
+
+      // setDclDataSource(res.data.Place.Decentranland)
+
+      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
+
+
+      const MenuDataTwoArr = []
+      const valCountCreater = []
+      const valCountEvent = []
+      // for (const key in dataCreater) {
+      //   // console.log(valueCount);
+      //   const obj = {
+      //     label: dataCreater[key],
+      //     type: dataCreater[key],
+      //     // count: countNum[data[key]],
+      //   }
+
+      //   valCountCreater.push(obj)
+      //   // console.log(valCountCreater, "valCountCreater");
+      // }
+      if (dataCreater) {
+        Object?.keys(dataCreater).forEach(key => {
+          const obj = {
+            label: dataCreater[key],
+            type: dataCreater[key],
+            // count: countNum[data[key]],
+          }
+          valCountCreater.push(obj)
+        })
+        setValueCountCreater(valCountCreater)
+      }
+
+
+      // for (const keys in MenuDataTwo) {
+      //   const objMenuTwo = {
+      //     label: MenuDataTwo[keys],
+      //     type: MenuDataTwo[keys],
+      //     // icon: MenuDataTwo[keys],
+      //   }
+      //   MenuDataTwoArr.push(objMenuTwo)
+      //   // console.log(MenuDataTwoArr);
+
+      // }
+
+
+      if (dataEvent) {
+        Object?.keys(dataEvent).forEach(key => {
+          const objEvent = {
+            label: dataEvent[key],
+            type: dataEvent[key],
+            // count: countNum[data[key]],
+          }
+          valCountEvent.push(objEvent)
+          // console.log(objEvent);
+
+        })
+        setValueCountEvent(valCountEvent)
+      }
+      // console.log(valueCountEvent, 9999999999999);
+
+      if (MenuDataTwo) {
+        Object?.keys(MenuDataTwo).forEach(keys => {
+          console.log(TABobj[MenuDataTwo[keys]]);
+          const objMenuTwo = {
+            label: MenuDataTwo[keys],
+            type: MenuDataTwo[keys],
+            icon: TABobj[MenuDataTwo[keys]],
+          }
+          MenuDataTwoArr.push(objMenuTwo)
+        })
+        setMenuDataTwoArrCon(MenuDataTwoArr)
+      }
+
+
+      // for (const key in data) {
+      //   // console.log(valueCount);
+      //   const obj = {
+      //     label: data[key],
+      //     type: data[key],
+      //     count: countNum[data[key]],
+      //   }
+
+      //   arr.push(obj)
+      //   // console.log(arr);
+      // }
+      // console.log(dataSource,dclDataSource);
+      // console.log(res.data, res.data?.item_count && res.data?.menu_one);
+
+      if ((res.data?.item_count && res.data?.menu_one).length === 0) {
+
+        setemptyStatus(true)
+        setloadingDetail(true)
+      } else {
+        setloadingDetail(false)
+      }
+
     }
-  },
-  [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
-);
-
-const requireBuilder = React.useCallback(
-  async (token) => {
-    const res = await req_get_building_detail_info(token);
-    const data = resultHandler(res, requireBuilder);
-    // if (data) {
-    //   const profile = convert(data.profile);
-    //   const {
-    //     address: addr,
-    //     nickName: name,
-    //     avatar,
-    //     links,
-    //     email: e,
-    //     country: c,
-    //     introduction: i,
-    //   } = profile;
-    //   const { twitterName, websiteUrl } = links;
-    //   setAvatarUrl(avatar);
-    //   setInitEmail(e);
-    //   if (e) {
-    //     setEmail(e);
-    //   }
-    //   setCountry(c);
-    //   setIntroduction(i);
-    //   setAddress(addr);
-    //   setNickNameVla(name);
-    //   setOrginName(name);
-    //   setTwitterAddress(twitterName);
-    //   setWebsiteAddress(websiteUrl);
-    //   state.setState({ profile });
-    // }
-  },
-  [resultHandler],
-);
-
-const toTopic = React.useCallback((id, item) => {
-  if (item?.name === 'WearableDAO') {
-    window.open('/wearables/wearabledao?type=chinesered')
-  }
-  if (item.topic_id) {
-    window.open(`/topic/${id}?type=buildings`);
-  } else if (item.address) {
-    window.open(`/topicNewBuilding?address=${item.address}`);
-  }
-}, []);
+  }, [router.query.q]);
 
 
 
-const renderContent = React.useMemo(() => {
+  const reqBuilderData = React.useCallback(
+    async (walletAddressVal: string) => {
+      try {
 
-  if (loading) {
-    return <Status status="loading" />;
-  }
-  if (error) {
-    return <Status retry={onRetry} status="error" />;
-  }
-  if (loadingDetail === true) {
+        const res = await req_building_list(walletAddressVal);
+        // console.log(res, 5959);
 
-    return <Status status="loadingDetail" />;
-  }
-  if (tabState === 'Voxels') {
 
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-        {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
-        {showModal === false ?
-          <><img src='/images/saveIcon.gif'></img> </>
-          :
-          <>
-            {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
+        const data = resultHandlerBu(res, reqBuilderData);
+        // console.log(data, 56569, res);
 
-          </>
+
+        setLoading(false);
+        if (!data) {
+          return;
         }
-      </div>
-    );
-  }
-  if (tabState === 'Decentraland') {
-    // Decentranland
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-        {dclDataSource.map((card) => {
-          return (<Card {...card} key={uuid()} typeState={card.type} />);
-        })}
-      </div>
-    );
-  }
-}, [
-  error,
-  dataSource,
-  loading,
-  onRetry,
-  changeNum,
-  valueCount,
-  parcelsIds,
-  setCardState,
-  tabState,
-  reqDclData,
-]);
-const onClinkCvDetail = (card) => {
-  window.open(card.event_parcel_url);
-}
-const onClinkDclDetail = (card) => {
-  window.open(card.event_parcel_url);
-}
-const onClinkSomDetail = (card) => {
-  window.open(card.event_parcel_url);
-}
-const renderContentEvent = React.useMemo(() => {
-  // console.log(tabStateEvent);
+        // console.log(data, 8989);
+        setDataBuildSource(data);
+        // changeNum(data, nav_Label.current);
+      } catch {
+        setError(true);
+      }
+    },
+    [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
+  );
 
-  if (loading) {
-    return <Status status="loading" />;
-  }
-  if (error) {
-    return <Status retry={onRetry} status="error" />;
-  }
-  if (loadingDetail === true) {
+  const requireBuilder = React.useCallback(
+    async (token) => {
+      const res = await req_get_building_detail_info(token);
+      const data = resultHandler(res, requireBuilder);
+      // if (data) {
+      //   const profile = convert(data.profile);
+      //   const {
+      //     address: addr,
+      //     nickName: name,
+      //     avatar,
+      //     links,
+      //     email: e,
+      //     country: c,
+      //     introduction: i,
+      //   } = profile;
+      //   const { twitterName, websiteUrl } = links;
+      //   setAvatarUrl(avatar);
+      //   setInitEmail(e);
+      //   if (e) {
+      //     setEmail(e);
+      //   }
+      //   setCountry(c);
+      //   setIntroduction(i);
+      //   setAddress(addr);
+      //   setNickNameVla(name);
+      //   setOrginName(name);
+      //   setTwitterAddress(twitterName);
+      //   setWebsiteAddress(websiteUrl);
+      //   state.setState({ profile });
+      // }
+    },
+    [resultHandler],
+  );
 
-    return <Status status="loadingDetail" />;
-  }
-  if (tabStateEvent === 'Voxels') {
+  const toTopic = React.useCallback((id, item) => {
+    if (item?.name === 'WearableDAO') {
+      window.open('/wearables/wearabledao?type=chinesered')
+    }
+    if (item.topic_id) {
+      window.open(`/topic/${id}?type=buildings`);
+    } else if (item.address) {
+      window.open(`/topicNewBuilding?address=${item.address}`);
+    }
+  }, []);
 
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-        {eventCvList.map((card, idx) => {
-          return < EventDetail key={idx} {...card} onClinkDetail={() => {
-            onClinkCvDetail(card)
-          }} />;
-        })}
-      </div>
-    );
-  }
-  if (tabStateEvent === 'Decentraland') {
-    // Decentranland
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-        {eventDclList.map((card, idx) => {
-          return (< EventDetail key={idx} {...card} onClinkDetail={() => {
-            onClinkDclDetail(card)
-          }} />);
-        })}
-      </div>
-    );
-  }
-  if (tabStateEvent === 'somniumspace') {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-        {eventSomList.map((card, idx) => {
-          return (< EventDetail key={idx} {...card} onClinkDetail={() => {
-            onClinkSomDetail(card)
-          }} />);
-        })}
-      </div>
-    );
-  }
-}, [
-  error,
-  loading,
-  onRetry,
-  eventCvList,
-  eventDclList,
-  eventSomList,
-  changeNum,
-  valueCount,
-  parcelsIds,
-  setCardState,
-  tabState,
-  reqDclData,
-]);
-const renderContentCreater = React.useMemo(() => {
-  // console.log(tabStateCreater);
 
-  // if (loading) {
-  //   return <Status status="loadingDetail" />;
-  // }
-  // if (error) {
-  //   return <Status retry={onRetry} status="error" />;
-  // }
-  // if (cartData.length === 0) {
-  //   return <Status status="empty" />;
-  // }
-  if (tabStateCreater === 'Builder') {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-        {dataSourceCreBuilder?.map((item, idx) => {
-          return (
-            <InfoCard cls={style.cls} {...item} key={idx}
-              onClick={() => toTopic(idx, item)}
-            ></InfoCard>
-            // <Card
-            //   {...card}
-            //   parcelsIds={parcelsIds}
-            //   state={cardState}
-            //   key={uuid()}
-            //   selectedIds={selectedIds}
-            //   onClick={(id, ids) => {
-            //     select(id, ids);
-            //   }}
-            // ></Card>
-          );
-        })}
-      </div>
-    );
-  }
-  if (tabStateCreater === 'wearable') {
-    // console.log("切换了");
 
-    return (
-      <>
-        <div>655555</div>
-        {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
+  const renderContent = React.useMemo(() => {
+
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (loadingDetail === true) {
+
+      return <Status status="loadingDetail" />;
+    }
+    if (tabState === 'Voxels') {
+
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+          {showModal === false ?
+            <><img src='/images/saveIcon.gif'></img> </>
+            :
+            <>
+              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
+
+            </>
+          }
+        </div>
+      );
+    }
+    if (tabState === 'Decentraland') {
+      // Decentranland
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+          {dclDataSource.map((card) => {
+            return (<Card {...card} key={uuid()} typeState={card.type} />);
+          })}
+        </div>
+      );
+    }
+  }, [
+    error,
+    dataSource,
+    loading,
+    onRetry,
+    changeNum,
+    valueCount,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
+  ]);
+  const onClinkCvDetail = (card) => {
+    window.open(card.event_parcel_url);
+  }
+  const onClinkDclDetail = (card) => {
+    window.open(card.event_parcel_url);
+  }
+  const onClinkSomDetail = (card) => {
+    window.open(card.event_parcel_url);
+  }
+  const renderContentEvent = React.useMemo(() => {
+    // console.log(tabStateEvent);
+
+    if (loading) {
+      return <Status status="loading" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (loadingDetail === true) {
+
+      return <Status status="loadingDetail" />;
+    }
+    if (tabStateEvent === 'Voxels') {
+
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+          {eventCvList.map((card, idx) => {
+            return < EventDetail key={idx} {...card} onClinkDetail={() => {
+              onClinkCvDetail(card)
+            }} />;
+          })}
+        </div>
+      );
+    }
+    if (tabStateEvent === 'Decentraland') {
+      // Decentranland
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+          {eventDclList.map((card, idx) => {
+            return (< EventDetail key={idx} {...card} onClinkDetail={() => {
+              onClinkDclDetail(card)
+            }} />);
+          })}
+        </div>
+      );
+    }
+    if (tabStateEvent === 'somniumspace') {
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
+          {eventSomList.map((card, idx) => {
+            return (< EventDetail key={idx} {...card} onClinkDetail={() => {
+              onClinkSomDetail(card)
+            }} />);
+          })}
+        </div>
+      );
+    }
+  }, [
+    error,
+    loading,
+    onRetry,
+    eventCvList,
+    eventDclList,
+    eventSomList,
+    changeNum,
+    valueCount,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
+  ]);
+  const renderContentCreater = React.useMemo(() => {
+    // console.log(tabStateCreater);
+
+    // if (loading) {
+    //   return <Status status="loadingDetail" />;
+    // }
+    // if (error) {
+    //   return <Status retry={onRetry} status="error" />;
+    // }
+    // if (cartData.length === 0) {
+    //   return <Status status="empty" />;
+    // }
+    if (tabStateCreater === 'Builder') {
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+          {dataSourceCreBuilder?.map((item, idx) => {
+            return (
+              <InfoCard cls={style.cls} {...item} key={idx}
+                onClick={() => toTopic(idx, item)}
+              ></InfoCard>
+              // <Card
+              //   {...card}
+              //   parcelsIds={parcelsIds}
+              //   state={cardState}
+              //   key={uuid()}
+              //   selectedIds={selectedIds}
+              //   onClick={(id, ids) => {
+              //     select(id, ids);
+              //   }}
+              // ></Card>
+            );
+          })}
+        </div>
+      );
+    }
+    if (tabStateCreater === 'wearable') {
+      // console.log("切换了");
+
+      return (
+        <>
+          <div>655555</div>
+          {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
             {dclDataSource.map((card) => {
               return (
                 <DclCard
@@ -1354,78 +1344,78 @@ const renderContentCreater = React.useMemo(() => {
               );
             })}
           </div> */}
-      </>
-    );
-  }
-}, [
-  error,
-  loading,
-  onRetry,
-  changeNum,
-  parcelsIds,
-  setCardState,
-  tabState,
-  reqDclData,
-]);
-const addWorkWerable = () => {
-  // console.log(55, tokenWearable);
-  // setShowModal(true)
-  // const res = getBaseInfo(tokenWearable);
-  // res.then((resWeable) => {
-  //   setaddressWerVal(resWeable.data.profile.address);
-  //   setemailWearVal(resWeable.data.profile.email);
+        </>
+      );
+    }
+  }, [
+    error,
+    loading,
+    onRetry,
+    changeNum,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
+  ]);
+  const addWorkWerable = () => {
+    // console.log(55, tokenWearable);
+    // setShowModal(true)
+    // const res = getBaseInfo(tokenWearable);
+    // res.then((resWeable) => {
+    //   setaddressWerVal(resWeable.data.profile.address);
+    //   setemailWearVal(resWeable.data.profile.email);
 
-  // })
-}
-
-const renderWerable = React.useMemo(() => {
-  // console.log(statue);
-
-  if (loading) {
-    return <Status status="loadingDetail" />;
-  }
-  if (error) {
-    return <Status retry={onRetry} status="error" />;
-  }
-  if (statue === 1) {
-    return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
-
+    // })
   }
 
-}, [statue,
-  error,
-  loading,
-  onRetry])
+  const renderWerable = React.useMemo(() => {
+    // console.log(statue);
 
-const renderBuilding = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loadingDetail" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (statue === 1) {
+      return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
 
-  if (loading) {
-    return <Status status="loadingDetail" />;
-  }
-  if (error) {
-    return <Status retry={onRetry} status="error" />;
-  }
+    }
 
-  if (routeTab === 'Learn') {
-    //   // console.log(dataBuildSource,6565656);
+  }, [statue,
+    error,
+    loading,
+    onRetry])
 
-    return (
-      <>
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-5">
+  const renderBuilding = React.useMemo(() => {
 
-          {/* <div>Learn</div> */}
-          {/* <LearnCard/> */}
-          {/* 123 */}
-          {
-            dataSourceLearn?.map((item, idx) => {
-              // console.log(card,8888888888);
+    if (loading) {
+      return <Status status="loadingDetail" />;
+    }
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
 
-              // console.log(dataSourceLearn,9999999);
+    if (routeTab === 'Learn') {
+      //   // console.log(dataBuildSource,6565656);
 
-              return (<LearnCard {...item} key={idx} />)
-            })
-          }
-          {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+      return (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-5">
+
+            {/* <div>Learn</div> */}
+            {/* <LearnCard/> */}
+            {/* 123 */}
+            {
+              dataSourceLearn?.map((item, idx) => {
+                // console.log(card,8888888888);
+
+                // console.log(dataSourceLearn,9999999);
+
+                return (<LearnCard {...item} key={idx} />)
+              })
+            }
+            {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
             {dataBuildSource.map((card) => {
               return (
                 <CardBuilding
@@ -1443,809 +1433,793 @@ const renderBuilding = React.useMemo(() => {
               );
             })}
           </div> */}
-        </div>
-      </>
-    );
-  }
+          </div>
+        </>
+      );
+    }
 
-}, [
-  error,
-  dataBuildSource,
-  loading,
-  onRetry,
-  buildState,
-  walletAddress,
-  builderSat,
-  changeNum,
-  parcelsIds,
-  setCardState,
-  tabState,
-  reqBuilderData,
-]);
+  }, [
+    error,
+    dataBuildSource,
+    loading,
+    onRetry,
+    buildState,
+    walletAddress,
+    builderSat,
+    changeNum,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqBuilderData,
+  ]);
 
 
 
-const manyChange = React.useCallback(
-  (many_label, data, sta = true) => {
-    const ids = [];
-    if (many_label === 'Rent out several')
-      data.forEach((item) => {
-        if (item.status === 'not_for_rent') ids.push(item.parcelId);
-      });
-    if (many_label === 'Cancel lease for multiple' || many_label === 'Mark several as leased')
-      data.forEach((item) => {
-        if (item.status === 'for_rent') ids.push(item.parcelId);
-      });
-    setParcelsIds(ids);
-    setCardState(sta);
-    setLabel(many_label);
-    setSelectedIds([]);
-    changeNum(dataSource, nav_Label);
-  },
-  [setParcelsIds, setLabel, setCardState, changeNavTab, changeNum, nav_Label, dataSource],
-);
+  const manyChange = React.useCallback(
+    (many_label, data, sta = true) => {
+      const ids = [];
+      if (many_label === 'Rent out several')
+        data.forEach((item) => {
+          if (item.status === 'not_for_rent') ids.push(item.parcelId);
+        });
+      if (many_label === 'Cancel lease for multiple' || many_label === 'Mark several as leased')
+        data.forEach((item) => {
+          if (item.status === 'for_rent') ids.push(item.parcelId);
+        });
+      setParcelsIds(ids);
+      setCardState(sta);
+      setLabel(many_label);
+      setSelectedIds([]);
+      changeNum(dataSource, nav_Label);
+    },
+    [setParcelsIds, setLabel, setCardState, changeNavTab, changeNum, nav_Label, dataSource],
+  );
 
-const close_rent_set = React.useCallback(
-  (current_state) => {
-    manyChange(label, cartData, false);
-    set_rent_set_state(current_state);
+  const close_rent_set = React.useCallback(
+    (current_state) => {
+      manyChange(label, cartData, false);
+      set_rent_set_state(current_state);
+      setManySetState(false);
+      setSelectedIds([]);
+      store.setState(() => ({ rentOutState: false }));
+    },
+    [rent_set_state, manyChange],
+  );
+
+  const requireData = React.useCallback(
+    async (token) => {
+      const res = await getBaseInfo(token);
+      const data = resultHandler(res, requireData);
+      // if (data) {
+      //   const profile = convert(data.profile);
+      //   const {
+      //     address: addr,
+      //     nickName: name,
+      //     // avatar,
+      //     links,
+      //     email: e,
+      //     country: c,
+      //     introduction: i,
+      //   } = profile;
+      //   const { twitterName, websiteUrl } = links;
+      //   setAvatarUrl(avatar);
+      //   setInitEmail(e);
+      //   if (e) {
+      //     setEmail(e);
+      //   }
+      //   setCountry(c);
+      //   setIntroduction(i);
+      //   setAddress(addr);
+      //   setNickNameVla(name);
+      //   setOrginName(name);
+      //   setTwitterAddress(twitterName);
+      //   setWebsiteAddress(websiteUrl);
+      //   state.setState({ profile });
+      // }
+    },
+    [resultHandler],
+  );
+
+
+
+
+  const watcher_store = React.useCallback(() => {
+    set_rent_set_state(s.rentOutState);
     setManySetState(false);
-    setSelectedIds([]);
-    store.setState(() => ({ rentOutState: false }));
-  },
-  [rent_set_state, manyChange],
-);
-
-const requireData = React.useCallback(
-  async (token) => {
-    const res = await getBaseInfo(token);
-    const data = resultHandler(res, requireData);
-    // if (data) {
-    //   const profile = convert(data.profile);
-    //   const {
-    //     address: addr,
-    //     nickName: name,
-    //     // avatar,
-    //     links,
-    //     email: e,
-    //     country: c,
-    //     introduction: i,
-    //   } = profile;
-    //   const { twitterName, websiteUrl } = links;
-    //   setAvatarUrl(avatar);
-    //   setInitEmail(e);
-    //   if (e) {
-    //     setEmail(e);
-    //   }
-    //   setCountry(c);
-    //   setIntroduction(i);
-    //   setAddress(addr);
-    //   setNickNameVla(name);
-    //   setOrginName(name);
-    //   setTwitterAddress(twitterName);
-    //   setWebsiteAddress(websiteUrl);
-    //   state.setState({ profile });
-    // }
-  },
-  [resultHandler],
-);
-
-
-
-
-const watcher_store = React.useCallback(() => {
-  set_rent_set_state(s.rentOutState);
-  setManySetState(false);
-  const id = [];
-  if (s.id) {
-    id.push(s.id);
-    setSelectedIds(id);
-  }
-}, [s, setSelectedIds]);
-const watcher_store_status = React.useCallback(() => {
-  if (s.status === '') return;
-  if (s.status !== 'Failed!') {
-    set_status('succeed');
+    const id = [];
+    if (s.id) {
+      id.push(s.id);
+      setSelectedIds(id);
+    }
+  }, [s, setSelectedIds]);
+  const watcher_store_status = React.useCallback(() => {
+    if (s.status === '') return;
+    if (s.status !== 'Failed!') {
+      set_status('succeed');
+      set_type(true);
+      set_value(s.status);
+      setTimeout(() => {
+        set_type(false);
+        store.setState(() => ({ status: '' }));
+      }, 2000);
+      return;
+    }
+    set_status('error');
     set_type(true);
     set_value(s.status);
     setTimeout(() => {
       set_type(false);
       store.setState(() => ({ status: '' }));
     }, 2000);
-    return;
-  }
-  set_status('error');
-  set_type(true);
-  set_value(s.status);
-  setTimeout(() => {
-    set_type(false);
-    store.setState(() => ({ status: '' }));
-  }, 2000);
-}, [s.status, set_status, set_type, set_value]);
-const watcher_cardState = React.useCallback(() => {
-  setCardState(s.parcels_cardState);
-}, [s.parcels_cardState]);
-//   useEffect(()=>{
-// console.log(saveVal,999999);
-//   },[saveVal])
-useEffect(() => {
-  setTabStateCreater('Builder')
-  setTabState('Voxels')
-  setTabStateEvent('Voxels')
-  // const accessToken = getToken('atk');
-  // console.log(accessToken);
+  }, [s.status, set_status, set_type, set_value]);
+  const watcher_cardState = React.useCallback(() => {
+    setCardState(s.parcels_cardState);
+  }, [s.parcels_cardState]);
+  //   useEffect(()=>{
+  // console.log(saveVal,999999);
+  //   },[saveVal])
+  useEffect(() => {
+    setTabStateCreater('Builder')
+    setTabState('Voxels')
+    setTabStateEvent('Voxels')
+    // const accessToken = getToken('atk');
+    // console.log(accessToken);
 
-  reqBuilderData(walletAddress)
+    reqBuilderData(walletAddress)
 
 
 
-}, [addbuild, walletAddress,])
-// console.log(headerRef.current?.scrollHeight);
-// console.log(showCon);
+  }, [addbuild, walletAddress,])
+  // console.log(headerRef.current?.scrollHeight);
+  // console.log(showCon);
 
-// console.log(searchText,999);
-React.useEffect(() => {
-  if (window.location.search) return;
-  onSearchHandler('', 1, 20, '', false)
-  console.log(router.query.q, window.location.search);
+  // console.log(searchText,999);
+  // React.useEffect(() => {
+  //   if(window.location.search)return;
+  //   onSearchHandler('', 1, 20, '',false)
+  //   console.log(router.query.q,window.location.search);
 
-}, [])
+  // }, [])
 
-React.useEffect(() => {
-  // console.log('执行', router?.query?.q,);
-  // if(router?.query?.q===undefined)return ;
-  if (router.query.q) {
-    setDataSource([])
-    setDataSourceLearn([])
-    setDataSourceCreWear([])
-    setDataBuildSource([])
-    setEventDclList([])
-    setEventSomList([])
-    setEventCvList([])
-    setSearchText(router.query.q);
-    onSearchHandler(router.query.q, 1, 20, '', false)
+  React.useEffect(() => {
+    // console.log('执行', router?.query?.q,);
+    // if(router?.query?.q===undefined)return ;
+    if (router.query.q) {
+      setDataSource([])
+      setDataSourceLearn([])
+      setDataSourceCreWear([])
+      setDataBuildSource([])
+      setEventDclList([])
+      setEventSomList([])
+      setEventCvList([])
+      setSearchText(router.query.q);
+      onSearchHandler(router.query.q, 1, 20, '', false)
 
-
-  } else {
-
-    if (router?.query?.q === undefined) {
-      return
-    }
-    setSearchText('');
-    onSearchHandler('', 1, 20, '', false)
-
-
-  }
-}, [router?.query?.q,])
-// console.log(router.query.value,"router.query.value");
-
-React.useEffect(() => {
-
-  // console.log(document.querySelector('body'));
-
-
-  const scrollChange = () => {
-    // console.log(document.getElementById('a1').scrollTop,"document.getElementById('countTatal').scrollTop");
-    //     console.log(showCon);
-    // console.log(window?.innerHeight,888);
-
-    // console.log(document?.getElementById('countTatal')?.scrollTop, 11111);
-    // console.log(document.querySelector('.myClassName')?.scrollTop, 2222);
-
-    // console.log(window.scrollY);
-    // const scrollHeight = document.getElementsByTagName('body')[0].scrollHeight
-    // const clientHeight = document.querySelector('.myClassName').clientHeight
-    // const scrollTop =document.querySelector('.myClassName')?.scrollTop
-    // // console.log( scrollHeight,clientHeight,scrollTop);
-    // // console.log( document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop);
-    // console.log(clientHeight,scrollTop,scrollHeight);
-
-    // console.log(window.scrollY);
-
-    // const listener = () => {
-    // console.log(151515151515);
-    // if (document.querySelector('.myClassName')?.scrollTop && document.querySelector('.myClassName')?.scrollTop > 1900) {
-    //   if (showCon === false) {
-
-    //     setSwitchShow(true)
-    //     if (!showModal) {
-    //       dataSourceTwoDetail('', 2, 20, '')
-    //     }
-
-    //     onSearchHandlerDetail('', pageNum, 8, '')
-    //   }
-
-    // }
-    // else {
-    //   setSwitchShow(false)
-    // }
-    // };
-    document.addEventListener('scroll', scrollChange);
-    return () => document.removeEventListener('scroll', scrollChange);
-  }
-
-
-  window.addEventListener('scroll', scrollChange, true)
-  // scrollChange()
-  return () => {
-    window.removeEventListener('scroll', scrollChange, false)
-  }
-
-}, [])
-
-
-
-
-// const requestPersonal = React.useCallback(
-//   async (token: string) => {
-//     const res = await getBaseInfo(token);
-//     const data = resultHandler(res, requestPersonal);
-//     if (!data) {
-//       return;
-//     }
-//     const { profile } = data;
-//     state.setState({ profile });
-//   },
-//   [resultHandler],
-// );
-
-
-
-React.useEffect(() => {
-
-
-  setSaveIcon(false)
-  const a = getToken('address');
-
-  if (a) {
-    setWalletAddress(a);
-  }
-  // console.log(r.router.query.type,"r.router.query.type");
-
-  setNavLabel('All')
-  // req_building_list(walletAddress)
-  // const accessToken = getToken('atk');
-  // console.log(11111111111111,accessToken);
-
-  // setTokenWearable(accessToken)
-  // // setRouteTab(r.router.query.type);
-  // reqWearablesData();
-  // requestPersonal(accessToken);
-  // requireBuilder(accessToken)
-  // if (tabState === 'Voxels') requestData(accessToken);
-  // if (tabState === 'Decentraland') reqDclData(accessToken);
-  // if(routeTab === 'building')reqBuilderData(accessToken);
-  watcher_store();
-  watcher_store_status();
-  watcher_cardState();
-  // if (!accessToken) window.location.href = '/'; //判断登录状态跳转
-}, [
-  tokenWearable,
-  navLabel,
-  getToken,
-  requestData,
-  loadingDetail,
-  builderSat,
-  buildState,
-  statue,
-  walletAddress,
-  requestPersonal,
-  watcher_store,
-  dataBuildSource,
-  // reqBuilderData,
-  addressWearable,
-  reqDclData,
-  // r.router.query.q,
-  routeTab,
-  tabState,
-  reqWearablesData,
-]);
-
-
-const tag2 = () => {
-  if (cardState) {
-    return (
-      <div className={style.succeedOrCancel}>
-        <div className={style.container}>
-          <div className={style.info}>
-            selected ({selectedIds.length}/{parcelsIds.length})
-          </div>
-          <div
-            className={style.succeed}
-            onClick={() => {
-              if (selectedIds.length === 0) return;
-              if (label === 'Rent out several') {
-                store.setState(() => ({
-                  parcels_cardState: false,
-                  rentOutState: true,
-                  id: null,
-                }));
-              }
-            }}
-          >
-          </div>
-          <div
-            className={style.cancel}
-            onClick={() => {
-              manyChange(label, cartData);
-              setCardState(false);
-              setSelectedIds([]);
-              store.setState(() => ({ parcels_cardState: false }));
-            }}
-          >
-            Close
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return <div></div>;
-};
-
-
-
-const batchShowOrHide = React.useCallback(
-  async (id = null, stat = null) => {
-    let result = null;
-    if (id && stat) {
-      result = await req_set_wearable_show_status(await refreshTK(), id, stat);
+    
     } else {
-      result = await req_set_wearable_show_status(
-        await refreshTK(),
-        wearablesSleceteIdList.join(),
-        wearablesShowOrHide,
-      );
-    }
-    setSaveIconVal(id)
-    if (result.code === 100000) {
 
-      if (wearablesShowOrHide === 2 || stat === 2) {
-        toast.success('Successfully hidden!');
+      if (router?.query?.q === undefined) {
+        // return
+        setSearchText('');
+        onSearchHandler('', 1, 20, '', false)
       }
-      if (wearablesShowOrHide === 1 || stat === 1) {
-        toast.success('Successfully shown!');
-      }
+      // setSearchText('');
+      // onSearchHandler('', 1, 20, '', false)
+     
 
-    } else {
-      toast.error('Failed!');
     }
+  }, [router?.query?.q,])
+  // console.log(router.query.value,"router.query.value");
 
-    setWearablesShowOrHideState(false);
-    setWearablesShowOrHide(0);
-    setWearablesSleceteIdList([]);
-    reqWearablesData();
-    setSaveIconVal(null)
+  React.useEffect(() => {
 
-
+    // console.log(document.querySelector('body'));
 
 
-  },
-  [wearablesShowOrHide, wearablesSleceteIdList, reqWearablesData],
-);
+    const scrollChange = () => {
+      // console.log(document.getElementById('a1').scrollTop,"document.getElementById('countTatal').scrollTop");
+      //     console.log(showCon);
+      // console.log(window?.innerHeight,888);
 
-const setWearablesId = React.useCallback(
-  (id) => {
-    if (wearablesSleceteIdList.findIndex((item) => item === id) === -1) {
-      wearablesSleceteIdList.push(id);
-    } else {
-      wearablesSleceteIdList.splice(
-        wearablesSleceteIdList.findIndex((item) => item === id),
-        1,
-      );
-    }
-    setWearablesSleceteIdList([...wearablesSleceteIdList]);
-  },
-  [wearablesSleceteIdList],
-);
-const creatorsReander = React.useMemo(() => {
+      // console.log(document?.getElementById('countTatal')?.scrollTop, 11111);
+      // console.log(document.querySelector('.myClassName')?.scrollTop, 2222);
 
-  if (wearablesCreatorsData.length === 0) {
-    return (
-      <div className={style.totop}>
-        <Status status="empty" />;
-      </div>
-    );
-  }
-  if (wearablesCreatorsData.length !== 0) {
-    return (
-      <>
-        <DaoModelList2
-          models={wearablesCreatorsData}
-          token={refreshTK()}
-          saveIconVal={saveIconVal}
-          wearablesShowOrHideState={wearablesShowOrHideState}
-          wearablesShowOrHide={wearablesShowOrHide}
-          length={wearablesCreatorsData.length}
-          onClick={setWearablesId}
-          wearablesSleceteIdList={wearablesSleceteIdList}
-          batchShowOrHide={batchShowOrHide}
-        ></DaoModelList2>
-      </>
-    );
-  }
-}, [
-  wearablesCreatorsData,
-  wearablesShowOrHideState,
-  wearablesShowOrHide,
-  setWearablesId,
-  wearablesSleceteIdList,
-  batchShowOrHide,
-]);
-// const ownedRander = React.useMemo(() => {
-//   if (ownerData.length === 0) {
-//     return (
-//       <div className={style.totop}>
-//         <Status status="empty" />;
-//       </div>
-//     );
-//   }
-//   if (ownerData.length !== 0) {
-//     return (
-//       <>
-//         <DaoModelList2 models={ownerData} type={'owner'}></DaoModelList2>
-//       </>
-//     );
-//   }
-// }, [ownerData]);
+      // console.log(window.scrollY);
+      // const scrollHeight = document.getElementsByTagName('body')[0].scrollHeight
+      // const clientHeight = document.querySelector('.myClassName').clientHeight
+      // const scrollTop =document.querySelector('.myClassName')?.scrollTop
+      // // console.log( scrollHeight,clientHeight,scrollTop);
+      // // console.log( document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop);
+      // console.log(clientHeight,scrollTop,scrollHeight);
 
+      // console.log(window.scrollY);
 
+      // const listener = () => {
+      // console.log(151515151515);
+      // if (document.querySelector('.myClassName')?.scrollTop && document.querySelector('.myClassName')?.scrollTop > 1900) {
+      //   if (showCon === false) {
 
-const randerCardList = React.useMemo(() => {
-  // console.log(routeTab,tabState);
+      //     setSwitchShow(true)
+      //     if (!showModal) {
+      //       dataSourceTwoDetail('', 2, 20, '')
+      //     }
 
-  const scroll = (e) => {
-    // console.log(e,"222222");
-
-    // // console.log('scrollscrollscrollscrollscrollscroll')
-    // console.log(document.querySelector('.myClassName')?.scrollTop);
-    // //   if(document.querySelector('.myClassName')?.scrollTop>868){
-    // // console.log('触底')
-    // //   }
-    // const timeCount;
-    // if (timeCount) {
-    //   clearTimeout(timeCount);
-    // }
-
-    // timeCount = setTimeout(() => {
-    // onSearchHandlerDetail('', pageNum, 20, '')
-    // if (dataSource.length) {
-    // console.log('触底')
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
-    // console.log(scrollTop, clientHeight, scrollTop + clientHeight, scrollHeight, window.innerHeight, scrollTop + clientHeight >= scrollHeight - 1);
-    if (scrollTop + clientHeight >= scrollHeight - 20) {
-      // if (showModal) {
-      // console.log('这时候刷新');
-      //  setTimeout(() => {
-      // console.log(searchText, 'console.log(searchText);');
-      if (searchText !== '') {
-        // console.log('有没有',searchText);
-
-        onSearchHandler(searchText, pageNum, 20, '', false)
-      } else {
-        // console.log(1111111111111111111111);
-
-        //  onSearchHandler(searchText, pageNum, 20, '', false)
-        onSearchHandlerDetail('', pageNum, 20, '')
-      }
-      //  }, 1000);
+      //     onSearchHandlerDetail('', pageNum, 8, '')
+      //   }
 
       // }
-    } else {
-      setShowModal(false)
-
+      // else {
+      //   setSwitchShow(false)
       // }
-
-      if (scrollTop + clientHeight >= scrollHeight - 20) {
-        // console.log('滚动');
-
-        //   setSwitchShow(true)
-        //   if(!showModal){
-        // onSearchHandlerDetail('', pageNum, 20, '')
-        //   }
-        // onSearchHandlerDetail('', pageNum, 20, '')
-        // setDataSource(res.data.Place.Voxels)
-
-      }
+      // };
+      document.addEventListener('scroll', scrollChange);
+      return () => document.removeEventListener('scroll', scrollChange);
     }
 
-    // }, 1000);
+
+    window.addEventListener('scroll', scrollChange, true)
+    // scrollChange()
+    return () => {
+      window.removeEventListener('scroll', scrollChange, false)
+    }
+
+  }, [])
 
 
-  }
 
-  if (routeTab === 'Place') {
-    return (
-      <>
-        <div className={cn('tab-list flex ', style.allHeight)}>
-          {/* <div className={cls}>menuDataTwoArrCon</div> */}
-          <div className={cn('main-content flex px-0', style.tabtext)}>
-            {
-              loadingDetail === true ? null :
-                <>
-                  {(TABData).map((item) => {
-                    // console.log(tabState, "tabStatetabStatetabState", dclDataSource);
 
-                    return (
-                      <Tab4
-                        active={tabState === item.type}
-                        isMini={true}
-                        key={item.label}
-                        label={item.label}
-                        icon={item.icon}
-                        onClick={() => {
-                          onTabChange(item.type);
-                        }}
-                      />
-                    );
-                  })}
-                </>
-            }
-            <div className={cls} />
-          </div>
-          <div className={cls} />
-        </div>
+  // const requestPersonal = React.useCallback(
+  //   async (token: string) => {
+  //     const res = await getBaseInfo(token);
+  //     const data = resultHandler(res, requestPersonal);
+  //     if (!data) {
+  //       return;
+  //     }
+  //     const { profile } = data;
+  //     state.setState({ profile });
+  //   },
+  //   [resultHandler],
+  // );
 
-        <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
-          {/* {
-               !valueCount ?
-            } */}
-          {renderContent}
-          {/* {
-            tabState === 'Voxels' ?
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {dataSource && dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
-              </div>
-              : ''
-          }
-          {
-            tabState === 'Decentraland' ?
-              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {dclDataSource && dclDataSource.map((card) => {
-                  return (<Card {...card} key={uuid()} typeState={card.type} />);
-                })}
-              </div>
-              : ''
-          } */}
 
-        </div>
 
-        {/* 卡片结束 */}
-        {tag2()}
-        <RentSet
-          state={rent_set_state}
-          onClick={(current_state) => {
-            close_rent_set(current_state);
-          }}
-          selectedIds={selectedIds}
-        />
-        <Popup status={status} type={type} value={value} />
-      </>
-    );
-  }
-  if (routeTab === 'Event') {
-    return (
-      //   // <div>5555555</div>
-      //   <div className={style.allHeight1}><EventDetail /><EventDetail /></div>
+  React.useEffect(() => {
 
-      <>
 
-        <div className={cn('tab-list flex ', style.allHeight)}>
-          {/* <div className={cls}>valueCountEvent||</div> */}
-          <div className={cn('main-content flex px-0', style.tabtext)}>
-            {(TABDataEvent).map((item) => {
-              return (
-                <Tab4
-                  active={tabStateEvent === item.type}
-                  isMini={true}
-                  key={item.label}
-                  icon={item.icon}
-                  label={item.label}
-                  onClick={() => {
-                    onTabChangeEvent(item.type);
-                  }}
-                />
-              );
-            })}
-            <div className={cls} />
-          </div>
-          <div className={cls} />
-        </div>
+    setSaveIcon(false)
+    const a = getToken('address');
 
-        <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
-          {renderContentEvent}
-        </div>
+    if (a) {
+      setWalletAddress(a);
+    }
+    // console.log(r.router.query.type,"r.router.query.type");
 
-      </>
-    )
-  }
-  if (routeTab === 'Creator') {
-    return (
-      <>
-        {/* {institutions.map((item, idx) => {
-          return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
-        })} */}
-        <div className={cn('tab-list flex ', style.allHeight)}>
-          {/* <div className={cls}>valueCountCreater || </div> */}
-          <div className={cn('main-content flex px-0', style.tabtext)}>
-            {(TABDataCreater).map((item) => {
-              return (
-                <Tab4
-                  active={tabStateCreater === item.type}
-                  isMini={true}
-                  key={item.label}
-                  label={item.label}
-                  onClick={() => {
-                    onTabChangeCreater(item.type);
-                  }}
-                />
-              );
-            })}
-            <div className={cls} />
-          </div>
-          <div className={cls} />
-        </div>
+    setNavLabel('All')
+    // req_building_list(walletAddress)
+    // const accessToken = getToken('atk');
+    // console.log(11111111111111,accessToken);
 
-        <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
-          {renderContentCreater}
-        </div>
-      </>
-    );
-  }
+    // setTokenWearable(accessToken)
+    // // setRouteTab(r.router.query.type);
+    // reqWearablesData();
+    // requestPersonal(accessToken);
+    // requireBuilder(accessToken)
+    // if (tabState === 'Voxels') requestData(accessToken);
+    // if (tabState === 'Decentraland') reqDclData(accessToken);
+    // if(routeTab === 'building')reqBuilderData(accessToken);
+    watcher_store();
+    watcher_store_status();
+    watcher_cardState();
+    // if (!accessToken) window.location.href = '/'; //判断登录状态跳转
+  }, [
+    tokenWearable,
+    navLabel,
+    getToken,
+    requestData,
+    loadingDetail,
+    builderSat,
+    buildState,
+    statue,
+    walletAddress,
+    requestPersonal,
+    watcher_store,
+    dataBuildSource,
+    // reqBuilderData,
+    addressWearable,
+    reqDclData,
+    // r.router.query.q,
+    routeTab,
+    tabState,
+    reqWearablesData,
+  ]);
 
-  if (routeTab === 'Learn') {
-    return (
-      <>
-        {/* {buildState === 2 ? */}
-        <>
-          <div className={style.buildingContainer}>
-            <div onScroll={scroll} className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+
+  const tag2 = () => {
+    if (cardState) {
+      return (
+        <div className={style.succeedOrCancel}>
+          <div className={style.container}>
+            <div className={style.info}>
+              selected ({selectedIds.length}/{parcelsIds.length})
+            </div>
+            <div
+              className={style.succeed}
+              onClick={() => {
+                if (selectedIds.length === 0) return;
+                if (label === 'Rent out several') {
+                  store.setState(() => ({
+                    parcels_cardState: false,
+                    rentOutState: true,
+                    id: null,
+                  }));
+                }
+              }}
+            >
+            </div>
+            <div
+              className={style.cancel}
+              onClick={() => {
+                manyChange(label, cartData);
+                setCardState(false);
+                setSelectedIds([]);
+                store.setState(() => ({ parcels_cardState: false }));
+              }}
+            >
+              Close
             </div>
           </div>
+        </div>
+      );
+    }
+    return <div></div>;
+  };
+
+
+
+  const batchShowOrHide = React.useCallback(
+    async (id = null, stat = null) => {
+      let result = null;
+      if (id && stat) {
+        result = await req_set_wearable_show_status(await refreshTK(), id, stat);
+      } else {
+        result = await req_set_wearable_show_status(
+          await refreshTK(),
+          wearablesSleceteIdList.join(),
+          wearablesShowOrHide,
+        );
+      }
+      setSaveIconVal(id)
+      if (result.code === 100000) {
+
+        if (wearablesShowOrHide === 2 || stat === 2) {
+          toast.success('Successfully hidden!');
+        }
+        if (wearablesShowOrHide === 1 || stat === 1) {
+          toast.success('Successfully shown!');
+        }
+
+      } else {
+        toast.error('Failed!');
+      }
+
+      setWearablesShowOrHideState(false);
+      setWearablesShowOrHide(0);
+      setWearablesSleceteIdList([]);
+      reqWearablesData();
+      setSaveIconVal(null)
+
+
+
+
+    },
+    [wearablesShowOrHide, wearablesSleceteIdList, reqWearablesData],
+  );
+
+  const setWearablesId = React.useCallback(
+    (id) => {
+      if (wearablesSleceteIdList.findIndex((item) => item === id) === -1) {
+        wearablesSleceteIdList.push(id);
+      } else {
+        wearablesSleceteIdList.splice(
+          wearablesSleceteIdList.findIndex((item) => item === id),
+          1,
+        );
+      }
+      setWearablesSleceteIdList([...wearablesSleceteIdList]);
+    },
+    [wearablesSleceteIdList],
+  );
+  const creatorsReander = React.useMemo(() => {
+
+    if (wearablesCreatorsData.length === 0) {
+      return (
+        <div className={style.totop}>
+          <Status status="empty" />;
+        </div>
+      );
+    }
+    if (wearablesCreatorsData.length !== 0) {
+      return (
+        <>
+          <DaoModelList2
+            models={wearablesCreatorsData}
+            token={refreshTK()}
+            saveIconVal={saveIconVal}
+            wearablesShowOrHideState={wearablesShowOrHideState}
+            wearablesShowOrHide={wearablesShowOrHide}
+            length={wearablesCreatorsData.length}
+            onClick={setWearablesId}
+            wearablesSleceteIdList={wearablesSleceteIdList}
+            batchShowOrHide={batchShowOrHide}
+          ></DaoModelList2>
         </>
-        : <></>
-        {/* } */}
-      </>
-    )
+      );
+    }
+  }, [
+    wearablesCreatorsData,
+    wearablesShowOrHideState,
+    wearablesShowOrHide,
+    setWearablesId,
+    wearablesSleceteIdList,
+    batchShowOrHide,
+  ]);
+  // const ownedRander = React.useMemo(() => {
+  //   if (ownerData.length === 0) {
+  //     return (
+  //       <div className={style.totop}>
+  //         <Status status="empty" />;
+  //       </div>
+  //     );
+  //   }
+  //   if (ownerData.length !== 0) {
+  //     return (
+  //       <>
+  //         <DaoModelList2 models={ownerData} type={'owner'}></DaoModelList2>
+  //       </>
+  //     );
+  //   }
+  // }, [ownerData]);
+
+
+
+  const randerCardList = React.useMemo(() => {
+    // console.log(routeTab,tabState);
+
+    const scroll = (e) => {
+      // console.log(e,"222222");
+
+      // // console.log('scrollscrollscrollscrollscrollscroll')
+      // console.log(document.querySelector('.myClassName')?.scrollTop);
+      // //   if(document.querySelector('.myClassName')?.scrollTop>868){
+      // // console.log('触底')
+      // //   }
+      // const timeCount;
+      // if (timeCount) {
+      //   clearTimeout(timeCount);
+      // }
+
+      // timeCount = setTimeout(() => {
+      // onSearchHandlerDetail('', pageNum, 20, '')
+      // if (dataSource.length) {
+      // console.log('触底')
+      const { scrollTop, scrollHeight, clientHeight } = e.target;
+      // console.log(scrollTop, scrollHeight, scrollTop + scrollHeight, scrollHeight - scrollTop, clientHeight,e.target.scrollHeight);
+      // console.log(scrollTop, clientHeight, scrollTop + clientHeight, scrollHeight, window.innerHeight, scrollTop + clientHeight >= scrollHeight - 1);
+      if (scrollTop + clientHeight >= scrollHeight - 20) {
+        // if (showModal) {
+        // console.log('这时候刷新');
+        //  setTimeout(() => {
+        // console.log(searchText, 'console.log(searchText);');
+        if (searchText !== '') {
+          // console.log('有没有',searchText);
+
+          onSearchHandler(searchText, pageNum, 20, '', false)
+        } else {
+          // console.log(1111111111111111111111);
+
+          //  onSearchHandler(searchText, pageNum, 20, '', false)
+          onSearchHandlerDetail('', pageNum, 20, '')
+        }
+        //  }, 1000);
+
+        // }
+      } else {
+        setShowModal(false)
+
+        // }
+
+        if (scrollTop + clientHeight >= scrollHeight - 20) {
+          // console.log('滚动');
+
+          //   setSwitchShow(true)
+          //   if(!showModal){
+          // onSearchHandlerDetail('', pageNum, 20, '')
+          //   }
+          // onSearchHandlerDetail('', pageNum, 20, '')
+          // setDataSource(res.data.Place.Voxels)
+
+        }
+      }
+
+      // }, 1000);
+
+
+    }
+
+    if (routeTab === 'Place') {
+      return (
+        <>
+          <div className={cn('tab-list flex ', style.allHeight)}>
+            {/* <div className={cls}>menuDataTwoArrCon</div> */}
+            <div className={cn('main-content flex px-0', style.tabtext)}>
+              {
+                loadingDetail === true ? null :
+                  <>
+                    {(menuDataTwoArrCon||TABData).map((item) => {
+
+                      return (
+                        <Tab4
+                          active={tabState === item.type}
+                          isMini={true}
+                          key={item.label}
+                          label={item.label}
+                          icon={item.icon}
+                          onClick={() => {
+                            onTabChange(item.type);
+                          }}
+                        />
+                      );
+                    })}
+                  </>
+              }
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+
+          <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
+            {/* {
+               !valueCount ?
+            } */}
+            {renderContent}
+          </div>
+
+          {/* 卡片结束 */}
+          {tag2()}
+          <RentSet
+            state={rent_set_state}
+            onClick={(current_state) => {
+              close_rent_set(current_state);
+            }}
+            selectedIds={selectedIds}
+          />
+          <Popup status={status} type={type} value={value} />
+        </>
+      );
+    }
+    if (routeTab === 'Event') {
+      return (
+        //   // <div>5555555</div>
+        //   <div className={style.allHeight1}><EventDetail /><EventDetail /></div>
+
+        <>
+
+          <div className={cn('tab-list flex ', style.allHeight)}>
+            {/* <div className={cls}>valueCountEvent||</div> */}
+            <div className={cn('main-content flex px-0', style.tabtext)}>
+              {(TABDataEvent).map((item) => {
+                return (
+                  <Tab4
+                    active={tabStateEvent === item.type}
+                    isMini={true}
+                    key={item.label}
+                    icon={item.icon}
+                    label={item.label}
+                    onClick={() => {
+                      onTabChangeEvent(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+
+          <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
+            {renderContentEvent}
+          </div>
+
+        </>
+      )
+    }
+    if (routeTab === 'Creator') {
+      return (
+        <>
+          {/* {institutions.map((item, idx) => {
+          return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
+        })} */}
+          <div className={cn('tab-list flex ', style.allHeight)}>
+            {/* <div className={cls}>valueCountCreater || </div> */}
+            <div className={cn('main-content flex px-0', style.tabtext)}>
+              {(TABDataCreater).map((item) => {
+                return (
+                  <Tab4
+                    active={tabStateCreater === item.type}
+                    isMini={true}
+                    key={item.label}
+                    label={item.label}
+                    onClick={() => {
+                      onTabChangeCreater(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+
+          <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
+            {renderContentCreater}
+          </div>
+        </>
+      );
+    }
+
+    if (routeTab === 'Learn') {
+      return (
+        <>
+          {/* {buildState === 2 ? */}
+          <>
+            <div className={style.buildingContainer}>
+              <div onScroll={scroll} className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+              </div>
+            </div>
+          </>
+          : <></>
+          {/* } */}
+        </>
+      )
+
+    }
+  }, [
+    showTab,
+    status,
+    type,
+    value,
+    selectedIds,
+    rent_set_state,
+    s,
+    cartData,
+    manySetLabel,
+    loadingDetail,
+    renderContent,
+    renderContentEvent,
+    renderBuilding,
+    renderWerable,
+    dataSource,
+    dataBuildSource,
+    reqBuilderData,
+    tabState,
+    routeTab,
+    creatorsReander,
+  ]);
+
+
+
+  const dataSourceTwoDetail = async (query: string,
+    page: number,
+    per_page: number,
+    search_item: string) => {
+    const res = await getSearchDetail(searchText || query, page, per_page, search_item);
+    // const dataList  = dataSourceTwo;
+    // dataList.push(res.data.Place.Voxels)
+    // setDataSourceTwo(dataList)
+    // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
+    setShowModal(true)
+    // setDataSourceTwo(res.data.Place.Voxels)
+    setDataSource(res.data.Place.Voxels)
 
   }
-}, [
-  showTab,
-  status,
-  type,
-  value,
-  selectedIds,
-  rent_set_state,
-  s,
-  cartData,
-  manySetLabel,
-  loadingDetail,
-  renderContent,
-  renderContentEvent,
-  renderBuilding,
-  renderWerable,
-  dataSource,
-  dataBuildSource,
-  reqBuilderData,
-  tabState,
-  routeTab,
-  creatorsReander,
-]);
+
+  React.useEffect(() => {
+    const listener = () => {
+      if (
+        document.getElementById('myClassName') && window.scrollY > 0
+      ) {
+        setFixedState(true);
+      } else {
+        setFixedState(false);
+      }
+    };
+    document.addEventListener('scroll', listener);
+    return () => document.removeEventListener('scroll', listener);
+  }, []);
 
 
 
-const dataSourceTwoDetail = async (query: string,
-  page: number,
-  per_page: number,
-  search_item: string) => {
-  const res = await getSearchDetail(searchText || query, page, per_page, search_item);
-  // const dataList  = dataSourceTwo;
-  // dataList.push(res.data.Place.Voxels)
-  // setDataSourceTwo(dataList)
-  // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-  setShowModal(true)
-  // setDataSourceTwo(res.data.Place.Voxels)
-  setDataSource(res.data.Place.Voxels)
-
-}
-
-React.useEffect(() => {
-  const listener = () => {
-    if (
-      document.getElementById('myClassName') && window.scrollY > 0
-    ) {
-      setFixedState(true);
-    } else {
-      setFixedState(false);
-    }
-  };
-  document.addEventListener('scroll', listener);
-  return () => document.removeEventListener('scroll', listener);
-}, []);
-
-
-
-return (
-  <>
-    <Page className={cn('min-h-screen ', style.anPage,)} meta={meta}
-    >
-      {/* joinBuilders === true?style.joinBuilders:'' */}
-      {/* <div
+  return (
+    <>
+      <Page className={cn('min-h-screen ', style.anPage,)} meta={meta}
+      >
+        {/* joinBuilders === true?style.joinBuilders:'' */}
+        {/* <div
           onClick={() => {
             setManySetState(false);
           }}
           id='container'
           className={cn('', style.bigPic)}
         > */}
-      <div id='myClassName' className={cn("bg-black relative", fixedState ? style.a : null)} >
-        <PageHeader className="relative z-10" />
-      </div>
-
-      <div id='countTatal' ref={headerRef}
-        className={cn(' flex flex-col justify-center items-center ', style.profileCon)}>
-
-
-        <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
-          <div className={cn('', style.searchBoxVal)}>
-            <Search text={searchText} onSearch={(val) => {
-              // console.log(!router.query.q,'执行几遍', router.query.q);
-              console.log(val, router.query.q);
-              setDataSource([])
-
-              // console.log(loadingDetail,1111111111)
-              // setSearchText(router.query.q);
-              // if (!router.query.q) {
-              setDataSource([])
-              setDataSourceLearn([])
-              setDataSourceCreWear([])
-              setDataBuildSource([])
-              setEventDclList([])
-              setEventSomList([])
-              setEventCvList([])
-              setSearchText(val);
-              // onSearchHandler(val, 1, pageSize, '', false)
-              // } else {
-              //   setSearchText('');
-              //   // onSearchHandler('', 1, pageSize, '', false)
-              //   // onSearchHandler(router.query.q, 1, pageSize, '',false)
-              // }
-            }} ></Search>
-          </div>
-
-
-
-          <div className={cn(style.tableList)}>
-            {
-
-
-              loadingDetail === true ? null :
-                <>
-                  {valueCount.map((item) => {
-                    // console.log(valueCount,22222222);
-                    return (
-                      <Tab5
-                        label={item.label}
-                        key={item.label}
-                        active={routeTab === item.type}
-                        count={item.count}
-                        onClick={() => {
-                          changeTab3(item.label, item.type);
-                        }}
-                      />
-                      // <>{item}</>
-                    );
-                  })}
-                </>
-            }
-          </div>
+        <div id='myClassName' className={cn("bg-black relative", fixedState ? style.a : null)} >
+          <PageHeader className="relative z-10" />
         </div>
-        {randerCardList}
-        <div id='footer' style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
-      </div>
-      {/* </div> */}
+
+        <div id='countTatal' ref={headerRef}
+          className={cn(' flex flex-col justify-center items-center ', style.profileCon)}>
 
 
-      {/* {wearablesShowOrHideState ? (
+          <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
+            <div className={cn('', style.searchBoxVal)}>
+              <Search text={searchText} onSearch={(val) => {
+                // console.log(!router.query.q,'执行几遍', router.query.q);
+                console.log(val,router.query.q);
+                setDataSource([])
+                
+                // console.log(loadingDetail,1111111111)
+                // setSearchText(router.query.q);
+                // if (!router.query.q) {
+                  setDataSource([])
+                  setDataSourceLearn([])
+                  setDataSourceCreWear([])
+                  setDataBuildSource([])
+                  setEventDclList([])
+                  setEventSomList([])
+                  setEventCvList([])
+                  setSearchText(val);
+                  // onSearchHandler(window.location.search, 1, pageSize, '', false)
+                // } else {
+                //   setSearchText('');
+                //   // onSearchHandler('', 1, pageSize, '', false)
+                //   // onSearchHandler(router.query.q, 1, pageSize, '',false)
+                // }
+              }} ></Search>
+            </div>
+
+
+
+            <div className={cn(style.tableList)}>
+              {
+
+
+                loadingDetail === true ? null :
+                  <>
+                    {valueCount.map((item) => {
+                      // console.log(valueCount,22222222);
+                      return (
+                        <Tab5
+                          label={item.label}
+                          key={item.label}
+                          active={routeTab === item.type}
+                          count={item.count}
+                          onClick={() => {
+                            changeTab3(item.label, item.type);
+                          }}
+                        />
+                        // <>{item}</>
+                      );
+                    })}
+                  </>
+              }
+            </div>
+          </div>
+          {randerCardList}
+          <div id='footer' style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
+        </div>
+        {/* </div> */}
+
+
+        {/* {wearablesShowOrHideState ? (
           <div className={style.settingShowOrHide}>
             {`${wearablesSleceteIdList.length}/${wearablesShowOrHide === 1 ? wearablesHideData.length : wearablesShowData.length
               } selected`}
@@ -2270,7 +2244,7 @@ return (
           </div>
         ) : null} */}
 
-      {/* {tabStateTR === true ? <>
+        {/* {tabStateTR === true ? <>
         <JoinBuildersAdd
           turnBuild={turnBuild}
           nextBtnAdd={nextBtnAdd}
@@ -2279,10 +2253,10 @@ return (
 
 
 
-    </Page>
+      </Page>
 
-  </>
-);
+    </>
+  );
 }
 
 export default withRouter(search);

@@ -4,6 +4,8 @@ import SearchInput from 'react-search-input';
 import cn from 'classnames';
 import style from './index.module.css';
 
+import { getSearchDetail } from '../../service';
+
 type Props = {
   text?: string;
   onSearch?;
@@ -19,7 +21,16 @@ export default function Search({ text, setVal,onSearch, showState,type }: Props)
 
   const clear = React.useCallback(() => {
     setValue('');
+    // onSearchHandler( '', 1,  20, '',false)
   }, [null]);
+
+  // const onSearchHandler = (query,
+  //   page: number,
+  //   per_page: number,
+  //   search_item: string,
+  //   isCli: boolean)=>{
+  //     const res =  getSearchDetail( '', 1,  20, '');
+  // }
 
   const search = React.useCallback(() => {
     // console.log(123456,value);

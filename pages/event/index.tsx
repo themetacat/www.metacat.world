@@ -263,7 +263,7 @@ export default function Event(props) {
         // console.log(subIndex, tabState);
         subIndex = subIndex === -1 ? 0 : subIndex;
         setTabState(tab);
-        let sub = '';
+        const sub = '';
         if (tab === 'cryptovoxels') {
             // sub = SUBTAB[subIndex].type;
             // setSubTabState(SUBTAB[subIndex].type);
