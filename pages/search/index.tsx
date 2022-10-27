@@ -892,7 +892,7 @@ function search(r) {
     isCli: boolean) => {
     // console.log('打印了打印了', query);
     // setPage(1)
-    console.log('调用几遍',);
+    // console.log('调用几遍',);
 
     const newPage = page + 1
     // console.log(newPage, page);
@@ -966,6 +966,8 @@ function search(r) {
         dataListEventDcl?.push(...res.data?.Event?.Decentranland)
         setEventDclList(dataListEventDcl)
       }
+      // console.log(eventDclList,"eventDclList",tabState);
+      
       const dataListEventSom = eventSomList;
       if (res.data?.Event?.Somniumspace?.length > 0) {
         dataListEventSom?.push(...res.data?.Event?.Somniumspace)
@@ -1053,7 +1055,7 @@ function search(r) {
 
       if (MenuDataTwo) {
         Object?.keys(MenuDataTwo).forEach(keys => {
-          console.log(TABobj[MenuDataTwo[keys]]);
+          // console.log(TABobj[MenuDataTwo[keys]]);
           const objMenuTwo = {
             label: MenuDataTwo[keys],
             type: MenuDataTwo[keys],
@@ -1206,6 +1208,7 @@ function search(r) {
   }, [
     error,
     dataSource,
+    dclDataSource,
     loading,
     onRetry,
     changeNum,
@@ -2002,7 +2005,7 @@ function search(r) {
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}>valueCountEvent||</div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(TABDataEvent).map((item) => {
+              {(valueCountEvent||TABDataEvent).map((item) => {
                 return (
                   <Tab4
                     active={tabStateEvent === item.type}
