@@ -158,7 +158,7 @@ export default function Event(props) {
                 mynum = num
                 return num + 1
             })
-            console.log(mynum,999);
+            // console.log(mynum,999);
             // console.log(mynum, mynum * count + 1, count);
 
             const res = await getEventList(mynum*count + 1, count)
@@ -198,7 +198,7 @@ export default function Event(props) {
                     dataList1?.push(...resDel?.data?.event_list)
                     setEventDclList(dataList1)
                 // }
-                console.log(eventDclList);
+                // console.log(eventDclList);
             }
             setShowModal(false)
 
