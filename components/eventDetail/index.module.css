@@ -8,6 +8,7 @@
     padding: 20px;
     display: flex;
     margin-right: 20px;
+    cursor: pointer;
 }
 .imgBox{
     width: 160px;

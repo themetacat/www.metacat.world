@@ -65,8 +65,9 @@ export default function Search({ text, onClinkDetail, type,
 
 
   return (
-    <div className={style.container} onClick={hasEntry === false ? null : detailInston}>
+    <div className={style.container} onClick={detailInston}>
       {/* <img src={cover_img} className={style.imgBox}></img> */}
+      {/* onClick={hasEntry === false ? null : detailInston} */}
       <CoverImg
         className={style.imgBox}
         img={cover_img}
@@ -78,11 +79,11 @@ export default function Search({ text, onClinkDetail, type,
         <div className={style.introduce}>
           <span>{description}</span>
         </div>
-        {
+        {/* {
           hasEntry ? <div className={style.btnBox} onClick={onClinkDetail}>Entry</div> :
             <div className={style.btnBoxOver}>Over</div>
-        }
-
+        } */}
+        <div className={cn('', status === 'Entry' ? style.btnBox : style.btnBoxOver)} onClick={onClinkDetail}>{status}</div>
       </div>
     </div>
   );

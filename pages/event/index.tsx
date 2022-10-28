@@ -151,10 +151,6 @@ export default function Event(props) {
     const cls = cn('flex-1', style.bottomLine);
 
     const requestData = async (page, countNum) => {
-
-
-        console.log(tabState);
-
         if (tabState === 'cryptovoxels') {
             let mynum = pageNum
             // console.log(mynum, 999);
@@ -290,13 +286,15 @@ export default function Event(props) {
 
     const renderContent = React.useMemo(() => {
 
-        console.log(eventSomList);
+        // console.log(eventSomList);
 
         if (tabState === 'cryptovoxels') {
             return (
                 <>
                     <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
                         {eventCvList.map((card, idx) => {
+                          
+                            
                             return < EventDetail {...card} onClinkDetail={() => { onClinkCvDetail(card) }} />;
                         })}
                     </div>
