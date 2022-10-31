@@ -1404,6 +1404,7 @@ function search(r) {
     setTabStateCreater('Builder')
     setTabState('Voxels')
     setTabStateEvent('Voxels')
+    setRouteTab('Place')
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
@@ -1429,6 +1430,7 @@ function search(r) {
     if (window.location.search) {
       setDataSource([])
       setDataSourceLearn([])
+      setDataSourceCreBuilder([])
       setDataSourceCreWear([])
       setDataBuildSource([])
       setEventDclList([])
@@ -1953,6 +1955,7 @@ function search(r) {
                 // if (!router.query.q) {
                 setDataSource([])
                 setDataSourceLearn([])
+                setDataSourceCreBuilder([])
                 setDataSourceCreWear([])
                 setDclDataSource([])
                 setDataBuildSource([])
