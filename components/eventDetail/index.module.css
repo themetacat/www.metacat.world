@@ -9,6 +9,7 @@
     display: flex;
     margin-right: 20px;
     cursor: pointer;
+    position: relative;
 }
 .imgBox{
     width: 160px;
@@ -63,8 +64,12 @@
     /* height: 40px; */
 }
 .btnBox{
-    margin-top: 10px;
+    /* margin-top: 10px;
+    padding: 6px 20px 6px 20px; */
+    position: absolute;
     padding: 6px 20px 6px 20px;
+    bottom: 35px;
+    right: 235px;
     background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
     border-radius: 4px;
     width: 160px;
@@ -76,12 +81,16 @@
 .btnBoxOver{
     background: #333333;
 border-radius: 4px;
-margin-top: 10px;
+position: absolute;
+bottom: 35px;
+right: 235px;
+padding: 6px 20px 6px 20px;
+/* margin-top: 10px; */
 padding: 6px 20px 6px 20px;
 border-radius: 4px;
 width: 160px;
 text-align: center;
 height: 32px;
 line-height: 20px;
-cursor: pointer;
+cursor: not-allowed;
 }

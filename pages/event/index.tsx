@@ -161,7 +161,7 @@ export default function Event(props) {
             // console.log(mynum,999);
             // console.log(mynum, mynum * count + 1, count);
 
-            const res = await getEventList(mynum*count + 1, count)
+            const res = await getEventList(mynum * count + 1, count)
             // console.log(pageNum, 777);
             setShowModal(true)
             // let num = pageNum 
@@ -172,8 +172,8 @@ export default function Event(props) {
                 // console.log(res, "res");
                 const dataList = eventCvList;
                 // if (res.data.event_list.length > 0) {
-                    dataList?.push(...res?.data?.event_list)
-                    setEventCvList(dataList)
+                dataList?.push(...res?.data?.event_list)
+                setEventCvList(dataList)
                 // }
 
             }
@@ -186,17 +186,17 @@ export default function Event(props) {
                 mynumDel = num
                 return num + 1
             })
-            const resDel = await getDclEventList(mynumDel*count + 1, count)
+            const resDel = await getDclEventList(mynumDel * count + 1, count)
             setShowModal(true)
             if (resDel.code === 100000) {
-             
+
                 // setEventDclList(resDel.data.event_list);
                 // console.log(resDel.data.event_list, "resDelList.data.event_list");
                 // console.log(eventDclList);
                 const dataList1 = eventDclList;
                 // if (resDel.data.event_list.length > 0) {
-                    dataList1?.push(...resDel?.data?.event_list)
-                    setEventDclList(dataList1)
+                dataList1?.push(...resDel?.data?.event_list)
+                setEventDclList(dataList1)
                 // }
                 // console.log(eventDclList);
             }
@@ -212,7 +212,7 @@ export default function Event(props) {
             // console.log(eventSomList.length);
 
             // const resSom = await getSomEventList(1,20)
-            const resSom = await getSomEventList(mynumSom*count, count)
+            const resSom = await getSomEventList(mynumSom * count, count)
             // console.log(getSomEventList(1,20),8888);
             // console.log(resSom?.data?.event_list);
             setShowModal(true)
@@ -273,15 +273,21 @@ export default function Event(props) {
             // setSubTabState(SUBTABDECE[subIndex].type);
             router.replace(`/event?tab=somniumspace`);
         }
-    
+
     };
 
     // console.log(tabState, 9999999999);
     const onClinkDclDetail = (card) => {
-        window.open(card.event_parcel_url);
+        // console.log(card.status);
+        if (card.status === 'Entry') {
+            window.open(card.event_parcel_url);
+        }
+
     }
     const onClinkCvDetail = (card) => {
-        window.open(card.event_parcel_url);
+        if (card.status === 'Entry') {
+            window.open(card.event_parcel_url);
+        }
     }
 
     const renderContent = React.useMemo(() => {
@@ -293,8 +299,8 @@ export default function Event(props) {
                 <>
                     <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
                         {eventCvList.map((card, idx) => {
-                          
-                            
+
+
                             return < EventDetail {...card} onClinkDetail={() => { onClinkCvDetail(card) }} />;
                         })}
                     </div>
@@ -445,12 +451,12 @@ export default function Event(props) {
 
                     {/* {renderContent} */}
                     {
-                      
-                        
+
+
                         tabState === 'decentraland' ?
                             <>
                                 <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
-                                    {eventDclList&&eventDclList.map((card, item) => {
+                                    {eventDclList && eventDclList.map((card, item) => {
                                         return < EventDetail {...card} onClinkDetail={() => { onClinkDclDetail(card) }} />;
                                     })}
                                 </div>
@@ -461,7 +467,7 @@ export default function Event(props) {
                         tabState === 'cryptovoxels' ?
                             <>
                                 <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
-                                    {eventCvList&&eventCvList.map((card, idx) => {
+                                    {eventCvList && eventCvList.map((card, idx) => {
                                         return < EventDetail {...card} onClinkDetail={() => { onClinkCvDetail(card) }} />;
                                     })}
                                 </div>

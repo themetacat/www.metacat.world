@@ -65,26 +65,30 @@ export default function Search({ text, onClinkDetail, type,
 
 
   return (
-    <div className={style.container} onClick={detailInston}>
-      {/* <img src={cover_img} className={style.imgBox}></img> */}
-      {/* onClick={hasEntry === false ? null : detailInston} */}
-      <CoverImg
-        className={style.imgBox}
-        img={cover_img}
-        error="/images/default-cover.png"
-      ></CoverImg>
-      <div className={style.content}>
-        <div className={style.instron}><span>{name}</span></div>
-        <div className={style.showDetail}>Activity time：{activity_time}</div>
-        <div className={style.introduce}>
-          <span>{description}</span>
-        </div>
-        {/* {
+    <div style={{position:"relative"}}>
+      <div className={style.container} onClick={detailInston}>
+        {/* <img src={cover_img} className={style.imgBox}></img> */}
+        {/* onClick={hasEntry === false ? null : detailInston} */}
+        <CoverImg
+          className={style.imgBox}
+          img={cover_img}
+          error="/images/default-cover.png"
+        ></CoverImg>
+        <div className={style.content}>
+          <div className={style.instron}><span>{name}</span></div>
+          <div className={style.showDetail}>Activity time：{activity_time}</div>
+          <div className={style.introduce}>
+            <span>{description}</span>
+          </div>
+          {/* {
           hasEntry ? <div className={style.btnBox} onClick={onClinkDetail}>Entry</div> :
             <div className={style.btnBoxOver}>Over</div>
         } */}
-        <div className={cn('', status === 'Entry' ? style.btnBox : style.btnBoxOver)} onClick={onClinkDetail}>{status}</div>
+
+        </div>
+
       </div>
+      <div className={cn('', status === 'Entry' ? style.btnBox : style.btnBoxOver)} onClick={onClinkDetail}>{status}</div>
     </div>
   );
 }

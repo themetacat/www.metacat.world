@@ -347,7 +347,7 @@ function search(r) {
         //   setDclDataSource([])
       }
     },
-    [ tabStateEvent],
+    [tabStateEvent],
   );
   const onTabChangeCreater = React.useCallback(
     async (tab) => {
@@ -652,7 +652,7 @@ function search(r) {
       setWalletAddress(wallet)
       // setCreaterStateVal(res.data.profile.creator_status)
       setEmailStateWearable(res.data.profile.email)
-    
+
 
       setEmailStateVal(emailState)
 
@@ -679,7 +679,7 @@ function search(r) {
       setAvatarUrl(ava);
       setCreatorsState(creatorStatus);
       setAddress(addr);
-   
+
       state.setState({ profile });
     },
     [resultHandler, statue, buildState, walletAddress],
@@ -770,7 +770,7 @@ function search(r) {
 
       setValueCount(arr)
 
-  
+
 
       // setTabStateCreater('Builder')
       // setTabState('Voxels')
@@ -889,14 +889,15 @@ function search(r) {
         Object?.keys(dataEvent).forEach(key => {
           const objEvent = {
             label: dataEvent[key],
-            type: dataEvent[key],icon: TABobj[dataEvent[key]],}
+            type: dataEvent[key], icon: TABobj[dataEvent[key]],
+          }
           valCountEvent.push(objEvent)
           // console.log(objEvent);
 
         })
         setTabStateEvent(dataEvent[0])
         setValueCountEvent(valCountEvent)
-     
+
       }
       // console.log(dataEvent[0], 999999,valueCountEvent);
 
@@ -926,10 +927,10 @@ function search(r) {
       //   arr.push(obj)
       //   // console.log(arr);
       // }
-//       console.log(dataSource,dclDataSource);
-//       // console.log(res.data, res.data?.item_count && res.data?.menu_one);
-// console.log((res.data?.item_count && res.data?.menu_one).length === 0);
-// console.log(valueCount,);
+      //       console.log(dataSource,dclDataSource);
+      //       // console.log(res.data, res.data?.item_count && res.data?.menu_one);
+      // console.log((res.data?.item_count && res.data?.menu_one).length === 0);
+      // console.log(valueCount,);
 
       if ((res.data?.item_count && res.data?.menu_one).length === 0) {
 
@@ -1005,18 +1006,20 @@ function search(r) {
   );
 
   const toTopic = React.useCallback((id, item) => {
+    console.log(item.topic_id);
+    
     if (item?.name === 'WearableDAO') {
       window.open('/wearables/wearabledao?type=chinesered')
     }
     if (item.topic_id) {
-      window.open(`/topic/${id}?type=buildings`);
+      window.open(`/topic/${item.topic_id}?type=buildings`);
     } else if (item.address) {
       window.open(`/topicNewBuilding?address=${item.address}`);
     }
   }, []);
 
 
-// console.log(loadingDetail);
+  // console.log(loadingDetail);
 
   const renderContent = React.useMemo(() => {
 
@@ -1071,13 +1074,20 @@ function search(r) {
     reqDclData,
   ]);
   const onClinkCvDetail = (card) => {
-    window.open(card.event_parcel_url);
+    if (card.status === 'Entry') {
+      window.open(card.event_parcel_url);
+    }
   }
   const onClinkDclDetail = (card) => {
-    window.open(card.event_parcel_url);
+    if (card.status === 'Entry') {
+      window.open(card.event_parcel_url);
+    }
   }
   const onClinkSomDetail = (card) => {
-    window.open(card.event_parcel_url);
+    if (card.status === 'Entry') {
+      window.open(card.event_parcel_url);
+    }
+
   }
   const renderContentEvent = React.useMemo(() => {
     // console.log(tabStateEvent);
@@ -1416,8 +1426,8 @@ function search(r) {
   //   },[saveVal])
   useEffect(() => {
     // console.log(tabState);
-  
-    
+
+
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
@@ -1434,18 +1444,18 @@ function search(r) {
   // console.log(showCon);
 
   // console.log(searchText,999);
-  React.useEffect(() => {
-    if(window.location.search)return;
-    onSearchHandler('', 1, 20, '',false)
-    // console.log(router.query.q,window.location.search);
+  // React.useEffect(() => {
+  //   if (window.location.search) return;
+  //   onSearchHandler('', 1, 20, '', false)
+  //   // console.log(router.query.q,window.location.search);
 
-  }, [])
+  // }, [])
 
   React.useEffect(() => {
-   
+
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
-    if (window.location.search&&router?.query?.q) {
+    if (window.location.search && router?.query?.q) {
       setDataSource([])
       setDataSourceLearn([])
       setDataSourceCreBuilder([])
@@ -1458,13 +1468,13 @@ function search(r) {
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
 
-    } else if (!window.location.search&&router?.query?.q === undefined) {
+    } else if (!window.location.search && router?.query?.q === undefined) {
       // return
       // console.log('没有啊！！！！！');
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
       // setSearchText('');
-    
+
       // onSearchHandler('', 1, 20, '', false)
     }
   }, [router?.query?.q])
@@ -1482,7 +1492,7 @@ function search(r) {
   //     const scrollTop = document.querySelector('.detailName')?.scrollTop
 
   //     // console.log(scrollHeight,clientHeight,scrollTop);
-      
+
 
   //     if (scrollTop + clientHeight >= scrollHeight - 1) {
 
@@ -1768,9 +1778,9 @@ function search(r) {
               </div>
               : null
             }
-            {loadingDetail === true?
+            {loadingDetail === true ?
               <Status status="loadingDetail" />
-              :null
+              : null
             }
           </div>
 
@@ -1852,9 +1862,9 @@ function search(r) {
                 </div>
                 : null
             }
-            {loadingDetail === true?
+            {loadingDetail === true ?
               <Status status="loadingDetail" />
-              :null
+              : null
             }
           </div>
 
@@ -1970,7 +1980,7 @@ function search(r) {
           className={cn(' flex flex-col justify-center items-center ', style.profileCon)}>
 
 
-          <div className={cn('', showModal === false  ? style.tablebg1 : style.tablebg)}>
+          <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
@@ -1981,7 +1991,7 @@ function search(r) {
                 // setSearchText(router.query.q);
                 // if (!router.query.q) {
                 setDataSource([])
-                
+
                 setDataSourceLearn([])
                 setDataSourceCreBuilder([])
                 setDataSourceCreWear([])
