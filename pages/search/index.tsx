@@ -273,9 +273,10 @@ function search(r) {
       if (l === 'Creator') {
         setShowTab('Builder')
       }
-      setTabState('Voxels')
+      // setTabState('Voxels')
       setTabStateCreater('Builder')
-      setTabStateEvent('Voxels')
+      // setTabStateEvent('Voxels')
+      // setTabStateEvent(dataEvent[0])
       // setTabState('Place');
       setShowTab(l);
       setRouteTab(t);
@@ -297,7 +298,7 @@ function search(r) {
 
 
 
-      setTabState(tab);
+      // setTabState(tab);
 
 
 
@@ -769,7 +770,12 @@ function search(r) {
 
       setValueCount(arr)
 
+  
 
+      // setTabStateCreater('Builder')
+      // setTabState('Voxels')
+      // setTabStateEvent('Voxels')
+      // setRouteTab('Place')
       const dataList = isCli ? [] : dataSource;
 
       // console.log(dataList, page, res.data.Place.Voxels);
@@ -888,9 +894,11 @@ function search(r) {
           // console.log(objEvent);
 
         })
+        setTabStateEvent(dataEvent[0])
         setValueCountEvent(valCountEvent)
+     
       }
-      // console.log(valueCountEvent, 9999999999999);
+      // console.log(dataEvent[0], 999999,valueCountEvent);
 
       if (MenuDataTwo) {
         Object?.keys(MenuDataTwo).forEach(keys => {
@@ -903,6 +911,7 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
+        setTabState(MenuDataTwo[0])
       }
 
 
@@ -1407,10 +1416,11 @@ function search(r) {
   //   },[saveVal])
   useEffect(() => {
     // console.log(tabState);
+  
     
     setTabStateCreater('Builder')
-    setTabState('Voxels')
-    setTabStateEvent('Voxels')
+    // setTabState('Voxels')
+    // setTabStateEvent('Voxels')
     setRouteTab('Place')
     // const accessToken = getToken('atk');
     // console.log(accessToken);
@@ -1419,22 +1429,28 @@ function search(r) {
 
 
 
-  }, [addbuild, walletAddress,])
+  }, [])
   // console.log(headerRef.current?.scrollHeight);
   // console.log(showCon);
 
   // console.log(searchText,999);
-  // React.useEffect(() => {
-  //   if(window.location.search)return;
-  //   onSearchHandler('', 1, 20, '',false)
-  //   console.log(router.query.q,window.location.search);
+  React.useEffect(() => {
+    if(window.location.search)return;
+    onSearchHandler('', 1, 20, '',false)
+    // console.log(router.query.q,window.location.search);
 
-  // }, [])
+  }, [])
 
   React.useEffect(() => {
+   
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
-    if (window.location.search) {
+    if (window.location.search&&router?.query?.q) {
+      // console.log('有值');
+           // var sub = window.location.search;
+      // var subStr = sub.split("=")[1]
+      // console.log(sub,111111,subStr);
+
       setDataSource([])
       setDataSourceLearn([])
       setDataSourceCreBuilder([])
@@ -1447,89 +1463,90 @@ function search(r) {
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
 
-
-    } else if (router?.query?.q === undefined) {
+    } else if (!window.location.search&&router?.query?.q === undefined) {
       // return
+      // console.log('没有啊！！！！！');
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
       // setSearchText('');
+    
       // onSearchHandler('', 1, 20, '', false)
     }
   }, [router?.query?.q])
   // console.log(router.query.value,"router.query.value");
 
-  React.useEffect(() => {
+  // React.useEffect(() => {
 
-    // console.log(document.querySelector('body'));
+  //   // console.log(document.querySelector('body'));
 
 
-    const scrollChange = () => {
+  //   const scrollChange = () => {
 
-      const scrollHeight = document.querySelector('.detailName')?.scrollHeight
-      const clientHeight = document.querySelector('.detailName')?.clientHeight
-      const scrollTop = document.querySelector('.detailName')?.scrollTop
+  //     const scrollHeight = document.querySelector('.detailName')?.scrollHeight
+  //     const clientHeight = document.querySelector('.detailName')?.clientHeight
+  //     const scrollTop = document.querySelector('.detailName')?.scrollTop
 
-      // console.log(scrollHeight,clientHeight,scrollTop);
+  //     // console.log(scrollHeight,clientHeight,scrollTop);
       
 
-      if (scrollTop + clientHeight >= scrollHeight - 1) {
+  //     if (scrollTop + clientHeight >= scrollHeight - 1) {
 
 
 
-          // requestData(pageNum, count)
-      }
+  //         // requestData(pageNum, count)
+  //     }
 
-      document.addEventListener('scroll', scrollChange);
-      return () => document.removeEventListener('scroll', scrollChange);
-  }
-
-
-  window.addEventListener('scroll', scrollChange, true)
-  // scrollChange()
-  return () => {
-      window.removeEventListener('scroll', scrollChange, false)
-  }
-
-  }, [])
+  //     document.addEventListener('scroll', scrollChange);
+  //     return () => document.removeEventListener('scroll', scrollChange);
+  // }
 
 
+  // window.addEventListener('scroll', scrollChange, true)
+  // // scrollChange()
+  // return () => {
+  //     window.removeEventListener('scroll', scrollChange, false)
+  // }
+
+  // }, [])
 
 
-  React.useEffect(() => {
 
 
-    setSaveIcon(false)
-    const a = getToken('address');
+  // React.useEffect(() => {
 
-    if (a) {
-      setWalletAddress(a);
-    }
 
-    setNavLabel('All')
+  //   setSaveIcon(false)
+  //   const a = getToken('address');
 
-    watcher_store();
-    watcher_store_status();
-    watcher_cardState();
-  }, [
-    tokenWearable,
-    navLabel,
-    getToken,
-    requestData,
-    loadingDetail,
-    buildState,
-    statue,
-    walletAddress,
-    requestPersonal,
-    watcher_store,
-    dataBuildSource,
-    // reqBuilderData,
-    addressWearable,
-    reqDclData,
-    // r.router.query.q,
-    routeTab,
-    tabState,
-    reqWearablesData,
-  ]);
+  //   if (a) {
+  //     setWalletAddress(a);
+  //   }
+
+  //   setNavLabel('All')
+
+  //   watcher_store();
+  //   watcher_store_status();
+  //   watcher_cardState();
+  // }, [
+  //   tokenWearable,
+  //   navLabel,
+  //   getToken,
+  //   requestData,
+  //   loadingDetail,
+  //   buildState,
+  //   statue,
+  //   walletAddress,
+  //   requestPersonal,
+  //   watcher_store,
+  //   dataBuildSource,
+  //   // reqBuilderData,
+  //   addressWearable,
+  //   reqDclData,
+  //   // r.router.query.q,
+  //   routeTab,
+  //   tabState,
+  //   reqWearablesData,
+  // ]);
 
 
   const tag2 = () => {
@@ -1964,11 +1981,12 @@ function search(r) {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 // console.log(val, router.query.q);
                 setDataSource([])
-
+                setRouteTab('Place')
                 // console.log(loadingDetail,1111111111)
                 // setSearchText(router.query.q);
                 // if (!router.query.q) {
                 setDataSource([])
+                
                 setDataSourceLearn([])
                 setDataSourceCreBuilder([])
                 setDataSourceCreWear([])
