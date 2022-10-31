@@ -1446,11 +1446,6 @@ function search(r) {
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
     if (window.location.search&&router?.query?.q) {
-      // console.log('有值');
-           // var sub = window.location.search;
-      // var subStr = sub.split("=")[1]
-      // console.log(sub,111111,subStr);
-
       setDataSource([])
       setDataSourceLearn([])
       setDataSourceCreBuilder([])
