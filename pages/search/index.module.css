@@ -1,10 +1,11 @@
 .anPage {
-  /* min-width: 1440px;
-  overflow-x: hidden;
-  overflow-y: scroll; */
+/* // min-width: 1440px;
+//   overflow-x: hidden;
+//   overflow-y: scroll;
+//   height: 1000px;  */
 }
 
-
+/* // body{overflow:hidden;} */
 .sign {
   width: 1087px;
   height: 125px;

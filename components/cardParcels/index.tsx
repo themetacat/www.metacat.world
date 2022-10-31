@@ -13,6 +13,7 @@ type Props = {
   type?: string;
   parcelPageUrl?: string;
   openseaUrl?: string;
+  opensea_url?: string;
   detail_url?: string;
   hasTypeTag?: boolean;
   world?: string;
@@ -28,24 +29,26 @@ export default function Card({
   description,
   type,
   openseaUrl,
+  opensea_url,
   detail_url,
   parcelPageUrl,
   hasTypeTag = true,
   world,
-  typeState
+  typeState,
 }: Props) {
   const jumpToOpenC = React.useCallback(
 
-
+    // window.open( detail_url);
     (event) => {
       event.stopPropagation();
-      console.log(detail_url, "detail_url");
+      // console.log(openseaUrl, "detail_url");
+      window.open( opensea_url ||openseaUrl);
     },
     [openseaUrl],
   );
   const jumpToParcel = React.useCallback(() => {
     window.open(parcelPageUrl || detail_url);
-    window.open(openseaUrl);
+    // window.open(openseaUrl); 
 
   }, [parcelPageUrl, detail_url]);
 
@@ -74,7 +77,7 @@ export default function Card({
           <div className={cn("text-xl font-semibold truncate flex-1 mr-3", style.name)} title={name}>
             {name}
           </div>
-          {openseaUrl  ? (
+          {openseaUrl ||opensea_url ? (
             <img src="/images/Nomal.png" className={style.icon} onClick={jumpToOpenC}></img>
           ) : null}
 

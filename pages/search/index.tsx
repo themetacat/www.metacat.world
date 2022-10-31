@@ -4,11 +4,9 @@ import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
 
-import { className } from 'babylonjs/index';
 
 import { useRouter, withRouter } from 'next/router';
 
-import { join } from 'path/posix';
 
 import Page from '../../components/page';
 // import PageHeader from '../../components/page-header';
@@ -17,36 +15,21 @@ import Search from '../../components/searchHome';
 import Footer from '../../components/footer';
 import LearnCard from '../../components/learnCard';
 import InfoCard from '../../components/info_card';
-import Tab from '../../components/tab';
-import ChangeEmail from '../../components/changeEmail';
 import Tab4 from '../../components/tab4';
 import Status from '../../components/status';
 // import Card from '../../components/parcels-card';
 import Card from '../../components/cardParcels';
-import CardBuilding from '../../components/cardBuilding';
-import DclCard from '../../components/parcels-dcl-card';
 import Tab5 from '../../components/tab5';
-import ParcelsTab from '../../components/parcels-tab';
 import RentSet from '../../components/parcels_rent_set';
 import Popup from '../../components/popup';
 import store from '../../store/profile';
 import EventDetail from '../../components/eventDetail';
-import PieChart from '../../components/pie-chart';
-import PieChartDece from '../../components/pie-chart-dece';
-import ProfileDetail from '../../components/profiledetail';
-import ProfileDetailDece from '../../components/profiledetail-dece';
+
 import { state } from '../../components/wallet-btn';
-import BaseBar from '../../components/parcel-base-bar';
-import BaseBarDece from '../../components/parcel-basebardece';
-import TrafficBar from '../../components/parcel-traffic_bar';
-import JoinModal from '../../components/v2/join-modal';
+
 // import Creator from '../../components/Creator';
 import DaoModelList2 from '../../components/dao-model-list2';
-import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
-import JoinBuilders from '../../components/join_builders';
-import JoinBuildersAdd from '../../components/join_builders_add';
-import AddBuildings from '../../components/addBuilding';
-import JoinBuildersWork from '../../components/join_builders_works';
+
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -57,31 +40,12 @@ import { getBaseInfo, refreshToken, getParcelList2, getSearchDetail } from '../.
 
 
 import {
-  req_parcels_cancel,
-  req_parcels_leased,
   req_dcl_parcel_list,
-  req_dcl_cancel,
-  req_dcl_leased,
-  req_cv_parcel_traffic,
-  req_cv_parcel_traffic_daily,
-  req_cv_parcel_month_traffic_detail,
-  req_deceData_parcel_traffic_daily,
-  req_dece_parcel_traffic_list,
-  req_dece_parcel_traffic,
   req_building_list,
-  req_cv_parcel_traffic_list,
   req_get_user_wearable,
   req_set_wearable_show_status,
-  req_bind_ver_email_code,
-  req_userBuilder_apply_become,
-  req_user_add_or_edit_building,
   req_get_building_detail_info,
-  req_builder_del_self_building,
 } from '../../service/z_api';
-
-
-// console.log(req_building_list('0x79EF3DA763754387F06022Cf66c2668854B3389B'));
-
 
 
 
@@ -153,44 +117,8 @@ const TAB3 = [
 
 ];
 
-const wearablesNav = [
-  {
-    label: 'All',
-    type: 'all',
-  },
-  {
-    label: 'Shown',
-    type: 'shown',
-  },
-  {
-    label: 'Hidden',
-    type: 'hidden',
-  },
-];
-const showOrHide = {
-  all: [
-    {
-      label: 'Show serveral',
-      type: 'showServeral',
-    },
-    {
-      label: 'Hide serveral',
-      type: 'hideserveral',
-    },
-  ],
-  shown: [
-    {
-      label: 'Hide serveral',
-      type: 'hideserveral',
-    },
-  ],
-  hidden: [
-    {
-      label: 'Show serveral',
-      type: 'showServeral',
-    },
-  ],
-};
+
+
 function search(r) {
   const nav_Label = React.useRef(null);
   const meta = {
@@ -198,19 +126,15 @@ function search(r) {
     description: META_DESCRIPTION,
   };
   const headerRef = React.useRef(null)
-  const clientRef: any = useRef(null);
-  const scrollRef: any = useRef(null);
+
 
   const router = useRouter();
   const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
   const [loading, setLoading] = React.useState(false);
-  const [showCon, setSwitchShow] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [loadingDetail, setloadingDetail] = React.useState(false);
   const [fixedState, setFixedState] = React.useState(false);
-  const [noWork, setNoWork] = React.useState(false);
   const [searchText, setSearchText] = React.useState(null);
-  const [builderSat, setBuilderSat] = React.useState(false);
   const [dataSource, setDataSource] = React.useState([]);
   const [dataSourceTwo, setDataSourceTwo] = React.useState([]);
   const [dataSourceCreBuilder, setDataSourceCreBuilder] = React.useState([]);
@@ -222,13 +146,6 @@ function search(r) {
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
-  const [nickNameVal, setNickNameVla] = React.useState('');
-  const [introductionText, setIntroduction] = React.useState('');
-  const [countryAddress, setcountry] = React.useState('');
-  const [twitterAddress, setTwitterAddress] = React.useState('');
-  const [websiteAddress, setWebsiteAddress] = React.useState('');
-  const [orginData, setOrginData] = React.useState({ parcelList: [] });
-  const [showType, setShowType] = React.useState('Voxels');
   const [tabStateEvent, setTabStateEvent] = React.useState('Voxels');
   const [tabState, setTabState] = React.useState('Voxels');
   const [tabStateCreater, setTabStateCreater] = React.useState('Builder');
@@ -251,14 +168,10 @@ function search(r) {
   const [addbuild, setAddbuild] = React.useState(false);
 
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
-  const [tabStateTR, setTabStateTR] = React.useState(false);
-  const [creatorState, setCreatorState] = React.useState(false);
-  const [modifyEmail, setModifyEmail] = React.useState(false);
+
 
   const [navLabel, setNavLabel] = React.useState('All');
-  const [wearablesNavState, setWearablesNavState] = React.useState('all');
   const wearablesState = React.useRef(null);
-  const [showOrHideState, setShowOrHideState] = React.useState(false);
   // const [showOrHideStateConent, setShowOrHideStateConent] = React.useState(false);
   const [creatorsState, setCreatorsState] = React.useState(null);
   const [wearablesCreatorsData, setWearablesCreatorsData] = React.useState([]);
@@ -403,7 +316,7 @@ function search(r) {
         // }
       }
     },
-    [orginData, tabState],
+    [tabState],
   );
   const onTabChangeEvent = React.useCallback(
     async (tab) => {
@@ -433,7 +346,7 @@ function search(r) {
         //   setDclDataSource([])
       }
     },
-    [orginData, tabStateEvent],
+    [ tabStateEvent],
   );
   const onTabChangeCreater = React.useCallback(
     async (tab) => {
@@ -457,7 +370,7 @@ function search(r) {
         // store.setState(() => ({ type: 'dcl' }));
       }
     },
-    [orginData, tabStateCreater],
+    [tabStateCreater],
   );
 
   // const onTabChangeTR = React.useCallback((i) => {
@@ -500,13 +413,14 @@ function search(r) {
     //             setEventSomList([])
     //             setEventCvList([])
     setShowModal(true)
+    setLoading(true)
     const newPage = pageNum + 1
 
     setPage(newPage)
 
     const res = await getSearchDetail(query, page, per_page, search_item);
     setShowModal(false)
-
+    setLoading(false)
     if (res.code === 100000) {
       const data = res.data?.menu_one;
       const dataCreater = res.data?.Creator?.menu_two;
@@ -533,34 +447,34 @@ function search(r) {
       }
 
       const dataListBuilder = dataSourceCreBuilder;
-      if (res.data?.Creator?.Builder.length > 0) {
+      if (res.data?.Creator?.Builder?.length > 0) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
       }
 
       const dataListLearn = dataSourceLearn;
-      if (res.data?.Learn?.data.length > 0) {
+      if (res.data?.Learn?.data?.length > 0) {
         dataListLearn?.push(...res.data?.Learn?.data)
         setDataSourceLearn(dataListLearn)
       }
       const dataListEventCv = eventCvList;
-      if (res.data?.Event?.Voxels.length > 0) {
+      if (res.data?.Event?.Voxels?.length > 0) {
         dataListEventCv?.push(...res.data?.Event?.Voxels)
         setEventCvList(dataListEventCv)
       }
       const dataListEventDcl = eventDclList;
-      if (res.data?.Event?.Decentranland.length > 0) {
+      if (res.data?.Event?.Decentranland?.length > 0) {
         dataListEventDcl?.push(...res.data?.Event?.Decentranland)
         setEventDclList(dataListEventDcl)
       }
       const dataListEventSom = eventSomList;
-      if (res.data?.Event?.Somniumspace.length > 0) {
+      if (res.data?.Event?.Somniumspace?.length > 0) {
         dataListEventSom?.push(...res.data?.Event?.Somniumspace)
         setEventSomList(dataListEventSom)
       }
 
       const dataListDece = dclDataSource;
-      if (res.data.Place?.Decentranland.length > 0) {
+      if (res.data.Place?.Decentranland?.length > 0) {
         dataListDece?.push(...res.data.Place?.Decentranland)
         setDclDataSource(dataListDece)
       }
@@ -590,7 +504,7 @@ function search(r) {
             type: dataEvent[key], icon: TABobj[dataEvent[key]],
           }
           valCountEvent.push(objEvent)
-          console.log(objEvent);
+          // console.log(objEvent);
 
         })
         setValueCountEvent(valCountEvent)
@@ -619,26 +533,26 @@ function search(r) {
 
   }
 
-  const resultHandlerBu = React.useCallback(
-    (res, callback) => {
-      const { code, msg, data } = res;
-      if (code === 100000) {
-        return convert(data);
-      }
-      if (code === 100003) {
-        refreshTK().then((token) => {
-          if (token && callback) {
-            callback(token);
-          }
-        });
-        return null;
-      }
+  // const resultHandlerBu = React.useCallback(
+  //   (res, callback) => {
+  //     const { code, msg, data } = res;
+  //     if (code === 100000) {
+  //       return convert(data);
+  //     }
+  //     if (code === 100003) {
+  //       refreshTK().then((token) => {
+  //         if (token && callback) {
+  //           callback(token);
+  //         }
+  //       });
+  //       return null;
+  //     }
 
 
-      return null;
-    },
-    [refreshTK],
-  );
+  //     return null;
+  //   },
+  //   [refreshTK],
+  // );
 
   const changeNavTab = React.useCallback(
     (nav_label, index = 0) => {
@@ -732,17 +646,14 @@ function search(r) {
       const emailState = res.data.profile.email
       const buildNum = res.data.profile.builder_status
       const wallet = res.data.profile.address
-      setNoWork(true)
       setStatue(res.data.profile.creator_status)
       setBuildState(buildNum)
       setWalletAddress(wallet)
       // setCreaterStateVal(res.data.profile.creator_status)
       setEmailStateWearable(res.data.profile.email)
-      // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
-      // console.log(statue, "setEmailStateWearable");
+    
 
       setEmailStateVal(emailState)
-      // console.log(res.data.profile.creator_status,99999);
 
       // const statue = res.data.profile.creator_status;
 
@@ -767,11 +678,7 @@ function search(r) {
       setAvatarUrl(ava);
       setCreatorsState(creatorStatus);
       setAddress(addr);
-      setNickNameVla(name);
-      setIntroduction(m);
-      setcountry(n);
-      setTwitterAddress(twitterName);
-      setWebsiteAddress(websiteUrl);
+   
       state.setState({ profile });
     },
     [resultHandler, statue, buildState, walletAddress],
@@ -833,6 +740,7 @@ function search(r) {
 
 
     setShowModal(true)
+    setLoading(true)
     // console.log(newPage);
     // setPage(newPage)
     // console.log(router.query.q || query);
@@ -840,6 +748,7 @@ function search(r) {
     const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
 
     setShowModal(false)
+    setLoading(false)
     if (res.code === 100000) {
       const data = res.data?.menu_one;
       const dataCreater = res.data?.Creator?.menu_two;
@@ -866,7 +775,7 @@ function search(r) {
       // console.log(dataList, page, res.data.Place.Voxels);
 
 
-      if (res.data?.Place?.Voxels.length > 0) {
+      if (res.data?.Place?.Voxels?.length > 0) {
         dataList?.push(...res.data?.Place?.Voxels)
         // console.log(dataList);
 
@@ -882,7 +791,7 @@ function search(r) {
       // setDataSource(res.data.Place.Voxels)
 
       const dataListBuilder = dataSourceCreBuilder;
-      if (res.data?.Creator?.Builder.length > 0) {
+      if (res.data?.Creator?.Builder?.length > 0) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
       }
@@ -909,7 +818,7 @@ function search(r) {
 
 
       const dataListLearn = dataSourceLearn;
-      if (res.data?.Learn?.data.length > 0) {
+      if (res.data?.Learn?.data?.length > 0) {
         dataListLearn?.push(...res.data?.Learn?.data)
         setDataSourceLearn(dataListLearn)
       }
@@ -919,7 +828,7 @@ function search(r) {
 
       // setDataSourceTwo(res.data.Place.Voxels)
       const dataListDece = dclDataSource;
-      if (res.data.Place?.Decentranland.length > 0) {
+      if (res.data.Place?.Decentranland?.length > 0) {
         dataListDece?.push(...res.data.Place?.Decentranland)
         // console.log(dataListDece);
 
@@ -1024,31 +933,31 @@ function search(r) {
 
 
 
-  const reqBuilderData = React.useCallback(
-    async (walletAddressVal: string) => {
-      try {
+  // const reqBuilderData = React.useCallback(
+  //   async (walletAddressVal: string) => {
+  //     try {
 
-        const res = await req_building_list(walletAddressVal);
-        // console.log(res, 5959);
-
-
-        const data = resultHandlerBu(res, reqBuilderData);
-        // console.log(data, 56569, res);
+  //       // const res = await req_building_list(walletAddressVal);
+  //       // console.log(res, 5959);
 
 
-        setLoading(false);
-        if (!data) {
-          return;
-        }
-        // console.log(data, 8989);
-        setDataBuildSource(data);
-        // changeNum(data, nav_Label.current);
-      } catch {
-        setError(true);
-      }
-    },
-    [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
-  );
+  //       // const data = resultHandlerBu(res, reqBuilderData);
+  //       // console.log(data, 56569, res);
+
+
+  //       setLoading(false);
+  //       if (!data) {
+  //         return;
+  //       }
+  //       // console.log(data, 8989);
+  //       setDataBuildSource(data);
+  //       // changeNum(data, nav_Label.current);
+  //     } catch {
+  //       setError(true);
+  //     }
+  //   },
+  //   [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
+  // );
 
   const requireBuilder = React.useCallback(
     async (token) => {
@@ -1114,7 +1023,7 @@ function search(r) {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
           {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
-          {showModal === false ?
+          {showModal === true ?
             <><img src='/images/saveIcon.gif'></img> </>
             :
             <>
@@ -1378,12 +1287,10 @@ function search(r) {
     onRetry,
     buildState,
     walletAddress,
-    builderSat,
     changeNum,
     parcelsIds,
     setCardState,
     tabState,
-    reqBuilderData,
   ]);
 
 
@@ -1492,13 +1399,15 @@ function search(r) {
   // console.log(saveVal,999999);
   //   },[saveVal])
   useEffect(() => {
+    // console.log(tabState);
+    
     setTabStateCreater('Builder')
     setTabState('Voxels')
     setTabStateEvent('Voxels')
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
-    reqBuilderData(walletAddress)
+    // reqBuilderData(walletAddress)
 
 
 
@@ -1524,6 +1433,7 @@ function search(r) {
       setDataBuildSource([])
       setEventDclList([])
       setEventSomList([])
+      setDclDataSource([])
       setEventCvList([])
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
@@ -1546,13 +1456,30 @@ function search(r) {
 
     const scrollChange = () => {
 
+      const scrollHeight = document.querySelector('.detailName')?.scrollHeight
+      const clientHeight = document.querySelector('.detailName')?.clientHeight
+      const scrollTop = document.querySelector('.detailName')?.scrollTop
+
+      // console.log(scrollHeight,clientHeight,scrollTop);
+      
+
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+
+
+
+          // requestData(pageNum, count)
+      }
+
       document.addEventListener('scroll', scrollChange);
       return () => document.removeEventListener('scroll', scrollChange);
-    }
-    window.addEventListener('scroll', scrollChange, true)
-    return () => {
+  }
+
+
+  window.addEventListener('scroll', scrollChange, true)
+  // scrollChange()
+  return () => {
       window.removeEventListener('scroll', scrollChange, false)
-    }
+  }
 
   }, [])
 
@@ -1580,7 +1507,6 @@ function search(r) {
     getToken,
     requestData,
     loadingDetail,
-    builderSat,
     buildState,
     statue,
     walletAddress,
@@ -1973,7 +1899,6 @@ function search(r) {
     renderWerable,
     dataSource,
     dataBuildSource,
-    reqBuilderData,
     tabState,
     routeTab,
     creatorsReander,
@@ -1998,7 +1923,7 @@ function search(r) {
 
   return (
     <>
-      <Page className={cn('min-h-screen ', style.anPage,)} meta={meta}
+      <Page className={cn('min-h-screen detailName', style.anPage,)} meta={meta}
       >
         {/* joinBuilders === true?style.joinBuilders:'' */}
         {/* <div
@@ -2016,7 +1941,7 @@ function search(r) {
           className={cn(' flex flex-col justify-center items-center ', style.profileCon)}>
 
 
-          <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
+          <div className={cn('', showModal === false  ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
@@ -2029,6 +1954,7 @@ function search(r) {
                 setDataSource([])
                 setDataSourceLearn([])
                 setDataSourceCreWear([])
+                setDclDataSource([])
                 setDataBuildSource([])
                 setEventDclList([])
                 setEventSomList([])
