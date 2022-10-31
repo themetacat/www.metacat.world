@@ -276,7 +276,7 @@ function search(r) {
       setTabState('Voxels')
       setTabStateCreater('Builder')
       setTabStateEvent('Voxels')
-      // setTabState('Place');
+      setTabState('Place');
       setShowTab(l);
       setRouteTab(t);
       // router.replace(`/profile?type=${t}`);
