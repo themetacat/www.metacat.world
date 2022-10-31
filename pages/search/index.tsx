@@ -276,7 +276,7 @@ function search(r) {
       setTabState('Voxels')
       setTabStateCreater('Builder')
       setTabStateEvent('Voxels')
-      setTabState('Place');
+      // setTabState('Place');
       setShowTab(l);
       setRouteTab(t);
       // router.replace(`/profile?type=${t}`);
@@ -917,8 +917,10 @@ function search(r) {
       //   arr.push(obj)
       //   // console.log(arr);
       // }
-      // console.log(dataSource,dclDataSource);
-      // console.log(res.data, res.data?.item_count && res.data?.menu_one);
+//       console.log(dataSource,dclDataSource);
+//       // console.log(res.data, res.data?.item_count && res.data?.menu_one);
+// console.log((res.data?.item_count && res.data?.menu_one).length === 0);
+// console.log(valueCount,);
 
       if ((res.data?.item_count && res.data?.menu_one).length === 0) {
 
@@ -1005,6 +1007,7 @@ function search(r) {
   }, []);
 
 
+// console.log(loadingDetail);
 
   const renderContent = React.useMemo(() => {
 
@@ -1014,7 +1017,7 @@ function search(r) {
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
-    if (loadingDetail === true) {
+    if (loadingDetail) {
 
       return <Status status="loadingDetail" />;
     }
@@ -1050,6 +1053,7 @@ function search(r) {
     dclDataSource,
     loading,
     onRetry,
+    loadingDetail,
     changeNum,
     valueCount,
     parcelsIds,
@@ -1120,6 +1124,7 @@ function search(r) {
     onRetry,
     eventCvList,
     eventDclList,
+    loadingDetail,
     eventSomList,
     changeNum,
     valueCount,
@@ -1195,6 +1200,7 @@ function search(r) {
     onRetry,
     changeNum,
     parcelsIds,
+    loadingDetail,
     setCardState,
     tabState,
     reqDclData,
@@ -1226,6 +1232,7 @@ function search(r) {
 
   }, [statue,
     error,
+    loadingDetail,
     loading,
     onRetry])
 
@@ -1749,6 +1756,10 @@ function search(r) {
               </div>
               : null
             }
+            {loadingDetail === true?
+              <Status status="loadingDetail" />
+              :null
+            }
           </div>
 
           {/* 卡片结束 */}
@@ -1828,6 +1839,10 @@ function search(r) {
                   })}
                 </div>
                 : null
+            }
+            {loadingDetail === true?
+              <Status status="loadingDetail" />
+              :null
             }
           </div>
 
