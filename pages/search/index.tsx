@@ -1717,9 +1717,7 @@ function search(r) {
   //   }
   // }, [ownerData]);
 
-  const onTypeChangeHandler = () => {
 
-  }
 
 
 
@@ -1752,7 +1750,7 @@ function search(r) {
     }
 
     if (routeTab === 'Place') {
-      console.log(menuDataTwoArrCon,tabState,898);
+      // console.log(menuDataTwoArrCon,tabState,898);
       return (
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>

@@ -30,7 +30,7 @@ export default function SwiperTag({ typeList = [], label, className, onActive }:
   const [activeLabel, setActiveLabel] = React.useState(label);
 
 
-console.log(typeList,999);
+// console.log(typeList,999);
 
 
   React.useEffect(() => {
