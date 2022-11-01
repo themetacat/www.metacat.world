@@ -28,6 +28,20 @@ class API {
     return json;
   }
 
+  public async getSomSpaceList(
+    page: number,
+    count: number,
+    query: string,
+    totalPage: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count, query, totalPage }, { addQueryPrefix: true });
+    const url = `${this.url}/get_somniumspace_parcel_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getSearchDetail(
     query: string,
     page:number,
@@ -710,7 +724,7 @@ class API {
   }
 }
 
-// export default new API('https://api.metacat.world/api/v1');
-export default new API('http://8.130.23.16/api/v1');
+export default new API('https://api.metacat.world/api/v1');
+// export default new API('http://8.130.23.16/api/v1');
 // http://8.130.23.16/
 // https://api.metacat.world

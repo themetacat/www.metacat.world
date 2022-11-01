@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchInput from 'react-search-input';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 import style from './index.module.css';
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function Search({ text, onSearch, type }: Props) {
+  const router = useRouter();
   const [value, setValue] = useState(text);
   const [show, setShow] = useState(false);
 

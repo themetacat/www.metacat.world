@@ -19,6 +19,15 @@ export const getCVParcelList = async (page: number, count: number, query: string
 
   return json;
 };
+export const getSomSpaceList = async (page: number, count: number, query: string, totalPage: string) => {
+  const search = qs.stringify({ page, count, query, totalPage }, { addQueryPrefix: true });
+  const url = `/api/som_space_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
 
 export const getSearchDetail = async ( query: string,
   page:number,

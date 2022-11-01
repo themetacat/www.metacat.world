@@ -54,6 +54,7 @@ import {
   getCVParcelList,
   getDCLEventList,
   getDCLParcelList,
+  getSomSpaceList,
   getTopicList,
   getCvParcelSoldTotalStats,
   getCvTrafficStats,
@@ -64,6 +65,8 @@ import {
   refreshToken,
   getBaseInfo,
 } from '../../service';
+console.log(getSomSpaceList(1, 50, '', ''));
+
 
 import {
   req_sandbox_avg_price_stats,
@@ -128,11 +131,12 @@ const TAB = [
   //   icon: '/images/home-icon.svg',
   //   type: 'sandbox',
   // },
-  // {
-  //   label: 'Somnium Space',
-  //   icon: '/images/somniumspace.png',
-  //   type: 'somniumspace',
-  // },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/parcels?tab=somniumspace',
+  },
   // {
   //   label: 'NFT Worlds',
   //   icon: '/images/worlds.svg',
@@ -199,6 +203,28 @@ const SUBTABDECE = [
   //   type: 'event',
   // },
 ];
+const SUBTABSomSpace = [
+  {
+    label: 'Parcel',
+    type: 'parcel',
+  },
+  {
+    label: 'Scene',
+    type: 'scene',
+  },
+  // {
+  //   label: 'Heatmap',
+  //   type: 'map',
+  // },
+  // {
+  //   label: 'Analytics',
+  //   type: 'analytics',
+  // },
+  // {
+  //   label: 'Events',
+  //   type: 'event',
+  // },
+];
 const SUBTABZ = [
   {
     label: 'Analytics',
@@ -243,6 +269,7 @@ export default function Index(props) {
   const nextCursor = React.useRef(1);
 
   const [dataSource, setDataSource] = React.useState([]);
+  const [dataSourceSomSpace, setDataSourceSomSpace] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
 
@@ -262,10 +289,10 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
-    // console.log(tab,11,
-    //   subTab,22,
-    //   type);
-    setSearchText('')
+    console.log(tab, 11,
+      subTab, 22,
+      type);
+    // setSearchText('')
     try {
       if (tab === 'cryptovoxels') {
         if (subTab === 'parcel') {
@@ -276,6 +303,7 @@ export default function Index(props) {
             const value = type_total[key];
             return { name: key, value };
           });
+
 
           // setPageNumber(currentPage);
           setTotalPage(total_page);
@@ -333,6 +361,8 @@ export default function Index(props) {
             setTypeList(typeArray);
           }
           data = parcel_list;
+      
+          
         } else if (subTab === 'event') {
           const res = await getDCLEventList(nextCursor.current, 10);
           const { cursor, event_list } = res.data;
@@ -364,6 +394,29 @@ export default function Index(props) {
           //  }
           //  data = parcel_list;
         }
+      } else if (tab === 'somniumspace') {
+        if (subTab === 'parcel') {
+        
+          
+          const res = await getSomSpaceList(page, 40, query, '');
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          // console.log(res.data.parcel_list);
+
+          // setPageNumber(currentPage);
+          setTotalPage(total_page);
+          setDataSourceSomSpace(res.data.parcel_list)
+          // const typeArray = Object.keys(type_total).map((key) => {
+          //   const value = type_total[key];
+          //   return { name: key, value };
+          // });
+          // console.log(typeArray);
+          // if (needUpdateTypeList) {
+          //   setTypeList(typeArray);
+          // }
+          // data = parcel_list;
+          // console.log(data, 9898989);
+
+        }
       }
     } catch (err) {
       setError(true);
@@ -377,7 +430,7 @@ export default function Index(props) {
 
   React.useEffect(() => {
     setOffsetWidthNum(headerRef?.current?.clientWidth)
-    
+
     const listener = () => {
       if (
         document.querySelector('.myClassName') &&
@@ -391,7 +444,7 @@ export default function Index(props) {
     };
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
-  }, [fixedState,offsetWidthNum]);
+  }, [fixedState, offsetWidthNum]);
 
   const onTabChange = async (tab) => {
     // console.log(tab, 222222222);
@@ -401,19 +454,29 @@ export default function Index(props) {
       subIndex = SUBTAB.findIndex((item) => item.type === subTabState);
     } else if (tabState === 'decentraland') {
       subIndex = SUBTABDECE.findIndex((item) => item.type === subTabState);
+    } else if (tabState === 'somniumspace') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+      // const res = getSomSpaceList()
     }
     // console.log(subIndex, tabState);
     subIndex = subIndex === -1 ? 0 : subIndex;
     setTabState(tab);
     let sub = '';
     if (tab === 'cryptovoxels') {
-      sub = SUBTAB[subIndex].type;
-      setSubTabState(SUBTAB[subIndex].type);
-      router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex].type}`);
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTAB[subIndex]?.type);
+      router.replace(`/parcels?tab=cryptovoxels`);
+      // router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndex]?.type}`);
     } else if (tab === 'decentraland') {
-      sub = SUBTAB[subIndex].type;
-      setSubTabState(SUBTABDECE[subIndex].type);
-      router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex].type}`);
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABDECE[subIndex]?.type);
+      router.replace(`/parcels?tab=decentraland`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    } else if (tab === 'somniumspace') {
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABSomSpace[subIndex]?.type);
+      router.replace(`/parcels?tab=somniumspace`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
     } else if (
       tab === 'nftworlds' ||
       tab === 'worldwidewebb' ||
@@ -422,7 +485,7 @@ export default function Index(props) {
     ) {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
-    } else if (tab === 'sandbox' || tab === 'somniumspace' || tab === 'otherside') {
+    } else if (tab === 'sandbox' || tab === 'otherside') {
       if (SUBTABZ2.find((item) => item.type === subTabState)) {
         sub = SUBTABZ2.find((item) => item.type === subTabState).type;
         setSubTabState(sub);
@@ -450,61 +513,61 @@ export default function Index(props) {
     });
     setDataSource(data);
   };
-  const onSubTabChange = React.useCallback(
-    async (subTab) => {
-      setSubTabState(subTab);
-      let subIndexData;
-      // console.log(subTab, tabState, subIndexData)
-      // setTabState(subTab);
-      if (tabState === 'cryptovoxels') {
-        if (subTab === 'parcel') {
-          subIndexData = SUBTAB.findIndex((item) => item.type === subTab);
-        } else if (subTab === 'space') {
-          subIndexData = SUBTAB.findIndex((item) => item.type === subTab);
-        }
-        // console.log(subIndexData, tabState);
-        subIndexData = subIndexData === -1 ? 0 : subIndexData;
-      } else {
-        if (subTab === 'parcel') {
-          subIndexData = SUBTABDECE.findIndex((item) => item.type === subTab);
-        } else if (subTab === 'scene') {
-          subIndexData = SUBTABDECE.findIndex((item) => item.type === subTab);
-        }
-        // console.log(subIndexData, tabState);
-        subIndexData = subIndexData === -1 ? 0 : subIndexData;
-      }
+  // const onSubTabChange = React.useCallback(
+  //   async (subTab) => {
+  //     setSubTabState(subTab);
+  //     let subIndexData;
+  //     // console.log(subTab, tabState, subIndexData)
+  //     // setTabState(subTab);
+  //     if (tabState === 'cryptovoxels') {
+  //       if (subTab === 'parcel') {
+  //         subIndexData = SUBTAB.findIndex((item) => item.type === subTab);
+  //       } else if (subTab === 'space') {
+  //         subIndexData = SUBTAB.findIndex((item) => item.type === subTab);
+  //       }
+  //       // console.log(subIndexData, tabState);
+  //       subIndexData = subIndexData === -1 ? 0 : subIndexData;
+  //     } else {
+  //       if (subTab === 'parcel') {
+  //         subIndexData = SUBTABDECE.findIndex((item) => item.type === subTab);
+  //       } else if (subTab === 'scene') {
+  //         subIndexData = SUBTABDECE.findIndex((item) => item.type === subTab);
+  //       }
+  //       // console.log(subIndexData, tabState);
+  //       subIndexData = subIndexData === -1 ? 0 : subIndexData;
+  //     }
 
-      let sub = '';
+  //     let sub = '';
 
-      if (tabState === 'cryptovoxels') {
-        sub = subTabState;
-        // console.log(SUBTAB[subIndexData].type,);
+  //     if (tabState === 'cryptovoxels') {
+  //       sub = subTabState;
+  //       // console.log(SUBTAB[subIndexData].type,);
 
-        setSubTabState(SUBTAB[subIndexData].type);
-        router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`);
-      } else if (tabState === 'decentraland') {
-        sub = subTabState;
-        // console.log(SUBTABDECE[subIndexData].type);
-        setSubTabState(SUBTABDECE[subIndexData].type);
-        router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`);
-      }
+  //       setSubTabState(SUBTAB[subIndexData].type);
+  //       router.replace(`/parcels?tab=cryptovoxels&subTab=${SUBTAB[subIndexData].type}`);
+  //     } else if (tabState === 'decentraland') {
+  //       sub = subTabState;
+  //       // console.log(SUBTABDECE[subIndexData].type);
+  //       setSubTabState(SUBTABDECE[subIndexData].type);
+  //       router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndexData].type}`);
+  //     }
 
-      setSearchText('');
-      setTypeState('');
-      setTypeState('All');
-      // console.log(sub);
-      const data = await requestData({
-        tab: tabState,
-        subTab,
-        page: 1,
-        query: '',
-        type: '',
-        needUpdateTypeList: true,
-      });
-      setDataSource(data);
-    },
-    [tabState, searchText, typeState],
-  );
+  //     setSearchText('');
+  //     setTypeState('');
+  //     setTypeState('All');
+  //     // console.log(sub);
+  //     const data = await requestData({
+  //       tab: tabState,
+  //       subTab,
+  //       page: 1,
+  //       query: '',
+  //       type: '',
+  //       needUpdateTypeList: true,
+  //     });
+  //     setDataSource(data);
+  //   },
+  //   [tabState, searchText, typeState],
+  // );
 
   const onTypeChangeHandler = React.useCallback(
     async (type: string,
@@ -527,13 +590,15 @@ export default function Index(props) {
       // }else{
 
       // }
-      setSearchText('')
+      // setSearchText('')
+      // const requestNumber = number + 1;
+      // setPageNumber(requestNumber)
       if (type === 'Free Space') {
         const data = await requestData({
           tab: tabState,
           subTab: 'space',
           page: 1,
-          query: '',
+          query: searchText,
           type: '',
           needUpdateTypeList: true,
         });
@@ -545,7 +610,7 @@ export default function Index(props) {
           tab: tabState,
           subTab: 'scene',
           page: 1,
-          query: '',
+          query: searchText,
           type: '',
           needUpdateTypeList: true,
         });
@@ -573,9 +638,11 @@ export default function Index(props) {
   useEffect(() => {
     onTypeChangeHandler('All')
   }, [])
-
-  const onPageChangeHandler = React.useCallback(
-    async (number: number) => {
+  const onPageChangeHandler =
+    async (number: number,) => {
+      console.log(searchText);
+    
+      
       const requestNumber = number + 1;
       const data = await requestData({
         tab: tabState,
@@ -586,14 +653,15 @@ export default function Index(props) {
       });
       setPageNumber(requestNumber);
       setDataSource(data);
-    },
-    [tabState, subTabState, typeState, searchText],
-  );
+      
+      // setDataSourceSomSpace(data);
+    }
+  
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
-      // console.log(type);
-
+      console.log(text);
+      // router.replace(`/parcels?tab=decentraland?q=${text}`);
       setSearchText(text);
       const data = await requestData({
         tab: tabState,
@@ -603,6 +671,7 @@ export default function Index(props) {
         type: typeState,
         needUpdateTypeList: true,
       });
+console.log(data,"data");
 
       setDataSource(data);
     },
@@ -681,53 +750,82 @@ export default function Index(props) {
     setDataSource(data);
   }, [tabState, subTabState, pageNumber, searchText, typeState]);
 
+
+
   const renderContent = React.useMemo(() => {
+
     if (subTabState === 'parcel') {
       if (loading) {
         return <Status status="loading" />;
       }
 
-      if (error) {
+      if (error ) {
         return <Status retry={onRetry} status="error" />;
       }
 
-      if (dataSource.length === 0) {
+      if (dataSource.length === 0 && (tabState === 'cryptovoxels' || tabState === 'decentraland')) {
         return <Status status="empty" />;
       }
+      if (tabState === 'cryptovoxels' || tabState === 'decentraland') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {
+                typeState === 'Free Space' || typeState === 'Scene' ?
+                  <>
+                    {dataSource.map((card, idx) => {
+                      return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
+                    })}
+                  </>
+                  : <>
+                    {dataSource.map((card, idx) => {
+                      return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+                    })}
+                  </>
+              }
 
-      return (
-        <>
-          <div
-            className={cn(
-              'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
-              style.bottomContent,
-            )}
-          >
-            {
-              typeState === 'Free Space' || typeState === 'Scene' ?
-                <>
-                  {dataSource.map((card, idx) => {
-                    return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
-                  })}
-                </>
-                : <>
-                  {dataSource.map((card, idx) => {
-                    return <Card {...card} typeState={typeState} key={uuid()}></Card>;
-                  })}
-                </>
-            }
 
-          </div>
-          <div className={style.pagiNation}>
-            <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-          </div>
-        </>
-      );
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        );
+      }
+      if (tabState === 'somniumspace') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceSomSpace.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
     }
     if (subTabState === 'scene') {
       // console.log(dataSource)
@@ -1637,6 +1735,7 @@ export default function Index(props) {
     dataSource,
     hasMore,
     loadMore,
+    dataSourceSomSpace,
     loading,
     totalPage,
     pageNumber,
@@ -1721,6 +1820,7 @@ export default function Index(props) {
     onTabChange(tab);
   }, [router.query.tab]);
 
+
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
@@ -1758,7 +1858,6 @@ export default function Index(props) {
     initTopic();
     init();
   }, [null]);
-
   const cls = cn('flex-1', style.bottomLine);
 
   return (
@@ -1848,7 +1947,7 @@ export default function Index(props) {
                   );
                 })}
               </Swiper>
-              <div
+              {/* <div
                 className={cn(
                   'n absolute z-40  flex justify-end items-center',
                   {
@@ -1858,11 +1957,11 @@ export default function Index(props) {
                 )}
               >
                 <img className={style.icon} src="/images/tab-right.png"></img>
-              </div>
+              </div> */}
               <div className={cls} />
             </div>
-            <div className={cn('', style.boxCon, fixedState===true ? style.boxCon1 : null,
-             offsetWidthNum <= 1200 ? style.boxCon2 : null )} >
+            <div className={cn('', style.boxCon, fixedState === true ? style.boxCon1 : null,
+              offsetWidthNum <= 1200 ? style.boxCon2 : null)} >
 
               {typeState === 'Free Space' ? (
                 <Search text={searchText} onSearch={onSearchSpace}></Search>
@@ -1970,6 +2069,11 @@ export default function Index(props) {
                 <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
               </div>
             ) : ''}
+            {/* {tabState === 'somniumspace'? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+              </div>
+            ) : ''} */}
             {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}
             {subTabState === 'scene' && dataSource.length === 0 && <ScenceBuilding />}
 
@@ -1991,6 +2095,47 @@ export default function Index(props) {
               </a>
             )}
             {renderContent}
+            {/* {console.log(dataSourceSomSpace, "datae")} */}
+
+            {/* {loading?<><Status status="loading" /></>:null}
+            {error?<><Status retry={onRetry} status="error" /></>:null}
+            {dataSource.length === 0?<><Status status="empty" /></>:null} */}
+            {/* {tabState === 'cryptovoxels' || tabState === 'decentraland' ?
+              <>
+                <div
+                  className={cn(
+                    'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                    style.bottomContent,
+                  )}
+                >
+                  {
+                    typeState === 'Free Space' || typeState === 'Scene' ?
+                      <>
+                        {dataSource.map((card, idx) => {
+                          return <CardSpace {...card} typeState={typeState} key={idx}></CardSpace>;
+                        })}
+                      </>
+                      : <>
+                        {dataSource.map((card, idx) => {
+                          return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+                        })}
+                      </>
+                  }
+
+
+                </div>
+                <div className={style.pagiNation}>
+                  <PagiNation
+                    total={totalPage}
+                    pageNumber={pageNumber - 1}
+                    pageSize={9}
+                    pageChange={onPageChangeHandler}
+                  />
+                </div>
+              </> : null
+            }
+            {tabState === 'somniumspace' ? 11111 : null} */}
+
           </div>
         </div>
         {subTabState === 'event' ? <TopJumper></TopJumper> : null}
@@ -1998,6 +2143,8 @@ export default function Index(props) {
     </Page>
   );
 }
+
+
 
 export async function getServerSideProps({ locale = 'en-US', query }) {
   return {
