@@ -1843,14 +1843,14 @@ function search(r) {
               </div>
               : null
             }
-            {/* {tabState === 'Somniumspace' ?
+            {tabState === 'Somniumspace' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {somSpaceDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
               : null
-            } */}
+            }
             {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null

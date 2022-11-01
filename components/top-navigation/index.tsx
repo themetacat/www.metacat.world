@@ -76,6 +76,12 @@ const parcels = [
     link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
+  {
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/parcels?tab=somniumspace',
+  },
 ];
 const eventList = [
   {
