@@ -157,6 +157,10 @@ color: #0F191B;
 .tabtext{
    border-bottom: 1px solid #012a30;
    height: 40px;
+   /* width: 1200px; */
+   /* background-color: red; */
+   /* overflow:hidden; */
+   position: relative;
 }
 .allHeight {
   height: 48px;
@@ -221,6 +225,20 @@ color: #0F191B;
   width: 99%;
   z-index: 999999;
   /* top：0; */
+}
+.per {
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(90deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  cursor: pointer;
+}
+.next {
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(270deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  cursor: pointer;
 }
 
 .qqq{

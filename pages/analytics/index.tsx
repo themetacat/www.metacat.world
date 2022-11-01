@@ -1635,7 +1635,7 @@ export default function AnalyticsIndex(props) {
 
               <div className={cn('w-full h-auto mt-7', style.table)}>
                 <div className={style.tabContainer}>
-                  <AnalyticsInfo options={types} labelText={'Coprehensive Data'} textColor={style.allColor}></AnalyticsInfo>
+                  <AnalyticsInfo options={types} labelText={'Comprehensive Data'} textColor={style.allColor}></AnalyticsInfo>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>

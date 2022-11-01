@@ -96,7 +96,7 @@ flex-flow: row;
 .location {
   position: absolute;
   right: -48px;
-  bottom: -110px;
+  bottom: -100px;
   /* bottom: -90px; */
   z-index: 99999 !important;
   background-color: #0f191b;
@@ -106,7 +106,7 @@ flex-flow: row;
   border-radius: 4px;
   position: absolute;
   left:-60px;
-  bottom: -110px;
+  bottom: -100px;
   z-index: 99999 !important;
   background-color: #0f191b;
 
@@ -115,7 +115,7 @@ flex-flow: row;
   border-radius: 4px;
   position: absolute;
   left:-60px;
-  bottom: -160px;
+  bottom: -150px;
   z-index: 99999 !important;
   background-color: #0f191b;
 
@@ -184,7 +184,8 @@ flex-flow: row;
   font-size: 20px;
   line-height: 22px;
   color: #AAAAAA;
-  padding-top: 5px;
+  /* padding-top: 5px; */
+  padding: 8px;
 }
 .rightCon{
   margin-right: 41.67px;

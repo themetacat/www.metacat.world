@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 
 
 import { useRouter, withRouter } from 'next/router';
@@ -14,8 +16,10 @@ import PageHeader from '../../components/top-navigation';
 import Search from '../../components/searchHome';
 import Footer from '../../components/footer';
 import LearnCard from '../../components/learnCard';
+import SwiperTagSearch from '../../components/swiper-tagSearch';
 import InfoCard from '../../components/info_card';
 import Tab4 from '../../components/tab4';
+import Tab from '../../components/hometabParcels';
 import Status from '../../components/status';
 // import Card from '../../components/parcels-card';
 import Card from '../../components/cardParcels';
@@ -142,7 +146,9 @@ function search(r) {
   const [dataSourceCreWear, setDataSourceCreWear] = React.useState([]);
   const [typeState, setTypeState] = React.useState('');
   const [dataBuildSource, setDataBuildSource] = React.useState([]);
+  const [typeList, setTypeList] = React.useState([]);
   const [dclDataSource, setDclDataSource] = React.useState([]);
+  const [somSpaceDataSource, setSomSpaceDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
@@ -191,6 +197,7 @@ function search(r) {
   const [valueCount, setValueCount] = React.useState([]);
   const [valueCountCreater, setValueCountCreater] = React.useState([]);
   const [valueCountEvent, setValueCountEvent] = React.useState([]);
+  const [tabPercent, setTabPercent] = React.useState(0);
 
   // const [buildName, setBuildData] = React.useState('');
   const [buildAll, setBuildAll] = React.useState(null);
@@ -298,7 +305,7 @@ function search(r) {
 
 
 
-      // setTabState(tab);
+      setTabState(tab);
 
 
 
@@ -478,6 +485,11 @@ function search(r) {
       if (res.data.Place?.Decentranland?.length > 0) {
         dataListDece?.push(...res.data.Place?.Decentranland)
         setDclDataSource(dataListDece)
+      }
+      const dataListSomSpace = somSpaceDataSource;
+      if (res.data.Place?.Somniumspace?.length > 0) {
+        dataListSomSpace?.push(...res.data.Place?.Somniumspace)
+        setSomSpaceDataSource(dataListSomSpace)
       }
 
 
@@ -840,7 +852,11 @@ function search(r) {
 
         setDclDataSource(dataListDece)
       }
-
+      const dataListSomSpace = somSpaceDataSource;
+      if (res.data.Place?.Somniumspace?.length > 0) {
+        dataListSomSpace?.push(...res.data.Place?.Somniumspace)
+        setSomSpaceDataSource(dataListSomSpace)
+      }
       // setDclDataSource(res.data.Place.Decentranland)
 
       // console.log(dclDataSource, "dataSourcedataSourcedataSource");
@@ -1007,7 +1023,7 @@ function search(r) {
 
   const toTopic = React.useCallback((id, item) => {
     console.log(item.topic_id);
-    
+
     if (item?.name === 'WearableDAO') {
       window.open('/wearables/wearabledao?type=chinesered')
     }
@@ -1464,6 +1480,7 @@ function search(r) {
       setEventDclList([])
       setEventSomList([])
       setDclDataSource([])
+      setSomSpaceDataSource([])
       setEventCvList([])
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
@@ -1700,6 +1717,10 @@ function search(r) {
   //   }
   // }, [ownerData]);
 
+  const onTypeChangeHandler = () => {
+
+  }
+
 
 
   const randerCardList = React.useMemo(() => {
@@ -1731,6 +1752,7 @@ function search(r) {
     }
 
     if (routeTab === 'Place') {
+      console.log(menuDataTwoArrCon,tabState,898);
       return (
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
@@ -1739,37 +1761,82 @@ function search(r) {
               {
                 loadingDetail === true ? null :
                   <>
-                    {(menuDataTwoArrCon || TABData).map((item) => {
-                      return (
-                        <Tab4
-                          active={tabState === item.type}
-                          isMini={true}
-                          key={item.label}
-                          label={item.label}
-                          icon={item.icon}
-                          onClick={() => {
-                            onTabChange(item.type);
-                          }}
-                        />
-                      );
-                    })}
+                  
+                    <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
+                    {/* <div
+                      className={cn(
+                        'p absolute z-40 flex justify-start items-center',
+                        {
+                          hidden: tabPercent <= 0,
+                        },
+                        style.per,
+                      )}
+                    >
+                      <img className={style.icon} src="/images/tab-left.png"></img>
+                    </div>
+                    <Swiper
+                      modules={[Navigation]}
+                      spaceBetween={1}
+                      slidesPerView="auto"
+                      className={cn('w-full')}
+                      navigation={{
+                        prevEl: '.p',
+                        nextEl: '.n',
+                      }}
+                      onProgress={(swiper, progress) => {
+                        setTabPercent(progress);
+                      }}
+                    >
+                      {(menuDataTwoArrCon || TABData).map((item, index) => {
+                        return (
+                          <SwiperSlide
+                            className={cn(
+                              'box-border w-12 font-semibold text-white flex',
+                              style.baseCON,
+                              tabState === item.type ? style.active : null,
+                            )}
+                            key={index}
+                            onClick={() => {
+                              onTabChange(item.type);
+                            }}
+                          >
+                            <Tab
+                              active={tabState === item.type}
+                              isMini={true}
+                              key={item.label}
+                              label={item.label}
+                              icon={item.icon}
+                            // onClick={() => {
+                            //   onTabChange(item.type);
+                            // }}
+                            />
+                          </SwiperSlide>
+                        );
+                      })}
+                    </Swiper>
+                    <div
+                      className={cn(
+                        'n absolute z-40  flex justify-end items-center',
+                        {
+                          hidden: tabPercent >= 1,
+                        },
+                        style.next,
+                      )}
+                    >
+                      <img className={style.icon} src="/images/tab-right.png"></img>
+                    </div> */}
                   </>
               }
               <div className={cls} />
             </div>
-            <div className={cls} />
           </div>
-
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
-
-            {/* {renderContent} */}
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
               </div>
               : null
             }
-            {/* {tabState} */}
             {tabState === 'Decentranland' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {dclDataSource.map((card) => {
@@ -1778,6 +1845,14 @@ function search(r) {
               </div>
               : null
             }
+            {/* {tabState === 'Somniumspace' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {somSpaceDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            } */}
             {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null
@@ -1996,6 +2071,7 @@ function search(r) {
                 setDataSourceCreBuilder([])
                 setDataSourceCreWear([])
                 setDclDataSource([])
+                setSomSpaceDataSource([])
                 setDataBuildSource([])
                 setEventDclList([])
                 setEventSomList([])
