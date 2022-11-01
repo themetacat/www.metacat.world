@@ -10,7 +10,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import styles from './index.module.css';
-import { isTopicInBloom } from 'web3-utils';
+
 
 type tag = {
   type?: string;
