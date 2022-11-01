@@ -65,7 +65,7 @@ import {
   refreshToken,
   getBaseInfo,
 } from '../../service';
-console.log(getSomSpaceList(1, 50, '', ''));
+// console.log(getSomSpaceList(1, 50, '', ''));
 
 
 import {
@@ -289,9 +289,9 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
-    console.log(tab, 11,
-      subTab, 22,
-      type);
+    // console.log(tab, 11,
+    //   subTab, 22,
+    //   type);
     // setSearchText('')
     try {
       if (tab === 'cryptovoxels') {
@@ -640,7 +640,7 @@ export default function Index(props) {
   }, [])
   const onPageChangeHandler =
     async (number: number,) => {
-      console.log(searchText);
+      // console.log(searchText);
     
       
       const requestNumber = number + 1;
@@ -660,7 +660,7 @@ export default function Index(props) {
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
-      console.log(text);
+      // console.log(text);
       // router.replace(`/parcels?tab=decentraland?q=${text}`);
       setSearchText(text);
       const data = await requestData({
@@ -671,7 +671,7 @@ export default function Index(props) {
         type: typeState,
         needUpdateTypeList: true,
       });
-console.log(data,"data");
+// console.log(data,"data");
 
       setDataSource(data);
     },
