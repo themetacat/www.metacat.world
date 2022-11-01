@@ -1963,7 +1963,7 @@ export default function Index(props) {
             <div className={cn('', style.boxCon, fixedState === true ? style.boxCon1 : null,
               offsetWidthNum <= 1200 ? style.boxCon2 : null)} >
 
-              {typeState === 'Free Space' ? (
+              {/* {typeState === 'Free Space' ? (
                 <Search text={searchText} onSearch={onSearchSpace}></Search>
               ) : null}
               {typeState === 'Scene' ? (
@@ -1971,7 +1971,7 @@ export default function Index(props) {
               ) : null}
               {typeState !== 'Free Space' && typeState !== 'Scene' ?
                 <Search text={searchText} onSearch={onSearchHandler}></Search>
-                : null}
+                : null} */}
             </div>
           </div>
         </div>
