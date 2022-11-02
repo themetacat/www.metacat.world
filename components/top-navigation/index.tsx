@@ -82,6 +82,18 @@ const parcels = [
     type: 'somniumspace',
     link: '/parcels?tab=somniumspace',
   },
+  {
+    label: 'Mona',
+    icon: 'https://monaverse.com/branding/mona-logo-black.svg',
+    type: 'mona',
+    link: '/parcels?tab=mona',
+  },
+  {
+    label: 'Oncyber',
+    icon: 'https://oncyber.io/images/logo.png',
+    type: 'oncyber',
+    link: '/parcels?tab=oncyber',
+  },
 ];
 const eventList = [
   {

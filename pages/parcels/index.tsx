@@ -56,6 +56,7 @@ import {
   getDCLParcelList,
   getSomSpaceList,
   getTopicList,
+  getOncyberParcelList,
   getCvParcelSoldTotalStats,
   getCvTrafficStats,
   getCvParcelAvgPriceStats,
@@ -64,8 +65,9 @@ import {
   getDclParcelSoldTotalStats,
   refreshToken,
   getBaseInfo,
+  getMonaParcelList,
 } from '../../service';
-// console.log(getSomSpaceList(1, 50, '', ''));
+// console.log(getMonaParcelList(1, 50));
 
 
 import {
@@ -136,6 +138,18 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
     link: '/parcels?tab=somniumspace',
+  },
+  {
+    label: 'Mona',
+    icon: 'https://monaverse.com/branding/mona-logo-black.svg',
+    type: 'mona',
+    link: '/parcels?tab=mona',
+  },
+  {
+    label: 'Oncyber',
+    icon: 'https://oncyber.io/images/logo.png',
+    type: 'oncyber',
+    link: '/parcels?tab=oncyber',
   },
   // {
   //   label: 'NFT Worlds',
@@ -212,19 +226,18 @@ const SUBTABSomSpace = [
     label: 'Scene',
     type: 'scene',
   },
-  // {
-  //   label: 'Heatmap',
-  //   type: 'map',
-  // },
-  // {
-  //   label: 'Analytics',
-  //   type: 'analytics',
-  // },
-  // {
-  //   label: 'Events',
-  //   type: 'event',
-  // },
 ];
+const SUBTABMona = [
+  {
+    label: 'Parcel',
+    type: 'parcel',
+  },
+  {
+    label: 'Scene',
+    type: 'scene',
+  },
+];
+
 const SUBTABZ = [
   {
     label: 'Analytics',
@@ -263,6 +276,8 @@ export default function Index(props) {
   const [searchText, setSearchText] = React.useState(props.query.search || '');
   const [typeState, setTypeState] = React.useState(props.query.type || 'All');
   const [typeList, setTypeList] = React.useState([]);
+  const [typeListMona, setTypeListMona] = React.useState([]);
+  const [typeListOncyber, setTypeListOncyber] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStatePage, setFixedStatePage] = React.useState(false);
@@ -270,6 +285,8 @@ export default function Index(props) {
 
   const [dataSource, setDataSource] = React.useState([]);
   const [dataSourceSomSpace, setDataSourceSomSpace] = React.useState([]);
+  const [dataSourceMona, setDataSourceMona] = React.useState([]);
+  const [dataSourceOrcyber, setDataSourceOrcyber] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
 
@@ -289,9 +306,12 @@ export default function Index(props) {
     let data = [];
     setLoading(true);
     setError(false);
+
     // console.log(tab, 11,
     //   subTab, 22,
     //   type);
+
+
     // setSearchText('')
     try {
       if (tab === 'cryptovoxels') {
@@ -361,8 +381,8 @@ export default function Index(props) {
             setTypeList(typeArray);
           }
           data = parcel_list;
-      
-          
+
+
         } else if (subTab === 'event') {
           const res = await getDCLEventList(nextCursor.current, 10);
           const { cursor, event_list } = res.data;
@@ -396,8 +416,8 @@ export default function Index(props) {
         }
       } else if (tab === 'somniumspace') {
         if (subTab === 'parcel') {
-        
-          
+
+
           const res = await getSomSpaceList(page, 40, query, '');
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           // console.log(res.data.parcel_list);
@@ -405,17 +425,55 @@ export default function Index(props) {
           // setPageNumber(currentPage);
           setTotalPage(total_page);
           setDataSourceSomSpace(res.data.parcel_list)
-          // const typeArray = Object.keys(type_total).map((key) => {
-          //   const value = type_total[key];
-          //   return { name: key, value };
-          // });
-          // console.log(typeArray);
+
+
+        }
+      } else if (tab === 'mona') {
+        if (subTab === 'parcel') {
+          const res = await getMonaParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          const typeArray = type_total.map((item) => {
+            const name = item.name;
+            const count = item.name;
+            return { name, count };
+         
+            
+          });
+          setDataSourceMona(res.data.parcel_list)
+
+          setTypeListMona(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
           // if (needUpdateTypeList) {
-          //   setTypeList(typeArray);
+          //   setTypeList(type_total);
           // }
           // data = parcel_list;
-          // console.log(data, 9898989);
+        }
+      
+      } else if (tab === 'oncyber') {
+        if (subTab === 'parcel') {
+          const res = await getOncyberParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
+          const typeArray = type_total.map((item) => {
+            const name = item.name;
+            const count = item.name;
+            return { name, count };
+         
+            
+          });
+          setDataSourceOrcyber(res.data.parcel_list)
+
+          setTypeListOncyber(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
         }
       }
     } catch (err) {
@@ -427,6 +485,7 @@ export default function Index(props) {
 
     return convert(data);
   };
+
 
   React.useEffect(() => {
     setOffsetWidthNum(headerRef?.current?.clientWidth)
@@ -447,7 +506,6 @@ export default function Index(props) {
   }, [fixedState, offsetWidthNum]);
 
   const onTabChange = async (tab) => {
-    // console.log(tab, 222222222);
 
     let subIndex;
     if (tabState === 'cryptovoxels') {
@@ -455,6 +513,14 @@ export default function Index(props) {
     } else if (tabState === 'decentraland') {
       subIndex = SUBTABDECE.findIndex((item) => item.type === subTabState);
     } else if (tabState === 'somniumspace') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+      // const res = getSomSpaceList()
+    }
+    else if (tabState === 'mona') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+      // const res = getSomSpaceList()
+    }
+    else if (tabState === 'oncyber') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
       // const res = getSomSpaceList()
     }
@@ -477,7 +543,22 @@ export default function Index(props) {
       setSubTabState(SUBTABSomSpace[subIndex]?.type);
       router.replace(`/parcels?tab=somniumspace`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    } else if (
+    } else if (tab === 'mona') {
+   
+      
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+      
+      router.replace(`/parcels?tab=mona`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    }
+    else if (tab === 'oncyber') {
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+      router.replace(`/parcels?tab=oncyber`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    }
+    else if (
       tab === 'nftworlds' ||
       tab === 'worldwidewebb' ||
       // tab === 'otherside' ||
@@ -508,10 +589,11 @@ export default function Index(props) {
       subTab: sub,
       page: 1,
       query: '',
-      type: '',
+      type: 'All',
       needUpdateTypeList: true,
     });
     setDataSource(data);
+    // setDataSourceMona(data);
   };
   // const onSubTabChange = React.useCallback(
   //   async (subTab) => {
@@ -574,6 +656,7 @@ export default function Index(props) {
       // page,
       // query = '',
     ) => {
+      
       setTypeState(type);
       // setSubTabState('')
       // if (searchText !=='') {
@@ -629,6 +712,7 @@ export default function Index(props) {
         });
 
         setDataSource(data);
+        // setDataSourceMona(data);
       }
 
     },
@@ -641,8 +725,8 @@ export default function Index(props) {
   const onPageChangeHandler =
     async (number: number,) => {
       // console.log(searchText);
-    
-      
+
+
       const requestNumber = number + 1;
       const data = await requestData({
         tab: tabState,
@@ -653,10 +737,10 @@ export default function Index(props) {
       });
       setPageNumber(requestNumber);
       setDataSource(data);
-      
+
       // setDataSourceSomSpace(data);
     }
-  
+
 
   const onSearchHandler = React.useCallback(
     async (text: string) => {
@@ -671,7 +755,7 @@ export default function Index(props) {
         type: typeState,
         needUpdateTypeList: true,
       });
-// console.log(data,"data");
+      // console.log(data,"data");
 
       setDataSource(data);
     },
@@ -732,6 +816,7 @@ export default function Index(props) {
         return;
       }
       setDataSource([...dataSource, ...list]);
+      setDataSource([...dataSource, ...list]);
       setPageNumber((defaultPage || pageNumber) + 1);
       setHasMore(true);
     },
@@ -752,6 +837,7 @@ export default function Index(props) {
 
 
 
+
   const renderContent = React.useMemo(() => {
 
     if (subTabState === 'parcel') {
@@ -759,7 +845,7 @@ export default function Index(props) {
         return <Status status="loading" />;
       }
 
-      if (error ) {
+      if (error) {
         return <Status retry={onRetry} status="error" />;
       }
 
@@ -812,6 +898,56 @@ export default function Index(props) {
               )}
             >
               {dataSourceSomSpace.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'mona') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceMona.map((card, idx) => {
+                
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'oncyber') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceOrcyber.map((card, idx) => {
+                
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}
             </div>
@@ -1735,7 +1871,6 @@ export default function Index(props) {
     dataSource,
     hasMore,
     loadMore,
-    dataSourceSomSpace,
     loading,
     totalPage,
     pageNumber,
@@ -1859,7 +1994,6 @@ export default function Index(props) {
     init();
   }, [null]);
   const cls = cn('flex-1', style.bottomLine);
-
   return (
     <Page meta={meta}>
       <Layout>
@@ -2062,11 +2196,22 @@ export default function Index(props) {
             ) : null}
           </div> */}
 
+
           <div className={cn('', style.content)}>
             {/* {subTabState === 'parcel' && ( */}
             {tabState === 'cryptovoxels' || tabState === 'decentraland' ? (
               <div style={{ marginTop: "20px" }}>
-                <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+                <SwiperTagParcels {...typeList} onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'mona' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListMona} onActive={onTypeChangeHandler} tags={typeListMona} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'oncyber' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListOncyber} onActive={onTypeChangeHandler} tags={typeListOncyber} label={typeState} />
               </div>
             ) : ''}
             {/* {tabState === 'somniumspace'? (
@@ -2099,8 +2244,8 @@ export default function Index(props) {
 
             {/* {loading?<><Status status="loading" /></>:null}
             {error?<><Status retry={onRetry} status="error" /></>:null}
-            {dataSource.length === 0?<><Status status="empty" /></>:null} */}
-            {/* {tabState === 'cryptovoxels' || tabState === 'decentraland' ?
+            {dataSource.length === 0?<><Status status="empty" /></>:null}
+            {tabState === 'cryptovoxels' || tabState === 'decentraland' ?
               <>
                 <div
                   className={cn(
@@ -2143,6 +2288,7 @@ export default function Index(props) {
     </Page>
   );
 }
+
 
 
 

@@ -1,60 +1,28 @@
 .miniActive {
-  color: #000 !important;
-  font-weight: 500;
-  font-size: 16px;
   font-family: 'PingFang SC';
   font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
   line-height: 22px;
-  background: linear-gradient(90deg, #00d0ec, #00ecb3);
-  background-color: rgba(0, 236, 222, 0.05);
-  border-bottom: transparent;
-  border-radius: 12px 12px 0 0;
+  color: #000000;
 }
 .miniNormal {
-  box-sizing: border-box;
-  width: auto;
-  margin-right: 0 !important;
-  padding: 9px 30px !important;
-  color: #aaa;
-  font-weight: 400;
-  font-size: 16px;
-  font-family: 'PingFang SC';
-  font-style: normal;
-  line-height: 22px;
-  background: hsla(0, 0%, 100%, 0.05);
-}
-.miniNormal:hover {
-  color: #000;
+  font-size: 14px;
 }
 .miniBase {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  padding: 9px 30px 9px 30px !important;
-  border-radius: 8px 8px 0 0;
-}
-.miniBase:hover {
-  width: auto;
-  color: #000 !important;
-  font-weight: 400;
+  vertical-align: middle;
   text-align: center;
-  background: linear-gradient(90deg, #00d0ec, #00ecb3);
-  cursor: pointer;
-}
-.miniActive:hover {
-  filter: brightness(125%);
-}
-.miniBase:active {
-  filter: brightness(75%);
+  align-items: center;
 }
 .miniActive > .miniCanHover,
 .miniCanHover:hover {
-  color: #000;
-  font-weight: 500;
-  font-size: 16px;
   font-family: 'PingFang SC';
   font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
   line-height: 22px;
+  color: #000000;
+  cursor: pointer;
 }
 .miniActive > .miniCanHover > .miniTabIcon,
 .miniCanHover:hover > .miniTabIcon {
@@ -63,17 +31,14 @@
 .miniTabIcon {
   width: 20px;
   height: 20px;
+  display: inline-block;
   border-radius: 16px;
-}
-.miniCanHover {
-  font-weight: 400;
-  font-size: 16px;
-  font-family: 'PingFang SC';
-  font-style: normal;
-  line-height: 22px;
+  background-repeat: no-repeat;
+  line-height: 20px;
 }
 .active {
-  color: #000;
+  color: #fff;
+  font-size: 30px;
   background-color: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(0, 208, 236, 0.5);
   border-bottom: transparent;
@@ -89,7 +54,8 @@
 }
 .active > .canHover,
 .canHover:hover {
-  color: #000;
+  color: #fff;
+  font-size: 30px;
   cursor: pointer;
 }
 .active > .canHover > .tabIcon,

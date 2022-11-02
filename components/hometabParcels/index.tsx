@@ -29,10 +29,11 @@ export default function Tab({ icon, label, fixedS,active, id,  className,onClick
     >
       {/* <div className={cn('flex justify-center items-center', style.miniCanHover)}> */}
         {icon ? (
-          <div
-            className={cn('bg-contain mr-2', style.miniTabIcon)}
-            style={{ backgroundImage: `url('${icon}')` }}
-          ></div>
+          // <span
+          //   className={cn('bg-contain mr-2', style.miniTabIcon)}
+          //   style={{ backgroundImage: `url('${icon}')` }}
+          // ></span>
+          <img className={cn('bg-contain mr-2', style.miniTabIcon)} src={icon}></img>
         ) : null}
         <span className={style.name} >{label}</span>
     </div>

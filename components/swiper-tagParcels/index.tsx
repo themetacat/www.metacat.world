@@ -14,6 +14,7 @@ import styles from './index.module.css';
 type tag = {
   name?: string;
   value?: number;
+  count?;
 };
 
 type Props = {
@@ -82,7 +83,8 @@ export default function SwiperTag({ tags = [], label, className, onActive }: Pro
               }}
             >
               <span className={cn('mr-1')}>{item.name}</span>
-              <span className={styles.number}>{item.value}</span>
+              <span className={styles.number}>{item.value||item.count}</span>
+              {/* {count?} */}
             </SwiperSlide>
           );
         })}

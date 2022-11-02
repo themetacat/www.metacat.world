@@ -73,6 +73,9 @@ const TABobj = {
   Voxels: '/images/cvLogo.png',
   Decentranland: '/images/Decentraland.jpg',
   Somniumspace: '/images/somniumspace.png',
+  Oncyber:'https://oncyber.io/images/logo.png',
+  Mona:'https://monaverse.com/branding/mona-logo-black.svg',
+  // Oncyber:'/images/oncyber.png',
 }
 const TABDataEvent = [
   {
@@ -149,6 +152,8 @@ function search(r) {
   const [typeList, setTypeList] = React.useState([]);
   const [dclDataSource, setDclDataSource] = React.useState([]);
   const [somSpaceDataSource, setSomSpaceDataSource] = React.useState([]);
+  const [oncyberDataSource, setOncyberDataSource] = React.useState([]);
+  const [monaDataSource, setMonaDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
@@ -194,6 +199,7 @@ function search(r) {
   const [eventCvList, setEventCvList] = React.useState([]);
   const [eventDclList, setEventDclList] = React.useState([]);
   const [eventSomList, setEventSomList] = React.useState([]);
+  // const [eventSomList, setEventSomList] = React.useState([]);
   const [valueCount, setValueCount] = React.useState([]);
   const [valueCountCreater, setValueCountCreater] = React.useState([]);
   const [valueCountEvent, setValueCountEvent] = React.useState([]);
@@ -490,6 +496,16 @@ function search(r) {
       if (res.data.Place?.Somniumspace?.length > 0) {
         dataListSomSpace?.push(...res.data.Place?.Somniumspace)
         setSomSpaceDataSource(dataListSomSpace)
+      }
+      const dataListOncyber = oncyberDataSource;
+      if (res.data.Place?.Oncyber?.length > 0) {
+        dataListOncyber?.push(...res.data.Place?.Oncyber)
+        setOncyberDataSource(dataListOncyber)
+      }
+      const dataListMona = monaDataSource;
+      if (res.data.Place?.Mona?.length > 0) {
+        dataListMona?.push(...res.data.Place?.Mona)
+        setMonaDataSource(dataListMona)
       }
 
 
@@ -856,6 +872,16 @@ function search(r) {
       if (res.data.Place?.Somniumspace?.length > 0) {
         dataListSomSpace?.push(...res.data.Place?.Somniumspace)
         setSomSpaceDataSource(dataListSomSpace)
+      }
+      const dataListOncyber = oncyberDataSource;
+      if (res.data.Place?.Oncyber?.length > 0) {
+        dataListOncyber?.push(...res.data.Place?.Oncyber)
+        setOncyberDataSource(dataListOncyber)
+      }
+      const dataListMona = monaDataSource;
+      if (res.data.Place?.Mona?.length > 0) {
+        dataListMona?.push(...res.data.Place?.Mona)
+        setMonaDataSource(dataListMona)
       }
       // setDclDataSource(res.data.Place.Decentranland)
 
@@ -1481,6 +1507,8 @@ function search(r) {
       setEventSomList([])
       setDclDataSource([])
       setSomSpaceDataSource([])
+      setMonaDataSource([])
+      setOncyberDataSource([])
       setEventCvList([])
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
@@ -1851,6 +1879,22 @@ function search(r) {
               </div>
               : null
             }
+            {tabState === 'Oncyber' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {oncyberDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Mona' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {monaDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
             {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null
@@ -1935,6 +1979,7 @@ function search(r) {
                 </div>
                 : null
             }
+         
             {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null
@@ -2070,6 +2115,8 @@ function search(r) {
                 setDataSourceCreWear([])
                 setDclDataSource([])
                 setSomSpaceDataSource([])
+                setMonaDataSource([])
+                setOncyberDataSource([])
                 setDataBuildSource([])
                 setEventDclList([])
                 setEventSomList([])
