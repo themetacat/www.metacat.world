@@ -72,9 +72,12 @@ const TABData = [
 const TABobj = {
   Voxels: '/images/cvLogo.png',
   Decentranland: '/images/Decentraland.jpg',
-  Somniumspace: '/images/somniumspace.png',
+  SomniumSpace: '/images/somniumspace.png',
   Oncyber:'https://oncyber.io/images/logo.png',
-  Mona:'https://monaverse.com/branding/mona-logo-black.svg',
+  Mona:'https://monaverse.com/branding/mona-logo-white.svg',
+  // Protoworld:'https://protoworld.io/img/logotype.svg',
+  // Rarerooms:'/images/Rarerooms.png',
+  Sandbox:'/images/home-icon.svg',
   // Oncyber:'/images/oncyber.png',
 }
 const TABDataEvent = [
@@ -154,6 +157,9 @@ function search(r) {
   const [somSpaceDataSource, setSomSpaceDataSource] = React.useState([]);
   const [oncyberDataSource, setOncyberDataSource] = React.useState([]);
   const [monaDataSource, setMonaDataSource] = React.useState([]);
+  const [protoWorldDataSource, setProtoWorldDataSource] = React.useState([]);
+  const [rareDataSource, setRareDataSource] = React.useState([]);
+  const [sandBoxDataSource, setSandBoxDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
@@ -506,6 +512,21 @@ function search(r) {
       if (res.data.Place?.Mona?.length > 0) {
         dataListMona?.push(...res.data.Place?.Mona)
         setMonaDataSource(dataListMona)
+      }
+      const dataListPro = protoWorldDataSource;
+      if (res.data.Place?.Protoworld?.length > 0) {
+        dataListPro?.push(...res.data.Place?.Protoworld)
+        setProtoWorldDataSource(dataListPro)
+      }
+      const dataListRare = rareDataSource;
+      if (res.data.Place?.Rarerooms?.length > 0) {
+        dataListRare?.push(...res.data.Place?.Rarerooms)
+        setRareDataSource(dataListRare)
+      }
+      const dataListsandBox = sandBoxDataSource;
+      if (res.data.Place?.Sandbox?.length > 0) {
+        dataListsandBox?.push(...res.data.Place?.Sandbox)
+        setSandBoxDataSource(dataListsandBox)
       }
 
 
@@ -883,6 +904,23 @@ function search(r) {
         dataListMona?.push(...res.data.Place?.Mona)
         setMonaDataSource(dataListMona)
       }
+      const dataListPro = protoWorldDataSource;
+      if (res.data.Place?.Protoworld?.length > 0) {
+        dataListPro?.push(...res.data.Place?.Protoworld)
+        setProtoWorldDataSource(dataListPro)
+      }
+
+      const dataListRare = rareDataSource;
+      if (res.data.Place?.Rarerooms?.length > 0) {
+        dataListRare?.push(...res.data.Place?.Rarerooms)
+        setRareDataSource(dataListRare)
+      }
+
+      const dataListsandBox = sandBoxDataSource;
+      if (res.data.Place?.Sandbox?.length > 0) {
+        dataListsandBox?.push(...res.data.Place?.Sandbox)
+        setSandBoxDataSource(dataListsandBox)
+      }
       // setDclDataSource(res.data.Place.Decentranland)
 
       // console.log(dclDataSource, "dataSourcedataSourcedataSource");
@@ -954,7 +992,7 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
-        setTabState(MenuDataTwo[0])
+        // setTabState(MenuDataTwo[0])
       }
 
 
@@ -1508,6 +1546,9 @@ function search(r) {
       setDclDataSource([])
       setSomSpaceDataSource([])
       setMonaDataSource([])
+      setProtoWorldDataSource([])
+      setRareDataSource([])
+      setSandBoxDataSource([])
       setOncyberDataSource([])
       setEventCvList([])
       setSearchText(router.query.q);
@@ -1778,7 +1819,7 @@ function search(r) {
     }
 
     if (routeTab === 'Place') {
-      // console.log(menuDataTwoArrCon,tabState,898);
+      console.log(tabState,898);
       return (
         <>
           <div className={cn('tab-list flex ', style.allHeight)}>
@@ -1890,6 +1931,30 @@ function search(r) {
             {tabState === 'Mona' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {monaDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Protoworld' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {protoWorldDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Rarerooms' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {rareDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Sandbox' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {sandBoxDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2116,6 +2181,9 @@ function search(r) {
                 setDclDataSource([])
                 setSomSpaceDataSource([])
                 setMonaDataSource([])
+                setProtoWorldDataSource([])
+                setRareDataSource([])
+                setSandBoxDataSource([])
                 setOncyberDataSource([])
                 setDataBuildSource([])
                 setEventDclList([])

@@ -84,17 +84,28 @@ const parcels = [
   },
   {
     label: 'Mona',
-    icon: 'https://monaverse.com/branding/mona-logo-black.svg',
+    icon: 'https://monaverse.com/branding/mona-logo-white.svg',
     type: 'mona',
     link: '/parcels?tab=mona',
   },
-  
+  // {
+  //   label: 'Protoworld',
+  //   icon: 'https://protoworld.io/img/logotype.svg',
+  //   type: 'protoworld',
+  //   link: '/parcels?tab=protoworld',
+  // },
   {
     label: 'Somnium Space',
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
     link: '/parcels?tab=somniumspace',
   },
+  // {
+  //   label: 'Rarerooms',
+  //   icon: '/images/Rarerooms.png',
+  //   type: 'rarerooms',
+  //   link: '/parcels?tab=rarerooms',
+  // },
 ];
 const eventList = [
   {

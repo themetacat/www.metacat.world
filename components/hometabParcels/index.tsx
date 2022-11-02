@@ -15,6 +15,7 @@ type Props = {
   className?;
 };
 
+
 export default function Tab({ icon, label, fixedS,active, id,  className,onClick, isMini = false }: Props) {
   const ac = isMini ? style.miniActive : style.active;
   const no = isMini ? style.miniNormal : style.normal;

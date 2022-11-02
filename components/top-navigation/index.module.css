@@ -106,7 +106,7 @@ flex-flow: row;
   border-radius: 4px;
   position: absolute;
   left:-60px;
-  bottom: -250px;
+  top: 40px;
   z-index: 99999 !important;
   background-color: #0f191b;
 

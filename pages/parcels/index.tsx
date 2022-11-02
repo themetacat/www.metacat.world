@@ -63,6 +63,8 @@ import {
   getDclParcelAvgPriceStats,
   getDclParcelSoldSumStats,
   getDclParcelSoldTotalStats,
+  getProtoParcelList,
+  getRareParcelList,
   refreshToken,
   getBaseInfo,
   getMonaParcelList,
@@ -141,16 +143,28 @@ const TAB = [
   },
   {
     label: 'Mona',
-    icon: 'https://monaverse.com/branding/mona-logo-black.svg',
+    icon: 'https://monaverse.com/branding/mona-logo-white.svg',
     type: 'mona',
     link: '/parcels?tab=mona',
   },
+  // {
+  //   label: 'Protoworld',
+  //   icon: 'https://protoworld.io/img/logotype.svg',
+  //   type: 'protoworld',
+  //   link: '/parcels?tab=protoworld',
+  // },
   {
     label: 'Somnium Space',
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
     link: '/parcels?tab=somniumspace',
   },
+  // {
+  //   label: 'Rarerooms',
+  //   icon: '/images/Rarerooms.png',
+  //   type: 'rarerooms',
+  //   link: '/parcels?tab=rarerooms',
+  // },
   // {
   //   label: 'NFT Worlds',
   //   icon: '/images/worlds.svg',
@@ -278,6 +292,8 @@ export default function Index(props) {
   const [typeList, setTypeList] = React.useState([]);
   const [typeListMona, setTypeListMona] = React.useState([]);
   const [typeListOncyber, setTypeListOncyber] = React.useState([]);
+  const [typeListProto, setTypeListProto] = React.useState([]);
+  const [typeListRare, setTypeListRare] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStatePage, setFixedStatePage] = React.useState(false);
@@ -287,6 +303,8 @@ export default function Index(props) {
   const [dataSourceSomSpace, setDataSourceSomSpace] = React.useState([]);
   const [dataSourceMona, setDataSourceMona] = React.useState([]);
   const [dataSourceOrcyber, setDataSourceOrcyber] = React.useState([]);
+  const [dataSourceProto, setDataSourceProto] = React.useState([]);
+  const [dataSourceRare, setDataSourceRare] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
 
@@ -307,9 +325,9 @@ export default function Index(props) {
     setLoading(true);
     setError(false);
 
-    // console.log(tab, 11,
-    //   subTab, 22,
-    //   type);
+    console.log(tab, 11,
+      subTab, 22,
+      type);
 
 
     // setSearchText('')
@@ -437,8 +455,8 @@ export default function Index(props) {
           //   const name = item.name;
           //   const count = item.name;
           //   return { name, count };
-         
-            
+
+
           // });
           setDataSourceMona(res.data.parcel_list)
 
@@ -451,7 +469,7 @@ export default function Index(props) {
           // }
           // data = parcel_list;
         }
-      
+
       } else if (tab === 'oncyber') {
         if (subTab === 'parcel') {
           const res = await getOncyberParcelList(page, 40, query, type);
@@ -461,12 +479,60 @@ export default function Index(props) {
           //   const name = item.name;
           //   const count = item.name;
           //   return { name, count };
-         
-            
+
+
           // });
           setDataSourceOrcyber(res.data.parcel_list)
 
           setTypeListOncyber(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+
+      } else if (tab === 'protoworld') {
+        if (subTab === 'parcel') {
+          const res = await getProtoParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceProto(res.data.parcel_list)
+
+          setTypeListProto(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+
+      } else if (tab === 'rarerooms') {
+        if (subTab === 'parcel') {
+          const res = await getRareParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceRare(res.data.parcel_list)
+
+          setTypeListRare(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
 
@@ -520,6 +586,14 @@ export default function Index(props) {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
       // const res = getSomSpaceList()
     }
+    else if (tabState === 'protoworld') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+      // const res = getSomSpaceList()
+    }
+    else if (tabState === 'rarerooms') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+      // const res = getSomSpaceList()
+    }
     else if (tabState === 'oncyber') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
       // const res = getSomSpaceList()
@@ -544,12 +618,30 @@ export default function Index(props) {
       router.replace(`/parcels?tab=somniumspace`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
     } else if (tab === 'mona') {
-   
-      
+
+
       sub = SUBTAB[subIndex]?.type;
       setSubTabState(SUBTABMona[subIndex]?.type);
-      
+
       router.replace(`/parcels?tab=mona`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } else if (tab === 'protoworld') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=protoworld`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } else if (tab === 'rarerooms') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=rarerooms`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
     }
     else if (tab === 'oncyber') {
@@ -656,7 +748,7 @@ export default function Index(props) {
       // page,
       // query = '',
     ) => {
-      
+
       setTypeState(type);
       // setSubTabState('')
       // if (searchText !=='') {
@@ -922,7 +1014,7 @@ export default function Index(props) {
               )}
             >
               {dataSourceMona.map((card, idx) => {
-                
+
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}
             </div>
@@ -947,7 +1039,57 @@ export default function Index(props) {
               )}
             >
               {dataSourceOrcyber.map((card, idx) => {
-                
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'protoworld') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceProto.map((card, idx) => {
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'rarerooms') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceRare.map((card, idx) => {
+
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}
             </div>
@@ -2212,6 +2354,16 @@ export default function Index(props) {
             {tabState === 'oncyber' ? (
               <div style={{ marginTop: "20px" }}>
                 <SwiperTagParcels {...typeListOncyber} onActive={onTypeChangeHandler} tags={typeListOncyber} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'protoworld' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListProto} onActive={onTypeChangeHandler} tags={typeListProto} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'rarerooms' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListRare} onActive={onTypeChangeHandler} tags={typeListRare} label={typeState} />
               </div>
             ) : ''}
             {/* {tabState === 'somniumspace'? (

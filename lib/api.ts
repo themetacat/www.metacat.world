@@ -56,6 +56,34 @@ class API {
     return json;
   }
 
+  public async getProtoParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_protoworld_zone_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getRareParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_rarerooms_room_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getSomSpaceList(
     page: number,
     count: number,

@@ -29,12 +29,10 @@
   transform: scale(1);
 }
 .miniTabIcon {
-  width: 20px;
   height: 20px;
   display: inline-block;
   border-radius: 16px;
   background-repeat: no-repeat;
-  line-height: 20px;
 }
 .active {
   color: #fff;

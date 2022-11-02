@@ -40,6 +40,26 @@ export const getOncyberParcelList = async (page: number, count: number, query: s
   return json;
 };
 
+export const getProtoParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/prooto-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getRareParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/rare-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getSomSpaceList = async (page: number, count: number, query: string, totalPage: string) => {
   const search = qs.stringify({ page, count, query, totalPage }, { addQueryPrefix: true });
   const url = `/api/som_space_list${search}`;
