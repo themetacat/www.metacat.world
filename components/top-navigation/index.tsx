@@ -76,11 +76,11 @@ const parcels = [
     link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
-  {
-    label: 'Somnium Space',
-    icon: '/images/somniumspace.png',
-    type: 'somniumspace',
-    link: '/parcels?tab=somniumspace',
+ {
+    label: 'Oncyber',
+    icon: 'https://oncyber.io/images/logo.png',
+    type: 'oncyber',
+    link: '/parcels?tab=oncyber',
   },
   {
     label: 'Mona',
@@ -88,11 +88,12 @@ const parcels = [
     type: 'mona',
     link: '/parcels?tab=mona',
   },
+  
   {
-    label: 'Oncyber',
-    icon: 'https://oncyber.io/images/logo.png',
-    type: 'oncyber',
-    link: '/parcels?tab=oncyber',
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/parcels?tab=somniumspace',
   },
 ];
 const eventList = [

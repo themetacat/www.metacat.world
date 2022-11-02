@@ -134,10 +134,10 @@ const TAB = [
   //   type: 'sandbox',
   // },
   {
-    label: 'Somnium Space',
-    icon: '/images/somniumspace.png',
-    type: 'somniumspace',
-    link: '/parcels?tab=somniumspace',
+    label: 'Oncyber',
+    icon: 'https://oncyber.io/images/logo.png',
+    type: 'oncyber',
+    link: '/parcels?tab=oncyber',
   },
   {
     label: 'Mona',
@@ -146,10 +146,10 @@ const TAB = [
     link: '/parcels?tab=mona',
   },
   {
-    label: 'Oncyber',
-    icon: 'https://oncyber.io/images/logo.png',
-    type: 'oncyber',
-    link: '/parcels?tab=oncyber',
+    label: 'Somnium Space',
+    icon: '/images/somniumspace.png',
+    type: 'somniumspace',
+    link: '/parcels?tab=somniumspace',
   },
   // {
   //   label: 'NFT Worlds',
