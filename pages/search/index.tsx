@@ -488,8 +488,8 @@ function search(r) {
         setEventDclList(dataListEventDcl)
       }
       const dataListEventSom = eventSomList;
-      if (res.data?.Event?.Somniumspace?.length > 0) {
-        dataListEventSom?.push(...res.data?.Event?.Somniumspace)
+      if (res.data?.Event?.SomniumSpace?.length > 0) {
+        dataListEventSom?.push(...res.data?.Event?.SomniumSpace)
         setEventSomList(dataListEventSom)
       }
 
@@ -499,8 +499,8 @@ function search(r) {
         setDclDataSource(dataListDece)
       }
       const dataListSomSpace = somSpaceDataSource;
-      if (res.data.Place?.Somniumspace?.length > 0) {
-        dataListSomSpace?.push(...res.data.Place?.Somniumspace)
+      if (res.data.Place?.SomniumSpace?.length > 0) {
+        dataListSomSpace?.push(...res.data.Place?.SomniumSpace)
         setSomSpaceDataSource(dataListSomSpace)
       }
       const dataListOncyber = oncyberDataSource;
@@ -865,8 +865,8 @@ function search(r) {
 
 
       const dataListEventSom = eventSomList;
-      if (res.data?.Event?.Somniumspace?.length > 0) {
-        dataListEventSom?.push(...res.data?.Event?.Somniumspace)
+      if (res.data?.Event?.SomniumSpace?.length > 0) {
+        dataListEventSom?.push(...res.data?.Event?.SomniumSpace)
         setEventSomList(dataListEventSom)
       }
       // setDataSourceCreBuilder(res.data.Creator.Builder)
@@ -890,8 +890,8 @@ function search(r) {
         setDclDataSource(dataListDece)
       }
       const dataListSomSpace = somSpaceDataSource;
-      if (res.data.Place?.Somniumspace?.length > 0) {
-        dataListSomSpace?.push(...res.data.Place?.Somniumspace)
+      if (res.data.Place?.SomniumSpace?.length > 0) {
+        dataListSomSpace?.push(...res.data.Place?.SomniumSpace)
         setSomSpaceDataSource(dataListSomSpace)
       }
       const dataListOncyber = oncyberDataSource;
@@ -1912,7 +1912,7 @@ function search(r) {
               </div>
               : null
             }
-            {tabState === 'Somniumspace' ?
+            {tabState === 'SomniumSpace' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {somSpaceDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
@@ -2034,7 +2034,7 @@ function search(r) {
                 : null
             }
             {
-              tabStateEvent === 'Somniumspace' ?
+              tabStateEvent === 'SomniumSpace' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
                   {eventSomList.map((card, idx) => {
                     return (< EventDetail key={idx} {...card} onClinkDetail={() => {
