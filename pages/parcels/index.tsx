@@ -433,13 +433,13 @@ export default function Index(props) {
           const res = await getMonaParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-          const typeArray = type_total.map((item) => {
-            const name = item.name;
-            const count = item.name;
-            return { name, count };
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
          
             
-          });
+          // });
           setDataSourceMona(res.data.parcel_list)
 
           setTypeListMona(type_total)
@@ -457,13 +457,13 @@ export default function Index(props) {
           const res = await getOncyberParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
 
-          const typeArray = type_total.map((item) => {
-            const name = item.name;
-            const count = item.name;
-            return { name, count };
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
          
             
-          });
+          // });
           setDataSourceOrcyber(res.data.parcel_list)
 
           setTypeListOncyber(type_total)

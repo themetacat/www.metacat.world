@@ -27,6 +27,7 @@ class API {
 
     return json;
   }
+  
   public async getMonaParcelList(
     page: number,
     count: number,
