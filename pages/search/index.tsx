@@ -73,12 +73,16 @@ const TABobj = {
   Voxels: '/images/cvLogo.png',
   Decentranland: '/images/Decentraland.jpg',
   SomniumSpace: '/images/somniumspace.png',
-  Oncyber:'https://oncyber.io/images/logo.png',
-  Mona:'https://monaverse.com/branding/mona-logo-white.svg',
-  // Protoworld:'https://protoworld.io/img/logotype.svg',
-  // Rarerooms:'/images/Rarerooms.png',
-  Sandbox:'/images/home-icon.svg',
-  // Oncyber:'/images/oncyber.png',
+  Oncyber: 'https://oncyber.io/images/logo.png',
+  Mona: 'https://monaverse.com/branding/mona-logo-white.svg',
+  Protoworld: '/images/protoworld.png',
+  RareRooms: '/images/RareRoom.png',
+  Sandbox: '/images/home-icon.svg',
+  Spatial: '/images/Spatial.png',
+  Hyperfy: '/images/Hyperfy.png',
+  MozillaHubs: '/images/MozillaHubs.png',
+  Arium: '/images/Arium.png',
+  Artifex:'/images/Artifex.png',
 }
 const TABDataEvent = [
   {
@@ -160,6 +164,11 @@ function search(r) {
   const [protoWorldDataSource, setProtoWorldDataSource] = React.useState([]);
   const [rareDataSource, setRareDataSource] = React.useState([]);
   const [sandBoxDataSource, setSandBoxDataSource] = React.useState([]);
+  const [spatialDataSource, setSpatialDataSource] = React.useState([]);
+  const [hyperfyDataSource, setHyperfyDataSource] = React.useState([]);
+  const [mozillaHubsDataSource, setMozillaHubsDataSource] = React.useState([]);
+  const [ariumDataSource, setAriumDataSource] = React.useState([]);
+  const [artifexDataSource, setArtifexDataSource] = React.useState([]);
   const [avatar, setAvatarUrl] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
@@ -519,14 +528,39 @@ function search(r) {
         setProtoWorldDataSource(dataListPro)
       }
       const dataListRare = rareDataSource;
-      if (res.data.Place?.Rarerooms?.length > 0) {
-        dataListRare?.push(...res.data.Place?.Rarerooms)
+      if (res.data.Place?.RareRooms?.length > 0) {
+        dataListRare?.push(...res.data.Place?.RareRooms)
         setRareDataSource(dataListRare)
       }
       const dataListsandBox = sandBoxDataSource;
       if (res.data.Place?.Sandbox?.length > 0) {
         dataListsandBox?.push(...res.data.Place?.Sandbox)
         setSandBoxDataSource(dataListsandBox)
+      }
+      const dataListSpatial = spatialDataSource;
+      if (res.data.Place?.Spatial?.length > 0) {
+        dataListSpatial?.push(...res.data.Place?.Spatial)
+        setSpatialDataSource(dataListSpatial)
+      }
+      const dataListHyperfy = hyperfyDataSource;
+      if (res.data.Place?.Hyperfy?.length > 0) {
+        dataListHyperfy?.push(...res.data.Place?.Hyperfy)
+        setHyperfyDataSource(dataListHyperfy)
+      }
+      const dataListMozillaHubs = mozillaHubsDataSource;
+      if (res.data.Place?.MozillaHubs?.length > 0) {
+        dataListMozillaHubs?.push(...res.data.Place?.MozillaHubs)
+        setMozillaHubsDataSource(dataListMozillaHubs)
+      }
+      const dataLisArium = ariumDataSource;
+      if (res.data.Place?.Arium?.length > 0) {
+        dataLisArium?.push(...res.data.Place?.Arium)
+        setAriumDataSource(dataLisArium)
+      }
+      const dataLisArtifex = artifexDataSource;
+      if (res.data.Place?.Artifex?.length > 0) {
+        dataLisArtifex?.push(...res.data.Place?.Artifex)
+        setArtifexDataSource(dataLisArtifex)
       }
 
 
@@ -911,8 +945,8 @@ function search(r) {
       }
 
       const dataListRare = rareDataSource;
-      if (res.data.Place?.Rarerooms?.length > 0) {
-        dataListRare?.push(...res.data.Place?.Rarerooms)
+      if (res.data.Place?.RareRooms?.length > 0) {
+        dataListRare?.push(...res.data.Place?.RareRooms)
         setRareDataSource(dataListRare)
       }
 
@@ -921,6 +955,34 @@ function search(r) {
         dataListsandBox?.push(...res.data.Place?.Sandbox)
         setSandBoxDataSource(dataListsandBox)
       }
+
+      const dataListSpatial = spatialDataSource;
+      if (res.data.Place?.Spatial?.length > 0) {
+        dataListSpatial?.push(...res.data.Place?.Spatial)
+        setSpatialDataSource(dataListSpatial)
+      }
+
+      const dataListHyperfy = hyperfyDataSource;
+      if (res.data.Place?.Hyperfy?.length > 0) {
+        dataListHyperfy?.push(...res.data.Place?.Hyperfy)
+        setHyperfyDataSource(dataListHyperfy)
+      }
+      const dataListMozillaHubs = mozillaHubsDataSource;
+      if (res.data.Place?.MozillaHubs?.length > 0) {
+        dataListMozillaHubs?.push(...res.data.Place?.MozillaHubs)
+        setMozillaHubsDataSource(dataListMozillaHubs)
+      }
+      const dataLisArium = ariumDataSource;
+      if (res.data.Place?.Arium?.length > 0) {
+        dataLisArium?.push(...res.data.Place?.Arium)
+        setAriumDataSource(dataLisArium)
+      }
+      const dataLisArtifex = artifexDataSource;
+      if (res.data.Place?.Artifex?.length > 0) {
+        dataLisArtifex?.push(...res.data.Place?.Artifex)
+        setArtifexDataSource(dataLisArtifex)
+      }
+
       // setDclDataSource(res.data.Place.Decentranland)
 
       // console.log(dclDataSource, "dataSourcedataSourcedataSource");
@@ -1086,7 +1148,7 @@ function search(r) {
   );
 
   const toTopic = React.useCallback((id, item) => {
-    console.log(item.topic_id);
+    // console.log(item.topic_id);
 
     if (item?.name === 'WearableDAO') {
       window.open('/wearables/wearabledao?type=chinesered')
@@ -1549,6 +1611,11 @@ function search(r) {
       setProtoWorldDataSource([])
       setRareDataSource([])
       setSandBoxDataSource([])
+      setSpatialDataSource([])
+      setHyperfyDataSource([])
+      setMozillaHubsDataSource([])
+      setAriumDataSource([])
+      setArtifexDataSource([])
       setOncyberDataSource([])
       setEventCvList([])
       setSearchText(router.query.q);
@@ -1819,17 +1886,19 @@ function search(r) {
     }
 
     if (routeTab === 'Place') {
-      console.log(tabState,898);
+      
       return (
         <>
-          <div className={cn('tab-list flex ', style.allHeight)}>
+          <div className={cn('flex ', style.allHeight)}>
             {/* <div className={cls}>menuDataTwoArrCon||TABData</div> */}
-            <div className={cn('main-content flex px-0', style.tabtext)}>
+            <div className={cn('main-content', style.tabtext)}>
+            <div className="main-content">
+                    <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
+                    </div>
               {
                 loadingDetail === true ? null :
                   <>
-                  
-                    <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
+                
                     {/* <div
                       className={cn(
                         'p absolute z-40 flex justify-start items-center',
@@ -1944,7 +2013,7 @@ function search(r) {
               </div>
               : null
             }
-            {tabState === 'Rarerooms' ?
+            {tabState === 'RareRooms' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {rareDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
@@ -1955,6 +2024,46 @@ function search(r) {
             {tabState === 'Sandbox' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {sandBoxDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Spatial' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {spatialDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Hyperfy' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {hyperfyDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'MozillaHubs' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {mozillaHubsDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Arium' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {ariumDataSource.map((card) => {
+                  return (<Card {...card} key={uuid()} typeState={card.type} />);
+                })}
+              </div>
+              : null
+            }
+            {tabState === 'Artifex' ?
+              <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                {artifexDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2044,7 +2153,7 @@ function search(r) {
                 </div>
                 : null
             }
-         
+
             {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null
@@ -2184,6 +2293,11 @@ function search(r) {
                 setProtoWorldDataSource([])
                 setRareDataSource([])
                 setSandBoxDataSource([])
+                setHyperfyDataSource([])
+                setMozillaHubsDataSource([])
+                setAriumDataSource([])
+                setArtifexDataSource([])
+                setSpatialDataSource([])
                 setOncyberDataSource([])
                 setDataBuildSource([])
                 setEventDclList([])

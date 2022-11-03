@@ -30,7 +30,6 @@ export default function SwiperTag({ typeList = [], label, className, onActive }:
   const [activeLabel, setActiveLabel] = React.useState(label);
 
 
-// console.log(typeList,999);
 
 
   React.useEffect(() => {
@@ -48,7 +47,7 @@ export default function SwiperTag({ typeList = [], label, className, onActive }:
   );
 
   return (
-    <div className={cn('flex justify-between items-center relative', styles.a,className)}>
+    <div className={cn('flex justify-between items-center relative w-full', styles.a,className)}>
       <div
         className={cn(
           'per absolute z-50 flex justify-start items-center',
@@ -63,7 +62,7 @@ export default function SwiperTag({ typeList = [], label, className, onActive }:
       <Swiper
         modules={[Navigation]}
         spaceBetween={1}
-        slidesPerView="auto"
+        slidesPerView={3}
         className={cn('w-full', styles.swiper)}
         navigation={{
           prevEl: '.per',
@@ -99,7 +98,7 @@ export default function SwiperTag({ typeList = [], label, className, onActive }:
         className={cn(
           'next absolute z-50  flex justify-end items-center',
           {
-            hidden: percent >= 1,
+            hidden: percent >= 0.2,
           },
           styles.next,
         )}
@@ -109,3 +108,6 @@ export default function SwiperTag({ typeList = [], label, className, onActive }:
     </div>
   );
 }
+
+
+

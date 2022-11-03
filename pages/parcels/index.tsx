@@ -59,17 +59,22 @@ import {
   getOncyberParcelList,
   getCvParcelSoldTotalStats,
   getCvTrafficStats,
+  getSandBoxParcelList,
   getCvParcelAvgPriceStats,
   getDclParcelAvgPriceStats,
   getDclParcelSoldSumStats,
   getDclParcelSoldTotalStats,
   getProtoParcelList,
+  getHyperfyParcelList,
+  getMozillaParcelList,
+  getArtifexParcelList,
+  getAriumParcelList,
   getRareParcelList,
+  getSpatialParcelList,
   refreshToken,
   getBaseInfo,
   getMonaParcelList,
 } from '../../service';
-// console.log(getMonaParcelList(1, 50));
 
 
 import {
@@ -147,23 +152,59 @@ const TAB = [
     type: 'mona',
     link: '/parcels?tab=mona',
   },
-  // {
-  //   label: 'Protoworld',
-  //   icon: 'https://protoworld.io/img/logotype.svg',
-  //   type: 'protoworld',
-  //   link: '/parcels?tab=protoworld',
-  // },
+  {
+    label: 'Protoworld',
+    icon: '/images/protoworld.png',
+    type: 'protoworld',
+    link: '/parcels?tab=protoworld',
+  },
   {
     label: 'Somnium Space',
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
     link: '/parcels?tab=somniumspace',
   },
+  {
+    label: 'RareRooms',
+    icon: '/images/RareRoom.png',
+    type: 'rarerooms',
+    link: '/parcels?tab=rarerooms',
+  },
   // {
-  //   label: 'Rarerooms',
-  //   icon: '/images/Rarerooms.png',
-  //   type: 'rarerooms',
-  //   link: '/parcels?tab=rarerooms',
+  //   label: 'The Sandbox',
+  //   icon: '/images/home-icon.svg',
+  //   type: 'sandbox',
+  //   link: '/parcels?tab=sandbox',
+  // },
+  // {
+  //   label: 'Spatial',
+  //   icon: '/images/Spatial.png',
+  //   type: 'spatial',
+  //   link: '/parcels?tab=spatial',
+  // },
+  // {
+  //   label: 'Hyperfy',
+  //   icon: '/images/Hyperfy.png',
+  //   type: 'hyperfy',
+  //   link: '/parcels?tab=hyperfy',
+  // },
+  // {
+  //   label: 'MozillaHubs',
+  //   icon: '/images/MozillaHubs.png',
+  //   type: 'mozillaHubs',
+  //   link: '/parcels?tab=mozillaHubs',
+  // },
+  // {
+  //   label: 'Arium',
+  //   icon: '/images/Arium.png',
+  //   type: 'arium',
+  //   link: '/parcels?tab=arium',
+  // },
+  // {
+  //   label: 'Artifex',
+  //   icon: '/images/Artifex.png',
+  //   type: 'artifex',
+  //   link: '/parcels?tab=artifex',
   // },
   // {
   //   label: 'NFT Worlds',
@@ -294,6 +335,13 @@ export default function Index(props) {
   const [typeListOncyber, setTypeListOncyber] = React.useState([]);
   const [typeListProto, setTypeListProto] = React.useState([]);
   const [typeListRare, setTypeListRare] = React.useState([]);
+  const [typeListSandBox, setTypeListSandBox] = React.useState([]);
+  const [typeListSpatial, setTypeListSpatial] = React.useState([]);
+  const [typeListHyperfy, setTypeListHyperfy] = React.useState([]);
+  const [typeListMozilla, setTypeListMozilla] = React.useState([]);
+  const [typeListArium, setTypeListArium] = React.useState([]);
+  const [typeListArtifex, setTypeListArtifex] = React.useState([]);
+  const [typeListsomniumspace, setTypeListSomniumspace] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStatePage, setFixedStatePage] = React.useState(false);
@@ -305,6 +353,12 @@ export default function Index(props) {
   const [dataSourceOrcyber, setDataSourceOrcyber] = React.useState([]);
   const [dataSourceProto, setDataSourceProto] = React.useState([]);
   const [dataSourceRare, setDataSourceRare] = React.useState([]);
+  const [dataSourceSpatial, setDataSourceSpatial] = React.useState([]);
+  const [dataSourceHyperfy, setDataSourceHyperfy] = React.useState([]);
+  const [dataSourceMozilla, setDataSourceMozilla] = React.useState([]);
+  const [dataSourceArium, setDataSourceArium] = React.useState([]);
+  const [dataSourceArtifex, setDataSourceArtifex] = React.useState([]);
+  const [dataSourceSandbox, setDataSourceSandbox] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
 
@@ -325,9 +379,9 @@ export default function Index(props) {
     setLoading(true);
     setError(false);
 
-    console.log(tab, 11,
-      subTab, 22,
-      type);
+    // console.log(tab, 11,
+    //   subTab, 22,
+    //   type);
 
 
     // setSearchText('')
@@ -436,12 +490,14 @@ export default function Index(props) {
         if (subTab === 'parcel') {
 
 
-          const res = await getSomSpaceList(page, 40, query, '');
+          const res = await getSomSpaceList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           // console.log(res.data.parcel_list);
 
           // setPageNumber(currentPage);
           setTotalPage(total_page);
+          setPageNumber(currentPage);
+          setTypeListSomniumspace(type_total)
           setDataSourceSomSpace(res.data.parcel_list)
 
 
@@ -459,7 +515,7 @@ export default function Index(props) {
 
           // });
           setDataSourceMona(res.data.parcel_list)
-
+      
           setTypeListMona(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
@@ -541,6 +597,147 @@ export default function Index(props) {
           // }
           // data = parcel_list;
         }
+      } else if (tab === 'sandbox') {
+        if (subTab === 'parcel') {
+          const res = await getSandBoxParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceSandbox(res.data.parcel_list)
+
+          setTypeListSandBox(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+      } else if (tab === 'spatial') {
+        if (subTab === 'parcel') {
+          const res = await getSpatialParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceSpatial(res.data.parcel_list)
+
+          setTypeListSpatial(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+      
+      } else if (tab === 'hyperfy') {
+        if (subTab === 'parcel') {
+          const res = await getHyperfyParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceHyperfy(res.data.parcel_list)
+
+          setTypeListHyperfy(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+      
+      } else if (tab === 'mozillaHubs') {
+        if (subTab === 'parcel') {
+          const res = await getMozillaParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceMozilla(res.data.parcel_list)
+
+          setTypeListMozilla(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+      } else if (tab === 'arium') {
+        if (subTab === 'parcel') {
+          const res = await getAriumParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceArium(res.data.parcel_list)
+
+          setTypeListArium(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
+      
+      } else if (tab === 'artifex') {
+        if (subTab === 'parcel') {
+          const res = await getArtifexParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+
+          // const typeArray = type_total.map((item) => {
+          //   const name = item.name;
+          //   const count = item.name;
+          //   return { name, count };
+
+
+          // });
+          setDataSourceArtifex(res.data.parcel_list)
+
+          setTypeListArtifex(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+
+          // if (needUpdateTypeList) {
+          //   setTypeList(type_total);
+          // }
+          // data = parcel_list;
+        }
       }
     } catch (err) {
       setError(true);
@@ -580,25 +777,38 @@ export default function Index(props) {
       subIndex = SUBTABDECE.findIndex((item) => item.type === subTabState);
     } else if (tabState === 'somniumspace') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
-      // const res = getSomSpaceList()
     }
     else if (tabState === 'mona') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
-      // const res = getSomSpaceList()
     }
     else if (tabState === 'protoworld') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
-      // const res = getSomSpaceList()
     }
     else if (tabState === 'rarerooms') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
-      // const res = getSomSpaceList()
+    }
+    else if (tabState === 'spatial') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'hyperfy') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'arium') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'artifex') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'mozillaHubs') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'sandbox') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
     else if (tabState === 'oncyber') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
-      // const res = getSomSpaceList()
     }
-    // console.log(subIndex, tabState);
+ 
     subIndex = subIndex === -1 ? 0 : subIndex;
     setTabState(tab);
     let sub = '';
@@ -643,11 +853,62 @@ export default function Index(props) {
 
       router.replace(`/parcels?tab=rarerooms`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'spatial') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=spatial`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'hyperfy') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=hyperfy`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'mozillaHubs') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=mozillaHubs`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'arium') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=arium`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'artifex') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=artifex`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
     }
     else if (tab === 'oncyber') {
       sub = SUBTAB[subIndex]?.type;
       setSubTabState(SUBTABMona[subIndex]?.type);
       router.replace(`/parcels?tab=oncyber`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    }
+    else if (tab === 'sandbox') {
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+      router.replace(`/parcels?tab=sandbox`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
     }
     else if (
@@ -658,7 +919,7 @@ export default function Index(props) {
     ) {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
-    } else if (tab === 'sandbox' || tab === 'otherside') {
+    } else if ( tab === 'otherside') {
       if (SUBTABZ2.find((item) => item.type === subTabState)) {
         sub = SUBTABZ2.find((item) => item.type === subTabState).type;
         setSubTabState(sub);
@@ -931,6 +1192,7 @@ export default function Index(props) {
 
 
   const renderContent = React.useMemo(() => {
+// console.log(tabState);
 
     if (subTabState === 'parcel') {
       if (loading) {
@@ -1089,7 +1351,150 @@ export default function Index(props) {
               )}
             >
               {dataSourceRare.map((card, idx) => {
-
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'spatial') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceSpatial.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'hyperfy') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceHyperfy.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'mozillaHubs') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceMozilla.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'arium') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceArium.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'artifex') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceArtifex.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'sandbox') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceSandbox.map((card, idx) => {
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}
             </div>
@@ -2171,7 +2576,8 @@ export default function Index(props) {
           >
 
             {fixedState === true ? <div className={offsetWidthNum <= 1200 ? style.headNumx : style.headNum}></div> : null}
-            <div className="flex px-0 relative">
+            <div className={cn("flex px-0 relative",style.boxContainer)}>
+            {/* <SwiperTagParcels {...typeListProto} onActive={onTypeChangeHandler} tags={typeListProto} label={typeState} /> */}
               <div
                 className={cn(
                   'p absolute z-40 flex justify-start items-center',
@@ -2223,7 +2629,7 @@ export default function Index(props) {
                   );
                 })}
               </Swiper>
-              {/* <div
+              <div
                 className={cn(
                   'n absolute z-40  flex justify-end items-center',
                   {
@@ -2233,7 +2639,7 @@ export default function Index(props) {
                 )}
               >
                 <img className={style.icon} src="/images/tab-right.png"></img>
-              </div> */}
+              </div>
               <div className={cls} />
             </div>
             <div className={cn('', style.boxCon, fixedState === true ? style.boxCon1 : null,
@@ -2366,11 +2772,41 @@ export default function Index(props) {
                 <SwiperTagParcels {...typeListRare} onActive={onTypeChangeHandler} tags={typeListRare} label={typeState} />
               </div>
             ) : ''}
-            {/* {tabState === 'somniumspace'? (
+            {tabState === 'spatial' ? (
               <div style={{ marginTop: "20px" }}>
-                <SwiperTagParcels onActive={onTypeChangeHandler} tags={typeList} label={typeState} />
+                <SwiperTagParcels {...typeListSpatial} onActive={onTypeChangeHandler} tags={typeListSpatial} label={typeState} />
               </div>
-            ) : ''} */}
+            ) : ''}
+            {tabState === 'hyperfy' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListHyperfy} onActive={onTypeChangeHandler} tags={typeListHyperfy} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'mozillaHubs' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListMozilla} onActive={onTypeChangeHandler} tags={typeListMozilla} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'arium' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListArium} onActive={onTypeChangeHandler} tags={typeListArium} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'artifex' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListArtifex} onActive={onTypeChangeHandler} tags={typeListArtifex} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'sandbox' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListSandBox} onActive={onTypeChangeHandler} tags={typeListSandBox} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'somniumspace'? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListsomniumspace} onActive={onTypeChangeHandler} tags={typeListsomniumspace} label={typeState} />
+              </div>
+            ) : ''}
             {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}
             {subTabState === 'scene' && dataSource.length === 0 && <ScenceBuilding />}
 

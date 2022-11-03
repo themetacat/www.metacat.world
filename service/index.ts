@@ -60,8 +60,68 @@ export const getRareParcelList = async (page: number, count: number, query: stri
   return json;
 };
 
-export const getSomSpaceList = async (page: number, count: number, query: string, totalPage: string) => {
-  const search = qs.stringify({ page, count, query, totalPage }, { addQueryPrefix: true });
+export const getHyperfyParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/hyperfy-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getMozillaParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/mozilla-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getArtifexParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/artifex-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getAriumParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/arium-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getSpatialParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/spatial-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getSandBoxParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/sandBox-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getSomSpaceList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
   const url = `/api/som_space_list${search}`;
 
   const res = await fetch(url);

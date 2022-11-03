@@ -160,7 +160,8 @@ color: #0F191B;
    /* width: 1200px; */
    /* background-color: red; */
    /* overflow:hidden; */
-   position: relative;
+   /* overflow:hidden; */
+   /* position: relative; */
 }
 .allHeight {
   height: 48px;

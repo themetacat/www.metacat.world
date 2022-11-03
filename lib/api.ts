@@ -84,13 +84,97 @@ class API {
     return json;
   }
 
+  public async getHyperfyParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_hyperfy_parcel_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getMozillaParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_mozilla_hubs_scene_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getArtifexParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_artifex_world_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getAriumParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_arium_space_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+  
+  public async getSpatialParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_spatial_space_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getSandBoxParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_sandbox_parcel_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getSomSpaceList(
     page: number,
     count: number,
     query: string,
-    totalPage: string,
+    type: string,
   ): Promise<any> {
-    const search = qs.stringify({ page, count, query, totalPage }, { addQueryPrefix: true });
+    const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_somniumspace_parcel_list${search}`;
     const res = await fetch(url);
     const json = await res.json();

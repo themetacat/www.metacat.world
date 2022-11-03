@@ -3,7 +3,7 @@ import api from '../../lib/api';
 
 export default async (req, res) => {
   const { page, count, query, type } = req.query;
-  const data = await api.getSomSpaceList(page, count, query, type);
+  const data = await api.getAriumParcelList(page, count, query, type);
 
   res.statusCode = 200;
 

@@ -1,8 +1,10 @@
 .swiper{
   margin: 0px !important;
+
 }
 .a{
-  width: 1200px;
+  /* width: 1200px; */
+  width: 100%;
 }
 
 .slide {
@@ -13,7 +15,7 @@
   font-size: 14px;
   font-weight: 400;
   /* height: 36px; */
-  margin-left: 40px;
+  margin-left: 15px;
   padding: 4px 15px 4px 15px;
   margin-right: 0px !important;
 }
