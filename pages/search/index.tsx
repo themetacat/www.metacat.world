@@ -1573,11 +1573,13 @@ function search(r) {
   //   },[saveVal])
   useEffect(() => {
 
+ 
    
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
-    setRouteTab('Place')
+    // setRouteTab('Place')
+    setRouteTab(valueCount[0]?.type)
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
@@ -1585,7 +1587,7 @@ function search(r) {
 
 
 
-  }, [menuDataTwoArrCon])
+  }, [menuDataTwoArrCon,valueCount])
   // console.log(headerRef.current?.scrollHeight);
   // console.log(showCon);
 
@@ -2284,7 +2286,7 @@ function search(r) {
                 // console.log(val, router.query.q);
              
                 setDataSource([])
-                setRouteTab('Place')
+                setRouteTab(valueCount[0]?.type)
                 // console.log(loadingDetail,1111111111)
                 // setSearchText(router.query.q);
                 // if (!router.query.q) {
@@ -2328,7 +2330,7 @@ function search(r) {
                 loadingDetail === true ? null :
                   <>
                     {valueCount.map((item) => {
-                      // console.log(valueCount,22222222);
+
                       return (
                         <Tab5
                           label={item.label}
