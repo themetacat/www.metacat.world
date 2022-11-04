@@ -833,7 +833,7 @@ function search(r) {
     // setPage(newPage)
     // console.log(router.query.q || query);
 
-    const res = await getSearchDetail(router.query.q || query, mynum || 1, per_page || 20, search_item);
+    const res = await getSearchDetail(router.query.q || query, mynum+1, per_page || 20, search_item);
 
     setShowModal(false)
     setLoading(false)
@@ -1650,68 +1650,115 @@ function search(r) {
 
 
     if (window.location.search && router?.query?.q) {
-      setDataSource([])
-      setDataSourceLearn([])
-      setDataSourceCreBuilder([])
-      setDataSourceCreWear([])
-      setDataBuildSource([])
-      setEventDclList([])
-      setEventSomList([])
-      setDclDataSource([])
-      setSomSpaceDataSource([])
-      setMonaDataSource([])
-      setProtoWorldDataSource([])
-      setRareDataSource([])
-      setSandBoxDataSource([])
-      setSpatialDataSource([])
-      setHyperfyDataSource([])
-      setMozillaHubsDataSource([])
-      setAriumDataSource([])
-      setArtifexDataSource([])
-      setOncyberDataSource([])
-      setEventCvList([])
-      setSearchText(router.query.q);
-      onSearchHandler(router.query.q, 1, 20, '', false)
-      // const scrollChange = () => {
+    // setDataSource([])
+    // setDataSourceLearn([])
+    // setDataSourceCreBuilder([])
+    // setDataSourceCreWear([])
+    // setDataBuildSource([])
+    // setEventDclList([])
+    // setEventSomList([])
+    // setDclDataSource([])
+    // setSomSpaceDataSource([])
+    // setMonaDataSource([])
+    // setProtoWorldDataSource([])
+    // setRareDataSource([])
+    // setSandBoxDataSource([])
+    // setSpatialDataSource([])
+    // setHyperfyDataSource([])
+    // setMozillaHubsDataSource([])
+    // setAriumDataSource([])
+    // setArtifexDataSource([])
+    // setOncyberDataSource([])
+    // setEventCvList([])
+    // setSearchText(router.query.q);
+    onSearchHandler(router.query.q, 1, 20, '', false)
+    // const scrollChange = () => {
 
-      //   const scrollHeight = document.querySelector('.detailName')?.scrollHeight
-      //   const clientHeight = document.querySelector('.detailName')?.clientHeight
-      //   const scrollTop = document.querySelector('.detailName')?.scrollTop
-      //   console.log(scrollHeight, clientHeight, scrollTop);
-      //   if (scrollTop + clientHeight >= scrollHeight - 1) {
+    //   const scrollHeight = document.querySelector('.detailName')?.scrollHeight
+    //   const clientHeight = document.querySelector('.detailName')?.clientHeight
+    //   const scrollTop = document.querySelector('.detailName')?.scrollTop
+    //   console.log(scrollHeight, clientHeight, scrollTop);
+    //   if (scrollTop + clientHeight >= scrollHeight - 1) {
 
-      //     onSearchHandler(router.query.q, pageNum, 20, '', false)
+    //     onSearchHandler(router.query.q, pageNum, 20, '', false)
 
-      //     // requestData(pageNum, count)
-      //   }
-      //   document.addEventListener('scroll', scrollChange);
-      //   return () => document.removeEventListener('scroll', scrollChange);
+    //     // requestData(pageNum, count)
+    //   }
+    //   document.addEventListener('scroll', scrollChange);
+    //   return () => document.removeEventListener('scroll', scrollChange);
 
-      // }
-      // window.addEventListener('scroll', scrollChange, true)
-      // // scrollChange()
-      // return () => {
-      //   window.removeEventListener('scroll', scrollChange, false)
-      // }
+    // }
+    // window.addEventListener('scroll', scrollChange, true)
+    // // scrollChange()
+    // return () => {
+    //   window.removeEventListener('scroll', scrollChange, false)
+    // }
     } else if (!window.location.search && router?.query?.q === undefined) {
 
 
-      setSearchText('');
+    //   setSearchText('');
       onSearchHandler('', 1, 20, '', false)
-   
+    // const scrollChange = () => {
 
-    }
+    //   const scrollHeight = document.querySelector('.detailName')?.scrollHeight
+    //   const clientHeight = document.querySelector('.detailName')?.clientHeight
+    //   const scrollTop = document.querySelector('.detailName')?.scrollTop
+    //   console.log(scrollHeight, clientHeight, scrollTop);
+    //   if (scrollTop + clientHeight >= scrollHeight - 1) {
+
+    //     onSearchHandler(router.query.q, pageNum, 20, '', false)
+
+    //     // requestData(pageNum, count)
+      }
+    //   document.addEventListener('scroll', scrollChange);
+    //   return () => document.removeEventListener('scroll', scrollChange);
+
+    // }
+    // window.addEventListener('scroll', scrollChange, true)
+    // // scrollChange()
+    // return () => {
+    //   window.removeEventListener('scroll', scrollChange, false)
+    // }
+
+    // onSearchHandler('', 1, 20, '', false)
+    // }
     const scrollChange = () => {
 
       const scrollHeight = document.querySelector('.detailName')?.scrollHeight
       const clientHeight = document.querySelector('.detailName')?.clientHeight
       const scrollTop = document.querySelector('.detailName')?.scrollTop
-      console.log(scrollHeight, clientHeight, scrollTop);
-      if (scrollTop + clientHeight >= scrollHeight - 1) {
+      // console.log(scrollHeight, clientHeight, scrollTop);
+      if (scrollTop + clientHeight >= scrollHeight - 1 && (window.location.search && router?.query?.q)) {
+        console.log("走的这里？");
+        // setDataSource([])
+        // setDataSourceLearn([])
+        // setDataSourceCreBuilder([])
+        // setDataSourceCreWear([])
+        // setDataBuildSource([])
+        // setEventDclList([])
+        // setEventSomList([])
+        // setDclDataSource([])
+        // setSomSpaceDataSource([])
+        // setMonaDataSource([])
+        // setProtoWorldDataSource([])
+        // setRareDataSource([])
+        // setSandBoxDataSource([])
+        // setSpatialDataSource([])
+        // setHyperfyDataSource([])
+        // setMozillaHubsDataSource([])
+        // setAriumDataSource([])
+        // setArtifexDataSource([])
+        // setOncyberDataSource([])
+        // setEventCvList([])
+        setSearchText(router.query.q);
 
-        onSearchHandler(router.query.q, pageNum, 20, '', false)
+        onSearchHandler(router.query.q, pageNum+1, 20, '', false)
+ 
 
         // requestData(pageNum, count)
+      } else if (scrollTop + clientHeight >= scrollHeight - 1 && !window.location.search && router?.query?.q === undefined) {
+        console.log("还是这儿！！！！");
+        onSearchHandler('', 1, 20, '', false)
       }
       document.addEventListener('scroll', scrollChange);
       return () => document.removeEventListener('scroll', scrollChange);
@@ -1722,7 +1769,6 @@ function search(r) {
     return () => {
       window.removeEventListener('scroll', scrollChange, false)
     }
-
 
 
   }, [router?.query?.q])
