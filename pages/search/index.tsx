@@ -317,7 +317,7 @@ function search(r) {
     async (tab) => {
       if (tabState === tab) return;
       // setLoading(true);
-    
+
 
       setParcelsIds([]);
       setSelectedIds([]);
@@ -1013,7 +1013,7 @@ function search(r) {
 
       // if (dataSource === []) {
       //   console.log(89898989);
-  
+
       //   setTabState('RareRooms')
       // }
       // for (const keys in MenuDataTwo) {
@@ -1055,10 +1055,10 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
-       
-        setTabState(MenuDataTwo[0])
+
+        // setTabState(MenuDataTwo[0])
       }
-     
+
 
       // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
 
@@ -1176,7 +1176,7 @@ function search(r) {
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
-    if (loadingDetail) {
+    if (loadingDetail === true) {
 
       return <Status status="loadingDetail" />;
     }
@@ -1573,8 +1573,8 @@ function search(r) {
   //   },[saveVal])
   useEffect(() => {
 
- 
-   
+
+
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
@@ -1587,7 +1587,7 @@ function search(r) {
 
 
 
-  }, [menuDataTwoArrCon,valueCount])
+  }, [menuDataTwoArrCon, valueCount])
   // console.log(headerRef.current?.scrollHeight);
   // console.log(showCon);
 
@@ -1895,6 +1895,7 @@ function search(r) {
 
       return (
         <>
+
           <div className={cn('flex ', style.allHeight)}>
             {/* <div className={cls}>menuDataTwoArrCon||TABData</div> */}
             <div className={cn('main-content', style.tabtext)}>
@@ -1973,6 +1974,7 @@ function search(r) {
             </div>
           </div>
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
+
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
@@ -2075,7 +2077,7 @@ function search(r) {
               </div>
               : null
             }
-            {loadingDetail === true ?
+            {loadingDetail === true || emptyStatus === true ?
               <Status status="loadingDetail" />
               : null
             }
@@ -2284,7 +2286,7 @@ function search(r) {
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 // console.log(val, router.query.q);
-             
+
                 setDataSource([])
                 setRouteTab(valueCount[0]?.type)
                 // console.log(loadingDetail,1111111111)
@@ -2324,31 +2326,34 @@ function search(r) {
 
 
             <div className={cn(style.tableList)}>
-              {
 
+              <>
+                {valueCount.map((item) => {
 
-                loadingDetail === true ? null :
-                  <>
-                    {valueCount.map((item) => {
+                  return (
+                    <Tab5
+                      label={item.label}
+                      key={item.label}
+                      active={routeTab === item.type}
+                      count={item.count}
+                      onClick={() => {
+                        changeTab3(item.label, item.type);
+                      }}
+                    />
+                    // <>{item}</>
+                  );
+                })}
+              </>
 
-                      return (
-                        <Tab5
-                          label={item.label}
-                          key={item.label}
-                          active={routeTab === item.type}
-                          count={item.count}
-                          onClick={() => {
-                            changeTab3(item.label, item.type);
-                          }}
-                        />
-                        // <>{item}</>
-                      );
-                    })}
-                  </>
-              }
             </div>
           </div>
+          {/* { */}
+
+          {/* // } */}
+          {
+            loadingDetail === true ? <div style={{ height: "500px", width: "1200px", margin: "0px auto" }}><Status status="loadingDetail" /></div> : null}
           {randerCardList}
+
           <div id='footer' style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
         </div>
         {/* </div> */}
