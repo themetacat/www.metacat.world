@@ -531,8 +531,8 @@ function search(r) {
         setRareDataSource(dataListRare)
       }
       const dataListsandBox = sandBoxDataSource;
-      if (res.data.Place?.Sandbox?.length > 0) {
-        dataListsandBox?.push(...res.data.Place?.Sandbox)
+      if (res.data.Place?.TheSandbox?.length > 0) {
+        dataListsandBox?.push(...res.data.Place?.TheSandbox)
         setSandBoxDataSource(dataListsandBox)
       }
       const dataListSpatial = spatialDataSource;
@@ -948,8 +948,8 @@ function search(r) {
       }
 
       const dataListsandBox = sandBoxDataSource;
-      if (res.data.Place?.Sandbox?.length > 0) {
-        dataListsandBox?.push(...res.data.Place?.Sandbox)
+      if (res.data.Place?.TheSandbox?.length > 0) {
+        dataListsandBox?.push(...res.data.Place?.TheSandbox)
         setSandBoxDataSource(dataListsandBox)
       }
 
@@ -2025,7 +2025,7 @@ function search(r) {
               </div>
               : null
             }
-            {tabState === 'Sandbox' ?
+            {tabState === 'TheSandbox' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {sandBoxDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
