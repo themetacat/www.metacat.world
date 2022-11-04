@@ -170,18 +170,18 @@ const TAB = [
     type: 'rarerooms',
     link: '/parcels?tab=rarerooms',
   },
-  // {
-  //   label: 'The Sandbox',
-  //   icon: '/images/home-icon.svg',
-  //   type: 'sandbox',
-  //   link: '/parcels?tab=sandbox',
-  // },
-  // {
-  //   label: 'Spatial',
-  //   icon: '/images/Spatial.png',
-  //   type: 'spatial',
-  //   link: '/parcels?tab=spatial',
-  // },
+  {
+    label: 'The Sandbox',
+    icon: '/images/home-icon.svg',
+    type: 'sandbox',
+    link: '/parcels?tab=sandbox',
+  },
+  {
+    label: 'Spatial',
+    icon: '/images/Spatial.png',
+    type: 'spatial',
+    link: '/parcels?tab=spatial',
+  },
   // {
   //   label: 'Hyperfy',
   //   icon: '/images/Hyperfy.png',

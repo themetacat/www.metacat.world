@@ -82,7 +82,7 @@ const TABobj = {
   Hyperfy: '/images/Hyperfy.png',
   MozillaHubs: '/images/MozillaHubs.png',
   Arium: '/images/Arium.png',
-  Artifex:'/images/Artifex.png',
+  Artifex: '/images/Artifex.png',
 }
 const TABDataEvent = [
   {
@@ -317,7 +317,7 @@ function search(r) {
     async (tab) => {
       if (tabState === tab) return;
       // setLoading(true);
-
+    
 
       setParcelsIds([]);
       setSelectedIds([]);
@@ -327,8 +327,6 @@ function search(r) {
 
 
       setTabState(tab);
-
-
 
       if (tab === 'Voxels') {
 
@@ -822,7 +820,6 @@ function search(r) {
 
     setPage(newPage)
 
-
     setShowModal(true)
     setLoading(true)
     // console.log(newPage);
@@ -1014,7 +1011,11 @@ function search(r) {
         setValueCountCreater(valCountCreater)
       }
 
-
+      // if (dataSource === []) {
+      //   console.log(89898989);
+  
+      //   setTabState('RareRooms')
+      // }
       // for (const keys in MenuDataTwo) {
       //   const objMenuTwo = {
       //     label: MenuDataTwo[keys],
@@ -1054,8 +1055,12 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
+       
         setTabState(MenuDataTwo[0])
       }
+     
+
+      // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
 
 
       // for (const key in data) {
@@ -1567,9 +1572,8 @@ function search(r) {
   // console.log(saveVal,999999);
   //   },[saveVal])
   useEffect(() => {
-    // console.log(tabState);
 
-
+   
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
@@ -1581,7 +1585,7 @@ function search(r) {
 
 
 
-  }, [])
+  }, [menuDataTwoArrCon])
   // console.log(headerRef.current?.scrollHeight);
   // console.log(showCon);
 
@@ -1858,7 +1862,7 @@ function search(r) {
 
 
   const randerCardList = React.useMemo(() => {
-    // console.log(routeTab,tabState);
+
 
     const scroll = (e) => {
 
@@ -1886,19 +1890,19 @@ function search(r) {
     }
 
     if (routeTab === 'Place') {
-      
+
       return (
         <>
           <div className={cn('flex ', style.allHeight)}>
             {/* <div className={cls}>menuDataTwoArrCon||TABData</div> */}
             <div className={cn('main-content', style.tabtext)}>
-            <div className="main-content">
-                    <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
-                    </div>
+              <div className="main-content">
+                <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
+              </div>
               {
                 loadingDetail === true ? null :
                   <>
-                
+
                     {/* <div
                       className={cn(
                         'p absolute z-40 flex justify-start items-center',
@@ -2218,6 +2222,7 @@ function search(r) {
     status,
     type,
     value,
+    menuDataTwoArrCon,
     selectedIds,
     rent_set_state,
     s,
@@ -2277,6 +2282,7 @@ function search(r) {
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 // console.log(val, router.query.q);
+             
                 setDataSource([])
                 setRouteTab('Place')
                 // console.log(loadingDetail,1111111111)

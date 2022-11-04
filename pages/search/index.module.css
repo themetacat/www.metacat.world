@@ -223,7 +223,7 @@ color: #0F191B;
 .a{
   position: fixed;
   top: 0px;
-  width: 99%;
+  width: 100%;
   z-index: 999999;
   /* top：0; */
 }
