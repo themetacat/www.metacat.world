@@ -78,7 +78,7 @@ const TABobj = {
   Mona: 'https://monaverse.com/branding/mona-logo-white.svg',
   Protoworld: '/images/protoworld.png',
   RareRooms: '/images/RareRoom.png',
-  Sandbox: '/images/home-icon.svg',
+  TheSandbox: '/images/home-icon.svg',
   Spatial: '/images/Spatial.png',
   Hyperfy: '/images/Hyperfy.png',
   MozillaHubs: '/images/MozillaHubs.png',
@@ -234,7 +234,7 @@ function search(r) {
   const [addressWearable, setaddressWerVal] = React.useState(null);
   const [subTabState, setSubTabState] = React.useState('Voxels');
   const [emptyStatus, setemptyStatus] = React.useState(false);
-  const [pageNum, setPage] = React.useState(0);
+  const [pageNum, setPage] = React.useState(1);
   const [pageSize, setPageSize] = React.useState(20);
   const a1 = useRef(null)
   const Nav = [
@@ -532,8 +532,8 @@ function search(r) {
         setRareDataSource(dataListRare)
       }
       const dataListsandBox = sandBoxDataSource;
-      if (res.data.Place?.Sandbox?.length > 0) {
-        dataListsandBox?.push(...res.data.Place?.Sandbox)
+      if (res.data.Place?.TheSandbox?.length > 0) {
+        dataListsandBox?.push(...res.data.Place?.TheSandbox)
         setSandBoxDataSource(dataListsandBox)
       }
       const dataListSpatial = spatialDataSource;
@@ -833,7 +833,7 @@ function search(r) {
     // setPage(newPage)
     // console.log(router.query.q || query);
 
-    const res = await getSearchDetail(router.query.q || query, mynum+1, per_page || 20, search_item);
+    const res = await getSearchDetail(router.query.q || query, mynum, per_page || 20, search_item);
 
     setShowModal(false)
     setLoading(false)
@@ -955,8 +955,8 @@ function search(r) {
       }
 
       const dataListsandBox = sandBoxDataSource;
-      if (res.data.Place?.Sandbox?.length > 0) {
-        dataListsandBox?.push(...res.data.Place?.Sandbox)
+      if (res.data.Place?.TheSandbox?.length > 0) {
+        dataListsandBox?.push(...res.data.Place?.TheSandbox)
         setSandBoxDataSource(dataListsandBox)
       }
 
@@ -1580,7 +1580,7 @@ function search(r) {
   //   },[saveVal])
   useEffect(() => {
 
-
+    // setTabState(menuDataTwoArrCon[0]?.type)
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
@@ -1604,40 +1604,40 @@ function search(r) {
 
   // }, [])
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
 
-  //   // console.log('执行', router?.query?.q,window.location.search);
-  //   // if(router?.query?.q===undefined)return ;
-  //   if (window.location.search && router?.query?.q) {
-  //     setDataSource([])
-  //     setDataSourceLearn([])
-  //     setDataSourceCreBuilder([])
-  //     setDataSourceCreWear([])
-  //     setDataBuildSource([])
-  //     setEventDclList([])
-  //     setEventSomList([])
-  //     setDclDataSource([])
-  //     setSomSpaceDataSource([])
-  //     setMonaDataSource([])
-  //     setProtoWorldDataSource([])
-  //     setRareDataSource([])
-  //     setSandBoxDataSource([])
-  //     setSpatialDataSource([])
-  //     setHyperfyDataSource([])
-  //     setMozillaHubsDataSource([])
-  //     setAriumDataSource([])
-  //     setArtifexDataSource([])
-  //     setOncyberDataSource([])
-  //     setEventCvList([])
-  //     setSearchText(router.query.q);
-  //     onSearchHandler(router.query.q, 1, 20, '', false)
+    // console.log('执行', router?.query?.q,window.location.search);
+    // if(router?.query?.q===undefined)return ;
+    if (window.location.search && router?.query?.q) {
+      // setDataSource([])
+      // setDataSourceLearn([])
+      // setDataSourceCreBuilder([])
+      // setDataSourceCreWear([])
+      // setDataBuildSource([])
+      // setEventDclList([])
+      // setEventSomList([])
+      // setDclDataSource([])
+      // setSomSpaceDataSource([])
+      // setMonaDataSource([])
+      // setProtoWorldDataSource([])
+      // setRareDataSource([])
+      // setSandBoxDataSource([])
+      // setSpatialDataSource([])
+      // setHyperfyDataSource([])
+      // setMozillaHubsDataSource([])
+      // setAriumDataSource([])
+      // setArtifexDataSource([])
+      // setOncyberDataSource([])
+      // setEventCvList([])
+      setSearchText(router.query.q);
+      onSearchHandler(router.query.q, 1, 20, '', false)
 
-  //   } else if (!window.location.search && router?.query?.q === undefined) {
-  //     setSearchText('');
-  //     onSearchHandler('', 1, 20, '', false)
+    } else if (!window.location.search && router?.query?.q === undefined) {
+      setSearchText('');
+      onSearchHandler('', 1, 20, '', false)
 
-  //   }
-  // }, [router?.query?.q])
+    }
+  }, [router?.query?.q])
 
 
   React.useEffect(() => {
@@ -1649,7 +1649,7 @@ function search(r) {
 
 
 
-    if (window.location.search && router?.query?.q) {
+    // if (window.location.search && router?.query?.q) {
     // setDataSource([])
     // setDataSourceLearn([])
     // setDataSourceCreBuilder([])
@@ -1671,7 +1671,9 @@ function search(r) {
     // setOncyberDataSource([])
     // setEventCvList([])
     // setSearchText(router.query.q);
-    onSearchHandler(router.query.q, 1, 20, '', false)
+  
+    
+    // onSearchHandler(router.query.q, 1, 20, '', false)
     // const scrollChange = () => {
 
     //   const scrollHeight = document.querySelector('.detailName')?.scrollHeight
@@ -1693,11 +1695,11 @@ function search(r) {
     // return () => {
     //   window.removeEventListener('scroll', scrollChange, false)
     // }
-    } else if (!window.location.search && router?.query?.q === undefined) {
+    // } else if (!window.location.search && router?.query?.q === undefined) {
 
 
     //   setSearchText('');
-      onSearchHandler('', 1, 20, '', false)
+      // onSearchHandler('', 1, 20, '', false)
     // const scrollChange = () => {
 
     //   const scrollHeight = document.querySelector('.detailName')?.scrollHeight
@@ -1709,7 +1711,7 @@ function search(r) {
     //     onSearchHandler(router.query.q, pageNum, 20, '', false)
 
     //     // requestData(pageNum, count)
-      }
+      // }
     //   document.addEventListener('scroll', scrollChange);
     //   return () => document.removeEventListener('scroll', scrollChange);
 
@@ -1728,8 +1730,16 @@ function search(r) {
       const clientHeight = document.querySelector('.detailName')?.clientHeight
       const scrollTop = document.querySelector('.detailName')?.scrollTop
       // console.log(scrollHeight, clientHeight, scrollTop);
-      if (scrollTop + clientHeight >= scrollHeight - 1 && (window.location.search && router?.query?.q)) {
+    //   if (scrollTop + clientHeight >= scrollHeight - 1) {
+
+
+
+    //     onSearchHandler(router.query.q, pageNum+1, 20, '', false)
+    // }
+
+      if (scrollTop + clientHeight >= scrollHeight - 30 && (window.location.search && router?.query?.q)) {
         console.log("走的这里？");
+    
         // setDataSource([])
         // setDataSourceLearn([])
         // setDataSourceCreBuilder([])
@@ -1750,8 +1760,8 @@ function search(r) {
         // setArtifexDataSource([])
         // setOncyberDataSource([])
         // setEventCvList([])
-        setSearchText(router.query.q);
-
+        // setSearchText(router.query.q);
+        console.log(router.query.q,searchText);
         onSearchHandler(router.query.q, pageNum+1, 20, '', false)
  
 
@@ -1968,24 +1978,24 @@ function search(r) {
 
     const scroll = (e) => {
 
-      const { scrollTop, scrollHeight, clientHeight } = e.target;
+      // const { scrollTop, scrollHeight, clientHeight } = e.target;
 
-      if (scrollTop + clientHeight >= scrollHeight - 20) {
+      // if (scrollTop + clientHeight >= scrollHeight - 20) {
 
-        if (searchText !== '') {
+      //   if (searchText !== '') {
 
-          onSearchHandler(searchText, pageNum, 20, '', false)
-        } else {
-          onSearchHandlerDetail('', pageNum, 20, '')
-        }
-      } else {
-        setShowModal(false)
+      //     onSearchHandler(searchText, pageNum, 20, '', false)
+      //   } else {
+      //     onSearchHandlerDetail('', pageNum, 20, '')
+      //   }
+      // } else {
+      //   setShowModal(false)
 
-        // if (scrollTop + clientHeight >= scrollHeight - 20) {
+      //   // if (scrollTop + clientHeight >= scrollHeight - 20) {
 
 
-        // }
-      }
+      //   // }
+      // }
 
 
 
@@ -2127,7 +2137,7 @@ function search(r) {
               </div>
               : null
             }
-            {tabState === 'Sandbox' ?
+            {tabState === 'TheSandbox' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {sandBoxDataSource.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
