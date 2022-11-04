@@ -77,7 +77,7 @@ const TABobj = {
   Mona: 'https://monaverse.com/branding/mona-logo-white.svg',
   Protoworld: '/images/protoworld.png',
   RareRooms: '/images/RareRoom.png',
-  Sandbox: '/images/home-icon.svg',
+  TheSandbox: '/images/home-icon.svg',
   Spatial: '/images/Spatial.png',
   Hyperfy: '/images/Hyperfy.png',
   MozillaHubs: '/images/MozillaHubs.png',
