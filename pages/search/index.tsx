@@ -53,7 +53,8 @@ import {
 
 
 
-import style from './index.module.css';
+// import style from './index.module.css';
+import style from './index.module.less';
 
 
 
@@ -233,7 +234,7 @@ function search(r) {
   const [addressWearable, setaddressWerVal] = React.useState(null);
   const [subTabState, setSubTabState] = React.useState('Voxels');
   const [emptyStatus, setemptyStatus] = React.useState(false);
-  const [pageNum, setPage] = React.useState(1);
+  const [pageNum, setPage] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(20);
   const a1 = useRef(null)
   const Nav = [
@@ -317,7 +318,7 @@ function search(r) {
     async (tab) => {
       if (tabState === tab) return;
       // setLoading(true);
-    
+
 
       setParcelsIds([]);
       setSelectedIds([]);
@@ -815,10 +816,16 @@ function search(r) {
     // setPage(1)
     // console.log('调用几遍',);
 
-    const newPage = page + 1
+    // const newPage = page + 1
     // console.log(newPage, page);
 
-    setPage(newPage)
+    // setPage(newPage)
+    let mynum = pageNum
+    // console.log(mynum, 999);
+    setPage((num) => {
+      mynum = num
+      return num + 1
+    })
 
     setShowModal(true)
     setLoading(true)
@@ -826,7 +833,7 @@ function search(r) {
     // setPage(newPage)
     // console.log(router.query.q || query);
 
-    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
+    const res = await getSearchDetail(router.query.q || query, mynum || 1, per_page || 20, search_item);
 
     setShowModal(false)
     setLoading(false)
@@ -1013,7 +1020,7 @@ function search(r) {
 
       // if (dataSource === []) {
       //   console.log(89898989);
-  
+
       //   setTabState('RareRooms')
       // }
       // for (const keys in MenuDataTwo) {
@@ -1055,10 +1062,10 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
-       
+
         setTabState(MenuDataTwo[0])
       }
-     
+
 
       // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
 
@@ -1573,7 +1580,7 @@ function search(r) {
   //   },[saveVal])
   useEffect(() => {
 
-   
+
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
@@ -1597,10 +1604,51 @@ function search(r) {
 
   // }, [])
 
+  // React.useEffect(() => {
+
+  //   // console.log('执行', router?.query?.q,window.location.search);
+  //   // if(router?.query?.q===undefined)return ;
+  //   if (window.location.search && router?.query?.q) {
+  //     setDataSource([])
+  //     setDataSourceLearn([])
+  //     setDataSourceCreBuilder([])
+  //     setDataSourceCreWear([])
+  //     setDataBuildSource([])
+  //     setEventDclList([])
+  //     setEventSomList([])
+  //     setDclDataSource([])
+  //     setSomSpaceDataSource([])
+  //     setMonaDataSource([])
+  //     setProtoWorldDataSource([])
+  //     setRareDataSource([])
+  //     setSandBoxDataSource([])
+  //     setSpatialDataSource([])
+  //     setHyperfyDataSource([])
+  //     setMozillaHubsDataSource([])
+  //     setAriumDataSource([])
+  //     setArtifexDataSource([])
+  //     setOncyberDataSource([])
+  //     setEventCvList([])
+  //     setSearchText(router.query.q);
+  //     onSearchHandler(router.query.q, 1, 20, '', false)
+
+  //   } else if (!window.location.search && router?.query?.q === undefined) {
+  //     setSearchText('');
+  //     onSearchHandler('', 1, 20, '', false)
+
+  //   }
+  // }, [router?.query?.q])
+
+
   React.useEffect(() => {
 
-    // console.log('执行', router?.query?.q,window.location.search);
-    // if(router?.query?.q===undefined)return ;
+    // console.log(document.querySelector('body'));
+
+
+    console.log(router?.query?.q, 55, !window.location.search);
+
+
+
     if (window.location.search && router?.query?.q) {
       setDataSource([])
       setDataSourceLearn([])
@@ -1624,52 +1672,60 @@ function search(r) {
       setEventCvList([])
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
+      // const scrollChange = () => {
 
+      //   const scrollHeight = document.querySelector('.detailName')?.scrollHeight
+      //   const clientHeight = document.querySelector('.detailName')?.clientHeight
+      //   const scrollTop = document.querySelector('.detailName')?.scrollTop
+      //   console.log(scrollHeight, clientHeight, scrollTop);
+      //   if (scrollTop + clientHeight >= scrollHeight - 1) {
+
+      //     onSearchHandler(router.query.q, pageNum, 20, '', false)
+
+      //     // requestData(pageNum, count)
+      //   }
+      //   document.addEventListener('scroll', scrollChange);
+      //   return () => document.removeEventListener('scroll', scrollChange);
+
+      // }
+      // window.addEventListener('scroll', scrollChange, true)
+      // // scrollChange()
+      // return () => {
+      //   window.removeEventListener('scroll', scrollChange, false)
+      // }
     } else if (!window.location.search && router?.query?.q === undefined) {
-      // return
-      // console.log('没有啊！！！！！');
+
+
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
-      // setSearchText('');
+   
 
-      // onSearchHandler('', 1, 20, '', false)
     }
+    const scrollChange = () => {
+
+      const scrollHeight = document.querySelector('.detailName')?.scrollHeight
+      const clientHeight = document.querySelector('.detailName')?.clientHeight
+      const scrollTop = document.querySelector('.detailName')?.scrollTop
+      console.log(scrollHeight, clientHeight, scrollTop);
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+
+        onSearchHandler(router.query.q, pageNum, 20, '', false)
+
+        // requestData(pageNum, count)
+      }
+      document.addEventListener('scroll', scrollChange);
+      return () => document.removeEventListener('scroll', scrollChange);
+
+    }
+    window.addEventListener('scroll', scrollChange, true)
+    // scrollChange()
+    return () => {
+      window.removeEventListener('scroll', scrollChange, false)
+    }
+
+
+
   }, [router?.query?.q])
-  // console.log(router.query.value,"router.query.value");
-
-  // React.useEffect(() => {
-
-  //   // console.log(document.querySelector('body'));
-
-
-  //   const scrollChange = () => {
-
-  //     const scrollHeight = document.querySelector('.detailName')?.scrollHeight
-  //     const clientHeight = document.querySelector('.detailName')?.clientHeight
-  //     const scrollTop = document.querySelector('.detailName')?.scrollTop
-
-  //     // console.log(scrollHeight,clientHeight,scrollTop);
-
-
-  //     if (scrollTop + clientHeight >= scrollHeight - 1) {
-
-
-
-  //         // requestData(pageNum, count)
-  //     }
-
-  //     document.addEventListener('scroll', scrollChange);
-  //     return () => document.removeEventListener('scroll', scrollChange);
-  // }
-
-
-  // window.addEventListener('scroll', scrollChange, true)
-  // // scrollChange()
-  // return () => {
-  //     window.removeEventListener('scroll', scrollChange, false)
-  // }
-
-  // }, [])
 
 
 
@@ -2282,7 +2338,7 @@ function search(r) {
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 // console.log(val, router.query.q);
-             
+                setPage(1)
                 setDataSource([])
                 setRouteTab('Place')
                 // console.log(loadingDetail,1111111111)
