@@ -836,6 +836,10 @@ function search(r) {
       const countNum = res.data?.item_count;
       const dataEvent = res.data?.Event?.menu_two;
       const MenuDataTwo = res.data?.Place?.menu_two;
+
+      const MenuDataTwoArr = []
+      const valCountCreater = []
+      const valCountEvent = []
       // const dataList  = dataSource;
       const arr = []
       Object.keys(data).forEach(key => {
@@ -849,6 +853,22 @@ function search(r) {
 
 
       setValueCount(arr)
+
+
+      if (MenuDataTwo) {
+        Object?.keys(MenuDataTwo).forEach(keys => {
+          // console.log(TABobj[MenuDataTwo[keys]]);
+          const objMenuTwo = {
+            label: MenuDataTwo[keys],
+            type: MenuDataTwo[keys],
+            icon: TABobj[MenuDataTwo[keys]],
+          }
+          MenuDataTwoArr.push(objMenuTwo)
+        })
+        setMenuDataTwoArrCon(MenuDataTwoArr)
+
+        setTabState(MenuDataTwo[0])
+      }
 
 
 
@@ -985,9 +1005,7 @@ function search(r) {
       // console.log(dclDataSource, "dataSourcedataSourcedataSource");
 
 
-      const MenuDataTwoArr = []
-      const valCountCreater = []
-      const valCountEvent = []
+   
       // for (const key in dataCreater) {
       //   // console.log(valueCount);
       //   const obj = {
@@ -1044,20 +1062,7 @@ function search(r) {
       }
       // console.log(dataEvent[0], 999999,valueCountEvent);
 
-      if (MenuDataTwo) {
-        Object?.keys(MenuDataTwo).forEach(keys => {
-          // console.log(TABobj[MenuDataTwo[keys]]);
-          const objMenuTwo = {
-            label: MenuDataTwo[keys],
-            type: MenuDataTwo[keys],
-            icon: TABobj[MenuDataTwo[keys]],
-          }
-          MenuDataTwoArr.push(objMenuTwo)
-        })
-        setMenuDataTwoArrCon(MenuDataTwoArr)
-
-        // setTabState(MenuDataTwo[0])
-      }
+  
 
 
       // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
