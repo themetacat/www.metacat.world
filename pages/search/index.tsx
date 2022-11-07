@@ -1585,10 +1585,14 @@ function search(r) {
   //   useEffect(()=>{
   // console.log(saveVal,999999);
   //   },[saveVal])
+
+
+
+
   useEffect(() => {
-    console.log(menuDataTwoArrCon,9989);
+    // console.log(menuDataTwoArrCon,9989);
       
-    setTabState(menuDataTwoArrCon[0]?.type)
+    // setTabState(menuDataTwoArrCon[0]?.type)
 
 
     setTabStateCreater('Builder')
@@ -1649,6 +1653,15 @@ function search(r) {
 
     }
   }, [router?.query?.q])
+
+  useEffect(() => {
+    //  if (window.location.search) return;
+     const res =  getSearchDetail(router?.query?.q , 1,  20, '');
+    //  onSearchHandler('', 1, 20, '', false)
+    res.then((resPlace)=>{
+      setTabState(resPlace?.data?.Place?.menu_two[0]);
+    })
+    }, [router?.query?.q])
 
 
   React.useEffect(() => {
