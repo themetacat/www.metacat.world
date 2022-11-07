@@ -815,7 +815,6 @@ function search(r) {
 
     const newPage = page + 1
     // console.log(newPage, page);
-    console.log(tabState,"tabStatetabState");
     setPage(newPage)
 
     setShowModal(true)
@@ -1576,11 +1575,6 @@ function search(r) {
   // console.log(saveVal,999999);
   //   },[saveVal])
   useEffect(() => {
-console.log(menuDataTwoArrCon);
-
-      
-
-
     setTabStateCreater('Builder')
     setRouteTab(valueCount[0]?.type)
   }, [menuDataTwoArrCon, valueCount])
