@@ -328,6 +328,8 @@ function search(r) {
 
 
       setTabState(tab);
+    
+      // onSearchHandler(router.query.q, 1, 20, '', false)
 
       if (tab === 'Voxels') {
 
@@ -829,7 +831,7 @@ function search(r) {
 
     setShowModal(true)
     setLoading(true)
-    // console.log(newPage);
+    console.log(tabState);
     // setPage(newPage)
     // console.log(router.query.q || query);
 
@@ -843,6 +845,10 @@ function search(r) {
       const countNum = res.data?.item_count;
       const dataEvent = res.data?.Event?.menu_two;
       const MenuDataTwo = res.data?.Place?.menu_two;
+
+      const MenuDataTwoArr = []
+      const valCountCreater = []
+      const valCountEvent = []
       // const dataList  = dataSource;
       const arr = []
       Object.keys(data).forEach(key => {
@@ -856,6 +862,22 @@ function search(r) {
 
 
       setValueCount(arr)
+
+
+      if (MenuDataTwo) {
+        Object?.keys(MenuDataTwo).forEach(keys => {
+          // console.log(TABobj[MenuDataTwo[keys]]);
+          const objMenuTwo = {
+            label: MenuDataTwo[keys],
+            type: MenuDataTwo[keys],
+            icon: TABobj[MenuDataTwo[keys]],
+          }
+          MenuDataTwoArr.push(objMenuTwo)
+        })
+        setMenuDataTwoArrCon(MenuDataTwoArr)
+
+        // setTabState(MenuDataTwo[0])
+      }
 
 
 
@@ -992,9 +1014,7 @@ function search(r) {
       // console.log(dclDataSource, "dataSourcedataSourcedataSource");
 
 
-      const MenuDataTwoArr = []
-      const valCountCreater = []
-      const valCountEvent = []
+   
       // for (const key in dataCreater) {
       //   // console.log(valueCount);
       //   const obj = {
@@ -1051,20 +1071,7 @@ function search(r) {
       }
       // console.log(dataEvent[0], 999999,valueCountEvent);
 
-      if (MenuDataTwo) {
-        Object?.keys(MenuDataTwo).forEach(keys => {
-          // console.log(TABobj[MenuDataTwo[keys]]);
-          const objMenuTwo = {
-            label: MenuDataTwo[keys],
-            type: MenuDataTwo[keys],
-            icon: TABobj[MenuDataTwo[keys]],
-          }
-          MenuDataTwoArr.push(objMenuTwo)
-        })
-        setMenuDataTwoArrCon(MenuDataTwoArr)
-
-        setTabState(MenuDataTwo[0])
-      }
+  
 
 
       // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
@@ -1183,7 +1190,7 @@ function search(r) {
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
-    if (loadingDetail) {
+    if (loadingDetail === true) {
 
       return <Status status="loadingDetail" />;
     }
@@ -1579,12 +1586,16 @@ function search(r) {
   // console.log(saveVal,999999);
   //   },[saveVal])
   useEffect(() => {
+    console.log(menuDataTwoArrCon,9989);
+      
+    setTabState(menuDataTwoArrCon[0]?.type)
 
-    // setTabState(menuDataTwoArrCon[0]?.type)
+
     setTabStateCreater('Builder')
     // setTabState('Voxels')
     // setTabStateEvent('Voxels')
-    setRouteTab('Place')
+    // setRouteTab('Place')
+    setRouteTab(valueCount[0]?.type)
     // const accessToken = getToken('atk');
     // console.log(accessToken);
 
@@ -1592,7 +1603,7 @@ function search(r) {
 
 
 
-  }, [menuDataTwoArrCon])
+  }, [menuDataTwoArrCon, valueCount])
   // console.log(headerRef.current?.scrollHeight);
   // console.log(showCon);
 
@@ -1738,8 +1749,8 @@ function search(r) {
     // }
 
       if (scrollTop + clientHeight >= scrollHeight - 30 && (window.location.search && router?.query?.q)) {
-        console.log("走的这里？");
-    
+        console.log("走的这里？",tabState);
+    // setTabState()
         // setDataSource([])
         // setDataSourceLearn([])
         // setDataSourceCreBuilder([])
@@ -1762,14 +1773,18 @@ function search(r) {
         // setEventCvList([])
         // setSearchText(router.query.q);
         console.log(router.query.q,searchText);
-        onSearchHandler(router.query.q, pageNum+1, 20, '', false)
- 
-
-        // requestData(pageNum, count)
+        // onSearchHandler(router.query.q, pageNum+1, 20, '', false)
+        onSearchHandler(searchText, pageNum, 20, '', false)
+    
       } else if (scrollTop + clientHeight >= scrollHeight - 1 && !window.location.search && router?.query?.q === undefined) {
         console.log("还是这儿！！！！");
-        onSearchHandler('', 1, 20, '', false)
+        // onSearchHandler('', 1, 20, '', false)
+          //     onSearchHandler(searchText, pageNum, 20, '', false)
+      //   } else {
+          onSearchHandlerDetail('', pageNum, 20, '')
+      //   }
       }
+      
       document.addEventListener('scroll', scrollChange);
       return () => document.removeEventListener('scroll', scrollChange);
 
@@ -2005,6 +2020,7 @@ function search(r) {
 
       return (
         <>
+
           <div className={cn('flex ', style.allHeight)}>
             {/* <div className={cls}>menuDataTwoArrCon||TABData</div> */}
             <div className={cn('main-content', style.tabtext)}>
@@ -2083,6 +2099,7 @@ function search(r) {
             </div>
           </div>
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
+
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
@@ -2185,7 +2202,7 @@ function search(r) {
               </div>
               : null
             }
-            {loadingDetail === true ?
+            {loadingDetail === true || emptyStatus === true ?
               <Status status="loadingDetail" />
               : null
             }
@@ -2395,8 +2412,9 @@ function search(r) {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 // console.log(val, router.query.q);
                 setPage(1)
+
                 setDataSource([])
-                setRouteTab('Place')
+                setRouteTab(valueCount[0]?.type)
                 // console.log(loadingDetail,1111111111)
                 // setSearchText(router.query.q);
                 // if (!router.query.q) {
@@ -2434,31 +2452,34 @@ function search(r) {
 
 
             <div className={cn(style.tableList)}>
-              {
 
+              <>
+                {valueCount.map((item) => {
 
-                loadingDetail === true ? null :
-                  <>
-                    {valueCount.map((item) => {
-                      // console.log(valueCount,22222222);
-                      return (
-                        <Tab5
-                          label={item.label}
-                          key={item.label}
-                          active={routeTab === item.type}
-                          count={item.count}
-                          onClick={() => {
-                            changeTab3(item.label, item.type);
-                          }}
-                        />
-                        // <>{item}</>
-                      );
-                    })}
-                  </>
-              }
+                  return (
+                    <Tab5
+                      label={item.label}
+                      key={item.label}
+                      active={routeTab === item.type}
+                      count={item.count}
+                      onClick={() => {
+                        changeTab3(item.label, item.type);
+                      }}
+                    />
+                    // <>{item}</>
+                  );
+                })}
+              </>
+
             </div>
           </div>
+          {/* { */}
+
+          {/* // } */}
+          {
+            loadingDetail === true ? <div style={{ height: "500px", width: "1200px", margin: "0px auto" }}><Status status="loadingDetail" /></div> : null}
           {randerCardList}
+
           <div id='footer' style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
         </div>
         {/* </div> */}
