@@ -118,18 +118,18 @@ const parcels = [
     type: 'spatial',
     link: '/parcels?tab=spatial',
   },
-  // {
-  //   label: 'Hyperfy',
-  //   icon: '/images/Hyperfy.png',
-  //   type: 'hyperfy',
-  //   link: '/parcels?tab=hyperfy',
-  // },
-  // {
-  //   label: 'MozillaHubs',
-  //   icon: '/images/MozillaHubs.png',
-  //   type: 'mozillaHubs',
-  //   link: '/parcels?tab=mozillaHubs',
-  // },
+  {
+    label: 'Hyperfy',
+    icon: '/images/Hyperfy.png',
+    type: 'hyperfy',
+    link: '/parcels?tab=hyperfy',
+  },
+  {
+    label: 'MozillaHubs',
+    icon: '/images/MozillaHubs.png',
+    type: 'mozillaHubs',
+    link: '/parcels?tab=mozillaHubs',
+  },
   // {
   //   label: 'Arium',
   //   icon: '/images/Arium.png',

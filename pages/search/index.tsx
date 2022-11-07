@@ -444,11 +444,17 @@ function search(r) {
     //             setEventCvList([])
     setShowModal(true)
     setLoading(true)
-    const newPage = pageNum + 1
+    // const newPage = pageNum + 1
 
-    setPage(newPage)
+    // setPage(newPage)
+    let mynum = pageNum
+    // console.log(mynum, 999);
+    setPage((num) => {
+      mynum = num
+      return num + 1
+    })
 
-    const res = await getSearchDetail(query, page, per_page, search_item);
+    const res = await getSearchDetail(query, mynum, per_page, search_item);
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
@@ -1094,6 +1100,7 @@ function search(r) {
       // console.log(valueCount,);
 
       if ((res.data?.item_count && res.data?.menu_one).length === 0) {
+console.log("????????????????????????????");
 
         setemptyStatus(true)
         setloadingDetail(true)
@@ -1619,40 +1626,20 @@ function search(r) {
 
   // }, [])
 
-  React.useEffect(() => {
+  // React.useEffect(() => {
 
-    // console.log('执行', router?.query?.q,window.location.search);
-    // if(router?.query?.q===undefined)return ;
-    if (window.location.search && router?.query?.q) {
-      // setDataSource([])
-      // setDataSourceLearn([])
-      // setDataSourceCreBuilder([])
-      // setDataSourceCreWear([])
-      // setDataBuildSource([])
-      // setEventDclList([])
-      // setEventSomList([])
-      // setDclDataSource([])
-      // setSomSpaceDataSource([])
-      // setMonaDataSource([])
-      // setProtoWorldDataSource([])
-      // setRareDataSource([])
-      // setSandBoxDataSource([])
-      // setSpatialDataSource([])
-      // setHyperfyDataSource([])
-      // setMozillaHubsDataSource([])
-      // setAriumDataSource([])
-      // setArtifexDataSource([])
-      // setOncyberDataSource([])
-      // setEventCvList([])
-      setSearchText(router.query.q);
-      onSearchHandler(router.query.q, 1, 20, '', false)
+  //   // console.log('执行', router?.query?.q,window.location.search);
+  //   // if(router?.query?.q===undefined)return ;
+  //   if (window.location.search && router?.query?.q) {
+  //     setSearchText(router.query.q);
+  //     onSearchHandler(router.query.q, 1, 20, '', false)
 
-    } else if (!window.location.search && router?.query?.q === undefined) {
-      setSearchText('');
-      onSearchHandler('', 1, 20, '', false)
+  //   } else if (!window.location.search && router?.query?.q === undefined) {
+  //     setSearchText('');
+  //     onSearchHandler('', 1, 20, '', false)
 
-    }
-  }, [router?.query?.q])
+  //   }
+  // }, [router?.query?.q])
 
   useEffect(() => {
     //  if (window.location.search) return;
@@ -1667,7 +1654,15 @@ function search(r) {
   React.useEffect(() => {
 
     // console.log(document.querySelector('body'));
+    if (window.location.search && router?.query?.q) {
+      setSearchText(router.query.q);
+      onSearchHandler(router.query.q, 1, 20, '', false)
 
+    } else if (!window.location.search && router?.query?.q === undefined) {
+      setSearchText('');
+      onSearchHandler('', 1, 20, '', false)
+
+    }
 
     console.log(router?.query?.q, 55, !window.location.search);
 
@@ -1753,7 +1748,7 @@ function search(r) {
       const scrollHeight = document.querySelector('.detailName')?.scrollHeight
       const clientHeight = document.querySelector('.detailName')?.clientHeight
       const scrollTop = document.querySelector('.detailName')?.scrollTop
-      // console.log(scrollHeight, clientHeight, scrollTop);
+      console.log(router.query.q);
     //   if (scrollTop + clientHeight >= scrollHeight - 1) {
 
 
@@ -1761,33 +1756,12 @@ function search(r) {
     //     onSearchHandler(router.query.q, pageNum+1, 20, '', false)
     // }
 
-      if (scrollTop + clientHeight >= scrollHeight - 30 && (window.location.search && router?.query?.q)) {
+      if (scrollTop + clientHeight >= scrollHeight - 30&&(window.location.search && router?.query?.q) ) {
         console.log("走的这里？",tabState);
-    // setTabState()
-        // setDataSource([])
-        // setDataSourceLearn([])
-        // setDataSourceCreBuilder([])
-        // setDataSourceCreWear([])
-        // setDataBuildSource([])
-        // setEventDclList([])
-        // setEventSomList([])
-        // setDclDataSource([])
-        // setSomSpaceDataSource([])
-        // setMonaDataSource([])
-        // setProtoWorldDataSource([])
-        // setRareDataSource([])
-        // setSandBoxDataSource([])
-        // setSpatialDataSource([])
-        // setHyperfyDataSource([])
-        // setMozillaHubsDataSource([])
-        // setAriumDataSource([])
-        // setArtifexDataSource([])
-        // setOncyberDataSource([])
-        // setEventCvList([])
-        // setSearchText(router.query.q);
-        console.log(router.query.q,searchText);
+        setSearchText(router.query.q);
+        console.log(router?.query?.q,searchText);
         // onSearchHandler(router.query.q, pageNum+1, 20, '', false)
-        onSearchHandler(searchText, pageNum, 20, '', false)
+        onSearchHandler(router?.query?.q, pageNum, 20, '', false)
     
       } else if (scrollTop + clientHeight >= scrollHeight - 1 && !window.location.search && router?.query?.q === undefined) {
         console.log("还是这儿！！！！");
@@ -2028,9 +2002,9 @@ function search(r) {
 
 
     }
-
+ 
     if (routeTab === 'Place') {
-
+      console.log(oncyberDataSource,"oncyberDataSource");
       return (
         <>
 
@@ -2040,9 +2014,9 @@ function search(r) {
               <div className="main-content">
                 <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
               </div>
-              {
+              {/* {
                 loadingDetail === true ? null :
-                  <>
+                  <> */}
 
                     {/* <div
                       className={cn(
@@ -2106,8 +2080,8 @@ function search(r) {
                     >
                       <img className={style.icon} src="/images/tab-right.png"></img>
                     </div> */}
-                  </>
-              }
+                  {/* </> */}
+              {/* // } */}
               <div className={cls} />
             </div>
           </div>
@@ -2138,6 +2112,8 @@ function search(r) {
             {tabState === 'Oncyber' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {oncyberDataSource.map((card) => {
+             
+                  
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
