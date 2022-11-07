@@ -173,7 +173,7 @@ function search(r) {
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
   const [tabStateEvent, setTabStateEvent] = React.useState('Voxels');
-  const [tabState, setTabState] = React.useState('Voxels');
+  const [tabState, setTabState] = React.useState(null);
   const [tabStateCreater, setTabStateCreater] = React.useState('Builder');
   const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
@@ -301,11 +301,9 @@ function search(r) {
       if (l === 'Creator') {
         setShowTab('Builder')
       }
-      // setTabState('Voxels')
       setTabStateCreater('Builder')
       // setTabStateEvent('Voxels')
       // setTabStateEvent(dataEvent[0])
-      // setTabState('Place');
       setShowTab(l);
       setRouteTab(t);
       // router.replace(`/profile?type=${t}`);
@@ -817,7 +815,7 @@ function search(r) {
 
     const newPage = page + 1
     // console.log(newPage, page);
-
+    console.log(tabState,"tabStatetabState");
     setPage(newPage)
 
     setShowModal(true)
@@ -856,6 +854,7 @@ function search(r) {
 
 
       if (MenuDataTwo) {
+      
         Object?.keys(MenuDataTwo).forEach(keys => {
           // console.log(TABobj[MenuDataTwo[keys]]);
           const objMenuTwo = {
@@ -866,8 +865,8 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
-
-        setTabState(MenuDataTwo[0])
+// setTabState(MenuDataTwo[0])
+     
       }
 
 
@@ -1577,22 +1576,28 @@ function search(r) {
   // console.log(saveVal,999999);
   //   },[saveVal])
   useEffect(() => {
+console.log(menuDataTwoArrCon);
 
+      
 
 
     setTabStateCreater('Builder')
-    // setTabState('Voxels')
-    // setTabStateEvent('Voxels')
-    // setRouteTab('Place')
     setRouteTab(valueCount[0]?.type)
-    // const accessToken = getToken('atk');
-    // console.log(accessToken);
-
-    // reqBuilderData(walletAddress)
-
-
-
   }, [menuDataTwoArrCon, valueCount])
+
+
+
+  useEffect(() => {
+  //  if (window.location.search) return;
+   const res =  getSearchDetail(router?.query?.q , 1,  20, '');
+  //  onSearchHandler('', 1, 20, '', false)
+  res.then((resPlace)=>{
+    setTabState(resPlace?.data?.Place?.menu_two[0]);
+  })
+  }, [router?.query?.q])
+
+
+
   // console.log(headerRef.current?.scrollHeight);
   // console.log(showCon);
 
@@ -1872,6 +1877,7 @@ function search(r) {
 
 
     const scroll = (e) => {
+
 
       const { scrollTop, scrollHeight, clientHeight } = e.target;
 

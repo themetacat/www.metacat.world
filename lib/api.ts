@@ -183,7 +183,7 @@ class API {
   }
 
   public async getSearchDetail(
-    query: string,
+    query,
     page:number,
     per_page:number,
     search_item:string,
