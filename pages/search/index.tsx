@@ -1223,9 +1223,7 @@ function search(r) {
     tabState,
     reqDclData,
   ]);
-  const addWorkWerable = () => {
-   
-  }
+  
 
   const renderWerable = React.useMemo(() => {
 
@@ -1236,7 +1234,7 @@ function search(r) {
       return <Status retry={onRetry} status="error" />;
     }
     if (statue === 1) {
-      return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
+      return <Status  status="emptyWerable" />;
 
     }
 
