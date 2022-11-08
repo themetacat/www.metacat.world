@@ -113,7 +113,7 @@ const TABDataCreater = [
 
 const TAB3 = [
   {
-    label: '1111111',
+    label: 'Place',
     type: 'Place',
   },
   {
@@ -306,7 +306,6 @@ function search(r) {
       // setTabStateEvent(dataEvent[0])
       setShowTab(l);
       setRouteTab(t);
-      // router.replace(`/profile?type=${t}`);
     },
     [showTab],
   );
@@ -584,7 +583,6 @@ function search(r) {
             type: dataEvent[key], icon: TABobj[dataEvent[key]],
           }
           valCountEvent.push(objEvent)
-          // console.log(objEvent);
 
         })
         setValueCountEvent(valCountEvent)
@@ -592,8 +590,6 @@ function search(r) {
 
       if (MenuDataTwo) {
         Object?.keys(MenuDataTwo).forEach(keys => {
-          // console.log(TABobj[MenuDataTwo[keys]]);
-
           const objMenuTwo = {
             label: MenuDataTwo[keys],
             type: MenuDataTwo[keys],
@@ -773,7 +769,6 @@ function search(r) {
       const hide = result.data.filter((i) => {
         return i.show_status === 2;
       });
-      // console.log(wearablesState.current);
       if (wearablesState.current === 'all') {
         setWearablesCreatorsData(result.data);
       } else if (wearablesState.current === 'shown') {
@@ -809,19 +804,15 @@ function search(r) {
     per_page: number,
     search_item: string,
     isCli: boolean) => {
-    // console.log('打印了打印了', query);
     // setPage(1)
     // console.log('调用几遍',);
 
     const newPage = page + 1
-    // console.log(newPage, page);
     setPage(newPage)
 
     setShowModal(true)
     setLoading(true)
-    // console.log(newPage);
     // setPage(newPage)
-    // console.log(router.query.q || query);
 
     const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
 
@@ -853,9 +844,8 @@ function search(r) {
 
 
       if (MenuDataTwo) {
-      
+
         Object?.keys(MenuDataTwo).forEach(keys => {
-          // console.log(TABobj[MenuDataTwo[keys]]);
           const objMenuTwo = {
             label: MenuDataTwo[keys],
             type: MenuDataTwo[keys],
@@ -864,8 +854,7 @@ function search(r) {
           MenuDataTwoArr.push(objMenuTwo)
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
-// setTabState(MenuDataTwo[0])
-     
+
       }
 
 
@@ -876,23 +865,11 @@ function search(r) {
       // setRouteTab('Place')
       const dataList = isCli ? [] : dataSource;
 
-      // console.log(dataList, page, res.data.Place.Voxels);
-
-
       if (res.data?.Place?.Voxels?.length > 0) {
         dataList?.push(...res.data?.Place?.Voxels)
-        // console.log(dataList);
 
         setDataSource(dataList)
       }
-
-      // console.log(dataList, "dataList");
-
-      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-
-      // setDataSourceTwo(dataList)
-
-      // setDataSource(res.data.Place.Voxels)
 
       const dataListBuilder = dataSourceCreBuilder;
       if (res.data?.Creator?.Builder?.length > 0) {
@@ -918,7 +895,6 @@ function search(r) {
         dataListEventSom?.push(...res.data?.Event?.SomniumSpace)
         setEventSomList(dataListEventSom)
       }
-      // setDataSourceCreBuilder(res.data.Creator.Builder)
 
 
       const dataListLearn = dataSourceLearn;
@@ -927,14 +903,9 @@ function search(r) {
         setDataSourceLearn(dataListLearn)
       }
 
-      // setDataSourceLearn(res.data.Learn.data)
-      // console.log(dataSourceLearn, 222523);
-
-      // setDataSourceTwo(res.data.Place.Voxels)
       const dataListDece = dclDataSource;
       if (res.data.Place?.Decentranland?.length > 0) {
         dataListDece?.push(...res.data.Place?.Decentranland)
-        // console.log(dataListDece);
 
         setDclDataSource(dataListDece)
       }
@@ -1000,21 +971,6 @@ function search(r) {
 
       // setDclDataSource(res.data.Place.Decentranland)
 
-      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
-
-
-   
-      // for (const key in dataCreater) {
-      //   // console.log(valueCount);
-      //   const obj = {
-      //     label: dataCreater[key],
-      //     type: dataCreater[key],
-      //     // count: countNum[data[key]],
-      //   }
-
-      //   valCountCreater.push(obj)
-      //   // console.log(valCountCreater, "valCountCreater");
-      // }
       if (dataCreater) {
         Object?.keys(dataCreater).forEach(key => {
           const obj = {
@@ -1027,23 +983,6 @@ function search(r) {
         setValueCountCreater(valCountCreater)
       }
 
-      // if (dataSource === []) {
-      //   console.log(89898989);
-
-      //   setTabState('RareRooms')
-      // }
-      // for (const keys in MenuDataTwo) {
-      //   const objMenuTwo = {
-      //     label: MenuDataTwo[keys],
-      //     type: MenuDataTwo[keys],
-      //     // icon: MenuDataTwo[keys],
-      //   }
-      //   MenuDataTwoArr.push(objMenuTwo)
-      //   // console.log(MenuDataTwoArr);
-
-      // }
-
-
       if (dataEvent) {
         Object?.keys(dataEvent).forEach(key => {
           const objEvent = {
@@ -1054,33 +993,11 @@ function search(r) {
           // console.log(objEvent);
 
         })
-        setTabStateEvent(dataEvent[0])
+        // setTabStateEvent(dataEvent[0])
         setValueCountEvent(valCountEvent)
 
       }
-      // console.log(dataEvent[0], 999999,valueCountEvent);
 
-  
-
-
-      // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
-
-
-      // for (const key in data) {
-      //   // console.log(valueCount);
-      //   const obj = {
-      //     label: data[key],
-      //     type: data[key],
-      //     count: countNum[data[key]],
-      //   }
-
-      //   arr.push(obj)
-      //   // console.log(arr);
-      // }
-      //       console.log(dataSource,dclDataSource);
-      //       // console.log(res.data, res.data?.item_count && res.data?.menu_one);
-      // console.log((res.data?.item_count && res.data?.menu_one).length === 0);
-      // console.log(valueCount,);
 
       if ((res.data?.item_count && res.data?.menu_one).length === 0) {
 
@@ -1094,69 +1011,15 @@ function search(r) {
   }, [router.query.q]);
 
 
-
-  // const reqBuilderData = React.useCallback(
-  //   async (walletAddressVal: string) => {
-  //     try {
-
-  //       // const res = await req_building_list(walletAddressVal);
-  //       // console.log(res, 5959);
-
-
-  //       // const data = resultHandlerBu(res, reqBuilderData);
-  //       // console.log(data, 56569, res);
-
-
-  //       setLoading(false);
-  //       if (!data) {
-  //         return;
-  //       }
-  //       // console.log(data, 8989);
-  //       setDataBuildSource(data);
-  //       // changeNum(data, nav_Label.current);
-  //     } catch {
-  //       setError(true);
-  //     }
-  //   },
-  //   [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
-  // );
-
   const requireBuilder = React.useCallback(
     async (token) => {
       const res = await req_get_building_detail_info(token);
       const data = resultHandler(res, requireBuilder);
-      // if (data) {
-      //   const profile = convert(data.profile);
-      //   const {
-      //     address: addr,
-      //     nickName: name,
-      //     avatar,
-      //     links,
-      //     email: e,
-      //     country: c,
-      //     introduction: i,
-      //   } = profile;
-      //   const { twitterName, websiteUrl } = links;
-      //   setAvatarUrl(avatar);
-      //   setInitEmail(e);
-      //   if (e) {
-      //     setEmail(e);
-      //   }
-      //   setCountry(c);
-      //   setIntroduction(i);
-      //   setAddress(addr);
-      //   setNickNameVla(name);
-      //   setOrginName(name);
-      //   setTwitterAddress(twitterName);
-      //   setWebsiteAddress(websiteUrl);
-      //   state.setState({ profile });
-      // }
     },
     [resultHandler],
   );
 
   const toTopic = React.useCallback((id, item) => {
-    // console.log(item.topic_id);
 
     if (item?.name === 'WearableDAO') {
       window.open('/wearables/wearabledao?type=chinesered')
@@ -1169,7 +1032,6 @@ function search(r) {
   }, []);
 
 
-  // console.log(loadingDetail);
 
   const renderContent = React.useMemo(() => {
 
@@ -1240,7 +1102,6 @@ function search(r) {
 
   }
   const renderContentEvent = React.useMemo(() => {
-    // console.log(tabStateEvent);
 
     if (loading) {
       return <Status status="loading" />;
@@ -1303,17 +1164,7 @@ function search(r) {
     reqDclData,
   ]);
   const renderContentCreater = React.useMemo(() => {
-    // console.log(tabStateCreater);
-
-    // if (loading) {
-    //   return <Status status="loadingDetail" />;
-    // }
-    // if (error) {
-    //   return <Status retry={onRetry} status="error" />;
-    // }
-    // if (cartData.length === 0) {
-    //   return <Status status="empty" />;
-    // }
+   
     if (tabStateCreater === 'Builder') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
@@ -1338,8 +1189,6 @@ function search(r) {
       );
     }
     if (tabStateCreater === 'wearable') {
-      // console.log("切换了");
-
       return (
         <>
           <div>655555</div>
@@ -1375,18 +1224,10 @@ function search(r) {
     reqDclData,
   ]);
   const addWorkWerable = () => {
-    // console.log(55, tokenWearable);
-    // setShowModal(true)
-    // const res = getBaseInfo(tokenWearable);
-    // res.then((resWeable) => {
-    //   setaddressWerVal(resWeable.data.profile.address);
-    //   setemailWearVal(resWeable.data.profile.email);
-
-    // })
+   
   }
 
   const renderWerable = React.useMemo(() => {
-    // console.log(statue);
 
     if (loading) {
       return <Status status="loadingDetail" />;
@@ -1415,7 +1256,6 @@ function search(r) {
     }
 
     if (routeTab === 'Learn') {
-      //   // console.log(dataBuildSource,6565656);
 
       return (
         <>
@@ -1426,10 +1266,6 @@ function search(r) {
             {/* 123 */}
             {
               dataSourceLearn?.map((item, idx) => {
-                // console.log(card,8888888888);
-
-                // console.log(dataSourceLearn,9999999);
-
                 return (<LearnCard {...item} key={idx} />)
               })
             }
@@ -1537,70 +1373,27 @@ function search(r) {
   );
 
 
-
-
-  const watcher_store = React.useCallback(() => {
-    set_rent_set_state(s.rentOutState);
-    setManySetState(false);
-    const id = [];
-    if (s.id) {
-      id.push(s.id);
-      setSelectedIds(id);
-    }
-  }, [s, setSelectedIds]);
-  const watcher_store_status = React.useCallback(() => {
-    if (s.status === '') return;
-    if (s.status !== 'Failed!') {
-      set_status('succeed');
-      set_type(true);
-      set_value(s.status);
-      setTimeout(() => {
-        set_type(false);
-        store.setState(() => ({ status: '' }));
-      }, 2000);
-      return;
-    }
-    set_status('error');
-    set_type(true);
-    set_value(s.status);
-    setTimeout(() => {
-      set_type(false);
-      store.setState(() => ({ status: '' }));
-    }, 2000);
-  }, [s.status, set_status, set_type, set_value]);
-  const watcher_cardState = React.useCallback(() => {
-    setCardState(s.parcels_cardState);
-  }, [s.parcels_cardState]);
-  //   useEffect(()=>{
-  // console.log(saveVal,999999);
-  //   },[saveVal])
-  useEffect(() => {
-    setTabStateCreater('Builder')
-    setRouteTab(valueCount[0]?.type)
-  }, [menuDataTwoArrCon, valueCount])
+  // useEffect(() => {
+  //   setTabStateCreater('Builder')
+  //   setRouteTab(valueCount[0]?.type)
+  // }, [menuDataTwoArrCon, valueCount])
 
 
 
   useEffect(() => {
-  //  if (window.location.search) return;
-   const res =  getSearchDetail(router?.query?.q , 1,  20, '');
-  //  onSearchHandler('', 1, 20, '', false)
-  res.then((resPlace)=>{
-    setTabState(resPlace?.data?.Place?.menu_two[0]);
-  })
+    //  if (window.location.search) return;
+    const res = getSearchDetail(router?.query?.q, 1, 20, '');
+    res.then((resPlace) => {
+      setTabState(resPlace?.data?.Place?.menu_two[0]);
+      setTabStateEvent(resPlace.data.Event?.menu_two[0])
+    })
   }, [router?.query?.q])
 
 
 
-  // console.log(headerRef.current?.scrollHeight);
-  // console.log(showCon);
-
-  // console.log(searchText,999);
   // React.useEffect(() => {
   //   if (window.location.search) return;
   //   onSearchHandler('', 1, 20, '', false)
-  //   // console.log(router.query.q,window.location.search);
-
   // }, [])
 
   React.useEffect(() => {
@@ -1632,89 +1425,11 @@ function search(r) {
       onSearchHandler(router.query.q, 1, 20, '', false)
 
     } else if (!window.location.search && router?.query?.q === undefined) {
-      // return
       // console.log('没有啊！！！！！');
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
-      // setSearchText('');
-
-      // onSearchHandler('', 1, 20, '', false)
     }
   }, [router?.query?.q])
-  // console.log(router.query.value,"router.query.value");
-
-  // React.useEffect(() => {
-
-  //   // console.log(document.querySelector('body'));
-
-
-  //   const scrollChange = () => {
-
-  //     const scrollHeight = document.querySelector('.detailName')?.scrollHeight
-  //     const clientHeight = document.querySelector('.detailName')?.clientHeight
-  //     const scrollTop = document.querySelector('.detailName')?.scrollTop
-
-  //     // console.log(scrollHeight,clientHeight,scrollTop);
-
-
-  //     if (scrollTop + clientHeight >= scrollHeight - 1) {
-
-
-
-  //         // requestData(pageNum, count)
-  //     }
-
-  //     document.addEventListener('scroll', scrollChange);
-  //     return () => document.removeEventListener('scroll', scrollChange);
-  // }
-
-
-  // window.addEventListener('scroll', scrollChange, true)
-  // // scrollChange()
-  // return () => {
-  //     window.removeEventListener('scroll', scrollChange, false)
-  // }
-
-  // }, [])
-
-
-
-
-  // React.useEffect(() => {
-
-
-  //   setSaveIcon(false)
-  //   const a = getToken('address');
-
-  //   if (a) {
-  //     setWalletAddress(a);
-  //   }
-
-  //   setNavLabel('All')
-
-  //   watcher_store();
-  //   watcher_store_status();
-  //   watcher_cardState();
-  // }, [
-  //   tokenWearable,
-  //   navLabel,
-  //   getToken,
-  //   requestData,
-  //   loadingDetail,
-  //   buildState,
-  //   statue,
-  //   walletAddress,
-  //   requestPersonal,
-  //   watcher_store,
-  //   dataBuildSource,
-  //   // reqBuilderData,
-  //   addressWearable,
-  //   reqDclData,
-  //   // r.router.query.q,
-  //   routeTab,
-  //   tabState,
-  //   reqWearablesData,
-  // ]);
 
 
   const tag2 = () => {
@@ -2290,13 +2005,8 @@ function search(r) {
             <div className={cn('', style.searchBoxVal)}>
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
-                // console.log(val, router.query.q);
-
                 setDataSource([])
                 setRouteTab(valueCount[0]?.type)
-                // console.log(loadingDetail,1111111111)
-                // setSearchText(router.query.q);
-                // if (!router.query.q) {
                 setDataSource([])
 
                 setDataSourceLearn([])
@@ -2319,12 +2029,6 @@ function search(r) {
                 setEventSomList([])
                 setEventCvList([])
                 setSearchText(val);
-                // onSearchHandler(window.location.search, 1, pageSize, '', false)
-                // } else {
-                //   setSearchText('');
-                //   // onSearchHandler('', 1, pageSize, '', false)
-                //   // onSearchHandler(router.query.q, 1, pageSize, '',false)
-                // }
               }} ></Search>
             </div>
 
@@ -2345,7 +2049,6 @@ function search(r) {
                         changeTab3(item.label, item.type);
                       }}
                     />
-                    // <>{item}</>
                   );
                 })}
               </>

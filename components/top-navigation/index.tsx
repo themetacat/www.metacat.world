@@ -130,18 +130,18 @@ const parcels = [
     type: 'mozillaHubs',
     link: '/parcels?tab=mozillaHubs',
   },
-  // {
-  //   label: 'Arium',
-  //   icon: '/images/Arium.png',
-  //   type: 'arium',
-  //   link: '/parcels?tab=arium',
-  // },
-  // {
-  //   label: 'Artifex',
-  //   icon: '/images/Artifex.png',
-  //   type: 'artifex',
-  //   link: '/parcels?tab=artifex',
-  // },
+  {
+    label: 'Arium',
+    icon: '/images/Arium.png',
+    type: 'arium',
+    link: '/parcels?tab=arium',
+  },
+  {
+    label: 'Artifex',
+    icon: '/images/Artifex.png',
+    type: 'artifex',
+    link: '/parcels?tab=artifex',
+  },
 ];
 const eventList = [
   {
