@@ -82,9 +82,9 @@ export default function TopicIndex() {
 
       // setPageNumber(newPage)
       const res = await req_wearable_list(page, count);
-      console.log(res,page, "req_wearable_listreq_wearable_list");
+      // console.log(res,page, "req_wearable_listreq_wearable_list");
 
-      console.log(res.total_page);
+      // console.log(res.total_page);
       const { data, total_page } = res;
 
       setBuilders(convert(data));
@@ -102,7 +102,7 @@ export default function TopicIndex() {
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
-      console.log(11111);
+      // console.log(11111);
 
       const requestNumber = number + 1;
 
@@ -128,7 +128,7 @@ export default function TopicIndex() {
       return <Status status="empty" />;
     }
     if (builders?.length > 0) {
-      console.log(builders);
+      // console.log(builders);
 
       return (
         <>

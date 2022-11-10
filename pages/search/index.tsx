@@ -483,7 +483,7 @@ function search(r) {
       const dataListWearable = dataSourceCreWear;
       if (res.data?.Creator?.Wearable?.length > 0) {
         dataListWearable?.push(...res.data?.Creator?.Wearable)
-        console.log(dataListWearable, page, "asdsadsad");
+        // console.log(dataListWearable, page, "asdsadsad");
 
         setDataSourceCreWear(convert(dataListWearable))
       }
@@ -1377,7 +1377,7 @@ function search(r) {
 
   useEffect(() => {
     //  if (window.location.search) return;
-    console.log(router?.query?.q);
+    // console.log(router?.query?.q);
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
     res.then((resPlace) => {
       setRouteTab(resPlace?.data?.menu_one[0])
@@ -1893,7 +1893,7 @@ function search(r) {
       )
     }
     if (routeTab === 'Creator') {
-      console.log(dataSourceCreWear)
+      // console.log(dataSourceCreWear)
       return (
         <>
           {/* {institutions.map((item, idx) => {
