@@ -312,6 +312,7 @@ export default function Event(props) {
                 <>
                     <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ", style.voEvent)}>
                         {eventDclList.map((card, item) => {
+                            
                             return < EventDetail {...card} onClinkDetail={() => { onClinkDclDetail(card) }} />;
                         })}
                     </div>

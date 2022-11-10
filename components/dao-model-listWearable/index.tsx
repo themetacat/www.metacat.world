@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { v4 as uuid } from 'uuid';
 import { WebGLRenderer } from 'three';
-import DaoWebglCard2 from '../dao-webgl-graphic2';
+import DaoWebglCard2 from '../dao-webgl-graphicWearable';
 import styles from './index.module.css';
 
 type Props = {
@@ -133,16 +133,18 @@ export default function DaoModelList({
       return;
     }
     const modelEle = models.map((model, idx) => {
+      
       return (
+        <>
         <DaoWebglCard2
-          wearablesShowOrHideState={wearablesShowOrHideState}
-          wearablesShowOrHide={wearablesShowOrHide}
-          wearablesSleceteIdList={wearablesSleceteIdList}
+          // wearablesShowOrHideState={wearablesShowOrHideState}
+          // wearablesShowOrHide={wearablesShowOrHide}
+          // wearablesSleceteIdList={wearablesSleceteIdList}
           onClick={onClick}
           id={id}
-          saveIconVal={saveIconVal}
+          // saveIconVal={saveIconVal}
           model={model}
-          batchShowOrHide={batchShowOrHide}
+          // batchShowOrHide={batchShowOrHide}
           name={name}
           key={uuid()}
           token={token}
@@ -154,6 +156,8 @@ export default function DaoModelList({
             scenes.push(se);
           }}
         ></DaoWebglCard2>
+     
+            </>
       );
     });
     setAllScene(scenes);
@@ -204,7 +208,7 @@ export default function DaoModelList({
         )}
         ref={canvaRef}
       ></canvas>
-      <div className="w-full  top-0 left-0 grid grid-cols-4 gap-4 z-10">{renderGraphic}</div>
+      <div className="w-full top-0 left-0 grid grid-cols-4 gap-4 z-10">{renderGraphic}</div>
     </div>
   );
 }

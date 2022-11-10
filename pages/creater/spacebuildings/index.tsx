@@ -59,7 +59,7 @@ export default function TopicIndex() {
   const cls = cn('flex-1', style.bottomLine);
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/build/${t}`);
+    router.replace(`/creater/${t}`);
   }, []);
 
   const requestData = React.useCallback(async (page: number, count: number,query,type) => {

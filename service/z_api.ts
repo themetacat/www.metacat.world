@@ -1147,6 +1147,20 @@ export const req_space_buildings_list = async (page: number, count: number, quer
   return json;
 };
 
+export const req_wearable_list = async (page: number, count: number,
+  ) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/get_wearable_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_scence_list = async (page: number, count: number, query: string,
   type: string,) => {
   const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });

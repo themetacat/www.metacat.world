@@ -27,6 +27,10 @@ const TAB = [
     label: 'Buildings',
     type: 'buildings',
   },
+  {
+    label: 'Wearable',
+    type: 'wearable',
+  },
   // {
   //   label: 'Space Buildings',
   //   type: 'spacebuildings',

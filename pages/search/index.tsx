@@ -107,6 +107,10 @@ const TABDataCreater = [
     label: 'Builder',
     type: 'Builder',
   },
+  {
+    label: 'Wearable',
+    type: 'Wearable',
+  },
 
 ]
 
@@ -378,12 +382,13 @@ function search(r) {
 
 
       if (tabStateCreater === tab) return;
+
       // setLoading(true);
       setTabStateCreater(tab);
-      // setParcelsIds([]);
-      // setSelectedIds([]);
-      // setCardState(false);
-      // store.setState(() => ({ parcels_cardState: false, id: null }));
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
       if (tab === 'builder') {
         // setDataSource(orginData.parcelList);
         // store.setState(() => ({ type: 'cv' }));
@@ -474,6 +479,13 @@ function search(r) {
       if (res.data?.Creator?.Builder?.length > 0) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
+      }
+      const dataListWearable = dataSourceCreWear;
+      if (res.data?.Creator?.Wearable?.length > 0) {
+        dataListWearable?.push(...res.data?.Creator?.Wearable)
+        console.log(dataListWearable, page, "asdsadsad");
+
+        setDataSourceCreWear(dataListWearable)
       }
 
       const dataListLearn = dataSourceLearn;
@@ -819,6 +831,7 @@ function search(r) {
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
+
       const data = res.data?.menu_one;
       const dataCreater = res.data?.Creator?.menu_two;
       const countNum = res.data?.item_count;
@@ -842,7 +855,7 @@ function search(r) {
 
       setValueCount(arr)
 
-
+      setRouteTab(arr[0]?.type)
       if (MenuDataTwo) {
 
         Object?.keys(MenuDataTwo).forEach(keys => {
@@ -875,6 +888,12 @@ function search(r) {
       if (res.data?.Creator?.Builder?.length > 0) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
+      }
+
+      const dataListWearable = dataSourceCreWear;
+      if (res.data?.Creator?.Wearable?.length > 0) {
+        dataListWearable?.push(...res.data?.Creator?.Wearable)
+        setDataSourceCreWear(dataListWearable)
       }
 
       const dataListEventCv = eventCvList;
@@ -1164,7 +1183,7 @@ function search(r) {
     reqDclData,
   ]);
   const renderContentCreater = React.useMemo(() => {
-   
+
     if (tabStateCreater === 'Builder') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
@@ -1173,42 +1192,19 @@ function search(r) {
               <InfoCard cls={style.cls} {...item} key={idx}
                 onClick={() => toTopic(idx, item)}
               ></InfoCard>
-              // <Card
-              //   {...card}
-              //   parcelsIds={parcelsIds}
-              //   state={cardState}
-              //   key={uuid()}
-              //   selectedIds={selectedIds}
-              //   onClick={(id, ids) => {
-              //     select(id, ids);
-              //   }}
-              // ></Card>
             );
           })}
         </div>
       );
     }
-    if (tabStateCreater === 'wearable') {
+    if (tabStateCreater === ' Wearable') {
       return (
-        <>
-          <div>655555</div>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
-            {dclDataSource.map((card) => {
-              return (
-                <DclCard
-                  {...card}
-                  parcelsIds={parcelsIds}
-                  state={cardState}
-                  key={uuid()}
-                  y
-                  selectedIds={selectedIds}
-                  onClick={(id, ids) => {
-                    select(id, ids);
-                  }}
-                ></DclCard>
-              );
-            })}
-          </div> */}
+        <>55555
+          {/* <DaoModelList2
+                models={dataSourceCreWear}
+                type={'topic'}
+                address={router.query.id}
+              ></DaoModelList2> */}
         </>
       );
     }
@@ -1219,11 +1215,12 @@ function search(r) {
     changeNum,
     parcelsIds,
     loadingDetail,
+    tabStateCreater,
     setCardState,
     tabState,
     reqDclData,
   ]);
-  
+
 
   const renderWerable = React.useMemo(() => {
 
@@ -1234,7 +1231,7 @@ function search(r) {
       return <Status retry={onRetry} status="error" />;
     }
     if (statue === 1) {
-      return <Status  status="emptyWerable" />;
+      return <Status status="emptyWerable" />;
 
     }
 
@@ -1380,11 +1377,14 @@ function search(r) {
 
   useEffect(() => {
     //  if (window.location.search) return;
+    console.log(router?.query?.q);
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
     res.then((resPlace) => {
+      // setRouteTab(resPlace?.data?.menu_one[0])
       setTabState(resPlace?.data?.Place?.menu_two[0]);
       setTabStateEvent(resPlace.data.Event?.menu_two[0])
     })
+
   }, [router?.query?.q])
 
 
@@ -1399,6 +1399,7 @@ function search(r) {
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
     if (window.location.search && router?.query?.q) {
+
       setDataSource([])
       setDataSourceLearn([])
       setDataSourceCreBuilder([])
@@ -1423,6 +1424,7 @@ function search(r) {
       onSearchHandler(router.query.q, 1, 20, '', false)
 
     } else if (!window.location.search && router?.query?.q === undefined) {
+
       // console.log('没有啊！！！！！');
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
@@ -1620,11 +1622,11 @@ function search(r) {
               <div className="main-content">
                 <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
               </div>
-              {
+              {/* {
                 loadingDetail === true ? null :
-                  <>
+                  <> */}
 
-                    {/* <div
+              {/* <div
                       className={cn(
                         'p absolute z-40 flex justify-start items-center',
                         {
@@ -1686,8 +1688,8 @@ function search(r) {
                     >
                       <img className={style.icon} src="/images/tab-right.png"></img>
                     </div> */}
-                  </>
-              }
+              {/* </> */}
+              {/* } */}
               <div className={cls} />
             </div>
           </div>
@@ -1795,10 +1797,10 @@ function search(r) {
               </div>
               : null
             }
-            {loadingDetail === true || emptyStatus === true ?
+            {/* {loadingDetail === true || emptyStatus === true ?
               <Status status="loadingDetail" />
               : null
-            }
+            } */}
           </div>
 
           {/* 卡片结束 */}
@@ -1880,25 +1882,28 @@ function search(r) {
                 : null
             }
 
-            {loadingDetail === true ?
+            {/* {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null
-            }
+            } */}
           </div>
 
         </>
       )
     }
     if (routeTab === 'Creator') {
+      console.log(dataSourceCreWear)
       return (
         <>
           {/* {institutions.map((item, idx) => {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })} */}
           <div className={cn('tab-list flex ', style.allHeight)}>
-            {/* <div className={cls}>valueCountCreater || </div> */}
+            {/* <div className={cls}> </div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(TABDataCreater).map((item) => {
+              {(valueCountCreater || TABDataCreater).map((item) => {
+                console.log(valueCountCreater, 1111);
+
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
@@ -1917,7 +1922,26 @@ function search(r) {
           </div>
 
           <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
-            {renderContentCreater}
+            {/* {renderContentCreater} */}
+            {tabStateCreater === 'Builder' ?
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                  {dataSourceCreBuilder?.map((item, idx) => {
+                    return (
+                      <InfoCard cls={style.cls} {...item} key={idx}
+                        onClick={() => toTopic(idx, item)}
+                      ></InfoCard>
+                    );
+                  })}
+                </div>
+              </> : null}
+            {tabStateCreater === 'Wearable' ? <>
+              <DaoModelList2
+                models={dataSourceCreWear}
+                type={'topic'}
+                address={router.query.id}
+              ></DaoModelList2>
+            </> : null}
           </div>
         </>
       );
@@ -2004,9 +2028,9 @@ function search(r) {
               <Search text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 setDataSource([])
-                setRouteTab(valueCount[0]?.type)
+                // setRouteTab(valueCount[0]?.type)
                 setDataSource([])
-
+                // setRouteTab('Place')
                 setDataSourceLearn([])
                 setDataSourceCreBuilder([])
                 setDataSourceCreWear([])

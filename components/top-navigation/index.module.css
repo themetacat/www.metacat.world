@@ -96,7 +96,7 @@ flex-flow: row;
 .location {
   position: absolute;
   right: -48px;
-  bottom: -100px;
+  top: 40px;
   /* bottom: -90px; */
   z-index: 99999 !important;
   background-color: #0f191b;

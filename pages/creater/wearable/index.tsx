@@ -7,10 +7,11 @@ import Page from '../../../components/page';
 import PageHeader from '../../../components/top-navigation';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
-import TopicDetailCardBuildings from '../../../components/topic-detail-card-Buildings';
+import TopicDetailCard from '../../../components/topic-detail-card';
+import DaoModelList2 from '../../../components/dao-model-listWearable';
+import WerableDetailCard from '../../../components/werableDetailCard';
 import PagiNation from '../../../components/pagination';
 import Tab from '../../../components/tab';
-import TopJumper from '../../../components/jump-to-top';
 
 import AnimationBack from '../../../components/animation-back';
 
@@ -18,7 +19,7 @@ import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { getBuilderList } from '../../../service';
+import { req_space_buildings_list, req_wearable_list } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -53,10 +54,12 @@ export default function TopicIndex() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
-  const [pageCount, setPageCount] = React.useState(80);
-  const [totalPage, setTotalPage] = React.useState(0);
+  const [pageCount, setPageCount] = React.useState(20);
+  const [totalPage, setTotalPage] = React.useState(1);
+  // const [query, setQuery] = React.useState(null);
+  // const [type, setTYPE] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
-  const [tabState, setTabState] = React.useState('buildings');
+  const [tabState, setTabState] = React.useState('wearable');
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -65,7 +68,8 @@ export default function TopicIndex() {
     router.replace(`/creater/${t}`);
   }, []);
 
-  const requestData = React.useCallback(async (page: number, count: number) => {
+
+  const requestData = async (page: number, count: number) => {
     setLoading(true);
     setError(false);
     try {
@@ -73,16 +77,24 @@ export default function TopicIndex() {
         setLoading(false);
         return;
       }
-      const res = await getBuilderList(page, count);
-      const { list, total_page } = res.data;
-      setBuilders(convert(list));
+      // const newPage = page + 1
+      // console.log(newPage,"newPagenewPage");
+
+      // setPageNumber(newPage)
+      const res = await req_wearable_list(page, count);
+      console.log(res, "req_wearable_listreq_wearable_list");
+
+      console.log(res.total_page);
+      const { data, total_page } = res;
+
+      setBuilders(convert(data));
       setTotalPage(total_page);
       setPageNumber(page);
       setLoading(false);
     } catch (err) {
       setError(true);
     }
-  }, []);
+  }
 
   const onRetry = React.useCallback(() => {
     requestData(pageNumber, pageCount);
@@ -90,7 +102,10 @@ export default function TopicIndex() {
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
+      console.log(11111);
+
       const requestNumber = number + 1;
+
       await requestData(requestNumber, pageCount);
     },
     [pageCount],
@@ -109,35 +124,60 @@ export default function TopicIndex() {
       return <Status retry={onRetry} status="error" />;
     }
 
-    if (builders.length === 0) {
+    if (builders?.length === 0) {
       return <Status status="empty" />;
     }
-  }, [loading, error, builders]);
+    if (builders?.length > 0) {
+      console.log(builders);
 
-  React.useEffect(() => {
-    const listener = () => {
-      if (document.getElementById('switch') && window.scrollY > 0) {
-        setFixedState(true);
-      } else {
-        setFixedState(false);
-      }
-    };
-    document.addEventListener('scroll', listener);
-    return () => document.removeEventListener('scroll', listener);
-  }, [fixedState]);
+      return (
+        <>
+          <div
+            className={cn(
+              '',
+              style.buildingsCon,
+            )}
+          >
+            <DaoModelList2
+              models={builders}
+              type={'topic'}
+              address={router.query.id}
+            ></DaoModelList2>
+
+          </div>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+        </>
+      );
+    }
+
+  }, [loading, error,]);
+
+  // React.useEffect(() => {
+  //   const listener = () => {
+  //     if (document.getElementById('switch') && window.scrollY > 90) {
+  //       setFixedState(true);
+  //     } else {
+  //       setFixedState(false);
+  //     }
+  //   };
+  //   document.addEventListener('scroll', listener);
+  //   return () => document.removeEventListener('scroll', listener);
+  // }, [fixedState]);
 
   return (
     <Page className="min-h-screen" meta={meta}>
-         <div className={cn(fixedState ? style.fix1 : null)}>
-            <PageHeader className={cn('')} active={'Build'} />
-          </div>
-      <div className={cn('bg-black relative', style.backImage)}>
-        <div className={style.topCon}>
-       
+      <div className="bg-black relative">
+        <div className={fixedState ? style.fix1 : null}>
+          <PageHeader className={cn('relative z-20')} active={'Build'} />
+        </div>
+        <div className={cn('bg-black relative', style.backImage)}>
           <div
-            className={cn('tab-list flex ', style.allHeight
-            // fixedState ? style.fix2 :  style.allHeight,
-            )}
+            className={cn('tab-list flex', style.allHeight, fixedState ? style.fix2 : null)}
             id="switch"
           >
             <div className={cls}></div>
@@ -160,59 +200,18 @@ export default function TopicIndex() {
             </div>
             <div className={cls} />
           </div>
-        </div>
-        {/* <div
-          className={cn('main-content flex justify-center items-end relative z-10', style.signBack)}
-        >
-          <img src="/images/buildingsBanner.png" className={style.sign}></img>
-        </div> */}
-        <div className={style.imgContanier}>
-          <div className={style.title}>Featured Buildings</div>
-          <div className={style.text}>
-            <div className={style.hengxian}></div>
-            <div className={style.t}>
-              EXCELLENT BUILDINGS ARE GATHERED ACCORDING TO THE LANDOWNERS OR ARCHITECTS
-              {/* EXCELLENT &nbsp;&nbsp;
-              BUILDINGS &nbsp;&nbsp;
-              ARE&nbsp;&nbsp;&nbsp;
-              GATHERED&nbsp;&nbsp;
-              ACCORDING&nbsp;&nbsp;
-              TO&nbsp;&nbsp;&nbsp;
-              THE&nbsp;&nbsp;&nbsp;
-              LANDOWNERS&nbsp;&nbsp;
-              OR&nbsp;&nbsp;&nbsp;
-              ARCHITECTS&nbsp;&nbsp; */}
+          <div className={style.imgContanier}>
+            <div className={style.title}>Metaverse Wearable</div>
+            <div className={style.text}>
+              <div className={style.hengxian}></div>
+              <div className={style.t}>ALL THE GENIUS VIRTUAL OUTFITS FOR DRESSING UP YOUR AVATAR</div>
+              <div className={style.hengxian}></div>
             </div>
-            {/* <div className={style.t}>Excellent buildings are gathered according to the landowners or architects.</div> */}
-            <div className={style.hengxian}></div>
           </div>
         </div>
       </div>
-      <TopJumper classname={style.jumper}></TopJumper>
-      <div className={cn('main-content', style.content)}>
-        {builders.length > 0 ? (
-          <>
-            <div
-              className={cn(
-                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center',
-                style.buildingsCon,
-              )}
-            >
-              {builders.map((card, idx) => {
-                return <TopicDetailCardBuildings {...card} key={idx}></TopicDetailCardBuildings>;
-              })}
-            </div>
-            <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-          </>
-        ) : null}
-        {renderStatus}
-      </div>
 
+      <div className={cn('main-content', style.content)}>{renderStatus}</div>
       <Footer />
     </Page>
   );

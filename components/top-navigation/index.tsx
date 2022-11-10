@@ -33,6 +33,11 @@ const build = [
     type: 'buildings',
     link: '/creater/buildings',
   },
+  {
+    label: 'Wearable',
+    type: 'wearable',
+    link: '/creater/wearable',
+  },
   // {
   //   label: 'Space Buildings',
   //   type: 'spacebuildings',

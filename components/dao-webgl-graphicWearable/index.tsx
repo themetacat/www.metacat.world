@@ -18,34 +18,18 @@ interface Props {
   tabState?;
   id?;
   name?;
-  saveIconVal;
+  // saveIconVal;
   token?;
-  wearablesShowOrHideState?;
-  wearablesShowOrHide?;
+  // wearablesShowOrHideState?;
+  // wearablesShowOrHide?;
   onClick?;
-  wearablesSleceteIdList?;
-  batchShowOrHide?;
+  // wearablesSleceteIdList?;
+  // batchShowOrHide?;
   type?;
   address?;
 }
 
-// {
-//   "artwork": {
-//     "name": "比特币子琪",
-//     "desc": "微博@公众号：子棋-热搜点评员 专注行情分析，挖掘优质项目！ Weibo and WeChat public account: Bitcoin Ziqi, focusing on market analysis,discover high-quality projects. #BTC $ETH",
-//     "vox_url": "https://poster-phi.vercel.app/wearable/okx/BTC521.vox",
-//     "opensea_url": "https://opensea.io/assets/matic/0x469da19448b0fafcf781350efcd5a09267ca1f99/60"
-//   },
-//   "artist": {
-//     "name": "Angelica",
-//     "contact": {
-//       "homepape": "https://www.xuechun.space/",
-//       "twitter": "https://twitter.com/BTC521",
-//       "weibo": "https://weibo.com/u/6201825184"
-//     }
-//   },
-//   "id": 100
-// },
+
 
 export default function DaoWebglCard({
   graphicId,
@@ -55,12 +39,12 @@ export default function DaoWebglCard({
   id,
   name,
   token,
-  wearablesShowOrHideState,
-  wearablesShowOrHide,
+  // wearablesShowOrHideState,
+  // wearablesShowOrHide,
   onClick,
-  saveIconVal,
-  wearablesSleceteIdList,
-  batchShowOrHide,
+  // saveIconVal,
+  // wearablesSleceteIdList,
+  // batchShowOrHide,
   type,
   address,
 }: Props) {
@@ -70,12 +54,15 @@ export default function DaoWebglCard({
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(() => {
     if (type === 'topic') {
-      router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
+      window.open(`/wearables/detail/${model.id}?type=${'topic'}`);
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
     } else {
       // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
       window.open(`/wearables/detail/${model.id}?type=${'mywearables'}`);
     }
+    // console.log(model,model.id);
+
+
   }, [tabState, id, address]);
 
   const init = React.useCallback(() => {
@@ -104,9 +91,9 @@ export default function DaoWebglCard({
     scene.add(light);
     sceneRef.current = scene;
 
-    if (!model.cover_img) {
-   
-      
+    if (!model.coverImg) {
+
+
       if (initFinish) {
         initFinish(scene);
       }
@@ -115,7 +102,7 @@ export default function DaoWebglCard({
 
     // add one random mesh to each scene
     const loader = new VOXLoader();
-    loader.load(model.cover_img, function (chunks) {
+    loader.load(model.coverImg, function (chunks) {
       for (let i = 0; i < chunks.length; i += 1) {
         const chunk = chunks[i];
         // displayPalette( chunk.palette );
@@ -166,16 +153,16 @@ export default function DaoWebglCard({
     //   } else {
     //     toast.error("Failed!")
     //   }
-    batchShowOrHide(model.id, model.show_status === 1 ? 2 : 1);
+    // batchShowOrHide(model.id, model.show_status === 1 ? 2 : 1);
     // setSaveIcon
   }, []);
-  React.useEffect(() => {
-    if (wearablesSleceteIdList && wearablesSleceteIdList.findIndex((i) => model.id === i) !== -1) {
-      setSelecete(true);
-    } else {
-      setSelecete(false);
-    }
-  }, [wearablesSleceteIdList]);
+  // React.useEffect(() => {
+  //   if (wearablesSleceteIdList && wearablesSleceteIdList.findIndex((i) => model.id === i) !== -1) {
+  //     setSelecete(true);
+  //   } else {
+  //     setSelecete(false);
+  //   }
+  // }, [wearablesSleceteIdList]);
 
   return (
     <>
@@ -188,11 +175,11 @@ export default function DaoWebglCard({
           triggerModelRotation(false);
         }}
       >
-        {wearablesShowOrHideState && model && wearablesShowOrHide === model.show_status ? (
+        {/* {wearablesShowOrHideState && model && wearablesShowOrHide === model.show_status ? (
           <div className={styles.shade}></div>
-        ) : null}
-        {wearablesShowOrHideState && model && wearablesShowOrHide !== model.show_status ? (
-          <>
+        ) : null} */}
+        {/* {wearablesShowOrHideState && model && wearablesShowOrHide !== model.show_status ? ( */}
+          {/* <>
             <div
               className={styles.selectShade}
               onClick={() => {
@@ -201,19 +188,19 @@ export default function DaoWebglCard({
             ></div>
             <img
               src={selecete ? '/images/Group1.png' : '/images/Group2.png'}
-              // src={cover_img}
+              // src={coverImg}
               className={styles.changeImg}
             />
-          </>
-        ) : null}
+          </> */}
+        {/* ) : null} */}
         <div className="relative">
           <div id={`webgl${graphicId}`} className={styles.graphic}></div>
-          {model && model.opensea_url ? (
+          {model && model.openseaUrl || model.opensea_url ? (
             <img
               src="/images/Nomal.png"
               className={cn('absolute z-20', styles.opese)}
               onClick={() => {
-                window.open(model.opensea_url);
+                window.open(model.openseaUrl|| model.opensea_url);
               }}
             ></img>
           ) : null}
@@ -226,7 +213,7 @@ export default function DaoWebglCard({
             <div className={styles.model}>  <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span></div>
             <div className={cn('flex items-end justify-center text-xs', styles.goDetail)}>
               <div className={styles.artist}>Voxel Artist：</div>
-              <div className={styles.text}> {model ? model.creator_name ||model.creatorName: null}</div>
+              <div className={styles.text}> {model ? model.creator_name || model.creatorName : null}</div>
             </div>
           </div>
           <div className={styles.container}>
@@ -236,21 +223,21 @@ export default function DaoWebglCard({
             </span>
           </div>
         </div>
-        {!type && model && model.show_status ? (
+        {/* {!type && model && model.show_status ? (
           <div className={styles.showOrHide} onClick={changeShowOrHide}>
             {
-               saveIconVal === model.id? <img src='/images/saveIcon.gif' ></img> : null
+              saveIconVal === model.id ? <img src='/images/saveIcon.gif' ></img> : null
             }
             {
-            model && model.show_status === 2 ?
-              <>Show</>
-              : `Hide`
+              model && model.show_status === 2 ?
+                <>Show</>
+                : `Hide`
 
             }
 
 
           </div>
-        ) : null}
+        ) : null} */}
 
       </div>
     </>
