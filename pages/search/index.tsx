@@ -473,12 +473,15 @@ function search(r) {
       if (res.data?.Place?.Voxels.length > 0) {
         dataList?.push(...res.data?.Place?.Voxels)
         setDataSource(dataList)
+
       }
 
       const dataListBuilder = dataSourceCreBuilder;
       if (res.data?.Creator?.Builder?.length > 0) {
         dataListBuilder?.push(...res.data?.Creator?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
+
+
       }
       const dataListWearable = dataSourceCreWear;
       if (res.data?.Creator?.Wearable?.length > 0) {
@@ -486,17 +489,20 @@ function search(r) {
         // console.log(dataListWearable, page, "asdsadsad");
 
         setDataSourceCreWear(convert(dataListWearable))
+
       }
 
       const dataListLearn = dataSourceLearn;
       if (res.data?.Learn?.data?.length > 0) {
         dataListLearn?.push(...res.data?.Learn?.data)
         setDataSourceLearn(dataListLearn)
+
       }
       const dataListEventCv = eventCvList;
       if (res.data?.Event?.Voxels?.length > 0) {
         dataListEventCv?.push(...res.data?.Event?.Voxels)
         setEventCvList(dataListEventCv)
+
       }
       const dataListEventDcl = eventDclList;
       if (res.data?.Event?.Decentranland?.length > 0) {
@@ -1368,12 +1374,15 @@ function search(r) {
   );
 
 
-  useEffect(() => {
-    // console.log(valueCountCreater[0]?.type);
-    
-    // setTabStateCreater(valueCountCreater[0]?.type)
-    setRouteTab(valueCount[0]?.type)
-  }, [valueCountCreater, valueCount])
+  // useEffect(() => {
+  //   console.log(menuDataTwoArrCon);
+
+  //   // setTabStateCreater(valueCountCreater[0]?.type)
+  //   setRouteTab(valueCount[0]?.type)
+  //   setTabState(menuDataTwoArrCon[0]?.type);
+  //   // setTabStateEvent(resPlace.data.Event?.menu_two[0])
+  //   // setTabStateCreater(resPlace.data.Creator?.menu_two[0])
+  // }, [valueCountCreater, valueCount, menuDataTwoArrCon])
 
 
 
@@ -1381,13 +1390,33 @@ function search(r) {
     //  if (window.location.search) return;
     // console.log(router?.query?.q);
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
+
     res.then((resPlace) => {
-      console.log(resPlace.data.Creator?.menu_two[0]);
-      
       setRouteTab(resPlace?.data?.menu_one[0])
       setTabState(resPlace?.data?.Place?.menu_two[0]);
       setTabStateEvent(resPlace.data.Event?.menu_two[0])
       setTabStateCreater(resPlace.data.Creator?.menu_two[0])
+      setDataSourceLearn(resPlace.data?.Learn?.data)
+      setDataSourceCreBuilder(resPlace.data?.Creator?.Builder)
+      setDataSource(resPlace.data?.Place?.Voxels)
+      setDclDataSource(resPlace.data?.Place?.Decentranland)
+      setOncyberDataSource(resPlace?.data?.Place?.Oncyber)
+      setMonaDataSource(resPlace?.data?.Place?.Mona)
+      setProtoWorldDataSource(resPlace?.data?.Place?.Protoworld)
+      setSomSpaceDataSource(resPlace?.data?.Place?.SomniumSpace)
+      setRareDataSource(resPlace?.data?.Place?.RareRooms)
+      setSandBoxDataSource(resPlace?.data?.Place?.TheSandbox)
+      setSpatialDataSource(resPlace?.data?.Place?.Spatial)
+      setHyperfyDataSource(resPlace?.data?.Place?.Hyperfy)
+      setMozillaHubsDataSource(resPlace?.data?.Place?.MozillaHubs)
+      setAriumDataSource(resPlace?.data?.Place?.Arium)
+      setArtifexDataSource(resPlace?.data?.Place?.Artifex)
+      setDataSourceCreBuilder(resPlace.data?.Creator?.Builder)
+      setDataSourceCreWear(resPlace.data?.Creator?.Wearable)
+      setEventCvList(resPlace.data?.Event?.Voxels)
+      setEventDclList(resPlace.data?.Event?.Decentranland)
+      setEventSomList(resPlace.data?.Event?.SomniumSpace)
+
     })
 
   }, [router?.query?.q])
@@ -1907,7 +1936,7 @@ function search(r) {
             {/* <div className={cls}> </div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
               {(valueCountCreater)?.map((item) => {
-                
+
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
