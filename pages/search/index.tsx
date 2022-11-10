@@ -1731,13 +1731,13 @@ function search(r) {
 
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+                {dataSource?.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
               </div>
               : null
             }
             {tabState === 'Decentranland' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {dclDataSource.map((card) => {
+                {dclDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1745,7 +1745,7 @@ function search(r) {
             }
             {tabState === 'SomniumSpace' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {somSpaceDataSource.map((card) => {
+                {somSpaceDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1753,7 +1753,7 @@ function search(r) {
             }
             {tabState === 'Oncyber' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {oncyberDataSource.map((card) => {
+                {oncyberDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1761,7 +1761,7 @@ function search(r) {
             }
             {tabState === 'Mona' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {monaDataSource.map((card) => {
+                {monaDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1769,7 +1769,7 @@ function search(r) {
             }
             {tabState === 'Protoworld' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {protoWorldDataSource.map((card) => {
+                {protoWorldDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1785,7 +1785,7 @@ function search(r) {
             }
             {tabState === 'TheSandbox' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {sandBoxDataSource.map((card) => {
+                {sandBoxDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1801,7 +1801,7 @@ function search(r) {
             }
             {tabState === 'Hyperfy' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {hyperfyDataSource.map((card) => {
+                {hyperfyDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1809,7 +1809,7 @@ function search(r) {
             }
             {tabState === 'MozillaHubs' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {mozillaHubsDataSource.map((card) => {
+                {mozillaHubsDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1817,7 +1817,7 @@ function search(r) {
             }
             {tabState === 'Arium' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {ariumDataSource.map((card) => {
+                {ariumDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1825,7 +1825,7 @@ function search(r) {
             }
             {tabState === 'Artifex' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {artifexDataSource.map((card) => {
+                {artifexDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -1885,7 +1885,7 @@ function search(r) {
             {
               tabStateEvent === 'Voxels' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-                  {eventCvList.map((card, idx) => {
+                  {eventCvList?.map((card, idx) => {
                     return < EventDetail key={idx} {...card} onClinkDetail={() => {
                       onClinkCvDetail(card)
                     }} />;
@@ -1896,7 +1896,7 @@ function search(r) {
             {
               tabStateEvent === 'Decentranland' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-                  {eventDclList.map((card, idx) => {
+                  {eventDclList?.map((card, idx) => {
                     return (< EventDetail key={idx} {...card} onClinkDetail={() => {
                       onClinkDclDetail(card)
                     }} />);
@@ -1907,7 +1907,7 @@ function search(r) {
             {
               tabStateEvent === 'SomniumSpace' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-                  {eventSomList.map((card, idx) => {
+                  {eventSomList?.map((card, idx) => {
                     return (< EventDetail key={idx} {...card} onClinkDetail={() => {
                       onClinkSomDetail(card)
                     }} />);
@@ -2093,7 +2093,7 @@ function search(r) {
             <div className={cn(style.tableList)}>
 
               <>
-                {valueCount.map((item) => {
+                {valueCount?.map((item) => {
 
                   return (
                     <Tab5
