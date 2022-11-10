@@ -178,7 +178,7 @@ function search(r) {
   const [showModal, setShowModal] = React.useState(false);
   const [tabStateEvent, setTabStateEvent] = React.useState('Voxels');
   const [tabState, setTabState] = React.useState(null);
-  const [tabStateCreater, setTabStateCreater] = React.useState('Builder');
+  const [tabStateCreater, setTabStateCreater] = React.useState(null);
   const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
   const [buildState, setBuildState] = React.useState(null);
@@ -305,7 +305,7 @@ function search(r) {
       if (l === 'Creator') {
         setShowTab('Builder')
       }
-      setTabStateCreater('Builder')
+      // setTabStateCreater('Builder')
       // setTabStateEvent('Voxels')
       // setTabStateEvent(dataEvent[0])
       setShowTab(l);
@@ -1368,10 +1368,12 @@ function search(r) {
   );
 
 
-  // useEffect(() => {
-  //   setTabStateCreater('Builder')
-  //   setRouteTab(valueCount[0]?.type)
-  // }, [menuDataTwoArrCon, valueCount])
+  useEffect(() => {
+    console.log(valueCountCreater[0]?.type);
+    
+    // setTabStateCreater(valueCountCreater[0]?.type)
+    setRouteTab(valueCount[0]?.type)
+  }, [valueCountCreater, valueCount])
 
 
 
@@ -1380,10 +1382,12 @@ function search(r) {
     // console.log(router?.query?.q);
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
     res.then((resPlace) => {
+      console.log(resPlace.data.Creator?.menu_two[0]);
+      
       setRouteTab(resPlace?.data?.menu_one[0])
       setTabState(resPlace?.data?.Place?.menu_two[0]);
       setTabStateEvent(resPlace.data.Event?.menu_two[0])
-      setValueCountCreater(resPlace.data.Creater?.menu_two[0])
+      setTabStateCreater(resPlace.data.Creator?.menu_two[0])
     })
 
   }, [router?.query?.q])
@@ -1902,7 +1906,8 @@ function search(r) {
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}> </div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(TABDataCreater||valueCountCreater).map((item) => {
+              {(valueCountCreater)?.map((item) => {
+                
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
@@ -1981,6 +1986,7 @@ function search(r) {
     dataSource,
     dataBuildSource,
     tabState,
+    tabStateCreater,
     routeTab,
     creatorsReander,
   ]);
