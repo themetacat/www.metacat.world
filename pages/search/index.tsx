@@ -1369,7 +1369,7 @@ function search(r) {
 
 
   useEffect(() => {
-    console.log(valueCountCreater[0]?.type);
+    // console.log(valueCountCreater[0]?.type);
     
     // setTabStateCreater(valueCountCreater[0]?.type)
     setRouteTab(valueCount[0]?.type)

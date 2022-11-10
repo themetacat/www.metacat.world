@@ -26,17 +26,17 @@ const build = [
   {
     label: 'Builders',
     type: 'builders',
-    link: '/creater/builders',
+    link: '/creation/builders',
   },
   {
     label: 'Buildings',
     type: 'buildings',
-    link: '/creater/buildings',
+    link: '/creation/buildings',
   },
   {
     label: 'Wearable',
     type: 'wearable',
-    link: '/creater/wearable',
+    link: '/creation/wearable',
   },
   // {
   //   label: 'Space Buildings',
@@ -527,8 +527,8 @@ export default function PageHeader({ active, className }: Props) {
               setBuildState(false);
             }}
           >
-            <Link href='/creater/builders' prefetch>
-              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Creator</span>
+            <Link href='/creation/builders' prefetch>
+              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Creation</span>
             </Link>
 
             {

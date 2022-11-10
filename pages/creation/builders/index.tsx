@@ -102,7 +102,7 @@ export default function Builders() {
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/creater/${t}`);
+    router.replace(`/creation/${t}`);
   }, []);
 
   const toTopic = React.useCallback((id, item) => {
