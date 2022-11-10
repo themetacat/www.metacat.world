@@ -32,7 +32,7 @@ import EventDetail from '../../components/eventDetail';
 import { state } from '../../components/wallet-btn';
 
 // import Creator from '../../components/Creator';
-import DaoModelList2 from '../../components/dao-model-list2';
+import DaoModelList2 from '../../components/dao-model-listWearable';
 
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
@@ -485,7 +485,7 @@ function search(r) {
         dataListWearable?.push(...res.data?.Creator?.Wearable)
         console.log(dataListWearable, page, "asdsadsad");
 
-        setDataSourceCreWear(dataListWearable)
+        setDataSourceCreWear(convert(dataListWearable))
       }
 
       const dataListLearn = dataSourceLearn;
@@ -855,7 +855,7 @@ function search(r) {
 
       setValueCount(arr)
 
-      setRouteTab(arr[0]?.type)
+      // setRouteTab(arr[0]?.type)
       if (MenuDataTwo) {
 
         Object?.keys(MenuDataTwo).forEach(keys => {
@@ -893,7 +893,7 @@ function search(r) {
       const dataListWearable = dataSourceCreWear;
       if (res.data?.Creator?.Wearable?.length > 0) {
         dataListWearable?.push(...res.data?.Creator?.Wearable)
-        setDataSourceCreWear(dataListWearable)
+        setDataSourceCreWear(convert(dataListWearable))
       }
 
       const dataListEventCv = eventCvList;
@@ -1380,9 +1380,10 @@ function search(r) {
     console.log(router?.query?.q);
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
     res.then((resPlace) => {
-      // setRouteTab(resPlace?.data?.menu_one[0])
+      setRouteTab(resPlace?.data?.menu_one[0])
       setTabState(resPlace?.data?.Place?.menu_two[0]);
       setTabStateEvent(resPlace.data.Event?.menu_two[0])
+      setValueCountCreater(resPlace.data.Creater?.menu_two[0])
     })
 
   }, [router?.query?.q])
@@ -1901,9 +1902,7 @@ function search(r) {
           <div className={cn('tab-list flex ', style.allHeight)}>
             {/* <div className={cls}> </div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(valueCountCreater || TABDataCreater).map((item) => {
-                console.log(valueCountCreater, 1111);
-
+              {(TABDataCreater||valueCountCreater).map((item) => {
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
@@ -1921,7 +1920,7 @@ function search(r) {
             <div className={cls} />
           </div>
 
-          <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
+          <div onScroll={scroll} className={cn('main-content h-full', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
             {/* {renderContentCreater} */}
             {tabStateCreater === 'Builder' ?
               <>

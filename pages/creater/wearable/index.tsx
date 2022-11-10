@@ -82,7 +82,7 @@ export default function TopicIndex() {
 
       // setPageNumber(newPage)
       const res = await req_wearable_list(page, count);
-      console.log(res, "req_wearable_listreq_wearable_list");
+      console.log(res,page, "req_wearable_listreq_wearable_list");
 
       console.log(res.total_page);
       const { data, total_page } = res;

@@ -18,13 +18,13 @@ interface Props {
   tabState?;
   id?;
   name?;
-  // saveIconVal;
+  saveIconVal;
   token?;
-  // wearablesShowOrHideState?;
-  // wearablesShowOrHide?;
+  wearablesShowOrHideState?;
+  wearablesShowOrHide?;
   onClick?;
-  // wearablesSleceteIdList?;
-  // batchShowOrHide?;
+  wearablesSleceteIdList?;
+  batchShowOrHide?;
   type?;
   address?;
 }
@@ -39,12 +39,12 @@ export default function DaoWebglCard({
   id,
   name,
   token,
-  // wearablesShowOrHideState,
-  // wearablesShowOrHide,
+  wearablesShowOrHideState,
+  wearablesShowOrHide,
   onClick,
-  // saveIconVal,
-  // wearablesSleceteIdList,
-  // batchShowOrHide,
+  saveIconVal,
+  wearablesSleceteIdList,
+  batchShowOrHide,
   type,
   address,
 }: Props) {
@@ -102,6 +102,8 @@ export default function DaoWebglCard({
 
     // add one random mesh to each scene
     const loader = new VOXLoader();
+    console.log(model.coverImg);
+    
     loader.load(model.coverImg, function (chunks) {
       for (let i = 0; i < chunks.length; i += 1) {
         const chunk = chunks[i];
@@ -129,6 +131,8 @@ export default function DaoWebglCard({
   }, [initFinish]);
 
   React.useEffect(() => {
+    console.log(model,"model");
+    
     if (!model) {
       return;
     }

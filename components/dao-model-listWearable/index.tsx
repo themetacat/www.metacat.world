@@ -137,14 +137,14 @@ export default function DaoModelList({
       return (
         <>
         <DaoWebglCard2
-          // wearablesShowOrHideState={wearablesShowOrHideState}
-          // wearablesShowOrHide={wearablesShowOrHide}
-          // wearablesSleceteIdList={wearablesSleceteIdList}
+          wearablesShowOrHideState={wearablesShowOrHideState}
+          wearablesShowOrHide={wearablesShowOrHide}
+          wearablesSleceteIdList={wearablesSleceteIdList}
           onClick={onClick}
           id={id}
-          // saveIconVal={saveIconVal}
+          saveIconVal={saveIconVal}
           model={model}
-          // batchShowOrHide={batchShowOrHide}
+          batchShowOrHide={batchShowOrHide}
           name={name}
           key={uuid()}
           token={token}
@@ -200,15 +200,25 @@ export default function DaoModelList({
   }, [models]);
 
   return (
+    // <div id="container" className="relative ">
+    //   <canvas
+    //     className={cn(
+    //       'absolute top-0 left-0 flex-auto bg-transparent',
+    //       styles.graphicAll,
+    //     )}
+    //     ref={canvaRef}
+    //   ></canvas>
+    //   <div className=" top-0 left-0 grid grid-cols-4 gap-4 z-10">{renderGraphic}</div>
+    // </div>
     <div id="container" className="relative w-full h-full">
-      <canvas
-        className={cn(
-          'absolute w-full h-full top-0 left-0 flex-auto bg-transparent',
-          styles.graphicAll,
-        )}
-        ref={canvaRef}
-      ></canvas>
-      <div className="w-full top-0 left-0 grid grid-cols-4 gap-4 z-10">{renderGraphic}</div>
-    </div>
+    <canvas
+      className={cn(
+        'absolute w-full top-0 left-0 flex-auto bg-transparent',
+        styles.graphicAll,
+      )}
+      ref={canvaRef}
+    ></canvas>
+    <div className="w-full  top-0 left-0 grid grid-cols-4 gap-4 z-10">{renderGraphic}</div>
+  </div>
   );
 }
