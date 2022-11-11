@@ -1389,7 +1389,7 @@ function search(r) {
     setRouteTab(router?.query?.type)
   }, [router?.query?.type])
 
-  // console.log(routeTab, 55555, router?.query?.type);
+  // console.log(routeTab, 55555, router?.query?.q);
 
 
   useEffect(() => {
@@ -1400,7 +1400,7 @@ function search(r) {
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
 
     res.then((resPlace) => {
-      console.log(!resPlace.data?.Learn?.data);
+      // console.log(!resPlace.data?.Learn?.data);
       if (router?.query?.type !== undefined) {
         // console.log('_____________');
         setRouteTab(router?.query?.type)
@@ -1462,7 +1462,7 @@ function search(r) {
   React.useEffect(() => {
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
-    if (window.location.search && router?.query?.q && router?.query?.type) {
+    if (window.location.search && router?.query?.q !== undefined) {
       // console.log('ni?');
 
       setDataSource([])
@@ -1491,10 +1491,30 @@ function search(r) {
     } else {
 
       // console.log('没有啊！！！！！');
+      setDataSource([])
+      setDataSourceLearn([])
+      setDataSourceCreBuilder([])
+      setDataSourceCreWear([])
+      setDataBuildSource([])
+      setEventDclList([])
+      setEventSomList([])
+      setDclDataSource([])
+      setSomSpaceDataSource([])
+      setMonaDataSource([])
+      setProtoWorldDataSource([])
+      setRareDataSource([])
+      setSandBoxDataSource([])
+      setSpatialDataSource([])
+      setHyperfyDataSource([])
+      setMozillaHubsDataSource([])
+      setAriumDataSource([])
+      setArtifexDataSource([])
+      setOncyberDataSource([])
+      setEventCvList([])
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
     }
-  }, [router?.query?.q, router?.query?.type])
+  }, [router?.query?.q])
 
 
   const tag2 = () => {
