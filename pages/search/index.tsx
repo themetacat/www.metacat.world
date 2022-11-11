@@ -1396,9 +1396,10 @@ function search(r) {
       setTabState(resPlace?.data?.Place?.menu_two[0]);
       setTabStateEvent(resPlace.data.Event?.menu_two[0])
       setTabStateCreater(resPlace.data.Creator?.menu_two[0])
+
       setDataSourceLearn(resPlace.data?.Learn?.data)
       setDataSourceCreBuilder(resPlace.data?.Creator?.Builder)
-      setDataSource(resPlace.data?.Place?.Voxels)
+      // setDataSource(resPlace.data?.Place?.Voxels)
       setDclDataSource(resPlace.data?.Place?.Decentranland)
       setOncyberDataSource(resPlace?.data?.Place?.Oncyber)
       setMonaDataSource(resPlace?.data?.Place?.Mona)
