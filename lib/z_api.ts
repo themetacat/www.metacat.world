@@ -724,6 +724,18 @@ class API {
     return json;
   }
 
+  public async req_learn_others_list(page: number, count: number, type: string): Promise<any> {
+    const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
+    const url = `${this.url}/learn/get_others_list${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 15.2 获取 Metaverse Report 文章列表接口
 
   public async req_learn_report_list(page: number, count: number, type: string): Promise<any> {

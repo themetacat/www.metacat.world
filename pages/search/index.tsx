@@ -31,7 +31,6 @@ import EventDetail from '../../components/eventDetail';
 
 import { state } from '../../components/wallet-btn';
 
-// import Creator from '../../components/Creator';
 import DaoModelList2 from '../../components/dao-model-listWearable';
 
 
@@ -125,8 +124,8 @@ const TAB3 = [
     type: 'Event',
   },
   {
-    label: 'Creator',
-    type: 'Creator',
+    label: 'Creation',
+    type: 'Creation',
   },
   {
     label: 'Learn',
@@ -193,7 +192,7 @@ function search(r) {
   const [saveIconVal, setSaveIconVal] = React.useState(false);
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
-  const [routeTab, setRouteTab] = React.useState('Place');
+  const [routeTab, setRouteTab] = React.useState(router?.query?.type );
   const [email, setEmail] = React.useState(null);
   const [addbuild, setAddbuild] = React.useState(false);
 
@@ -301,17 +300,17 @@ function search(r) {
 
   const changeTab3 = React.useCallback(
     async (l, t) => {
-      // console.log(l, 111, showTab, tabState);
-      if (l === 'Creator') {
-        setShowTab('Builder')
-      }
-      // setTabStateCreater('Builder')
-      // setTabStateEvent('Voxels')
-      // setTabStateEvent(dataEvent[0])
+      // console.log(l, 111, showTab, router.query.q);
+    
       setShowTab(l);
       setRouteTab(t);
+      if (l&&router.query.q!==undefined) {
+        router.replace(`/search?q=${router.query.q}&type=${l}`);
+      } else {
+        router.replace(`/search?type=${l}`)
+      }
     },
-    [showTab],
+    [showTab,router.query.q],
   );
 
   const onTabChange = React.useCallback(
@@ -433,7 +432,7 @@ function search(r) {
   const onSearchHandlerDetail = async (query,
     page: number,
     per_page: number,
-    search_item: string) => {
+    type: string) => {
     // setDataSource([])
     //             setDataSourceLearn([])
     //             setDataSourceCreWear([])
@@ -447,12 +446,12 @@ function search(r) {
 
     setPage(newPage)
 
-    const res = await getSearchDetail(query, page, per_page, search_item);
+    const res = await getSearchDetail(query, page, per_page, type);
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
       const data = res.data?.menu_one;
-      const dataCreater = res.data?.Creator?.menu_two;
+      const dataCreater = res.data?.Creation?.menu_two;
       const dataEvent = res.data?.Event?.menu_two;
       const countNum = res.data?.item_count;
       const MenuDataTwo = res.data?.Place?.menu_two;
@@ -466,7 +465,6 @@ function search(r) {
         }
         arr.push(obj)
       })
-
       setValueCount(arr)
 
       const dataList = dataSource;
@@ -477,15 +475,15 @@ function search(r) {
       }
 
       const dataListBuilder = dataSourceCreBuilder;
-      if (res.data?.Creator?.Builder?.length > 0) {
-        dataListBuilder?.push(...res.data?.Creator?.Builder)
+      if (res.data?.Creation?.Builder?.length > 0) {
+        dataListBuilder?.push(...res.data?.Creation?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
 
 
       }
       const dataListWearable = dataSourceCreWear;
-      if (res.data?.Creator?.Wearable?.length > 0) {
-        dataListWearable?.push(...res.data?.Creator?.Wearable)
+      if (res.data?.Creation?.Wearable?.length > 0) {
+        dataListWearable?.push(...res.data?.Creation?.Wearable)
         // console.log(dataListWearable, page, "asdsadsad");
 
         setDataSourceCreWear(convert(dataListWearable))
@@ -820,7 +818,7 @@ function search(r) {
   const onSearchHandler = React.useCallback(async (query,
     page: number,
     per_page: number,
-    search_item: string,
+    type: string,
     isCli: boolean) => {
     // setPage(1)
     // console.log('调用几遍',);
@@ -831,15 +829,15 @@ function search(r) {
     setShowModal(true)
     setLoading(true)
     // setPage(newPage)
-
-    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, search_item);
+    
+    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, type);
 
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
 
       const data = res.data?.menu_one;
-      const dataCreater = res.data?.Creator?.menu_two;
+      const dataCreater = res.data?.Creation?.menu_two;
       const countNum = res.data?.item_count;
       const dataEvent = res.data?.Event?.menu_two;
       const MenuDataTwo = res.data?.Place?.menu_two;
@@ -860,6 +858,7 @@ function search(r) {
 
 
       setValueCount(arr)
+
 
       // setRouteTab(arr[0]?.type)
       if (MenuDataTwo) {
@@ -891,14 +890,14 @@ function search(r) {
       }
 
       const dataListBuilder = dataSourceCreBuilder;
-      if (res.data?.Creator?.Builder?.length > 0) {
-        dataListBuilder?.push(...res.data?.Creator?.Builder)
+      if (res.data?.Creation?.Builder?.length > 0) {
+        dataListBuilder?.push(...res.data?.Creation?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
       }
 
       const dataListWearable = dataSourceCreWear;
-      if (res.data?.Creator?.Wearable?.length > 0) {
-        dataListWearable?.push(...res.data?.Creator?.Wearable)
+      if (res.data?.Creation?.Wearable?.length > 0) {
+        dataListWearable?.push(...res.data?.Creation?.Wearable)
         setDataSourceCreWear(convert(dataListWearable))
       }
 
@@ -1074,12 +1073,12 @@ function search(r) {
 
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+          {dataSource?.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
           {showModal === true ?
             <><img src='/images/saveIcon.gif'></img> </>
             :
             <>
-              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
+              {dataSourceTwo?.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
 
             </>
           }
@@ -1142,7 +1141,7 @@ function search(r) {
 
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-          {eventCvList.map((card, idx) => {
+          {eventCvList?.map((card, idx) => {
             return < EventDetail key={idx} {...card} onClinkDetail={() => {
               onClinkCvDetail(card)
             }} />;
@@ -1154,7 +1153,7 @@ function search(r) {
       // Decentranland
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-          {eventDclList.map((card, idx) => {
+          {eventDclList?.map((card, idx) => {
             return (< EventDetail key={idx} {...card} onClinkDetail={() => {
               onClinkDclDetail(card)
             }} />);
@@ -1165,7 +1164,7 @@ function search(r) {
     if (tabStateEvent === 'somniumspace') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-          {eventSomList.map((card, idx) => {
+          {eventSomList?.map((card, idx) => {
             return (< EventDetail key={idx} {...card} onClinkDetail={() => {
               onClinkSomDetail(card)
             }} />);
@@ -1249,9 +1248,9 @@ function search(r) {
 
   const renderBuilding = React.useMemo(() => {
 
-    if (loading) {
-      return <Status status="loadingDetail" />;
-    }
+    // if (loading) {
+    //   return <Status status="loadingDetail" />;
+    // }
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
@@ -1373,32 +1372,50 @@ function search(r) {
     [resultHandler],
   );
 
-
   // useEffect(() => {
-  //   console.log(menuDataTwoArrCon);
+  // //   //   console.log(menuDataTwoArrCon);
+  // //   console.log(router?.query?.type);
+  // //   router.replace(`/search?q=${value}&type=${routeTab}`);
+  // if(router?.query?.type === undefined ||router?.query?.type ==='Place'){
+  //   setRouteTab('Place')
+  // }else{
+  //   setRouteTab(router?.query?.type)
+  // }
 
-  //   // setTabStateCreater(valueCountCreater[0]?.type)
-  //   setRouteTab(valueCount[0]?.type)
-  //   setTabState(menuDataTwoArrCon[0]?.type);
-  //   // setTabStateEvent(resPlace.data.Event?.menu_two[0])
-  //   // setTabStateCreater(resPlace.data.Creator?.menu_two[0])
-  // }, [valueCountCreater, valueCount, menuDataTwoArrCon])
 
+  // }, [router?.query?.type])
+  useEffect(() => {
+    // console.log(router?.query?.type, 111111);
+    setRouteTab(router?.query?.type)
+  }, [router?.query?.type])
+
+  // console.log(routeTab, 55555, router?.query?.type);
 
 
   useEffect(() => {
     //  if (window.location.search) return;
-    // console.log(router?.query?.q);
+
+// console.log(router?.query?.type);
+
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
 
     res.then((resPlace) => {
-      setRouteTab(resPlace?.data?.menu_one[0])
+      if(router?.query?.type !==undefined){
+        // console.log('_____________');
+        setRouteTab(router?.query?.type)
+        // setRouteTab(resPlace?.data?.menu_one[0])
+      }else{
+        // console.log('_____________88888');
+        setRouteTab(resPlace?.data?.menu_one[0])
+        // setRouteTab(router?.query?.type)
+      }
+
       setTabState(resPlace?.data?.Place?.menu_two[0]);
       setTabStateEvent(resPlace.data.Event?.menu_two[0])
-      setTabStateCreater(resPlace.data.Creator?.menu_two[0])
+      setTabStateCreater(resPlace.data.Creation?.menu_two[0])
 
       setDataSourceLearn(resPlace.data?.Learn?.data)
-      setDataSourceCreBuilder(resPlace.data?.Creator?.Builder)
+      setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
       // setDataSource(resPlace.data?.Place?.Voxels)
       setDclDataSource(resPlace.data?.Place?.Decentranland)
       setOncyberDataSource(resPlace?.data?.Place?.Oncyber)
@@ -1412,15 +1429,15 @@ function search(r) {
       setMozillaHubsDataSource(resPlace?.data?.Place?.MozillaHubs)
       setAriumDataSource(resPlace?.data?.Place?.Arium)
       setArtifexDataSource(resPlace?.data?.Place?.Artifex)
-      setDataSourceCreBuilder(resPlace.data?.Creator?.Builder)
-      setDataSourceCreWear(resPlace.data?.Creator?.Wearable)
+      setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
+      setDataSourceCreWear(resPlace.data?.Creation?.Wearable)
       setEventCvList(resPlace.data?.Event?.Voxels)
       setEventDclList(resPlace.data?.Event?.Decentranland)
       setEventSomList(resPlace.data?.Event?.SomniumSpace)
 
     })
 
-  }, [router?.query?.q])
+  }, [router?.query?.q,router?.query?.type])
 
 
 
@@ -1430,10 +1447,10 @@ function search(r) {
   // }, [])
 
   React.useEffect(() => {
-
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
-    if (window.location.search && router?.query?.q) {
+    if (window.location.search && router?.query?.q&&router?.query?.type) {
+// console.log('ni?');
 
       setDataSource([])
       setDataSourceLearn([])
@@ -1458,13 +1475,13 @@ function search(r) {
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
 
-    } else if (!window.location.search && router?.query?.q === undefined) {
+    } else { 
 
       // console.log('没有啊！！！！！');
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
     }
-  }, [router?.query?.q])
+  }, [router?.query?.q,router?.query?.type])
 
 
   const tag2 = () => {
@@ -1621,8 +1638,6 @@ function search(r) {
 
 
     const scroll = (e) => {
-
-
       const { scrollTop, scrollHeight, clientHeight } = e.target;
 
       if (scrollTop + clientHeight >= scrollHeight - 20) {
@@ -1657,74 +1672,6 @@ function search(r) {
               <div className="main-content">
                 <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
               </div>
-              {/* {
-                loadingDetail === true ? null :
-                  <> */}
-
-              {/* <div
-                      className={cn(
-                        'p absolute z-40 flex justify-start items-center',
-                        {
-                          hidden: tabPercent <= 0,
-                        },
-                        style.per,
-                      )}
-                    >
-                      <img className={style.icon} src="/images/tab-left.png"></img>
-                    </div>
-                    <Swiper
-                      modules={[Navigation]}
-                      spaceBetween={1}
-                      slidesPerView="auto"
-                      className={cn('w-full')}
-                      navigation={{
-                        prevEl: '.p',
-                        nextEl: '.n',
-                      }}
-                      onProgress={(swiper, progress) => {
-                        setTabPercent(progress);
-                      }}
-                    >
-                      {(menuDataTwoArrCon || TABData).map((item, index) => {
-                        return (
-                          <SwiperSlide
-                            className={cn(
-                              'box-border w-12 font-semibold text-white flex',
-                              style.baseCON,
-                              tabState === item.type ? style.active : null,
-                            )}
-                            key={index}
-                            onClick={() => {
-                              onTabChange(item.type);
-                            }}
-                          >
-                            <Tab
-                              active={tabState === item.type}
-                              isMini={true}
-                              key={item.label}
-                              label={item.label}
-                              icon={item.icon}
-                            // onClick={() => {
-                            //   onTabChange(item.type);
-                            // }}
-                            />
-                          </SwiperSlide>
-                        );
-                      })}
-                    </Swiper>
-                    <div
-                      className={cn(
-                        'n absolute z-40  flex justify-end items-center',
-                        {
-                          hidden: tabPercent >= 1,
-                        },
-                        style.next,
-                      )}
-                    >
-                      <img className={style.icon} src="/images/tab-right.png"></img>
-                    </div> */}
-              {/* </> */}
-              {/* } */}
               <div className={cls} />
             </div>
           </div>
@@ -1926,7 +1873,7 @@ function search(r) {
         </>
       )
     }
-    if (routeTab === 'Creator') {
+    if (routeTab === 'Creation') {
       // console.log(dataSourceCreWear)
       return (
         <>
@@ -2060,7 +2007,7 @@ function search(r) {
 
           <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
-              <Search text={searchText} onSearch={(val) => {
+              <Search setTypeVal={routeTab} text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
                 setDataSource([])
                 // setRouteTab(valueCount[0]?.type)
@@ -2095,6 +2042,7 @@ function search(r) {
 
               <>
                 {valueCount?.map((item) => {
+                  
 
                   return (
                     <Tab5

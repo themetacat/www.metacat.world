@@ -12,9 +12,10 @@ type Props = {
   type?: string;
   showState?: (value) => void;
   setVal?: (value) => void;
+  setTypeVal;
 };
 
-export default function Search({ text, setVal,onSearch, showState,type }: Props) {
+export default function Search({ text,setTypeVal, setVal,onSearch, showState,type }: Props) {
   const router = useRouter();
   const [value, setValue] = useState(text);
   const [show, setShow] = useState(true);
@@ -36,9 +37,11 @@ export default function Search({ text, setVal,onSearch, showState,type }: Props)
     // console.log(123456,value);
     if(value){
       // setVal(value)
-      router.replace(`/search?q=${value}`)
+      router.replace(`/search?q=${value}&type=${setTypeVal}`)
+      // router.replace(`/search?q=${value}`)
     }else{
-      router.replace(`/search`)
+      router.replace(`/search?type=${setTypeVal}`)
+      // router.replace(`/search`)
     }
     
    

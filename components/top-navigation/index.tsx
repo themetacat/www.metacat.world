@@ -12,6 +12,7 @@ import style from './index.module.css';
 
 
 import { getSearchDetail } from '../../service';
+import { req_sales_amount_percent } from '../../service/z_api';
 
 
 
@@ -66,6 +67,11 @@ const learnCon = [
     label: 'Report',
     type: 'Report',
     link: '/learn?type=report',
+  },
+  {
+    label: 'Others',
+    type: 'Others',
+    link: '/learn?type=others',
   },
 ];
 const parcels = [
@@ -269,6 +275,16 @@ const analyticsData = [
     link: '/analytics?type=netvrk',
   },
 ];
+
+// const routerTab = [
+//    "Place"
+//   ,
+//    "Event"
+//   ,
+//    "Creation"
+//   , "Learn"
+  
+// ]
 
 
 
@@ -642,7 +658,7 @@ export default function PageHeader({ active, className }: Props) {
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler} ></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search  setTypeVal={'Place'||'Event'||'Creation'}  text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler} ></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>

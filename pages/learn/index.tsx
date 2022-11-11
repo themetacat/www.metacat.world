@@ -18,7 +18,7 @@ import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import EventCardLearn from '../../components/EventCard-learn';
 import TopJumper from '../../components/jump-to-top';
 
-import { req_learn_article_list, req_learn_report_list } from '../../service/z_api';
+import { req_learn_article_list, req_learn_report_list, req_learn_others_list } from '../../service/z_api';
 
 const REPORTTAB = [
   {
@@ -28,6 +28,10 @@ const REPORTTAB = [
   {
     label: 'Report',
     type: 'report',
+  },
+  {
+    label: 'Others',
+    type: 'others',
   },
 ];
 
@@ -92,6 +96,10 @@ function Learn(r) {
       if (type === 'report' && type) {
         result = await req_learn_report_list(p, c, t);
       }
+      if (type === 'others' && type) {
+
+        result = await req_learn_others_list(p, c, t);
+      }
       setLoading(false);
       if (result?.code === 100000 && result.data.list.length !== 0) {
         setDataSource(result.data.list);
@@ -102,8 +110,11 @@ function Learn(r) {
     },
     [page, count, showType],
   );
+
   const onTabChange = React.useCallback(
     (i) => {
+
+
       setRouteTab(i);
       router.replace(`/learn?type=${i}`);
     },
@@ -181,15 +192,18 @@ function Learn(r) {
     if (r.router.query.type && r.router.query.type === 'report') {
       requestData(page, count, showType, 'report');
     }
+    if (r.router.query.type && r.router.query.type === 'others') {
+      requestData(page, count, showType, 'others');
+    }
   }, [requestData, r.router.query.type, page, count, showType]);
 
   React.useEffect(() => {
-    
-    
+
+
     const listener = () => {
       // console.log(fixedState,document.querySelector('#myClassName').getBoundingClientRect().top,222);
       // console.log(document.querySelector('#myClassName').getBoundingClientRect().top,window.scrollY);
-      
+
       if (
         // document.querySelector('#myClassName') &&
         // document.querySelector('#myClassName').getBoundingClientRect().top >= 10 
@@ -208,13 +222,13 @@ function Learn(r) {
   const cls = cn('flex-1', style.bottomLine);
   return (
     <Page className={cn('min-h-screen', style.anPage)} meta={meta}>
-      <div className={cn("bg-black relative",fixedState? style.a:null)} >
+      <div className={cn("bg-black relative", fixedState ? style.a : null)} >
         <PageHeader className="relative z-10" active={'learn'} />
       </div>
       <div className={style.containerBanner}>
         <img src="/images/LearnBanner.png" className={style.banner} />
       </div>
-      <div id='myClassName' className={cn('tab-list flex myClassName', fixedState  ? style.aboslute :null, style.allHeight)}>
+      <div id='myClassName' className={cn('tab-list flex myClassName', fixedState ? style.aboslute : null, style.allHeight)}>
         <div className={cls}></div>
         <div className={cn('main-content flex px-0', style.r)}>
           {REPORTTAB.map((item) => {
@@ -233,22 +247,27 @@ function Learn(r) {
 
           <div className={cls} />
           <div className={style.searchOrlangue}>
-            <div className={style.right}>
-              <Search text={searchText} onSearch={onSearchHandler} type={'z'}></Search>
-              <div
-                className={cn('flex items-center', style.border)}
-                style={{ color: 'rgba(255,255,255, 0.3)' }}
-              >
-                <SelectLearn
-                  options={options}
-                  showArrow={true}
-                  onClick={changeStatic}
-                  className={style.selecterLong}
-                  defaultLabel={options[0].label}
-                  hasBorder={false}
-                ></SelectLearn>
-              </div>
-            </div>
+            {
+              r.router.query.type === 'articles' || r.router.query.type === 'report' ? <>
+                <div className={style.right}>
+                  <Search text={searchText} onSearch={onSearchHandler} type={'z'}></Search>
+                  <div
+                    className={cn('flex items-center', style.border)}
+                    style={{ color: 'rgba(255,255,255, 0.3)' }}
+                  >
+                    <SelectLearn
+                      options={options}
+                      showArrow={true}
+                      onClick={changeStatic}
+                      className={style.selecterLong}
+                      defaultLabel={options[0].label}
+                      hasBorder={false}
+                    ></SelectLearn>
+                  </div>
+                </div>
+              </> : null
+            }
+
           </div>
         </div>
 
