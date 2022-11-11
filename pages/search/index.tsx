@@ -1385,7 +1385,7 @@ function search(r) {
 
   // }, [router?.query?.type])
   useEffect(() => {
-    // console.log(router?.query?.type, 111111);
+    // console.log(router?.query?.type.toLowerCase(), 111111);
     setRouteTab(router?.query?.type)
   }, [router?.query?.type])
 
