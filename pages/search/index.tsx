@@ -1404,18 +1404,18 @@ function search(r) {
       if (router?.query?.type !== undefined) {
         // console.log('_____________');
         setRouteTab(router?.query?.type)
-        // if (!resPlace.data?.Learn&&router?.query?.type !== undefined) {
-        //   setRouteTab(resPlace?.data?.menu_one[0])
-        // }
-        // if (!resPlace.data?.Event&&router?.query?.type !== undefined) {
-        //   setRouteTab(resPlace?.data?.menu_one[0])
-        // }
-        // if (!resPlace.data?.Creation&&router?.query?.type !== undefined) {
-        //   setRouteTab(resPlace?.data?.menu_one[0])
-        // }
-        // if (!resPlace.data?.Place&&router?.query?.type !== undefined) {
-        //   setRouteTab(resPlace?.data?.menu_one[0])
-        // }
+        if (!resPlace.data?.Learn&&router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
+        if (!resPlace.data?.Event&&router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
+        if (!resPlace.data?.Creation&&router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
+        if (!resPlace.data?.Place&&router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
 
       } else {
         // console.log('_____________88888');
