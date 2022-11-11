@@ -192,7 +192,7 @@ function search(r) {
   const [saveIconVal, setSaveIconVal] = React.useState(false);
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
-  const [routeTab, setRouteTab] = React.useState(router?.query?.type );
+  const [routeTab, setRouteTab] = React.useState(router?.query?.type);
   const [email, setEmail] = React.useState(null);
   const [addbuild, setAddbuild] = React.useState(false);
 
@@ -301,16 +301,16 @@ function search(r) {
   const changeTab3 = React.useCallback(
     async (l, t) => {
       // console.log(l, 111, showTab, router.query.q);
-    
+
       setShowTab(l);
       setRouteTab(t);
-      if (l&&router.query.q!==undefined) {
+      if (l && router.query.q !== undefined) {
         router.replace(`/search?q=${router.query.q}&type=${l}`);
       } else {
         router.replace(`/search?type=${l}`)
       }
     },
-    [showTab,router.query.q],
+    [showTab, router.query.q],
   );
 
   const onTabChange = React.useCallback(
@@ -432,7 +432,7 @@ function search(r) {
   const onSearchHandlerDetail = async (query,
     page: number,
     per_page: number,
-    type: string) => {
+    typeVal: string) => {
     // setDataSource([])
     //             setDataSourceLearn([])
     //             setDataSourceCreWear([])
@@ -446,7 +446,7 @@ function search(r) {
 
     setPage(newPage)
 
-    const res = await getSearchDetail(query, page, per_page, type);
+    const res = await getSearchDetail(query, page, per_page, typeVal);
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
@@ -818,7 +818,7 @@ function search(r) {
   const onSearchHandler = React.useCallback(async (query,
     page: number,
     per_page: number,
-    type: string,
+    typeVal: string,
     isCli: boolean) => {
     // setPage(1)
     // console.log('调用几遍',);
@@ -829,8 +829,8 @@ function search(r) {
     setShowModal(true)
     setLoading(true)
     // setPage(newPage)
-    
-    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, type);
+
+    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, typeVal);
 
     setShowModal(false)
     setLoading(false)
@@ -1395,16 +1395,29 @@ function search(r) {
   useEffect(() => {
     //  if (window.location.search) return;
 
-// console.log(router?.query?.type);
+
 
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
 
     res.then((resPlace) => {
-      if(router?.query?.type !==undefined){
+      console.log(!resPlace.data?.Learn?.data);
+      if (router?.query?.type !== undefined) {
         // console.log('_____________');
         setRouteTab(router?.query?.type)
-        // setRouteTab(resPlace?.data?.menu_one[0])
-      }else{
+        // if (!resPlace.data?.Learn&&router?.query?.type !== undefined) {
+        //   setRouteTab(resPlace?.data?.menu_one[0])
+        // }
+        // if (!resPlace.data?.Event&&router?.query?.type !== undefined) {
+        //   setRouteTab(resPlace?.data?.menu_one[0])
+        // }
+        // if (!resPlace.data?.Creation&&router?.query?.type !== undefined) {
+        //   setRouteTab(resPlace?.data?.menu_one[0])
+        // }
+        // if (!resPlace.data?.Place&&router?.query?.type !== undefined) {
+        //   setRouteTab(resPlace?.data?.menu_one[0])
+        // }
+
+      } else {
         // console.log('_____________88888');
         setRouteTab(resPlace?.data?.menu_one[0])
         // setRouteTab(router?.query?.type)
@@ -1437,7 +1450,7 @@ function search(r) {
 
     })
 
-  }, [router?.query?.q,router?.query?.type])
+  }, [router?.query?.q, router?.query?.type])
 
 
 
@@ -1449,8 +1462,8 @@ function search(r) {
   React.useEffect(() => {
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
-    if (window.location.search && router?.query?.q&&router?.query?.type) {
-// console.log('ni?');
+    if (window.location.search && router?.query?.q && router?.query?.type) {
+      // console.log('ni?');
 
       setDataSource([])
       setDataSourceLearn([])
@@ -1475,13 +1488,13 @@ function search(r) {
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
 
-    } else { 
+    } else {
 
       // console.log('没有啊！！！！！');
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
     }
-  }, [router?.query?.q,router?.query?.type])
+  }, [router?.query?.q, router?.query?.type])
 
 
   const tag2 = () => {
@@ -2042,7 +2055,7 @@ function search(r) {
 
               <>
                 {valueCount?.map((item) => {
-                  
+
 
                   return (
                     <Tab5
