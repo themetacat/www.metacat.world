@@ -1405,17 +1405,17 @@ function search(r) {
       if (router?.query?.type !== undefined) {
         // console.log('_____________');
         setRouteTab(router?.query?.type)
-        if (!resPlace.data?.Learn&&router?.query?.type !== undefined) {
+        if (!resPlace.data?.Learn && router?.query?.type !== undefined) {
           setRouteTab(resPlace?.data?.menu_one[0])
           // router.replace(`/search?q=${router?.query?.q}&type=${resPlace?.data?.menu_one[0]}`);
         }
-        if (!resPlace.data?.Event&&router?.query?.type !== undefined) {
+        if (!resPlace.data?.Event && router?.query?.type !== undefined) {
           setRouteTab(resPlace?.data?.menu_one[0])
         }
-        if (!resPlace.data?.Creation&&router?.query?.type !== undefined) {
+        if (!resPlace.data?.Creation && router?.query?.type !== undefined) {
           setRouteTab(resPlace?.data?.menu_one[0])
         }
-        if (!resPlace.data?.Place&&router?.query?.type !== undefined) {
+        if (!resPlace.data?.Place && router?.query?.type !== undefined) {
           setRouteTab(resPlace?.data?.menu_one[0])
         }
 
@@ -1712,13 +1712,8 @@ function search(r) {
           </div>
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
 
-          {
-              loading ? <Status status="loading" />:null
-            }
-              {
-              error ? <Status retry={onRetry} status="error" />:null
-            }
-
+            {loading ? <Status status="loading" /> : null}
+            {error ? <Status retry={onRetry} status="error" /> : null}
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {dataSource?.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
