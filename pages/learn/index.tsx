@@ -177,9 +177,9 @@ function Learn(r) {
       return <Status status="search" />;
     }
     return (
-      <div className={style.container}>
+      <div className={cn('grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 mt-5',style.container)}>
         {dataSource.map((item) => {
-          return <EventCardLearn className="mt-7" {...item} key={uuid()} />;
+          return <EventCardLearn className="" {...item} key={uuid()} />;
         })}
       </div>
     );

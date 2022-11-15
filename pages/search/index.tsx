@@ -801,13 +801,14 @@ function search(r) {
   }, [refreshTK]);
 
   const onRetry = React.useCallback(async () => {
-    const accessToken = getToken('atk');
-    if (accessToken && tabState === 'Voxels') {
-      requestData(accessToken);
-    }
-    if (accessToken && tabState === 'Decentraland') {
-      reqDclData(accessToken);
-    }
+    window.location.reload()
+    // const accessToken = getToken('atk');
+    // if (accessToken && tabState === 'Voxels') {
+    //   requestData(accessToken);
+    // }
+    // if (accessToken && tabState === 'Decentraland') {
+    //   reqDclData(accessToken);
+    // }
     // if (accessToken && routeTab === 'building') {
     //   reqBuilderData(accessToken);
     // }
@@ -1406,6 +1407,7 @@ function search(r) {
         setRouteTab(router?.query?.type)
         if (!resPlace.data?.Learn&&router?.query?.type !== undefined) {
           setRouteTab(resPlace?.data?.menu_one[0])
+          // router.replace(`/search?q=${router?.query?.q}&type=${resPlace?.data?.menu_one[0]}`);
         }
         if (!resPlace.data?.Event&&router?.query?.type !== undefined) {
           setRouteTab(resPlace?.data?.menu_one[0])
@@ -1710,6 +1712,13 @@ function search(r) {
           </div>
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
 
+          {
+              loading ? <Status status="loading" />:null
+            }
+              {
+              error ? <Status retry={onRetry} status="error" />:null
+            }
+
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
                 {dataSource?.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
@@ -1985,6 +1994,8 @@ function search(r) {
     menuDataTwoArrCon,
     selectedIds,
     rent_set_state,
+    loading,
+    error,
     s,
     cartData,
     manySetLabel,

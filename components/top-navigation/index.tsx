@@ -658,7 +658,7 @@ export default function PageHeader({ active, className }: Props) {
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search  setTypeVal={'Place'||'Event'||'Creation'}  text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler} ></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search  setTypeVal={'Place'||'Event'||'Creation'||'Learn'}  text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler} ></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>
