@@ -46,12 +46,17 @@ border-radius: 8px;
   width: 70px !important;
 }
 .source{
-  /* width: 50px !important; */
-  /* overflow:hidden; */
+  width: 50px !important;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  
 }
 .author{
-  /* width: 77px; */
-  /* overflow:hidden; */
+  width: 135px;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
 }
 
 .description {
@@ -65,7 +70,7 @@ border-radius: 8px;
 
 .detail {
   margin-top: 4px;
-  margin-bottom: 12px;
+  margin-bottom: 3px;
 
 }
 .detail > div {
