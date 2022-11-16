@@ -4,7 +4,7 @@ import SearchInput from 'react-search-input';
 import cn from 'classnames';
 import style from './index.module.css';
 
-import { getSearchDetail } from '../../service';
+import { toast } from 'react-hot-toast';
 
 type Props = {
   text?: string;
@@ -30,12 +30,14 @@ export default function Search({ text, setTypeVal, setVal, onSearch, showState, 
     // console.log(123456, value);
     if (value !== '') {
       // setVal(value)  !==''
-      router.replace(`/search?q=${value}&type=${setTypeVal}`)
+      // router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
+      // router.replace(`http://localhost:3001/search?q=${value}&type=${setTypeVal}`)
+      router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
       // router.replace(`/search?q=${value}`)
     } else {
-      // alert('输入数据啊')
-      router.replace(`/search?type=${setTypeVal}`)
-      // router.replace(`/search`)
+      // toast.error('Please enter the content');
+      // router.replace(`/search?type=${setTypeVal}`)
+      router.replace(`/`)
     }
 
 
