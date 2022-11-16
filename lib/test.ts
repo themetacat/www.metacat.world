@@ -152,7 +152,23 @@ class API {
     return json;
   }
 
+  public async getSearchDetail(
+    query,
+    page:number,
+    per_page:number,
+    search_item:string,
+  ): Promise<any> {
+    const search = qs.stringify({query,page,per_page,search_item,}, { addQueryPrefix: true });
+    const url = `${this.url}/the_search${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
 }
+
+
 
 
 

@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import api from '../../lib/api';
+// import api from '../../lib/api';
+import api from '../../lib/test';
 
 export default async (req, res) => {
   const {query,page,per_page,search_item,} = req.query;

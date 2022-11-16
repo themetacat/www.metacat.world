@@ -189,8 +189,7 @@ class API {
     search_item:string,
   ): Promise<any> {
     const search = qs.stringify({query,page,per_page,search_item,}, { addQueryPrefix: true });
-    // const url = `${this.url}/the_search${search}`;
-    const url = `http://8.130.23.16/api/v1/the_search${search}`;
+    const url = `${this.url}/the_search${search}`;
     const res = await fetch(url);
     const json = await res.json();
 
