@@ -824,7 +824,11 @@ function search(r) {
     // setPage(1)
     // console.log('调用几遍',);
 
+    // const newPage = page + 1
+    // setPage(newPage)
+
     const newPage = page + 1
+
     setPage(newPage)
 
     setShowModal(true)
@@ -1398,61 +1402,9 @@ function search(r) {
 
 
 
-    const res = getSearchDetail(router?.query?.q, 1, 20, '');
+  
 
-    res.then((resPlace) => {
-      // console.log(!resPlace.data?.Learn?.data);
-      if (router?.query?.type !== undefined) {
-        // console.log('_____________');
-        setRouteTab(router?.query?.type)
-        if (!resPlace.data?.Learn && router?.query?.type !== undefined) {
-          setRouteTab(resPlace?.data?.menu_one[0])
-          // router.replace(`/search?q=${router?.query?.q}&type=${resPlace?.data?.menu_one[0]}`);
-        }
-        if (!resPlace.data?.Event && router?.query?.type !== undefined) {
-          setRouteTab(resPlace?.data?.menu_one[0])
-        }
-        if (!resPlace.data?.Creation && router?.query?.type !== undefined) {
-          setRouteTab(resPlace?.data?.menu_one[0])
-        }
-        if (!resPlace.data?.Place && router?.query?.type !== undefined) {
-          setRouteTab(resPlace?.data?.menu_one[0])
-        }
-
-      } else {
-        // console.log('_____________88888');
-        setRouteTab(resPlace?.data?.menu_one[0])
-        // setRouteTab(router?.query?.type)
-      }
-
-      setTabState(resPlace?.data?.Place?.menu_two[0]);
-      setTabStateEvent(resPlace.data.Event?.menu_two[0])
-      setTabStateCreater(resPlace.data.Creation?.menu_two[0])
-
-      setDataSourceLearn(resPlace.data?.Learn?.data)
-      setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
-      // setDataSource(resPlace.data?.Place?.Voxels)
-      setDclDataSource(resPlace.data?.Place?.Decentranland)
-      setOncyberDataSource(resPlace?.data?.Place?.Oncyber)
-      setMonaDataSource(resPlace?.data?.Place?.Mona)
-      setProtoWorldDataSource(resPlace?.data?.Place?.Protoworld)
-      setSomSpaceDataSource(resPlace?.data?.Place?.SomniumSpace)
-      setRareDataSource(resPlace?.data?.Place?.RareRooms)
-      setSandBoxDataSource(resPlace?.data?.Place?.TheSandbox)
-      setSpatialDataSource(resPlace?.data?.Place?.Spatial)
-      setHyperfyDataSource(resPlace?.data?.Place?.Hyperfy)
-      setMozillaHubsDataSource(resPlace?.data?.Place?.MozillaHubs)
-      setAriumDataSource(resPlace?.data?.Place?.Arium)
-      setArtifexDataSource(resPlace?.data?.Place?.Artifex)
-      setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
-      setDataSourceCreWear(resPlace.data?.Creation?.Wearable)
-      setEventCvList(resPlace.data?.Event?.Voxels)
-      setEventDclList(resPlace.data?.Event?.Decentranland)
-      setEventSomList(resPlace.data?.Event?.SomniumSpace)
-
-    })
-
-  }, [router?.query?.q, router?.query?.type])
+  }, [router?.query?.q])
 
 
 
@@ -1462,10 +1414,67 @@ function search(r) {
   // }, [])
 
   React.useEffect(() => {
+
+
+    const res = getSearchDetail(router?.query?.q, 1, 20, '');
+    console.log(1111111111);
+    
+        res.then((resPlace) => {
+          // console.log(!resPlace.data?.Learn?.data);
+          if (router?.query?.type !== undefined) {
+            // console.log('_____________');
+            setRouteTab(router?.query?.type)
+            if (!resPlace.data?.Learn && router?.query?.type !== undefined) {
+              setRouteTab(resPlace?.data?.menu_one[0])
+              // router.replace(`/search?q=${router?.query?.q}&type=${resPlace?.data?.menu_one[0]}`);
+            }
+            if (!resPlace.data?.Event && router?.query?.type !== undefined) {
+              setRouteTab(resPlace?.data?.menu_one[0])
+            }
+            if (!resPlace.data?.Creation && router?.query?.type !== undefined) {
+              setRouteTab(resPlace?.data?.menu_one[0])
+            }
+            if (!resPlace.data?.Place && router?.query?.type !== undefined) {
+              setRouteTab(resPlace?.data?.menu_one[0])
+            }
+    
+          } else {
+            // console.log('_____________88888');
+            setRouteTab(resPlace?.data?.menu_one[0])
+            // setRouteTab(router?.query?.type)
+          }
+    
+          setTabState(resPlace?.data?.Place?.menu_two[0]);
+          setTabStateEvent(resPlace.data.Event?.menu_two[0])
+          setTabStateCreater(resPlace.data.Creation?.menu_two[0])
+    
+          setDataSourceLearn(resPlace.data?.Learn?.data)
+          setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
+          // setDataSource(resPlace.data?.Place?.Voxels)
+          setDclDataSource(resPlace.data?.Place?.Decentranland)
+          setOncyberDataSource(resPlace?.data?.Place?.Oncyber)
+          setMonaDataSource(resPlace?.data?.Place?.Mona)
+          setProtoWorldDataSource(resPlace?.data?.Place?.Protoworld)
+          setSomSpaceDataSource(resPlace?.data?.Place?.SomniumSpace)
+          setRareDataSource(resPlace?.data?.Place?.RareRooms)
+          setSandBoxDataSource(resPlace?.data?.Place?.TheSandbox)
+          setSpatialDataSource(resPlace?.data?.Place?.Spatial)
+          setHyperfyDataSource(resPlace?.data?.Place?.Hyperfy)
+          setMozillaHubsDataSource(resPlace?.data?.Place?.MozillaHubs)
+          setAriumDataSource(resPlace?.data?.Place?.Arium)
+          setArtifexDataSource(resPlace?.data?.Place?.Artifex)
+          setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
+          setDataSourceCreWear(resPlace.data?.Creation?.Wearable)
+          setEventCvList(resPlace.data?.Event?.Voxels)
+          setEventDclList(resPlace.data?.Event?.Decentranland)
+          setEventSomList(resPlace.data?.Event?.SomniumSpace)
+    
+        })
+
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
     if (window.location.search && router?.query?.q !== undefined) {
-      // console.log('ni?');
+      console.log('ni?');
 
       setDataSource([])
       setDataSourceLearn([])
@@ -1490,31 +1499,31 @@ function search(r) {
       setSearchText(router.query.q);
       onSearchHandler(router.query.q, 1, 20, '', false)
 
-    } else {
+    // } else {
 
-      // console.log('没有啊！！！！！');
-      setDataSource([])
-      setDataSourceLearn([])
-      setDataSourceCreBuilder([])
-      setDataSourceCreWear([])
-      setDataBuildSource([])
-      setEventDclList([])
-      setEventSomList([])
-      setDclDataSource([])
-      setSomSpaceDataSource([])
-      setMonaDataSource([])
-      setProtoWorldDataSource([])
-      setRareDataSource([])
-      setSandBoxDataSource([])
-      setSpatialDataSource([])
-      setHyperfyDataSource([])
-      setMozillaHubsDataSource([])
-      setAriumDataSource([])
-      setArtifexDataSource([])
-      setOncyberDataSource([])
-      setEventCvList([])
-      setSearchText('');
-      onSearchHandler('', 1, 20, '', false)
+    //   console.log('没有啊！！！！！');
+    //   setDataSource([])
+    //   setDataSourceLearn([])
+    //   setDataSourceCreBuilder([])
+    //   setDataSourceCreWear([])
+    //   setDataBuildSource([])
+    //   setEventDclList([])
+    //   setEventSomList([])
+    //   setDclDataSource([])
+    //   setSomSpaceDataSource([])
+    //   setMonaDataSource([])
+    //   setProtoWorldDataSource([])
+    //   setRareDataSource([])
+    //   setSandBoxDataSource([])
+    //   setSpatialDataSource([])
+    //   setHyperfyDataSource([])
+    //   setMozillaHubsDataSource([])
+    //   setAriumDataSource([])
+    //   setArtifexDataSource([])
+    //   setOncyberDataSource([])
+    //   setEventCvList([])
+    //   setSearchText('');
+    //   onSearchHandler('', 1, 20, '', false)
     }
   }, [router?.query?.q])
 

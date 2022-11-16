@@ -15,7 +15,7 @@ type Props = {
   setTypeVal;
 };
 
-export default function Search({ text,setTypeVal, setVal,onSearch, showState,type }: Props) {
+export default function Search({ text, setTypeVal, setVal, onSearch, showState, type }: Props) {
   const router = useRouter();
   const [value, setValue] = useState(text);
   const [show, setShow] = useState(true);
@@ -25,26 +25,20 @@ export default function Search({ text,setTypeVal, setVal,onSearch, showState,typ
     // onSearchHandler( '', 1,  20, '',false)
   }, [null]);
 
-  // const onSearchHandler = (query,
-  //   page: number,
-  //   per_page: number,
-  //   search_item: string,
-  //   isCli: boolean)=>{
-  //     const res =  getSearchDetail( '', 1,  20, '');
-  // }
 
   const search = React.useCallback(() => {
-    // console.log(123456,value);
-    if(value){
-      // setVal(value)
+    console.log(123456, value);
+    if (value !== '') {
+      // setVal(value)  !==''
       router.replace(`/search?q=${value}&type=${setTypeVal}`)
       // router.replace(`/search?q=${value}`)
-    }else{
-      router.replace(`/search?type=${setTypeVal}`)
+    } else {
+      alert('输入数据啊')
+      // router.replace(`/search?type=${setTypeVal}`)
       // router.replace(`/search`)
     }
-    
-   
+
+
     if (!show) {
       setShow(true);
       showState(true)
@@ -98,7 +92,7 @@ export default function Search({ text,setTypeVal, setVal,onSearch, showState,typ
           className={cn(style.searchIcon, type === 'z' ? style.lessen : null)}
           src="/images/search.png"
         ></img>
-        <span style={{fontSize:"14px"}}>Search</span>
+        <span style={{ fontSize: "14px" }}>Search</span>
       </div>
     </div>
   );
