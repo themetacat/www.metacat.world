@@ -1395,11 +1395,7 @@ function search(r) {
 
   useEffect(() => {
     //  if (window.location.search) return;
-
-
-
     const res = getSearchDetail(router?.query?.q, 1, 20, '');
-console.log(1111111111);
 
     res.then((resPlace) => {
       // console.log(!resPlace.data?.Learn?.data);
@@ -1452,8 +1448,7 @@ console.log(1111111111);
       setEventSomList(resPlace.data?.Event?.SomniumSpace)
 
     })
-
-  }, [router?.query?.q])
+  }, [router?.query?.q,])
 
 
 
@@ -1466,7 +1461,7 @@ console.log(1111111111);
     // console.log('执行', router?.query?.q,window.location.search);
     // if(router?.query?.q===undefined)return ;
     if (window.location.search && router?.query?.q !== undefined) {
-      console.log('ni?');
+      // console.log('ni?');
 
       setDataSource([])
       setDataSourceLearn([])
@@ -1493,7 +1488,7 @@ console.log(1111111111);
 
     } else {
 
-      console.log('没有啊！！！！！');
+      // console.log('没有啊！！！！！');
       setDataSource([])
       setDataSourceLearn([])
       setDataSourceCreBuilder([])

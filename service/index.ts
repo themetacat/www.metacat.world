@@ -135,6 +135,7 @@ export const getSearchDetail = async ( query,
   per_page:number,
   search_item:string,) => {
   const search = qs.stringify({query,page,per_page,search_item,}, { addQueryPrefix: true });
+  // const url = `/api/get_search_list${search}`;
   const url = `/api/get_search_list${search}`;
 
   const res = await fetch(url);
