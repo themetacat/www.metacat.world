@@ -28,13 +28,15 @@ export default function Search({ text, setTypeVal, setVal, onSearch, showState, 
 
   const search = React.useCallback(() => {
     // console.log(123456, value);
-    if (value !== '') {
+   if (value !== '') {
       // setVal(value)  !==''
-      router.replace(`/search?q=${value}&type=${setTypeVal}`)
+//       router.replace(`/search?q=${value}&type=${setTypeVal}`)
+      router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
       // router.replace(`/search?q=${value}`)
     } else {
       // alert('输入数据啊')
-      router.replace(`/search?type=${setTypeVal}`)
+//       router.replace(`/search?type=${setTypeVal}`)
+      router.replace(`/`)
       // router.replace(`/search`)
     }
 
