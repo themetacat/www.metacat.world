@@ -4,7 +4,6 @@ import SearchInput from 'react-search-input';
 import cn from 'classnames';
 import style from './index.module.css';
 
-import { toast } from 'react-hot-toast';
 
 type Props = {
   text?: string;
@@ -28,7 +27,7 @@ export default function Search({ text, setTypeVal, setVal, onSearch, showState, 
 
   const search = React.useCallback(() => {
     // console.log(123456, value);
-    if (value !== '') {
+   if (value !== '') {
       // setVal(value)  !==''
       // router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
       // router.replace(`http://localhost:3001/search?q=${value}&type=${setTypeVal}`)
