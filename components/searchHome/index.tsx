@@ -28,7 +28,7 @@ export default function Search({ text, setTypeVal, setVal, onSearch, showState, 
 
   const search = React.useCallback(() => {
     // console.log(123456, value);
-    if (value !== '') {
+   if (value !== '') {
       // setVal(value)  !==''
       // router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
       // router.replace(`http://localhost:3001/search?q=${value}&type=${setTypeVal}`)
