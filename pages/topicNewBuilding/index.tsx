@@ -216,6 +216,29 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
     setNavState(t);
   }, []);
 
+  const searchList=()=>{
+    if (parcelList?.length === 0) {
+      setNavState('wearables')
+      setNavBox([{
+        label: 'Wearables',
+        type: 'wearables',
+      }])
+    } else if (wearableList?.length === 0) {
+      setNavBox([{
+        label: 'Buildings',
+        type: 'buildings',
+      },])
+    } else if (parcelList?.length !== 0 || wearableList?.length !== 0) {
+      setNavBox([{
+        label: 'Buildings',
+        type: 'buildings',
+      },
+      {
+        label: 'Wearables',
+        type: 'wearables',
+      }])
+    }
+  }
 
 
   React.useEffect(() => {
@@ -241,7 +264,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
       }])
     }
 
-    console.log(navBox, "navBox");
+    // console.log(navBox, "navBox");
 
     const accessToken = getToken('atk');
     if (accessToken) {
@@ -256,6 +279,23 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
     }
 
   }, [requestPersonal, walletAddress,]);
+  
+  React.useEffect(() => {
+
+    searchList();
+    
+    const accessToken = getToken('atk');
+    if (accessToken) {
+      requestPersonal(accessToken);
+    }
+    const strAdd = router.asPath
+    const newAdd = strAdd.split('=')[1]
+
+    // const a = getToken('address');
+    if (newAdd) {
+      setWalletAddress(newAdd);
+    }
+  }, [requestPersonal]);
 
   const onSearchHandler = React.useCallback(
     (text: string) => {
@@ -457,7 +497,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
           <div className={style.navCOntainer}>
             <div className={style.nav}>
               {navBox.map((item, idx) => {
-                console.log(item);
+                // console.log(item);
 
                 return (
                   <div

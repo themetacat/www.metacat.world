@@ -300,7 +300,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           />
         </div>
         <div
-          className={cn('main-content flex justify-center flex-col  relative z-10', style.signBack)}
+          className={cn('flex justify-center flex-col  relative z-10', style.signBack)}
         >
           <UserAvatar
             avatar={base_info.logo_url}
