@@ -172,7 +172,6 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   const changeNav = React.useCallback((t) => {
     setNavState(t);
   }, []);
-  console.log(loading);
 
   React.useEffect(() => {
     const accessToken = getToken('atk');

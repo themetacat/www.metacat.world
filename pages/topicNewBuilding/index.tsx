@@ -305,7 +305,6 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   );
 
   const search = React.useCallback(() => {
-    console.log(1111111111,navState);
     
     if (navState === 'buildings') {
       if (parcelList) {
