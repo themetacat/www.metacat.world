@@ -66,12 +66,15 @@ export default function DaoWebglCard({
   const sceneRef = React.useRef(null);
   const [selecete, setSelecete] = React.useState(false);
   const goToDetail = React.useCallback(() => {
+    console.log(type,address);
+    
     if (type === 'topicNewBuilding') {
-      router.replace(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
+      // router.replace(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
+      window.open(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
     } else {
       // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
-      window.open(`/wearables/detail/${model.id}?type=${'mywearables'}`);
+      window.open(`/wearables/detail/${model.id}?type=${'topic'}`);
     }
   }, [tabState, id, address]);
 
@@ -173,6 +176,7 @@ export default function DaoWebglCard({
   }, [wearablesSleceteIdList]);
 
 
+
   return (
     <>
       <div
@@ -224,7 +228,7 @@ export default function DaoWebglCard({
             <div className={styles.model}>  <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span></div>
             <div className={cn('flex items-end justify-center text-xs', styles.goDetail)}>
               <div className={styles.artist}>Voxel Artist：</div>
-              <div className={styles.text}> {model ? model.creator_name : null}</div>
+              <div className={styles.text}> {model ? model.creator_name||model.creatorName : null}</div>
             </div>
           </div>
           <div className={styles.container}>

@@ -305,6 +305,8 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
   );
 
   const search = React.useCallback(() => {
+    console.log(1111111111,navState);
+    
     if (navState === 'buildings') {
       if (parcelList) {
 
@@ -329,7 +331,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
         const dataToShow = wearableList.filter((x) => {
           return (
             x.name?.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
-            // x.creator_name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
+            // x.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1 ||
             // x.name.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) > -1
           );
         });
@@ -382,6 +384,9 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
             ) : null}
           </div>
           {/* {renderStatus} */}
+          {loading === true?<Status status="loading" />:null}
+          {error === true?<Status retry={onRetry} status="error" />:null}
+          {parcelList?.length === 0?<Status status="empty" />:null}
         </div>
       );
     }
@@ -392,7 +397,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
         <div className={style.wearable}>
           <DaoModelListBuilding
             models={wearableList}
-            type={'topicNewBuilding'}
+            type={'topic'}
             address={router.query.address}
           ></DaoModelListBuilding>
         </div>
