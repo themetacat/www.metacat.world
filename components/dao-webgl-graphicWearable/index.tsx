@@ -53,14 +53,14 @@ export default function DaoWebglCard({
   const [selecete, setSelecete] = React.useState(false);
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(() => {
+    
     if (type === 'topic') {
-      window.open(`/wearables/detail/${model.id}?type=${'topic'}`);
+      router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${model.address}`);
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
     } else {
       // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
       window.open(`/wearables/detail/${model.id}?type=${'mywearables'}`);
     }
-    // console.log(model,model.id);
 
 
   }, [tabState, id, address]);

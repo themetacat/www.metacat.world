@@ -70,11 +70,11 @@ export default function DaoWebglCard({
     
     if (type === 'topicNewBuilding') {
       // router.replace(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
-      window.open(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);
+      window.open(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${model.address}`);
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
     } else {
       // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
-      window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
+      window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${model.address}`);
     }
   }, [tabState, id, address]);
 
