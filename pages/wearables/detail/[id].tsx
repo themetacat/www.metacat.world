@@ -134,18 +134,19 @@ export default function WearablesDetail({ artwork, artist, id }) {
       }
     };
   }, [animation, artworkData]);
-
-  const toWearableDao = React.useCallback(() => {
-    if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
-      router.replace(`/wearables/wearabledao?type=${router.query.type}`);
-    } else if (router.query.type === 'mywearables') {
-      router.replace(`/profile?type=wearablelist`);
-    } else if (router.query.type === 'topic') {
-      router.replace(`/topic/${router.query.address}?type=wearables`);
-    } else {
-      router.replace(`/topic/${router.query.type}?type=wearables`);
-    }
-  }, [router.query.type]);
+  const toWearableDao =() => {
+    
+    router.replace(`/topicNewBuilding?address=${router?.query?.address}`);
+    // if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
+    //   router.replace(`/wearables/wearabledao?type=${router.query.type}`);
+    // } else if (router.query.type === 'mywearables') {
+    //   router.replace(`/profile?type=wearablelist`);
+    // } else if (router.query.type === 'topic') {
+    //   router.replace(`/topic/${router.query.address}?type=wearables`);
+    // } else {
+    //   router.replace(`/topic/${router.query.type}?type=wearables`);
+    // }
+  }
   const GoBack = () => {
     // window.open(`https://www.metacat.world/profile?type=wearablelist`);
     router.push(`/profile?type=wearablelist`);

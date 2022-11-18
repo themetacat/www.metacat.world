@@ -4,7 +4,6 @@ import SearchInput from 'react-search-input';
 import cn from 'classnames';
 import style from './index.module.css';
 
-import { toast } from 'react-hot-toast';
 
 type Props = {
   text?: string;
