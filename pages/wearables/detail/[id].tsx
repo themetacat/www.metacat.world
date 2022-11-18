@@ -282,10 +282,14 @@ export async function getServerSideProps(context) {
     res = await z_api.req_pfp_detail(id);
   } else if (context.query.type === 'mywearables' || context.query.type === 'topic') {
     res = await z_api.req_get_wearable_detail(id);
+
+
   } else {
     res = await api.getDaoWearableDetail(id);
   }
+  
   const { artwork, artist } = res.data[0];
+  console.log(res,1111);
   return {
     props: {
       artwork,

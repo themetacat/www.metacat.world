@@ -349,11 +349,11 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
             <div className={cn(' text-center mt-4',  getMore ? style.deptContent : style.deptContentHidden)} id="textcontain">{base_info.description}</div>
             {getMore === false &&base_info.description.length>=315?
               <div className={style.showMore}>
-                <a onClick={showMore}>查看更多</a>
+                <a onClick={showMore}>See More</a>
               </div> : null}
             {getMore === true ?
               <div className={style.packUp}>
-                <a onClick={packUp}>收起</a>
+                <a onClick={packUp}>See Less</a>
               </div> : null}
           </div>
         </div>
