@@ -69,6 +69,7 @@ export default function DaoWebglCard({
   const [selecete, setSelecete] = React.useState(false);
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(() => {
+    
     if (type === 'topic') {
       router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
