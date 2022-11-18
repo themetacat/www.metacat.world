@@ -308,6 +308,8 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
 
   }
 
+  
+
   return (
     <Page className="min-h-screen flex flex-col" meta={meta}>
       <div className="bg-black relative">
@@ -346,7 +348,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           ></UserAvatar>
           <div className={style.contentBox}>
             <div className={cn(' text-center mt-4',  getMore ? style.deptContent : style.deptContentHidden)} id="textcontain">{base_info.description}</div>
-            {getMore === false ?
+            {getMore === false &&base_info.description.length>=315?
               <div className={style.showMore}>
                 <a onClick={showMore}>查看更多</a>
               </div> : null}
