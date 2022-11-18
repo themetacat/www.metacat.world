@@ -53,14 +53,17 @@
 .deptContentHidden{
   font-family: PingFangSC-Regular;
   font-size: 14px;
+  width: 1200px;
   color: #666666;
+  margin: 0 auto !important;
   letter-spacing: 0.2px;
   text-align: justify;
   line-height: 22px;
-  margin-top: 16px;
+  margin-top: 16px !important;
   margin-left: 23px;
   margin-right: 23px;
   height: 48px;
+  width: 80%;
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -71,9 +74,12 @@
   font-family: PingFangSC-Regular;
   font-size: 14px;
   text-align: center;
+  width: 1200px;
   color: #666666;
+  margin: 0 auto !important;
   letter-spacing: 0.2px;
   text-align: justify;
+  margin-top: 16px !important;
   line-height: 22px;
   margin-top: 16px;
   margin-left: 23px;
