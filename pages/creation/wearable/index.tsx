@@ -2,6 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
+
 import Page from '../../../components/page';
 // import PageHeader from '../../../components/page-header';
 import PageHeader from '../../../components/top-navigation';
@@ -51,6 +54,53 @@ export default function TopicIndex() {
     //   type: 'spacebuildings',
     // },
   ];
+
+  const TABList = [
+    {
+      label: 'Voxels',
+      icon: '/images/cvLogo.png',
+      type: 'cryptovoxels',
+      // link: '/parcels?tab=cryptovoxels',
+    },
+    {
+      label: 'Decentraland',
+      icon: '/images/Decentraland.jpg',
+      type: 'decentraland',
+      // link: '/parcels?tab=decentraland',
+    },
+    // {
+    //   label: 'The Sandbox',
+    //   icon: '/images/home-icon.svg',
+    //   type: 'sandbox',
+    // },
+    // {
+    //     label: 'Somnium Space',
+    //     icon: '/images/somniumspace.png',
+    //     type: 'somniumspace',
+    // },
+    // {
+    //   label: 'NFT Worlds',
+    //   icon: '/images/worlds.svg',
+    //   type: 'nftworlds',
+    // },
+    // {
+    //   label: 'Worldwide Webb',
+    //   icon: '/images/unnamed.svg',
+    //   type: 'worldwidewebb',
+    // },
+    // {
+    //   label: 'Otherside',
+    //   icon: '/images/osd.png',
+    //   type: 'otherside',
+    // },
+    // {
+    //   label: 'Netvrk',
+    //   icon: '/images/netvrk_logomark.svg',
+    //   type: 'netvrk',
+    // },
+  ];
+
+
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
@@ -60,6 +110,7 @@ export default function TopicIndex() {
   // const [type, setTYPE] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('wearable');
+  const [tabStateList, setTabStateList] = React.useState('cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -68,6 +119,23 @@ export default function TopicIndex() {
     router.replace(`/creation/${t}`);
   }, []);
 
+
+
+  const onTabChangeList = async (tab) => {
+
+    // let subIndex;
+    // if (tabStateList === 'cryptovoxels') {
+    // } else if (tabStateList === 'decentraland') {
+    // }
+    // subIndex = subIndex === -1 ? 0 : subIndex;
+    // setTabStateList(tab);
+    // let sub = '';
+    if (tab === 'cryptovoxels') {
+      router.replace(`/creation/wearable?tab=cryptovoxels`);
+    } else if (tab === 'decentraland') {
+      router.replace(`/creation/wearable?tab=decentraland`);
+    }
+  };
 
   const requestData = async (page: number, count: number) => {
     setLoading(true);
@@ -116,6 +184,48 @@ export default function TopicIndex() {
   }, []);
 
   const renderStatus = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loading" />;
+    }
+
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+
+    if (builders?.length === 0) {
+      return <Status status="empty" />;
+    }
+    if (builders?.length > 0) {
+      // console.log(builders);
+
+      return (
+        <>
+          <div
+            className={cn(
+              '',
+              style.buildingsCon,
+            )}
+          >
+            <DaoModelList2
+              models={builders}
+              type={'topic'}
+              address={router.query.id}
+            ></DaoModelList2>
+
+          </div>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+        </>
+      );
+    }
+
+  }, [loading, error,]);
+
+  const renderStatusList = React.useMemo(() => {
     if (loading) {
       return <Status status="loading" />;
     }
@@ -211,7 +321,44 @@ export default function TopicIndex() {
         </div>
       </div>
 
-      <div className={cn('main-content', style.content)}>{renderStatus}</div>
+      {/* <div className={cn("flex px-0 relative", style.headNum)}>
+        {TABList.map((item, index) => {
+          return (
+            <div
+              className={cn(
+                ' flex',
+                style.baseCON,
+                tabStateList === item.type ? style.active : null,
+              )}
+              key={index}
+              onClick={() => {
+                onTabChangeList(item.type);
+              }}
+            >
+              <Tab
+                active={tabStateList === item.type}
+                key={item.label}
+                label={item.label}
+                icon={item.icon}
+                isMini={true}
+              />
+            </div>
+          );
+        })}
+      </div> */}
+      <div className={cn('main-content', style.content)}>{renderStatusList}</div>
+      {/* {
+                      tabStateList==='cryptovoxels' ?
+                      <div className={cn('main-content', style.content)}>{renderStatus}</div>
+                      :null
+                    }
+                    {
+                      tabStateList==='decentraland' ?
+                      <div className={cn('main-content', style.content)}>{renderStatusList}</div>
+                      :null
+                    } */}
+
+
       <Footer />
     </Page>
   );

@@ -1823,10 +1823,10 @@ export default function AnalyticsIndex(props) {
                       label: 'Weekly',
                       value: 'weekly',
                     },
-                    // {
-                    //   label: 'Monthly',
-                    //   value: 'monthly',
-                    // },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
                     // {
                     //   label: 'Quarterly',
                     //   value: 'quarterly',
@@ -1874,10 +1874,10 @@ export default function AnalyticsIndex(props) {
                       label: 'Weekly',
                       value: 'weekly',
                     },
-                    // {
-                    //   label: 'Monthly',
-                    //   value: 'monthly',
-                    // },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
                     // {
                     //   label: 'Quarterly',
                     //   value: 'quarterly',

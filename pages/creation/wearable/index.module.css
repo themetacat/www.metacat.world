@@ -6,6 +6,10 @@
   height: 125px;
   margin-bottom: 67px;
 }
+.headNum{
+  width: 1200px;
+  margin: 0 auto;
+}
 .info {
   color: #fff;
 }
