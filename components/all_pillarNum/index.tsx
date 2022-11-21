@@ -434,7 +434,7 @@ export default function AllPillarNum({
       >
         <ChartSelecter
           options={options}
-          showArrow={false}
+          showArrow={true}
           onClick={changeStatic}
           className={style.selecterLong}
           defaultLabel={options[0].value}
