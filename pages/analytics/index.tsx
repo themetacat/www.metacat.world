@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
+
 import cn from 'classnames';
 
 import { useRouter } from 'next/router';
@@ -20,6 +23,10 @@ import AnalyticsInfoSale from '../../components/analytics-info-sale';
 import AnalyticsAverage from '../../components/analytics-info-average';
 
 import AnalyticsInfoNum from '../../components/analytics-info-num';
+
+import SwiperTagSearch from '../../components/swiper-tagSearch';
+
+import Tab from '../../components/hometabParcels';
 
 import Switch from '../../components/switch';
 
@@ -73,8 +80,11 @@ import {
   req_otherside_sales_num,
   req_otherside_sales_amount,
   req_netvrk_avg_price,
+  req_aavegotchi_sales_num,
+  req_aavegotchi_avg_price,
   req_netvrk_sales_num,
   req_netvrk_sales_amount,
+  req_aavegotchi_sales_amount,
   req_avg_creater_price,
   req_sales_rent_sum_price,
   req_num_of_rent
@@ -246,6 +256,11 @@ const types = [
     icon: '/images/netvrk_logomark.svg',
     value: 'netvrk',
   },
+  {
+    label: 'Aavegotchi',
+    icon: 'https://www.aavegotchi.com/img/brand/sun.png',
+    value: 'aavegotchi',
+  },
 ];
 const hNav = [
   {
@@ -271,6 +286,7 @@ export default function AnalyticsIndex(props) {
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStateAll, setFixedStateAll] = React.useState(false);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
+    const [tabPercent, setTabPercent] = React.useState(0);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
     setShowType(newType);
@@ -1399,6 +1415,126 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
+    if (showType === 'aavegotchi') {
+      return (
+        <>
+          <ChartLineSandBox
+            id={'netvrk1'}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            legend1={{ label: 'Primary', color: [196, 148, 254] }}
+            dataHandlder={req_aavegotchi_avg_price}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineSandBox>
+          <ChartLineToolTipSimpleSandbox
+            id={'netvrk2'}
+            className="mt-5"
+            labelText={'Number of Parcel Sales'}
+            dataHandlder={req_aavegotchi_sales_num}
+            legend1={{ label: 'Land', color: [148, 159, 254] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineToolTipSimpleSandbox>
+          <StackBarZ
+            id={'netvrk3'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_aavegotchi_sales_amount}
+            legend1={{ label: 'Land', color: [196, 148, 254] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>
+        </>
+      );
+    }
   }, [showType]);
 
   const reander = React.useMemo(() => {
@@ -1771,10 +1907,10 @@ export default function AnalyticsIndex(props) {
       );
     }
     if (headerNav === 'single') {
+      
       return (
         <>
           <div className={cn(style.tmbg,)}>
-            {/* <div className={cn(style.bg)}> */}
             <Switch
               onActive={changeType}
               options={types}
@@ -1783,7 +1919,18 @@ export default function AnalyticsIndex(props) {
               className={offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
               fixedS={fixedState}
             ></Switch>
-            {/* </div> */}
+            
+            {/* <div
+                className={cn(
+                  'n absolute z-40  flex justify-end items-center',
+                  {
+                    hidden: tabPercent >= 1,
+                  },
+                  style.next,
+                )}
+              >
+                <img className={style.icon} src="/images/tab-right.png"></img>
+              </div> */}
           </div>
           <div className={cn('flex flex-col justify-center items-center', style.content)}>
             <div
@@ -1815,6 +1962,8 @@ export default function AnalyticsIndex(props) {
   //     setFixedState(false)
   //   }
   // }, [Top, Dtop.current])
+  console.log(tabPercent);
+  
 
   React.useEffect(() => {
 

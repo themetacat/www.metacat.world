@@ -406,6 +406,7 @@ export default function AllPillarNum({
 
   const changeStatic = React.useCallback(
     (val) => {
+      
       setShowType(val);
       if (dataSource && chart.current) {
         updata(val, priceShowType);
@@ -525,7 +526,7 @@ export default function AllPillarNum({
     requestData();
     return () => {
       if (chart.current) {
-        chart.current.destroy();
+        chart.current?.destroy();
       }
     };
   }, [requestData]);

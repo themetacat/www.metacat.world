@@ -84,6 +84,7 @@
   background: linear-gradient(270deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
   right: 0px;
   cursor: pointer;
+  height: 40px;
 }
 
 .swiper-wrapper {
