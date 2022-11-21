@@ -965,6 +965,18 @@ class API {
     return json;
   }
 
+  public async req_aavegotchi_avg_price() {
+    const url = `${this.url}/get_aavegotchi_avg_price_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 6.31 获取 netvrk 地块成交总数量统计信息接口
 
   public async req_netvrk_sales_num() {
@@ -978,10 +990,32 @@ class API {
     return json;
   }
 
+  public async req_aavegotchi_sales_num() {
+    const url = `${this.url}/get_aavegotchi_sales_num`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 6.32 获取 netvrk 地块销售总额统计信息接口
 
   public async req_netvrk_sales_amount() {
     const url = `${this.url}/get_netvrk_sales_amount`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+  
+  public async req_aavegotchi_sales_amount() {
+    const url = `${this.url}/get_aavegotchi_sales_amount`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',

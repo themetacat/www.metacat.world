@@ -274,6 +274,12 @@ const analyticsData = [
     type: 'netvrk',
     link: '/analytics?type=netvrk',
   },
+  {
+    label: 'Aavegotchi',
+    icon: 'https://www.aavegotchi.com/img/brand/sun.png',
+    type: 'aavegotchi',
+    link: '/analytics?type=aavegotchi',
+  },
 ];
 
 // const routerTab = [

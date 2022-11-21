@@ -54,7 +54,7 @@ React.useEffect(()=>{
       )}
       id={id}
     >
-      {/* <div
+      <div
         className={cn(
           'per absolute z-50 flex justify-start items-center',
           {
@@ -64,7 +64,7 @@ React.useEffect(()=>{
         )}
       >
         <img className={style.icon} src="/images/tab-left.png"></img>
-      </div> */}
+      </div>
       <Swiper
         modules={[Navigation]}
         spaceBetween={1}
@@ -109,7 +109,7 @@ React.useEffect(()=>{
           );
         })}
       </Swiper>
-      {/* <div
+      <div
         className={cn(
           'next absolute z-50  flex justify-end items-center',
           {
@@ -119,7 +119,7 @@ React.useEffect(()=>{
         )}
       >
         <img className={style.icon} src="/images/tab-right.png"></img>
-      </div> */}
+      </div>
          
     </div>
  <div className={style.underline}></div>
