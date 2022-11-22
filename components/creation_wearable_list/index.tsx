@@ -10,7 +10,7 @@ import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 import { req_detailWearableDcl_list } from '../../service/z_api';
 
 import styles from './index.module.css';
-import { useEffect } from 'react';
+
 
 interface Props {
     idx,
@@ -38,7 +38,7 @@ export default function CreationWearableList({
     const sceneRef = React.useRef(null);
     const [selecete, setSelecete] = React.useState(false);
     // const [saveIconVal, setSaveIconVal] = React.useState(false);
-    const goToDetail  = React.useCallback((item_id,contract_address) => {
+    const goToDetail  = React.useCallback((l,t) => {
         const res = req_detailWearableDcl_list(contract_address,item_id)
         
         router.replace(`/wearables/detailDcl/?contract_address=${contract_address}&item_id=${item_id}`);

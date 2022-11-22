@@ -1,11 +1,11 @@
 import React from 'react';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 import cn from 'classnames';
+import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
+
 import Page from '../../../components/page';
 import PageHeader from '../../../components/top-navigation';
-import { Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper } from 'three';
 
 import { req_detailWearableDcl_list } from '../../../service/z_api';
 
@@ -51,7 +51,7 @@ export default function CreationWearableList({
     const [contact, setContact] = React.useState(null);
     // const [saveIconVal, setSaveIconVal] = React.useState(false);
 
-    const reqWearableList = (contract_address, item_id) => {
+    const reqWearableList = (l,t) => {
         const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id)
         // console.log(res.data,1222);
         res.then((resWear) => {

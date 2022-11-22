@@ -126,13 +126,13 @@ export default function TopicIndex() {
 
   const onTabChangeList = async (tab) => {
 
-    let subIndex;
-    if (tabStateList === 'cryptovoxels') {
-    } else if (tabStateList === 'decentraland') {
-    }
-    subIndex = subIndex === -1 ? 0 : subIndex;
+    // let subIndex;
+    // // if (tabStateList === 'cryptovoxels') {
+    // // } else if (tabStateList === 'decentraland') {
+    // // }
+    // subIndex = subIndex === -1 ? 0 : subIndex;
     setTabStateList(tab);
-    let sub = '';
+    // let sub = '';
     if (tab === 'cryptovoxels') {
       router.replace(`/creation/wearable?tab=cryptovoxels`);
     } else if (tab === 'decentraland') {
