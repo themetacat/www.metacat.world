@@ -50,7 +50,7 @@ export default function CreationWearableList({
     return (
         <>
             <div className={styles.container}>
-                <div><img src={cover_img} alt="" className={styles.boxCon} /></div>
+                <div className={styles.imgBoxCon}><img src={cover_img} alt="" className={styles.boxCon} /></div>
                 <div className={styles.footerBox}>
                     <div className={styles.title}>{wearable_name}</div>
                     <div className={styles.totalCon}><span className={styles.artist}>Voxel Artist：</span><span className={styles.text}>{creator_name}</span></div>

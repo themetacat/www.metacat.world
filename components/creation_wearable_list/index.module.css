@@ -60,6 +60,9 @@
   color: #CCCCCC;
 
 }
+.imgBoxCon{
+  padding: 15px 15px 0px 15px;
+}
 .text {
   overflow: hidden;
   white-space: nowrap;
