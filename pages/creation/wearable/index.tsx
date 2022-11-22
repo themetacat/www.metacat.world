@@ -113,7 +113,7 @@ export default function TopicIndex() {
   // const [type, setTYPE] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('wearable');
-  const [tabStateList, setTabStateList] = React.useState('cryptovoxels' ||router.query.tab);
+  const [tabStateList, setTabStateList] = React.useState('cryptovoxels' || router.query.tab);
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -125,7 +125,7 @@ export default function TopicIndex() {
 
 
   const onTabChangeList = async (tab) => {
-
+    // setPageNumber(pageNumber)
     // let subIndex;
     // // if (tabStateList === 'cryptovoxels') {
     // // } else if (tabStateList === 'decentraland') {
@@ -134,8 +134,12 @@ export default function TopicIndex() {
     setTabStateList(tab);
     // let sub = '';
     if (tab === 'cryptovoxels') {
+      setPageNumber(1)
       router.replace(`/creation/wearable?tab=cryptovoxels`);
+      requestData(1, pageCount);
     } else if (tab === 'decentraland') {
+      setPageNumber(1)
+      requestData(1, pageCount);
       router.replace(`/creation/wearable?tab=decentraland`);
     }
   };
@@ -194,11 +198,13 @@ export default function TopicIndex() {
     [pageCount],
   );
 
+
+
   React.useEffect(() => {
     requestData(pageNumber, pageCount);
   }, []);
   React.useEffect(() => {
-    
+
     setTabStateList(router.query.tab)
   }, [router.query.tab]);
 
@@ -270,7 +276,7 @@ export default function TopicIndex() {
           {
             wearableList.map((card) => {
 
-              return <CreationWearableList {...card}  models={wearableList}/>
+              return <CreationWearableList {...card} models={wearableList} />
             })
           }
         </div>
@@ -377,8 +383,8 @@ export default function TopicIndex() {
             <div className={cn('main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center', style.content)}>
               {/* {renderStatusList} */}
               {
-                wearableList.map((card,idx) => {
-                  return <CreationWearableList {...card} key={idx} model={wearableList}/>
+                wearableList.map((card, idx) => {
+                  return <CreationWearableList {...card} key={idx} model={wearableList} />
                 })
               }
             </div>
