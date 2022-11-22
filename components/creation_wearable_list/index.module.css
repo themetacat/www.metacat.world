@@ -64,14 +64,16 @@
   padding: 15px 15px 0px 15px;
 }
 .text {
+  display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 170px;
+  width: 95px;
   color: #888;
   font-size: 12px;
   cursor: pointer;
-  margin-top: 8px;
+  position: absolute;
+  bottom: 12px;
 }
 .detailBox{
   display: flex;
