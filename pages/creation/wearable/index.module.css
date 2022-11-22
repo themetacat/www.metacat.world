@@ -9,15 +9,18 @@
 .headNum{
   width: 1200px;
   margin: 0 auto;
+  margin-top: 20px !important;
 }
 .info {
   color: #fff;
 }
 .content {
   min-height: 650px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .bottomLine {
-  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
   position: relative;
   z-index: 1;
 }
