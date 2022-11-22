@@ -124,25 +124,7 @@ export default function TopicIndex() {
 
 
 
-  const onTabChangeList = async (tab) => {
-    // setPageNumber(pageNumber)
-    // let subIndex;
-    // // if (tabStateList === 'cryptovoxels') {
-    // // } else if (tabStateList === 'decentraland') {
-    // // }
-    // subIndex = subIndex === -1 ? 0 : subIndex;
-    setTabStateList(tab);
-    // let sub = '';
-    if (tab === 'cryptovoxels') {
-      setPageNumber(1)
-      router.replace(`/creation/wearable?tab=cryptovoxels`);
-      requestData(1, pageCount);
-    } else if (tab === 'decentraland') {
-      setPageNumber(1)
-      requestData(1, pageCount);
-      router.replace(`/creation/wearable?tab=decentraland`);
-    }
-  };
+
 
   const requestData = async (page: number, count: number) => {
     setLoading(true);
@@ -197,6 +179,26 @@ export default function TopicIndex() {
     },
     [pageCount],
   );
+
+  const onTabChangeList = async (tab) => {
+    // setPageNumber(pageNumber)
+    // let subIndex;
+    // // if (tabStateList === 'cryptovoxels') {
+    // // } else if (tabStateList === 'decentraland') {
+    // // }
+    // subIndex = subIndex === -1 ? 0 : subIndex;
+    setTabStateList(tab);
+    // let sub = '';
+    if (tab === 'cryptovoxels') {
+      setPageNumber(1)
+      router.replace(`/creation/wearable?tab=cryptovoxels`);
+      requestData(1, pageCount);
+    } else if (tab === 'decentraland') {
+      setPageNumber(1)
+      requestData(1, pageCount);
+      router.replace(`/creation/wearable?tab=decentraland`);
+    }
+  };
 
 
 
