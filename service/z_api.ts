@@ -1208,6 +1208,34 @@ export const req_wearable_list = async (page: number, count: number,
   return json;
 };
 
+export const req_wearableDcl_list = async (page: number, count: number,
+  ) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/get_wearableDcl_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_detailWearableDcl_list = async (contract_address, item_id,
+  ) => {
+  const search = qs.stringify({ contract_address, item_id, }, { addQueryPrefix: true });
+  const url = `/api/get_wearableDclDetail_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_scence_list = async (page: number, count: number, query: string,
   type: string,) => {
   const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });

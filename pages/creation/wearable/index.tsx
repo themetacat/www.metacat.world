@@ -14,15 +14,17 @@ import TopicDetailCard from '../../../components/topic-detail-card';
 import DaoModelList2 from '../../../components/dao-model-listWearable';
 import WerableDetailCard from '../../../components/werableDetailCard';
 import PagiNation from '../../../components/pagination';
+import Tab6 from '../../../components/tab6';
 import Tab from '../../../components/tab';
 
 import AnimationBack from '../../../components/animation-back';
+import CreationWearableList from '../../../components/creation_wearable_list';
 
 import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { req_space_buildings_list, req_wearable_list } from '../../../service/z_api';
+import { req_wearableDcl_list, req_wearable_list } from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -104,13 +106,14 @@ export default function TopicIndex() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
+  const [wearableList, setWearableList] = React.useState([]);
   const [pageCount, setPageCount] = React.useState(20);
   const [totalPage, setTotalPage] = React.useState(1);
   // const [query, setQuery] = React.useState(null);
   // const [type, setTYPE] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('wearable');
-  const [tabStateList, setTabStateList] = React.useState('cryptovoxels');
+  const [tabStateList, setTabStateList] = React.useState('cryptovoxels' || router.query.tab);
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -121,21 +124,7 @@ export default function TopicIndex() {
 
 
 
-  const onTabChangeList = async (tab) => {
 
-    // let subIndex;
-    // if (tabStateList === 'cryptovoxels') {
-    // } else if (tabStateList === 'decentraland') {
-    // }
-    // subIndex = subIndex === -1 ? 0 : subIndex;
-    // setTabStateList(tab);
-    // let sub = '';
-    if (tab === 'cryptovoxels') {
-      router.replace(`/creation/wearable?tab=cryptovoxels`);
-    } else if (tab === 'decentraland') {
-      router.replace(`/creation/wearable?tab=decentraland`);
-    }
-  };
 
   const requestData = async (page: number, count: number) => {
     setLoading(true);
@@ -149,6 +138,7 @@ export default function TopicIndex() {
       // console.log(newPage,"newPagenewPage");
 
       // setPageNumber(newPage)
+      // if(tabStateList==='cryptovoxels'){
       const res = await req_wearable_list(page, count);
       // console.log(res,page, "req_wearable_listreq_wearable_list");
 
@@ -157,6 +147,18 @@ export default function TopicIndex() {
 
       setBuilders(convert(data));
       setTotalPage(total_page);
+      // }
+      // if(tabStateList==='decentraland'){
+      const resWear = await req_wearableDcl_list(page, count);
+
+      setWearableList(resWear.data)
+
+      // console.log(resWear);
+      // }
+
+
+
+      // setTotalPage(total_page);
       setPageNumber(page);
       setLoading(false);
     } catch (err) {
@@ -170,7 +172,6 @@ export default function TopicIndex() {
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
-      // console.log(11111);
 
       const requestNumber = number + 1;
 
@@ -179,9 +180,35 @@ export default function TopicIndex() {
     [pageCount],
   );
 
+  const onTabChangeList = async (tab) => {
+    // setPageNumber(pageNumber)
+    // let subIndex;
+    // // if (tabStateList === 'cryptovoxels') {
+    // // } else if (tabStateList === 'decentraland') {
+    // // }
+    // subIndex = subIndex === -1 ? 0 : subIndex;
+    setTabStateList(tab);
+    // let sub = '';
+    if (tab === 'cryptovoxels') {
+      setPageNumber(1)
+      router.replace(`/creation/wearable?tab=cryptovoxels`);
+      requestData(1, pageCount);
+    } else if (tab === 'decentraland') {
+      setPageNumber(1)
+      requestData(1, pageCount);
+      router.replace(`/creation/wearable?tab=decentraland`);
+    }
+  };
+
+
+
   React.useEffect(() => {
     requestData(pageNumber, pageCount);
   }, []);
+  React.useEffect(() => {
+
+    setTabStateList(router.query.tab)
+  }, [router.query.tab]);
 
   const renderStatus = React.useMemo(() => {
     if (loading) {
@@ -234,35 +261,35 @@ export default function TopicIndex() {
       return <Status retry={onRetry} status="error" />;
     }
 
-    if (builders?.length === 0) {
+    if (wearableList?.length === 0) {
       return <Status status="empty" />;
     }
-    if (builders?.length > 0) {
+    if (wearableList?.length > 0) {
       // console.log(builders);
 
-      return (
-        <>
-          <div
-            className={cn(
-              '',
-              style.buildingsCon,
-            )}
-          >
-            <DaoModelList2
-              models={builders}
-              type={'topic'}
-              address={router.query.id}
-            ></DaoModelList2>
+      // return (
+      <>
+        <div
+          className={cn(
+            "w-full  top-0 left-0 grid grid-cols-4 gap-4 z-10",
+            style.buildingsCon,
+          )}
+        >
+          {
+            wearableList.map((card) => {
 
-          </div>
-          <PagiNation
-            total={totalPage}
-            pageNumber={pageNumber - 1}
-            pageSize={9}
-            pageChange={onPageChangeHandler}
-          />
-        </>
-      );
+              return <CreationWearableList {...card} models={wearableList} />
+            })
+          }
+        </div>
+        <PagiNation
+          total={totalPage}
+          pageNumber={pageNumber - 1}
+          pageSize={9}
+          pageChange={onPageChangeHandler}
+        />
+      </>
+      // );
     }
 
   }, [loading, error,]);
@@ -291,7 +318,7 @@ export default function TopicIndex() {
             id="switch"
           >
             <div className={cls}></div>
-            <div className="main-content flex px-0">
+            <div className={cn("main-content flex px-0")}>
               {TAB.map((item, index) => {
                 return (
                   <Tab
@@ -321,7 +348,7 @@ export default function TopicIndex() {
         </div>
       </div>
 
-      {/* <div className={cn("flex px-0 relative", style.headNum)}>
+      <div className={cn("flex px-0 relative", style.headNum)}>
         {TABList.map((item, index) => {
           return (
             <div
@@ -335,7 +362,7 @@ export default function TopicIndex() {
                 onTabChangeList(item.type);
               }}
             >
-              <Tab
+              <Tab6
                 active={tabStateList === item.type}
                 key={item.label}
                 label={item.label}
@@ -345,18 +372,33 @@ export default function TopicIndex() {
             </div>
           );
         })}
-      </div> */}
-      <div className={cn('main-content', style.content)}>{renderStatusList}</div>
-      {/* {
-                      tabStateList==='cryptovoxels' ?
-                      <div className={cn('main-content', style.content)}>{renderStatus}</div>
-                      :null
-                    }
-                    {
-                      tabStateList==='decentraland' ?
-                      <div className={cn('main-content', style.content)}>{renderStatusList}</div>
-                      :null
-                    } */}
+      </div>
+      {/* <div className={cn('main-content', style.content)}>{renderStatusList}</div> */}
+      {
+        tabStateList === 'cryptovoxels' ?
+          <div className={cn('main-content', style.content)}>{renderStatus}</div>
+          : null
+      }
+      {
+        tabStateList === 'decentraland' ?
+          <>
+            <div className={cn('main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center', style.content)}>
+              {/* {renderStatusList} */}
+              {
+                wearableList.map((card, idx) => {
+                  return <CreationWearableList {...card} key={idx} model={wearableList} />
+                })
+              }
+            </div>
+            <PagiNation
+              total={totalPage}
+              pageNumber={pageNumber - 1}
+              pageSize={9}
+              pageChange={onPageChangeHandler}
+            />
+          </>
+          : null
+      }
 
 
       <Footer />

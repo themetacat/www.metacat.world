@@ -102,24 +102,29 @@ export default function Builders() {
 
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/creation/${t}`);
+    if (t === 'wearable') {
+      router.replace(`/creation/wearable?tab=cryptovoxels`);
+    } else {
+      router.replace(`/creation/${t}`);
+    }
+
   }, []);
 
   const toTopic = React.useCallback((id, item) => {
-    
+
     if (item?.name === 'WearableDAO') {
       window.open('/wearables/wearabledao?type=chinesered')
-    }else {
+    } else {
       window.open(`/topic/${item.topic_id}?type=buildings`);
     }
- 
+
   }, []);
   const toTopicNewBuilding = (item) => {
 
     window.open(`/topicNewBuilding?address=${item.address}`);
 
   };
-  const toTopicNew = (id)=>{
+  const toTopicNew = (id) => {
     window.open(`/topic/${id}?type=buildings`);
   }
 
@@ -130,7 +135,7 @@ export default function Builders() {
     return (
       <>
         {institutions.map((item, idx) => {
-          
+
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })}
       </>
@@ -179,9 +184,9 @@ export default function Builders() {
         </div>
         <div className={cn('bg-black relative', style.backImage)}>
 
-          <div className={cn('', )} id="switch">
+          <div className={cn('',)} id="switch">
             <div className={cn('tab-list flex ', style.allHeight,
-            // fixedState ? style.fix2 : style.allHeight,
+              // fixedState ? style.fix2 : style.allHeight,
             )}>
               <div className={cls}></div>
               <div className={cn('main-content flex px-0')}>
