@@ -60,6 +60,11 @@
   color: #CCCCCC;
 
 }
+.opese{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
 .imgBoxCon{
   padding: 15px 15px 0px 15px;
 }
