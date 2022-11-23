@@ -216,7 +216,7 @@ export default function DaoWebglCard({
           <div className={cn("flex flex-col justify-start items-start w-full text-lg font-medium", styles.bigbox)}>
             <div className={styles.model}>  <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span></div>
             <div className={cn('flex items-end justify-center text-xs', styles.goDetail)}>
-              <div className={styles.artist}>Voxel Artist：</div>
+              <div className={styles.artist}>Wearable Artist：</div>
               <div className={styles.text}> {model ? model.creator_name || model.creatorName : null}</div>
             </div>
           </div>
