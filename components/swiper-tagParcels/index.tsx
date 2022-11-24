@@ -58,7 +58,11 @@ export default function SwiperTag({ tags = [], label, className, onActive }: Pro
       <Swiper
         modules={[Navigation]}
         spaceBetween={1}
+        // loop={true}
+        // centeredSlides={true}   
+        // slideToClickedSlide={true} 
         slidesPerView="auto"
+        // centerInsufficientSlides={true}
         className={cn('w-full', styles.swiper)}
         navigation={{
           prevEl: '.per',

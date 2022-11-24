@@ -235,7 +235,6 @@ const types = [
     icon: '/images/Decentraland.jpg',
     value: 'decentraland',
   },
-
   {
     label: 'Worldwide Webb',
     icon: '/images/unnamed.svg',
@@ -1916,6 +1915,7 @@ export default function AnalyticsIndex(props) {
               options={types}
               defaultValue={showType}
               id="switch"
+              showType={showType}
               className={offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
               fixedS={fixedState}
             ></Switch>
@@ -1962,7 +1962,6 @@ export default function AnalyticsIndex(props) {
   //     setFixedState(false)
   //   }
   // }, [Top, Dtop.current])
-  console.log(tabPercent);
   
 
   React.useEffect(() => {
