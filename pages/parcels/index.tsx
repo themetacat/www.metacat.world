@@ -315,7 +315,7 @@ export default function Index(props) {
   const headerRef = React.useRef(null)
 
   const meta = {
-    title: `Home - ${SITE_NAME}`,
+    title: `Parcels - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
@@ -346,6 +346,8 @@ export default function Index(props) {
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStatePage, setFixedStatePage] = React.useState(false);
   const nextCursor = React.useRef(1);
+  const [findIndex, setFindIndex] = React.useState(1);
+  const [isSwiper, setSwiper] = React.useState(null);
 
   const [dataSource, setDataSource] = React.useState([]);
   const [dataSourceSomSpace, setDataSourceSomSpace] = React.useState([]);
@@ -515,7 +517,7 @@ export default function Index(props) {
 
           // });
           setDataSourceMona(res.data.parcel_list)
-      
+
           setTypeListMona(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
@@ -643,7 +645,7 @@ export default function Index(props) {
           // }
           // data = parcel_list;
         }
-      
+
       } else if (tab === 'hyperfy') {
         if (subTab === 'parcel') {
           const res = await getHyperfyParcelList(page, 40, query, type);
@@ -667,7 +669,7 @@ export default function Index(props) {
           // }
           // data = parcel_list;
         }
-      
+
       } else if (tab === 'mozillaHubs') {
         if (subTab === 'parcel') {
           const res = await getMozillaParcelList(page, 40, query, type);
@@ -714,7 +716,7 @@ export default function Index(props) {
           // }
           // data = parcel_list;
         }
-      
+
       } else if (tab === 'artifex') {
         if (subTab === 'parcel') {
           const res = await getArtifexParcelList(page, 40, query, type);
@@ -808,7 +810,7 @@ export default function Index(props) {
     else if (tabState === 'oncyber') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
- 
+
     subIndex = subIndex === -1 ? 0 : subIndex;
     setTabState(tab);
     let sub = '';
@@ -853,7 +855,7 @@ export default function Index(props) {
 
       router.replace(`/parcels?tab=rarerooms`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    
+
     } else if (tab === 'spatial') {
 
 
@@ -862,7 +864,7 @@ export default function Index(props) {
 
       router.replace(`/parcels?tab=spatial`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    
+
     } else if (tab === 'hyperfy') {
 
 
@@ -871,7 +873,7 @@ export default function Index(props) {
 
       router.replace(`/parcels?tab=hyperfy`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    
+
     } else if (tab === 'mozillaHubs') {
 
 
@@ -880,7 +882,7 @@ export default function Index(props) {
 
       router.replace(`/parcels?tab=mozillaHubs`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    
+
     } else if (tab === 'arium') {
 
 
@@ -889,7 +891,7 @@ export default function Index(props) {
 
       router.replace(`/parcels?tab=arium`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    
+
     } else if (tab === 'artifex') {
 
 
@@ -919,7 +921,7 @@ export default function Index(props) {
     ) {
       sub = SUBTABZ[0].type;
       setSubTabState(SUBTABZ[0].type);
-    } else if ( tab === 'otherside') {
+    } else if (tab === 'otherside') {
       if (SUBTABZ2.find((item) => item.type === subTabState)) {
         sub = SUBTABZ2.find((item) => item.type === subTabState).type;
         setSubTabState(sub);
@@ -1074,6 +1076,7 @@ export default function Index(props) {
 
   useEffect(() => {
     onTypeChangeHandler('All')
+  
   }, [])
   const onPageChangeHandler =
     async (number: number,) => {
@@ -1192,7 +1195,7 @@ export default function Index(props) {
 
 
   const renderContent = React.useMemo(() => {
-// console.log(tabState);
+    // console.log(tabState);
 
     if (subTabState === 'parcel') {
       if (loading) {
@@ -2494,13 +2497,23 @@ export default function Index(props) {
   );
 
   useEffect(() => {
-    // console.log(router.query.tab);
+    
+    if (router) {
+      // if( router.query.tab !=='decentraland'&& router.query.tab !=='cryptovoxels'&& router.query.tab !== 'oncyber'){
+        let index = TAB.findIndex(item => {
+          return item.type === router.query.tab
+        })
+        setFindIndex(index)
+        isSwiper?.slideTo(index)
+      // }
+    
+    }
     const tab = router.query.tab || 'cryptovoxels';
     const subTab = router.query.subTab || 'parcel';
     setTabState(tab);
     setSubTabState(subTab);
     onTabChange(tab);
-  }, [router.query.tab]);
+  }, [router.query.tab,isSwiper]);
 
 
   const requestPersonal = React.useCallback(
@@ -2576,8 +2589,8 @@ export default function Index(props) {
           >
 
             {fixedState === true ? <div className={offsetWidthNum <= 1200 ? style.headNumx : style.headNum}></div> : null}
-            <div className={cn("flex px-0 relative",style.boxContainer)}>
-            {/* <SwiperTagParcels {...typeListProto} onActive={onTypeChangeHandler} tags={typeListProto} label={typeState} /> */}
+            <div className={cn("flex px-0 relative", style.boxContainer)}>
+              {/* <SwiperTagParcels {...typeListProto} onActive={onTypeChangeHandler} tags={typeListProto} label={typeState} /> */}
               <div
                 className={cn(
                   'p absolute z-40 flex justify-start items-center',
@@ -2592,6 +2605,13 @@ export default function Index(props) {
               <Swiper
                 modules={[Navigation]}
                 spaceBetween={1}
+                loop={true}
+                centeredSlides={true}   
+                onSwiper={(swiper)=>{
+                  
+                  setSwiper(swiper)
+                }}
+                slideToClickedSlide={true} 
                 slidesPerView="auto"
                 className={cn('w-full')}
                 navigation={{
@@ -2802,7 +2822,7 @@ export default function Index(props) {
                 <SwiperTagParcels {...typeListSandBox} onActive={onTypeChangeHandler} tags={typeListSandBox} label={typeState} />
               </div>
             ) : ''}
-            {tabState === 'somniumspace'? (
+            {tabState === 'somniumspace' ? (
               <div style={{ marginTop: "20px" }}>
                 <SwiperTagParcels {...typeListsomniumspace} onActive={onTypeChangeHandler} tags={typeListsomniumspace} label={typeState} />
               </div>

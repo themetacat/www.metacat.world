@@ -58,7 +58,7 @@ export default function Builders() {
   const [anchor, setAnchor] = React.useState(false);
   const [walletAddress, setWalletAddress] = React.useState('');
   const meta = {
-    title: `Build - ${SITE_NAME}`,
+    title: `Creation - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
