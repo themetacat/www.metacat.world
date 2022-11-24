@@ -46,7 +46,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
         return item.value === router.query.type
       })
       setFindIndex(index)
-      isSwiper?.slideTo(index)
+      isSwiper?.slideToLoop(index)
     
       setActive(router.query.type)
       onActive(router?.query?.type);
@@ -82,7 +82,11 @@ export default function Switch({ onActive, options, defaultValue, id, className,
           //   }
           // }}
           // initialSlide={findIndex}
-          onSwiper={(swiper)=>{
+          onSwiper={(swiper) => {
+            const index = options.findIndex(item => {
+              return item.value === router.query.tab
+            })
+            swiper?.slideToLoop(index)
             setSwiper(swiper)
           }}
           spaceBetween={1}

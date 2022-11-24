@@ -1076,7 +1076,7 @@ export default function Index(props) {
 
   useEffect(() => {
     onTypeChangeHandler('All')
-  
+
   }, [])
   const onPageChangeHandler =
     async (number: number,) => {
@@ -2497,23 +2497,26 @@ export default function Index(props) {
   );
 
   useEffect(() => {
-    
+
     if (router) {
       // if( router.query.tab !=='decentraland'&& router.query.tab !=='cryptovoxels'&& router.query.tab !== 'oncyber'){
-        const index = TAB.findIndex(item => {
-          return item.type === router.query.tab
-        })
-        setFindIndex(index)
-        isSwiper?.slideTo(index)
-      // }
-    
+      if (router.query.tab === tabState) return
+      const index = TAB.findIndex(item => {
+        return item.type === router.query.tab
+      })
+      setFindIndex(index)
+      console.log(isSwiper, 22222222222);
+
+      isSwiper?.slideToLoop(index)
     }
+
+    // }
     const tab = router.query.tab || 'cryptovoxels';
     const subTab = router.query.subTab || 'parcel';
     setTabState(tab);
     setSubTabState(subTab);
     onTabChange(tab);
-  }, [router.query.tab,isSwiper]);
+  }, [router.query.tab]);
 
 
   const requestPersonal = React.useCallback(
@@ -2594,9 +2597,9 @@ export default function Index(props) {
               <div
                 className={cn(
                   'p absolute z-40 flex justify-start items-center',
-                  {
-                    hidden: tabPercent <= 0,
-                  },
+                  // {
+                  //   hidden: tabPercent <= 0,
+                  // },
                   style.per,
                 )}
               >
@@ -2606,12 +2609,16 @@ export default function Index(props) {
                 modules={[Navigation]}
                 spaceBetween={1}
                 loop={true}
-                centeredSlides={true}   
-                onSwiper={(swiper)=>{
-                  
+                centeredSlides={true}
+                // initialSlide={findIndex}
+                onSwiper={(swiper) => {
+                  const index = TAB.findIndex(item => {
+                    return item.type === router.query.tab
+                  })
+                  swiper?.slideToLoop(index)
                   setSwiper(swiper)
                 }}
-                slideToClickedSlide={true} 
+                slideToClickedSlide={true}
                 slidesPerView="auto"
                 className={cn('w-full')}
                 navigation={{
