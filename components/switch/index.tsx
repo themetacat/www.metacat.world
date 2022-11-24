@@ -42,7 +42,7 @@ export default function Switch({ onActive, options, defaultValue, id, className,
   React.useEffect(() => {
     // console.log(router,'switch');
     if (router) {
-      let index = options.findIndex(item => {
+      const index = options.findIndex(item => {
         return item.value === router.query.type
       })
       setFindIndex(index)

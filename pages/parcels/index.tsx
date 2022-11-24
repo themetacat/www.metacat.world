@@ -2500,7 +2500,7 @@ export default function Index(props) {
     
     if (router) {
       // if( router.query.tab !=='decentraland'&& router.query.tab !=='cryptovoxels'&& router.query.tab !== 'oncyber'){
-        let index = TAB.findIndex(item => {
+        const index = TAB.findIndex(item => {
           return item.type === router.query.tab
         })
         setFindIndex(index)
