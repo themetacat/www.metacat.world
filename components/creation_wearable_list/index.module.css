@@ -91,6 +91,7 @@
 }
 .detailBox > img {
   width: 10px;
-  height: 10;
+  height: 10.5px;
+  margin-top: 3px;
   filter: brightness(75%);
 }

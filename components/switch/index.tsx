@@ -19,11 +19,12 @@ type Props = {
   onActive?: (x) => void;
   options?: Array<optionItem>;
   defaultValue?;
+  showType?;
   id?: string;
   className?;
   fixedS?;
 };
-export default function Switch({ onActive, options, defaultValue, id, className, fixedS }: Props) {
+export default function Switch({ onActive, options,showType, defaultValue, id, className, fixedS }: Props) {
   const router = useRouter();
   const [active, setActive] = React.useState(defaultValue || options[0].value);
   const [percent, setPercent] = React.useState(0);
@@ -40,17 +41,20 @@ export default function Switch({ onActive, options, defaultValue, id, className,
     [options, onActive],
   );
   React.useEffect(() => {
-    // console.log(router,'switch');
+  
     if (router) {
+      // if (router.query.type === showType) return
       const index = options.findIndex(item => {
         return item.value === router.query.type
       })
       setFindIndex(index)
       isSwiper?.slideToLoop(index)
     
-      setActive(router.query.type)
-      onActive(router?.query?.type);
+    
     }
+  
+    setActive(router.query.type)
+    onActive(router?.query?.type);
   }, [router.query.type])
   return (
     <>
@@ -84,13 +88,13 @@ export default function Switch({ onActive, options, defaultValue, id, className,
           // initialSlide={findIndex}
           onSwiper={(swiper) => {
             const index = options.findIndex(item => {
-              return item.value === router.query.tab
+              return item.value === router.query.type
             })
             swiper?.slideToLoop(index)
             setSwiper(swiper)
           }}
           spaceBetween={1}
-          touchReleaseOnEdges={false}
+          // touchReleaseOnEdges={false}
           slidesPerView="auto"
           loop={true}
           centeredSlides={true}

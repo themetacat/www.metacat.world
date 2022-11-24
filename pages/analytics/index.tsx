@@ -1915,6 +1915,7 @@ export default function AnalyticsIndex(props) {
               options={types}
               defaultValue={showType}
               id="switch"
+              showType={showType}
               className={offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
               fixedS={fixedState}
             ></Switch>

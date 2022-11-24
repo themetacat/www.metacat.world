@@ -2505,7 +2505,6 @@ export default function Index(props) {
         return item.type === router.query.tab
       })
       setFindIndex(index)
-      console.log(isSwiper, 22222222222);
 
       isSwiper?.slideToLoop(index)
     }
@@ -2610,7 +2609,6 @@ export default function Index(props) {
                 spaceBetween={1}
                 loop={true}
                 centeredSlides={true}
-                // initialSlide={findIndex}
                 onSwiper={(swiper) => {
                   const index = TAB.findIndex(item => {
                     return item.type === router.query.tab
