@@ -64,7 +64,8 @@
   margin-left: 23px;
   margin-right: 23px;
   height: 48px;
-  width: 80%;
+  text-align: center;
+  /* width: 80%; */
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
