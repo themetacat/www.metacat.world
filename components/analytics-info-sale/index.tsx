@@ -19,9 +19,10 @@ type Props = {
   options?: Array<optionItem>;
   labelText?: string;
   textColor?;
+  id?;
 };
 
-export default function AnalyticsInfoSale({ options, labelText, textColor }: Props) {
+export default function AnalyticsInfoSale({ options,id, labelText, textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [arrdataSource, setArrDataSource] = React.useState([] || {});
   const [totaldataSource, setTotalDataSource] = React.useState([]);
@@ -93,7 +94,7 @@ export default function AnalyticsInfoSale({ options, labelText, textColor }: Pro
   return (
     <>
       <ChartTitle text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
-      <table className={cn('w-full', style.table)}>
+      <table className={cn('w-full', style.table)}  id={id}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
             <th

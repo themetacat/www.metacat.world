@@ -285,7 +285,7 @@ export default function AnalyticsIndex(props) {
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStateAll, setFixedStateAll] = React.useState(false);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
-    const [tabPercent, setTabPercent] = React.useState(0);
+  const [tabPercent, setTabPercent] = React.useState(0);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   const changeType = React.useCallback((newType) => {
     setShowType(newType);
@@ -1541,6 +1541,28 @@ export default function AnalyticsIndex(props) {
       return (
         <>
           <div className={cn('flex flex-col justify-center items-center', style.content)}>
+            <table style={{ width: "1200px" ,cursor:"pointer"}}>
+              <tr>
+                <td style={{ width: "25%" }}><a onClick={() => scrollToAnchor('annular1')} style={{ color: "#fff", width: "50%" }} >1.Parcel Sales Amount (USD)</a></td>
+                <td style={{ width: "25%" }}>  <a onClick={() => scrollToAnchor('miniline1')} style={{ color: "#fff", width: "50%" }} >2.MREI</a></td>
+                <td style={{ width: "25%" }}> <a onClick={() => scrollToAnchor('allline1')} style={{ color: "#fff", width: "50%" }} >3.Average Parcel Price Total</a></td>
+                <td  style={{ width: "25%" }}><a onClick={() => scrollToAnchor('allpillar1')} style={{ color: "#fff", width: "50%" }} >4.Parcel Sales Amount</a></td>
+              </tr>
+              <tr>
+                <td>
+                  <a onClick={() => scrollToAnchor('allpillar2')} style={{ color: "#fff", width: "50%" }} >5.Number of Parcel Sales</a></td>
+                <td> <a onClick={() => scrollToAnchor('allline2')} style={{ color: "#fff", width: "50%" }} >6.Floor Price</a></td>
+                <td>   <a onClick={() => scrollToAnchor('analyticsInfo')} style={{ color: "#fff", width: "50%" }} >7.Comprehensive Data</a></td>
+                <td>   <a onClick={() => scrollToAnchor('analyticsInfoSale')} style={{ color: "#fff", width: "50%" }} >8.Parcel Sales Amount</a></td>
+              </tr>
+              <tr>
+                <td>  <a onClick={() => scrollToAnchor('analyticsAverage')} style={{ color: "#fff", width: "50%" }} >9.Average Parcel Price</a></td>
+                <td> <a onClick={() => scrollToAnchor('analyticsInfoNum')} style={{ color: "#fff", width: "50%" }} >10.Number Of Parcel Sales</a></td>
+                <td>  <a onClick={() => scrollToAnchor('allpillarNum')} style={{ color: "#fff", width: "50%" }} >11.Parcel Rent Amount</a></td>
+                <td> <a onClick={() => scrollToAnchor('allpillarNum2')} style={{ color: "#fff", width: "50%" }} >12.Number of Parcel Rent</a></td>
+              </tr>
+            </table>
+
             <div
               className={cn('w-full mt-7 p-5 flex flex-col justify-start items-center', style.list)}
             >
@@ -1605,7 +1627,7 @@ export default function AnalyticsIndex(props) {
                   legend2={{ label: 'ETH', color: [0, 208, 236] }}
                 ></Miniline>
               </div>
-              <div className={style.allLine}>
+              <div className={style.allLine2}>
                 <Allline
                   id="allline1"
                   textColor={style.allColor}
@@ -1701,7 +1723,7 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></AllPillar>
               </div>
-              <div className={style.allLine}>
+              <div className={style.allLine1}>
                 <AllPillar2
                   id="allpillar2"
                   textColor={style.allColor}
@@ -1739,7 +1761,7 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></AllPillar2>
               </div>
-              <div className={style.allLine}>
+              <div className={style.allLine3}>
                 <AlllineData
                   id="allline2"
                   labelText="Floor Price"
@@ -1770,17 +1792,17 @@ export default function AnalyticsIndex(props) {
 
               <div className={cn('w-full h-auto mt-7', style.table)}>
                 <div className={style.tabContainer}>
-                  <AnalyticsInfo options={types} labelText={'Comprehensive Data'} textColor={style.allColor}></AnalyticsInfo>
+                  <AnalyticsInfo options={types} id="analyticsInfo" labelText={'Comprehensive Data'} textColor={style.allColor}></AnalyticsInfo>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>
-                <div className={style.tabContainer}>
-                  <AnalyticsInfoSale options={types} labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
+                <div className={style.tabContainer1}>
+                  <AnalyticsInfoSale options={types} id="analyticsInfoSale" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.tableBox)}>
-                <div className={style.tabContainer}>
-                  <AnalyticsAverage options={types} labelText={'Average Parcel Price'} textColor={style.allColor}
+                <div className={style.tabContainer2}>
+                  <AnalyticsAverage options={types} id="analyticsAverage" labelText={'Average Parcel Price'} textColor={style.allColor}
                     priceOptions={[
                       {
                         label: 'USD',
@@ -1793,11 +1815,11 @@ export default function AnalyticsIndex(props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={style.tabContainer} style={{ marginLeft: "20px" }}>
-                  <AnalyticsInfoNum options={types} labelText={'Number Of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
+                <div className={style.tabContainer3} style={{ marginLeft: "20px" }}>
+                  <AnalyticsInfoNum options={types} id='analyticsInfoNum' labelText={'Number Of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
               </div>
-              <div className={style.allLine}>
+              <div className={style.allLineb}>
                 <AllPillarNum
                   id="allpillarNum"
                   textColor={style.allColor}
@@ -1848,7 +1870,7 @@ export default function AnalyticsIndex(props) {
                 ></AllPillarNum>
 
               </div>
-              <div className={style.allLine}>
+              <div className={style.allLinen}>
                 <AllPillarNum2
                   id="allpillarNum2"
                   textColor={style.allColor}
@@ -1906,7 +1928,7 @@ export default function AnalyticsIndex(props) {
       );
     }
     if (headerNav === 'single') {
-      
+
       return (
         <>
           <div className={cn(style.tmbg,)}>
@@ -1919,7 +1941,7 @@ export default function AnalyticsIndex(props) {
               className={offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
               fixedS={fixedState}
             ></Switch>
-            
+
             {/* <div
                 className={cn(
                   'n absolute z-40  flex justify-end items-center',
@@ -1956,13 +1978,96 @@ export default function AnalyticsIndex(props) {
   // }, [Dtop])
 
   // React.useEffect(() => {
-  //   if (Top() <= 0) {
-  //     setFixedState(true)
-  //   } else {
-  //     setFixedState(false)
-  //   }
-  // }, [Top, Dtop.current])
-  
+  //   console.log(window, 666);
+  //   window.onhashchange
+  //   console.log(router);
+
+  //   const viewHeight = document.body.clientHeight
+  //   // var aList = document.querySelectorAll('a');
+  //   // var target = this?.hash;
+  //   // var offsetTop = document.querySelector(target)?.offsetTop;
+  //   // document.documentElement.scrollTop = offsetTop;
+  //   document.addEventListener('mousewheel', function (e) {
+  //     console.log(e, "ppppp", viewHeight, 1, document.documentElement.scrollTop);
+
+  //   })
+
+  // }, [router])
+  const scrollToAnchor = (anchorName) => {
+    console.log(anchorName, "anchorName");
+
+
+    if (anchorName) {
+      // 找到锚点
+      console.log('走了吗');
+      // router.replace(`/analytics?id=${anchorName}`)
+      // if (window.location.search && router) {
+      //   let idVal = window.location.search.split("=")[1];
+      //   console.log(idVal, "idValidVal");
+      let anchorElement = document.getElementById(anchorName);
+      // 如果对应id的锚点存在，就跳转到锚点
+      console.log(anchorElement);
+      if (anchorElement) { anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+      console.log(window.location.search, 5555, router.query.id);
+      // createPath
+      router.replace(`/analytics#id=${anchorName}`)
+      // let  as =`/analytics?id=${anchorName}`
+      // router.beforePopState(({url,as }) => {
+      // window.location.href = as
+      // return false
+      // })
+      // }
+
+    }
+    console.log(router);
+  }
+
+  React.useEffect(() => {
+    // idValCon.scrollTo({
+    //   top:idValCon.scrollTop +60,
+    //   left:0,
+    //   behavior:'smooth'
+    // })
+    let idVal = router.asPath.split("=")[1]
+    console.log(idVal, idVal === 'analyticsInfoSale');
+
+    if (idVal === 'allpillar2') {
+      let idValCon = document.querySelector('.analytics_allLine1__W4ibX');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'annular1' || idVal === 'miniline1') {
+      let idValCon = document.querySelector('.analytics_topContainer__GZXEO');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+
+    } else if (idVal === 'allline1') {
+      let idValCon = document.querySelector('.analytics_allLine1__W4ibX, .analytics_allLine2__xUO23');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'allpillar1') {
+      let idValCon = document.querySelector('.analytics_allLine__caJyn');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'allline2') {
+      let idValCon = document.querySelector('.analytics_allLine3__CQ_qr');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'analyticsInfo') {
+      let idValCon = document.querySelector('.analytics_tabContainer__BZNAm');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'analyticsInfoSale') {
+      let idValCon = document.querySelector('.analytics_tabContainer1__BDS2H');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'analyticsAverage') {
+      let idValCon = document.querySelector('.analytics_tabContainer2__yWp4H');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'analyticsInfoNum') {
+      let idValCon = document.querySelector('.analytics_tabContainer3__tgo0r');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'allpillarNum') {
+      let idValCon = document.querySelector('.analytics_allLineb__R3vbO');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    } else if (idVal === 'allpillarNum2') {
+      let idValCon = document.querySelector('.analytics_allLinen__iALvW');
+      if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+    }
+
+  }, [])
 
   React.useEffect(() => {
 
@@ -2007,11 +2112,11 @@ export default function AnalyticsIndex(props) {
     document.addEventListener('scroll', listener);
     return () => document.removeEventListener('scroll', listener);
   }, [fixedStateAll, offsetWidthNum]);
-// console.log(headerNav,"headerNav",fixedStateAll);
+  // console.log(headerNav,"headerNav",fixedStateAll);
 
   return (
     <Page className={cn('min-h-screen', offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
-      <div  className={cn('myClassName', fixedStateAll === true ? style.a : null)} ref={headerRef}>
+      <div className={cn('myClassName', fixedStateAll === true ? style.a : null)} ref={headerRef}>
         <PageHeader active={'analytics'} />
       </div>
 
@@ -2049,6 +2154,7 @@ export default function AnalyticsIndex(props) {
         <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
       </div>
       {reander}
+      {/* <div className={style.container}>{reander}</div>  */}
       <Footer />
     </Page>
   );

@@ -1,3 +1,7 @@
+
+.container{
+  height: 100vh;
+}
 .signBack {
   /* height: 270px; */
   height: 315px;
@@ -205,8 +209,56 @@
   padding: 20px;
   border-radius: 8px;
 }
+.allLinen {
+  width: 1340px;
+  height: 519px;
+  background: #000;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.allLineb {
+  width: 1340px;
+  height: 519px;
+  background: #000;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+.allLine1,.allLine2 {
+  width: 1340px;
+  height: 519px;
+  background: #000;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+.allLine3 {
+  width: 1340px;
+  height: 519px;
+  background: #000;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
 
 .tabContainer {
+  padding: 25px 20px 20px 20px;
+  background: #000;
+  border-radius: 8px;
+}
+.tabContainer1 {
+  padding: 25px 20px 20px 20px;
+  background: #000;
+  border-radius: 8px;
+}
+.tabContainer2 {
+  padding: 25px 20px 20px 20px;
+  background: #000;
+  border-radius: 8px;
+}
+.tabContainer3 {
   padding: 25px 20px 20px 20px;
   background: #000;
   border-radius: 8px;
