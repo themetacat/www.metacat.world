@@ -1971,7 +1971,15 @@ export default function AnalyticsIndex(props) {
     }
   }, [headerNav, changeType, renderChartList, fixedState]);
 
-
+  const scrollToAnchor = (anchorName) => {
+    if (anchorName) {
+      // 找到锚点
+      const anchorElement = document.getElementById(anchorName);
+      // 如果对应id的锚点存在，就跳转到锚点
+      if (anchorElement) { anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+      router.replace(`/analytics#id=${anchorName}`)
+    }
+  }
   // const Top = React.useCallback(() => {
   //   Dtop.current =
   //   return Dtop.current
@@ -1993,77 +2001,43 @@ export default function AnalyticsIndex(props) {
   //   })
 
   // }, [router])
-  const scrollToAnchor = (anchorName) => {
-    console.log(anchorName, "anchorName");
 
-
-    if (anchorName) {
-      // 找到锚点
-      console.log('走了吗');
-      // router.replace(`/analytics?id=${anchorName}`)
-      // if (window.location.search && router) {
-      //   let idVal = window.location.search.split("=")[1];
-      //   console.log(idVal, "idValidVal");
-      let anchorElement = document.getElementById(anchorName);
-      // 如果对应id的锚点存在，就跳转到锚点
-      console.log(anchorElement);
-      if (anchorElement) { anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
-      console.log(window.location.search, 5555, router.query.id);
-      // createPath
-      router.replace(`/analytics#id=${anchorName}`)
-      // let  as =`/analytics?id=${anchorName}`
-      // router.beforePopState(({url,as }) => {
-      // window.location.href = as
-      // return false
-      // })
-      // }
-
-    }
-    console.log(router);
-  }
 
   React.useEffect(() => {
-    // idValCon.scrollTo({
-    //   top:idValCon.scrollTop +60,
-    //   left:0,
-    //   behavior:'smooth'
-    // })
-    let idVal = router.asPath.split("=")[1]
-    console.log(idVal, idVal === 'analyticsInfoSale');
+    const idVal = router.asPath.split("=")[1]
 
     if (idVal === 'allpillar2') {
-      let idValCon = document.querySelector('.analytics_allLine1__W4ibX');
+      const idValCon = document.querySelector('.analytics_allLine1__W4ibX');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'annular1' || idVal === 'miniline1') {
-      let idValCon = document.querySelector('.analytics_topContainer__GZXEO');
+      const idValCon = document.querySelector('.analytics_topContainer__GZXEO');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
-
     } else if (idVal === 'allline1') {
-      let idValCon = document.querySelector('.analytics_allLine1__W4ibX, .analytics_allLine2__xUO23');
+      const idValCon = document.querySelector('.analytics_allLine1__W4ibX, .analytics_allLine2__xUO23');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'allpillar1') {
-      let idValCon = document.querySelector('.analytics_allLine__caJyn');
+      const idValCon = document.querySelector('.analytics_allLine__caJyn');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'allline2') {
-      let idValCon = document.querySelector('.analytics_allLine3__CQ_qr');
+      const idValCon = document.querySelector('.analytics_allLine3__CQ_qr');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'analyticsInfo') {
-      let idValCon = document.querySelector('.analytics_tabContainer__BZNAm');
+      const idValCon = document.querySelector('.analytics_tabContainer__BZNAm');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'analyticsInfoSale') {
-      let idValCon = document.querySelector('.analytics_tabContainer1__BDS2H');
+      const idValCon = document.querySelector('.analytics_tabContainer1__BDS2H');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'analyticsAverage') {
-      let idValCon = document.querySelector('.analytics_tabContainer2__yWp4H');
+      const idValCon = document.querySelector('.analytics_tabContainer2__yWp4H');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'analyticsInfoNum') {
-      let idValCon = document.querySelector('.analytics_tabContainer3__tgo0r');
+      const idValCon = document.querySelector('.analytics_tabContainer3__tgo0r');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'allpillarNum') {
-      let idValCon = document.querySelector('.analytics_allLineb__R3vbO');
+      const idValCon = document.querySelector('.analytics_allLineb__R3vbO');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     } else if (idVal === 'allpillarNum2') {
-      let idValCon = document.querySelector('.analytics_allLinen__iALvW');
+      const idValCon = document.querySelector('.analytics_allLinen__iALvW');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
     }
 
