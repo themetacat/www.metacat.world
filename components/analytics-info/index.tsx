@@ -17,10 +17,11 @@ type Props = {
   options?: Array<optionItem>;
   labelText?: string;
   textColor?;
+  HyperlinkJump?;
   id?;
 };
 
-export default function AnalyticsInfo({ options, id,labelText ,textColor}: Props) {
+export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,textColor}: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
@@ -38,7 +39,7 @@ export default function AnalyticsInfo({ options, id,labelText ,textColor}: Props
 
   return (
     <>
-      <ChartTitle text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
+      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
       <table className={cn('w-full', style.table)} id={id}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>

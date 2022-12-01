@@ -27,6 +27,7 @@ type Props = {
   legend8?,
   legend9?,
   textColor?,
+  HyperlinkJump?,
 };
 
 export default function Annular({
@@ -45,6 +46,7 @@ export default function Annular({
   legend8,
   legend9,
   textColor,
+  HyperlinkJump,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -230,7 +232,7 @@ export default function Annular({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}  color={textColor}></ChartTitle>
+        <ChartTitle Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
         <div className="flex items-center">{getSelect}</div>
       </div>
       {rander}

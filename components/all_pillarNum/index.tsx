@@ -26,6 +26,7 @@ type Props = {
   priceOptions?;
   limit?: number;
   textColor?;
+  HyperlinkJump?;
   imgBox?;
   toLink?;
 };
@@ -62,6 +63,7 @@ export default function AllPillarNum({
   id,
   labelText,
   dataHandlder,
+  HyperlinkJump,
   legend1,
   legend2,
   legend3,
@@ -534,7 +536,7 @@ export default function AllPillarNum({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
+        <ChartTitle Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

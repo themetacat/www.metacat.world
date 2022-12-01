@@ -23,10 +23,11 @@ type Props = {
   priceOptions?: Array<optionItem>;
   labelText?: string;
   textColor?;
+  HyperlinkJump?;
   id?;
 };
 
-export default function AnalyticsAverage({ options,id, priceOptions, labelText, textColor }: Props) {
+export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJump, labelText, textColor }: Props) {
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const [dataSource, setDataSource] = React.useState([]);
   const [arrdataSourceList, setArrDataSourceList] = React.useState(null);
@@ -177,7 +178,7 @@ export default function AnalyticsAverage({ options,id, priceOptions, labelText, 
 
   return (
     <>
-      <ChartTitle text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
+      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
       <table className={cn('w-full', style.tableHead)}  id={id}>
         <tbody>
           <div className={style.getSelect}>{getSelect}</div>

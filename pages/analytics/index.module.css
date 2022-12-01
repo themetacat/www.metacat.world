@@ -51,6 +51,7 @@
   min-height: 650px;
   padding: 30px;
   padding-top:0px !important;
+  cursor: pointer;
   /* position: relative; */
 }
 
