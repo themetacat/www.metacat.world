@@ -13,10 +13,9 @@ type Props = {
 export default function ChartTitle({ text, Hyperlink, className, color }: Props) {
 
   return (
-    <a onClick={() => { Hyperlink }}><div className={cn('flex items-center justify-start', className, style.chartTitle)} >
+   <div className={cn('flex items-center justify-start', className, style.chartTitle)} >
       <div className={cn(style.icon, color)}></div>
       <div className={cn(' text-white font-medium text-sm', style.title)} onClick={Hyperlink}>{text}</div>
     </div>
-    </a>
   );
 }

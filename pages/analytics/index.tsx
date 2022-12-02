@@ -1669,7 +1669,7 @@ export default function AnalyticsIndex(props) {
                 <div className={style.topContainer} >
                 <Annular
                 HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount(USD) ')}
-                  id="ParcelSalesAmount(USD) "
+                  id="ParcelSalesAmount(USD)"
                   labelText={'Parcel Sales Amount (USD)'}
                   dataHandlder={req_sales_amount_percent}
                   textColor={style.allColor}
@@ -2122,7 +2122,7 @@ export default function AnalyticsIndex(props) {
         left: 100,
         behavior: 'smooth'
       });
-    } else if (idVal === 'ParcelSalesAmount(USD) ' || idVal === 'MREI') {
+    } else if (idVal === 'ParcelSalesAmount(USD)' || idVal === 'MREI') {
       const idValCon = document.querySelector('.analytics_topContainer__GZXEO');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
       window.scrollTo({
