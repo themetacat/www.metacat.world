@@ -26,6 +26,7 @@ type Props = {
   priceOptions?;
   limit?: number;
   textColor?;
+  HyperlinkJump?;
 };
 /**
  * The Sandbox
@@ -70,6 +71,7 @@ export default function AllPillar({
   legend8,
   options,
   priceOptions,
+  HyperlinkJump,
   limit,
   textColor,
 }: Props) {
@@ -600,7 +602,7 @@ ${showKeyTypes[6]}:
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText} color={textColor}></ChartTitle>
+        <ChartTitle  Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

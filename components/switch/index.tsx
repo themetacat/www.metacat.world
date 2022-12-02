@@ -94,7 +94,6 @@ export default function Switch({ onActive, options,showType, defaultValue, id, c
             setSwiper(swiper)
           }}
           spaceBetween={1}
-          // touchReleaseOnEdges={false}
           slidesPerView="auto"
           loop={true}
           centeredSlides={true}
@@ -109,6 +108,7 @@ export default function Switch({ onActive, options,showType, defaultValue, id, c
           }}
         >
           {options.map((item, idx) => {
+            
             return (
               <SwiperSlide
                 className={cn(

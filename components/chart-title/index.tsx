@@ -4,16 +4,18 @@ import cn from 'classnames';
 import style from './index.module.css';
 
 type Props = {
-  text?: string;
+  text?;
   className?: string;
   color?: string;
+  Hyperlink?: (x) => void;
 };
 
-export default function ChartTitle({ text, className, color }: Props) {
+export default function ChartTitle({ text, Hyperlink, className, color }: Props) {
+
   return (
-    <div className={cn('flex items-center justify-start', className, style.chartTitle)}>
+   <div className={cn('flex items-center justify-start', className, style.chartTitle)} >
       <div className={cn(style.icon, color)}></div>
-      <div className={cn(' text-white font-medium text-sm', style.title)}>{text}</div>
+      <div className={cn(' text-white font-medium text-sm', style.title)} onClick={Hyperlink}>{text}</div>
     </div>
   );
 }

@@ -28,6 +28,7 @@ type Props = {
   priceOptions?;
   limit?: number;
   textColor?;
+  HyperlinkJump?: (x) => void;
 };
 /**
  * The Sandbox
@@ -62,6 +63,7 @@ export default function AllLineData({
   id,
   labelText,
   dataHandlder,
+  HyperlinkJump,
   legend1,
   legend2,
   legend3,
@@ -626,11 +628,12 @@ export default function AllLineData({
       }
     };
   }, [requestData]);
+  
 
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText} color={textColor}></ChartTitle>
+        <ChartTitle Hyperlink={HyperlinkJump}  text={labelText} color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className={cn('flex items-center')}>{getSelect}</div>
       </div>
