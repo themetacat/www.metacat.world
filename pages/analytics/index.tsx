@@ -2183,7 +2183,7 @@ export default function AnalyticsIndex(props) {
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
       setTimeout(()=>{
         window.scrollTo({
-          top: 3100,
+          top: 3200,
           left: 100,
           behavior: 'smooth'
         });
