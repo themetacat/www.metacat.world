@@ -74,7 +74,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                 setIndex(null);
               }}
             >
-              <div className={style.right}>Number Of Parcels Sold</div>
+              <div className={style.right}>Number of Parcels Sold</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -96,7 +96,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                 setIndex(null);
               }}
             >
-              <div className={style.right}>Total Number Of Owners</div>
+              <div className={style.right}>Total Number of Owners</div>
             </th>
             <th
               className={cn(style.h4, style.bg, style.biaotou)}

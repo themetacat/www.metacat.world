@@ -1545,7 +1545,7 @@ export default function AnalyticsIndex(props) {
       // 如果对应id的锚点存在，就跳转到锚点
       // if (anchorElement) { anchorElement.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
 
-      if (anchorName === 'NumberOfParcelSales') {
+      if (anchorName === 'NumberofParcelSales') {
         const idValCon = document.querySelector('.analytics_allLine1__W4ibX');
         if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
         window.scrollTo({
@@ -1621,7 +1621,7 @@ export default function AnalyticsIndex(props) {
             left: 100,
             behavior: 'smooth'
           });
-      } else if (anchorName === 'NumberOfParcelSalesM2M') {
+      } else if (anchorName === 'NumberofParcelSalesM2M') {
         const idValCon = document.querySelector('.analytics_tabContainer3__tgo0r');
         if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
           window.scrollTo({
@@ -1829,8 +1829,8 @@ export default function AnalyticsIndex(props) {
               </div>
             <div className={style.allLine1}>
                 <AllPillar2
-                 HyperlinkJump={() => scrollToAnchor('NumberOfParcelSales')}
-                  id="NumberOfParcelSales"
+                 HyperlinkJump={() => scrollToAnchor('NumberofParcelSales')}
+                  id="NumberofParcelSales"
                   textColor={style.allColor}
                   labelText="Number of Parcel Sales"
                   dataHandlder={req_all_number_sales}
@@ -1931,8 +1931,8 @@ export default function AnalyticsIndex(props) {
                 </div>
                   <div className={style.tabContainer3} style={{ marginLeft: "20px" }}>
                   <AnalyticsInfoNum 
-                      HyperlinkJump={() => scrollToAnchor('NumberOfParcelSalesM2M')} 
-                  options={types} id='NumberOfParcelSalesM2M' labelText={'Number of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
+                      HyperlinkJump={() => scrollToAnchor('NumberofParcelSalesM2M')} 
+                  options={types} id='NumberofParcelSalesM2M' labelText={'Number of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
               </div>
 
@@ -2114,7 +2114,7 @@ export default function AnalyticsIndex(props) {
 
   React.useEffect(() => {
     const idVal = router.asPath.split("#")[1]
-    if (idVal === 'NumberOfParcelSales') {
+    if (idVal === 'NumberofParcelSales') {
       const idValCon = document.querySelector('.analytics_allLine1__W4ibX');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
       window.scrollTo({
@@ -2188,7 +2188,7 @@ export default function AnalyticsIndex(props) {
           behavior: 'smooth'
         });
       },2000)
-    } else if (idVal === 'NumberOfParcelSalesM2M') {
+    } else if (idVal === 'NumberofParcelSalesM2M') {
       const idValCon = document.querySelector('.analytics_tabContainer3__tgo0r');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
       setTimeout(()=>{
