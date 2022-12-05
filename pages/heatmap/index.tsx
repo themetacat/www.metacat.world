@@ -105,7 +105,6 @@ export default function MapPage(props) {
   );
 
   useEffect(() => {
-    console.log(fullScreen);
     
     if (router.query.type) {
       setMapType(router.query.type);
