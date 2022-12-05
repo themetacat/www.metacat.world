@@ -1006,7 +1006,7 @@ function Map({
       onEachFeature: (feature, layer) => {
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
-            direction: 'center', permanent:true,
+            direction: 'top', 
             className: style.leafletLabel,
           });
         }
