@@ -155,19 +155,19 @@ const parcels = [
   },
   {
     label: 'NiftyIsland',
-    icon: '/images/Artifex.png',
+    icon: '/images/NiftyIsland.png',
     type: 'niftyIsland',
     link: '/parcels?tab=niftyIsland',
   },
   {
     label: 'Substrata',
-    icon: '/images/Artifex.png',
+    icon: '/images/substrata.png',
     type: 'substrata',
     link: '/parcels?tab=substrata',
   },
   {
     label: 'PlayerOne',
-    icon: '/images/Artifex.png',
+    icon: '/images/PlayerOne.png',
     type: 'playerOne',
     link: '/parcels?tab=playerOne',
   },
