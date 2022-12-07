@@ -109,7 +109,8 @@ flex-flow: row;
   top: 40px;
   z-index: 99999 !important;
   background-color: #0f191b;
-
+height: 640px;
+overflow-y: scroll;
 }
 .eventList {
   border-radius: 4px;
@@ -164,6 +165,7 @@ flex-flow: row;
 .cn {
   width: 176px;
   z-index: 999999;
+
 }
 .cn1 {
   width: 176px;

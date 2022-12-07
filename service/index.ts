@@ -90,6 +90,36 @@ export const getArtifexParcelList = async (page: number, count: number, query: s
   return json;
 };
 
+export const getPlayerOneList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/playerOne-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getNiftyIslandList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/niftyIsland-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getSubstrataList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/substrata-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getAriumParcelList = async (page: number, count: number, query: string, type: string) => {
   const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
   const url = `/api/arium-parcel-list${search}`;

@@ -153,6 +153,24 @@ const parcels = [
     type: 'artifex',
     link: '/parcels?tab=artifex',
   },
+  {
+    label: 'NiftyIsland',
+    icon: '/images/NiftyIsland.png',
+    type: 'niftyIsland',
+    link: '/parcels?tab=niftyIsland',
+  },
+  {
+    label: 'Substrata',
+    icon: '/images/substrata.png',
+    type: 'substrata',
+    link: '/parcels?tab=substrata',
+  },
+  {
+    label: 'PlayerOne',
+    icon: '/images/PlayerOne.png',
+    type: 'playerOne',
+    link: '/parcels?tab=playerOne',
+  },
 ];
 const eventList = [
   {

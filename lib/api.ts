@@ -126,6 +126,48 @@ class API {
     return json;
   }
 
+  public async getPlayerOneList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_playerone_space_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getNiftyIslandList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_niftyisland_island_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getSubstrataList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_substrata_parcel_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getAriumParcelList(
     page: number,
     count: number,
