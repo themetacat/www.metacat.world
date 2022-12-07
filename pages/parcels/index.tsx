@@ -68,6 +68,9 @@ import {
   getHyperfyParcelList,
   getMozillaParcelList,
   getArtifexParcelList,
+  getNiftyIslandList,
+  getSubstrataList,
+  getPlayerOneList,
   getAriumParcelList,
   getRareParcelList,
   getSpatialParcelList,
@@ -206,6 +209,24 @@ const TAB = [
     type: 'artifex',
     link: '/parcels?tab=artifex',
   },
+  {
+    label: 'NiftyIsland',
+    icon: '/images/NiftyIsland.png',
+    type: 'niftyIsland',
+    link: '/parcels?tab=niftyIsland',
+  },
+  {
+    label: 'Substrata',
+    icon: '/images/substrata.png',
+    type: 'substrata',
+    link: '/parcels?tab=substrata',
+  },
+  {
+    label: 'PlayerOne',
+    icon: '/images/PlayerOne.png',
+    type: 'playerOne',
+    link: '/parcels?tab=playerOne',
+  },
   // {
   //   label: 'NFT Worlds',
   //   icon: '/images/worlds.svg',
@@ -341,6 +362,9 @@ export default function Index(props) {
   const [typeListMozilla, setTypeListMozilla] = React.useState([]);
   const [typeListArium, setTypeListArium] = React.useState([]);
   const [typeListArtifex, setTypeListArtifex] = React.useState([]);
+  const [typeListNiftyIsland, setTypeListNiftyIsland] = React.useState([]);
+  const [typeListSubstrata, setTypeListSubstrata] = React.useState([]);
+  const [typeListPlayerOne, setTypeListPlayerOne] = React.useState([]);
   const [typeListsomniumspace, setTypeListSomniumspace] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const [fixedState, setFixedState] = React.useState(false);
@@ -360,6 +384,9 @@ export default function Index(props) {
   const [dataSourceMozilla, setDataSourceMozilla] = React.useState([]);
   const [dataSourceArium, setDataSourceArium] = React.useState([]);
   const [dataSourceArtifex, setDataSourceArtifex] = React.useState([]);
+  const [dataSourceSubstrataList, setDataSourceSubstrataList] = React.useState([]);
+  const [dataSourceNiftyIslandList, setDataSourceNiftyIslandList] = React.useState([]);
+  const [dataSourcePlayerOneList, setDataSourcePlayerOneList] = React.useState([]);
   const [dataSourceSandbox, setDataSourceSandbox] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
@@ -740,6 +767,36 @@ export default function Index(props) {
           // }
           // data = parcel_list;
         }
+      } else if (tab === 'niftyIsland') {
+        if (subTab === 'parcel') {
+          const res = await getNiftyIslandList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceNiftyIslandList(res.data.parcel_list)
+
+          setTypeListNiftyIsland(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+      } else if (tab === 'substrata') {
+        if (subTab === 'parcel') {
+          const res = await getSubstrataList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceSubstrataList(res.data.parcel_list)
+
+          setTypeListSubstrata(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+      } else if (tab === 'playerOne') {
+        if (subTab === 'parcel') {
+          const res = await getPlayerOneList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourcePlayerOneList(res.data.parcel_list)
+
+          setTypeListPlayerOne(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
       }
     } catch (err) {
       setError(true);
@@ -799,6 +856,15 @@ export default function Index(props) {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
     else if (tabState === 'artifex') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'niftyIsland') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'substrata') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'playerOne') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
     else if (tabState === 'mozillaHubs') {
@@ -899,6 +965,34 @@ export default function Index(props) {
       setSubTabState(SUBTABMona[subIndex]?.type);
 
       router.replace(`/parcels?tab=artifex`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'niftyIsland') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=niftyIsland`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    } else if (tab === 'substrata') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=substrata`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+    
+    
+    } else if (tab === 'playerOne') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=playerOne`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
     }
     else if (tab === 'oncyber') {
@@ -1474,6 +1568,78 @@ export default function Index(props) {
               )}
             >
               {dataSourceArtifex.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'niftyIsland') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceNiftyIslandList.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'substrata') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceSubstrataList.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'playerOne') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourcePlayerOneList.map((card, idx) => {
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}
             </div>
@@ -2820,6 +2986,21 @@ export default function Index(props) {
             {tabState === 'artifex' ? (
               <div style={{ marginTop: "20px" }}>
                 <SwiperTagParcels {...typeListArtifex} onActive={onTypeChangeHandler} tags={typeListArtifex} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'niftyIsland' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListNiftyIsland} onActive={onTypeChangeHandler} tags={typeListNiftyIsland} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'substrata' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListSubstrata} onActive={onTypeChangeHandler} tags={typeListSubstrata} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'playerOne' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListPlayerOne} onActive={onTypeChangeHandler} tags={typeListPlayerOne} label={typeState} />
               </div>
             ) : ''}
             {tabState === 'sandbox' ? (
