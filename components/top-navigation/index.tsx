@@ -371,7 +371,6 @@ export default function PageHeader({ active, className }: Props) {
   //   []
   // );
   useEffect(() => {
-console.log(screenY,window.screen.availHeight,headerRef?.current?.clientHeight,111);
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
     setOffsetHeightNum(window.screen.availHeight)
