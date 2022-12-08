@@ -111,6 +111,8 @@ flex-flow: row;
   background-color: #0f191b;
 /* height: 640px;
 overflow-y: scroll; */
+height: 100vh;
+  overflow: auto;
 }
 .parcels1 {
   border-radius: 4px;

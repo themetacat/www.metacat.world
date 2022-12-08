@@ -371,6 +371,7 @@ export default function PageHeader({ active, className }: Props) {
   //   []
   // );
   useEffect(() => {
+console.log(document.documentElement.clientHeight);
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
     setOffsetHeightNum(window.screen.availHeight)
@@ -491,7 +492,7 @@ export default function PageHeader({ active, className }: Props) {
               setParcelsState(true);
             }}
             onMouseLeave={() => {
-              setParcelsState(false);
+              setParcelsState(true);
             }}
           // onClick={placeDataSet}
           >
@@ -515,7 +516,8 @@ export default function PageHeader({ active, className }: Props) {
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                location={offsetHeighthNum<820?style.parcels:style.parcels1}
+                // location={offsetHeighthNum<820?style.parcels:style.parcels1}
+                location={style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
