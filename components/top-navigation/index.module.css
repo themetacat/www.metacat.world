@@ -109,8 +109,8 @@ flex-flow: row;
   top: 40px;
   z-index: 99999 !important;
   background-color: #0f191b;
-/* height: 640px;
-overflow-y: scroll; */
+/* height: 640px; */
+/* overflow-y: scroll; */
 height: 100vh;
   overflow: auto;
 }
