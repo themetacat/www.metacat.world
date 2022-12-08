@@ -953,6 +953,18 @@ export const req_aavegotchi_avg_price = async () => {
   return json;
 };
 
+export const req_playerone_avg_price = async () => {
+  const url = 'api/get_playerone_avg_price_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 6.31 获取 netvrk 地块成交总数量统计信息接口
 
 export const req_netvrk_sales_num = async () => {
@@ -979,6 +991,18 @@ export const req_aavegotchi_sales_num = async () => {
   return json;
 };
 
+export const req_playerone_sales_num = async () => {
+  const url = '/api/get_playerone_sales_num';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 6.32 获取 netvrk 地块销售总额统计信息接口
 
 export const req_netvrk_sales_amount = async () => {
@@ -994,6 +1018,17 @@ export const req_netvrk_sales_amount = async () => {
 
 export const req_aavegotchi_sales_amount = async () => {
   const url = 'api/get_aavegotchi_sales_amount';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_playerone_sales_amount = async () => {
+  const url = 'api/get_playerone_sales_amount';
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
