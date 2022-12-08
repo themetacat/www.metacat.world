@@ -109,7 +109,18 @@ flex-flow: row;
   top: 40px;
   z-index: 99999 !important;
   background-color: #0f191b;
+/* height: 640px;
+overflow-y: scroll; */
+}
+.parcels1 {
+  border-radius: 4px;
+  position: absolute;
+  left:-60px;
+  top: 40px;
+  z-index: 99999 !important;
+  background-color: #0f191b;
 height: 640px;
+/* height: 100%; */
 overflow-y: scroll;
 }
 .eventList {

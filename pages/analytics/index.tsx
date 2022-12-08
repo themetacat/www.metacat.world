@@ -1429,7 +1429,7 @@ export default function AnalyticsIndex(props) {
             id={'netvrk1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
-            legend1={{ label: 'Primary', color: [250, 216, 23]  }}
+            legend1={{ label:'Primary',color: [250,216,23]}}
             dataHandlder={req_aavegotchi_avg_price}
             textColor={style.spaceColor}
             options={[
@@ -1467,8 +1467,7 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_aavegotchi_sales_num}
-            legend1={{ label: 'Land', color: [250, 159, 23]
-          }}
+            legend1={{ label: 'Land', color: [250,159,23]}}
             keyTypes={['land', 'estate']}
             textColor={style.spaceColor}
             options={[
@@ -1500,8 +1499,8 @@ export default function AnalyticsIndex(props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_aavegotchi_sales_amount}
-            legend1={{ label: 'Land', color: [250, 216, 23]  }}
-            keyTypes={['land', 'estate']}
+            legend1={{ label: 'Land', color: [250,216,23]}}
+            keyTypes={['land','estate']}
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
