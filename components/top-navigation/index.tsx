@@ -298,6 +298,12 @@ const analyticsData = [
     type: 'aavegotchi',
     link: '/analytics?type=aavegotchi',
   },
+  {
+    label: 'PlayerOne',
+    icon: '/images/PlayerOne.png',
+    type: 'playerOne',
+    link: '/analytics?type=playerOne',
+  },
 ];
 
 // const routerTab = [
@@ -324,6 +330,7 @@ export default function PageHeader({ active, className }: Props) {
   const [learnState, setLearnState] = React.useState(false);
   const [showStateVal, setShowStateVal] = React.useState(null);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
+  const [offsetHeighthNum, setOffsetHeightNum] = React.useState(0);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -366,6 +373,7 @@ export default function PageHeader({ active, className }: Props) {
   useEffect(() => {
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
+    setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
   }, [])
@@ -507,7 +515,7 @@ export default function PageHeader({ active, className }: Props) {
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                location={style.parcels}
+                location={offsetHeighthNum<820?style.parcels:style.parcels1}
               ></TwoNavigation>
             ) : null}
           </div>
