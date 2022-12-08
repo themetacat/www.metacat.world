@@ -492,7 +492,7 @@ console.log(document.documentElement.clientHeight);
               setParcelsState(true);
             }}
             onMouseLeave={() => {
-              setParcelsState(true);
+              setParcelsState(false);
             }}
           // onClick={placeDataSet}
           >
