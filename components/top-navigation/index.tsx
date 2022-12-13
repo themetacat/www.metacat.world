@@ -371,7 +371,6 @@ export default function PageHeader({ active, className }: Props) {
   //   []
   // );
   useEffect(() => {
-console.log(document.documentElement.clientHeight);
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
     setOffsetHeightNum(window.screen.availHeight)
@@ -516,8 +515,7 @@ console.log(document.documentElement.clientHeight);
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                // location={offsetHeighthNum<820?style.parcels:style.parcels1}
-                location={style.parcels}
+                location={offsetHeighthNum<820?style.parcels:style.parcels1}
               ></TwoNavigation>
             ) : null}
           </div>

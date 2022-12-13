@@ -2,6 +2,18 @@
   height: 30px;
   margin-bottom: 30px;
 }
+.container{
+  position: relative;
+}
+.getSelect{
+  position: absolute;
+  right: 3px;
+
+}
+.cheartitle{
+  position: absolute;
+  
+}
 .border {
   background: rgba(0, 236, 222, 0.05);
   border: 0.5px solid rgba(1, 218, 217, 0.6);
@@ -10,6 +22,9 @@
 }
 .selecterLong {
   width: 134px;
+}
+.a{
+  display: none;
 }
 .ov {
   height: 400px;
