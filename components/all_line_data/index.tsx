@@ -611,8 +611,8 @@ export default function AllLineData({
     return <div id={id} className={style.ov}></div>;
   }, [loading, error, onRetry]);
   const singleClick = React.useCallback((text) => {
-    console.log(chart.current, 222, view);
-    console.log(555555555, text);
+    // console.log(chart.current, 222, view);
+    // console.log(555555555, text);
   }, [view])
 
 
