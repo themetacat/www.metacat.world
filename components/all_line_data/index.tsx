@@ -5,7 +5,7 @@ import style from './index.module.css'; //
 
 // 178行     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
 
-import ChartTitle from '../chart-title';
+import ChartTitle from '../chart-title3';
 import Status from '../status';
 import IconLabel from '../icon-label';
 import ChartSelecter from '../chart-select';
@@ -679,11 +679,11 @@ export default function AllLineData({
 
   return (
     <div className={style.container}>
-      <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
+      {/* <div className={cn('w-full flex justify-between item-center', style.header)}> */}
+        <ChartTitle className={style.cheartitle} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
         {/* <div className={cn('flex items-center', style.toright)} >{getLenged}</div> */}
-        <div className={cn('flex items-center')}>{getSelect}</div>
-      </div>
+        <div className={cn('flex items-center',style.getSelect)}>{getSelect}</div>
+      {/* </div> */}
       {rander}
     </div>
   );
