@@ -518,7 +518,7 @@ console.log(window.screen.height,555);
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                location={window.screen.height<820?style.parcels:style.parcels1}
+                location={window.screen.height<820?style.parcels1:style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
