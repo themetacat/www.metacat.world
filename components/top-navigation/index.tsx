@@ -370,8 +370,10 @@ export default function PageHeader({ active, className }: Props) {
   //   },
   //   []
   // );
+  
   useEffect(() => {
-// console.log(window.screen.availHeight,222);
+console.log(window.screen.availHeight,222);
+console.log(window.screen.height,555);
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
     setOffsetHeightNum(window.screen.availHeight)
@@ -516,7 +518,7 @@ export default function PageHeader({ active, className }: Props) {
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                location={window.screen.availHeight<820?style.parcels:style.parcels1}
+                location={window.screen.height<820?style.parcels:style.parcels1}
               ></TwoNavigation>
             ) : null}
           </div>
