@@ -370,13 +370,15 @@ export default function PageHeader({ active, className }: Props) {
   //   },
   //   []
   // );
+  
   useEffect(() => {
+
 
     setOffsetWidthNum(headerRef?.current?.clientWidth)
     setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
-  }, [])
+  }, [offsetHeighthNum])
   return (
     <header
       className={cn('w-full flex flex-glow items-start ',
@@ -515,7 +517,7 @@ export default function PageHeader({ active, className }: Props) {
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                location={offsetHeighthNum<820?style.parcels:style.parcels1}
+                location={window.screen.height<820?style.parcels1:style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
