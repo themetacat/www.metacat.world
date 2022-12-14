@@ -376,7 +376,7 @@ export default function PageHeader({ active, className }: Props) {
     setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
-  }, [])
+  }, [offsetHeighthNum])
   return (
     <header
       className={cn('w-full flex flex-glow items-start ',
