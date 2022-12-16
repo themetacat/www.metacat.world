@@ -38,10 +38,11 @@ export default function Tab6({onActive, icon, label, active, options,onClick, is
     >
       <div className={cn('flex justify-center items-center', style.miniCanHover)}>
         {icon ? (
-          <div
-            className={cn('bg-contain mr-2', style.miniTabIcon)}
-            style={{ backgroundImage: `url('${icon}')` }}
-          ></div>
+          // <div
+          //   className={cn('bg-contain mr-2', style.miniTabIcon)}
+          //   style={{ backgroundImage: `url('${icon}')` }}
+          // ></div>
+          <img src={icon} alt="" className={cn(style.miniTabIcon)}/>
         ) : null}
        <div className={style.lable}>{label}</div>
       </div>
@@ -52,12 +53,14 @@ export default function Tab6({onActive, icon, label, active, options,onClick, is
       onClick={onClick}
     >
       <div className={cn('flex justify-center items-center', style.canHover)}>
-        <div
+        {/* <div
           className={cn('bg-contain mr-2', style.tabIcon)}
           style={{ backgroundImage: `url('${icon}')` }}
-        ></div>
+        ></div> */}
+         <img src={icon} alt="" className={cn(style.tabIcon)}/>
         <div className={style.lable}>{label}</div>
       </div>
+      
     </div>
   );
 }

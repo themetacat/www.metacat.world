@@ -58,9 +58,13 @@
   transform: scale(1);
 }
 .miniTabIcon {
+  background-repeat: no-repeat;
   width: 20px;
   height: 20px;
-  border-radius: 16px;
+  margin-right: 8px;
+  line-height: 30px;
+  border-radius: 50%;
+  border: 0.3px solid rgba(255, 255, 255, 0.3);
 }
 .miniCanHover {
   font-weight: 400;

@@ -19,16 +19,17 @@ import Tab from '../../../components/tab';
 
 import AnimationBack from '../../../components/animation-back';
 import CreationWearableList from '../../../components/creation_wearable_list';
+import CreationMonaWearableList from '../../../components/creation_monaWear_list';
 
 import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { req_wearableDcl_list, req_wearable_list } from '../../../service/z_api';
+import { req_wearableDcl_list, req_wearable_list, req_wearableMona_list } from '../../../service/z_api';
 
 import style from './index.module.css';
 
-export default function TopicIndex() {
+export default function TopicIndex(props) {
   const meta = {
     title: `Creation - ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -70,6 +71,11 @@ export default function TopicIndex() {
       type: 'decentraland',
       // link: '/parcels?tab=decentraland',
     },
+    {
+      label: 'Mona',
+      icon: 'https://monaverse.com/branding/mona-logo-white.svg',
+      type: 'mona',
+    },
     // {
     //   label: 'The Sandbox',
     //   icon: '/images/home-icon.svg',
@@ -107,13 +113,14 @@ export default function TopicIndex() {
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
   const [wearableList, setWearableList] = React.useState([]);
+  const [wearableListMona, setWearableListMona] = React.useState([]);
   const [pageCount, setPageCount] = React.useState(20);
   const [totalPage, setTotalPage] = React.useState(1);
   // const [query, setQuery] = React.useState(null);
   // const [type, setTYPE] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('wearable');
-  const [tabStateList, setTabStateList] = React.useState('cryptovoxels' || router.query.tab);
+  const [tabStateList, setTabStateList] = React.useState( props.query.tab || 'cryptovoxels' );
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -126,7 +133,7 @@ export default function TopicIndex() {
 
 
 
-  const requestData = async (page: number, count: number) => {
+  const requestData =async (page: number, count: number) => {
     setLoading(true);
     setError(false);
     try {
@@ -134,30 +141,32 @@ export default function TopicIndex() {
         setLoading(false);
         return;
       }
+
       // const newPage = page + 1
       // console.log(newPage,"newPagenewPage");
 
       // setPageNumber(newPage)
-      // if(tabStateList==='cryptovoxels'){
-      const res = await req_wearable_list(page, count);
-      // console.log(res,page, "req_wearable_listreq_wearable_list");
+      if (tabStateList === 'cryptovoxels') {
+        const res = await req_wearable_list(page, count);
+        // console.log(res,page, "req_wearable_listreq_wearable_list");
 
-      // console.log(res.total_page);
-      const { data, total_page } = res;
+        // console.log(res.total_page);
+        const { data, total_page } = res;
 
-      setBuilders(convert(data));
-      setTotalPage(total_page);
-      // }
-      // if(tabStateList==='decentraland'){
-      const resWear = await req_wearableDcl_list(page, count);
+        setBuilders(convert(data));
+        setTotalPage(total_page);
+      } else if (tabStateList === 'decentraland') {
+        const resWear = await req_wearableDcl_list(page, count);
 
-      setWearableList(resWear.data)
+        setWearableList(resWear.data)
+        setTotalPage(resWear.total_page);
+        // console.log(resWear);
+      } else if (tabStateList === 'mona') {
 
-      // console.log(resWear);
-      // }
-
-
-
+        const resMona = await req_wearableMona_list(page, count);
+        setWearableListMona(resMona.data)
+        setTotalPage(resMona.total_page);
+      }
       // setTotalPage(total_page);
       setPageNumber(page);
       setLoading(false);
@@ -180,7 +189,7 @@ export default function TopicIndex() {
     [pageCount],
   );
 
-  const onTabChangeList = async (tab) => {
+  const onTabChangeList =  (tab) => {
     // setPageNumber(pageNumber)
     // let subIndex;
     // // if (tabStateList === 'cryptovoxels') {
@@ -189,25 +198,36 @@ export default function TopicIndex() {
     // subIndex = subIndex === -1 ? 0 : subIndex;
     setTabStateList(tab);
     // let sub = '';
+    // router.replace(`/creation/wearable?tab=${tab}`);
+    // setPageNumber(1)
+    // requestData(1, pageCount);
     if (tab === 'cryptovoxels') {
       setPageNumber(1)
       router.replace(`/creation/wearable?tab=cryptovoxels`);
-      requestData(1, pageCount);
+      // requestData(1, pageCount);
     } else if (tab === 'decentraland') {
       setPageNumber(1)
-      requestData(1, pageCount);
+      // requestData(1, pageCount);
       router.replace(`/creation/wearable?tab=decentraland`);
+
+    } else if (tab === 'mona') {
+      setPageNumber(1)
+      // requestData(1, pageCount);
+      router.replace(`/creation/wearable?tab=mona`);
     }
   };
 
 
 
+  // React.useEffect(() => {
+  //   requestData(pageNumber, pageCount);
+  // }, []);
   React.useEffect(() => {
-    requestData(pageNumber, pageCount);
-  }, []);
-  React.useEffect(() => {
-
+    // const tab = router.query.tab;
+ 
     setTabStateList(router.query.tab)
+    onTabChangeList(router.query.tab)
+    requestData(1, 20)
   }, [router.query.tab]);
 
   const renderStatus = React.useMemo(() => {
@@ -399,9 +419,42 @@ export default function TopicIndex() {
           </>
           : null
       }
+      {
+        tabStateList === 'mona' ?
+          <>
+            <div className={cn('main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center', style.content)}>
+              {/* {renderStatusList} */}
+              {
+                wearableListMona.map((card, idx) => {
+                  return <CreationMonaWearableList {...card} key={idx} model={wearableListMona} />
+                })
+              }
+            </div>
+            <PagiNation
+              total={totalPage}
+              pageNumber={pageNumber - 1}
+              pageSize={9}
+              pageChange={onPageChangeHandler}
+            />
+          </>
+          : null
+      }
 
 
       <Footer />
     </Page>
   );
+}
+export async function getServerSideProps({ locale = 'en-US', query }) {
+  return {
+      props: {
+          messages: {
+              ...require(`../../../messages/common/${locale}.json`),
+              ...require(`../../../messages/index/${locale}.json`),
+          },
+          now: new Date().getTime(),
+          locale,
+          query,
+      },
+  };
 }
