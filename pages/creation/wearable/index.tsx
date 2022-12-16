@@ -223,10 +223,10 @@ export default function TopicIndex(props) {
   //   requestData(pageNumber, pageCount);
   // }, []);
   React.useEffect(() => {
-    const tab = router.query.tab;
+    // const tab = router.query.tab;
  
     setTabStateList(router.query.tab)
-    onTabChangeList(tab)
+    onTabChangeList(router.query.tab)
     requestData(1, 20)
   }, [router.query.tab]);
 
