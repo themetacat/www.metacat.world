@@ -7,7 +7,7 @@ import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 import Page from '../../../components/page';
 import PageHeader from '../../../components/top-navigation';
 
-import { req_detailWearableDcl_list } from '../../../service/z_api';
+import { req_detailWearableMona_list } from '../../../service/z_api';
 
 
 import style from './index.module.css';
@@ -19,7 +19,9 @@ interface Props {
     creator_name?;
     wearable_name?;
     contract_address?;
-    item_id?;
+    wearable_id?;
+    is_exists?;
+    creator_address?;
 }
 
 const meta = {
@@ -36,7 +38,9 @@ export default function CreationWearableList({
     creator_name,
     wearable_name,
     contract_address,
-    item_id,
+    is_exists,
+    wearable_id,
+    creator_address,
 }: Props) {
 
     const router = useRouter();
@@ -51,9 +55,8 @@ export default function CreationWearableList({
     const [contact, setContact] = React.useState(null);
     // const [saveIconVal, setSaveIconVal] = React.useState(false);
 
-    const reqWearableList = (l,t) => {
-        const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id)
-        // console.log(res.data,1222);
+    const reqWearableList = (l, t) => {
+        const res = req_detailWearableMona_list(router.query.creator_address, router.query.wearable_id)
         res.then((resWear) => {
             setCoverImg(resWear.data.cover_img)
             setCreatorName(resWear.data.creator_name)
@@ -68,8 +71,8 @@ export default function CreationWearableList({
 
     React.useEffect(() => {
 
-        reqWearableList(contract_address, item_id)
-    }, [router.query.contract_address, router.query.item_id]);
+        reqWearableList(creator_address, wearable_id)
+    }, [router.query.creator_address, router.query.wearable_id]);
 
     React.useEffect(() => {
         const listener = () => {
@@ -88,6 +91,7 @@ export default function CreationWearableList({
         if (isExists === 2) {
             router.replace(`/topic/${creatorAddress}?type=wearables`);
         }
+
     }
 
 
@@ -111,11 +115,11 @@ export default function CreationWearableList({
                         <span className={style.productionName1}>{wearableName}</span>
                         <div className={style.inst}>{description}</div>
                         <div className={cn('mt-7 w-full p-5 flex items-start justify-start', style.infoRow)}>
-                            <span className={cn('text-white',style.createrName)} >Voxel Artist：</span>
+                            <span className={cn('text-white', style.createrName)} >Voxel Artist：</span>
                             <span className={cn('text-white')}>{creatorName}</span>
                         </div>
                         <div className={cn('mt-7 w-full p-5 flex items-start justify-start', style.infoRow)}>
-                            <span className={cn('text-white',style.createrName)} >Contact：</span>
+                            <span className={cn('text-white', style.createrName)} >Contact：</span>
                             <span className=" text-white">
                                 {contact?.homepage !== '' ? (
                                     <img
