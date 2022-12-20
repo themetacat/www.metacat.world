@@ -1571,7 +1571,8 @@ function ProfilePage(r) {
         <>
           <DaoModelList2
             models={wearablesCreatorsData}
-            token={refreshTK()}
+            // token={refreshTK()}
+            token={tokenWearable}
             saveIconVal={saveIconVal}
             wearablesShowOrHideState={wearablesShowOrHideState}
             wearablesShowOrHide={wearablesShowOrHide}
@@ -1891,7 +1892,8 @@ function ProfilePage(r) {
                   barWidth={20}
                   limit={21}
                   textColor={style.nftColor}
-                  token={refreshTK()}
+                // token={refreshTK()}
+                token={tokenWearable}
                 ></BaseBar>
               </BaseChart>
               {/* <BaseChart className=" my-5">
@@ -1910,7 +1912,8 @@ function ProfilePage(r) {
                   id="piechart2"
                   labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
                   dataHandlder={req_cv_parcel_traffic_daily}
-                  token={refreshTK()}
+                  // token={refreshTK()}
+                  token={tokenWearable}
                   textColor={style.nftColor}
                   options={[
                     {
@@ -1932,7 +1935,8 @@ function ProfilePage(r) {
                 <ProfileDetail
                   label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
                   dataHandlder={req_cv_parcel_month_traffic_detail}
-                  token={refreshTK()}
+                 // token={refreshTK()}
+                 token={tokenWearable}
                   textColor={style.nftColor}
                 ></ProfileDetail>
               </BaseChart>
@@ -1973,7 +1977,8 @@ function ProfilePage(r) {
                   barWidth={20}
                   limit={21}
                   textColor={style.deceColor}
-                  token={refreshTK()}
+                 // token={refreshTK()}
+                 token={tokenWearable}
                 ></BaseBarDece>
               </BaseChart>
               <BaseChart className=" my-5" type={true}>
@@ -1981,7 +1986,8 @@ function ProfilePage(r) {
                   id="piechart2"
                   labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
                   dataHandlder={req_deceData_parcel_traffic_daily}
-                  token={refreshTK()}
+                  // token={refreshTK()}
+                  token={tokenWearable}
                   textColor={style.deceColor}
                   options={[
                     {
@@ -2003,7 +2009,8 @@ function ProfilePage(r) {
                 <ProfileDetailDece
                   label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
                   dataHandlder={req_dece_parcel_traffic_list}
-                  token={refreshTK()}
+                  // token={refreshTK()}
+                  token={tokenWearable}
                   textColor={style.deceColor}
                 ></ProfileDetailDece>
               </BaseChart>
@@ -2285,7 +2292,8 @@ function ProfilePage(r) {
         {creatorState ? (
           <Creator
             onClick={changeCreatorState}
-            token={refreshTK()}
+            // token={refreshTK()}
+            token={tokenWearable}
             email={email}
             address={address}
           ></Creator>
