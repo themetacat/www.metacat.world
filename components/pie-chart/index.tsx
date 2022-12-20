@@ -212,9 +212,9 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
   React.useEffect(() => {
     requestData(token);
   }, [requestData]);
-  React.useEffect(() => {
+  // React.useEffect(() => {
 
-  }, [id]);
+  // }, [id]);
 
   return (
     <div>
