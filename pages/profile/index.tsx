@@ -619,7 +619,8 @@ function ProfilePage(r) {
   );
 
   const reqWearablesData = React.useCallback(async () => {
-    const result = await req_get_user_wearable(await refreshTK());
+    // const result = await req_get_user_wearable(await refreshTK());
+    const result = await req_get_user_wearable(await tokenWearable);
     if (result.code === 100000) {
       const show = result.data.filter((i) => {
         return i.show_status === 1;
@@ -640,6 +641,29 @@ function ProfilePage(r) {
       setWearablesCreatorsOriginData(result.data);
       setWearablesShowData(show);
       setWearablesHideData(hide);
+    }else if(result.code === 100003){
+       const result = await req_get_user_wearable(await refreshTK());
+       if (result.code === 100000) {
+        const show = result.data.filter((i) => {
+          return i.show_status === 1;
+        });
+        const hide = result.data.filter((i) => {
+          return i.show_status === 2;
+        });
+        // console.log(wearablesState.current);
+        if (wearablesState.current === 'all') {
+          setWearablesCreatorsData(result.data);
+        } else if (wearablesState.current === 'shown') {
+          setWearablesCreatorsData(show);
+        } else if (wearablesState.current === 'hidden') {
+          setWearablesCreatorsData(hide);
+        } else {
+          setWearablesCreatorsData(result.data);
+        }
+        setWearablesCreatorsOriginData(result.data);
+        setWearablesShowData(show);
+        setWearablesHideData(hide);
+        }
     }
   }, [refreshTK]);
 
@@ -1307,7 +1331,8 @@ function ProfilePage(r) {
     if (s.type === 'cv') {
       // 批量标记已出租
       if (label === 'Mark several as leased') {
-        const token = await refreshTK();
+        // const token = await refreshTK();
+        const token = await tokenWearable;
         const result = await req_parcels_leased(token, selectedIds.join(','));
         if (result.code === 100000) {
           store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
