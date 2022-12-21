@@ -1337,9 +1337,9 @@ function ProfilePage(r) {
         if (result.code === 100000) {
           store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
         } else if (result.code === 100003) {
-          const token = await refreshTK();
-          const result = await req_parcels_leased(token, selectedIds.join(','));
-          if (result.code === 100000) {
+          const tokenNew = await refreshTK();
+          const resultNew = await req_parcels_leased(tokenNew, selectedIds.join(','));
+          if (resultNew.code === 100000) {
             store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
           } else {
             store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
