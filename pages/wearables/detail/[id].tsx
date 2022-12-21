@@ -162,7 +162,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
     };
   }, [animation, artworkData]);
 
-  const toWearableDao = React.useCallback(() => {
+  const toWearableDao = () => {
     if (isExists === 1) {
       router.replace(`/topic/${creatorAddress}?type=wearables`);
   }
@@ -176,7 +176,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
     // } else {
     //   router.replace(`/topic/${router.query.type}?type=wearables`);
     // }
-  }, []);
+  }
   const GoBack = () => {
     // window.open(`https://www.metacat.world/profile?type=wearablelist`);
     router.push(`/profile?type=wearablelist`);
@@ -194,8 +194,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              
-              isExists === 1 ? toWearableDao():null;
+              isExists === 1 ? toWearableDao:null;
             }}
           >
             {router.query.type === 'chinesered' ? 'Chinese Red' : null}
