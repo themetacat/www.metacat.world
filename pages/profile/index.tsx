@@ -642,25 +642,25 @@ function ProfilePage(r) {
       setWearablesShowData(show);
       setWearablesHideData(hide);
     }else if(result.code === 100003){
-       const result = await req_get_user_wearable(await refreshTK());
-       if (result.code === 100000) {
-        const show = result.data.filter((i) => {
+       const resultWe = await req_get_user_wearable(await refreshTK());
+       if (resultWe.code === 100000) {
+        const show = resultWe.data.filter((i) => {
           return i.show_status === 1;
         });
-        const hide = result.data.filter((i) => {
+        const hide = resultWe.data.filter((i) => {
           return i.show_status === 2;
         });
         // console.log(wearablesState.current);
         if (wearablesState.current === 'all') {
-          setWearablesCreatorsData(result.data);
+          setWearablesCreatorsData(resultWe.data);
         } else if (wearablesState.current === 'shown') {
           setWearablesCreatorsData(show);
         } else if (wearablesState.current === 'hidden') {
           setWearablesCreatorsData(hide);
         } else {
-          setWearablesCreatorsData(result.data);
+          setWearablesCreatorsData(resultWe.data);
         }
-        setWearablesCreatorsOriginData(result.data);
+        setWearablesCreatorsOriginData(resultWe.data);
         setWearablesShowData(show);
         setWearablesHideData(hide);
         }
