@@ -193,9 +193,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
         <div className={cn('text-sm flex items-center', style.guide)}>
           <span
             className={cn('cursor-pointer', style.guideHome)}
-            onClick={() => {
-              isExists === 1 ? toWearableDao:null;
-            }}
+            onClick={isExists === 1 ? toWearableDao:null}
           >
             {router.query.type === 'chinesered' ? 'Chinese Red' : null}
             {router.query.type === 'pfp' ? 'PFP' : null}
