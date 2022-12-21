@@ -185,8 +185,9 @@ export default function TopicIndex(props) {
       const requestNumber = number + 1;
 
       await requestData(requestNumber, pageCount);
+      // await requestData(pageNumber, pageCount);;
     },
-    [pageCount],
+    [pageCount,tabStateList],
   );
 
   const onTabChangeList =  (tab) => {
@@ -198,23 +199,23 @@ export default function TopicIndex(props) {
     // subIndex = subIndex === -1 ? 0 : subIndex;
     setTabStateList(tab);
     // let sub = '';
-    // router.replace(`/creation/wearable?tab=${tab}`);
+    router.replace(`/creation/wearable?tab=${tab}`);
     // setPageNumber(1)
     // requestData(1, pageCount);
-    if (tab === 'cryptovoxels') {
-      setPageNumber(1)
-      router.replace(`/creation/wearable?tab=cryptovoxels`);
-      // requestData(1, pageCount);
-    } else if (tab === 'decentraland') {
-      setPageNumber(1)
-      // requestData(1, pageCount);
-      router.replace(`/creation/wearable?tab=decentraland`);
+    // if (tab === 'cryptovoxels') {
+    //   setPageNumber(1)
+    //   router.replace(`/creation/wearable?tab=cryptovoxels`);
+    //   // requestData(1, pageCount);
+    // } else if (tab === 'decentraland') {
+    //   setPageNumber(1)
+    //   // requestData(1, pageCount);
+    //   router.replace(`/creation/wearable?tab=decentraland`);
 
-    } else if (tab === 'mona') {
-      setPageNumber(1)
-      // requestData(1, pageCount);
-      router.replace(`/creation/wearable?tab=mona`);
-    }
+    // } else if (tab === 'mona') {
+    //   setPageNumber(1)
+    //   // requestData(1, pageCount);
+    //   router.replace(`/creation/wearable?tab=mona`);
+    // }
   };
 
 
