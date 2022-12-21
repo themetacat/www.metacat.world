@@ -641,9 +641,9 @@ function ProfilePage(r) {
       setWearablesCreatorsOriginData(result.data);
       setWearablesShowData(show);
       setWearablesHideData(hide);
-    }else if(result.code === 100003){
-       const resultWe = await req_get_user_wearable(await refreshTK());
-       if (resultWe.code === 100000) {
+    } else if (result.code === 100003) {
+      const resultWe = await req_get_user_wearable(await refreshTK());
+      if (resultWe.code === 100000) {
         const show = resultWe.data.filter((i) => {
           return i.show_status === 1;
         });
@@ -663,7 +663,7 @@ function ProfilePage(r) {
         setWearablesCreatorsOriginData(resultWe.data);
         setWearablesShowData(show);
         setWearablesHideData(hide);
-        }
+      }
     }
   }, [refreshTK]);
 
@@ -1336,8 +1336,15 @@ function ProfilePage(r) {
         const result = await req_parcels_leased(token, selectedIds.join(','));
         if (result.code === 100000) {
           store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
-        } else {
-          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        } else if (result.code === 100003) {
+          const token = await refreshTK();
+          const result = await req_parcels_leased(token, selectedIds.join(','));
+          if (result.code === 100000) {
+            store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
+          } else {
+            store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+          }
+
         }
         set_rent_set_state(true);
         setManySetState(false);
@@ -1532,15 +1539,38 @@ function ProfilePage(r) {
     async (id = null, stat = null) => {
       let result = null;
       if (id && stat) {
-        result = await req_set_wearable_show_status(await refreshTK(), id, stat);
+        // result = await req_set_wearable_show_status(await refreshTK(), id, stat);
+        result = await req_set_wearable_show_status(await tokenWearable, id, stat);
       } else {
         result = await req_set_wearable_show_status(
-          await refreshTK(),
+          // await refreshTK(),
+          await tokenWearable,
           wearablesSleceteIdList.join(),
           wearablesShowOrHide,
         );
       }
       setSaveIconVal(id)
+      if (result.code === 100000) {
+
+        if (wearablesShowOrHide === 2 || stat === 2) {
+          toast.success('Successfully hidden!');
+        }
+        if (wearablesShowOrHide === 1 || stat === 1) {
+          toast.success('Successfully shown!');
+        }
+
+      } else if (result.code === 100003) {
+        // toast.error('Failed!');
+        if (id && stat) {
+          result = await req_set_wearable_show_status(await refreshTK(), id, stat);
+        } else {
+          result = await req_set_wearable_show_status(
+            await refreshTK(),
+            wearablesSleceteIdList.join(),
+            wearablesShowOrHide,
+          );
+        }
+        setSaveIconVal(id)
         if (result.code === 100000) {
 
           if (wearablesShowOrHide === 2 || stat === 2) {
@@ -1553,14 +1583,15 @@ function ProfilePage(r) {
         } else {
           toast.error('Failed!');
         }
+      }
 
-        setWearablesShowOrHideState(false);
-        setWearablesShowOrHide(0);
-        setWearablesSleceteIdList([]);
-        reqWearablesData();
-        setSaveIconVal(null)
+      setWearablesShowOrHideState(false);
+      setWearablesShowOrHide(0);
+      setWearablesSleceteIdList([]);
+      reqWearablesData();
+      setSaveIconVal(null)
 
-     
+
 
 
     },
@@ -1591,7 +1622,7 @@ function ProfilePage(r) {
       );
     }
     if (wearablesCreatorsData.length !== 0) {
-      
+
       return (
         <>
           <DaoModelList2
@@ -1917,8 +1948,8 @@ function ProfilePage(r) {
                   barWidth={20}
                   limit={21}
                   textColor={style.nftColor}
-                // token={refreshTK()}
-                token={tokenWearable}
+                  // token={refreshTK()}
+                  token={tokenWearable}
                 ></BaseBar>
               </BaseChart>
               {/* <BaseChart className=" my-5">
@@ -1960,8 +1991,8 @@ function ProfilePage(r) {
                 <ProfileDetail
                   label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
                   dataHandlder={req_cv_parcel_month_traffic_detail}
-                 // token={refreshTK()}
-                 token={tokenWearable}
+                  // token={refreshTK()}
+                  token={tokenWearable}
                   textColor={style.nftColor}
                 ></ProfileDetail>
               </BaseChart>
@@ -2002,8 +2033,8 @@ function ProfilePage(r) {
                   barWidth={20}
                   limit={21}
                   textColor={style.deceColor}
-                 // token={refreshTK()}
-                 token={tokenWearable}
+                  // token={refreshTK()}
+                  token={tokenWearable}
                 ></BaseBarDece>
               </BaseChart>
               <BaseChart className=" my-5" type={true}>
