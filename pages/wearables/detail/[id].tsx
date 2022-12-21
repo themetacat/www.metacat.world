@@ -24,11 +24,14 @@ import z_api from '../../../lib/z_api';
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
 import { convert } from '../../../common/utils';
+import { req_get_wearable_detail} from '../../../service/z_api';
 
 import style from './index.module.css';
 
 export default function WearablesDetail({ artwork, artist, id }) {
   const router = useRouter();
+  const [isExists, setIsExists] = React.useState(null);
+  const [creatorAddress, setCreatorAddress] = React.useState(null);
   const meta = {
     title: `WearablesDetail- ${SITE_NAME}`,
     description: META_DESCRIPTION,
@@ -62,6 +65,30 @@ export default function WearablesDetail({ artwork, artist, id }) {
     render();
     animationRef.current = requestAnimationFrame(animation);
   }, [render]);
+
+  const reqWearableList = (l) => {
+    const res = req_get_wearable_detail(router.query.id)
+ 
+    res.then((resWear) => {
+      
+    //     setCoverImg(resWear.data.cover_img)
+    //     setCreatorName(resWear.data.creator_name)
+    //     setWearableName(resWear.data.wearable_name)
+        setCreatorAddress(resWear.data.artist?.address)
+    //     setDescription(resWear.data.description)
+        setIsExists(resWear.data[0].artist?.is_exists)
+    //     setContact(resWear.data.contact)
+
+    })
+}
+
+
+
+  React.useEffect(() => {
+
+    reqWearableList(router.query.id)
+    
+}, [router.query.id]);
 
   React.useEffect(() => {
     if (!artworkData.voxUrl) {
@@ -136,17 +163,20 @@ export default function WearablesDetail({ artwork, artist, id }) {
   }, [animation, artworkData]);
 
   const toWearableDao = React.useCallback(() => {
+    if (isExists === 1) {
+      router.replace(`/topic/${creatorAddress}?type=wearables`);
+  }
     // router.replace(`/topicNewBuilding?address=${router?.query?.address}`);
-    if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
-      router.replace(`/wearables/wearabledao?type=${router.query.type}`);
-    } else if (router.query.type === 'mywearables') {
-      router.replace(`/profile?type=wearablelist`);
-    } else if (router.query.type === 'topic') {
-      router.replace(`/topic/${router.query.address}?type=wearables`);
-    } else {
-      router.replace(`/topic/${router.query.type}?type=wearables`);
-    }
-  }, [router.query.type]);
+    // if (router.query.type === 'chinesered' || router.query.type === 'pfp') {
+    //   router.replace(`/wearables/wearabledao?type=${router.query.type}`);
+    // } else if (router.query.type === 'mywearables') {
+    //   router.replace(`/profile?type=wearablelist`);
+    // } else if (router.query.type === 'topic') {
+    //   router.replace(`/topic/${router.query.address}?type=wearables`);
+    // } else {
+    //   router.replace(`/topic/${router.query.type}?type=wearables`);
+    // }
+  }, []);
   const GoBack = () => {
     // window.open(`https://www.metacat.world/profile?type=wearablelist`);
     router.push(`/profile?type=wearablelist`);
@@ -164,7 +194,8 @@ export default function WearablesDetail({ artwork, artist, id }) {
           <span
             className={cn('cursor-pointer', style.guideHome)}
             onClick={() => {
-              toWearableDao();
+              
+              isExists === 1 ? toWearableDao():null;
             }}
           >
             {router.query.type === 'chinesered' ? 'Chinese Red' : null}
@@ -289,7 +320,6 @@ export async function getServerSideProps(context) {
   }
   
   const { artwork, artist } = res.data[0];
-  console.log(res,1111);
   return {
     props: {
       artwork,
