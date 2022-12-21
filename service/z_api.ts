@@ -1469,7 +1469,7 @@ export const req_set_wearable_show_status = async (
 };
 
 export const req_get_wearable_detail = async (id) => {
-  const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: false });
+  const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: true });
   const url = `/api/get_wearable_detail${search}`;
 
   const result = await fetch(url, {

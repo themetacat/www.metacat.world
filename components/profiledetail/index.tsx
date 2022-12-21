@@ -21,7 +21,7 @@ export default function ProfileDetailDece({ label, dataHandlder, token, textColo
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
   React.useEffect(() => {
-    console.log(bgState);
+    // console.log(bgState);
   }, [bgState])
 
 
