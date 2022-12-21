@@ -70,11 +70,12 @@ export default function WearablesDetail({ artwork, artist, id }) {
     const res = req_get_wearable_detail(router.query.id)
  
     res.then((resWear) => {
+      // console.log(resWear.data[0].artist?.address,resWear.data[0]);
       
     //     setCoverImg(resWear.data.cover_img)
     //     setCreatorName(resWear.data.creator_name)
     //     setWearableName(resWear.data.wearable_name)
-        setCreatorAddress(resWear.data.artist?.address)
+        setCreatorAddress(resWear.data[0].artist?.address)
     //     setDescription(resWear.data.description)
         setIsExists(resWear.data[0].artist?.is_exists)
     //     setContact(resWear.data.contact)
@@ -163,7 +164,10 @@ export default function WearablesDetail({ artwork, artist, id }) {
   }, [animation, artworkData]);
 
   const toWearableDao = () => {
+    console.log(creatorAddress);
+
     if (isExists === 1) {
+      
       router.replace(`/topic/${creatorAddress}?type=wearables`);
   }
     // router.replace(`/topicNewBuilding?address=${router?.query?.address}`);
