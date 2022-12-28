@@ -8,9 +8,11 @@ import Router, { useRouter } from 'next/router';
 
 import { toast } from 'react-hot-toast';
 
-import { useWalletProvider } from '../web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
+
+import { useWalletProvider } from '../web3modal';
+
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 import { req_user_logout } from '../../service/z_api';
