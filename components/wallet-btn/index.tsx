@@ -201,7 +201,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       web3.connect().then(
         async (res) => {
-          const { address: addr, provider:provi } = res;
+          const { address: addr, provider: provi } = res;
           connect(addr, provi);
         },
         (err) => {
@@ -250,8 +250,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         checkLoginStatu(resData);
       }, (res1) => {
         console.log(1);
-        
-       })
+
+      })
     }, (error) => {
       if (w3) {
         w3.resetApp()
@@ -262,7 +262,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       return;
     }
 
-  //   //断开连接
+    //   //断开连接
     provider.on('close', async () => {
       removeToken('atk');
       removeToken('rtk');
@@ -276,7 +276,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       await provider.killSession()
       await provider.clearCachedProvider();
     });
-    //切换账号
     provider.on('accountsChanged', async (accounts) => {
       const addressData = await accounts[0];
       console.log('切换账号')
@@ -289,7 +288,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',//以太坊连接必填
+          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
           // rpc: {
           //   56: 'https://mainnet.infura.io/v3',
           // },
@@ -302,12 +301,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       cacheProvider: true,
       providerOptions,
     });
-    const provider = await web3Modal.connect()
+    const providerDataText = await web3Modal.connect()
     await web3Modal.toggleModal()
-    const web_3 = new WalletConnectProvider(provider)
+    const web_3 = new WalletConnectProvider(providerDataText)
 
     setw3(web_3)
-    await subscribeProvider(provider, web_3, web3Modal)
+    await subscribeProvider(providerDataText, web_3, web3Modal)
     return web_3
   }, [subscribeProvider])
 
@@ -320,7 +319,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         }
         if (!profile.address && item.value === 'walletconnect') {
           console.log(444444444);
-          
+
           walletconnect()
         }
       }
@@ -332,21 +331,22 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     console.log(await p1.enable())
     const i = await p1.enable();
 
-  
-  provider.on("accountsChanged", (accounts: string[]) => {
-    console.log(accounts);
-  });
 
-  // Subscribe to chainId change
-  provider.on("chainChanged", (chainId: number) => {
-    console.log(chainId);
-  });
+    provider.on("accountsChanged", (accounts: string[]) => {
+      console.log(accounts);
+    });
 
-  // Subscribe to session disconnection
-  provider.on("disconnect", (code: number, reason: string) => {
-    console.log(code, reason);
-  });
-    return await i
+    // Subscribe to chainId change
+    provider.on("chainChanged", (chainId: number) => {
+      console.log(chainId);
+    });
+
+    // Subscribe to session disconnection
+    provider.on("disconnect", (code: number, reason: string) => {
+      console.log(code, reason);
+    });
+    // return await i
+    return  i
   }, [p1])
 
   const clickOperationItem = React.useCallback(
@@ -528,8 +528,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       >
         {getText}
       </div>
-      <div style={{borderRadius:"6px"}}>
-      <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
+      <div style={{ borderRadius: "6px" }}>
+        <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
       </div>
     </div>
   );
