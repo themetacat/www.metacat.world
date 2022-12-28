@@ -164,11 +164,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const connect = React.useCallback(
-    async (addr, provider) => {
+    async (addr, providerCon) => {
       const nonceData = await requireNonce(addr);
       if (nonceData) {
         const { address: add, nonce } = nonceData;
-        provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+        providerCon.request({ method: 'personal_sign', params: [nonce, add] }).then(
           async (signature) => {
             const result = await loginSignature(add, signature);
             checkLoginStatu(result);
@@ -201,8 +201,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       web3.connect().then(
         async (res) => {
-          const { address: addr, provider } = res;
-          connect(addr, provider);
+          const { address: addr, provider:provi } = res;
+          connect(addr, provi);
         },
         (err) => {
           setLoading(false);
@@ -243,9 +243,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     await newWeb3.clearCachedProvider();
   };
 
-  const subscribeProvider = React.useCallback(async (provider, newWeb3, modal) => {
-    const { nonce, address: add } = await requireNonce(provider.accounts[0]);
-    provider.request({ method: 'personal_sign', params: [nonce, add] }).then((res) => {
+  const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
+    const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
+    providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((res) => {
       loginSignature(add, res).then((res) => {
         checkLoginStatu(res);
       }, () => { })
@@ -255,7 +255,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       }
     })
 
-    if (!provider.on) {
+    if (!providerDa.on) {
       return;
     }
 
@@ -276,7 +276,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
     //切换账号
     provider.on('accountsChanged', async (accounts) => {
-      let address = await accounts[0];
+      const address = await accounts[0];
       console.log('切换账号')
     });
   }, [w3])
@@ -317,6 +317,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           connectToChain();
         }
         if (!profile.address && item.value === 'walletconnect') {
+          console.log(444444444);
+          
           walletconnect()
         }
       }
