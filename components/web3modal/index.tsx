@@ -2,7 +2,7 @@ import React from 'react';
 import Web3Modal, { IProviderControllerOptions } from 'web3modal';
 import Rekv from 'rekv';
 import Web3 from 'web3';
-// import WalletConnectProvider from '@walletconnect/web3-provider';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 
 import { getChainData } from './utils';
 import { IAssetData } from './interface';
@@ -149,28 +149,28 @@ export default function Web3ModalProvider({
       return;
     }
     provider.on('close', () => resetApp());
-    // provider.on('accountsChanged', async (accounts: string[]) => {
-    //   // eslint-disable-next-line no-underscore-dangle
-    //   const _address = accounts[0];
-    //   await state.setState({ address: _address });
-    //   await getAccountAssets(_address, chainId);
-    // });
-    // provider.on('chainChanged', async (cid: number) => {
-    //   const id = +cid;
-    //   // const networkId = await web3.eth.net.getId();
-    //   if (!getNetwork(id)) return;
-    //   state.setState({ chainId: id, networkId: id });
-    //   await getAccountAssets(address, id);
-    // });
+    provider.on('accountsChanged', async (accounts: string[]) => {
+      // eslint-disable-next-line no-underscore-dangle
+      const _address = accounts[0];
+      await state.setState({ address: _address });
+      await getAccountAssets(_address, chainId);
+    });
+    provider.on('chainChanged', async (cid: number) => {
+      const id = +cid;
+      // const networkId = await web3.eth.net.getId();
+      if (!getNetwork(id)) return;
+      state.setState({ chainId: id, networkId: id });
+      await getAccountAssets(address, id);
+    });
 
-    // provider.on('networkChanged', async (networkId: number) => {
-    //   // const cid = await web3.eth.getChainId();
-    //   const id = +networkId;
+    provider.on('networkChanged', async (networkId: number) => {
+      // const cid = await web3.eth.getChainId();
+      const id = +networkId;
 
-    //   if (!getNetwork(+id)) return;
-    //   state.setState({ chainId: +id, networkId: id });
-    //   await getAccountAssets(address, id);
-    // });
+      if (!getNetwork(+id)) return;
+      state.setState({ chainId: +id, networkId: id });
+      await getAccountAssets(address, id);
+    });
   };
 
   const onConnect = async () => {
@@ -220,14 +220,14 @@ export default function Web3ModalProvider({
       {
         network: getNetwork(), // optional
         cacheProvider: true, // optional
-        // providerOptions: {
-        //   walletconnect: {
-        //     package: WalletConnectProvider,
-        //     options: {
-        //       infuraId: process.env.REACT_APP_INFURA_ID,
-        //     },
-        //   },
-        // },
+        providerOptions: {
+          walletconnect: {
+            package: WalletConnectProvider,
+            options: {
+              infuraId: process.env.REACT_APP_INFURA_ID,
+            },
+          },
+        },
       },
       options,
     );
