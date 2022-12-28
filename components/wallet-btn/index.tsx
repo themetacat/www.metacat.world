@@ -245,10 +245,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
     const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
-    providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((res) => {
-      loginSignature(add, res).then((resData) => {
+    providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
+      loginSignature(add, resD).then((resData) => {
         checkLoginStatu(resData);
-      }, () => {
+      }, (res1) => {
         console.log(1);
         
        })
@@ -276,7 +276,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       await provider.killSession()
       await provider.clearCachedProvider();
     });
-
     //切换账号
     provider.on('accountsChanged', async (accounts) => {
       const addressData = await accounts[0];
