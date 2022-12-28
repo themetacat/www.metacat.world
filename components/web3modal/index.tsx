@@ -179,6 +179,8 @@ export default function Web3ModalProvider({
     }
 
     try {
+      // console.log(web3ModalRef,55555);
+      
       const provider = await web3ModalRef.current?.connect();
       await subscribeProvider(provider);
 
