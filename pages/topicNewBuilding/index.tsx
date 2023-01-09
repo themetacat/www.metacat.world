@@ -272,8 +272,10 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
     }
     const strAdd = router.asPath
     const newAdd = strAdd.split('=')[1]
-
+console.log(newAdd);
+requestPersonal(newAdd);
     // const a = getToken('address');
+    
     if (newAdd) {
       setWalletAddress(newAdd);
     }
@@ -285,6 +287,8 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
     searchList();
     
     const accessToken = getToken('atk');
+    console.log(accessToken,111,getToken('atk'));
+    
     if (accessToken) {
       requestPersonal(accessToken);
     }

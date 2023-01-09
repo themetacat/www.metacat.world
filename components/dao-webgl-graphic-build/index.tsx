@@ -74,7 +74,7 @@ export default function DaoWebglCard({
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
     } else {
       // router.replace(`/wearables/detail/${model.id}?type=${'mywearables'}`);
-      window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${model.address}`);
+      window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${model.address ||address}`);
     }
   }, [tabState, id, address]);
 
