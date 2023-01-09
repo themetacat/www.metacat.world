@@ -8,8 +8,8 @@ import Router, { useRouter } from 'next/router';
 
 import { toast } from 'react-hot-toast';
 
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal from 'web3modal';
+// import WalletConnectProvider from '@walletconnect/web3-provider';
+// import Web3Modal from 'web3modal';
 
 import { useWalletProvider } from '../web3modal';
 
@@ -87,12 +87,12 @@ const WALLET = [
     value: 'metamask',
     type: 'wallet',
   },
-  {
-    label: 'Wallet Connect',
-    icon: '/images/walletconnect.png',
-    value: 'walletconnect',
-    type: 'wallet',
-  },
+  // {
+  //   label: 'Wallet Connect',
+  //   icon: '/images/walletconnect.png',
+  //   value: 'walletconnect',
+  //   type: 'wallet',
+  // },
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
@@ -105,13 +105,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const [showWall, setShowWall] = React.useState(null);
 
-  const [w3, setw3] = React.useState(null)
+  // const [w3, setw3] = React.useState(null)
 
-  const provider = new WalletConnectProvider({
-    infuraId: "f9d7d835ed864a299a13e841a1b654f8",
-  });
+  // const provider = new WalletConnectProvider({
+  //   infuraId: "f9d7d835ed864a299a13e841a1b654f8",
+  // });
 
-  const [p1, setp1] = React.useState(provider)
+  // const [p1, setp1] = React.useState(provider)
 
   const web3 = useWalletProvider();
   const router = useRouter();
@@ -201,8 +201,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       web3.connect().then(
         async (res) => {
-          const { address: addr, provider: provi } = res;
-          connect(addr, provi);
+          const { address: addr, provider } = res;
+          connect(addr, provider);
         },
         (err) => {
           setLoading(false);
@@ -243,72 +243,72 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     await newWeb3.clearCachedProvider();
   };
 
-  const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
-    const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
-    providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
-      loginSignature(add, resD).then((resData) => {
-        checkLoginStatu(resData);
-      }, (res1) => {
-        console.log(1);
+  // const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
+  //   const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
+  //   providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
+  //     loginSignature(add, resD).then((resData) => {
+  //       checkLoginStatu(resData);
+  //     }, (res1) => {
+  //       console.log(1);
 
-      })
-    }, (error) => {
-      if (w3) {
-        w3.resetApp()
-      }
-    })
+  //     })
+  //   }, (error) => {
+  //     if (w3) {
+  //       w3.resetApp()
+  //     }
+  //   })
 
-    if (!providerDa.on) {
-      return;
-    }
+  //   if (!providerDa.on) {
+  //     return;
+  //   }
 
-    //   //断开连接
-    provider.on('close', async () => {
-      removeToken('atk');
-      removeToken('rtk');
-      state.setState({
-        accessToken: '',
-        refreshToken: '',
-        profile: { address: null, nickName: null, avatar: null },
-      });
-      window.location.href = '/';
-      newWeb3.resetApp()
-      await provider.killSession()
-      await provider.clearCachedProvider();
-    });
-    provider.on('accountsChanged', async (accounts) => {
-      const addressData = await accounts[0];
-      console.log('切换账号')
-    });
-  }, [w3])
+  //   //   //断开连接
+  //   provider.on('close', async () => {
+  //     removeToken('atk');
+  //     removeToken('rtk');
+  //     state.setState({
+  //       accessToken: '',
+  //       refreshToken: '',
+  //       profile: { address: null, nickName: null, avatar: null },
+  //     });
+  //     window.location.href = '/';
+  //     newWeb3.resetApp()
+  //     await provider.killSession()
+  //     await provider.clearCachedProvider();
+  //   });
+  //   provider.on('accountsChanged', async (accounts) => {
+  //     const addressData = await accounts[0];
+  //     console.log('切换账号')
+  //   });
+  // }, [w3])
 
-  const walletconnect = React.useCallback(async () => {
+  // const walletconnect = React.useCallback(async () => {
 
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
-          // rpc: {
-          //   56: 'https://mainnet.infura.io/v3',
-          // },
-          // network: 56,
-        },
-      },
-    };
-    const web3Modal = new Web3Modal({
-      network: 'mainnet',
-      cacheProvider: true,
-      providerOptions,
-    });
-    const providerDataText = await web3Modal.connect()
-    await web3Modal.toggleModal()
-    const web_3 = new WalletConnectProvider(providerDataText)
+  //   const providerOptions = {
+  //     walletconnect: {
+  //       package: WalletConnectProvider,
+  //       options: {
+  //         infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+  //         // rpc: {
+  //         //   56: 'https://mainnet.infura.io/v3',
+  //         // },
+  //         // network: 56,
+  //       },
+  //     },
+  //   };
+  //   const web3Modal = new Web3Modal({
+  //     network: 'mainnet',
+  //     cacheProvider: true,
+  //     providerOptions,
+  //   });
+  //   const providerDataText = await web3Modal.connect()
+  //   await web3Modal.toggleModal()
+  //   const web_3 = new WalletConnectProvider(providerDataText)
 
-    setw3(web_3)
-    await subscribeProvider(providerDataText, web_3, web3Modal)
-    return web_3
-  }, [subscribeProvider])
+  //   setw3(web_3)
+  //   await subscribeProvider(providerDataText, web_3, web3Modal)
+  //   return web_3
+  // }, [subscribeProvider])
 
   const clickItem = React.useCallback(
     (item) => {
@@ -317,37 +317,37 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         if (!profile.address && item.value === 'metamask') {
           connectToChain();
         }
-        if (!profile.address && item.value === 'walletconnect') {
-          console.log(444444444);
+        // if (!profile.address && item.value === 'walletconnect') {
+        //   console.log(444444444);
 
-          walletconnect()
-        }
+        //   walletconnect()
+        // }
       }
     },
     [profile, connectToChain],
     // walletconnect
   );
-  const demo = React.useCallback(async () => {
-    console.log(await p1.enable())
-    const i = await p1.enable();
+  // const demo = React.useCallback(async () => {
+  //   console.log(await p1.enable())
+  //   const i = await p1.enable();
 
 
-    provider.on("accountsChanged", (accounts: string[]) => {
-      console.log(accounts);
-    });
+  //   provider.on("accountsChanged", (accounts: string[]) => {
+  //     console.log(accounts);
+  //   });
 
-    // Subscribe to chainId change
-    provider.on("chainChanged", (chainId: number) => {
-      console.log(chainId);
-    });
+  //   // Subscribe to chainId change
+  //   provider.on("chainChanged", (chainId: number) => {
+  //     console.log(chainId);
+  //   });
 
-    // Subscribe to session disconnection
-    provider.on("disconnect", (code: number, reason: string) => {
-      console.log(code, reason);
-    });
-    // return await i
-    return  i
-  }, [p1])
+  //   // Subscribe to session disconnection
+  //   provider.on("disconnect", (code: number, reason: string) => {
+  //     console.log(code, reason);
+  //   });
+  //   return await i
+  //   // return  i
+  // }, [p1])
 
   const clickOperationItem = React.useCallback(
     async (item) => {
