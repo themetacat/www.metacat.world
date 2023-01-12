@@ -1,11 +1,9 @@
 import React from 'react';
 import { Chart } from '@antv/g2';
 import cn from 'classnames';
-import style from './index.module.css'; //
+import style from './index.module.css';
 
-// 178行     <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
-
-import ChartTitle from '../chart-title3';
+import ChartTitle from '../chart-title';
 import Status from '../status';
 import IconLabel from '../icon-label';
 import ChartSelecter from '../chart-select';
@@ -22,13 +20,12 @@ type Props = {
   legend4?;
   legend5?;
   legend6?;
-  options?;
   legend7?;
   legend8?;
-  priceOptions?;
-  iconImgLight?;
+  options?;
   limit?: number;
   textColor?;
+  iconImgLight?;
   HyperlinkJump?: (x) => void;
 };
 /**
@@ -45,7 +42,7 @@ const keyTypes = [
   'nftworlds',
   'decentraland',
   'worldwidewebb',
-  'voxels',
+  'cryptovoxels',
   'somniumspace',
 ];
 
@@ -60,31 +57,28 @@ const showKeyTypes = [
   'Netvrk',
 ];
 
-export default function AllLineData1({
+export default function AllLine3({
   id,
   labelText,
   dataHandlder,
-  HyperlinkJump,
   legend1,
   legend2,
   legend3,
   legend4,
   legend5,
   legend6,
-  options,
   legend7,
   legend8,
-  priceOptions,
+  options,
   limit,
-  iconImgLight,
   textColor,
+  HyperlinkJump,
+  iconImgLight,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState(null);
-  const [view, setView] = React.useState(null);
   const [showType, setShowType] = React.useState(options[0].value);
-  // const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const chart = React.useRef(null);
 
   const transfromData = React.useCallback(
@@ -98,16 +92,14 @@ export default function AllLineData1({
           result.push({
             ...element,
             staticT: type,
-            // priceStaticT: priceType,
           });
         });
         return result;
       }
-      data.data.forEach((element) => {
+      data.forEach((element) => {
         result.push({
           ...element,
           staticT: type,
-          // priceStaticT: priceType,
         });
       });
       return result;
@@ -126,18 +118,8 @@ export default function AllLineData1({
         autoFit: true,
         height: 400,
       });
-      // chart.current.removeInteraction('legend-filter')
-      // chart.current.interaction('legend-visible-filter')
       chart.current.data(transfromData(data[showType], showType));
-      chart.current.scale('time', {
-        // range: [0.01, 0.99],
-        type: 'cat',
-        mask: 'YYYY.MM.DD',
-      });
 
-      chart.current.scale('floor_price', {
-        nice: true,
-      });
       chart.current.tooltip({
         // showMarkers: false,
         showCrosshairs: true,
@@ -150,7 +132,6 @@ export default function AllLineData1({
           },
         },
         customContent: (name, items) => {
-
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -161,81 +142,87 @@ export default function AllLineData1({
             worldwidewebb: null,
             voxels: null,
             somniumspance: null,
+            otherside: null,
           };
           if (items.length <= 0) {
             return;
           }
           items.forEach((item, index) => {
-
             result[item.name] = item;
           });
 
           const staticItem = `
-        
-          <div style="color:#fff;margin-bottom:12px">
-            <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]
-            }, 1);">
-            ${showKeyTypes[0]}:
-              <span style="color:#fff;">
-                <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend1.color[0]
-            }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[0]]?.value,
-            )}</span>
-                <span>ETH</span>
-              </span>
-            </span>
-          </div>
+              
               <div style="color:#fff;margin-bottom:12px">
-                <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]
-            }, 1);">
-                ${showKeyTypes[1]}:
+                <span style="color:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${
+            legend1.color[2]
+          }, 1);">
+                ${showKeyTypes[0]}:
                   <span style="color:#fff;">
-                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend2.color[0]
-            }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[1]]?.value,
-            )}</span>
-          <span>ETH</span>
+                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                      legend1.color[0]
+                    }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[0]]?.value,
+          )}</span>
                   </span>
                 </span>
               </div>
 
               <div style="color:#fff;margin-bottom:12px">
-              <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]
-            }, 1);">
+                <span style="color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
+            legend2.color[2]
+          }, 1);">
+                ${showKeyTypes[1]}:
+                  <span style="color:#fff;">
+                    <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+                      legend2.color[0]
+                    }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[1]]?.value,
+          )}</span>
+                  </span>
+                </span>
+              </div>
+
+              <div style="color:#fff;margin-bottom:12px">
+              <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${
+            legend3.color[2]
+          }, 1);">
               ${showKeyTypes[2]}:
                 <span style="color:#fff;">
-                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend3.color[0]
-            }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[2]]?.value,
-            )}</span>
-          <span>ETH</span>
+                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                    legend3.color[0]
+                  }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
+            parseInt(result[showKeyTypes[2]]?.value, 10),
+          )}</span>
                 </span>
               </span>
             </div>
             <div style="color:#fff;margin-bottom:12px">
-            <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]
-            }, 1);">
+            <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${
+            legend4.color[2]
+          }, 1);">
             ${showKeyTypes[3]}:
               <span style="color:#fff;">
-                <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend4.color[0]
-            }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[3]]?.value,
-            )}</span>
-          <span>ETH</span>
+                <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                  legend4.color[0]
+                }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[3]]?.value,
+          )}</span>
               </span>
             </span>
           </div>
 
           <div style="color:#fff;margin-bottom:12px">
-          <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]
-            }, 1);">
+          <span style="color:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${
+            legend5.color[2]
+          }, 1);">
           ${showKeyTypes[4]}:
             <span style="color:#fff;">
-              <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend5.color[0]
-            }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[4]]?.value,
-            )}</span>
-          <span>ETH</span>
+              <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+                legend5.color[0]
+              }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[4]]?.value,
+          )}</span>
             </span>
           </span>
         </div>
@@ -244,42 +231,40 @@ export default function AllLineData1({
         <span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
         ${showKeyTypes[5]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend6.color[0]
             }, ${legend6.color[1]}, ${legend6.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[5]]?.value,
-            )}</span>
-          <span>ETH</span>
+            result[showKeyTypes[5]]?.value,
+          )}</span>
           </span>
         </span>
       </div>
 
       <div style="color:#fff;margin-bottom:12px">
-      <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]
-            }, 1);">
+      <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
       ${showKeyTypes[6]}:
         <span style="color:#fff;">
           <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]
             }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
               result[showKeyTypes[6]]?.value,
             )}</span>
-        <span>ETH</span>
         </span>
       </span>
     </div>
-
 
         <div style="color:#fff;margin-bottom:12px">
         <span style="color:rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1);">
         ${showKeyTypes[7]}:
           <span style="color:#fff;">
-            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]
+            <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+              legend8.color[0]
             }, ${legend8.color[1]}, ${legend8.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[7]]?.value,
-            )}</span>
-          <span>ETH</span>
+            result[showKeyTypes[7]]?.value,
+          )}</span>
           </span>
         </span>
       </div>
+
 
               `;
           container.innerHTML = title + staticItem;
@@ -305,61 +290,89 @@ export default function AllLineData1({
           },
         },
       });
-      // console.log(chart.current.legend(true));
-      // console.log(chart.current);
-      // setView(chart.current.legend(true))
-      // console.log(chart.current.legend(true));
 
-      //  chart.current.legend(true)
+      chart.current.legend(false);
 
-      // chart.current.interaction('legend-highlight');
       // 设置横纵轴
-      chart.current.axis('floor_price', {
+      // 设置横纵轴
+      chart.current.axis('value', {
         grid: {
           line: {
             type: 'line',
             style: (x, y) => {
-              return {
-                lineDash: [5, 5],
-                lineWidth: 1,
-                stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
-              };
+              if (y !== 0) {
+                return {
+                  lineDash: [5, 5],
+                  lineWidth: 1,
+                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+                };
+              }
+              return null;
             },
           },
         },
         label: {
-          formatter: (text, item, index) => {
+          offsetX: 2 / 2,
+          formatter: (text) => {
             return formatNum(parseFloat(text));
           },
         },
       });
       chart.current.axis('time', {
-        grid: {
-          line: {
-            type: 'line',
-            style: (x, y) => {
-              return {
-                lineDash: [5, 5],
-                lineWidth: 1,
-                stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
-              };
-            },
+        tickLine: null,
+        line: {
+          style: {
+            lineWidth: 1,
+            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
           style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
-          // offset: 25,
-          offsetX: 25,
+          offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
-          rotate: 1,
+          rotate: showType === 'yearly' ? 0 : 1,
         },
       });
+      // 设置纵轴值
+      chart.current.scale('value', {
+        nice: true,
+      });
 
+      chart.current.scale('time', {
+        type: 'cat',
+        mask: 'YYYY.MM.DD',
+      });
       chart.current
-        .area()
-        .shape('smooth')
-        .position('time*floor_price')
-        .color('name')
+        .interval()
+        .position('time*value')
+        .size(showType === 'yearly' ? 70 : 20)
+        .color('name', (tVal) => {
+          if (tVal === 'Otherside') {
+            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (tVal === 'The Sandbox') {
+            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (tVal === 'NFT Worlds') {
+            return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (tVal === 'Decentraland') {
+            return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (tVal === 'Worldwide Webb') {
+            return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (tVal === 'Voxels') {
+            return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (tVal === 'Somnium Space') {
+            return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+
+          if (tVal === 'Netvrk') {
+            return `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+        })
         .style({
           fields: ['name'],
           callback: (tVal) => {
@@ -407,7 +420,7 @@ export default function AllLineData1({
           },
         })
         .tooltip(
-          'time*floor_price*name*staticT*priceStaticT',
+          'time*value*name*staticT*priceStaticT',
           (time, value, name, staticT, priceStaticT) => {
             return {
               value,
@@ -417,101 +430,12 @@ export default function AllLineData1({
               priceStaticT,
             };
           },
-        );
-      chart.current
-        .line()
-        .shape('smooth')
-        .position('time*floor_price')
-        .size(2)
-        .tooltip(false)
-        .color('name', (tVal) => {
-          if (tVal === 'Otherside') {
-            return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
-          }
-          if (tVal === 'The Sandbox') {
-            return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
-          }
-          if (tVal === 'NFT Worlds') {
-            return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
-          }
-          if (tVal === 'Decentraland') {
-            return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
-          }
-          if (tVal === 'Worldwide Webb') {
-            return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
-          }
-          if (tVal === 'Voxels') {
-            return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
-          }
-          if (tVal === 'Somnium Space') {
-            return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
-          }
+        )
+        .adjust({
+          type: 'stack',
+          reverseOrder: false,
+        });
 
-          if (tVal === 'Netvrk') {
-            return `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
-          }
-        })
-      chart.current.legend({
-        position: 'top',
-        marker: (name, index, item) => {
-          let fill = ''
-          if (name === 'Otherside') {
-            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`
-          }
-          if (name === 'The Sandbox') {
-            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`
-          }
-          if (name === 'NFT Worlds') {
-            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`
-          }
-          if (name === 'Decentraland') {
-            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`
-          }
-          if (name === 'Worldwide Webb') {
-            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`
-          }
-          if (name === 'Voxels') {
-            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`
-          }
-          if (name === 'Somnium Space') {
-            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`
-          }
-
-          if (name === 'Netvrk') {
-            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`
-          }
-          return {
-            symbol: "circle",
-            style: {
-              fill,
-              lineWidth: 1,
-              opacity:1,
-              fillOpacity:1,
-            },
-          };
-        },
-       
-        attachLast:true,
-        itemName: {
-          style: {
-            fill:  iconImgLight===true?'#000':'#fff'
-          }
-        },
-        // values:['Otherside']
-      });
-      // chart.current.on('legend-item-name:click', (ev) => {
-      //   ev.target.attrs.fill= ev.target.attrs.fill=='#fff'?'#fff':'#000'
-      //   console.log(ev.target.attrs.fill,ev);
-        
-      // })
-      chart.current.interaction('legend-filter', {
-        start: [
-          { trigger: 'legend-item-name:click', action: ['list-unchecked:toggle', 'data-filter:filter'] },
-          { trigger: 'legend-item-marker:click', action: ['list-checked:checked', 'data-filter:filter'] },
-        ],
-        end: [{ trigger: 'legend-item-marker:dblclick', action: ['list-checked:reset', 'data-filter:filter'] }],
-      });
-      chart.current.removeInteraction('legend-active')
       chart.current.render();
     },
     [showType],
@@ -537,9 +461,9 @@ export default function AllLineData1({
   }, [showType, dataHandlder]);
 
   const updata = React.useCallback(
-    (st, pt) => {
+    (st) => {
       if (chart.current && dataSource[0]) {
-        chart.current.changeData(transfromData(dataSource[st][pt], st));
+        chart.current.changeData(transfromData(dataSource[st], st));
       }
     },
     [dataSource],
@@ -549,20 +473,10 @@ export default function AllLineData1({
     (val) => {
       setShowType(val);
       if (dataSource && chart.current) {
-        updata(val, 1);
+        updata(val);
       }
     },
     [updata, dataSource],
-  );
-
-  const changePriceStatic = React.useCallback(
-    (val) => {
-      // setPriceShowType(val);
-      if (dataSource && chart.current) {
-        updata(showType, val);
-      }
-    },
-    [updata, showType, dataSource],
   );
 
   const getSelect = React.useMemo(() => {
@@ -570,25 +484,15 @@ export default function AllLineData1({
     return (
       <div
         className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(0, 236, 222, 0.05)' }}
+        style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
         iconImgLight={iconImgLight}
           options={options}
-          showArrow={false}
+          showArrow={true}
           onClick={changeStatic}
           className={style.selecterLong}
           defaultLabel={options[0].value}
-          hasBorder={false}
-          cl={style.bg}
-        ></ChartSelecter>
-        <span style={{ color: '#505c4e' }}> 丨</span>
-        <ChartSelecter
-         iconImgLight={iconImgLight}
-          options={priceOptions}
-          showArrow={false}
-          onClick={changePriceStatic}
-          defaultLabel={priceOptions[0].value}
           hasBorder={false}
           cl={style.bg}
         ></ChartSelecter>
@@ -596,7 +500,7 @@ export default function AllLineData1({
     );
     // }
     // return null;
-  }, [changeStatic, changePriceStatic]);
+  }, [changeStatic]);
   const onRetry = React.useCallback(() => {
     requestData();
   }, [requestData]);
@@ -614,54 +518,55 @@ export default function AllLineData1({
     }
     return <div id={id} className={style.ov}></div>;
   }, [loading, error, onRetry]);
-  const singleClick = React.useCallback((text) => {
-    // console.log(chart.current, 222, view);
-    // console.log(555555555, text);
-  }, [view])
-
 
   const getLenged = React.useMemo(() => {
-
     return (
       <>
-
+   
         <IconLabel
-          singleClick={() => { singleClick(legend1.label) }}
+        iconImgLight={iconImgLight}
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
-          className={cn("mr-5")}
+          className="mr-5"
         ></IconLabel>
         <IconLabel
+         iconImgLight={iconImgLight}
           text={legend2.label}
           color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+         iconImgLight={iconImgLight}
           text={legend3.label}
           color={`rgb(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+         iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+         iconImgLight={iconImgLight}
           text={legend5.label}
           color={`rgb(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+         iconImgLight={iconImgLight}
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
           className="mr-5"
         ></IconLabel>
-        <IconLabel
+             <IconLabel
+              iconImgLight={iconImgLight}
           text={legend7.label}
           color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+         iconImgLight={iconImgLight}
           text={legend8.label}
           color={`rgb(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]})`}
           className="mr-5"
@@ -677,17 +582,15 @@ export default function AllLineData1({
         chart.current.destroy();
       }
     };
-  }, [requestData,iconImgLight]);
-
-
+  }, [requestData]);
 
   return (
     <div className={style.container}>
-      {/* <div className={cn('w-full flex justify-between item-center', style.header)}> */}
-        <ChartTitle  iconImgLight={iconImgLight} className={style.cheartitle} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
-        {/* <div className={cn('flex items-center', style.toright)} >{getLenged}</div> */}
-        <div className={cn('flex items-center',style.getSelect)}>{getSelect}</div>
-      {/* </div> */}
+      <div className={cn('w-full flex justify-between item-center', style.header)}>
+        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
+        <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
+        <div className={cn('flex items-center')}>{getSelect}</div>
+      </div>
       {rander}
     </div>
   );

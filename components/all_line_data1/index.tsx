@@ -60,7 +60,7 @@ const showKeyTypes = [
   'Netvrk',
 ];
 
-export default function AllLineData1({
+export default function AllLineData({
   id,
   labelText,
   dataHandlder,

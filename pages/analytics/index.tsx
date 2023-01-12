@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -179,7 +179,13 @@ const Annular = dynamic(
 const Miniline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/mini_line'), {
   ssr: false,
 });
+const Miniline1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/mini_line1'), {
+  ssr: false,
+});
 const Allline = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line'), {
+  ssr: false,
+});
+const Allline1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_line1'), {
   ssr: false,
 });
 const AlllineData = dynamic(
@@ -188,17 +194,36 @@ const AlllineData = dynamic(
     ssr: false,
   },
 );
+const AlllineData1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/all_line_data1'),
+  {
+    ssr: false,
+  },
+);
 const AllPillar2 = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/all_pillar2'),
+  { ssr: false },
+);
+const AllPillar3 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/all_pillar3'),
   { ssr: false },
 );
 const AllPillar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillar'), {
   ssr: false,
 });
+const AllPillar1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillar1'), {
+  ssr: false,
+});
 const AllPillarNum = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum'), {
   ssr: false,
 });
+const AllPillarNum1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum1'), {
+  ssr: false,
+});
 const AllPillarNum2 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum2'), {
+  ssr: false,
+});
+const AllPillarNum3 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum3'), {
   ssr: false,
 });
 
@@ -285,7 +310,7 @@ type Props = {
   iconImgLight?;
 };
 
-export default function AnalyticsIndex(props,iconImgLight:Props) {
+export default function AnalyticsIndex(props, iconImgLight: Props) {
 
 
   const meta = {
@@ -302,11 +327,11 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
   const [darkLight, setDarkLight] = React.useState(false);
   console.log(darkLight);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
-  useEffect(()=>{
-    const darkBackColor = window.localStorage.getItem("darkLight")==="true";
-    
+  useEffect(() => {
+    const darkBackColor = window.localStorage.getItem("darkLight") === "true";
+
     setDarkLight(darkBackColor)
-  },[darkLight])
+  }, [darkLight])
   const changeType = React.useCallback((newType) => {
     setShowType(newType);
 
@@ -1441,7 +1466,7 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
             id={'netvrk1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
-            legend1={{ label:'Primary',color: [250,216,23]}}
+            legend1={{ label: 'Primary', color: [250, 216, 23] }}
             dataHandlder={req_aavegotchi_avg_price}
             textColor={style.spaceColor}
             options={[
@@ -1479,7 +1504,7 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
             className="mt-5"
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_aavegotchi_sales_num}
-            legend1={{ label: 'Land', color: [250,159,23]}}
+            legend1={{ label: 'Land', color: [250, 159, 23] }}
             keyTypes={['land', 'estate']}
             textColor={style.spaceColor}
             options={[
@@ -1511,8 +1536,8 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_aavegotchi_sales_amount}
-            legend1={{ label: 'Land', color: [250,216,23]}}
-            keyTypes={['land','estate']}
+            legend1={{ label: 'Land', color: [250, 216, 23] }}
+            keyTypes={['land', 'estate']}
             barWidth={18}
             isEth={true}
             showMarkerType="sandbox"
@@ -1800,16 +1825,16 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
 
   const reander = React.useMemo(() => {
     if (headerNav === 'all') {
-     
+
       return (
         <>
-          <div className={cn('flex flex-col justify-center items-center', darkLight ===true?style.content1:style.content)}>
+          <div className={cn('flex flex-col justify-center items-center', darkLight === true ? style.content1 : style.content)}>
             <div
-              className={cn('w-full mt-7 p-5 relative flex flex-col justify-start items-center', darkLight ===true?style.list1:style.list)}
+              className={cn('w-full mt-7 p-5 relative flex flex-col justify-start items-center', darkLight === true ? style.list1 : style.list)}
             >
               <div className={style.topContainer} >
                 <Annular
-                iconImgLight={darkLight}
+                  iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount(USD) ')}
                   id="ParcelSalesAmount(USD)"
                   labelText={'Parcel Sales Amount (USD)'}
@@ -1861,161 +1886,313 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
                     // },
                   ]}
                 ></Annular>
-                <Miniline
-                  iconImgLight={darkLight}
-                  id="MREI"
-                  HyperlinkJump={() => scrollToAnchor('MREI')}
-                  labelText={'Metaverse Real Estate Index（MREI) vs. ETH Price'}
-                  dataHandlder={req_metaindex_ethprice}
-                  textColor={style.allColor}
-                  legend1={{ label: 'MREI', color: [0, 236, 179,] }}
-                  legend2={{ label: 'ETH', color: [0, 208, 236] }}
-                ></Miniline>
+                {
+                  darkLight === true ?
+                    <Miniline
+                      iconImgLight={darkLight}
+                      id="MREI"
+                      HyperlinkJump={() => scrollToAnchor('MREI')}
+                      labelText={'Metaverse Real Estate Index（MREI) vs. ETH Price'}
+                      dataHandlder={req_metaindex_ethprice}
+                      textColor={style.allColor}
+                      legend1={{ label: 'MREI', color: [0, 236, 179,] }}
+                      legend2={{ label: 'ETH', color: [0, 208, 236] }}
+                    ></Miniline>
+                    : <Miniline1
+                      iconImgLight={darkLight}
+                      id="MREI"
+                      HyperlinkJump={() => scrollToAnchor('MREI')}
+                      labelText={'Metaverse Real Estate Index（MREI) vs. ETH Price'}
+                      dataHandlder={req_metaindex_ethprice}
+                      textColor={style.allColor}
+                      legend1={{ label: 'MREI', color: [0, 236, 179,] }}
+                      legend2={{ label: 'ETH', color: [0, 208, 236] }}
+                    ></Miniline1>}
               </div>
-              <div className={cn('',darkLight===true?style.allLineLight:style.allLine2)}>
-                <Allline
-                  iconImgLight={darkLight}
-                  HyperlinkJump={() => scrollToAnchor('AverageParcelPrice')}
-                  id="AverageParcelPrice"
-                  textColor={style.allColor}
-                  labelText="Average Parcel Price"
-                  dataHandlder={req_avg_parcel_price}
-                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
-                  options={[
-                    {
-                      label: 'Daily',
-                      value: 'daily',
-                    },
-                    {
-                      label: 'Weekly',
-                      value: 'weekly',
-                    },
-                    {
-                      label: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
-                      label: 'Quarterly',
-                      value: 'quarterly',
-                    },
-                    // {
-                    //   label: 'Year',
-                    //   value: 'year',
-                    // },
-                  ]}
-                  priceOptions={[
-                    {
-                      label: 'USD',
-                      value: 'usd',
-                    },
-                    {
-                      label: 'ETH',
-                      value: 'eth',
-                    },
-                  ]}
-                ></Allline>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine2)}>
+                {
+                  darkLight === true ?
+                    <Allline
+                      iconImgLight={darkLight}
+                      HyperlinkJump={() => scrollToAnchor('AverageParcelPrice')}
+                      id="AverageParcelPrice"
+                      textColor={style.allColor}
+                      labelText="Average Parcel Price"
+                      dataHandlder={req_avg_parcel_price}
+                      legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                      legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                      legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                      legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                      legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                      legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                      options={[
+                        {
+                          label: 'Daily',
+                          value: 'daily',
+                        },
+                        {
+                          label: 'Weekly',
+                          value: 'weekly',
+                        },
+                        {
+                          label: 'Monthly',
+                          value: 'monthly',
+                        },
+                        {
+                          label: 'Quarterly',
+                          value: 'quarterly',
+                        },
+                        // {
+                        //   label: 'Year',
+                        //   value: 'year',
+                        // },
+                      ]}
+                      priceOptions={[
+                        {
+                          label: 'USD',
+                          value: 'usd',
+                        },
+                        {
+                          label: 'ETH',
+                          value: 'eth',
+                        },
+                      ]}
+                    ></Allline>
+                    : <Allline1
+                      iconImgLight={darkLight}
+                      HyperlinkJump={() => scrollToAnchor('AverageParcelPrice')}
+                      id="AverageParcelPrice"
+                      textColor={style.allColor}
+                      labelText="Average Parcel Price"
+                      dataHandlder={req_avg_parcel_price}
+                      legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                      legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                      legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                      legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                      legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                      legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                      options={[
+                        {
+                          label: 'Daily',
+                          value: 'daily',
+                        },
+                        {
+                          label: 'Weekly',
+                          value: 'weekly',
+                        },
+                        {
+                          label: 'Monthly',
+                          value: 'monthly',
+                        },
+                        {
+                          label: 'Quarterly',
+                          value: 'quarterly',
+                        },
+                        // {
+                        //   label: 'Year',
+                        //   value: 'year',
+                        // },
+                      ]}
+                      priceOptions={[
+                        {
+                          label: 'USD',
+                          value: 'usd',
+                        },
+                        {
+                          label: 'ETH',
+                          value: 'eth',
+                        },
+                      ]}
+                    ></Allline1>
+                }
               </div>
-              <div className={cn('',darkLight===true?style.allLineLight:style.allLine)}>
-                <AllPillar
-                 iconImgLight={darkLight}
-                  HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount')}
-                  id="ParcelSalesAmount"
-                  textColor={style.allColor}
-                  labelText="Parcel Sales Amount"
-                  dataHandlder={req_sales_amount_stack}
-                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
-                  options={[
-                    {
-                      label: 'Daily',
-                      value: 'daily',
-                    },
-                    {
-                      label: 'Weekly',
-                      value: 'weekly',
-                    },
-                    {
-                      label: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
-                      label: 'Quarterly',
-                      value: 'quarterly',
-                    },
-                    {
-                      label: 'Yearly',
-                      value: 'yearly',
-                    },
-                  ]}
-                  priceOptions={[
-                    {
-                      label: 'USD',
-                      value: 'usd',
-                    },
-                    {
-                      label: 'ETH',
-                      value: 'eth',
-                    },
-                  ]}
-                ></AllPillar>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine)}>
+                {
+                  darkLight === true ? <AllPillar
+                    iconImgLight={darkLight}
+                    HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount')}
+                    id="ParcelSalesAmount"
+                    textColor={style.allColor}
+                    labelText="Parcel Sales Amount"
+                    dataHandlder={req_sales_amount_stack}
+                    legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      {
+                        label: 'Daily',
+                        value: 'daily',
+                      },
+                      {
+                        label: 'Weekly',
+                        value: 'weekly',
+                      },
+                      {
+                        label: 'Monthly',
+                        value: 'monthly',
+                      },
+                      {
+                        label: 'Quarterly',
+                        value: 'quarterly',
+                      },
+                      {
+                        label: 'Yearly',
+                        value: 'yearly',
+                      },
+                    ]}
+                    priceOptions={[
+                      {
+                        label: 'USD',
+                        value: 'usd',
+                      },
+                      {
+                        label: 'ETH',
+                        value: 'eth',
+                      },
+                    ]}
+                  ></AllPillar> :
+                    <AllPillar1
+                      iconImgLight={darkLight}
+                      HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount')}
+                      id="ParcelSalesAmount"
+                      textColor={style.allColor}
+                      labelText="Parcel Sales Amount"
+                      dataHandlder={req_sales_amount_stack}
+                      legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                      legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                      legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                      legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                      legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                      legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                      options={[
+                        {
+                          label: 'Daily',
+                          value: 'daily',
+                        },
+                        {
+                          label: 'Weekly',
+                          value: 'weekly',
+                        },
+                        {
+                          label: 'Monthly',
+                          value: 'monthly',
+                        },
+                        {
+                          label: 'Quarterly',
+                          value: 'quarterly',
+                        },
+                        {
+                          label: 'Yearly',
+                          value: 'yearly',
+                        },
+                      ]}
+                      priceOptions={[
+                        {
+                          label: 'USD',
+                          value: 'usd',
+                        },
+                        {
+                          label: 'ETH',
+                          value: 'eth',
+                        },
+                      ]}
+                    ></AllPillar1>}
               </div>
-              <div className={cn('',darkLight===true?style.allLineLight:style.allLine1)}>
-                <AllPillar2
-                        iconImgLight={darkLight}
-                  HyperlinkJump={() => scrollToAnchor('NumberofParcelSales')}
-                  id="NumberofParcelSales"
-                  textColor={style.allColor}
-                  labelText="Number of Parcel Sales"
-                  dataHandlder={req_all_number_sales}
-                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
-                  legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
-                  legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
-                  legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
-                  legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
-                  options={[
-                    {
-                      label: 'Daily',
-                      value: 'daily',
-                    },
-                    {
-                      label: 'Weekly',
-                      value: 'weekly',
-                    },
-                    {
-                      label: 'Monthly',
-                      value: 'monthly',
-                    },
-                    {
-                      label: 'Quarterly',
-                      value: 'quarterly',
-                    },
-                    {
-                      label: 'Yearly',
-                      value: 'yearly',
-                    },
-                  ]}
-                ></AllPillar2>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine1)}>
+                {
+                  darkLight === true ? <AllPillar2
+                    iconImgLight={darkLight}
+                    HyperlinkJump={() => scrollToAnchor('NumberofParcelSales')}
+                    id="NumberofParcelSales"
+                    textColor={style.allColor}
+                    labelText="Number of Parcel Sales"
+                    dataHandlder={req_all_number_sales}
+                    legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      {
+                        label: 'Daily',
+                        value: 'daily',
+                      },
+                      {
+                        label: 'Weekly',
+                        value: 'weekly',
+                      },
+                      {
+                        label: 'Monthly',
+                        value: 'monthly',
+                      },
+                      {
+                        label: 'Quarterly',
+                        value: 'quarterly',
+                      },
+                      {
+                        label: 'Yearly',
+                        value: 'yearly',
+                      },
+                    ]}
+                  ></AllPillar2> :
+                    <AllPillar3
+                      iconImgLight={darkLight}
+                      HyperlinkJump={() => scrollToAnchor('NumberofParcelSales')}
+                      id="NumberofParcelSales"
+                      textColor={style.allColor}
+                      labelText="Number of Parcel Sales"
+                      dataHandlder={req_all_number_sales}
+                      legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                      legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                      legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                      legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                      legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                      legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                      options={[
+                        {
+                          label: 'Daily',
+                          value: 'daily',
+                        },
+                        {
+                          label: 'Weekly',
+                          value: 'weekly',
+                        },
+                        {
+                          label: 'Monthly',
+                          value: 'monthly',
+                        },
+                        {
+                          label: 'Quarterly',
+                          value: 'quarterly',
+                        },
+                        {
+                          label: 'Yearly',
+                          value: 'yearly',
+                        },
+                      ]}
+                    ></AllPillar3>
+                }
               </div>
               {/* <a onClick={() => scrollToAnchor('FloorPrice')} > */}
-              <div className={cn('',darkLight===true?style.allLineLight:style.allLine3)}>
-                <AlllineData
-                   iconImgLight={darkLight}
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine3)}>
+                {darkLight === true ? <AlllineData
+                  iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('FloorPrice')}
                   id="FloorPrice"
                   labelText="Floor Price"
@@ -2041,13 +2218,41 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
                       value: 'eth',
                     },
                   ]}
-                ></AlllineData>
+                ></AlllineData> :
+                  <AlllineData1
+                    iconImgLight={darkLight}
+                    HyperlinkJump={() => scrollToAnchor('FloorPrice')}
+                    id="FloorPrice"
+                    labelText="Floor Price"
+                    textColor={style.allColor}
+                    dataHandlder={req_avg_creater_price}
+                    legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      {
+                        label: 'Daily',
+                        value: 'daily',
+                      },
+                    ]}
+                    priceOptions={[
+                      {
+                        label: 'ETH',
+                        value: 'eth',
+                      },
+                    ]}
+                  ></AlllineData1>}
               </div>
               {/* </a> */}
-              <div className={cn('',style.table)}>
-                <div className={cn('',darkLight===true?style.allLineLight:style.tabContainer)}>
+              <div className={cn('', style.table)}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer)}>
                   <AnalyticsInfo
-                   iconImgLight={darkLight}
+                    iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('ComprehensiveData')}
                     options={types}
                     id="ComprehensiveData"
@@ -2056,14 +2261,14 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>
-                   <div className={cn('',darkLight===true?style.allLineLight1:style.tabContainer1)}>
-                  <AnalyticsInfoSale  iconImgLight={darkLight}  HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
+                <div className={cn('', darkLight === true ? style.allLineLight1 : style.tabContainer1)}>
+                  <AnalyticsInfoSale iconImgLight={darkLight} HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.tableBox)}>
-              <div className={cn('',darkLight===true?style.allLineLight1:style.tabContainer2)}>
+                <div className={cn('', darkLight === true ? style.allLineLight1 : style.tabContainer2)}>
                   <AnalyticsAverage
-                  iconImgLight={darkLight}
+                    iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('AverageParcelPriceM2M')}
                     options={types} id="AverageParcelPriceM2M" labelText={'Average Parcel Price'} textColor={style.allColor}
                     priceOptions={[
@@ -2078,69 +2283,120 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={cn('',darkLight===true?style.allLineLight:style.tabContainer3)}style={{ marginLeft: "20px" }}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px" }}>
                   <AnalyticsInfoNum
-                  iconImgLight={darkLight}
+                    iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('NumberofParcelSalesM2M')}
                     options={types} id='NumberofParcelSalesM2M' labelText={'Number of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
               </div>
 
-              <div className={cn('',darkLight===true?style.allLineLight:style.allLineb)}>
-                <AllPillarNum
-               iconImgLight={darkLight}
-                HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
-                id="ParcelRentAmount"
-                textColor={style.allColor}
-                labelText="Parcel Rent Amount(Data Source"
-                imgBox={'data:image/png;base64,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'}
-                toLink={'https://landworks.xyz/'}
-                dataHandlder={req_sales_rent_sum_price}
-                // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
-                // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
-                legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
-                // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
-                legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
-                // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
-                // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
-                options={[
-                  // {
-                  //   label: 'Daily',
-                  //   value: 'daily',
-                  // },
-                  {
-                    label: 'Weekly',
-                    value: 'weekly',
-                  },
-                  {
-                    label: 'Monthly',
-                    value: 'monthly',
-                  },
-                  // {
-                  //   label: 'Quarterly',
-                  //   value: 'quarterly',
-                  // },
-                  // {
-                  //   label: 'Yearly',
-                  //   value: 'yearly',
-                  // },
-                ]}
-                priceOptions={[
-                  {
-                    label: 'USD',
-                    value: 'usd',
-                  },
-                  {
-                    label: 'ETH',
-                    value: 'eth',
-                  },
-                ]}
-              ></AllPillarNum>
-              </div>
-              <div className={cn('',darkLight===true?style.allLineLight:style.allLinen)}>
-                <AllPillarNum2
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)}>
+                {darkLight === true ? <AllPillarNum
+                  iconImgLight={darkLight}
+                  HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
+                  id="ParcelRentAmount"
+                  textColor={style.allColor}
+                  labelText="Parcel Rent Amount(Data Source"
+                  imgBox={'data:image/png;base64,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'}
+                  toLink={'https://landworks.xyz/'}
+                  dataHandlder={req_sales_rent_sum_price}
+                  // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  options={[
+                    // {
+                    //   label: 'Daily',
+                    //   value: 'daily',
+                    // },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    // {
+                    //   label: 'Quarterly',
+                    //   value: 'quarterly',
+                    // },
+                    // {
+                    //   label: 'Yearly',
+                    //   value: 'yearly',
+                    // },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></AllPillarNum>
+                  : <AllPillarNum1
                     iconImgLight={darkLight}
+                    HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
+                    id="ParcelRentAmount"
+                    textColor={style.allColor}
+                    labelText="Parcel Rent Amount(Data Source"
+                    imgBox={'data:image/png;base64,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'}
+                    toLink={'https://landworks.xyz/'}
+                    dataHandlder={req_sales_rent_sum_price}
+                    // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      // {
+                      //   label: 'Daily',
+                      //   value: 'daily',
+                      // },
+                      {
+                        label: 'Weekly',
+                        value: 'weekly',
+                      },
+                      {
+                        label: 'Monthly',
+                        value: 'monthly',
+                      },
+                      // {
+                      //   label: 'Quarterly',
+                      //   value: 'quarterly',
+                      // },
+                      // {
+                      //   label: 'Yearly',
+                      //   value: 'yearly',
+                      // },
+                    ]}
+                    priceOptions={[
+                      {
+                        label: 'USD',
+                        value: 'usd',
+                      },
+                      {
+                        label: 'ETH',
+                        value: 'eth',
+                      },
+                    ]}
+                  ></AllPillarNum1>
+                }
+              </div>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLinen)}>
+                {darkLight === true ? <AllPillarNum2
+                  iconImgLight={darkLight}
                   id="NumberOfParcelRent"
                   HyperlinkJump={() => scrollToAnchor('NumberOfParcelRent')}
                   textColor={style.allColor}
@@ -2189,7 +2445,56 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
                 //   },
                 // ]}
                 ></AllPillarNum2>
-
+                  : <AllPillarNum3
+                    iconImgLight={darkLight}
+                    id="NumberOfParcelRent"
+                    HyperlinkJump={() => scrollToAnchor('NumberOfParcelRent')}
+                    textColor={style.allColor}
+                    labelText="Number of Parcel Rent(Data Source"
+                    imgBox={'data:image/png;base64,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'}
+                    toLink={'https://landworks.xyz/'}
+                    dataHandlder={req_num_of_rent}
+                    // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      // {
+                      //   label: 'Daily',
+                      //   value: 'daily',
+                      // },
+                      {
+                        label: 'Weekly',
+                        value: 'weekly',
+                      },
+                      {
+                        label: 'Monthly',
+                        value: 'monthly',
+                      },
+                      // {
+                      //   label: 'Quarterly',
+                      //   value: 'quarterly',
+                      // },
+                      // {
+                      //   label: 'Yearly',
+                      //   value: 'yearly',
+                      // },
+                    ]}
+                  // priceOptions={[
+                  //   {
+                  //     label: 'USD',
+                  //     value: 'usd',
+                  //   },
+                  //   {
+                  //     label: 'ETH',
+                  //     value: 'eth',
+                  //   },
+                  // ]}
+                  ></AllPillarNum3>}
               </div>
             </div>
           </div>
@@ -2224,7 +2529,7 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
                 <img className={style.icon} src="/images/tab-right.png"></img>
               </div> */}
           </div>
-          <div className={cn('flex flex-col justify-center items-center', darkLight===true?style.content1:style.content)}>
+          <div className={cn('flex flex-col justify-center items-center', darkLight === true ? style.content1 : style.content)}>
             <div
               className={cn(
                 'w-full mt-7 p-5 flex flex-col justify-start items-center',
@@ -2239,7 +2544,7 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
         </>
       );
     }
-  }, [headerNav, changeType, renderChartList,darkLight,darkLight, fixedState]);
+  }, [headerNav, darkLight, changeType, renderChartList, fixedState]);
 
 
   // const Top = React.useCallback(() => {
@@ -2422,7 +2727,7 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
   return (
     <Page className={cn('min-h-screen', offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
       <div className={cn('myClassName', fixedStateAll === true ? style.a : null)} ref={headerRef}>
-        <PageHeader active={'analytics'} iconImgLight={setDarkLight}/>
+        <PageHeader active={'analytics'} iconImgLight={setDarkLight} />
       </div>
 
       <div className="bg-black relative">
@@ -2435,13 +2740,13 @@ export default function AnalyticsIndex(props,iconImgLight:Props) {
         >
           {/* <img src="/images/analyticsBack.png" className={style.sign}></img> */}
           <div className={style.imgContanier}>
-            <div className={cn('',darkLight===true?style.title1:style.title)}>Metaverse Analytics</div>
+            <div className={cn('', darkLight === true ? style.title1 : style.title)}>Metaverse Analytics</div>
             <div className={style.text}>
               <div className={style.hengxian}></div>
-              <div className={cn('',darkLight===true?style.t1:style.t)}>
+              <div className={cn('', darkLight === true ? style.t1 : style.t)}>
                 <p>These analytics only represent analysis of the parcel data of t he main metaverse </p>
                 <p>platforms, and does not include tokens or other assets.</p>
-                </div>
+              </div>
               <div className={style.t}></div>
               {/* <div className={style.t}>In Metaverse we Creator</div> */}
               <div className={style.hengxian}></div>
