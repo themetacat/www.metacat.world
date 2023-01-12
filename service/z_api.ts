@@ -704,6 +704,18 @@ export const req_learn_article_list = async (page: number, count: number, type: 
   return json;
 };
 
+export const req_learn_others_list = async (page: number, count: number, type: string) => {
+  const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
+  const url = `/api/get_others_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 15.2 获取 Metaverse Report 文章列表接口
 
 export const req_learn_report_list = async (page: number, count: number, type: string) => {
@@ -929,6 +941,30 @@ export const req_netvrk_avg_price = async () => {
   return json;
 };
 
+export const req_aavegotchi_avg_price = async () => {
+  const url = 'api/get_aavegotchi_avg_price_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_playerone_avg_price = async () => {
+  const url = 'api/get_playerone_avg_price_stats';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 6.31 获取 netvrk 地块成交总数量统计信息接口
 
 export const req_netvrk_sales_num = async () => {
@@ -943,10 +979,56 @@ export const req_netvrk_sales_num = async () => {
   return json;
 };
 
+export const req_aavegotchi_sales_num = async () => {
+  const url = '/api/get_aavegotchi_sales_num';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_playerone_sales_num = async () => {
+  const url = '/api/get_playerone_sales_num';
+
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 // 6.32 获取 netvrk 地块销售总额统计信息接口
 
 export const req_netvrk_sales_amount = async () => {
   const url = 'api/get_netvrk_sales_amount';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_aavegotchi_sales_amount = async () => {
+  const url = 'api/get_aavegotchi_sales_amount';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_playerone_sales_amount = async () => {
+  const url = 'api/get_playerone_sales_amount';
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
@@ -1147,6 +1229,76 @@ export const req_space_buildings_list = async (page: number, count: number, quer
   return json;
 };
 
+export const req_wearable_list = async (page: number, count: number,
+  ) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/get_wearable_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_wearableDcl_list = async (page: number, count: number,
+  ) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/get_wearableDcl_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_wearableMona_list = async (page: number, count: number,
+  ) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/get_wearableMona_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_detailWearableDcl_list = async (contract_address, item_id,
+  ) => {
+  const search = qs.stringify({ contract_address, item_id, }, { addQueryPrefix: true });
+  const url = `/api/get_wearableDclDetail_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_detailWearableMona_list = async (creator_address,wearable_id,
+  ) => {
+  const search = qs.stringify({creator_address,  wearable_id, }, { addQueryPrefix: true });
+  const url = `/api/get_wearableMonaDetail_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_scence_list = async (page: number, count: number, query: string,
   type: string,) => {
   const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
@@ -1317,7 +1469,7 @@ export const req_set_wearable_show_status = async (
 };
 
 export const req_get_wearable_detail = async (id) => {
-  const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: false });
+  const search = qs.stringify({ wearable_id: id }, { addQueryPrefix: true });
   const url = `/api/get_wearable_detail${search}`;
 
   const result = await fetch(url, {

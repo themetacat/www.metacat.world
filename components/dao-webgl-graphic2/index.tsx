@@ -69,6 +69,7 @@ export default function DaoWebglCard({
   const [selecete, setSelecete] = React.useState(false);
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(() => {
+    
     if (type === 'topic') {
       router.replace(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`);
       // window.open(`/wearables/detail/${model.id}?type=${'topic'}&address=${address}`)
@@ -105,6 +106,8 @@ export default function DaoWebglCard({
     sceneRef.current = scene;
 
     if (!model.cover_img) {
+   
+      
       if (initFinish) {
         initFinish(scene);
       }
@@ -199,6 +202,7 @@ export default function DaoWebglCard({
             ></div>
             <img
               src={selecete ? '/images/Group1.png' : '/images/Group2.png'}
+              // src={cover_img}
               className={styles.changeImg}
             />
           </>
@@ -223,7 +227,7 @@ export default function DaoWebglCard({
             <div className={styles.model}>  <span className={cn('truncate', styles.title)}>{model ? model.name : null}</span></div>
             <div className={cn('flex items-end justify-center text-xs', styles.goDetail)}>
               <div className={styles.artist}>Voxel Artist：</div>
-              <div className={styles.text}> {model ? model.creator_name : null}</div>
+              <div className={styles.text}> {model ? model.creator_name ||model.creatorName: null}</div>
             </div>
           </div>
           <div className={styles.container}>

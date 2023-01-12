@@ -17,9 +17,11 @@ type Props = {
   options?: Array<optionItem>;
   labelText?: string;
   textColor?;
+  HyperlinkJump?;
+  id?;
 };
 
-export default function AnalyticsInfo({ options, labelText ,textColor}: Props) {
+export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,textColor}: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
@@ -37,8 +39,8 @@ export default function AnalyticsInfo({ options, labelText ,textColor}: Props) {
 
   return (
     <>
-      <ChartTitle text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
-      <table className={cn('w-full', style.table)}>
+      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
+      <table className={cn('w-full', style.table)} id={id}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
             <th
@@ -72,7 +74,7 @@ export default function AnalyticsInfo({ options, labelText ,textColor}: Props) {
                 setIndex(null);
               }}
             >
-              <div className={style.right}>Number Of Parcels Sold</div>
+              <div className={style.right}>Number of Parcels Sold</div>
             </th>
             <th
               className={cn(style.h3, style.bg, style.biaotou)}
@@ -94,7 +96,7 @@ export default function AnalyticsInfo({ options, labelText ,textColor}: Props) {
                 setIndex(null);
               }}
             >
-              <div className={style.right}>Total Number Of Owners</div>
+              <div className={style.right}>Total Number of Owners</div>
             </th>
             <th
               className={cn(style.h4, style.bg, style.biaotou)}

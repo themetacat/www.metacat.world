@@ -724,6 +724,18 @@ class API {
     return json;
   }
 
+  public async req_learn_others_list(page: number, count: number, type: string): Promise<any> {
+    const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
+    const url = `${this.url}/learn/get_others_list${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 15.2 获取 Metaverse Report 文章列表接口
 
   public async req_learn_report_list(page: number, count: number, type: string): Promise<any> {
@@ -953,6 +965,30 @@ class API {
     return json;
   }
 
+  public async req_aavegotchi_avg_price() {
+    const url = `${this.url}/get_aavegotchi_avg_price_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_playerone_avg_price() {
+    const url = `${this.url}/get_playerone_avg_price_stats`;
+
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 6.31 获取 netvrk 地块成交总数量统计信息接口
 
   public async req_netvrk_sales_num() {
@@ -966,10 +1002,54 @@ class API {
     return json;
   }
 
+  public async req_playerone_sales_num() {
+    const url = `${this.url}/get_playerone_sales_num`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_aavegotchi_sales_num() {
+    const url = `${this.url}/get_aavegotchi_sales_num`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   // 6.32 获取 netvrk 地块销售总额统计信息接口
 
   public async req_netvrk_sales_amount() {
     const url = `${this.url}/get_netvrk_sales_amount`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+  
+  public async req_aavegotchi_sales_amount() {
+    const url = `${this.url}/get_aavegotchi_sales_amount`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+  
+  public async req_playerone_sales_amount() {
+    const url = `${this.url}/get_playerone_sales_amount`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1148,6 +1228,82 @@ class API {
     const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_cv_space_buildings${search}`;
     // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_wearable_list(page: number, count: number,
+    //  world: string,
+  ) {
+    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_wearable_list${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_wearableDcl_list(page: number, count: number,
+    //  world: string,
+  ) {
+    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_dcl_wearable_list${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_wearableMona_list(page: number, count: number,
+    //  world: string,
+  ) {
+    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_mona_wearable_list${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_detailWearableDcl_list(contract_address, item_id,
+  ) {
+    const search = qs.stringify({ contract_address, item_id }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_dcl_wearable_detail${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_detailWearableMona_list(creator_address, wearable_id,
+  ) {
+    const search = qs.stringify({ creator_address, wearable_id }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_mona_wearable_detail${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',

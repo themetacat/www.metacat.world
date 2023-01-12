@@ -24,7 +24,7 @@ import style from './index.module.css';
 
 export default function TopicIndex() {
   const meta = {
-    title: `Builders - ${SITE_NAME}`,
+    title: `Creation - ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
@@ -40,6 +40,10 @@ export default function TopicIndex() {
     {
       label: 'Buildings',
       type: 'buildings',
+    },
+    {
+      label: 'Wearable',
+      type: 'wearable',
     },
     // {
     //   label: 'Space Buildings',
@@ -58,7 +62,11 @@ export default function TopicIndex() {
   const cls = cn('flex-1', style.bottomLine);
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
-    router.replace(`/creater/${t}`);
+    if (t === 'wearable') {
+      router.replace(`/creation/wearable?tab=cryptovoxels`);
+    } else {
+      router.replace(`/creation/${t}`);
+    }
   }, []);
 
   const requestData = React.useCallback(async (page: number, count: number) => {

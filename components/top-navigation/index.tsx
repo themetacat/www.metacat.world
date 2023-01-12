@@ -12,6 +12,7 @@ import style from './index.module.css';
 
 
 import { getSearchDetail } from '../../service';
+import { req_sales_amount_percent } from '../../service/z_api';
 
 
 
@@ -26,12 +27,17 @@ const build = [
   {
     label: 'Builders',
     type: 'builders',
-    link: '/creater/builders',
+    link: '/creation/builders',
   },
   {
     label: 'Buildings',
     type: 'buildings',
-    link: '/creater/buildings',
+    link: '/creation/buildings',
+  },
+  {
+    label: 'Wearable',
+    type: 'wearable',
+    link: '/creation/wearable?tab=cryptovoxels',
   },
   // {
   //   label: 'Space Buildings',
@@ -61,6 +67,11 @@ const learnCon = [
     label: 'Report',
     type: 'Report',
     link: '/learn?type=report',
+  },
+  {
+    label: 'Others',
+    type: 'Others',
+    link: '/learn?type=others',
   },
 ];
 const parcels = [
@@ -130,6 +141,7 @@ const parcels = [
     type: 'mozillaHubs',
     link: '/parcels?tab=mozillaHubs',
   },
+<<<<<<< HEAD
   // {
   //   label: 'Arium',
   //   icon: '/images/Arium.png',
@@ -142,6 +154,38 @@ const parcels = [
   //   type: 'artifex',
   //   link: '/parcels?tab=artifex',
   // },
+=======
+  {
+    label: 'Arium',
+    icon: '/images/Arium.png',
+    type: 'arium',
+    link: '/parcels?tab=arium',
+  },
+  {
+    label: 'Artifex',
+    icon: '/images/Artifex.png',
+    type: 'artifex',
+    link: '/parcels?tab=artifex',
+  },
+  {
+    label: 'NiftyIsland',
+    icon: '/images/NiftyIsland.png',
+    type: 'niftyIsland',
+    link: '/parcels?tab=niftyIsland',
+  },
+  {
+    label: 'Substrata',
+    icon: '/images/substrata.png',
+    type: 'substrata',
+    link: '/parcels?tab=substrata',
+  },
+  {
+    label: 'PlayerOne',
+    icon: '/images/PlayerOne.png',
+    type: 'playerOne',
+    link: '/parcels?tab=playerOne',
+  },
+>>>>>>> test
 ];
 const eventList = [
   {
@@ -263,7 +307,29 @@ const analyticsData = [
     type: 'netvrk',
     link: '/analytics?type=netvrk',
   },
+  {
+    label: 'Aavegotchi',
+    icon: 'https://www.aavegotchi.com/img/brand/sun.png',
+    type: 'aavegotchi',
+    link: '/analytics?type=aavegotchi',
+  },
+  {
+    label: 'PlayerOne',
+    icon: '/images/PlayerOne.png',
+    type: 'playerOne',
+    link: '/analytics?type=playerOne',
+  },
 ];
+
+// const routerTab = [
+//    "Place"
+//   ,
+//    "Event"
+//   ,
+//    "Creation"
+//   , "Learn"
+  
+// ]
 
 
 
@@ -279,20 +345,21 @@ export default function PageHeader({ active, className }: Props) {
   const [learnState, setLearnState] = React.useState(false);
   const [showStateVal, setShowStateVal] = React.useState(null);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
+  const [offsetHeighthNum, setOffsetHeightNum] = React.useState(0);
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
 
 // console.log(searchText,999999999999999);
 
-  const onSearchHandler = (query: string,
-    page: number,
-    per_page: number,
-    search_item: string) => {
-    // console.log(888);
-    const res = getSearchDetail(searchText ||query, page, per_page, search_item);
-    // console.log(res, "res");
-  }
+  // const onSearchHandler = (query: string,
+  //   page: number,
+  //   per_page: number,
+  //   search_item: string) => {
+  //   // console.log(888);
+  //   // const res = getSearchDetail(searchText ||query, page, per_page, search_item);
+  //   // console.log(res, "res");
+  // }
 
   // const onSearchHandler = React.useCallback(
   //   async (query = '', text: string) => {
@@ -318,12 +385,15 @@ export default function PageHeader({ active, className }: Props) {
   //   },
   //   []
   // );
+  
   useEffect(() => {
 
+
     setOffsetWidthNum(headerRef?.current?.clientWidth)
+    setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
-  }, [])
+  }, [offsetHeighthNum])
   return (
     <header
       className={cn('w-full flex flex-glow items-start ',
@@ -462,7 +532,7 @@ export default function PageHeader({ active, className }: Props) {
               <TwoNavigation
                 options={parcels}
                 className={style.cn}
-                location={style.parcels}
+                location={window.screen.height<820?style.parcels1:style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -522,8 +592,8 @@ export default function PageHeader({ active, className }: Props) {
               setBuildState(false);
             }}
           >
-            <Link href='/creater/builders' prefetch>
-              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Creator</span>
+            <Link href='/creation/builders' prefetch>
+              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Creation</span>
             </Link>
 
             {
@@ -637,7 +707,7 @@ export default function PageHeader({ active, className }: Props) {
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search text={searchText} showState={(x) => { setShowStateVal(x) }} onSearch={onSearchHandler} ></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search  setTypeVal={'Place'||'Event'||'Creation'||'Learn'}  text={searchText} showState={(x) => { setShowStateVal(x) }}  ></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>

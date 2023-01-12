@@ -23,7 +23,7 @@ type Props = {
 
 };
 
-export default function PieChartZ({ id, options, labelText, dataHandlder, token,  textColor, }: Props) {
+export default function PieChartZ({ id, options, labelText, dataHandlder, token, textColor, }: Props) {
   const visible1 = React.useRef();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -34,7 +34,8 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
   const initChart = React.useCallback(
     (dd) => {
       const chartDom = document.getElementById(id)!;
-      const myChart = echarts.init(chartDom);
+      const myChart = echarts?.init(chartDom);
+      // const myChart = null;
       let chartData = null;
       if (dd) {
         chartData = dd.map((item) => {
@@ -190,7 +191,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
       return (
         <div
           className={cn('flex items-center', style.border)}
-          style={{ color: 'rgba(255,255,255, 0.3)',borderRadius:"4px" }}
+          style={{ color: 'rgba(255,255,255, 0.3)', borderRadius: "4px" }}
         >
           <ChartSelecter
             options={options}
@@ -211,13 +212,16 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
   React.useEffect(() => {
     requestData(token);
   }, [requestData]);
+  // React.useEffect(() => {
+
+  // }, [id]);
 
   return (
     <div>
-      <div className={cn('w-full p-5', style.content)} style={{ borderRadius:"4px" }}>
+      <div className={cn('w-full p-5', style.content)} style={{ borderRadius: "4px" }}>
         <div>
           <div className={cn('w-full flex justify-between item-center', style.header)}>
-            <ChartTitle text={labelText}  color={textColor}></ChartTitle>
+            <ChartTitle text={labelText} color={textColor}></ChartTitle>
             <div className="flex items-center">{getSelect}</div>
           </div>
           <div className={cn(data.length === 0 ? style.tobottom : null)}>{render}</div>

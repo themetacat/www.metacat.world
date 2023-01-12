@@ -14,6 +14,7 @@ type Props = {
   id?: string;
   labelText?: string;
   dataHandlder?;
+  HyperlinkJump?;
   legend1?;
   legend2?;
   legend3?;
@@ -62,6 +63,7 @@ export default function AllPillarNum2({
   id,
   labelText,
   dataHandlder,
+  HyperlinkJump,
   legend1,
   legend2,
   legend3,
@@ -430,7 +432,7 @@ export default function AllPillarNum2({
       >
         <ChartSelecter
           options={options}
-          showArrow={false}
+          showArrow={true}
           onClick={changeStatic}
           className={style.selecterLong}
           defaultLabel={options[0].value}
@@ -522,7 +524,7 @@ export default function AllPillarNum2({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-      <ChartTitle text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
+      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

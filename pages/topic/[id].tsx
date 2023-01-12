@@ -60,6 +60,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   const [wearables, setWearables] = React.useState(wearable);
   const [originWearables, setOriginWearables] = React.useState(wearable);
   const [fixedState, setFixedState] = React.useState(false);
+  const [getMore, setGetMore] = React.useState(false);
 
   const web3 = useWalletProvider();
 
@@ -173,7 +174,6 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   }, []);
 
   React.useEffect(() => {
-    
     const accessToken = getToken('atk');
     if (accessToken) {
       requestPersonal(accessToken);
@@ -188,6 +188,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
   );
 
   const search = React.useCallback(() => {
+
     if (navState === 'buildings') {
       if (parcelList) {
         if (searchText === '' || searchText === null) {
@@ -261,7 +262,11 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
               </div>
             ) : null}
           </div>
-          {renderStatus}
+          {/* {renderStatus} */}
+          {loading === true ? <Status status="loading" /> : null}
+          {error === true ? <Status retry={onRetry} status="error" /> : null}
+          {parcelList?.length === 0 ? <Status status="empty" /> : null}
+
         </div>
       );
     }
@@ -290,6 +295,20 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
+  const showMore = () => {
+
+    setGetMore(true)
+
+
+  }
+  const packUp = () => {
+    setGetMore(false)
+
+
+  }
+
+  
+
   return (
     <Page className="min-h-screen flex flex-col" meta={meta}>
       <div className="bg-black relative">
@@ -300,7 +319,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
           />
         </div>
         <div
-          className={cn('main-content flex justify-center flex-col  relative z-10', style.signBack)}
+          className={cn('flex justify-center flex-col  relative z-10', style.signBack)}
         >
           <UserAvatar
             avatar={base_info.logo_url}
@@ -326,12 +345,22 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
               },
             ]}
           ></UserAvatar>
-          <div className={cn(' text-center mt-4 mb-7', style.desc)}>{base_info.description}</div>
+          <div className={style.contentBox}>
+            <div className={cn(' text-center mt-4',  getMore ? style.deptContent : style.deptContentHidden)} id="textcontain">{base_info.description}</div>
+            {getMore === false &&base_info.description.length>=315?
+              <div className={style.showMore}>
+                <a onClick={showMore}>See More</a>
+              </div> : null}
+            {getMore === true ?
+              <div className={style.packUp}>
+                <a onClick={packUp}>See Less</a>
+              </div> : null}
+          </div>
         </div>
       </div>
       {parcel_list && wearable ? (
-        <div className={cn(style.nav, 
-        // fixedState ? style.fix2 : null
+        <div className={cn(style.nav,
+          // fixedState ? style.fix2 : null
         )}>
           <div className={style.navCOntainer}>
             <div className={style.nav}>
@@ -358,7 +387,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         className={cn(
           'flex justify-center items-center flex-1',
           style.search,
-        
+
         )}
       >
         <MeteInput

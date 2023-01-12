@@ -31,8 +31,7 @@ import EventDetail from '../../components/eventDetail';
 
 import { state } from '../../components/wallet-btn';
 
-// import Creator from '../../components/Creator';
-import DaoModelList2 from '../../components/dao-model-list2';
+import DaoModelList2 from '../../components/dao-model-listWearable';
 
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
@@ -108,13 +107,17 @@ const TABDataCreater = [
     label: 'Builder',
     type: 'Builder',
   },
+  {
+    label: 'Wearable',
+    type: 'Wearable',
+  },
 
 ]
 
 
 const TAB3 = [
   {
-    label: '1111111',
+    label: 'Place',
     type: 'Place',
   },
   {
@@ -122,8 +125,8 @@ const TAB3 = [
     type: 'Event',
   },
   {
-    label: 'Creator',
-    type: 'Creator',
+    label: 'Creation',
+    type: 'Creation',
   },
   {
     label: 'Learn',
@@ -174,8 +177,8 @@ function search(r) {
   const [address, setAddress] = React.useState('');
   const [showModal, setShowModal] = React.useState(false);
   const [tabStateEvent, setTabStateEvent] = React.useState('Voxels');
-  const [tabState, setTabState] = React.useState('Voxels');
-  const [tabStateCreater, setTabStateCreater] = React.useState('Builder');
+  const [tabState, setTabState] = React.useState(null);
+  const [tabStateCreater, setTabStateCreater] = React.useState(null);
   const [statue, setStatue] = React.useState(null);
   const [emailStateVal, setEmailStateVal] = React.useState(null);
   const [buildState, setBuildState] = React.useState(null);
@@ -190,7 +193,7 @@ function search(r) {
   const [saveIconVal, setSaveIconVal] = React.useState(false);
   const [type, set_type] = React.useState(false);
   const [value, set_value] = React.useState('');
-  const [routeTab, setRouteTab] = React.useState('Place');
+  const [routeTab, setRouteTab] = React.useState(router?.query?.type);
   const [email, setEmail] = React.useState(null);
   const [addbuild, setAddbuild] = React.useState(false);
 
@@ -298,20 +301,17 @@ function search(r) {
 
   const changeTab3 = React.useCallback(
     async (l, t) => {
-      // console.log(l, 111, showTab, tabState);
-      if (l === 'Creator') {
-        setShowTab('Builder')
-      }
-      // setTabState('Voxels')
-      setTabStateCreater('Builder')
-      // setTabStateEvent('Voxels')
-      // setTabStateEvent(dataEvent[0])
-      // setTabState('Place');
+      // console.log(l, 111, showTab, router.query.q);
+
       setShowTab(l);
       setRouteTab(t);
-      // router.replace(`/profile?type=${t}`);
+      if (l && router.query.q !== undefined) {
+        router.replace(`/search?q=${router.query.q}&type=${l}`);
+      } else {
+        router.replace(`/search?type=${l}`)
+      }
     },
-    [showTab],
+    [showTab, router.query.q],
   );
 
   const onTabChange = React.useCallback(
@@ -384,12 +384,13 @@ function search(r) {
 
 
       if (tabStateCreater === tab) return;
+
       // setLoading(true);
       setTabStateCreater(tab);
-      // setParcelsIds([]);
-      // setSelectedIds([]);
-      // setCardState(false);
-      // store.setState(() => ({ parcels_cardState: false, id: null }));
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
       if (tab === 'builder') {
         // setDataSource(orginData.parcelList);
         // store.setState(() => ({ type: 'cv' }));
@@ -434,7 +435,7 @@ function search(r) {
   const onSearchHandlerDetail = async (query,
     page: number,
     per_page: number,
-    search_item: string) => {
+    typeVal: string) => {
     // setDataSource([])
     //             setDataSourceLearn([])
     //             setDataSourceCreWear([])
@@ -454,12 +455,16 @@ function search(r) {
       return num + 1
     })
 
+<<<<<<< HEAD
     const res = await getSearchDetail(query, mynum, per_page, search_item);
+=======
+    const res = await getSearchDetail(query, page, per_page, typeVal);
+>>>>>>> test
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
       const data = res.data?.menu_one;
-      const dataCreater = res.data?.Creator?.menu_two;
+      const dataCreater = res.data?.Creation?.menu_two;
       const dataEvent = res.data?.Event?.menu_two;
       const countNum = res.data?.item_count;
       const MenuDataTwo = res.data?.Place?.menu_two;
@@ -473,30 +478,42 @@ function search(r) {
         }
         arr.push(obj)
       })
-
       setValueCount(arr)
 
       const dataList = dataSource;
       if (res.data?.Place?.Voxels.length > 0) {
         dataList?.push(...res.data?.Place?.Voxels)
         setDataSource(dataList)
+
       }
 
       const dataListBuilder = dataSourceCreBuilder;
-      if (res.data?.Creator?.Builder?.length > 0) {
-        dataListBuilder?.push(...res.data?.Creator?.Builder)
+      if (res.data?.Creation?.Builder?.length > 0) {
+        dataListBuilder?.push(...res.data?.Creation?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
+
+
+      }
+      const dataListWearable = dataSourceCreWear;
+      if (res.data?.Creation?.Wearable?.length > 0) {
+        dataListWearable?.push(...res.data?.Creation?.Wearable)
+        // console.log(dataListWearable, page, "asdsadsad");
+
+        setDataSourceCreWear(convert(dataListWearable))
+
       }
 
       const dataListLearn = dataSourceLearn;
       if (res.data?.Learn?.data?.length > 0) {
         dataListLearn?.push(...res.data?.Learn?.data)
         setDataSourceLearn(dataListLearn)
+
       }
       const dataListEventCv = eventCvList;
       if (res.data?.Event?.Voxels?.length > 0) {
         dataListEventCv?.push(...res.data?.Event?.Voxels)
         setEventCvList(dataListEventCv)
+
       }
       const dataListEventDcl = eventDclList;
       if (res.data?.Event?.Decentranland?.length > 0) {
@@ -595,7 +612,6 @@ function search(r) {
             type: dataEvent[key], icon: TABobj[dataEvent[key]],
           }
           valCountEvent.push(objEvent)
-          // console.log(objEvent);
 
         })
         setValueCountEvent(valCountEvent)
@@ -603,8 +619,6 @@ function search(r) {
 
       if (MenuDataTwo) {
         Object?.keys(MenuDataTwo).forEach(keys => {
-          // console.log(TABobj[MenuDataTwo[keys]]);
-
           const objMenuTwo = {
             label: MenuDataTwo[keys],
             type: MenuDataTwo[keys],
@@ -784,7 +798,6 @@ function search(r) {
       const hide = result.data.filter((i) => {
         return i.show_status === 2;
       });
-      // console.log(wearablesState.current);
       if (wearablesState.current === 'all') {
         setWearablesCreatorsData(result.data);
       } else if (wearablesState.current === 'shown') {
@@ -801,13 +814,14 @@ function search(r) {
   }, [refreshTK]);
 
   const onRetry = React.useCallback(async () => {
-    const accessToken = getToken('atk');
-    if (accessToken && tabState === 'Voxels') {
-      requestData(accessToken);
-    }
-    if (accessToken && tabState === 'Decentraland') {
-      reqDclData(accessToken);
-    }
+    window.location.reload()
+    // const accessToken = getToken('atk');
+    // if (accessToken && tabState === 'Voxels') {
+    //   requestData(accessToken);
+    // }
+    // if (accessToken && tabState === 'Decentraland') {
+    //   reqDclData(accessToken);
+    // }
     // if (accessToken && routeTab === 'building') {
     //   reqBuilderData(accessToken);
     // }
@@ -818,12 +832,12 @@ function search(r) {
   const onSearchHandler = React.useCallback(async (query,
     page: number,
     per_page: number,
-    search_item: string,
+    typeVal: string,
     isCli: boolean) => {
-    // console.log('打印了打印了', query);
     // setPage(1)
     // console.log('调用几遍',);
 
+<<<<<<< HEAD
     // const newPage = page + 1
     // console.log(newPage, page);
 
@@ -838,16 +852,27 @@ function search(r) {
     setShowModal(true)
     setLoading(true)
     console.log(tabState);
-    // setPage(newPage)
-    // console.log(router.query.q || query);
+=======
+    const newPage = page + 1
+    setPage(newPage)
 
+    setShowModal(true)
+    setLoading(true)
+>>>>>>> test
+    // setPage(newPage)
+
+<<<<<<< HEAD
     const res = await getSearchDetail(router.query.q || query, mynum, per_page || 20, search_item);
+=======
+    const res = await getSearchDetail(router.query.q || query, page || 1, per_page || 20, typeVal);
+>>>>>>> test
 
     setShowModal(false)
     setLoading(false)
     if (res.code === 100000) {
+
       const data = res.data?.menu_one;
-      const dataCreater = res.data?.Creator?.menu_two;
+      const dataCreater = res.data?.Creation?.menu_two;
       const countNum = res.data?.item_count;
       const dataEvent = res.data?.Event?.menu_two;
       const MenuDataTwo = res.data?.Place?.menu_two;
@@ -870,9 +895,10 @@ function search(r) {
       setValueCount(arr)
 
 
+      // setRouteTab(arr[0]?.type)
       if (MenuDataTwo) {
+
         Object?.keys(MenuDataTwo).forEach(keys => {
-          // console.log(TABobj[MenuDataTwo[keys]]);
           const objMenuTwo = {
             label: MenuDataTwo[keys],
             type: MenuDataTwo[keys],
@@ -882,7 +908,10 @@ function search(r) {
         })
         setMenuDataTwoArrCon(MenuDataTwoArr)
 
+<<<<<<< HEAD
         // setTabState(MenuDataTwo[0])
+=======
+>>>>>>> test
       }
 
 
@@ -893,28 +922,22 @@ function search(r) {
       // setRouteTab('Place')
       const dataList = isCli ? [] : dataSource;
 
-      // console.log(dataList, page, res.data.Place.Voxels);
-
-
       if (res.data?.Place?.Voxels?.length > 0) {
         dataList?.push(...res.data?.Place?.Voxels)
-        // console.log(dataList);
 
         setDataSource(dataList)
       }
 
-      // console.log(dataList, "dataList");
-
-      // console.log(dataSourceTwo,"dataSourceTwodataSourceTwo");
-
-      // setDataSourceTwo(dataList)
-
-      // setDataSource(res.data.Place.Voxels)
-
       const dataListBuilder = dataSourceCreBuilder;
-      if (res.data?.Creator?.Builder?.length > 0) {
-        dataListBuilder?.push(...res.data?.Creator?.Builder)
+      if (res.data?.Creation?.Builder?.length > 0) {
+        dataListBuilder?.push(...res.data?.Creation?.Builder)
         setDataSourceCreBuilder(dataListBuilder)
+      }
+
+      const dataListWearable = dataSourceCreWear;
+      if (res.data?.Creation?.Wearable?.length > 0) {
+        dataListWearable?.push(...res.data?.Creation?.Wearable)
+        setDataSourceCreWear(convert(dataListWearable))
       }
 
       const dataListEventCv = eventCvList;
@@ -935,7 +958,6 @@ function search(r) {
         dataListEventSom?.push(...res.data?.Event?.SomniumSpace)
         setEventSomList(dataListEventSom)
       }
-      // setDataSourceCreBuilder(res.data.Creator.Builder)
 
 
       const dataListLearn = dataSourceLearn;
@@ -944,14 +966,9 @@ function search(r) {
         setDataSourceLearn(dataListLearn)
       }
 
-      // setDataSourceLearn(res.data.Learn.data)
-      // console.log(dataSourceLearn, 222523);
-
-      // setDataSourceTwo(res.data.Place.Voxels)
       const dataListDece = dclDataSource;
       if (res.data.Place?.Decentranland?.length > 0) {
         dataListDece?.push(...res.data.Place?.Decentranland)
-        // console.log(dataListDece);
 
         setDclDataSource(dataListDece)
       }
@@ -1017,21 +1034,6 @@ function search(r) {
 
       // setDclDataSource(res.data.Place.Decentranland)
 
-      // console.log(dclDataSource, "dataSourcedataSourcedataSource");
-
-
-   
-      // for (const key in dataCreater) {
-      //   // console.log(valueCount);
-      //   const obj = {
-      //     label: dataCreater[key],
-      //     type: dataCreater[key],
-      //     // count: countNum[data[key]],
-      //   }
-
-      //   valCountCreater.push(obj)
-      //   // console.log(valCountCreater, "valCountCreater");
-      // }
       if (dataCreater) {
         Object?.keys(dataCreater).forEach(key => {
           const obj = {
@@ -1044,23 +1046,6 @@ function search(r) {
         setValueCountCreater(valCountCreater)
       }
 
-      // if (dataSource === []) {
-      //   console.log(89898989);
-
-      //   setTabState('RareRooms')
-      // }
-      // for (const keys in MenuDataTwo) {
-      //   const objMenuTwo = {
-      //     label: MenuDataTwo[keys],
-      //     type: MenuDataTwo[keys],
-      //     // icon: MenuDataTwo[keys],
-      //   }
-      //   MenuDataTwoArr.push(objMenuTwo)
-      //   // console.log(MenuDataTwoArr);
-
-      // }
-
-
       if (dataEvent) {
         Object?.keys(dataEvent).forEach(key => {
           const objEvent = {
@@ -1071,33 +1056,11 @@ function search(r) {
           // console.log(objEvent);
 
         })
-        setTabStateEvent(dataEvent[0])
+        // setTabStateEvent(dataEvent[0])
         setValueCountEvent(valCountEvent)
 
       }
-      // console.log(dataEvent[0], 999999,valueCountEvent);
 
-  
-
-
-      // console.log(router.query.q,"router.query.q",router.query.q !==undefined);
-
-
-      // for (const key in data) {
-      //   // console.log(valueCount);
-      //   const obj = {
-      //     label: data[key],
-      //     type: data[key],
-      //     count: countNum[data[key]],
-      //   }
-
-      //   arr.push(obj)
-      //   // console.log(arr);
-      // }
-      //       console.log(dataSource,dclDataSource);
-      //       // console.log(res.data, res.data?.item_count && res.data?.menu_one);
-      // console.log((res.data?.item_count && res.data?.menu_one).length === 0);
-      // console.log(valueCount,);
 
       if ((res.data?.item_count && res.data?.menu_one).length === 0) {
 console.log("????????????????????????????");
@@ -1112,69 +1075,15 @@ console.log("????????????????????????????");
   }, [router.query.q]);
 
 
-
-  // const reqBuilderData = React.useCallback(
-  //   async (walletAddressVal: string) => {
-  //     try {
-
-  //       // const res = await req_building_list(walletAddressVal);
-  //       // console.log(res, 5959);
-
-
-  //       // const data = resultHandlerBu(res, reqBuilderData);
-  //       // console.log(data, 56569, res);
-
-
-  //       setLoading(false);
-  //       if (!data) {
-  //         return;
-  //       }
-  //       // console.log(data, 8989);
-  //       setDataBuildSource(data);
-  //       // changeNum(data, nav_Label.current);
-  //     } catch {
-  //       setError(true);
-  //     }
-  //   },
-  //   [resultHandlerBu, routeTab, nav_Label, walletAddress, dataBuildSource],
-  // );
-
   const requireBuilder = React.useCallback(
     async (token) => {
       const res = await req_get_building_detail_info(token);
       const data = resultHandler(res, requireBuilder);
-      // if (data) {
-      //   const profile = convert(data.profile);
-      //   const {
-      //     address: addr,
-      //     nickName: name,
-      //     avatar,
-      //     links,
-      //     email: e,
-      //     country: c,
-      //     introduction: i,
-      //   } = profile;
-      //   const { twitterName, websiteUrl } = links;
-      //   setAvatarUrl(avatar);
-      //   setInitEmail(e);
-      //   if (e) {
-      //     setEmail(e);
-      //   }
-      //   setCountry(c);
-      //   setIntroduction(i);
-      //   setAddress(addr);
-      //   setNickNameVla(name);
-      //   setOrginName(name);
-      //   setTwitterAddress(twitterName);
-      //   setWebsiteAddress(websiteUrl);
-      //   state.setState({ profile });
-      // }
     },
     [resultHandler],
   );
 
   const toTopic = React.useCallback((id, item) => {
-    // console.log(item.topic_id);
 
     if (item?.name === 'WearableDAO') {
       window.open('/wearables/wearabledao?type=chinesered')
@@ -1187,7 +1096,6 @@ console.log("????????????????????????????");
   }, []);
 
 
-  // console.log(loadingDetail);
 
   const renderContent = React.useMemo(() => {
 
@@ -1205,12 +1113,12 @@ console.log("????????????????????????????");
 
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-          {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+          {dataSource?.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
           {showModal === true ?
             <><img src='/images/saveIcon.gif'></img> </>
             :
             <>
-              {dataSourceTwo.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
+              {dataSourceTwo?.map((card) => (<Card {...card} key={uuid()} typeState={card.type} />))}
 
             </>
           }
@@ -1258,7 +1166,6 @@ console.log("????????????????????????????");
 
   }
   const renderContentEvent = React.useMemo(() => {
-    // console.log(tabStateEvent);
 
     if (loading) {
       return <Status status="loading" />;
@@ -1274,7 +1181,7 @@ console.log("????????????????????????????");
 
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-          {eventCvList.map((card, idx) => {
+          {eventCvList?.map((card, idx) => {
             return < EventDetail key={idx} {...card} onClinkDetail={() => {
               onClinkCvDetail(card)
             }} />;
@@ -1286,7 +1193,7 @@ console.log("????????????????????????????");
       // Decentranland
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-          {eventDclList.map((card, idx) => {
+          {eventDclList?.map((card, idx) => {
             return (< EventDetail key={idx} {...card} onClinkDetail={() => {
               onClinkDclDetail(card)
             }} />);
@@ -1297,7 +1204,7 @@ console.log("????????????????????????????");
     if (tabStateEvent === 'somniumspace') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-          {eventSomList.map((card, idx) => {
+          {eventSomList?.map((card, idx) => {
             return (< EventDetail key={idx} {...card} onClinkDetail={() => {
               onClinkSomDetail(card)
             }} />);
@@ -1321,17 +1228,7 @@ console.log("????????????????????????????");
     reqDclData,
   ]);
   const renderContentCreater = React.useMemo(() => {
-    // console.log(tabStateCreater);
 
-    // if (loading) {
-    //   return <Status status="loadingDetail" />;
-    // }
-    // if (error) {
-    //   return <Status retry={onRetry} status="error" />;
-    // }
-    // if (cartData.length === 0) {
-    //   return <Status status="empty" />;
-    // }
     if (tabStateCreater === 'Builder') {
       return (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
@@ -1340,44 +1237,19 @@ console.log("????????????????????????????");
               <InfoCard cls={style.cls} {...item} key={idx}
                 onClick={() => toTopic(idx, item)}
               ></InfoCard>
-              // <Card
-              //   {...card}
-              //   parcelsIds={parcelsIds}
-              //   state={cardState}
-              //   key={uuid()}
-              //   selectedIds={selectedIds}
-              //   onClick={(id, ids) => {
-              //     select(id, ids);
-              //   }}
-              // ></Card>
             );
           })}
         </div>
       );
     }
-    if (tabStateCreater === 'wearable') {
-      // console.log("切换了");
-
+    if (tabStateCreater === ' Wearable') {
       return (
-        <>
-          <div>655555</div>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
-            {dclDataSource.map((card) => {
-              return (
-                <DclCard
-                  {...card}
-                  parcelsIds={parcelsIds}
-                  state={cardState}
-                  key={uuid()}
-                  y
-                  selectedIds={selectedIds}
-                  onClick={(id, ids) => {
-                    select(id, ids);
-                  }}
-                ></DclCard>
-              );
-            })}
-          </div> */}
+        <>55555
+          {/* <DaoModelList2
+                models={dataSourceCreWear}
+                type={'topic'}
+                address={router.query.id}
+              ></DaoModelList2> */}
         </>
       );
     }
@@ -1388,23 +1260,14 @@ console.log("????????????????????????????");
     changeNum,
     parcelsIds,
     loadingDetail,
+    tabStateCreater,
     setCardState,
     tabState,
     reqDclData,
   ]);
-  const addWorkWerable = () => {
-    // console.log(55, tokenWearable);
-    // setShowModal(true)
-    // const res = getBaseInfo(tokenWearable);
-    // res.then((resWeable) => {
-    //   setaddressWerVal(resWeable.data.profile.address);
-    //   setemailWearVal(resWeable.data.profile.email);
 
-    // })
-  }
 
   const renderWerable = React.useMemo(() => {
-    // console.log(statue);
 
     if (loading) {
       return <Status status="loadingDetail" />;
@@ -1413,7 +1276,7 @@ console.log("????????????????????????????");
       return <Status retry={onRetry} status="error" />;
     }
     if (statue === 1) {
-      return <Status addWorkWerable={addWorkWerable} status="emptyWerable" />;
+      return <Status status="emptyWerable" />;
 
     }
 
@@ -1425,15 +1288,14 @@ console.log("????????????????????????????");
 
   const renderBuilding = React.useMemo(() => {
 
-    if (loading) {
-      return <Status status="loadingDetail" />;
-    }
+    // if (loading) {
+    //   return <Status status="loadingDetail" />;
+    // }
     if (error) {
       return <Status retry={onRetry} status="error" />;
     }
 
     if (routeTab === 'Learn') {
-      //   // console.log(dataBuildSource,6565656);
 
       return (
         <>
@@ -1444,10 +1306,6 @@ console.log("????????????????????????????");
             {/* 123 */}
             {
               dataSourceLearn?.map((item, idx) => {
-                // console.log(card,8888888888);
-
-                // console.log(dataSourceLearn,9999999);
-
                 return (<LearnCard {...item} key={idx} />)
               })
             }
@@ -1554,8 +1412,18 @@ console.log("????????????????????????????");
     [resultHandler],
   );
 
+  // useEffect(() => {
+  // //   //   console.log(menuDataTwoArrCon);
+  // //   console.log(router?.query?.type);
+  // //   router.replace(`/search?q=${value}&type=${routeTab}`);
+  // if(router?.query?.type === undefined ||router?.query?.type ==='Place'){
+  //   setRouteTab('Place')
+  // }else{
+  //   setRouteTab(router?.query?.type)
+  // }
 
 
+<<<<<<< HEAD
 
   const watcher_store = React.useCallback(() => {
     set_rent_set_state(s.rentOutState);
@@ -1619,11 +1487,79 @@ console.log("????????????????????????????");
   // console.log(showCon);
 
   // console.log(searchText,999);
+=======
+  // }, [router?.query?.type])
+  useEffect(() => {
+    // console.log(router?.query?.type.toLowerCase(), 111111);
+    setRouteTab(router?.query?.type)
+  }, [router?.query?.type])
+
+  // console.log(routeTab, 55555, router?.query?.q);
+
+
+  useEffect(() => {
+    //  if (window.location.search) return;
+    const res = getSearchDetail(router?.query?.q, 1, 20, '');
+
+    res.then((resPlace) => {
+      // console.log(!resPlace.data?.Learn?.data);
+      if (router?.query?.type !== undefined) {
+        // console.log('_____________');
+        setRouteTab(router?.query?.type)
+        if (!resPlace.data?.Learn && router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+          // router.replace(`/search?q=${router?.query?.q}&type=${resPlace?.data?.menu_one[0]}`);
+        }
+        if (!resPlace.data?.Event && router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
+        if (!resPlace.data?.Creation && router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
+        if (!resPlace.data?.Place && router?.query?.type !== undefined) {
+          setRouteTab(resPlace?.data?.menu_one[0])
+        }
+
+      } else {
+        // console.log('_____________88888');
+        setRouteTab(resPlace?.data?.menu_one[0])
+        // setRouteTab(router?.query?.type)
+      }
+
+      setTabState(resPlace?.data?.Place?.menu_two[0]);
+      setTabStateEvent(resPlace.data.Event?.menu_two[0])
+      setTabStateCreater(resPlace.data.Creation?.menu_two[0])
+
+      setDataSourceLearn(resPlace.data?.Learn?.data)
+      setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
+      // setDataSource(resPlace.data?.Place?.Voxels)
+      setDclDataSource(resPlace.data?.Place?.Decentranland)
+      setOncyberDataSource(resPlace?.data?.Place?.Oncyber)
+      setMonaDataSource(resPlace?.data?.Place?.Mona)
+      setProtoWorldDataSource(resPlace?.data?.Place?.Protoworld)
+      setSomSpaceDataSource(resPlace?.data?.Place?.SomniumSpace)
+      setRareDataSource(resPlace?.data?.Place?.RareRooms)
+      setSandBoxDataSource(resPlace?.data?.Place?.TheSandbox)
+      setSpatialDataSource(resPlace?.data?.Place?.Spatial)
+      setHyperfyDataSource(resPlace?.data?.Place?.Hyperfy)
+      setMozillaHubsDataSource(resPlace?.data?.Place?.MozillaHubs)
+      setAriumDataSource(resPlace?.data?.Place?.Arium)
+      setArtifexDataSource(resPlace?.data?.Place?.Artifex)
+      setDataSourceCreBuilder(resPlace.data?.Creation?.Builder)
+      setDataSourceCreWear(resPlace.data?.Creation?.Wearable)
+      setEventCvList(resPlace.data?.Event?.Voxels)
+      setEventDclList(resPlace.data?.Event?.Decentranland)
+      setEventSomList(resPlace.data?.Event?.SomniumSpace)
+
+    })
+  }, [router?.query?.q,])
+
+
+
+>>>>>>> test
   // React.useEffect(() => {
   //   if (window.location.search) return;
   //   onSearchHandler('', 1, 20, '', false)
-  //   // console.log(router.query.q,window.location.search);
-
   // }, [])
 
   // React.useEffect(() => {
@@ -1652,6 +1588,7 @@ console.log("????????????????????????????");
 
 
   React.useEffect(() => {
+<<<<<<< HEAD
 
     // console.log(document.querySelector('body'));
     if (window.location.search && router?.query?.q) {
@@ -1662,6 +1599,61 @@ console.log("????????????????????????????");
       setSearchText('');
       onSearchHandler('', 1, 20, '', false)
 
+=======
+    // console.log('执行', router?.query?.q,window.location.search);
+    // if(router?.query?.q===undefined)return ;
+    if (window.location.search && router?.query?.q !== undefined) {
+      // console.log('ni?');
+
+      setDataSource([])
+      setDataSourceLearn([])
+      setDataSourceCreBuilder([])
+      setDataSourceCreWear([])
+      setDataBuildSource([])
+      setEventDclList([])
+      setEventSomList([])
+      setDclDataSource([])
+      setSomSpaceDataSource([])
+      setMonaDataSource([])
+      setProtoWorldDataSource([])
+      setRareDataSource([])
+      setSandBoxDataSource([])
+      setSpatialDataSource([])
+      setHyperfyDataSource([])
+      setMozillaHubsDataSource([])
+      setAriumDataSource([])
+      setArtifexDataSource([])
+      setOncyberDataSource([])
+      setEventCvList([])
+      setSearchText(router.query.q);
+      onSearchHandler(router.query.q, 1, 20, '', false)
+
+    } else {
+
+      // console.log('没有啊！！！！！');
+      setDataSource([])
+      setDataSourceLearn([])
+      setDataSourceCreBuilder([])
+      setDataSourceCreWear([])
+      setDataBuildSource([])
+      setEventDclList([])
+      setEventSomList([])
+      setDclDataSource([])
+      setSomSpaceDataSource([])
+      setMonaDataSource([])
+      setProtoWorldDataSource([])
+      setRareDataSource([])
+      setSandBoxDataSource([])
+      setSpatialDataSource([])
+      setHyperfyDataSource([])
+      setMozillaHubsDataSource([])
+      setAriumDataSource([])
+      setArtifexDataSource([])
+      setOncyberDataSource([])
+      setEventCvList([])
+      setSearchText('');
+      onSearchHandler('', 1, 20, '', false)
+>>>>>>> test
     }
 
     console.log(router?.query?.q, 55, !window.location.search);
@@ -1784,6 +1776,7 @@ console.log("????????????????????????????");
 
 
   }, [router?.query?.q])
+<<<<<<< HEAD
 
 
 
@@ -1823,6 +1816,8 @@ console.log("????????????????????????????");
   //   tabState,
   //   reqWearablesData,
   // ]);
+=======
+>>>>>>> test
 
 
   const tag2 = () => {
@@ -1979,8 +1974,12 @@ console.log("????????????????????????????");
 
 
     const scroll = (e) => {
+<<<<<<< HEAD
 
       // const { scrollTop, scrollHeight, clientHeight } = e.target;
+=======
+      const { scrollTop, scrollHeight, clientHeight } = e.target;
+>>>>>>> test
 
       // if (scrollTop + clientHeight >= scrollHeight - 20) {
 
@@ -2014,6 +2013,7 @@ console.log("????????????????????????????");
               <div className="main-content">
                 <SwiperTagSearch onActive={onTabChange} typeList={menuDataTwoArrCon} label={tabState} />
               </div>
+<<<<<<< HEAD
               {/* {
                 loadingDetail === true ? null :
                   <> */}
@@ -2082,20 +2082,24 @@ console.log("????????????????????????????");
                     </div> */}
                   {/* </> */}
               {/* // } */}
+=======
+>>>>>>> test
               <div className={cls} />
             </div>
           </div>
           <div onScroll={scroll} className={cn('main-content myClassName', emptyStatus === true ? style.qqq : style.content,)} style={{ marginTop: "20px", marginBottom: "30px", paddingBottom: '2px' }}>
 
+            {loading ? <Status status="loading" /> : null}
+            {error ? <Status retry={onRetry} status="error" /> : null}
             {tabState === 'Voxels' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {dataSource.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
+                {dataSource?.map((card) => { return (<Card {...card} key={uuid()} typeState={card.type} />); })}
               </div>
               : null
             }
             {tabState === 'Decentranland' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {dclDataSource.map((card) => {
+                {dclDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2103,7 +2107,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'SomniumSpace' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {somSpaceDataSource.map((card) => {
+                {somSpaceDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2111,9 +2115,13 @@ console.log("????????????????????????????");
             }
             {tabState === 'Oncyber' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+<<<<<<< HEAD
                 {oncyberDataSource.map((card) => {
              
                   
+=======
+                {oncyberDataSource?.map((card) => {
+>>>>>>> test
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2121,7 +2129,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'Mona' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {monaDataSource.map((card) => {
+                {monaDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2129,7 +2137,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'Protoworld' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {protoWorldDataSource.map((card) => {
+                {protoWorldDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2145,7 +2153,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'TheSandbox' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {sandBoxDataSource.map((card) => {
+                {sandBoxDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2161,7 +2169,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'Hyperfy' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {hyperfyDataSource.map((card) => {
+                {hyperfyDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2169,7 +2177,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'MozillaHubs' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {mozillaHubsDataSource.map((card) => {
+                {mozillaHubsDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2177,7 +2185,7 @@ console.log("????????????????????????????");
             }
             {tabState === 'Arium' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {ariumDataSource.map((card) => {
+                {ariumDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
@@ -2185,16 +2193,16 @@ console.log("????????????????????????????");
             }
             {tabState === 'Artifex' ?
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
-                {artifexDataSource.map((card) => {
+                {artifexDataSource?.map((card) => {
                   return (<Card {...card} key={uuid()} typeState={card.type} />);
                 })}
               </div>
               : null
             }
-            {loadingDetail === true || emptyStatus === true ?
+            {/* {loadingDetail === true || emptyStatus === true ?
               <Status status="loadingDetail" />
               : null
-            }
+            } */}
           </div>
 
           {/* 卡片结束 */}
@@ -2245,7 +2253,7 @@ console.log("????????????????????????????");
             {
               tabStateEvent === 'Voxels' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-                  {eventCvList.map((card, idx) => {
+                  {eventCvList?.map((card, idx) => {
                     return < EventDetail key={idx} {...card} onClinkDetail={() => {
                       onClinkCvDetail(card)
                     }} />;
@@ -2256,7 +2264,7 @@ console.log("????????????????????????????");
             {
               tabStateEvent === 'Decentranland' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-                  {eventDclList.map((card, idx) => {
+                  {eventDclList?.map((card, idx) => {
                     return (< EventDetail key={idx} {...card} onClinkDetail={() => {
                       onClinkDclDetail(card)
                     }} />);
@@ -2267,7 +2275,7 @@ console.log("????????????????????????????");
             {
               tabStateEvent === 'SomniumSpace' ?
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 ">
-                  {eventSomList.map((card, idx) => {
+                  {eventSomList?.map((card, idx) => {
                     return (< EventDetail key={idx} {...card} onClinkDetail={() => {
                       onClinkSomDetail(card)
                     }} />);
@@ -2276,25 +2284,27 @@ console.log("????????????????????????????");
                 : null
             }
 
-            {loadingDetail === true ?
+            {/* {loadingDetail === true ?
               <Status status="loadingDetail" />
               : null
-            }
+            } */}
           </div>
 
         </>
       )
     }
-    if (routeTab === 'Creator') {
+    if (routeTab === 'Creation') {
+      // console.log(dataSourceCreWear)
       return (
         <>
           {/* {institutions.map((item, idx) => {
           return <InfoCard cls={style.cls} {...item} key={idx} onClick={() => toTopic(idx, item)}></InfoCard>;
         })} */}
           <div className={cn('tab-list flex ', style.allHeight)}>
-            {/* <div className={cls}>valueCountCreater || </div> */}
+            {/* <div className={cls}> </div> */}
             <div className={cn('main-content flex px-0', style.tabtext)}>
-              {(TABDataCreater).map((item) => {
+              {(valueCountCreater)?.map((item) => {
+
                 return (
                   <Tab4
                     active={tabStateCreater === item.type}
@@ -2312,8 +2322,27 @@ console.log("????????????????????????????");
             <div className={cls} />
           </div>
 
-          <div onScroll={scroll} className={cn('main-content', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
-            {renderContentCreater}
+          <div onScroll={scroll} className={cn('main-content h-full', style.content)} style={{ marginTop: "20px", marginBottom: "30px" }}>
+            {/* {renderContentCreater} */}
+            {tabStateCreater === 'Builder' ?
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+                  {dataSourceCreBuilder?.map((item, idx) => {
+                    return (
+                      <InfoCard cls={style.cls} {...item} key={idx}
+                        onClick={() => toTopic(idx, item)}
+                      ></InfoCard>
+                    );
+                  })}
+                </div>
+              </> : null}
+            {tabStateCreater === 'Wearable' ? <>
+              <DaoModelList2
+                models={dataSourceCreWear}
+                type={'topic'}
+                address={router.query.id}
+              ></DaoModelList2>
+            </> : null}
           </div>
         </>
       );
@@ -2343,6 +2372,8 @@ console.log("????????????????????????????");
     menuDataTwoArrCon,
     selectedIds,
     rent_set_state,
+    loading,
+    error,
     s,
     cartData,
     manySetLabel,
@@ -2354,6 +2385,7 @@ console.log("????????????????????????????");
     dataSource,
     dataBuildSource,
     tabState,
+    tabStateCreater,
     routeTab,
     creatorsReander,
   ]);
@@ -2397,18 +2429,18 @@ console.log("????????????????????????????");
 
           <div className={cn('', showModal === false ? style.tablebg1 : style.tablebg)}>
             <div className={cn('', style.searchBoxVal)}>
-              <Search text={searchText} onSearch={(val) => {
+              <Search setTypeVal={routeTab} text={searchText} onSearch={(val) => {
                 // console.log(!router.query.q,'执行几遍', router.query.q);
+<<<<<<< HEAD
                 // console.log(val, router.query.q);
                 setPage(1)
 
+=======
+>>>>>>> test
                 setDataSource([])
-                setRouteTab(valueCount[0]?.type)
-                // console.log(loadingDetail,1111111111)
-                // setSearchText(router.query.q);
-                // if (!router.query.q) {
+                // setRouteTab(valueCount[0]?.type)
                 setDataSource([])
-
+                // setRouteTab('Place')
                 setDataSourceLearn([])
                 setDataSourceCreBuilder([])
                 setDataSourceCreWear([])
@@ -2429,12 +2461,6 @@ console.log("????????????????????????????");
                 setEventSomList([])
                 setEventCvList([])
                 setSearchText(val);
-                // onSearchHandler(window.location.search, 1, pageSize, '', false)
-                // } else {
-                //   setSearchText('');
-                //   // onSearchHandler('', 1, pageSize, '', false)
-                //   // onSearchHandler(router.query.q, 1, pageSize, '',false)
-                // }
               }} ></Search>
             </div>
 
@@ -2443,7 +2469,8 @@ console.log("????????????????????????????");
             <div className={cn(style.tableList)}>
 
               <>
-                {valueCount.map((item) => {
+                {valueCount?.map((item) => {
+
 
                   return (
                     <Tab5
@@ -2455,7 +2482,6 @@ console.log("????????????????????????????");
                         changeTab3(item.label, item.type);
                       }}
                     />
-                    // <>{item}</>
                   );
                 })}
               </>

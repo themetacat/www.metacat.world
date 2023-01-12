@@ -18,11 +18,12 @@ type Props = {
   legend2?;
   limit?;
   textColor?;
+  HyperlinkJump?;
 };
 
 const keyTypes = ['ETH', 'MREI'];
 
-export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2, limit,textColor }: Props) {
+export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2, limit,textColor,HyperlinkJump }: Props) {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [dataSource, setDataSource] = React.useState(null);
@@ -275,7 +276,7 @@ export default function MiniLine({ id, labelText, dataHandlder, legend1, legend2
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle text={labelText}  color={textColor}></ChartTitle>
+        <ChartTitle Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
         <div className="flex items-center">{getLenged}</div>
       </div>
       {render}

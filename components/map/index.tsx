@@ -330,6 +330,7 @@ function Map({
             return {
               fill: true,
               fillColor: `rgba(101, 128, 134, 1)`,
+              // fillColor: `red`,
               weight: 1,
               fillOpacity: 1,
               color: '#444444',
@@ -341,6 +342,8 @@ function Map({
           if (islands[i]) {
             const all = islands[i];
             if (all.geometry) {
+              
+              
               const al = {
                 type: 'Feature',
                 geometry: all.geometry,
@@ -388,6 +391,7 @@ function Map({
           if (suburbs[i]) {
             const all = suburbs[i];
             if (all.geometry) {
+              console.log(all,all.geometry,222);
               const al = {
                 type: 'Feature',
                 geometry: all.position,
@@ -825,6 +829,8 @@ function Map({
 
   const zoomButtonClick = React.useCallback(
     (type) => {
+      // console.log(mapRef,mapRef.current);
+      
       if (mapRef.current) {
         if (type === 'zoomIn') {
           mapRef.current.zoomIn();
@@ -838,6 +844,7 @@ function Map({
 
   const getCanvas = React.useCallback(
     (text) => {
+      
       const canvas = document.createElement('canvas');
 
       const ctx = canvas.getContext('2d');
@@ -896,13 +903,14 @@ function Map({
   }, [fullScreen, fullScreenOnClick]);
 
   React.useEffect(() => {
-    const map = L.map('map', {
+    const map = L?.map('map', {
       preferCanvas: true,
       minZoom: minZoomLevel,
       maxZoom: maxZoomLevel,
       zoomControl: false,
       dragging,
     }).setView([0, 0], zoomLevel);
+    
     map.on('zoom', zoomChange);
     if (zoomControl) {
       legends.current = colors[getZoomChangeNumber(zoomLevel)];
@@ -953,7 +961,7 @@ function Map({
         }
 
         const canvas = getCanvas(feature.properties.name);
-        /* eslint no-underscore-dangle: 0 */
+        // eslint no-underscore-dangle: 0 
         const coord = feature.geometry.coordinates.reverse();
         const markerlayer = L.marker(
           { lat: coord[0], lng: coord[1] },
@@ -986,6 +994,7 @@ function Map({
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
             direction: 'top',
+            // permanent:true,
             className: style.leafletLabel,
           });
         }
@@ -997,7 +1006,7 @@ function Map({
       onEachFeature: (feature, layer) => {
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
-            direction: 'top',
+            direction: 'top', 
             className: style.leafletLabel,
           });
         }
@@ -1010,6 +1019,7 @@ function Map({
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
             direction: 'top',
+            // permanent:true,
             className: style.leafletLabel,
           });
         }
@@ -1032,6 +1042,7 @@ function Map({
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
             direction: 'top',
+            // permanent:true,
             className: style.leafletLabel,
           });
         }
@@ -1043,7 +1054,8 @@ function Map({
       onEachFeature: (feature, layer) => {
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
-            direction: 'top',
+            direction: 'center',
+            permanent:true,
             className: style.leafletLabel,
           });
         }
@@ -1056,6 +1068,7 @@ function Map({
         if (feature.properties.name && zoomControl) {
           layer.bindTooltip(feature.properties.name, {
             direction: 'top',
+            // permanent:true,
             className: style.leafletLabel,
           });
         }
@@ -1063,6 +1076,7 @@ function Map({
     });
 
     if (zoomControl) {
+      
       parcelsLayerThree.on('click', function (e) {
         if (e.sourceTarget && e.sourceTarget.feature) {
           const id = e.sourceTarget.feature.properties.parcel_id;
@@ -1130,6 +1144,7 @@ function Map({
       map.on('moveend', () => {
         if (updatePop.current.need) {
           updatePop.current.need = false;
+          // updatePop.current.need = true;
         }
       });
     }

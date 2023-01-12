@@ -54,8 +54,8 @@ export default function EventCard({
   }, []);
   const hasEntry = inTimeLine();
   return (
-    <div className={cn('p-5 flex', className, style.card)} onClick={jumpToDetail}>
-      <img
+    <div className={cn('p-5 flex ', className, style.card)} onClick={jumpToDetail}>
+     <img 
         className={cover_img_url ? style.cover2 : style.cover}
         src={cover_img_url || '/images/default.png'}
       />

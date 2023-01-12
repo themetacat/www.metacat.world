@@ -1,0 +1,140 @@
+.miniActive {
+  color: #000 !important;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  line-height: 22px;
+  // background: linear-gradient(90deg, #00dx0ec, #00ecb3);
+  // font-size: 30px;
+  // background-color: rgba(0, 236, 222, 0.05);
+  border-bottom: transparent;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid #00dcd5;
+}
+
+.miniNormal {
+  box-sizing: border-box;
+  width: auto;
+  margin-right: 0 !important;
+  padding: 9px 30px !important;
+  color: #aaa;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  line-height: 22px;
+  // background: hsla(0, 0%, 100%, 0.05);
+  &:hover {
+    color: #000;
+  }
+}
+
+.miniBase {
+
+  position: relative;
+  z-index: 1;
+  // min-width: 171px;
+  height: 100%;
+  padding: 9px 30px 9px 30px !important;
+  border-radius: 8px 8px 0 0;
+  &:hover {
+    width: auto;
+    color: #fff !important;
+    font-weight: 400;
+    text-align: center;
+    // background: linear-gradient(90deg, #00d0ec, #00ecb3);
+    cursor: pointer;
+  }
+}
+
+.miniActive:hover {
+  filter: brightness(125%);
+}
+.miniBase:active {
+  filter: brightness(75%);
+
+}
+
+.miniActive > .miniCanHover,
+.miniCanHover:hover {
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  line-height: 22px;
+}
+.miniActive > .miniCanHover > .miniTabIcon,
+.miniCanHover:hover > .miniTabIcon {
+  transform: scale(1);
+}
+
+.miniTabIcon {
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  // border-radius: 16px;
+
+
+    margin-right: 8px;
+    line-height: 30px;
+    border-radius: 50%;
+    border: 0.3px solid rgba(255, 255, 255, 0.3);
+}
+.miniCanHover {
+  font-weight: 400;
+  font-size: 16px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  line-height: 22px;
+  // color: #AAAAAA;
+}
+
+.active {
+  color: #000;
+  // font-size: 30px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+
+.normal {
+  color: #aaa;
+  font-size: 26px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+
+.base {
+  min-width: 300px;
+  padding: 0 30px;
+}
+
+.active > .canHover,
+.canHover:hover {
+  color: #000;
+  //transform: scale(1.1);
+  // font-size: 30px;
+  cursor: pointer;
+}
+.active > .canHover > .tabIcon,
+.canHover:hover > .tabIcon {
+  width: 44px;
+  height: 44px;
+}
+
+.tabIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+}
+// .lable{
+//   font-family: 'PingFang SC';
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 16px;
+//   line-height: 22px;
+// }
+// .lable:hover{
+//   color: #000;
+// }
