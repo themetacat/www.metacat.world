@@ -25,9 +25,10 @@ type Props = {
   textColor?;
   HyperlinkJump?;
   id?;
+  iconImgLight?;
 };
 
-export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJump, labelText, textColor }: Props) {
+export default function AnalyticsAverage({ iconImgLight,options,id, priceOptions,HyperlinkJump, labelText, textColor }: Props) {
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const [dataSource, setDataSource] = React.useState([]);
   const [arrdataSourceList, setArrDataSourceList] = React.useState(null);
@@ -160,6 +161,7 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
+        iconImgLight={iconImgLight}
           options={priceOptions}
           showArrow={true}
           onClick={changeStatic}
@@ -172,13 +174,13 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
     );
   }
     // return null;
-    , []);
+    , [iconImgLight]);
 
 
 
   return (
     <>
-      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
+      <ChartTitle      iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
       <table className={cn('w-full', style.tableHead)}  id={id}>
         <tbody>
           <div className={style.getSelect}>{getSelect}</div>
@@ -193,7 +195,7 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
                 setIndex(null);
               }}
             >
-              <div className={style.left}>World/sales（{priceShowType}）</div>
+              <div className={cn('',style.left)}>World/sales（{priceShowType}）</div>
             </th>
             <th
               className={cn(style.h2, style.bg, style.biaotou)}
@@ -207,7 +209,7 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
               {/* <div className={style.right}>{Object?.keys(arrdataSource).length === 0 ? null :
                 arrdataSource && Object?.keys(arrdataSource["Otherside"]?.time)[0]
               }</div> */}
-                <div className={style.right}>{arrdataSourceList?.length === 0 ? null :
+                <div className={cn('',style.right)}>{arrdataSourceList?.length === 0 ? null :
         arrdataSourceList &&retObjValue(arrdataSourceList.Otherside?.time,0,'keys')
               }</div>
             </th>
@@ -281,7 +283,7 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
                       setIndex(null);
                     }}
                   >
-                    <div className={cn(style.leftContext)}>
+                    <div className={cn(iconImgLight===true?style.fontStyle:style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                       return (<span>{o}</span>)
                     })} */}
@@ -305,7 +307,7 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
                     }}
 
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle: style.leftContext)}>
                       {/* ${Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
@@ -346,7 +348,7 @@ export default function AnalyticsAverage({ options,id, priceOptions,HyperlinkJum
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right,iconImgLight===true?style.fontStyle: style.leftContext)}>
                       {
                         priceShowType === 'ETH' ?
                           <>

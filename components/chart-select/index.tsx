@@ -19,11 +19,13 @@ interface Props {
   trigger?: (x: boolean) => void;
   useRef?: React.Ref<any>;
   cl?;
+  iconImgLight?;
 }
 
 export default function ChartSelecter({
   options,
   onClick,
+  iconImgLight,
   className,
   showArrow = false,
   defaultLabel = 'Daily',
@@ -96,7 +98,7 @@ export default function ChartSelecter({
       <div
         className={cn(
           'flex justify-center items-center',
-          style.selecter,
+          iconImgLight===true?style.selecter1: style.selecter,
           hasBorder ? style.border : '',
         )}
         onClick={changeShow}
