@@ -12,6 +12,8 @@ import { useWalletProvider } from '../web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal from 'web3modal';
 
+
+
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 import { req_user_logout } from '../../service/z_api';
 
@@ -162,11 +164,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const connect = React.useCallback(
-    async (addr, provider) => {
+    async (addr, providerCon) => {
       const nonceData = await requireNonce(addr);
       if (nonceData) {
         const { address: add, nonce } = nonceData;
-        provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
+        providerCon.request({ method: 'personal_sign', params: [nonce, add] }).then(
           async (signature) => {
             const result = await loginSignature(add, signature);
             checkLoginStatu(result);
@@ -522,8 +524,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       >
         {getText}
       </div>
-      <div style={{borderRadius:"6px"}}>
-      <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
+      <div style={{ borderRadius: "6px" }}>
+        <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
       </div>
     </div>
   );
