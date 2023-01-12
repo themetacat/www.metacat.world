@@ -20,6 +20,7 @@ import { req_sales_amount_percent } from '../../service/z_api';
 type Props = {
   active?: string;
   className?: string;
+  iconImgLight?:any;
 
 };
 // 首页 二级页
@@ -318,7 +319,7 @@ const analyticsData = [
 
 
 
-export default function PageHeader({ active, className }: Props) {
+export default function PageHeader({ active, className,iconImgLight }: Props) {
   const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
@@ -331,6 +332,12 @@ export default function PageHeader({ active, className }: Props) {
   const [showStateVal, setShowStateVal] = React.useState(null);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [offsetHeighthNum, setOffsetHeightNum] = React.useState(0);
+  const [darkLight, setDarkLight] = React.useState(false);
+  useEffect(()=>{
+    const darkBackColor = window.localStorage.getItem("darkLight")==="true";
+    
+    setDarkLight(darkBackColor)
+  },[darkLight])
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -370,7 +377,16 @@ export default function PageHeader({ active, className }: Props) {
   //   },
   //   []
   // );
-  
+  const btnDark = ()=>{
+    if(darkLight===false){window.localStorage.setItem("darkLight",'true')
+      setDarkLight(true)
+      iconImgLight(true)
+    }else{window.localStorage.setItem("darkLight", 'false')
+      setDarkLight(false)
+      iconImgLight(false)
+    }
+  }
+
   useEffect(() => {
 
 
@@ -435,7 +451,7 @@ export default function PageHeader({ active, className }: Props) {
           >
 
             <Link href={'/analytics'} prefetch>
-              <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,)}>Analytics</span>
+              <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,)} >Analytics</span>
 
             </Link>
 
@@ -698,7 +714,9 @@ export default function PageHeader({ active, className }: Props) {
           </div>
           : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>}
         {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
-
+        {
+            darkLight === true?<img  onClick={btnDark} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" />:<img  onClick={btnDark} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
+          }
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
         <Toaster
           toastOptions={{

@@ -22,9 +22,10 @@ type Props = {
   textColor?;
   HyperlinkJump?;
   id?;
+  iconImgLight?;
 };
 
-export default function AnalyticsAverage({ options,id,HyperlinkJump, labelText, textColor }: Props) {
+export default function AnalyticsAverage({ iconImgLight,options,id,HyperlinkJump, labelText, textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [arrdataSource, setArrDataSource] = React.useState(null);
   const [arrdataSourceList, setArrDataSourceList] = React.useState(null);
@@ -105,7 +106,7 @@ export default function AnalyticsAverage({ options,id,HyperlinkJump, labelText, 
 
   return (
     <>
-      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor} ></ChartTitle>
+      <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor} ></ChartTitle>
       <table className={cn('w-full', style.table)}  id={id}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
@@ -206,7 +207,7 @@ export default function AnalyticsAverage({ options,id,HyperlinkJump, labelText, 
                       setIndex(null);
                     }}
                   >
-                    <div className={cn(style.leftContext, style.font1)}>
+                    <div className={cn(iconImgLight===true?style.fontStyle:style.leftContext, style.font1)}>
                       {/* {formatNum(item.totalLandOwner, false)} */}
                       {/* {Object.keys(item).map((o) => {
                       return (<span>{o}</span>)
@@ -231,7 +232,7 @@ export default function AnalyticsAverage({ options,id,HyperlinkJump, labelText, 
                     }}
 
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right,iconImgLight===true?style.fontStyle: style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.07"]
                       })} */}
@@ -258,7 +259,7 @@ export default function AnalyticsAverage({ options,id,HyperlinkJump, labelText, 
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right,iconImgLight===true?style.fontStyle: style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         return item[o]["2022.08"]
                       })} */}
@@ -291,7 +292,7 @@ export default function AnalyticsAverage({ options,id,HyperlinkJump, labelText, 
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext,
+                    <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle:style.leftContext,
                     )}
                     >
                       {/* {Object.keys(item).map((o) => {

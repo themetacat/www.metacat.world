@@ -7,6 +7,15 @@
   position: relative;
   border-radius: 8px;
 }
+.container1{
+  width: 660px;
+  height: 417px;
+  margin-right: 20px;
+  padding: 20px;
+  background: #fff;
+  position: relative;
+  border-radius: 8px;
+}
 .header {
   height: 30px;
   margin-bottom: 30px;

@@ -19,9 +19,10 @@ type Props = {
   textColor?;
   HyperlinkJump?;
   id?;
+  iconImgLight?;
 };
 
-export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,textColor}: Props) {
+export default function AnalyticsInfo({ options, iconImgLight,id,labelText ,HyperlinkJump,textColor}: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [bgState, setBgState] = React.useState('');
   const [index, setIndex] = React.useState(null);
@@ -39,7 +40,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
 
   return (
     <>
-      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
+      <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom}  color={textColor}></ChartTitle>
       <table className={cn('w-full', style.table)} id={id}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
@@ -139,7 +140,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                     setIndex(null);
                   }}
                 >
-                  <div className={cn(style.left, style.font1)}>{item.name}</div>
+                  <div className={cn(style.left, iconImgLight===true?style.fontStyle: style.font1)}>{item.name}</div>
                 </th>
                 <th
                   className={cn(
@@ -157,7 +158,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end', style.right, style.font2)}>
+                  <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle: style.font2)}>
                     {formatNum(item.totalParcelSales?.value, false)}
                     <span className="ml-3">
                       {item.totalParcelSales?.value ? item.totalParcelSales.symbol : ''}
@@ -180,7 +181,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end', style.right, style.font3)}>
+                  <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle: style.font3)}>
                     {formatNum(item.numberOfParcelSales, false)}
                   </div>
                 </th>
@@ -200,7 +201,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end', style.right, style.font3)}>
+                  <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle: style.font3)}>
                     {formatNum(item.totalParcelSupply, false)}
                   </div>
                 </th>
@@ -220,7 +221,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end', style.right, style.font3)}>
+                  <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle: style.font3)}>
                     {formatNum(item.totalLandOwner, false)}
                   </div>
                 </th>
@@ -240,7 +241,7 @@ export default function AnalyticsInfo({ options, id,labelText ,HyperlinkJump,tex
                     setIndex(null);
                   }}
                 >
-                  <div className={cn('justify-end', style.right, style.font3)}>
+                  <div className={cn('justify-end', style.right,iconImgLight===true?style.fontStyle: style.font3)}>
                     {Math.round(item.total10Percent * 100)}%
                   </div>
                 </th>

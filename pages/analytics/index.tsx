@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -280,7 +280,12 @@ const hNav = [
   },
 ];
 
-export default function AnalyticsIndex(props) {
+type Props = {
+
+  iconImgLight?;
+};
+
+export default function AnalyticsIndex(props,iconImgLight:Props) {
 
 
   const meta = {
@@ -294,7 +299,14 @@ export default function AnalyticsIndex(props) {
   const [fixedStateAll, setFixedStateAll] = React.useState(false);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [tabPercent, setTabPercent] = React.useState(0);
+  const [darkLight, setDarkLight] = React.useState(false);
+  console.log(darkLight);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
+  useEffect(()=>{
+    const darkBackColor = window.localStorage.getItem("darkLight")==="true";
+    
+    setDarkLight(darkBackColor)
+  },[darkLight])
   const changeType = React.useCallback((newType) => {
     setShowType(newType);
 
@@ -1788,14 +1800,16 @@ export default function AnalyticsIndex(props) {
 
   const reander = React.useMemo(() => {
     if (headerNav === 'all') {
+     
       return (
         <>
-          <div className={cn('flex flex-col justify-center items-center', style.content)}>
+          <div className={cn('flex flex-col justify-center items-center', darkLight ===true?style.content1:style.content)}>
             <div
-              className={cn('w-full mt-7 p-5 relative flex flex-col justify-start items-center', style.list)}
+              className={cn('w-full mt-7 p-5 relative flex flex-col justify-start items-center', darkLight ===true?style.list1:style.list)}
             >
               <div className={style.topContainer} >
                 <Annular
+                iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount(USD) ')}
                   id="ParcelSalesAmount(USD)"
                   labelText={'Parcel Sales Amount (USD)'}
@@ -1848,6 +1862,7 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></Annular>
                 <Miniline
+                  iconImgLight={darkLight}
                   id="MREI"
                   HyperlinkJump={() => scrollToAnchor('MREI')}
                   labelText={'Metaverse Real Estate Index（MREI) vs. ETH Price'}
@@ -1857,8 +1872,9 @@ export default function AnalyticsIndex(props) {
                   legend2={{ label: 'ETH', color: [0, 208, 236] }}
                 ></Miniline>
               </div>
-              <div className={style.allLine2}>
+              <div className={cn('',darkLight===true?style.allLineLight:style.allLine2)}>
                 <Allline
+                  iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('AverageParcelPrice')}
                   id="AverageParcelPrice"
                   textColor={style.allColor}
@@ -1906,8 +1922,9 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></Allline>
               </div>
-              <div className={style.allLine}>
+              <div className={cn('',darkLight===true?style.allLineLight:style.allLine)}>
                 <AllPillar
+                 iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('ParcelSalesAmount')}
                   id="ParcelSalesAmount"
                   textColor={style.allColor}
@@ -1955,8 +1972,9 @@ export default function AnalyticsIndex(props) {
                   ]}
                 ></AllPillar>
               </div>
-              <div className={style.allLine1}>
+              <div className={cn('',darkLight===true?style.allLineLight:style.allLine1)}>
                 <AllPillar2
+                        iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('NumberofParcelSales')}
                   id="NumberofParcelSales"
                   textColor={style.allColor}
@@ -1995,8 +2013,9 @@ export default function AnalyticsIndex(props) {
                 ></AllPillar2>
               </div>
               {/* <a onClick={() => scrollToAnchor('FloorPrice')} > */}
-              <div className={style.allLine3}>
+              <div className={cn('',darkLight===true?style.allLineLight:style.allLine3)}>
                 <AlllineData
+                   iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('FloorPrice')}
                   id="FloorPrice"
                   labelText="Floor Price"
@@ -2025,9 +2044,10 @@ export default function AnalyticsIndex(props) {
                 ></AlllineData>
               </div>
               {/* </a> */}
-              <div className={cn('w-full h-auto mt-7', style.table)}>
-                <div className={style.tabContainer}>
+              <div className={cn('',style.table)}>
+                <div className={cn('',darkLight===true?style.allLineLight:style.tabContainer)}>
                   <AnalyticsInfo
+                   iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('ComprehensiveData')}
                     options={types}
                     id="ComprehensiveData"
@@ -2036,13 +2056,14 @@ export default function AnalyticsIndex(props) {
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.table)}>
-                <div className={style.tabContainer1}>
-                  <AnalyticsInfoSale HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
+                   <div className={cn('',darkLight===true?style.allLineLight1:style.tabContainer1)}>
+                  <AnalyticsInfoSale  iconImgLight={darkLight}  HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.tableBox)}>
-                <div className={style.tabContainer2}>
+              <div className={cn('',darkLight===true?style.allLineLight1:style.tabContainer2)}>
                   <AnalyticsAverage
+                  iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('AverageParcelPriceM2M')}
                     options={types} id="AverageParcelPriceM2M" labelText={'Average Parcel Price'} textColor={style.allColor}
                     priceOptions={[
@@ -2057,14 +2078,17 @@ export default function AnalyticsIndex(props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={style.tabContainer3} style={{ marginLeft: "20px" }}>
+                <div className={cn('',darkLight===true?style.allLineLight:style.tabContainer3)}style={{ marginLeft: "20px" }}>
                   <AnalyticsInfoNum
+                  iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('NumberofParcelSalesM2M')}
                     options={types} id='NumberofParcelSalesM2M' labelText={'Number of Parcel Sales'} textColor={style.allColor}></AnalyticsInfoNum>
                 </div>
               </div>
 
-              <div className={style.allLineb}><AllPillarNum
+              <div className={cn('',darkLight===true?style.allLineLight:style.allLineb)}>
+                <AllPillarNum
+               iconImgLight={darkLight}
                 HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
                 id="ParcelRentAmount"
                 textColor={style.allColor}
@@ -2114,8 +2138,9 @@ export default function AnalyticsIndex(props) {
                 ]}
               ></AllPillarNum>
               </div>
-              <div className={style.allLinen}>
+              <div className={cn('',darkLight===true?style.allLineLight:style.allLinen)}>
                 <AllPillarNum2
+                    iconImgLight={darkLight}
                   id="NumberOfParcelRent"
                   HyperlinkJump={() => scrollToAnchor('NumberOfParcelRent')}
                   textColor={style.allColor}
@@ -2199,7 +2224,7 @@ export default function AnalyticsIndex(props) {
                 <img className={style.icon} src="/images/tab-right.png"></img>
               </div> */}
           </div>
-          <div className={cn('flex flex-col justify-center items-center', style.content)}>
+          <div className={cn('flex flex-col justify-center items-center', darkLight===true?style.content1:style.content)}>
             <div
               className={cn(
                 'w-full mt-7 p-5 flex flex-col justify-start items-center',
@@ -2214,7 +2239,7 @@ export default function AnalyticsIndex(props) {
         </>
       );
     }
-  }, [headerNav, changeType, renderChartList, fixedState]);
+  }, [headerNav, changeType, renderChartList,darkLight,darkLight, fixedState]);
 
 
   // const Top = React.useCallback(() => {
@@ -2397,7 +2422,7 @@ export default function AnalyticsIndex(props) {
   return (
     <Page className={cn('min-h-screen', offsetWidthNum <= 1200 ? style.anPage1 : style.anPage,)} meta={meta}>
       <div className={cn('myClassName', fixedStateAll === true ? style.a : null)} ref={headerRef}>
-        <PageHeader active={'analytics'} />
+        <PageHeader active={'analytics'} iconImgLight={setDarkLight}/>
       </div>
 
       <div className="bg-black relative">
@@ -2408,7 +2433,20 @@ export default function AnalyticsIndex(props) {
             style.signBack,
           )}
         >
-          <img src="/images/analyticsBack.png" className={style.sign}></img>
+          {/* <img src="/images/analyticsBack.png" className={style.sign}></img> */}
+          <div className={style.imgContanier}>
+            <div className={cn('',darkLight===true?style.title1:style.title)}>Metaverse Analytics</div>
+            <div className={style.text}>
+              <div className={style.hengxian}></div>
+              <div className={cn('',darkLight===true?style.t1:style.t)}>
+                <p>These analytics only represent analysis of the parcel data of t he main metaverse </p>
+                <p>platforms, and does not include tokens or other assets.</p>
+                </div>
+              <div className={style.t}></div>
+              {/* <div className={style.t}>In Metaverse we Creator</div> */}
+              <div className={style.hengxian}></div>
+            </div>
+          </div>
         </div>
         <div className={cn('', style.headerNav,
 
@@ -2431,7 +2469,7 @@ export default function AnalyticsIndex(props) {
             })}
           </div>
         </div>
-        <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0"></AnimationBack>
+        <AnimationBack id="smoke" className="absolute w-full h-full top-0 left-0" iconImgLight={darkLight}></AnimationBack>
       </div>
       {reander}
       {/* <div className={style.container}>{reander}</div>  */}

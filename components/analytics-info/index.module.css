@@ -103,4 +103,12 @@
   font-size: 14px;
   font-family: PingFang SC;
   line-height: 16.8px;
+  color:#fff ;
+}
+.fontStyle {
+  color: #000;
+  font-style: normal;
+  font-size: 14px;
+  font-family: PingFang SC;
+  line-height: 16.8px;
 }

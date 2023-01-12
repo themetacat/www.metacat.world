@@ -5,6 +5,19 @@
   background: #000;
   border-radius: 8px;
 }
+.container1{
+  width: 660px;
+  height: 417px;
+  padding: 20px;
+  background: #fafbfc;
+  border-radius: 8px;
+}
+.getLenged1{
+  color: #000;
+}
+.getLenged{
+  color: #fff;
+}
 .header {
   height: 30px;
   margin-bottom: 30px;
