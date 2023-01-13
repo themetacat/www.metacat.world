@@ -20,7 +20,7 @@ export default function Footer(iconImgLight:Props) {
             <img className="mr-4" src="/images/icon.png" alt="logo" />
           </div>
           <section className="flex flex-col	h-full">
-            <span className="sm:text-xl text-base font-semibold">Powered by MetaCat</span>
+            <span className={cn("sm:text-xl text-base font-semibold",iconImgLight.iconImgLight===true?style.p1:style.p2)}>Powered by MetaCat</span>
           </section>
         </div>
 
