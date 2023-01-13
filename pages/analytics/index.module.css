@@ -318,7 +318,14 @@
 .allLineLight {
   width: 1340px;
   height: 519px;
-  background: #fff;
+  background: #fafbfc;
+  border-radius: 8px;
+}
+
+.allLineLight1 {
+  width: 1340px;
+  margin-bottom: 30px;
+  background: #fafbfc;
   border-radius: 8px;
 }
 
