@@ -2190,7 +2190,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 }
               </div>
               {/* <a onClick={() => scrollToAnchor('FloorPrice')} > */}
-              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine3)}>
+              <div className={cn('', darkLight === true ? style.allLineLight1 : style.allLine3)}>
                 {darkLight === true ? <AlllineData
                   iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('FloorPrice')}
@@ -2249,7 +2249,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   ></AlllineData1>}
               </div>
               {/* </a> */}
-              <div className={cn('', style.table)}>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.table)}>
                 <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer)}>
                   <AnalyticsInfo
                     iconImgLight={darkLight}
@@ -2260,13 +2260,13 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     textColor={style.allColor}></AnalyticsInfo>
                 </div>
               </div>
-              <div className={cn('w-full h-auto mt-7', style.table)}>
-                <div className={cn('', darkLight === true ? style.allLineLight1 : style.tabContainer1)}>
+              <div className={cn('', darkLight === true ? style.allLineLight1 : style.table)}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer1)}>
                   <AnalyticsInfoSale iconImgLight={darkLight} HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto mt-7', style.tableBox)}>
-                <div className={cn('', darkLight === true ? style.allLineLight1 : style.tabContainer2)}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)}>
                   <AnalyticsAverage
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('AverageParcelPriceM2M')}
@@ -2778,7 +2778,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       </div>
       {reander}
       {/* <div className={style.container}>{reander}</div>  */}
-      <Footer />
+      <Footer    iconImgLight={darkLight}/>
     </Page>
   );
 }
