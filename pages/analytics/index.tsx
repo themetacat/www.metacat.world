@@ -2260,7 +2260,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     textColor={style.allColor}></AnalyticsInfo>
                 </div>
               </div>
-              <div className={cn('', darkLight === true ? style.allLineLight1 : style.table)}>
+              <div className={cn(' mt-7', darkLight === true ? style.allLineLight1 : style.table)}>
                 <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer1)}>
                   <AnalyticsInfoSale iconImgLight={darkLight} HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
