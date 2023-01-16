@@ -1919,7 +1919,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       textColor={style.allColor}
                       labelText="Average Parcel Price"
                       dataHandlder={req_avg_parcel_price}
-                      legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                      legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                       legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                       legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -2019,7 +2019,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     textColor={style.allColor}
                     labelText="Parcel Sales Amount"
                     dataHandlder={req_sales_amount_stack}
-                    legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                     legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                     legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -2118,7 +2118,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     textColor={style.allColor}
                     labelText="Number of Parcel Sales"
                     dataHandlder={req_all_number_sales}
-                    legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                     legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                     legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -2198,7 +2198,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   labelText="Floor Price"
                   textColor={style.allColor}
                   dataHandlder={req_avg_creater_price}
-                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                   legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                   legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -2250,7 +2250,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               </div>
               {/* </a> */}
               <div className={cn('', darkLight === true ? style.allLineLight : style.table)}>
-                <div className={cn('', )}>
+                <div className={cn('',)}>
                   <AnalyticsInfo
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('ComprehensiveData')}
@@ -2261,12 +2261,12 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 </div>
               </div>
               <div className={cn(' mt-7', darkLight === true ? style.allLineLight1 : style.table)}>
-                <div className={cn('', )}>
+                <div className={cn('',)}>
                   <AnalyticsInfoSale iconImgLight={darkLight} HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto ', style.tableBox)}>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)} style={{marginBottom:"0px" ,marginTop:"0px"}}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)} style={{ marginBottom: "0px", marginTop: "0px" }}>
                   <AnalyticsAverage
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('AverageParcelPriceM2M')}
@@ -2283,7 +2283,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px",marginBottom:"0px",marginTop:"0px" }}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px", marginBottom: "0px", marginTop: "0px" }}>
                   <AnalyticsInfoNum
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('NumberofParcelSalesM2M')}
@@ -2291,7 +2291,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 </div>
               </div>
 
-              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom:"0px" }}>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom: "0px" }}>
                 {darkLight === true ? <AllPillarNum
                   iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
@@ -2395,7 +2395,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 }
               </div>
               <div className={cn('', darkLight === true ? style.allLineLight : style.allLinen)}
-              style={{ marginBottom:"0px" }}>
+                style={{ marginBottom: "0px" }}>
                 {darkLight === true ? <AllPillarNum2
                   iconImgLight={darkLight}
                   id="NumberOfParcelRent"
@@ -2779,7 +2779,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       </div>
       {reander}
       {/* <div className={style.container}>{reander}</div>  */}
-      <Footer    iconImgLight={darkLight}/>
+      <Footer iconImgLight={darkLight} />
     </Page>
   );
 }
