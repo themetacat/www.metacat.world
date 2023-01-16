@@ -21,9 +21,10 @@ type Props = {
   textColor?;
   HyperlinkJump?;
   id?;
+  iconImgLight?;
 };
 
-export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump,textColor }: Props) {
+export default function AnalyticsInfoSale({ iconImgLight,options,id, labelText, HyperlinkJump,textColor }: Props) {
   const [dataSource, setDataSource] = React.useState([]);
   const [arrdataSource, setArrDataSource] = React.useState([] || {});
   const [totaldataSource, setTotalDataSource] = React.useState([]);
@@ -94,8 +95,8 @@ export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump
 
   return (
     <>
-      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
-      <table className={cn('w-full', style.table)}  id={id}>
+      <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} className={style.tobottom} color={textColor}></ChartTitle>
+      <table className={cn('w-full ', style.table)}  id={id}>
         <tbody>
           <tr className={cn('text-base font-normal', style.title)}>
             <th
@@ -195,7 +196,7 @@ export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump
                       setIndex(null);
                     }}
                   >
-                    <div className={cn(style.leftContext, style.font1)}>
+                    <div className={cn( iconImgLight===true?style.fontStyle:  style.leftContext,)}>
                       {<span>{item}</span>}
                     </div>
                   </th>
@@ -215,7 +216,7 @@ export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle:  style.leftContext)}>
                       {/* ${Object.values(arrdataSource[item].time)[0]} */}
                       ${formatNum(Object.values(arrdataSource[item].time)[0] as number, false)}
                     </div>
@@ -236,7 +237,7 @@ export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right,iconImgLight===true?style.fontStyle:  style.leftContext)}>
                       {/* $ {Object.values(arrdataSource[item].time)[1]} */}
                       ${formatNum(Object.values(arrdataSource[item].time)[1] as number, false)}
                     </div>
@@ -262,7 +263,7 @@ export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.leftContext)}>
+                    <div className={cn('justify-end', style.right,iconImgLight===true?style.fontStyle:  style.leftContext)}>
                       {/* {Object.keys(item).map((o) => {
                         console.log(o,item,11111111111111);
                         return (item[o].percent * 100)
@@ -287,7 +288,7 @@ export default function AnalyticsInfoSale({ options,id, labelText, HyperlinkJump
                       setIndex(null);
                     }}
                   >
-                    <div className={cn('justify-end', style.right, style.font3)}>
+                    <div className={cn('justify-end', style.right, iconImgLight===true?style.fontStyle: style.font3)}>
                       {/* {Object.keys(item).map((o) => {
                         return item[o].total * 100
 

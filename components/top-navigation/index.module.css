@@ -171,6 +171,20 @@ overflow-y: scroll;
   background-color: #0f191b;
   border-radius: 4px;
 }
+.iconImg{
+  width:20px;
+  height:20px;
+  position: absolute;
+  right:165px;
+  top: 20px;
+}
+.iconImgSun{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 165px;
+  top: 20px;
+}
 .head{
   z-index: 999999;
   flex-grow: 1;

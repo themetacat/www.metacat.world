@@ -26,6 +26,7 @@ type Props = {
   legend7?;
   legend8?;
   priceOptions?;
+  iconImgLight?;
   limit?: number;
   textColor?;
   HyperlinkJump?: (x) => void;
@@ -59,7 +60,7 @@ const showKeyTypes = [
   'Netvrk',
 ];
 
-export default function AllLineData({
+export default function AllLineData1({
   id,
   labelText,
   dataHandlder,
@@ -75,6 +76,7 @@ export default function AllLineData({
   legend8,
   priceOptions,
   limit,
+  iconImgLight,
   textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
@@ -320,7 +322,7 @@ export default function AllLineData({
               return {
                 lineDash: [5, 5],
                 lineWidth: 1,
-                stroke: 'rgba(255, 255, 255, 0.15)',
+                stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
               };
             },
           },
@@ -339,13 +341,13 @@ export default function AllLineData({
               return {
                 lineDash: [5, 5],
                 lineWidth: 1,
-                stroke: 'rgba(255, 255, 255, 0.15)',
+                stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
               };
             },
           },
         },
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           // offset: 25,
           offsetX: 25,
           offsetY: 0,
@@ -492,7 +494,7 @@ export default function AllLineData({
         attachLast:true,
         itemName: {
           style: {
-            fill: '#fff',
+            fill:  iconImgLight===true?'#000':'#fff'
           }
         },
         // values:['Otherside']
@@ -571,6 +573,7 @@ export default function AllLineData({
         style={{ color: 'rgba(0, 236, 222, 0.05)' }}
       >
         <ChartSelecter
+        iconImgLight={iconImgLight}
           options={options}
           showArrow={false}
           onClick={changeStatic}
@@ -581,6 +584,7 @@ export default function AllLineData({
         ></ChartSelecter>
         <span style={{ color: '#505c4e' }}> 丨</span>
         <ChartSelecter
+         iconImgLight={iconImgLight}
           options={priceOptions}
           showArrow={false}
           onClick={changePriceStatic}
@@ -673,14 +677,14 @@ export default function AllLineData({
         chart.current.destroy();
       }
     };
-  }, [requestData]);
+  }, [requestData,iconImgLight]);
 
 
 
   return (
     <div className={style.container}>
       {/* <div className={cn('w-full flex justify-between item-center', style.header)}> */}
-        <ChartTitle className={style.cheartitle} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
+        <ChartTitle  iconImgLight={iconImgLight} className={style.cheartitle} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
         {/* <div className={cn('flex items-center', style.toright)} >{getLenged}</div> */}
         <div className={cn('flex items-center',style.getSelect)}>{getSelect}</div>
       {/* </div> */}

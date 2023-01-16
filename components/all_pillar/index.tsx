@@ -26,6 +26,7 @@ type Props = {
   priceOptions?;
   limit?: number;
   textColor?;
+  iconImgLight?;
   HyperlinkJump?;
 };
 /**
@@ -73,6 +74,7 @@ export default function AllPillar({
   priceOptions,
   HyperlinkJump,
   limit,
+  iconImgLight,
   textColor,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
@@ -307,7 +309,7 @@ ${showKeyTypes[6]}:
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
+                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -326,11 +328,11 @@ ${showKeyTypes[6]}:
         line: {
           style: {
             lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, .15)',
+            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
           rotate: showType === 'yearly' ? 0 : 1,
@@ -448,7 +450,7 @@ ${showKeyTypes[6]}:
         });
       chart.current.render();
     },
-    [showType, priceShowType],
+    [showType, priceShowType,iconImgLight],
   );
 
   const requestData = React.useCallback(async () => {
@@ -501,6 +503,7 @@ ${showKeyTypes[6]}:
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
+        iconImgLight={iconImgLight}
           options={options}
           showArrow={true}
           onClick={changeStatic}
@@ -511,6 +514,7 @@ ${showKeyTypes[6]}:
         ></ChartSelecter>
         丨
         <ChartSelecter
+           iconImgLight={iconImgLight}
           options={priceOptions}
           showArrow={true}
           onClick={changePriceStatic}
@@ -529,41 +533,49 @@ ${showKeyTypes[6]}:
       <>
 
         <IconLabel
+        iconImgLight={iconImgLight}
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+            iconImgLight={iconImgLight}
           text={legend2.label}
           color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+            iconImgLight={iconImgLight}
           text={legend3.label}
           color={`rgb(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+            iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+          iconImgLight={iconImgLight}
           text={legend5.label}
           color={`rgb(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+            iconImgLight={iconImgLight}
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+            iconImgLight={iconImgLight}
           text={legend7.label}
           color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+            iconImgLight={iconImgLight}
           text={legend8.label}
           color={`rgb(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]})`}
           className="mr-5"
@@ -602,7 +614,7 @@ ${showKeyTypes[6]}:
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle  Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
+        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>
