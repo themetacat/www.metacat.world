@@ -325,7 +325,6 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [tabPercent, setTabPercent] = React.useState(0);
   const [darkLight, setDarkLight] = React.useState(false);
-  console.log(darkLight);
   const [headerNav, setHeaderNav] = React.useState(props.query.type ? hNav[1].type : hNav[0].type);
   useEffect(() => {
     const darkBackColor = window.localStorage.getItem("darkLight") === "true";
