@@ -213,8 +213,8 @@ export default function MiniLine({ id, labelText, dataHandlder, iconImgLight,leg
   );
   const initChart1 = React.useCallback(
     (data) => {
-      const d1 = data[keyTypes[0]].map((item) => ({ ...item, name: 'ETH' }));
-      const d2 = data.MetaIndex.map((item) => ({ ...item, name: 'MREI' }));
+      const d1 = data[keyTypes[0]]?.map((item) => ({ ...item, name: 'ETH' }));
+      const d2 = data.MetaIndex?.map((item) => ({ ...item, name: 'MREI' }));
       const dom = document.getElementById(id);
       if (!dom) {
         return;

@@ -322,6 +322,17 @@
   height: 519px;
   background: #fafbfc;
   border-radius: 8px;
+  /* margin-bottom: 30px; */
+  margin-top: 30px;
+  padding: 20px;
+}
+.allLineLight3 {
+  width: 1340px;
+  height: 519px;
+  background: #fafbfc;
+  border-radius: 8px;
+  margin-top: 30px;
+  padding: 20px;
 }
 
 .allLineLight1 {
@@ -329,6 +340,7 @@
   margin-bottom: 30px;
   background: #fafbfc;
   border-radius: 8px;
+  padding: 20px;
 }
 
 .allLine3 {
