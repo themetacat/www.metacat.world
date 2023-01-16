@@ -1909,7 +1909,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       legend2={{ label: 'ETH', color: [0, 208, 236] }}
                     ></Miniline1>}
               </div>
-              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine2)}>
+              <div className={cn('', darkLight === true ? style.allLineLight3 : style.allLine2)}>
                 {
                   darkLight === true ?
                     <Allline
@@ -2190,7 +2190,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 }
               </div>
               {/* <a onClick={() => scrollToAnchor('FloorPrice')} > */}
-              <div className={cn('', darkLight === true ? style.allLineLight1 : style.allLine3)}>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLine3)}>
                 {darkLight === true ? <AlllineData
                   iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('FloorPrice')}
@@ -2250,7 +2250,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               </div>
               {/* </a> */}
               <div className={cn('', darkLight === true ? style.allLineLight : style.table)}>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer)}>
+                <div className={cn('', )}>
                   <AnalyticsInfo
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('ComprehensiveData')}
@@ -2261,12 +2261,12 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 </div>
               </div>
               <div className={cn(' mt-7', darkLight === true ? style.allLineLight1 : style.table)}>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer1)}>
+                <div className={cn('', )}>
                   <AnalyticsInfoSale iconImgLight={darkLight} HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
-              <div className={cn('w-full h-auto mt-7', style.tableBox)}>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)}>
+              <div className={cn('w-full h-auto ', style.tableBox)}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)} style={{marginBottom:"0px" ,marginTop:"0px"}}>
                   <AnalyticsAverage
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('AverageParcelPriceM2M')}
@@ -2283,7 +2283,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px" }}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px",marginBottom:"0px",marginTop:"0px" }}>
                   <AnalyticsInfoNum
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('NumberofParcelSalesM2M')}
@@ -2291,7 +2291,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 </div>
               </div>
 
-              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)}>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom:"0px" }}>
                 {darkLight === true ? <AllPillarNum
                   iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
@@ -2394,7 +2394,8 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   ></AllPillarNum1>
                 }
               </div>
-              <div className={cn('', darkLight === true ? style.allLineLight : style.allLinen)}>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLinen)}
+              style={{ marginBottom:"0px" }}>
                 {darkLight === true ? <AllPillarNum2
                   iconImgLight={darkLight}
                   id="NumberOfParcelRent"
