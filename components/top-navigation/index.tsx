@@ -436,7 +436,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
         </div> */}
           <div
             className={cn(
-              'text-xl flex text-gray-400 relative   active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex text-gray-400 relative cursor-pointer pointer-events-auto',
               active === 'analytics' ? style.active : null,
               // analyticState === true ? style.active : null,
               style.z, style.nameCon, style.rightCon,
@@ -452,16 +452,14 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           >
 
             <Link href={'/analytics'} prefetch>
-              <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,  darkLight===true?style.rightConHover:null)} >Analytics</span>
+              <span className={cn('', analyticState === true  &&darkLight===true? style.active1 : null, active === 'analytics' &&darkLight===true? style.active1 : null,  darkLight===true?style.rightConHover:null)} >Analytics</span>
 
             </Link>
 
-            {
-              analyticState === false? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
-            }
-            {
-              analyticState === true? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+           <img  src={analyticState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            {/* {
+              analyticState === true? <img src= style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
+            } */}
 
             {analyticState ? (
               <TwoNav
@@ -487,15 +485,16 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             }}
           >
             <Link href={'/heatmap?type=cryptovoxels'} prefetch>
-              <span className={cn('', heatmapState === true ? style.active : null, active === 'heatmap' ? style.active : null, darkLight===true?style.rightConHover:null)}>Heatmap</span>
+              <span className={cn('', heatmapState === true  &&darkLight===true? style.active1 : null, active === 'heatmap' &&darkLight===true? style.active1 : null, darkLight===true?style.rightConHover:null)}>Heatmap</span>
 
             </Link>
-            {
-              heatmapState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            <img  src={heatmapState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            {/* {
+              heatmapState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               heatmapState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
             {heatmapState ? (
               <TwoNav options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
             ) : null}
@@ -516,15 +515,15 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           // onClick={placeDataSet}
           >
             <Link href="/parcels?tab=cryptovoxels" prefetch>
-              <span className={cn('', ParcelsState === true ? style.active : null, active === '/parcels' ? style.active : null, darkLight===true?style.rightConHover:null)}>Place</span>
+              <span className={cn('', ParcelsState === true  &&darkLight===true? style.active1 : null, active === '/parcels' &&darkLight===true? style.active1 : null, darkLight===true?style.rightConHover:null)}>Place</span>
             </Link>
-
-            {
-              ParcelsState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            <img  src={ParcelsState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            {/* {
+              ParcelsState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               ParcelsState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {ParcelsState ? (
               // <TwoNav
@@ -555,15 +554,16 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           // onClick={placeDataSet}  
           >
             <Link href="/event?tab=cryptovoxels" prefetch>
-              <span className={cn('', EventState === true ? style.active : null, active === '/event' ? style.active : null, darkLight===true?style.rightConHover:null)}>Event</span>
+              <span className={cn('', EventState === true  &&darkLight===true? style.active1 : null, active === '/event' &&darkLight===true? style.active1 : null, darkLight===true?style.rightConHover:null)}>Event</span>
             </Link>
+            <img  src={EventState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
 
-            {
-              EventState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            {/* {
+              EventState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               EventState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {EventState ? (
               // <TwoNav
@@ -596,15 +596,15 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             }}
           >
             <Link href='/creation/builders' prefetch>
-              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null, darkLight===true?style.rightConHover:null)}>Creation</span>
+              <span className={cn('', buildState === true  &&darkLight===true? style.active1 : null,active === 'Build' &&darkLight===true? style.active1 : null,darkLight===true?style.rightConHover:null)}>Creation</span>
             </Link>
-
-            {
-              buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            <img  src={buildState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            {/* {
+              buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               buildState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {buildState ? (
               <TwoNavigation
@@ -660,16 +660,16 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             }}
           >
             <Link href={'/learn?type=articles'} prefetch>
-              <span className={cn('', active === 'learn' ? style.active : null,darkLight===true?style.rightConHover:null)}>Learn</span>
+              <span className={cn('',learnState===true &&darkLight===true? style.active1 : null, active === 'learn' &&darkLight===true? style.active1 : null,darkLight===true?style.rightConHover:null)}>Learn</span>
             </Link>
 
-
-            {
+            <img  src={learnState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px",marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            {/* {
               learnState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
             }
             {
               learnState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {learnState ? (
               <TwoNavigation

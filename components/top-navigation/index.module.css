@@ -7,6 +7,9 @@
 .active {
   color: #fff;
 }
+.active1 {
+  color: #000;
+}
 .old {
   color: #fff;
 }
@@ -241,7 +244,10 @@ overflow-y: scroll;
 }
 .rightConHover{
   /* margin-right: 41.67px; */
-  color: #ccc;
+  /* color: #ccc; */
+}
+.rightConHover:active{
+  color: #000 !important; 
 }
 .rightConHover:hover{
   /* margin-right: 41.67px; */
