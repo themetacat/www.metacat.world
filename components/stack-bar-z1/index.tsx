@@ -43,7 +43,7 @@ type Props = {
   iconImgLight?;
 };
 
-export default function StackBar({
+export default function StackBar1({
   id,
   dataHandler,
   legend1 = { label: 'Primary', color: [95, 213, 236] },

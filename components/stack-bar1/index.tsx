@@ -36,18 +36,15 @@ type Props = {
   limit?: number;
   barWidth?: number;
   keyTypes?: Array<string>;
-  token?: string;
-  tabState?: string;
-  optionsPrice?: Array<optionItem>;
   textColor?;
   iconImgLight?;
 };
 
-export default function StackBar({
+export default function StackBar1({
   id,
   dataHandler,
-  legend1 = { label: 'Primary', color: [95, 213, 236] },
-  legend2 = { label: 'Secondary', color: [255, 207, 95] },
+  legend1 = { label: 'Primary', color: [255, 224, 206] },
+  legend2 = { label: 'Secondary', color: [172, 174, 242] },
   gradient = true,
   className,
   options,
@@ -58,14 +55,9 @@ export default function StackBar({
   limit,
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
-  token,
-  tabState,
-  optionsPrice,
   textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
-  const [priceType, setPriceType] = React.useState(optionsPrice[0].value);
-  const [tab_state, set_tab_state] = React.useState(tabState);
   const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -73,32 +65,24 @@ export default function StackBar({
   const chart = React.useRef(null);
 
   const transfromData = React.useCallback(
-    (data, type, priceT) => {
+    (data, type) => {
       const result = [];
-      if (limit) {
+      if (limit && data.length > limit) {
         const l = data.length;
         const d = l - limit * 2;
-        let last = [];
-        if (type === 'quarterly') {
-          last = data.slice(d);
-        } else {
-          last = data.slice(limit);
-        }
+        const last = data.slice(d);
         last.forEach((element) => {
           result.push({
             ...element,
             staticT: type,
-            priceStaticT: priceT,
           });
         });
         return result;
       }
-
       data.forEach((element) => {
         result.push({
           ...element,
           staticT: type,
-          priceStaticT: priceT,
         });
       });
       return result;
@@ -107,7 +91,7 @@ export default function StackBar({
   );
 
   const initChart = React.useCallback(
-    (data, t1, t2) => {
+    (data) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -117,21 +101,8 @@ export default function StackBar({
         autoFit: true,
         height: 210,
       });
-      if (data) {
-        if (t1 !== t2) {
-          chart.current.data(
-            transfromData(
-              data[options[0].value].data[optionsPrice[0].value],
-              options[0].value,
-              optionsPrice[0].value,
-            ),
-          );
-        } else {
-          chart.current.data(
-            transfromData(data[staticType].data[priceType], staticType, priceType),
-          );
-        }
-      }
+      const tempData = transfromData(data[staticType].data, staticType);
+      chart.current.data(tempData);
       // 设置弹窗
       chart.current.tooltip({
         shared: true,
@@ -153,16 +124,23 @@ export default function StackBar({
           items.forEach((item) => {
             listItem += `
           <li class="g2-tooltip-list-item" data-index={index}>
-            
+            <span class="g2-tooltip-name">${item.type}</span>
+            :
+            <span class="g2-tooltip-value" style="color:${item.color}">
+              <span>${formatNum(item.value)}</span>
+              <span ${isEth ? 'style="margin-left:5px"' : ''}>${
+              isEth ? item.staticT.toLocaleUpperCase() : ''
+            }</span>
+            </span>
           </li>`;
             sum += item.value * 1000;
-            type = item.data.priceStaticT;
+            type = item.staticT;
           });
           const staticItem = `<div style="color:#fff;"><span style="color:#fff; font-size: 20px; font-weight:700">${formatNum(
             sum / 1000,
           )}</span><span ${isEth ? 'style="margin-left:5px"' : ''}>${
             isEth ? type.toLocaleUpperCase() : ''
-          }</span><span style="margin-left:5px"></span></div>`;
+          }</span><span style="margin-left:5px">Total</span></div>`;
           container.innerHTML = title + staticItem + listItem;
           return container;
         },
@@ -290,7 +268,7 @@ export default function StackBar({
         chart.current.render();
       }
     },
-    [staticType, limit, id, options, priceType],
+    [staticType, limit, id, options],
   );
 
   const requestData = React.useCallback(async () => {
@@ -305,7 +283,7 @@ export default function StackBar({
     }
     setLoading(false);
     if (result) {
-      initChart(result, tabState, tab_state);
+      initChart(result);
     }
     return result;
   }, [dataHandler]);
@@ -314,59 +292,25 @@ export default function StackBar({
     requestData();
   }, [requestData]);
 
-  // const updateData = React.useCallback(
-  //   (staticT) => {
-  //     if (chart.current && dataSource) {
-  //       chart.current.changeData(transfromData(dataSource[staticT].data, staticT));
-  //     }
-  //   },
-  //   [dataSource, staticType, limit],
-  // );
-  const updateData = React.useCallback(
-    (staticT, priceT) => {
-      if (chart.current && dataSource) {
-        chart.current.changeData(transfromData(dataSource[staticT].data[priceT], staticT, priceT));
-      }
-    },
-    [dataSource, staticType, priceType, limit],
-  );
-
-  const changeStatic = React.useCallback(
-    (val) => {
-      setStaticType(val);
-      if (chart.current && dataSource) {
-        updateData(val, priceType);
-      }
-    },
-    [dataSource, limit, priceType, updateData],
-  );
-
-  const changePriceStatic = React.useCallback(
-    (val) => {
-      setPriceType(val);
-      if (chart.current && dataSource) {
-        updateData(staticType, val);
-      }
-    },
-    [dataSource, staticType, limit, updateData],
-  );
-
-  const init = React.useCallback(() => {
-    changeStatic(options[0].value);
-    setStaticType(options[0].value);
-    set_tab_state(tabState);
-    initChart(dataSource, tabState, tab_state);
-  }, [tabState]);
-
   React.useEffect(() => {
     requestData();
-    init();
+
     return () => {
       if (chart.current) {
         chart.current.destroy();
       }
     };
-  }, [requestData, init]);
+  }, [requestData]);
+
+  const changeStatic = React.useCallback(
+    (val) => {
+      setStaticType(val);
+      if (chart.current && dataSource) {
+        chart.current.changeData(transfromData(dataSource[val].data, val));
+      }
+    },
+    [dataSource, limit],
+  );
 
   const getLenged = React.useMemo(() => {
     if (showMarkerType !== 'sandbox') {
@@ -379,7 +323,7 @@ export default function StackBar({
             className="mr-5"
           ></IconLabel>
           <IconLabel
-             iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
             text={legend2.label}
             color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
           ></IconLabel>
@@ -391,29 +335,13 @@ export default function StackBar({
 
   const getSelect = React.useMemo(() => {
     return (
-      <div
-        className={cn('flex items-center', style.border)}
-        style={{ color: 'rgba(255,255,255, 0.3)' }}
-      >
-        <ChartSelecter
-           iconImgLight={iconImgLight}
-          options={options}
-          showArrow={true}
-          onClick={changeStatic}
-          className={style.selecterLong}
-          defaultLabel={options[0].value}
-          hasBorder={false}
-        ></ChartSelecter>
-        丨
-        <ChartSelecter
-           iconImgLight={iconImgLight}
-          hasBorder={false}
-          options={optionsPrice}
-          showArrow={true}
-          onClick={changePriceStatic}
-          defaultLabel={optionsPrice[0].value}
-        ></ChartSelecter>
-      </div>
+      <ChartSelecter
+      iconImgLight={iconImgLight}
+        options={options}
+        showArrow={true}
+        onClick={changeStatic}
+        defaultLabel={options[0].value}
+      ></ChartSelecter>
     );
   }, [options, changeStatic]);
 
@@ -430,7 +358,7 @@ export default function StackBar({
   }, [loading, error, onRetry]);
 
   return (
-    <div className={cn('w-full p-5', iconImgLight===true?style.content1:style.content, className)}>
+    <div className={cn('w-full p-5',iconImgLight===true?style.content1: style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
           <ChartTitle iconImgLight={iconImgLight} text={labelText} color={textColor}></ChartTitle>

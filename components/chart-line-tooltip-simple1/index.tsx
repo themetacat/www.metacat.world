@@ -32,7 +32,6 @@ type Props = {
   priceOptions?: Array<optionItem>;
   keyTypes?: Array<string>;
   simpleTooltip?: boolean;
-  tabState?: string;
   textColor?;
   iconImgLight?;
 };
@@ -46,15 +45,13 @@ export default function ChartLineToolTipSimple({
   limit,
   options,
   priceOptions,
-  iconImgLight,
   className,
+  iconImgLight,
   keyTypes = ['primary', 'secondary'],
-  tabState,
   textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
   const [dataSource, setDataSource] = React.useState(null);
-  const [tab_state, set_tab_state] = React.useState(tabState);
   const chart = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
@@ -64,7 +61,7 @@ export default function ChartLineToolTipSimple({
       const result = [];
       if (limit) {
         const l = data.length;
-        const d = l - limit;
+        const d = l - limit * 2;
         const last = data.slice(d);
         last.forEach((element) => {
           result.push({
@@ -106,13 +103,21 @@ export default function ChartLineToolTipSimple({
         ${formatNum(result[keyTypes[0]])}
         </span>
     </div>
+    <div style="color:#fff;margin-bottom:12px">
+      <span style="font-size: 12px;color:#999999;font-weight:400;">Estate:</span>
+      <span style="margin:0px 5px; color:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${
+      legend2.color[2]
+    }, 1); font-size: 18px; font-weight:700;">
+        ${formatNum(result[keyTypes[1]])}
+        </span>
+    </div>
     `;
     container.innerHTML = title + staticItem;
     return container;
   };
 
   const initChart = React.useCallback(
-    (data, t1, t2) => {
+    (data) => {
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -122,13 +127,8 @@ export default function ChartLineToolTipSimple({
         autoFit: true,
         height: 210,
       });
-      if (data) {
-        if (t1 !== t2) {
-          chart.current.data(transfromData(data[options[0].value].data, options[0].value));
-        } else {
-          chart.current.data(transfromData(data[staticType].data, staticType));
-        }
-      }
+
+      chart.current.data(transfromData(data[staticType].data, staticType));
       chart.current.scale('time', {
         range: [0.01, 0.99],
         type: 'cat',
@@ -226,6 +226,9 @@ export default function ChartLineToolTipSimple({
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
             }
+            return {
+              fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+            };
           },
         })
         .tooltip('time*value*type*staticT', (time, value, type, staticT) => {
@@ -243,10 +246,13 @@ export default function ChartLineToolTipSimple({
         .position('time*value')
         .size(2)
         .tooltip(true)
-        .color('type', [`rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`]);
+        .color('type', [
+          `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
+          `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
+        ]);
       chart.current.render();
     },
-    [staticType, limit, id, options],
+    [staticType, limit],
   );
 
   const requestData = React.useCallback(async () => {
@@ -263,7 +269,7 @@ export default function ChartLineToolTipSimple({
     }
     setLoading(false);
     if (result) {
-      initChart(result, tabState, tab_state);
+      initChart(result);
     }
     return result;
   }, [dataHandlder]);
@@ -284,6 +290,24 @@ export default function ChartLineToolTipSimple({
     return <div id={id}></div>;
   }, [loading, error, onRetry]);
 
+  const getLenged = React.useMemo(() => {
+    return (
+      <>
+        <IconLabel
+        iconImgLight={iconImgLight}
+          text={legend1.label}
+          color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
+          className="mr-5"
+        ></IconLabel>
+        <IconLabel
+           iconImgLight={iconImgLight}
+          text={legend2.label}
+          color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
+        ></IconLabel>
+      </>
+    );
+  }, [legend1, legend2]);
+
   const updateData = React.useCallback(
     (staticT) => {
       if (chart.current && dataSource) {
@@ -303,13 +327,6 @@ export default function ChartLineToolTipSimple({
     [dataSource, limit, updateData],
   );
 
-  const init = React.useCallback(() => {
-    changeStatic(options[0].value);
-    setStaticType(options[0].value);
-    set_tab_state(tabState);
-    initChart(dataSource, tabState, tab_state);
-  }, [tabState]);
-
   const getSelect = React.useMemo(() => {
     return (
       <ChartSelecter
@@ -325,20 +342,22 @@ export default function ChartLineToolTipSimple({
 
   React.useEffect(() => {
     requestData();
-    init();
     return () => {
       if (chart.current) {
         chart.current.destroy();
       }
     };
-  }, [requestData, init]);
+  }, [requestData]);
 
   return (
-    <div className={cn('w-full p-5',iconImgLight===true?style.content1:style.content,  className)}>
+    <div className={cn('w-full p-5', iconImgLight===true?style.content1:style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
           <ChartTitle iconImgLight={iconImgLight} text={labelText} color={textColor}></ChartTitle>
-          <div className="flex items-center">{getSelect}</div>
+          <div className="flex items-center">
+            <div className="flex items-center mr-7">{getLenged}</div>
+            {getSelect}
+          </div>
         </div>
         {render}
       </div>

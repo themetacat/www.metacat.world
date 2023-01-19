@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import cn from 'classnames';
 
 import { EffectCreative, Navigation } from 'swiper';
@@ -23,13 +23,20 @@ type Props = {
   id?: string;
   className?;
   fixedS?;
+  iconImgLight?;
 };
-export default function Switch({ onActive, options,showType, defaultValue, id, className, fixedS }: Props) {
+export default function Switch({ onActive, options,showType,iconImgLight, defaultValue, id, className, fixedS }: Props) {
   const router = useRouter();
   const [active, setActive] = React.useState(defaultValue || options[0].value);
   const [percent, setPercent] = React.useState(0);
   const [findIndex, setFindIndex] = React.useState(1);
   const [isSwiper, setSwiper] = React.useState(null);
+  const [darkLight, setDarkLight] = React.useState(false);
+  useEffect(() => {
+    const darkBackColor = window.localStorage.getItem("darkLight") === "true";
+
+    setDarkLight(darkBackColor)
+  }, [darkLight])
   const changeActive = React.useCallback(
 
     (acitveItem) => {
@@ -72,7 +79,7 @@ export default function Switch({ onActive, options,showType, defaultValue, id, c
             {
               hidden: percent <= 0,
             },
-            style.per,
+            iconImgLight===true? style.per1:style.per,
           )}
         >
           <img className={style.icon} src="/images/tab-left.png"></img>
@@ -132,7 +139,7 @@ export default function Switch({ onActive, options,showType, defaultValue, id, c
                     className={cn('bg-contain mr-2', style.tabIcon)}
                     style={{ backgroundImage: `url('${item.icon}')` }}
                   ></div>
-                  <div className={style.n}>{item.label}</div>
+                  <div className={iconImgLight===true?style.n1:style.n}>{item.label}</div>
                 </div>
               </SwiperSlide>
             );
@@ -144,7 +151,8 @@ export default function Switch({ onActive, options,showType, defaultValue, id, c
             {
               hidden: percent >= 1,
             },
-            style.next,
+       
+            iconImgLight===true? style.next1:     style.next,
           )}
         >
           <img className={style.icon} src="/images/tab-right.png"></img>
