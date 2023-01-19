@@ -34,8 +34,19 @@ justify-content: left;
 flex-flow: row;
 }
 .header{
-  background-image: url("/images/imgConent/Mask group.png");
   background-size:cover;
+  background-color: #052c2b;
+  background-repeat: no-repeat;
+  height: 60px;
+  z-index:99999;
+  position: fixed;
+  top: 0px;
+  position: relative;
+}
+.header1{
+  /* background-image: url("/images/imgConent/Mask group.png"); */
+  background-size:cover;
+  background-color: #fafbfc;
   background-repeat: no-repeat;
   height: 60px;
   z-index:99999;
@@ -216,8 +227,26 @@ overflow-y: scroll;
   /* padding-top: 5px; */
   padding: 8px;
 }
+.nameCon:hover{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 22px;
+  color: #000 !important;
+  /* padding-top: 5px; */
+  padding: 8px;
+}
 .rightCon{
   margin-right: 41.67px;
+}
+.rightConHover{
+  /* margin-right: 41.67px; */
+  color: #ccc;
+}
+.rightConHover:hover{
+  /* margin-right: 41.67px; */
+  color: #000;
 }
 .rightCon1{
   margin-right: 45px;

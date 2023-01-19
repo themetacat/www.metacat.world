@@ -5,11 +5,12 @@ import style from './index.module.css';
 
 type Props = {
   options?;
+  iconImgLight?;
   className?: string;
   location?: string;
 };
 
-export default function TwoNav({ options, className, location }: Props) {
+export default function TwoNav({ options,iconImgLight, className, location }: Props) {
   return (
     <div className={cn(location)}>
       {options.map((item, index) => {
