@@ -227,16 +227,15 @@ overflow-y: scroll;
   /* padding-top: 5px; */
   padding: 8px;
 }
-.nameCon:hover{
+/* .nameCon:hover{
   font-family: 'PingFang SC';
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 22px;
   color: #000 !important;
-  /* padding-top: 5px; */
   padding: 8px;
-}
+} */
 .rightCon{
   margin-right: 41.67px;
 }

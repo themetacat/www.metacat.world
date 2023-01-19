@@ -423,7 +423,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             )}
           >
             <Link href="/" prefetch>
-              <span className={cn('', active === '/' ? style.active : null,)}>Home</span>
+              <span className={cn('', active === '/' ? style.active : null, darkLight===true?style.rightConHover:null)}>Home</span>
             </Link>
           </div>
           {/* <div
@@ -447,7 +447,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
               setAnalyticState(true);
             }}
             onMouseLeave={() => {
-              setAnalyticState(true);
+              setAnalyticState(false);
             }}
           >
 
