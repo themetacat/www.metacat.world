@@ -419,11 +419,11 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           <div
             className={cn(
               'text-xl  text-gray-400 cursor-pointer  pointer-events-auto',
-              active === '/' ? style.active : null, style.nameCon, style.rightCon1
+              active === '/' ? style.active1 : null, style.nameCon, style.rightCon1
             )}
           >
             <Link href="/" prefetch>
-              <span className={cn('', active === '/' ? style.active : null, darkLight===true?style.rightConHover:null)}>Home</span>
+              <span className={cn('', active === '/' &&darkLight===true? style.active1 : null,  darkLight===true?style.rightConHover:null)}>Home</span>
             </Link>
           </div>
           {/* <div
