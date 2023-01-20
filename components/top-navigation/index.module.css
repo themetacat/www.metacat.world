@@ -116,6 +116,15 @@ flex-flow: row;
   background-color: #0f191b;
   border-radius: 4px;
 }
+.locationState {
+  position: absolute;
+  right: -48px;
+  top: 40px;
+  /* bottom: -90px; */
+  z-index: 99999 !important;
+  background-color: #ffff;
+  border-radius: 4px;
+}
 .parcels {
   border-radius: 4px;
   position: absolute;
@@ -134,7 +143,7 @@ height: 100vh;
   left:-60px;
   top: 40px;
   z-index: 99999 !important;
-  background-color: #0f191b;
+  background-color: #fff;
 height: 640px;
 /* height: 100vh; */
 overflow-y: scroll;
@@ -146,6 +155,15 @@ overflow-y: scroll;
   bottom: -150px;
   z-index: 99999 !important;
   background-color: #0f191b;
+
+}
+.eventListState {
+  border-radius: 4px;
+  position: absolute;
+  left:-60px;
+  bottom: -150px;
+  z-index: 99999 !important;
+  background-color: #fff;
 
 }
 .location2 {
@@ -166,6 +184,16 @@ overflow-y: scroll;
   background-color: #0f191b;
   border-radius: 4px;
 }
+.location3State {
+  position: absolute;
+  z-index: 99999 !important;
+  /* left: 387px;
+  bottom: 128px; */
+  top: 39px;
+  left: -50px;
+  background-color: #fff;
+  border-radius: 4px;
+}
 .locationLearn{
   position: absolute;
   /* left: 387px;
@@ -176,6 +204,16 @@ overflow-y: scroll;
   background-color: #0f191b;
   border-radius: 4px;
 }
+.locationLearnState{
+  position: absolute;
+  /* left: 387px;
+  bottom: 128px; */
+  top: 39px;
+  left: -50px;
+  z-index: 99999 !important;
+  background-color: #fff;
+  border-radius: 4px;
+}
 .location4 {
   position: absolute;
   left: -50px;
@@ -183,6 +221,15 @@ overflow-y: scroll;
   z-index: 99999 !important;
   /* bottom: 27px; */
   background-color: #0f191b;
+  border-radius: 4px;
+}
+.locationAnalyticState {
+  position: absolute;
+  left: -50px;
+  top: 39px;
+  z-index: 99999 !important;
+  /* bottom: 27px; */
+  background-color: #fff;
   border-radius: 4px;
 }
 .iconImg{

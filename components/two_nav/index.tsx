@@ -16,7 +16,7 @@ export default function TwoNav({ options,iconImgLight, className, location }: Pr
       {options.map((item, index) => {
         return (
           <Link href={item.link}>
-            <div key={index} className={cn(style.item, className)} style={{ display: 'flex' }}>
+            <div key={index} className={cn(iconImgLight===true?style.itemTotal:style.item, className)} style={{ display: 'flex' }}>
               <img
                 src={item.icon}
                 style={{

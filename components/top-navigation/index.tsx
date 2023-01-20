@@ -20,7 +20,7 @@ import { req_sales_amount_percent } from '../../service/z_api';
 type Props = {
   active?: string;
   className?: string;
-  iconImgLight?:any;
+  iconImgLight?: any;
 
 };
 // 首页 二级页
@@ -88,7 +88,7 @@ const parcels = [
     link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
- {
+  {
     label: 'Oncyber',
     icon: 'https://oncyber.io/images/logo.png',
     type: 'oncyber',
@@ -314,12 +314,12 @@ const analyticsData = [
 //   ,
 //    "Creation"
 //   , "Learn"
-  
+
 // ]
 
 
 
-export default function darkLightPageHeader({ active, className,iconImgLight }: Props) {
+export default function darkLightPageHeader({ active, className, iconImgLight }: Props) {
   const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
@@ -333,16 +333,16 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [offsetHeighthNum, setOffsetHeightNum] = React.useState(0);
   const [darkLight, setDarkLight] = React.useState(false);
-  useEffect(()=>{
-    const darkBackColor = window.localStorage.getItem("darkLight")==="true";
-    
+  useEffect(() => {
+    const darkBackColor = window.localStorage.getItem("darkLight") === "true";
+
     setDarkLight(darkBackColor)
-  },[darkLight])
+  }, [darkLight])
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
 
-// console.log(searchText,999999999999999);
+  // console.log(searchText,999999999999999);
 
   // const onSearchHandler = (query: string,
   //   page: number,
@@ -377,11 +377,13 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
   //   },
   //   []
   // );
-  const btnDark = ()=>{
-    if(darkLight===false){window.localStorage.setItem("darkLight",'true')
+  const btnDark = () => {
+    if (darkLight === false) {
+      window.localStorage.setItem("darkLight", 'true')
       setDarkLight(true)
       iconImgLight(true)
-    }else{window.localStorage.setItem("darkLight", 'false')
+    } else {
+      window.localStorage.setItem("darkLight", 'false')
       setDarkLight(false)
       iconImgLight(false)
     }
@@ -394,7 +396,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
     setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
-  }, [offsetHeighthNum,darkLight])
+  }, [offsetHeighthNum, darkLight])
   return (
     <header
       className={cn('w-full flex flex-glow items-start ',
@@ -405,13 +407,13 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
       <div
         className={cn(
           ' flex items-center  w-full flex-flow',
-          darkLight===true?style.header1:style.header,
+          darkLight === true ? style.header1 : style.header,
         )}
       >
         <div className={cn(" flex-flow", style.one,)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
-            <img className={cn('flex-flow', style.metaImg)} src= {darkLight===false?"/images/imgConent/meta1.png":'/images/image/meta1.png'}></img>
+            <img className={cn('flex-flow', style.metaImg)} src={darkLight === false ? "/images/imgConent/meta1.png" : '/images/image/meta1.png'}></img>
           </Link>
         </div>
         <div className={cn("flex flex-flow", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null, showStateVal === true ? style.showStateVal : null
@@ -423,7 +425,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             )}
           >
             <Link href="/" prefetch>
-              <span className={cn('', active === '/' &&darkLight===true? style.active1 : null,  darkLight===true?style.rightConHover:null)}>Home</span>
+              <span className={cn('', active === '/' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Home</span>
             </Link>
           </div>
           {/* <div
@@ -440,7 +442,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
               active === 'analytics' ? style.active : null,
               // analyticState === true ? style.active : null,
               style.z, style.nameCon, style.rightCon,
-            
+
             )}
             // onClick={analyticsDataSet}
             onMouseEnter={() => {
@@ -452,21 +454,21 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           >
 
             <Link href={'/analytics'} prefetch>
-              <span className={cn('', analyticState === true  &&darkLight===true? style.active1 : null, active === 'analytics' &&darkLight===true? style.active1 : null,  darkLight===true?style.rightConHover:null)} >Analytics</span>
+              <span className={cn('', analyticState === true && darkLight === true ? style.active1 : null, active === 'analytics' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)} >Analytics</span>
 
             </Link>
 
-           <img  src={analyticState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            <img src={analyticState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
               analyticState === true? <img src= style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
             } */}
 
             {analyticState ? (
               <TwoNav
-              iconImgLight={darkLight} 
+                iconImgLight={darkLight}
                 options={analyticsData}
                 className={style.cn1}
-                location={style.location4}
+                location={darkLight === true ? style.locationAnalyticState : style.location4}
               ></TwoNav>
             ) : null}
           </div>
@@ -485,10 +487,10 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             }}
           >
             <Link href={'/heatmap?type=cryptovoxels'} prefetch>
-              <span className={cn('', heatmapState === true  &&darkLight===true? style.active1 : null, active === 'heatmap' &&darkLight===true? style.active1 : null, darkLight===true?style.rightConHover:null)}>Heatmap</span>
+              <span className={cn('', heatmapState === true && darkLight === true ? style.active1 : null, active === 'heatmap' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Heatmap</span>
 
             </Link>
-            <img  src={heatmapState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            <img src={heatmapState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
               heatmapState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
@@ -496,7 +498,7 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
               heatmapState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
             } */}
             {heatmapState ? (
-              <TwoNav options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
+              <TwoNav iconImgLight={darkLight} options={heatmapData} className={style.cn} location={darkLight === true ?style.location3State:style.location3}></TwoNav>
             ) : null}
           </div>
 
@@ -515,9 +517,9 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           // onClick={placeDataSet}
           >
             <Link href="/parcels?tab=cryptovoxels" prefetch>
-              <span className={cn('', ParcelsState === true  &&darkLight===true? style.active1 : null, active === '/parcels' &&darkLight===true? style.active1 : null, darkLight===true?style.rightConHover:null)}>Place</span>
+              <span className={cn('', ParcelsState === true && darkLight === true ? style.active1 : null, active === '/parcels' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Place</span>
             </Link>
-            <img  src={ParcelsState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            <img src={ParcelsState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
               ParcelsState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
@@ -532,9 +534,10 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
               //   location={style.parcels}
               // ></TwoNav>
               <TwoNavigation
+                iconImgLight={darkLight}
                 options={parcels}
                 className={style.cn}
-                location={window.screen.height<820?style.parcels1:style.parcels}
+                location={darkLight === true ?style.parcels1: style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -554,9 +557,9 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
           // onClick={placeDataSet}  
           >
             <Link href="/event?tab=cryptovoxels" prefetch>
-              <span className={cn('', EventState === true  &&darkLight===true? style.active1 : null, active === '/event' &&darkLight===true? style.active1 : null, darkLight===true?style.rightConHover:null)}>Event</span>
+              <span className={cn('', EventState === true && darkLight === true ? style.active1 : null, active === '/event' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Event</span>
             </Link>
-            <img  src={EventState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            <img src={EventState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
 
             {/* {
               EventState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
@@ -572,9 +575,10 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
               //   location={style.parcels}
               // ></TwoNav>
               <TwoNavigation
+              iconImgLight={darkLight}
                 options={eventList}
                 className={style.cn}
-                location={style.eventList}
+                location={darkLight === true ?style.eventListState:style.eventList}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -596,9 +600,9 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             }}
           >
             <Link href='/creation/builders' prefetch>
-              <span className={cn('', buildState === true  &&darkLight===true? style.active1 : null,active === 'Build' &&darkLight===true? style.active1 : null,darkLight===true?style.rightConHover:null)}>Creation</span>
+              <span className={cn('', buildState === true && darkLight === true ? style.active1 : null, active === 'Build' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Creation</span>
             </Link>
-            <img  src={buildState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            <img src={buildState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
               buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
@@ -608,9 +612,10 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
 
             {buildState ? (
               <TwoNavigation
+              iconImgLight={darkLight}
                 options={build}
                 className={style.cn}
-                location={style.location}
+                location={darkLight === true ?style.locationState:style.location}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -660,10 +665,10 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             }}
           >
             <Link href={'/learn?type=articles'} prefetch>
-              <span className={cn('',learnState===true &&darkLight===true? style.active1 : null, active === 'learn' &&darkLight===true? style.active1 : null,darkLight===true?style.rightConHover:null)}>Learn</span>
+              <span className={cn('', learnState === true && darkLight === true ? style.active1 : null, active === 'learn' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Learn</span>
             </Link>
 
-            <img  src={learnState === true?'/images/Frame-up.png':'/images/Frame-down.png'} style={{ width: "12px", height: "15px",marginTop: "8px", marginLeft: "5.67px" }}></img> 
+            <img src={learnState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
               learnState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
             }
@@ -673,9 +678,10 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
 
             {learnState ? (
               <TwoNavigation
+              iconImgLight={darkLight}
                 options={learnCon}
                 className={style.cn2}
-                location={style.locationLearn}
+                location={darkLight === true ?style.locationLearnState:style.locationLearn}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -710,15 +716,15 @@ export default function darkLightPageHeader({ active, className,iconImgLight }: 
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search  setTypeVal={'Place'||'Event'||'Creation'||'Learn'}  text={searchText} showState={(x) => { setShowStateVal(x) }}  ></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search setTypeVal={'Place' || 'Event' || 'Creation' || 'Learn'} text={searchText} showState={(x) => { setShowStateVal(x) }}  ></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>
           : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>}
         {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
         {
-            darkLight === true?<img  onClick={btnDark} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" />:<img  onClick={btnDark} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
-          }
+          darkLight === true ? <img onClick={btnDark} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" /> : <img onClick={btnDark} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
+        }
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
         <Toaster
           toastOptions={{
