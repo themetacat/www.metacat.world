@@ -112,8 +112,8 @@ const WALLET = [
   //   type: 'wallet',
   // },
   {
-    label: 'Login',
-    icon: '/images/walletconnect.png',
+    label: 'Others(Meta,Twitter...)',
+    icon: '/images/v5/login.jpg',
     value: 'loginConnevt',
     type: 'login',
   },
@@ -432,9 +432,9 @@ useEffect(()=>{
   if(idTokenWeb3&&web3AuthAddress){
     setToken('atk',idTokenWeb3+'-.-'+web3AuthAddress)
     
-   
+    // window.location.href='/profile?type=parcellist'
   }
-  // window.location.href('/profile?type=parcellist')
+
 console.log(web3AuthAddress,idTokenWeb3);
 },[web3AuthAddress,idTokenWeb3])
 
@@ -526,11 +526,12 @@ console.log(web3AuthAddress,idTokenWeb3);
       return;
     }
     web3auth.logout();
+    setWeb3AuthAddress(null)
+
+    setProvider(null);
     if (pathname !== '/') {
       window.location.href = '/';
     }
-    setProvider(null);
-
     // setShowMenu(false);
   }, [provider, web3auth])
 
@@ -588,8 +589,11 @@ console.log(web3AuthAddress,idTokenWeb3);
       }
       if (web3AuthAddress) {
         if (item.value === 'resetApp') {
-          setProvider(null);
-          setWeb3AuthAddress(null)
+          // setProvider(null);
+          // setWeb3AuthAddress(null)
+          console.log(11111);
+         
+          
           logout()
           setShowMenu(false);
           removeToken('atk');
