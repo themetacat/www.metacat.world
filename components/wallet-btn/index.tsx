@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
-
+import { Web3AuthCore } from "@web3auth/core";
+import {
+  CHAIN_NAMESPACES,
+  SafeEventEmitterProvider,
+  WALLET_ADAPTERS,
+} from "@web3auth/base";
 import Rekv from 'rekv';
 import Link from 'next/link';
+import RPC from "./web3RPC";
+import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
+
+
 
 import Router, { useRouter } from 'next/router';
 
@@ -11,7 +20,8 @@ import { toast } from 'react-hot-toast';
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 // import Web3Modal from 'web3modal';
 
-import { useWalletProvider } from '../web3modal';
+import { useWalletProvider } from '../web3moda2';
+// import { useWalletProvider } from '../web3modal';
 
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
@@ -29,6 +39,7 @@ type Props = {
 
 interface IProfileData {
   accessToken: string;
+  idToken: string;
   refreshToken: string;
   profile: {
     nickName: string;
@@ -39,6 +50,7 @@ interface IProfileData {
 
 const INITIAL_STATE: IProfileData = {
   accessToken: null,
+  idToken: null,
   refreshToken: null,
   profile: {
     nickName: null,
@@ -78,6 +90,12 @@ const MENU = [
     value: 'resetApp',
     type: 'operation',
   },
+  // {
+  //   label: 'Sign Out',
+  //   icon: '/images/v5/Signout.png',
+  //   value: 'resetAppWeb3',
+  //   type: 'operation',
+  // },
 ];
 
 const WALLET = [
@@ -93,6 +111,18 @@ const WALLET = [
   //   value: 'walletconnect',
   //   type: 'wallet',
   // },
+  {
+    label: 'Login',
+    icon: '/images/walletconnect.png',
+    value: 'loginConnevt',
+    type: 'login',
+  },
+  // {
+  //   label: 'Login Out',
+  //   icon: '/images/walletconnect.png',
+  //   value: 'loginOut',
+  //   type: 'loginOut',
+  // },
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
@@ -100,11 +130,19 @@ export const state = new Rekv<IProfileData>(INITIAL_STATE);
 export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [showMenu, setShowMenu] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const profileData = state.useState('accessToken', 'refreshToken', 'profile');
-  const { accessToken, refreshToken, profile } = profileData;
+  const profileData = state.useState('accessToken', 'idToken', 'refreshToken', 'profile');
+  const { accessToken, idToken, refreshToken, profile } = profileData;
 
   const [showWall, setShowWall] = React.useState(null);
+  const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
+    null
+  );
 
+  const [web3auth, setWeb3auth] = useState<Web3AuthCore | null>(null);
+
+  const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null)
+  const [idTokenWeb3, setIdTokenWeb3] = React.useState(null)
+  const [getAccountsState, setGetAccountsState] = React.useState(false)
   // const [w3, setw3] = React.useState(null)
 
   // const provider = new WalletConnectProvider({
@@ -134,6 +172,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const checkLoginStatu = React.useCallback(
     (res) => {
       const data = resultHandler(res);
+      // const idToken =  web3auth.authenticateUser();
       if (data) {
         state.setState({
           accessToken: data.accessToken,
@@ -249,7 +288,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //     loginSignature(add, resD).then((resData) => {
   //       checkLoginStatu(resData);
   //     }, (res1) => {
-  //       console.log(1);
 
   //     })
   //   }, (error) => {
@@ -278,7 +316,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //   });
   //   provider.on('accountsChanged', async (accounts) => {
   //     const addressData = await accounts[0];
-  //     console.log('切换账号')
   //   });
   // }, [w3])
 
@@ -309,6 +346,136 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //   await subscribeProvider(providerDataText, web_3, web3Modal)
   //   return web_3
   // }, [subscribeProvider])
+  const clientId =
+    "BL0lPOjUH2OVtbjhuD-usHSh09E-5o6pGwjykgEvd77MKTmumyBQRfUGl2Mblz1-KH1dT96XLazZAhekRYZiTsE";
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const web3auth = new Web3AuthCore({
+          clientId,
+          chainConfig: {
+            chainNamespace: CHAIN_NAMESPACES.EIP155,
+            chainId: "0x1",
+            rpcTarget: "https://mainnet.infura.io/v3/09a94580c8e24b25bbb5deca04927305", // This is the public RPC we have added, please pass on your own endpoint while creating an app
+          },
+        });
+        setWeb3auth(web3auth);
+        const torusWalletAdapter = new TorusWalletAdapter({
+
+          clientId,
+          sessionTime: 3600 * 24 * 7, // 1 hour in seconds
+
+        });
+
+        web3auth.configureAdapter(torusWalletAdapter);
+
+        await web3auth.init();
+
+        if (web3auth.provider) {
+
+          setProvider(web3auth.provider);
+
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+    };
+
+    init()
+  }, []);
+  const getAccounts = React.useCallback(() => {
+    
+    // setGetAccountsState(true)
+    let promise = new Promise(async (resolve, reject) => {
+      if (!provider) {
+        console.log("provider not initialized yet");
+        return;
+      }
+      const rpc = new RPC(provider);
+      
+      const address = await rpc.getAccounts();
+      // setGetAccountsState(false)
+
+      setWeb3AuthAddress(address)
+      resolve(address)
+      reject(address)
+    })
+   
+    return promise
+  }, [ web3AuthAddress,provider])
+
+  const authenticateUser = React.useCallback(() => {
+    // console.log(web3AuthAddress,888888888888)
+   
+    let promise = new Promise(async (resolve, reject) => {
+      if (!web3auth) {
+        console.log("web3auth not initialized yet");
+        return;
+      }
+      
+      const idToken = await web3auth.authenticateUser();
+      setIdTokenWeb3(idToken.idToken)
+      resolve(idToken)
+    })
+    //  const address1= getAccounts()
+    //  setToken('atk',idToken+'-'+address1)
+
+    // setToken('atk',idToken.idToken+'-.-'+'0x60d136A10c67D534BB7822c175a44C855b2D9B57')
+    setShowWall(false)
+    return promise
+  }, [idTokenWeb3,web3AuthAddress, provider,idTokenWeb3, web3auth])
+useEffect(()=>{
+  if(idTokenWeb3&&web3AuthAddress){
+    setToken('atk',idTokenWeb3+'-.-'+web3AuthAddress)
+   
+  }
+  
+console.log(web3AuthAddress,idTokenWeb3);
+},[web3AuthAddress,idTokenWeb3])
+
+  const login = React.useCallback(async () => {
+
+    if (!web3auth) {
+      console.log("web3auth not initialized yet");
+      return;
+    }
+    const web3authProvider = await web3auth.connectTo(
+      WALLET_ADAPTERS.TORUS_EVM,
+    );
+    setProvider(web3authProvider);
+    // const address1 = getAccounts()
+    // if (!provider) {
+    //   console.log("provider not initialized yet");
+    //   return;
+    // }
+    // const rpc = new RPC(provider);
+    // const address = await rpc.getAccounts();
+    // console.log(address, 'address' ,web3AuthAddress);
+
+    // setWeb3AuthAddress(address)
+
+    // console.log(web3AuthAddress,4566);
+    // if(provider){
+    //   getAccounts()
+    //   console.log(666666666666);
+      
+    // }
+    const address3 = getAccounts()
+    address3.then(res => {
+      // console.log(res,1,web3AuthAddress, 2222,address3);
+    })
+
+    const idtoken = authenticateUser()
+    idtoken.then(res => {
+      console.log(res,web3AuthAddress, 2222);
+    })
+    // console.log(idtoken, 2, web3AuthAddress, 3, idTokenWeb3);
+
+    // console.log(getToken('atk'), 2222);
+    // setToken('atk',idtoken)
+  }, [provider, web3auth,  idTokenWeb3])
+
 
   const clickItem = React.useCallback(
     (item) => {
@@ -323,10 +490,46 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         //   walletconnect()
         // }
       }
+      if (item.type === 'login') {
+        // if (!web3auth) {
+        //   console.log("web3auth not initialized yet");
+        //   return;
+        // }
+        // const web3authProvider = await web3auth.connectTo(
+        //   WALLET_ADAPTERS.TORUS_EVM,
+        // );
+        // setProvider(web3authProvider);
+        // init()
+        login()
+        // authenticateUser()
+        // getAccounts()
+
+
+      }
+      if (item.type === 'loginOut') {
+        logout()
+      }
     },
-    [profile, connectToChain],
+    [profile, connectToChain, login],
     // walletconnect
   );
+  const logout = React.useCallback(() => {
+
+    if (!web3auth) {
+      console.log("web3auth not initialized yet");
+      return;
+    }
+    web3auth.logout();
+    if (pathname !== '/') {
+      window.location.href = '/';
+    }
+    setProvider(null);
+
+    // setShowMenu(false);
+  }, [provider, web3auth])
+
+
+
   // const demo = React.useCallback(async () => {
   //   console.log(await p1.enable())
   //   const i = await p1.enable();
@@ -351,35 +554,47 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const clickOperationItem = React.useCallback(
     async (item) => {
-      if (item.value === 'resetApp') {
-        removeToken('atk');
-        removeToken('rtk');
-        removeToken('address');
-        // if (w3) {
-        //   w3.resetApp()
-        // }
-        if (web3) {
-          web3.resetApp();
+      // console.log(profile?.address,web3AuthAddress);
+      // return;
+      if (profile?.address) {
+        if (item.value === 'resetApp') {
+          removeToken('atk');
+          removeToken('rtk');
+          removeToken('address');
+          // if (w3) {
+          //   w3.resetApp()
+          // }
+          if (web3) {
+            web3?.resetApp();
+          }
+          state.setState({
+            accessToken: '',
+            refreshToken: '',
+            profile: { address: null, nickName: null, avatar: null },
+          });
+          // const res = await req_user_logout(accessToken);
+          // console.log(res)
+          if (pathname !== '/') {
+            window.location.href = '/';
+          }
         }
-        state.setState({
-          accessToken: '',
-          refreshToken: '',
-          profile: { address: null, nickName: null, avatar: null },
-        });
-        // const res = await req_user_logout(accessToken);
-        // console.log(res)
-        if (pathname !== '/') {
-          window.location.href = '/';
+        setShowMenu(false);
+      }
+      if (web3AuthAddress) {
+        if (item.value === 'resetApp') {
+          setProvider(null);
+          setWeb3AuthAddress(null)
+          logout()
+          setShowMenu(false);
         }
       }
-      setShowMenu(false);
     },
-    [pathname, web3, profile, state, accessToken],
+    [pathname, web3, profile, state,  provider, accessToken],
     // w3
   );
 
   const render = React.useMemo(() => {
-    if (profile?.address) {
+    if (profile?.address || web3AuthAddress) {
       return MENU.map((item, idx) => {
         return (
           <li
@@ -412,6 +627,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                   </div>
                   <img src="/images/v5/arrow-simple.png" className={style.activeOperation}></img>
                 </div>
+                {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
               </Link>
             )}
           </li>
@@ -419,6 +635,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       });
     }
     return WALLET.map((item, idx) => {
+
       return (
         <li
           className={cn('flex justify-around items-center text-xs', style.walletItem)}
@@ -457,7 +674,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     });
   }, [profile, clickItem, clickOperationItem, loading, showWall]);
 
+
+
   const getText = React.useMemo(() => {
+// console.log(idTokenWeb3,44444444444444444);
+
     let text = 'Connect';
     if (profile.address) {
       if (profile.nickName) {
@@ -466,9 +687,21 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         text = clipName(profile.address);
       }
     }
+  getAccounts()
+  
+   
+    if (web3AuthAddress) {
+      text = web3AuthAddress
+      setShowWall(false)
+      // setShowMenu(true);
+    } else {
+      text = 'Connect'
+    }
+
+    
     return (
       <>
-        {profile.address ? (
+        {profile.address || (web3AuthAddress && provider !== null) ? (
           <img className={cn('mr-1', style.avatar)} src={profile.avatar || '/images/icon.png'} />
         ) : (
           <img className="mr-1" src="/images/v5/wallet.png" />
@@ -481,11 +714,14 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             profile.address ? 'text-xs' : 'text-base',
           )}
         >
+          {/* {provider===null?'Connect':text} */}
           {text}
         </div>
+
       </>
     );
-  }, [profile, clipName]);
+  }, [profile, clipName, web3AuthAddress,provider,idTokenWeb3, logout]);
+
 
   const requireBaseData = React.useCallback(
     async (tk) => {
@@ -519,6 +755,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       document.removeEventListener('click', close);
     };
   }, [close]);
+  const unloggedInView = (
+    <button onClick={login} className="card">
+      Login
+    </button>
+  );
+  const loggedInView = (
+    <button onClick={logout} className="card">
+      LogOut
+    </button>
+  );
 
   return (
     <div className={cn('cursor-pointer', style.btn)}>
@@ -530,7 +776,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       </div>
       <div style={{ borderRadius: "6px" }}>
         <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
+
       </div>
+
+
     </div>
   );
 }

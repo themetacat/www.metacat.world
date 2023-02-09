@@ -382,7 +382,7 @@ function ProfilePage(r) {
       setTabState('cryptovoxels');
       setShowTab(l);
       setRouteTab(t);
-      router.replace(`/profile?type=${t}`);
+      router?.replace(`/profile?type=${t}`);
     },
     [showTab],
   );
@@ -570,15 +570,15 @@ function ProfilePage(r) {
       const res = await getBaseInfo(token);
 
       // const sta = res.data.profile.creator_status
-      const emailState = res.data.profile.email
-      const buildNum = res.data.profile.builder_status
-      const wallet = res.data.profile.address
+      const emailState = res.data?.profile.email
+      const buildNum = res.data?.profile.builder_status
+      const wallet = res.data?.profile.address
       setNoWork(true)
-      setStatue(res.data.profile.creator_status)
+      setStatue(res.data?.profile.creator_status)
       setBuildState(buildNum)
       setWalletAddress(wallet)
       // setCreaterStateVal(res.data.profile.creator_status)
-      setEmailStateWearable(res.data.profile.email)
+      setEmailStateWearable(res.data?.profile.email)
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
       // console.log(statue, "setEmailStateWearable");
 
@@ -620,6 +620,8 @@ function ProfilePage(r) {
 
   const reqWearablesData = React.useCallback(async () => {
     // const result = await req_get_user_wearable(await refreshTK());
+    console.log(tokenWearable,555555555555555555555555555555);
+    
     const result = await req_get_user_wearable(await tokenWearable);
     if (result.code === 100000) {
       const show = result.data.filter((i) => {
@@ -665,7 +667,7 @@ function ProfilePage(r) {
         setWearablesHideData(hide);
       }
     }
-  }, [refreshTK]);
+  }, [refreshTK,tokenWearable]);
 
   const onRetry = React.useCallback(async () => {
     const accessToken = getToken('atk');
@@ -1451,6 +1453,8 @@ function ProfilePage(r) {
     setNavLabel('All')
     req_building_list(walletAddress)
     const accessToken = getToken('atk');
+    console.log(accessToken,"accn");
+    
     setTokenWearable(accessToken)
     setRouteTab(r.router.query.type);
     reqWearablesData();

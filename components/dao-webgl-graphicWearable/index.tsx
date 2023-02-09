@@ -70,6 +70,8 @@ export default function DaoWebglCard({
 
     const containerId = `webgl${graphicId}`;
     const sceneElement = document.getElementById(containerId);
+ 
+    
     // the element that represents the area we want to render the scene
     scene.userData.element = sceneElement;
 
@@ -90,7 +92,7 @@ export default function DaoWebglCard({
     light.position.set(1, 1, 1);
     scene.add(light);
     sceneRef.current = scene;
-
+    console.log(scene);
     if (!model.coverImg) {
 
 
@@ -103,7 +105,7 @@ export default function DaoWebglCard({
     // add one random mesh to each scene
     const loader = new VOXLoader();
     // console.log(model.coverImg);
-    
+    console.log(loader.load,"loader");
     loader.load(model.coverImg, function (chunks) {
       for (let i = 0; i < chunks?.length; i += 1) {
         const chunk = chunks[i];
@@ -126,10 +128,12 @@ export default function DaoWebglCard({
     });
 
     if (initFinish) {
+
+      
       initFinish(scene);
     }
   }, [initFinish]);
-
+  console.log(initFinish,55555);
   React.useEffect(() => {
     // console.log(model,"model");
     
