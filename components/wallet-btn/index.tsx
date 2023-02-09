@@ -222,8 +222,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const connectToChain = React.useCallback(async () => {
+ 
+    console.log( !(window as any).ethereum.isMetaMask,1111111111111);
+    
     setLoading(true);
     if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
+      console.log(333);
       setLoading(false);
       setShowMenu(false);
       window.open('https://metamask.io/');
@@ -481,7 +485,9 @@ console.log(web3AuthAddress,idTokenWeb3);
     (item) => {
       setShowWall(item.value);
       if (item.type === 'wallet') {
+        
         if (!profile.address && item.value === 'metamask') {
+          
           connectToChain();
         }
         // if (!profile.address && item.value === 'walletconnect') {
