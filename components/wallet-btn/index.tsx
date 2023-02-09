@@ -223,7 +223,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connectToChain = React.useCallback(async () => {
  
-    console.log( !(window as any).ethereum.isMetaMask,1111111111111);
     
     setLoading(true);
     if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
@@ -432,9 +431,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 useEffect(()=>{
   if(idTokenWeb3&&web3AuthAddress){
     setToken('atk',idTokenWeb3+'-.-'+web3AuthAddress)
+    
    
   }
-  
+  // window.location.href('/profile?type=parcellist')
 console.log(web3AuthAddress,idTokenWeb3);
 },[web3AuthAddress,idTokenWeb3])
 
@@ -592,6 +592,7 @@ console.log(web3AuthAddress,idTokenWeb3);
           setWeb3AuthAddress(null)
           logout()
           setShowMenu(false);
+          removeToken('atk');
         }
       }
     },
