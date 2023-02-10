@@ -61,6 +61,8 @@ module.exports = {
     polyfills: ['fetch', 'Promise', 'URL', 'object-assign'],
   },
   rules: {
+      'typescript/no-template-shadow':'off',
+      
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'no-use-before-define': 'off',

@@ -134,14 +134,14 @@ export default function CreationWearableList({
             texture => {
                 const SIZE = 1;
                 const img = texture.image;
-                let height = (img && img.height / 10) || SIZE;
-                let width = (img && img.width / 10) || SIZE;
+                const height = (img && img.height / 10) || SIZE;
+                const width = (img && img.width / 10) || SIZE;
                 const mat = new Three.MeshBasicMaterial({
                     map: texture,
                     side: Three.DoubleSide,
                     transparent: true
                 });
-                const geom = new Three.PlaneGeometry(width, height); //使用平面缓冲几何体
+                const geom = new Three.PlaneGeometry(width, height); 
                 const mesh = new Three.Mesh(geom, mat);
                 mesh.position.set(0, 0, 0);
                 mesh.scale.set(10, 10, 10);
@@ -169,8 +169,8 @@ export default function CreationWearableList({
         re.setClearColor(0xffffff, 1);
         re.setPixelRatio(window.devicePixelRatio);
         function render1() {
-            re.render(scene, camera); //执行渲染操作
-            // mesh.rotateY(0.01);//每次绕y轴旋转0.01弧度
+            re.render(scene, camera);
+            // mesh.rotateY(0.01);
             window.requestAnimationFrame(render1);
         }
         render1()

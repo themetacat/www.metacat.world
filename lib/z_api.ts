@@ -1431,8 +1431,8 @@ class API {
 
 
   public async req_get_user_wearable(token: string) {
-    const url = 'http://8.130.23.16/api/v1/wearable/get_user_wearable';
-    // const url = `${this.url}/wearable/get_user_wearable`;
+    // const url = 'http://8.130.23.16/api/v1/wearable/get_user_wearable';
+    const url = `${this.url}/wearable/get_user_wearable`;
 
     const result = await fetch(url, {
       method: 'get',
