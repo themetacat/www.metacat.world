@@ -368,7 +368,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //   return web_3
   // }, [subscribeProvider])
   const clientId =
-    "BL0lPOjUH2OVtbjhuD-usHSh09E-5o6pGwjykgEvd77MKTmumyBQRfUGl2Mblz1-KH1dT96XLazZAhekRYZiTsE";
+    "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
+ 
   useEffect(() => {
 
 
@@ -382,7 +383,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             rpcTarget: "https://mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
           },
         });
-  console.log(coreWeb3auth,22222);
+  
   
         setWeb3auth(coreWeb3auth);
         const torusWalletAdapter = new TorusWalletAdapter({
@@ -405,9 +406,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
         await coreWeb3auth.init();
 
-        if (web3auth?.provider) {
+        if (coreWeb3auth.provider) {
 
-          setProviderWeb3auth(web3auth.provider);
+          setProviderWeb3auth(coreWeb3auth.provider);
 
         }
       } catch (error) {
@@ -419,6 +420,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
 
   }, []);
+  
   const logout = React.useCallback(() => {
     // return
     if (!web3auth) {
@@ -431,13 +433,15 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     setProviderWeb3auth(null);
     if (pathname !== '/') {
       window.location.href = '/';
+    }else{
+      window.location.reload()
     }
     removeToken('atk')
     setIdTokenWeb3(null)
     // console.log(getToken('atk'),555555555555);
 
     // setShowMenu(false);
-  }, [providerWeb3auth, web3auth])
+  }, [providerWeb3auth, web3auth,pathname])
   const getAccounts = React.useCallback(async () => {
 
     // setGetAccountsState(true)
@@ -528,7 +532,7 @@ console.log(web3AuthAddress, idTokenWeb3,11111);
     } catch (error) {
 
       if (error.message === 'Failed to connect with wallet. Already connected') {
-        //  getAccounts()
+         getAccounts()
         const idtoken = authenticateUser()
         idtoken.then(res => {
           console.log(res);
@@ -635,6 +639,7 @@ console.log(web3AuthAddress, idTokenWeb3,11111);
           logout()
 
           removeToken('atk');
+          
         }
         setShowMenu(false);
       } else if (profile?.address && loginState === 'metaMask') {
