@@ -82,6 +82,7 @@ export default function Footer(iconImgLight:Props) {
           >
             <img src={iconImgLight.iconImgLight ===false?"/images/emailW.png" :'/images/image/emailW.png' }/>
           </a>
+        
           <ReactTooltip
             id="code"
             effect="solid"
@@ -92,6 +93,7 @@ export default function Footer(iconImgLight:Props) {
           >
             <img src="/images/code.jpg" className="w-24 h-24" />
           </ReactTooltip>
+      
         </section>
       </div>
       <ReactTooltip

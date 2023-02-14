@@ -1256,7 +1256,7 @@ function ProfilePage(r) {
       setCardState(sta);
       setLabel(many_label);
       setSelectedIds([]);
-      changeNum(dataSource, nav_Label);
+      changeNum(dataSource, nav_Label.current);
     },
     [setParcelsIds, setLabel, setCardState, changeNavTab, changeNum, nav_Label, dataSource],
   );

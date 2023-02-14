@@ -542,6 +542,7 @@ console.log(web3AuthAddress, idTokenWeb3,11111);
 
           const address3 = getAccounts()
           address3.then(res => {
+console.log(res);
 
           })
 
