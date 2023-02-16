@@ -502,7 +502,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   }, [web3AuthAddress, loginState, idTokenWeb3, showMenu])
 
   const login = React.useCallback(async () => {
-console.log(web3AuthAddress, idTokenWeb3,11111);
 
     if (!web3auth) {
       console.log("web3auth not initialized yet");
