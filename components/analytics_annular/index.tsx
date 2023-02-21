@@ -28,6 +28,7 @@ type Props = {
   legend9?,
   textColor?,
   HyperlinkJump?,
+  iconImgLight?,
 };
 
 export default function Annular({
@@ -47,6 +48,7 @@ export default function Annular({
   legend9,
   textColor,
   HyperlinkJump,
+  iconImgLight,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -147,7 +149,100 @@ export default function Annular({
         myChart.setOption(chart.current);
       }
     },
-    [showData],
+    [showData,iconImgLight],
+  );
+  const initChart1 = React.useCallback(
+    (dd, st) => {
+      const chartDom = document.getElementById(id)!;
+      const myChart = echarts.init(chartDom);
+      let chartData = null;
+      if (dd) {
+        chartData = dd.map((item) => {
+          return {
+            name: item.name,
+            value: Math.round(item.value * 100),
+          };
+        });
+      }
+      chart.current = {
+        dataset: {
+          source: chartData,
+          dimensions: ['name', 'value'],
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            encode: {
+              x: 'name', // 指定x轴对应的值
+            },
+            label: {
+              color: '#000',
+              fontSize: 12,
+              formatter: ` {@name} - {@value}%`,
+            },
+            emphasis: {
+              itemStyle: {
+                borderWidth: 1,
+                borderColor: '#a0a0a0',
+                fontSize: 20,
+              },
+              label: {
+                show: true,
+                fontSize: '14',
+                fontWeight: 'bold',
+                color: {},
+              },
+              labelLine: {
+                lineStyle: {
+                  width: 3,
+                },
+              },
+            },
+            itemStyle: {
+              normal: {
+                color: (tVal) => {
+                  if (tVal.data.name === 'The Sandbox') {
+                    return `rgba(119, 152, 238)`;
+                  }
+                  if (tVal.data.name === 'NFT Worlds') {
+                    return `rgba(175, 234, 101)`;
+                  }
+                  if (tVal.data.name === 'Decentraland') {
+                    return `rgba(240, 117, 97)`;
+                  }
+                  if (tVal.data.name === 'Worldwide Webb') {
+                    return `rgba(245, 120, 157)`;
+                  }
+                  if (tVal.data.name === 'Voxels') {
+                    return `rgba(244, 210, 191,1)`;
+                  }
+                  if (tVal.data.name === 'Somnium Space') {
+                    return `rgba(240, 201, 124)`;
+                  }
+                  if (tVal.data.name === 'Otherside') {
+                    return `rgba(255, 248, 187)`;
+                  }
+                  if (tVal.data.name === 'Netvrk') {
+                    return `rgba(196, 148, 254,1)`;
+                  }
+                },
+                borderWidth: 0.5,
+                borderColor: '#a0a0a0',
+              },
+            },
+          },
+        ],
+      };
+      myChart.resize({
+        width: 660,
+        height: 350,
+      });
+      if (myChart) {
+        myChart.setOption(chart.current);
+      }
+    },
+    [showData,iconImgLight],
   );
 
   const requestData = React.useCallback(async () => {
@@ -157,12 +252,23 @@ export default function Annular({
       setLoading(false);
       setData(result.data);
       setShowData(result.data[showType][priceShowType]);
-      initChart(result.data[showType][priceShowType], showType);
+      console.log(iconImgLight,666);
+      
+      if(iconImgLight===true){
+        console.log(111);
+        
+        initChart1(result.data[showType][priceShowType], showType);
+      }else{
+        console.log(222);
+        
+        initChart(result.data[showType][priceShowType], showType);
+      }
+    
     } else {
       setLoading(false);
       setError(true);
     }
-  }, [showType, priceShowType]);
+  }, [showType, priceShowType,iconImgLight]);
 
   const onRetry = React.useCallback(() => {
     requestData();
@@ -188,9 +294,14 @@ export default function Annular({
 
   const updata = React.useCallback(
     (st, pt) => {
-      initChart(data[st][pt], st);
+      // initChart(data[st][pt], st);
+      if(iconImgLight===true){
+        initChart1(data[st][pt], st);
+      }else{
+        initChart(data[st][pt], st);
+      }
     },
-    [data],
+    [data,iconImgLight],
   );
 
   const changeStatic = React.useCallback(
@@ -211,6 +322,7 @@ export default function Annular({
           style={{ color: 'rgba(255,255,255, 0.3)' }}
         >
           <ChartSelecter
+          iconImgLight={iconImgLight} 
             options={options}
             showArrow={true}
             onClick={changeStatic}
@@ -230,9 +342,9 @@ export default function Annular({
   }, [requestData]);
 
   return (
-    <div className={style.container}>
+    <div className={cn('',iconImgLight===true?style.container1:style.container)}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
+        <ChartTitle  iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
         <div className="flex items-center">{getSelect}</div>
       </div>
       {rander}

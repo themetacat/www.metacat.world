@@ -19,11 +19,13 @@ interface Props {
   trigger?: (x: boolean) => void;
   useRef?: React.Ref<any>;
   cl?;
+  iconImgLight?;
 }
 
 export default function ChartSelecter({
   options,
   onClick,
+  iconImgLight,
   className,
   showArrow = false,
   defaultLabel = 'Daily',
@@ -96,7 +98,7 @@ export default function ChartSelecter({
       <div
         className={cn(
           'flex justify-center items-center',
-          style.selecter,
+          iconImgLight===true?style.selecter1: style.selecter,
           hasBorder ? style.border : '',
         )}
         onClick={changeShow}
@@ -113,14 +115,14 @@ export default function ChartSelecter({
         {options.map((x) => {
           return (
             <li
-              className={cn('flex items-center', style.option)}
+              className={cn('flex items-center', iconImgLight===true?style.option1:style.option)}
               key={x.value}
               onClick={(e) => {
                 e.stopPropagation();
                 itemOnClick(x);
               }}
             >
-              <span className={cn(selectedOption === x.label ? style.active : '')}>{x.label}</span>
+              <span className={cn(selectedOption === x.label ? style.active : '', )}>{x.label}</span>
             </li>
           );
         })}

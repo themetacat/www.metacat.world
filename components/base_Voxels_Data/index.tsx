@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import cn from 'classnames';
 import { Chart } from '@antv/g2';
 
@@ -37,6 +37,7 @@ type Props = {
   barWidth?: number;
   keyTypes?: Array<string>;
   textColor?;
+  iconImgLight?;
 };
 
 export default function StackBar({
@@ -52,6 +53,7 @@ export default function StackBar({
   labelText,
   showMarkerType,
   limit,
+  iconImgLight,
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
   textColor,
@@ -60,6 +62,12 @@ export default function StackBar({
   const [dataSource, setDataSource] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
+  // const [darkLight, setDarkLight] = React.useState(false);
+  // useEffect(() => {
+  //   const darkBackColor = window.localStorage.getItem("darkLight") === "true";
+
+  //   setDarkLight(darkBackColor)
+  // }, [darkLight])
 
   const chart = React.useRef(null);
 
@@ -178,7 +186,7 @@ export default function StackBar({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
+                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -197,11 +205,11 @@ export default function StackBar({
         line: {
           style: {
             lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, .15)',
+            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           offsetX: 25,
           offsetY: 0,
           rotate: 1,
@@ -334,6 +342,7 @@ export default function StackBar({
   const getSelect = React.useMemo(() => {
     return (
       <ChartSelecter
+      iconImgLight={iconImgLight}
         options={options}
         showArrow={true}
         onClick={changeStatic}
@@ -355,10 +364,10 @@ export default function StackBar({
   }, [loading, error, onRetry]);
 
   return (
-    <div className={cn('w-full p-5', style.content, className)}>
+    <div className={cn('w-full p-5', iconImgLight===true?style.content1:style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText} color={textColor}></ChartTitle>
+          <ChartTitle   iconImgLight={iconImgLight} text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
             {/* <div className="flex items-center mr-7">{getLenged}</div> */}
             {getSelect}

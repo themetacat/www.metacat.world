@@ -3,10 +3,72 @@
   height: 100vh;
 }
 .signBack {
-  /* height: 270px; */
   height: 315px;
+  /* position: absolute;
+  top: 30px;
+  margin-bottom: 60px; */
 }
-
+.imgContanier {
+  width: 100%;
+  height: 172px;
+  position: absolute;
+  top: 40px;
+  overflow: hidden;
+}
+.imgContanier .title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 66px;
+  color: #DDDDDD;
+  text-align: center;
+  margin-top: 35px;
+}
+.imgContanier .title1 {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 66px;
+  color: #000;
+  text-align: center;
+  margin-top: 35px;
+}
+.imgContanier .text {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.imgContanier .text .t {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  margin:0 30px ;
+  color: #FFFFFF;
+  opacity: 0.6;
+}
+.imgContanier .text .t1 {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  margin:0 30px ;
+  color: #000;
+  opacity: 0.6;
+}
+.imgContanier .text .hengxian {
+  width: 180px;
+  height: 1px;
+  background-color: #999;
+  margin-top: 10px;
+}
 .anPage {
   min-width: 1440px;
   overflow-x: scroll;
@@ -52,9 +114,18 @@
   padding: 30px;
   padding-top:0px !important;
   cursor: pointer;
-  /* position: relative; */
+  background-color: #282828;
 }
-
+.content1 {
+  min-height: 650px;
+  padding: 30px;
+  padding-top:0px !important;
+  cursor: pointer;
+  background-color:#ffffff;
+}
+.table{
+  width: 100%;
+}
 .table,
 .dclColor {
 }
@@ -67,6 +138,13 @@
   border: 0.5px solid rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
   box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.15);
+  min-height: 650px;
+  border-radius: 12px;
+}
+.chartList1 {
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.15);
   min-height: 650px;
   border-radius: 12px;
 }
@@ -100,13 +178,23 @@
   height: 70px;
   background-color: #111a1b;
 }
+.tmbg1 {
+  /* width: 96%;
+  width: 1800px; */
+  padding: 15px;
+  padding-left: 40px;
+  padding-bottom:0px;
+  border-bottom:1px solid rgba(255, 255, 255, 0.2) ;
+  height: 70px;
+  background-color: #fff;
+}
 
 .headNum{
   position:fixed;
   /* height: 42px; */
   width: 95%;
   z-index: 99879;
-  background-color: #111a1b;
+  background-color: #fff;
   border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
   top:60px;
   padding-top: 32px;
@@ -118,6 +206,17 @@
   width: 95%;
   z-index: 99879;
   background-color: #111a1b;
+  border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
+  top:60px;
+  padding-top: 48px;
+  margin: 0px auto 0;
+}
+.aboslute1 {
+  position:fixed;
+  /* height: 42px; */
+  width: 95%;
+  z-index: 99879;
+  background-color: #fff;
   border-bottom:1px solid rgba(90, 67, 67, 0.2) ;
   top:60px;
   padding-top: 48px;
@@ -197,6 +296,16 @@
   min-height: 650px;
   border-radius: 12px;
 }
+.list1 {
+  
+  max-width: 1380px;
+  min-width: 1380px;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.15);
+  min-height: 650px;
+  border-radius: 12px;
+}
 
 .topContainer {
   display: flex;
@@ -235,9 +344,34 @@
   padding: 20px;
   border-radius: 8px;
 }
+.allLineLight {
+  width: 1340px;
+  height: 519px;
+  background: #fafbfc;
+  border-radius: 8px;
+  /* margin-bottom: 30px; */
+  margin-top: 30px;
+  padding: 20px;
+}
+.allLineLight3 {
+  width: 1340px;
+  height: 519px;
+  background: #fafbfc;
+  border-radius: 8px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.allLineLight1 {
+  width: 1340px;
+  margin-bottom: 30px;
+  background: #fafbfc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
 .allLine3 {
   width: 1340px;
-  /* height: 519px; */
   background: #000;
   margin-top: 20px;
   padding: 20px;
@@ -248,6 +382,7 @@
   padding: 25px 20px 20px 20px;
   background: #000;
   border-radius: 8px;
+  margin-top: 20px;
 }
 .tabContainer1 {
   padding: 25px 20px 20px 20px;
