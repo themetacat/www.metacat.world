@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart } from '@antv/g2';
+import { Chart } from '@antv/g2'
 import cn from 'classnames';
 
 import ChartTitle from '../chart-title';
