@@ -614,7 +614,7 @@ export default function Modal({ show, setbuildState, addressWearable, emaileWear
                         require={true}
                         name={'email'}
                         bold={true}
-                        disable={profile?.email !== null || emaileWearable !== null}
+                        // disable={profile?.email !== null || emaileWearable !== null}
                         value={verCode || ''}
                         classname={'mt-2'}
                         needSuffix={true}

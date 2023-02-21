@@ -8,6 +8,21 @@
   flex-wrap: wrap;
   /* background-image: url('/images/imgConent/1.png'); */
   background-image: url("/images/Mask groupbeijingtutu.png");
+  /* background-image: url('/images/Snipaste.png'); */
+  overflow: hidden;
+  /* animation: animateColor 5s linear infinite; */
+  pointer-events: all;
+}
+.container1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  /* background-image: url('/images/imgConent/1.png'); */
+  /* background-image: url("/images/Mask groupbeijingtutu.png"); */
+  background-image: url('/images/Snipaste.png');
   overflow: hidden;
   /* animation: animateColor 5s linear infinite; */
   pointer-events: all;

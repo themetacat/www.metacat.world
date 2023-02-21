@@ -355,8 +355,9 @@ function ProfilePage(r) {
   const cls = cn('flex-1', style.bottomLine);
 
   const refreshTK = React.useCallback(async () => {
+ 
     const rToken = getToken('rtk');
-    if (rToken) {
+    if (rToken&&window.localStorage.getItem("LoginType")==='metaMask') {
       const res = await refreshToken(rToken);
       const { code, data, msg } = res;
       if (code === 100003) {
@@ -369,6 +370,7 @@ function ProfilePage(r) {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
+     
       setToken('atk', accessToken);
       setToken('rtk', rtk);
       state.setState({ accessToken, refreshToken: rtk });
@@ -382,7 +384,7 @@ function ProfilePage(r) {
       setTabState('cryptovoxels');
       setShowTab(l);
       setRouteTab(t);
-      router.replace(`/profile?type=${t}`);
+      router?.replace(`/profile?type=${t}`);
     },
     [showTab],
   );
@@ -570,15 +572,15 @@ function ProfilePage(r) {
       const res = await getBaseInfo(token);
 
       // const sta = res.data.profile.creator_status
-      const emailState = res.data.profile.email
-      const buildNum = res.data.profile.builder_status
-      const wallet = res.data.profile.address
+      const emailState = res.data?.profile.email
+      const buildNum = res.data?.profile.builder_status
+      const wallet = res.data?.profile.address
       setNoWork(true)
-      setStatue(res.data.profile.creator_status)
+      setStatue(res.data?.profile.creator_status)
       setBuildState(buildNum)
       setWalletAddress(wallet)
       // setCreaterStateVal(res.data.profile.creator_status)
-      setEmailStateWearable(res.data.profile.email)
+      setEmailStateWearable(res.data?.profile.email)
       // console.log(sta, 88888, emailState, 888, statue, res.data.profile.builder_status, buildState);
       // console.log(statue, "setEmailStateWearable");
 
@@ -620,6 +622,8 @@ function ProfilePage(r) {
 
   const reqWearablesData = React.useCallback(async () => {
     // const result = await req_get_user_wearable(await refreshTK());
+    console.log(tokenWearable,555555555555555555555555555555);
+    
     const result = await req_get_user_wearable(await tokenWearable);
     if (result.code === 100000) {
       const show = result.data.filter((i) => {
@@ -665,7 +669,7 @@ function ProfilePage(r) {
         setWearablesHideData(hide);
       }
     }
-  }, [refreshTK]);
+  }, [refreshTK,tokenWearable]);
 
   const onRetry = React.useCallback(async () => {
     const accessToken = getToken('atk');
@@ -1252,7 +1256,7 @@ function ProfilePage(r) {
       setCardState(sta);
       setLabel(many_label);
       setSelectedIds([]);
-      changeNum(dataSource, nav_Label);
+      changeNum(dataSource, nav_Label.current);
     },
     [setParcelsIds, setLabel, setCardState, changeNavTab, changeNum, nav_Label, dataSource],
   );
@@ -1433,7 +1437,6 @@ function ProfilePage(r) {
   useEffect(() => {
     // const accessToken = getToken('atk');
     // console.log(accessToken);
-
     reqBuilderData(walletAddress)
 
 
@@ -1451,6 +1454,8 @@ function ProfilePage(r) {
     setNavLabel('All')
     req_building_list(walletAddress)
     const accessToken = getToken('atk');
+    console.log(accessToken,"accn");
+    
     setTokenWearable(accessToken)
     setRouteTab(r.router.query.type);
     reqWearablesData();
@@ -2076,42 +2081,6 @@ function ProfilePage(r) {
       }
     }
     if (routeTab === 'wearablelist') {
-
-      // return (
-      //   <>
-
-      //     <>
-      //       <div className={style.buildingContainer}>
-      //         <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>
-      //           {renderWerable}
-
-      //         </div>
-      //       </div>
-      //     </>
-      //     : <></>
-
-      //   </>
-      // )
-      // if(statue===1){
-      // return (
-      //   <>
-      //     {statue === 1 ?
-      //       <div className={style.createrCont}>
-      //         <span className={style.join}>Join Creators to show your works</span>
-      //         <span className={style.apply}>Apply</span>
-      //       </div>
-      //       :
-      //       <>
-
-      //       </>}
-      //   </>
-      // )
-      // }else{
-
-
-
-
-
       return (
         <>
           {statue === 1 ? <>
@@ -2156,6 +2125,7 @@ function ProfilePage(r) {
             <div className={style.wearablesNav}>
               <div className={style.left}>
                 {wearablesNav.map((item, index) => {
+                  
                   return (
                     <>
                       <div

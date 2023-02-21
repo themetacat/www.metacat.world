@@ -8,9 +8,10 @@ type Props = {
   color?: string;
   className?: string;
   singleClick?;
+  iconImgLight?;
 };
 
-export default function IconLabel({ text, color = '#5FD5EC', singleClick,className }: Props) {
+export default function IconLabel({ text, color = '#5FD5EC',iconImgLight, singleClick,className }: Props) {
 
   return (
     <div
@@ -23,7 +24,7 @@ export default function IconLabel({ text, color = '#5FD5EC', singleClick,classNa
 
     >
       <div className={cn('mr-1', style.dot)} style={{ backgroundColor: color }}></div>
-      <div className={style.text}>{text}</div>
+      <div className={cn(iconImgLight===true?style.text1:style.text)}>{text}</div>
     </div>
   );
 }
