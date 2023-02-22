@@ -1,4 +1,5 @@
 const withAntdLess = require('next-plugin-antd-less');
+const { default: Script } = require('next/script');
 
 module.exports = withAntdLess({
   // modifyVars: { '@primary-color': '#04f' },
@@ -27,3 +28,9 @@ module.exports = withAntdLess({
     domains: ['static.ghost.org'],
   },
 });
+// const isProd = process.env.NODE_ENV === 'production'
+
+// module.exports = {
+//   // Use the CDN in production and localhost for development.
+//   assetPrefix: isProd ? 'https://cdn.mydomain.com' : '',
+// }

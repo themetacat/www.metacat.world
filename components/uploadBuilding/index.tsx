@@ -88,7 +88,8 @@ export default function uploadBuilding({ imgUrl, cover,coverImg, closeBuild, sho
       <div style={{ position: "absolute", right: "0px", top: "-20px", backgroundColor: "#fff", borderRadius: "50%", width: "14px", height: "14px" }} onClick={closeBuild}>
         <img src="/images/guanbi.png" alt="" /></div>
       <div className={cn('cursor-pointer', style.uploadContainer)}>
-        <Upload customRequest={customRequest}>
+        <Upload >
+        {/* customRequest={customRequest} */}
           <div
             className={cn(
               'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',

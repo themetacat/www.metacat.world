@@ -67,7 +67,8 @@ export default function UploadBuilding({ imgUrl, afterUpload, beginUpload }: Pro
 
   return (
     <div className={cn('cursor-pointer', style.uploadContainer)}>
-      <Upload customRequest={customRequest}>
+      <Upload >
+      {/* customRequest={customRequest} */}
         <div
           className={cn(
             'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',

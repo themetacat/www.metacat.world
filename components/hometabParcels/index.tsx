@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 
 import cn from 'classnames';
 
-import style from './index.module.less';
+import style from './index.module.css';
 
 type Props = {
   active?: boolean;
