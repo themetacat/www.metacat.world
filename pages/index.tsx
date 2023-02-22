@@ -325,7 +325,9 @@ export default function Index(props) {
 
 
   return (
+    
     <Page meta={meta} className={cn('')} >
+       <script src="https://unpkg.com/@antv/g2@beta/dist/g2.min.js"></script>
       <Layout>
       {/* , joinBuilders === true ? style.aa : null */}
         <div className={cn("bg-gray-500",)} >
@@ -607,12 +609,14 @@ export default function Index(props) {
           }}
         />
       </Layout>
+     
     </Page >
   );
 }
 
 export async function getServerSideProps({ locale = 'en-US', query }) {
   return {
+  
     props: {
       messages: {
         ...require(`../messages/common/${locale}.json`),
