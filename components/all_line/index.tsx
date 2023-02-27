@@ -27,6 +27,7 @@ type Props = {
   limit?: number;
   textColor?;
   HyperlinkJump?;
+  iconImgLight?;
 };
 /**
  * The Sandbox
@@ -73,6 +74,7 @@ export default function AllLine({
   priceOptions,
   limit,
   textColor,
+  iconImgLight,
   HyperlinkJump,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
@@ -325,7 +327,7 @@ export default function AllLine({
               return {
                 lineDash: [5, 5],
                 lineWidth: 1,
-                stroke: 'rgba(255, 255, 255, 0.15)',
+                stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
               };
             },
           },
@@ -336,6 +338,7 @@ export default function AllLine({
           },
         },
       });
+
       chart.current.axis('time', {
         grid: {
           series:[{  smooth: true,}],
@@ -345,14 +348,16 @@ export default function AllLine({
               return {
                 lineDash: [5, 5],
                 lineWidth: 1,
-                stroke: 'rgba(255, 255, 255, 0.15)',
+                stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
               };
             },
           },
         },
+
         // 横轴
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           // offset: 25,
           offsetX: 25,
           offsetY: 0,
@@ -476,7 +481,7 @@ export default function AllLine({
       // ]
       chart.current.render();
     },
-    [showType, priceShowType],
+    [showType, priceShowType,iconImgLight],
   );
 
   const requestData = React.useCallback(async () => {
@@ -535,6 +540,7 @@ export default function AllLine({
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
+        iconImgLight={iconImgLight}
           options={options}
           showArrow={true}
           onClick={changeStatic}
@@ -545,6 +551,7 @@ export default function AllLine({
         ></ChartSelecter>
         <span style={{ color: '#505c4e' }}> 丨</span>
         <ChartSelecter
+        iconImgLight={iconImgLight}
           options={priceOptions}
           showArrow={true}
           onClick={changePriceStatic}
@@ -580,41 +587,50 @@ export default function AllLine({
       <>
       
         <IconLabel
+        iconImgLight={iconImgLight}
           text={legend1.label}
+          // color={`red`}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+             iconImgLight={iconImgLight}
           text={legend2.label}
           color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+             iconImgLight={iconImgLight}
           text={legend3.label}
           color={`rgb(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+             iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+             iconImgLight={iconImgLight}
           text={legend5.label}
           color={`rgb(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+             iconImgLight={iconImgLight}
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
           className="mr-5"
         ></IconLabel>
           <IconLabel
+               iconImgLight={iconImgLight}
           text={legend7.label}
           color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
+             iconImgLight={iconImgLight}
           text={legend8.label}
           color={`rgb(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]})`}
           className="mr-5"
@@ -633,9 +649,10 @@ export default function AllLine({
   }, [requestData]);
 
   return (
+    
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
+        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className={cn('flex items-center')}>{getSelect}</div>
       </div>

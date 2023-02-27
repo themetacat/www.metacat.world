@@ -20,6 +20,7 @@ import { req_sales_amount_percent } from '../../service/z_api';
 type Props = {
   active?: string;
   className?: string;
+  iconImgLight?: any;
 
 };
 // 首页 二级页
@@ -87,7 +88,7 @@ const parcels = [
     link: '/parcels?tab=decentraland',
     icon: '/images/Decentraland.jpg',
   },
- {
+  {
     label: 'Oncyber',
     icon: 'https://oncyber.io/images/logo.png',
     type: 'oncyber',
@@ -313,12 +314,12 @@ const analyticsData = [
 //   ,
 //    "Creation"
 //   , "Learn"
-  
+
 // ]
 
 
 
-export default function PageHeader({ active, className }: Props) {
+export default function darkLightPageHeader({ active, className, iconImgLight }: Props) {
   const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
@@ -331,11 +332,17 @@ export default function PageHeader({ active, className }: Props) {
   const [showStateVal, setShowStateVal] = React.useState(null);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [offsetHeighthNum, setOffsetHeightNum] = React.useState(0);
+  const [darkLight, setDarkLight] = React.useState(false);
+  useEffect(() => {
+    const darkBackColor = window.localStorage.getItem("darkLight") === "true";
+
+    setDarkLight(darkBackColor)
+  }, [darkLight])
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
 
-// console.log(searchText,999999999999999);
+  // console.log(searchText,999999999999999);
 
   // const onSearchHandler = (query: string,
   //   page: number,
@@ -370,7 +377,18 @@ export default function PageHeader({ active, className }: Props) {
   //   },
   //   []
   // );
-  
+  const btnDark = () => {
+    if (darkLight === false) {
+      window.localStorage.setItem("darkLight", 'true')
+      setDarkLight(true)
+      iconImgLight(true)
+    } else {
+      window.localStorage.setItem("darkLight", 'false')
+      setDarkLight(false)
+      iconImgLight(false)
+    }
+  }
+
   useEffect(() => {
 
 
@@ -378,7 +396,7 @@ export default function PageHeader({ active, className }: Props) {
     setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
-  }, [offsetHeighthNum])
+  }, [offsetHeighthNum, darkLight])
   return (
     <header
       className={cn('w-full flex flex-glow items-start ',
@@ -389,30 +407,30 @@ export default function PageHeader({ active, className }: Props) {
       <div
         className={cn(
           ' flex items-center  w-full flex-flow',
-          style.header,
+          darkLight === true ? style.header1 : style.header,
         )}
       >
         <div className={cn(" flex-flow", style.one,)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
-            <img className={cn('flex-flow', style.metaImg)} src="/images/imgConent/meta1.png"></img>
+            <img className={cn('flex-flow', style.metaImg)} src={darkLight === false ? "/images/imgConent/meta1.png" : '/images/image/meta1.png'}></img>
           </Link>
         </div>
         <div className={cn("flex flex-flow", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null, showStateVal === true ? style.showStateVal : null
         )}>
           <div
             className={cn(
-              'text-xl  text-gray-400 cursor-pointer hover:text-white pointer-events-auto',
-              active === '/' ? style.active : null, style.nameCon, style.rightCon1
+              'text-xl  text-gray-400 cursor-pointer  pointer-events-auto',
+              active === '/' ? style.active1 : null, style.nameCon, style.rightCon1
             )}
           >
             <Link href="/" prefetch>
-              <span className={cn('', active === '/' ? style.active : null,)}>Home</span>
+              <span className={cn('', active === '/' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Home</span>
             </Link>
           </div>
           {/* <div
           className={cn(
-            'text-xl font-medium text-gray-400 mr-14 cursor-pointer hover:text-white pointer-events-auto',
+            'text-xl font-medium text-gray-400 mr-14 cursor-pointer  pointer-events-auto',
             active === 'rent' ? style.active : null,
           )}
         >
@@ -420,10 +438,11 @@ export default function PageHeader({ active, className }: Props) {
         </div> */}
           <div
             className={cn(
-              'text-xl flex text-gray-400 relative hover:text-white  active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex text-gray-400 relative cursor-pointer pointer-events-auto',
               active === 'analytics' ? style.active : null,
               // analyticState === true ? style.active : null,
-              style.z, style.nameCon, style.rightCon
+              style.z, style.nameCon, style.rightCon,
+
             )}
             // onClick={analyticsDataSet}
             onMouseEnter={() => {
@@ -435,29 +454,28 @@ export default function PageHeader({ active, className }: Props) {
           >
 
             <Link href={'/analytics'} prefetch>
-              <span className={cn('', analyticState === true ? style.active : null, active === 'analytics' ? style.active : null,)}>Analytics</span>
+              <span className={cn('', analyticState === true && darkLight === true ? style.active1 : null, active === 'analytics' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)} >Analytics</span>
 
             </Link>
 
-            {
-              analyticState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
-            }
-            {
-              analyticState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            <img src={analyticState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
+            {/* {
+              analyticState === true? <img src= style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
+            } */}
 
             {analyticState ? (
               <TwoNav
+                iconImgLight={darkLight}
                 options={analyticsData}
                 className={style.cn1}
-                location={style.location4}
+                location={darkLight === true ? style.locationAnalyticState : style.location4}
               ></TwoNav>
             ) : null}
           </div>
 
           <div
             className={cn(
-              'text-xl flex text-gray-400 relative hover:text-white active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex text-gray-400 relative  active:text-white cursor-pointer pointer-events-auto',
               active === 'heatmap' ? style.active : null, style.nameCon, style.rightCon
             )}
             // onClick={heatmapDataSet}
@@ -469,23 +487,24 @@ export default function PageHeader({ active, className }: Props) {
             }}
           >
             <Link href={'/heatmap?type=cryptovoxels'} prefetch>
-              <span className={cn('', heatmapState === true ? style.active : null, active === 'heatmap' ? style.active : null,)}>Heatmap</span>
+              <span className={cn('', heatmapState === true && darkLight === true ? style.active1 : null, active === 'heatmap' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Heatmap</span>
 
             </Link>
-            {
-              heatmapState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            <img src={heatmapState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
+            {/* {
+              heatmapState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               heatmapState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
             {heatmapState ? (
-              <TwoNav options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
+              <TwoNav iconImgLight={darkLight} options={heatmapData} className={style.cn} location={darkLight === true ?style.location3State:style.location3}></TwoNav>
             ) : null}
           </div>
 
           <div
             className={cn(
-              'text-xl flex text-gray-400 relative cursor-pointer hover:text-white pointer-events-auto',
+              'text-xl flex text-gray-400 relative cursor-pointer  pointer-events-auto',
               active === '/parcels' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
@@ -498,15 +517,15 @@ export default function PageHeader({ active, className }: Props) {
           // onClick={placeDataSet}
           >
             <Link href="/parcels?tab=cryptovoxels" prefetch>
-              <span className={cn('', ParcelsState === true ? style.active : null, active === '/parcels' ? style.active : null,)}>Place</span>
+              <span className={cn('', ParcelsState === true && darkLight === true ? style.active1 : null, active === '/parcels' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Place</span>
             </Link>
-
-            {
-              ParcelsState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            <img src={ParcelsState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
+            {/* {
+              ParcelsState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               ParcelsState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {ParcelsState ? (
               // <TwoNav
@@ -515,16 +534,17 @@ export default function PageHeader({ active, className }: Props) {
               //   location={style.parcels}
               // ></TwoNav>
               <TwoNavigation
+                iconImgLight={darkLight}
                 options={parcels}
                 className={style.cn}
-                location={window.screen.height<820?style.parcels1:style.parcels}
+                location={darkLight === true ?style.parcels1: style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
 
           <div
             className={cn(
-              'text-xl flex text-gray-400 relative cursor-pointer hover:text-white pointer-events-auto',
+              'text-xl flex text-gray-400 relative cursor-pointer  pointer-events-auto',
               active === '/event' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
@@ -537,15 +557,16 @@ export default function PageHeader({ active, className }: Props) {
           // onClick={placeDataSet}  
           >
             <Link href="/event?tab=cryptovoxels" prefetch>
-              <span className={cn('', EventState === true ? style.active : null, active === '/event' ? style.active : null,)}>Event</span>
+              <span className={cn('', EventState === true && darkLight === true ? style.active1 : null, active === '/event' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Event</span>
             </Link>
+            <img src={EventState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
 
-            {
-              EventState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            {/* {
+              EventState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               EventState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {EventState ? (
               // <TwoNav
@@ -554,16 +575,17 @@ export default function PageHeader({ active, className }: Props) {
               //   location={style.parcels}
               // ></TwoNav>
               <TwoNavigation
+              iconImgLight={darkLight}
                 options={eventList}
                 className={style.cn}
-                location={style.eventList}
+                location={darkLight === true ?style.eventListState:style.eventList}
               ></TwoNavigation>
             ) : null}
           </div>
 
           <div
             className={cn(
-              'text-xl flex  text-gray-400 hover:text-white relative active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex  text-gray-400  relative active:text-white cursor-pointer pointer-events-auto',
               active === 'Build' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
@@ -578,28 +600,29 @@ export default function PageHeader({ active, className }: Props) {
             }}
           >
             <Link href='/creation/builders' prefetch>
-              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null,)}>Creation</span>
+              <span className={cn('', buildState === true && darkLight === true ? style.active1 : null, active === 'Build' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Creation</span>
             </Link>
-
-            {
-              buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
+            <img src={buildState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
+            {/* {
+              buildState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "8px", marginLeft: "5.67px" }}></img> : null
             }
             {
               buildState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {buildState ? (
               <TwoNavigation
+              iconImgLight={darkLight}
                 options={build}
                 className={style.cn}
-                location={style.location}
+                location={darkLight === true ?style.locationState:style.location}
               ></TwoNavigation>
             ) : null}
           </div>
 
           {/* <div
             className={cn(
-              'text-xl flex  text-gray-400 hover:text-white relative  active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex  text-gray-400  relative  active:text-white cursor-pointer pointer-events-auto',
               active === 'wearables' ? style.active : null,
               style.z, style.nameCon, style.rightCon
             )}
@@ -630,7 +653,7 @@ export default function PageHeader({ active, className }: Props) {
           </div> */}
           <div
             className={cn(
-              'text-xl flex text-gray-400 relative hover:text-white active:text-white cursor-pointer pointer-events-auto',
+              'text-xl flex text-gray-400 relative  active:text-white cursor-pointer pointer-events-auto',
               active === 'learn' ? style.active : null,
               style.nameCon
             )}
@@ -642,28 +665,29 @@ export default function PageHeader({ active, className }: Props) {
             }}
           >
             <Link href={'/learn?type=articles'} prefetch>
-              <span className={cn('', active === 'learn' ? style.active : null)}>Learn</span>
+              <span className={cn('', learnState === true && darkLight === true ? style.active1 : null, active === 'learn' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Learn</span>
             </Link>
 
-
-            {
+            <img src={learnState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
+            {/* {
               learnState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : null
             }
             {
               learnState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
-            }
+            } */}
 
             {learnState ? (
               <TwoNavigation
+              iconImgLight={darkLight}
                 options={learnCon}
                 className={style.cn2}
-                location={style.locationLearn}
+                location={darkLight === true ?style.locationLearnState:style.locationLearn}
               ></TwoNavigation>
             ) : null}
           </div>
           {/* <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400   mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'learn' ? style.active : null,
           )}
         >
@@ -673,7 +697,7 @@ export default function PageHeader({ active, className }: Props) {
         </div> */}
           {/* <div
           className={cn(
-            'text-xl font-medium text-gray-400 hover:text-white  mr-14 active:text-white cursor-pointer pointer-events-auto',
+            'text-xl font-medium text-gray-400   mr-14 active:text-white cursor-pointer pointer-events-auto',
             active === 'learn' ? style.active : null,
           )}
         >
@@ -686,19 +710,21 @@ export default function PageHeader({ active, className }: Props) {
         {showStateVal === true ?
           <div
             className={cn(
-              'text-xl font-medium text-gray-400 hover:text-white active:text-white cursor-pointer pointer-events-auto',
+              'text-xl font-medium text-gray-400  active:text-white cursor-pointer pointer-events-auto',
               active === 'builders' ? style.active : null,
               showStateVal === true ? style.connectBox1 : style.connectBox
             )}
           >
 
-            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search  setTypeVal={'Place'||'Event'||'Creation'||'Learn'}  text={searchText} showState={(x) => { setShowStateVal(x) }}  ></Search></div>
+            <div className={cn('', style.imgIcon, offsetWidthNum <= 1200 ? style.imgIconNum : null)}> <Search setTypeVal={'Place' || 'Event' || 'Creation' || 'Learn'} text={searchText} showState={(x) => { setShowStateVal(x) }}  ></Search></div>
 
             <div onClick={() => { setShowStateVal(false) }} className={cn('', style.closePop)}><img src='/images/close-pop.png'></img></div>
           </div>
           : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>}
         {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
-
+        {
+          darkLight === true ? <img onClick={btnDark} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" /> : <img onClick={btnDark} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
+        }
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
         <Toaster
           toastOptions={{

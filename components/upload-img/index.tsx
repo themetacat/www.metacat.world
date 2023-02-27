@@ -40,15 +40,7 @@ export default function UploadBuilding({ imgUrl, afterUpload, beginUpload }: Pro
 
   const customRequest = React.useCallback(
     async ({
-      action,
-      data,
       file,
-      filename,
-      headers,
-      onError,
-      onProgress,
-      onSuccess,
-      withCredentials,
     }) => {
       const size = file.size / 1024 / 1024;
       if (size >= 1) {
@@ -67,7 +59,8 @@ export default function UploadBuilding({ imgUrl, afterUpload, beginUpload }: Pro
 
   return (
     <div className={cn('cursor-pointer', style.uploadContainer)}>
-      <Upload customRequest={customRequest}>
+      <Upload customRequest={customRequest} >
+      {/* customRequest={customRequest} */}
         <div
           className={cn(
             'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',

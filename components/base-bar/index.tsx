@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart } from '@antv/g2';
+import { Chart } from '@antv/g2'
 import cn from 'classnames';
 
 import ChartTitle from '../chart-title';
@@ -18,6 +18,7 @@ type Props = {
   limit?: number;
   barWidth?: number;
   textColor?;
+  iconImgLight?;
   legend1?,
 };
 
@@ -28,6 +29,7 @@ export default function BaseBar({
   gradient = true,
   className,
   labelText,
+  iconImgLight,
   limit,
   barWidth = 35,
   legend1 = {  color: [172, 174, 242] },
@@ -118,7 +120,7 @@ export default function BaseBar({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
+                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -136,11 +138,11 @@ export default function BaseBar({
         line: {
           style: {
             lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, .15)',
+            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           offsetX: barWidth / 2,
           offsetY: 0,
           rotate: 1,
@@ -213,10 +215,10 @@ export default function BaseBar({
   }, [requestData]);
 
   return (
-    <div className={cn('w-full p-5', style.content, className)}>
+    <div className={cn('w-full p-5', iconImgLight===true?style.content1:style.content,  className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText} color={textColor}></ChartTitle>
+          <ChartTitle iconImgLight={iconImgLight} text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
             <div className="flex items-center mr-7"></div>
           </div>

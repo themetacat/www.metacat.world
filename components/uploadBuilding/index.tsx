@@ -52,15 +52,7 @@ export default function uploadBuilding({ imgUrl, cover,coverImg, closeBuild, sho
 
   const customRequest = React.useCallback(
     async ({
-      action,
-      data,
       file,
-      filename,
-      headers,
-      onError,
-      onProgress,
-      onSuccess,
-      withCredentials,
     }) => {
       const fileInd = file.type.indexOf('image')
       if(fileInd === -1){
@@ -89,6 +81,7 @@ export default function uploadBuilding({ imgUrl, cover,coverImg, closeBuild, sho
         <img src="/images/guanbi.png" alt="" /></div>
       <div className={cn('cursor-pointer', style.uploadContainer)}>
         <Upload customRequest={customRequest}>
+        {/* customRequest={customRequest} */}
           <div
             className={cn(
               'flex w-full h-full justify-center items-center z-10 absolute top-0 left-0',

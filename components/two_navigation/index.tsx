@@ -9,6 +9,7 @@ import style from './index.module.css';
 
 type Props = {
   options?;
+  iconImgLight?;
   className?: string;
   location?: string;
 };
@@ -25,12 +26,14 @@ type Props = {
   
     router.replace(newType.link);
   }, []);
+  console.log(props.iconImgLight);
+  
 
   return (
     <div className={cn(props.location)}>
         {props.options.map((item, index) => {
         return (
-            <div key={index} onClick={()=>{changeType(item)}} className={cn(style.item, props.className)} style={{ display: 'flex' }}
+            <div key={index} onClick={()=>{changeType(item)}} className={cn(props.iconImgLight===true?style.itemState:style.item, props.className)} style={{ display: 'flex' }}
             >
              {item.icon?(<img
                 src={item.icon}

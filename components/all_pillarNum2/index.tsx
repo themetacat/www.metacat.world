@@ -29,6 +29,7 @@ type Props = {
   textColor?;
   imgBox?;
   toLink?;
+  iconImgLight?;
 };
 /**
  * The Sandbox
@@ -78,6 +79,7 @@ export default function AllPillarNum2({
   textColor,
   imgBox,
   toLink,
+  iconImgLight,
 }: Props) {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -237,7 +239,7 @@ export default function AllPillarNum2({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
+                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -256,11 +258,11 @@ export default function AllPillarNum2({
         line: {
           style: {
             lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, .15)',
+            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
           rotate: showType === 'yearly' ? 0 : 1,
@@ -431,6 +433,7 @@ export default function AllPillarNum2({
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
+        iconImgLight={iconImgLight}
           options={options}
           showArrow={true}
           onClick={changeStatic}
@@ -466,6 +469,7 @@ export default function AllPillarNum2({
           className="mr-5"
         ></IconLabel> */}
         <IconLabel
+        iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
@@ -476,6 +480,7 @@ export default function AllPillarNum2({
           className="mr-5"
         ></IconLabel> */}
         <IconLabel
+        iconImgLight={iconImgLight}
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
           className="mr-5"
@@ -524,7 +529,7 @@ export default function AllPillarNum2({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-      <ChartTitle Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
+      <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

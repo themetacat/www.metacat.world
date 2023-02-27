@@ -10,6 +10,13 @@
 .info {
   height: 50px;
 }
+.fontStyle {
+  color: #000;
+  font-style: normal;
+  font-size: 14px;
+  font-family: PingFang SC;
+  line-height: 16.8px;
+}
 
 .type {
   font-size: 20px !important;
