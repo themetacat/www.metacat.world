@@ -9,7 +9,7 @@ export default function WalletBtn() {
   return (
     <div className={cn('cursor-pointer',)}>
        {/* style.btn */}
-      可以正常使用吗
+      是否可以正常推送
       {/* <div
         className={cn('flex justify-center items-center w-full h-full text-xs', style.btnDiv)}
         onClick={onClick}
