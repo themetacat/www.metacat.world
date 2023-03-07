@@ -478,7 +478,7 @@ console.log(web3,6666);
     }
     // setShowWall(false)
 
-    // console.log(web3AuthAddress,idTokenWeb3);
+    // console.log(web3AuthAddress,idTokenWeb3,222);
   }, [web3AuthAddress, loginState, idTokenWeb3, showMenu]);
 
   const login = React.useCallback(async () => {
