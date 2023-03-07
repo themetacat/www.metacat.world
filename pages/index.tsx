@@ -15,7 +15,7 @@ import { TorusWalletAdapter } from '@web3auth/torus-evm-adapter';
 import Router, { useRouter } from 'next/router';
 
 import { toast } from 'react-hot-toast';
-import RPC from './web3RPC';
+import RPC from '../components/web3RPC';
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 // import Web3Modal from 'web3modal';
 
