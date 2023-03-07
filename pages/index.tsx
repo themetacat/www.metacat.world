@@ -493,7 +493,7 @@ console.log(web3,6666);
       setProviderWeb3auth(web3authProvider);
       const idtoken = authenticateUser();
       idtoken.then((res) => {
-        // console.log(res,web3AuthAddress, 2222);
+        // console.log(res,web3AuthAddress, 22222);
       });
       if (idtoken !== null) {
         const address3 = getAccounts();
