@@ -160,7 +160,7 @@ export const getSomSpaceList = async (page: number, count: number, query: string
   return json;
 };
 
-export const getSearchDetail = async ( query: any,
+export const getSearchDetail = async ( query,
   page:number,
   per_page:number,
   search_item:string,) => {

@@ -29,7 +29,7 @@ interface Options extends IProviderControllerOptions {
 interface IAppState {
   fetching: boolean;
   address: string;
-  web3: Web3|null;
+  web3: Web3;
   provider: any;
   connected: boolean;
   chainId: number;
@@ -75,7 +75,6 @@ export const ProviderContext = React.createContext<{
 
 function initWeb3(provider: any) {
   const web3 = new Web3(provider);
-
   web3.eth.extend({
     methods: [
       {
@@ -98,7 +97,6 @@ export default function Web3ModalProvider({
   options?: Options;
 }) {
   const web3ModalRef = React.useRef<Web3Modal>(null);
-
   const value = state.useState(
     'fetching',
     'address',
