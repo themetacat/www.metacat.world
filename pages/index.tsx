@@ -112,12 +112,7 @@ const WALLET = [
     value: 'loginConnevt',
     type: 'login',
   },
-  // {
-  //   label: 'Login Out',
-  //   icon: '/images/walletconnect.png',
-  //   value: 'loginOut',
-  //   type: 'loginOut',
-  // },
+  
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
