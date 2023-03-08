@@ -1,33 +1,36 @@
 /* eslint-disable @next/next/no-img-element */
 
-
-import React, { useEffect, useState } from 'react';
-import cn from 'classnames';
-import 'tailwindcss/tailwind.css';
-import { Web3AuthCore } from '@web3auth/core';
+import React, { useEffect, useState } from "react";
+import cn from "classnames";
+import "tailwindcss/tailwind.css";
+import { Web3AuthCore } from "@web3auth/core";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { CHAIN_NAMESPACES, SafeEventEmitterProvider, WALLET_ADAPTERS } from '@web3auth/base';
-import Rekv from 'rekv';
-import Link from 'next/link';
+import {
+  CHAIN_NAMESPACES,
+  SafeEventEmitterProvider,
+  WALLET_ADAPTERS,
+} from "@web3auth/base";
+import Rekv from "rekv";
+import Link from "next/link";
 
-import { TorusWalletAdapter } from '@web3auth/torus-evm-adapter';
+import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 
-import Router, { useRouter } from 'next/router';
+import Router, { useRouter } from "next/router";
 
-import { toast } from 'react-hot-toast';
-import RPC from '../components/web3RPC';
+import { toast } from "react-hot-toast";
+import RPC from "../components/web3RPC";
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 // import Web3Modal from 'web3modal';
 
 // import { useWalletProvider } from '../web3moda2';
-import { useWalletProvider } from '../components/web3modal';
+import { useWalletProvider } from "../components/web3modal";
 
-import { getNonce, loginSignature, getBaseInfo } from '../service';
-import { req_user_logout } from '../service/z_api';
+import { getNonce, loginSignature, getBaseInfo } from "../service";
+import { req_user_logout } from "../service/z_api";
 
-import { convert, getToken, removeToken, setToken } from '../common/utils';
+import { convert, getToken, removeToken, setToken } from "../common/utils";
 
-import style from './index.module.css';
+import style from "./index.module.css";
 
 type Props = {
   name?: string;
@@ -59,34 +62,34 @@ const INITIAL_STATE: IProfileData = {
 
 const MENU = [
   {
-    label: 'Setting',
-    icon: '/images/v5/Settings.png',
-    value: '/profile/setting',
-    type: 'operation',
+    label: "Setting",
+    icon: "/images/v5/Settings.png",
+    value: "/profile/setting",
+    type: "operation",
   },
   {
-    label: 'My Parcels',
-    icon: '/images/v5/MyParcels.png',
-    value: '/profile?type=parcellist',
-    type: 'operation',
+    label: "My Parcels",
+    icon: "/images/v5/MyParcels.png",
+    value: "/profile?type=parcellist",
+    type: "operation",
   },
   {
-    label: 'My Wearables',
-    icon: '/images/icon/wearables.png',
-    value: '/profile?type=wearablelist',
-    type: 'operation',
+    label: "My Wearables",
+    icon: "/images/icon/wearables.png",
+    value: "/profile?type=wearablelist",
+    type: "operation",
   },
   {
-    label: 'My Buildings',
-    icon: '/images/icon/buildingIcon.png',
-    value: '/profile?type=building',
-    type: 'operation',
+    label: "My Buildings",
+    icon: "/images/icon/buildingIcon.png",
+    value: "/profile?type=building",
+    type: "operation",
   },
   {
-    label: 'Sign Out',
-    icon: '/images/v5/Signout.png',
-    value: 'resetApp',
-    type: 'operation',
+    label: "Sign Out",
+    icon: "/images/v5/Signout.png",
+    value: "resetApp",
+    type: "operation",
   },
   // {
   //   label: 'Sign Out',
@@ -98,10 +101,10 @@ const MENU = [
 
 const WALLET = [
   {
-    label: 'MetaMask',
-    icon: '/images/v5/Maskgroup.png',
-    value: 'metamask',
-    type: 'wallet',
+    label: "MetaMask",
+    icon: "/images/v5/Maskgroup.png",
+    value: "metamask",
+    type: "wallet",
   },
   // {
   //   label: 'Wallet Connect',
@@ -110,10 +113,10 @@ const WALLET = [
   //   type: 'wallet',
   // },
   {
-    label: 'Others(Meta,Twitter...)',
-    icon: '/images/v5/login.jpg',
-    value: 'loginConnevt',
-    type: 'login',
+    label: "Others(Meta,Twitter...)",
+    icon: "/images/v5/login.jpg",
+    value: "loginConnevt",
+    type: "login",
   },
   // {
   //   label: 'Login Out',
@@ -128,17 +131,23 @@ export const state = new Rekv<IProfileData>(INITIAL_STATE);
 export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [showMenu, setShowMenu] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const profileData = state.useState('accessToken', 'idToken', 'refreshToken', 'profile');
+  const profileData = state.useState(
+    "accessToken",
+    "idToken",
+    "refreshToken",
+    "profile"
+  );
   const { accessToken, idToken, refreshToken, profile } = profileData;
 
   const [showWall, setShowWall] = React.useState(null);
-  const [providerWeb3auth, setProviderWeb3auth] = useState<SafeEventEmitterProvider | null>(null);
+  const [providerWeb3auth, setProviderWeb3auth] =
+    useState<SafeEventEmitterProvider | null>(null);
 
   const [web3auth, setWeb3auth] = useState<Web3AuthCore | null>(null);
 
   const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
-  const [loginState, setLoginState] = React.useState('web3Auth');
+  const [loginState, setLoginState] = React.useState("web3Auth");
   // const [w3, setw3] = React.useState(null)
 
   // const provider = new WalletConnectProvider({
@@ -146,20 +155,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   // });
 
   // const [p1, setp1] = React.useState(provider)
-  useEffect(() => {
-    // const LoginType = window.localStorage.getItem("LoginType") === "web3Auth";
-    // console.log(window.localStorage.getItem("LoginType"));
-    const idTokenAuthenticateUser = window.localStorage.getItem('idTokenAuthenticateUser')
-    const addressGetAccounts = window.localStorage.getItem('addressGetAccounts')
-setIdTokenWeb3(idTokenAuthenticateUser)
-setWeb3AuthAddress(addressGetAccounts)
-    setLoginState(window.localStorage.getItem('LoginType'));
-    // console.log(LoginType,666666666666);
-  }, [loginState,web3AuthAddress,idTokenWeb3]);
-  const web3 = useWalletProvider();
-  
 
-  
+  const web3 = useWalletProvider();
+
   const router = useRouter();
 
   const { pathname } = router;
@@ -174,7 +172,7 @@ setWeb3AuthAddress(addressGetAccounts)
 
       return null;
     },
-    [null],
+    [null]
   );
 
   const checkLoginStatu = React.useCallback(
@@ -187,19 +185,19 @@ setWeb3AuthAddress(addressGetAccounts)
           profile: data.profile,
           refreshToken: data.refreshToken,
         });
-        setToken('atk', data.accessToken);
-        setToken('rtk', data.refreshToken);
+        setToken("atk", data.accessToken);
+        setToken("rtk", data.refreshToken);
         Router.push({
-          pathname: '/profile',
+          pathname: "/profile",
           query: {
-            type: 'parcellist',
+            type: "parcellist",
           },
         });
       }
       setShowMenu(false);
       setLoading(false);
     },
-    [resultHandler],
+    [resultHandler]
   );
 
   const requireNonce = React.useCallback(
@@ -207,7 +205,7 @@ setWeb3AuthAddress(addressGetAccounts)
       const res = await getNonce(addr);
       return resultHandler(res);
     },
-    [resultHandler],
+    [resultHandler]
   );
 
   const connect = React.useCallback(
@@ -215,34 +213,35 @@ setWeb3AuthAddress(addressGetAccounts)
       const nonceData = await requireNonce(addr);
       if (nonceData) {
         const { address: add, nonce } = nonceData;
-        providerCon.request({ method: 'personal_sign', params: [nonce, add] }).then(
-          async (signature) => {
-            const result = await loginSignature(add, signature);
-            checkLoginStatu(result);
-          },
-          (error: any) => {
-            setLoading(false); 
-          },
-        );
+        providerCon
+          .request({ method: "personal_sign", params: [nonce, add] })
+          .then(
+            async (signature) => {
+              const result = await loginSignature(add, signature);
+              checkLoginStatu(result);
+            },
+            (error: any) => {
+              setLoading(false);
+            }
+          );
       }
     },
-    [requireNonce, checkLoginStatu],
+    [requireNonce, checkLoginStatu]
   );
 
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
- 
 
-    if (typeof (window as any).ethereum === 'undefined' || !(window as any).ethereum.isMetaMask) {
- 
+    if (
+      typeof (window as any).ethereum === "undefined" ||
+      !(window as any).ethereum.isMetaMask
+    ) {
       setLoading(false);
       setShowMenu(false);
-      window.open('https://metamask.io/');
+      window.open("https://metamask.io/");
       return;
     }
     try {
- 
-   
       // removeToken(profile.address, 'atk');
       // removeToken(profile.address, 'rtk');
       // state.setState({
@@ -250,7 +249,7 @@ setWeb3AuthAddress(addressGetAccounts)
       //   refreshToken: '',
       //   profile: { address: null, nickName: null, avatar: null },
       // });
-console.log(web3,6666);
+      console.log(web3, 6666);
 
       web3.connect().then(
         async (res) => {
@@ -260,29 +259,29 @@ console.log(web3,6666);
         },
         (err) => {
           setLoading(false);
-        },
+        }
       );
-      window.localStorage.setItem('LoginType', 'metaMask');
+      window.localStorage.setItem("LoginType", "metaMask");
     } catch {
       setLoading(false);
     }
-  }, [web3]);
+  }, [web3, connect]);
 
   const clipName = React.useCallback(
     (addres) => {
       if (addres?.length > 8) {
         const end = addres.length - 4;
         const all = addres.slice(4, end);
-        return addres.replace(all, '***');
+        return addres.replace(all, "***");
       }
       return addres;
     },
-    [null],
+    [null]
   );
 
   const onClick = React.useCallback(
     (event) => {
-      console.log(showMenu,idTokenWeb3,888888888888);
+      console.log(showMenu, idTokenWeb3, 888888888888);
       if (idTokenWeb3 === null) {
         setShowMenu(false);
       }
@@ -292,7 +291,7 @@ console.log(web3,6666);
         onClickHandler();
       }
     },
-    [showMenu, onClickHandler, idTokenWeb3],
+    [showMenu, onClickHandler, idTokenWeb3]
   );
 
   const closeApp = async (newWeb3) => {
@@ -367,7 +366,7 @@ console.log(web3,6666);
   //   return web_3
   // }, [subscribeProvider])
   const clientId =
-    'BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs';
+    "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
 
   useEffect(() => {
     const init = async () => {
@@ -376,8 +375,9 @@ console.log(web3,6666);
           clientId,
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: '0x1',
-            rpcTarget: 'https://mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e', // This is the public RPC we have added, please pass on your own endpoint while creating an app
+            chainId: "0x1",
+            rpcTarget:
+              "https://mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
           },
         });
 
@@ -390,11 +390,11 @@ console.log(web3,6666);
           initParams: {
             whiteLabel: {
               theme: {
-                isDark: window.localStorage.getItem('darkLight') === 'false',
-                colors: { primary: '#00a8ff' },
+                isDark: window.localStorage.getItem("darkLight") === "false",
+                colors: { primary: "#00a8ff" },
               },
-              logoDark: 'https://web3auth.io/images/w3a-L-Favicon-1.svg',
-              logoLight: 'https://web3auth.io/images/w3a-D-Favicon-1.svg',
+              logoDark: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+              logoLight: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
             },
           },
           sessionTime: 3600 * 24 * 7, // 1 hour in seconds
@@ -415,40 +415,50 @@ console.log(web3,6666);
   }, []);
 
   const logout = React.useCallback(() => {
-    console.log('退出');
+    console.log("退出");
     if (!web3auth) {
-      console.log('web3auth not initialized yet');
+      console.log("web3auth not initialized yet");
       return;
     }
+    window.localStorage.setItem("LoginType", null);
+    window.localStorage.setItem("addressGetAccounts", null);
     web3auth.logout();
+    window.localStorage.clear();
     setWeb3AuthAddress(null);
 
     setProviderWeb3auth(null);
-    console.log(idTokenWeb3,web3AuthAddress);
-    window.localStorage.clear()
-    if (pathname !== '/') {
-      window.location.href = '/';
+    console.log(idTokenWeb3, web3AuthAddress);
+
+    if (pathname !== "/") {
+      window.location.href = "/";
+      window.localStorage.setItem("LoginType", null);
+      window.localStorage.setItem("addressGetAccounts", null);
+      window.localStorage.clear();
     } else {
       window.location.reload();
+      window.localStorage.setItem("LoginType", null);
+      window.localStorage.setItem("addressGetAccounts", null);
+      window.localStorage.clear();
     }
-    removeToken('atk');
+    removeToken("atk");
     setIdTokenWeb3(null);
     // console.log(getToken('atk'),555555555555);
 
     // setShowMenu(false);
-  }, [ web3auth, pathname]);
+  }, [web3auth, idTokenWeb3, web3AuthAddress, pathname]);
   const getAccounts = React.useCallback(async () => {
     // setGetAccountsState(true)
     // const promise = new Promise(async (resolve, reject) => {
     if (!providerWeb3auth) {
-      console.log('provider not initialized yet');
+      console.log("provider not initialized yet");
       return;
     }
     const rpc = new RPC(providerWeb3auth);
 
     const addressGetAccounts = await rpc.getAccounts();
     // setGetAccountsState(false)
-    window.localStorage.setItem('addressGetAccounts',addressGetAccounts)
+    window.localStorage.setItem("addressGetAccounts", addressGetAccounts);
+    console.log(window.localStorage.getItem("addressGetAccounts"), 6666666);
 
     setWeb3AuthAddress(addressGetAccounts);
     // resolve(address)
@@ -456,20 +466,23 @@ console.log(web3,6666);
     // })
 
     // return promise
-  }, [ providerWeb3auth]);
+  }, [providerWeb3auth]);
 
   const authenticateUser = React.useCallback(async () => {
     // console.log(web3AuthAddress,888888888888)
 
     // const promise = new Promise(async (resolve, reject) => {
     if (!web3auth) {
-      console.log('web3auth not initialized yet');
+      console.log("web3auth not initialized yet");
       return;
     }
 
     const idTokenAuthenticateUser = await web3auth.authenticateUser();
     setIdTokenWeb3(idTokenAuthenticateUser.idToken);
-    window.localStorage.setItem('idTokenAuthenticateUser', idTokenAuthenticateUser.idToken)
+    window.localStorage.setItem(
+      "idTokenAuthenticateUser",
+      idTokenAuthenticateUser.idToken
+    );
     // resolve(idToken)
     // })
     // if(idToken||idTokenWeb3){
@@ -481,11 +494,31 @@ console.log(web3,6666);
     // setToken('atk',idToken.idToken+'-.-'+'0x60d136A10c67D534BB7822c175a44C855b2D9B57')
 
     // return promise
-  }, [idTokenWeb3, web3AuthAddress, showMenu, providerWeb3auth, idTokenWeb3, web3auth]);
+  }, [
+    idTokenWeb3,
+    web3AuthAddress,
+    showMenu,
+    providerWeb3auth,
+    idTokenWeb3,
+    web3auth,
+  ]);
+  useEffect(() => {
+    // const LoginType = window.localStorage.getItem("LoginType") === "web3Auth";
+    // console.log(window.localStorage.getItem("LoginType"));
+    const idTokenAuthenticateUser = window.localStorage.getItem(
+      "idTokenAuthenticateUser"
+    );
+    const addressGetAccounts =
+      window.localStorage.getItem("addressGetAccounts");
+    setIdTokenWeb3(idTokenAuthenticateUser);
+    setWeb3AuthAddress(addressGetAccounts);
 
+    setLoginState(window.localStorage.getItem("LoginType"));
+    // console.log(LoginType,666666666666);
+  }, [loginState, web3AuthAddress, idTokenWeb3]);
   useEffect(() => {
     if (idTokenWeb3 && web3AuthAddress) {
-      setToken('atk', `${idTokenWeb3}-.-${web3AuthAddress}`);
+      setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
       // setToken('atk',idTokenWeb3+'-.-'+web3AuthAddress)
 
       // window.location.href = '/profile?type=parcellist'
@@ -497,12 +530,14 @@ console.log(web3,6666);
 
   const login = React.useCallback(async () => {
     if (!web3auth) {
-      console.log('web3auth not initialized yet');
+      console.log("web3auth not initialized yet");
       return;
     }
 
     try {
-      const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.TORUS_EVM);
+      const web3authProvider = await web3auth.connectTo(
+        WALLET_ADAPTERS.TORUS_EVM
+      );
 
       setProviderWeb3auth(web3authProvider);
       const idtoken = authenticateUser();
@@ -518,7 +553,9 @@ console.log(web3,6666);
         //   setWeb3AuthAddress(null)
       }
     } catch (error) {
-      if (error.message === 'Failed to connect with wallet. Already connected') {
+      if (
+        error.message === "Failed to connect with wallet. Already connected"
+      ) {
         getAccounts();
         const idtoken = authenticateUser();
         idtoken.then((res) => {
@@ -534,18 +571,16 @@ console.log(web3,6666);
     }
 
     // setLoginState('web3Auth')
-    window.localStorage.setItem('LoginType', 'web3Auth');
+    window.localStorage.setItem("LoginType", "web3Auth");
   }, [providerWeb3auth, web3auth, showMenu, web3AuthAddress, idTokenWeb3]);
 
   const clickItem = React.useCallback(
     (item) => {
       // console.log(!profile.address,item.value === 'metamask');
 
-
       setShowWall(item.value);
-      if (item.type === 'wallet') {
-
-        if (!profile.address && item.value === 'metamask') {
+      if (item.type === "wallet") {
+        if (!profile.address && item.value === "metamask") {
           connectToChain();
         }
         // if (!profile.address && item.value === 'walletconnect') {
@@ -554,7 +589,7 @@ console.log(web3,6666);
         //   walletconnect()
         // }
       }
-      if (item.type === 'login') {
+      if (item.type === "login") {
         // if (!web3auth) {
         //   console.log("web3auth not initialized yet");
         //   return;
@@ -568,11 +603,11 @@ console.log(web3,6666);
         // authenticateUser()
         // getAccounts()
       }
-      if (item.type === 'loginOut') {
+      if (item.type === "loginOut") {
         logout();
       }
     },
-    [profile, connectToChain, login],
+    [profile, connectToChain, login]
     // walletconnect
   );
 
@@ -603,22 +638,22 @@ console.log(web3,6666);
 
       // console.log(idTokenWeb3,web3AuthAddress,profile?.address,);
       // return;
-      if (loginState === 'web3Auth') {
-        if (item.value === 'resetApp') {
+      if (loginState === "web3Auth") {
+        if (item.value === "resetApp") {
           setProviderWeb3auth(null);
           setWeb3AuthAddress(null);
           // console.log(11111);
 
           logout();
 
-          removeToken('atk');
+          removeToken("atk");
         }
         setShowMenu(false);
-      } else if (profile?.address && loginState === 'metaMask') {
-        if (item.value === 'resetApp') {
-          removeToken('atk');
-          removeToken('rtk');
-          removeToken('address');
+      } else if (profile?.address && loginState === "metaMask") {
+        if (item.value === "resetApp") {
+          removeToken("atk");
+          removeToken("rtk");
+          removeToken("address");
           // if (w3) {
           //   w3.resetApp()
           // }
@@ -626,31 +661,20 @@ console.log(web3,6666);
             web3?.resetApp();
           }
           state.setState({
-            accessToken: '',
-            refreshToken: '',
+            accessToken: "",
+            refreshToken: "",
             profile: { address: null, nickName: null, avatar: null },
           });
           // const res = await req_user_logout(accessToken);
           // console.log(res)
-          if (pathname !== '/') {
-            window.location.href = '/';
+          if (pathname !== "/") {
+            window.location.href = "/";
           }
         }
         setShowMenu(false);
       }
     },
-    [
-      pathname,
-      web3,
-      loginState,
-      profile,
-      state,
-      web3AuthAddress,
-      showMenu,
-      idTokenWeb3,
-      providerWeb3auth,
-      accessToken,
-    ],
+    [logout, pathname, web3, loginState, profile]
     // w3
   );
 
@@ -662,13 +686,13 @@ console.log(web3,6666);
         return (
           <li
             className={cn(
-              'flex justify-between  items-center',
+              "flex justify-between  items-center",
               style.menuItem,
-              idx === MENU.length - 1 ? style.last : null,
+              idx === MENU.length - 1 ? style.last : null
             )}
             key={idx}
           >
-            {item.value === 'resetApp' ? (
+            {item.value === "resetApp" ? (
               <div
                 className="w-full flex justify-between  items-center p-3 text-xs"
                 onClick={() => {
@@ -676,19 +700,31 @@ console.log(web3,6666);
                 }}
               >
                 <div className="flex items-center justify-around">
-                  <img src={item.icon} className={cn('mr-2', style.operation)}></img>
+                  <img
+                    src={item.icon}
+                    className={cn("mr-2", style.operation)}
+                  ></img>
                   <span>{item.label}</span>
                 </div>
-                <img src="/images/v5/arrow-simple.png" className={style.activeOperation}></img>
+                <img
+                  src="/images/v5/arrow-simple.png"
+                  className={style.activeOperation}
+                ></img>
               </div>
             ) : (
               <Link href={item.value}>
                 <div className="w-full flex justify-between  items-center p-3 text-xs">
                   <div className="flex items-center justify-around">
-                    <img src={item.icon} className={cn('mr-2', style.operation)}></img>
+                    <img
+                      src={item.icon}
+                      className={cn("mr-2", style.operation)}
+                    ></img>
                     <span>{item.label}</span>
                   </div>
-                  <img src="/images/v5/arrow-simple.png" className={style.activeOperation}></img>
+                  <img
+                    src="/images/v5/arrow-simple.png"
+                    className={style.activeOperation}
+                  ></img>
                 </div>
                 {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
               </Link>
@@ -700,37 +736,46 @@ console.log(web3,6666);
     return WALLET.map((item, idx) => {
       return (
         <li
-          className={cn('flex justify-around items-center text-xs', style.walletItem)}
+          className={cn(
+            "flex justify-around items-center text-xs",
+            style.walletItem
+          )}
           key={idx}
           onClick={() => {
             clickItem(item);
           }}
         >
           <div
-            className={cn('flex justify-between items-center w-full h-full', style.walletContent)}
+            className={cn(
+              "flex justify-between items-center w-full h-full",
+              style.walletContent
+            )}
           >
             <div className="flex items-center justify-around">
-              <img src={item.icon} className={cn('mr-2', style.walletLogo)}></img>
+              <img
+                src={item.icon}
+                className={cn("mr-2", style.walletLogo)}
+              ></img>
               <span>{item.label}</span>
             </div>
-            {loading === true?
-               <img
-               alt='/'
-                 src="/images/loading.png"
-                 className={cn(
-                   'animate-spin',
-                   style.loading,
-                   loading && item.value === showWall ? null : ' hidden',
-                 )}
-               />:
-               <img
-               alt=''
-                 src="/images/v5/arrow.png"
-                 className={cn(style.activeWallet, loading ? ' hidden' : null)}
-               ></img>
-            }
-         
-          
+            {loading === true ? (
+              <img
+                alt="/"
+                src="/images/loading.png"
+                className={cn(
+                  "animate-spin",
+                  style.loading,
+                  loading && item.value === showWall ? null : " hidden"
+                )}
+              />
+            ) : (
+              <img
+                alt=""
+                src="/images/v5/arrow.png"
+                className={cn(style.activeWallet, loading ? " hidden" : null)}
+              ></img>
+            )}
+
             {/* {loading ? (
               <img src="/images/loading.png" className={cn('animate-spin', style.loading)} />
             ) : (
@@ -743,7 +788,7 @@ console.log(web3,6666);
   }, [profile, clickItem, clickOperationItem, idTokenWeb3, loading, showWall]);
 
   const getText = React.useMemo(() => {
-    let text = 'Connect';
+    let text = "Connect";
     if (profile.address) {
       if (profile.nickName) {
         text = profile.nickName;
@@ -762,34 +807,45 @@ console.log(web3,6666);
         setShowMenu(!showMenu);
         // setLoading(false)
       } else {
-        text = 'Connect';
+        text = "Connect";
         setShowMenu(true);
       }
     }
 
     return (
       <>
-      <div style={{display:"flex"}}>
-        {profile.address || (web3AuthAddress && providerWeb3auth !== null && idTokenWeb3) ? (
-          <img className={cn('mr-1 ', style.avatar)} src={profile.avatar || '/images/icon.png'} />
-        ) : (
-          <img className="mr-1" src="/images/v5/wallet.png" />
-        )}
-        <div
-          title={text}
-          className={cn(
-            'font-semibold truncate',
-            style.walletText,
-            profile.address ? 'text-xs' : 'text-base',
+        <div style={{ display: "flex" }}>
+          {profile.address ||
+          (web3AuthAddress && providerWeb3auth !== null && idTokenWeb3) ? (
+            <img
+              className={cn("mr-1 ", style.avatar)}
+              src={profile.avatar || "/images/icon.png"}
+            />
+          ) : (
+            <img className="mr-1" src="/images/v5/wallet.png" />
           )}
-        >
-          {/* {provider===null?'Connect':text} */}
-          {text}
-        </div>
+          <div
+            title={text}
+            className={cn(
+              "font-semibold truncate",
+              style.walletText,
+              profile.address ? "text-xs" : "text-base"
+            )}
+          >
+            {/* {provider===null?'Connect':text} */}
+            {text}
+          </div>
         </div>
       </>
     );
-  }, [profile, clipName, web3AuthAddress, providerWeb3auth, idTokenWeb3, logout]);
+  }, [
+    profile,
+    clipName,
+    web3AuthAddress,
+    providerWeb3auth,
+    idTokenWeb3,
+    logout,
+  ]);
 
   const requireBaseData = React.useCallback(
     async (tk) => {
@@ -799,7 +855,7 @@ console.log(web3,6666);
       const newProfile = Object.assign({ address: addr, avatar }, profile);
       state.setState({ profile: newProfile });
     },
-    [profile],
+    [profile]
   );
 
   // React.useEffect(() => {
@@ -818,9 +874,9 @@ console.log(web3,6666);
   }, [profile]);
 
   React.useEffect(() => {
-    document.addEventListener('click', close);
+    document.addEventListener("click", close);
     return () => {
-      document.removeEventListener('click', close);
+      document.removeEventListener("click", close);
     };
   }, [close]);
   const unloggedInView = (
@@ -835,16 +891,18 @@ console.log(web3,6666);
   );
 
   return (
-    <div className={cn('cursor-pointer',style.btn)}>
-
+    <div className={cn("cursor-pointer", style.btn)}>
       <div
-        className={cn('flex justify-center items-center w-full h-full text-xs', style.btnDiv)}
+        className={cn(
+          "flex justify-center items-center w-full h-full text-xs",
+          style.btnDiv
+        )}
         onClick={onClick}
       >
         {getText}
       </div>
-      <div style={{ borderRadius: '6px' }}>
-        <ul className={cn('list-none mt-2 z-20')}>{showMenu && render}</ul>
+      <div style={{ borderRadius: "6px" }}>
+        <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
       </div>
     </div>
   );
