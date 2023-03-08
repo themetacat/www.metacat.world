@@ -149,14 +149,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   useEffect(() => {
     // const LoginType = window.localStorage.getItem("LoginType") === "web3Auth";
     // console.log(window.localStorage.getItem("LoginType"));
-
+    const idTokenAuthenticateUser = window.localStorage.getItem('idTokenAuthenticateUser')
+    const addressGetAccounts = window.localStorage.getItem('addressGetAccounts')
+setIdTokenWeb3(idTokenAuthenticateUser)
+setWeb3AuthAddress(addressGetAccounts)
     setLoginState(window.localStorage.getItem('LoginType'));
     // console.log(LoginType,666666666666);
-  }, [loginState]);
+  }, [loginState,web3AuthAddress,idTokenWeb3]);
   const web3 = useWalletProvider();
   
 
-  console.log(useWalletProvider,"u",web3,useWalletProvider());
   
   const router = useRouter();
 
@@ -422,6 +424,8 @@ console.log(web3,6666);
     setWeb3AuthAddress(null);
 
     setProviderWeb3auth(null);
+    console.log(idTokenWeb3,web3AuthAddress);
+    window.localStorage.clear()
     if (pathname !== '/') {
       window.location.href = '/';
     } else {
@@ -432,7 +436,7 @@ console.log(web3,6666);
     // console.log(getToken('atk'),555555555555);
 
     // setShowMenu(false);
-  }, [providerWeb3auth, web3auth, pathname]);
+  }, [ web3auth, pathname]);
   const getAccounts = React.useCallback(async () => {
     // setGetAccountsState(true)
     // const promise = new Promise(async (resolve, reject) => {
@@ -444,6 +448,7 @@ console.log(web3,6666);
 
     const addressGetAccounts = await rpc.getAccounts();
     // setGetAccountsState(false)
+    window.localStorage.setItem('addressGetAccounts',addressGetAccounts)
 
     setWeb3AuthAddress(addressGetAccounts);
     // resolve(address)
@@ -451,7 +456,7 @@ console.log(web3,6666);
     // })
 
     // return promise
-  }, [web3AuthAddress, providerWeb3auth]);
+  }, [ providerWeb3auth]);
 
   const authenticateUser = React.useCallback(async () => {
     // console.log(web3AuthAddress,888888888888)
@@ -464,6 +469,7 @@ console.log(web3,6666);
 
     const idTokenAuthenticateUser = await web3auth.authenticateUser();
     setIdTokenWeb3(idTokenAuthenticateUser.idToken);
+    window.localStorage.setItem('idTokenAuthenticateUser', idTokenAuthenticateUser.idToken)
     // resolve(idToken)
     // })
     // if(idToken||idTokenWeb3){
