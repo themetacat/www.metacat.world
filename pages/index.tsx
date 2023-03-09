@@ -25,12 +25,18 @@ import RPC from "../components/web3RPC";
 // import { useWalletProvider } from '../web3moda2';
 import { useWalletProvider } from "../components/web3modal";
 
-import { getNonce, loginSignature, getBaseInfo } from "../service";
+import {
+  getNonce,
+  loginSignature,
+  getBaseInfo,
+  getCVEventList,
+} from "../service";
 import { req_user_logout } from "../service/z_api";
 
 import { convert, getToken, removeToken, setToken } from "../common/utils";
 
 import style from "./index.module.css";
+import base_info from "./api/base_info";
 
 type Props = {
   name?: string;
@@ -148,6 +154,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
   const [loginState, setLoginState] = React.useState("web3Auth");
+  const [profileConcent, setProfileConcent] = React.useState(null);
   // const [w3, setw3] = React.useState(null)
 
   // const provider = new WalletConnectProvider({
@@ -187,12 +194,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         setToken("atk", data.accessToken);
         setToken("rtk", data.refreshToken);
-        Router.push({
-          pathname: "/profile",
-          query: {
-            type: "parcellist",
-          },
-        });
+
+        // Router.push({
+        //   pathname: "/profile",
+        //   query: {
+        //     type: "parcellist",
+        //   },
+        // });
       }
       setShowMenu(false);
       setLoading(false);
@@ -249,13 +257,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       //   refreshToken: '',
       //   profile: { address: null, nickName: null, avatar: null },
       // });
-      console.log(web3, 6666);
 
       web3.connect().then(
         async (res) => {
-          console.log(244);
           const { address: addr, provider } = res;
           connect(addr, provider);
+          console.log(res, "address");
+          window.localStorage.setItem("metaMaskAddress", res.address);
         },
         (err) => {
           setLoading(false);
@@ -502,12 +510,60 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     idTokenWeb3,
     web3auth,
   ]);
+  const profilConent = React.useCallback(async () => {
+    const profilemetaMask = window.localStorage.getItem("metaMaskAddress");
+    if (profilemetaMask !== null) {
+      const metaCatAtk = window.localStorage.getItem("METACAT_atk");
+      console.log(metaCatAtk, 888887588);
+      console.log(getBaseInfo(metaCatAtk));
+      if (metaCatAtk) {
+        const renConcent = getBaseInfo(profileData.accessToken);
+        console.log(renConcent);
+        // setProfileConcent(renConcent)
+        // console.log(profileConcent,55655);
+        renConcent.then((renConcent1) => {
+          // const profileAddress = renConcent1.profile?.address;
+          setProfileConcent(renConcent1.profile?.address);
+        });
+      }
+    }
+  }, [profileData]);
+
   useEffect(() => {
     // const LoginType = window.localStorage.getItem("LoginType") === "web3Auth";
     // console.log(window.localStorage.getItem("LoginType"));
     const idTokenAuthenticateUser = window.localStorage.getItem(
       "idTokenAuthenticateUser"
     );
+
+    const profilemetaMask = window.localStorage.getItem("metaMaskAddress");
+    const metaCatAtk = window.localStorage.getItem("METACAT_atk");
+    console.log(metaCatAtk);
+
+    if (!metaCatAtk) {
+      console.log(1);
+
+      setTimeout(() => {
+        profilConent();
+      }, 2000);
+    } else {
+      console.log(2);
+      const renConcent = getBaseInfo(metaCatAtk);
+
+      renConcent.then((renConcent1) => {
+        console.log(renConcent1?.data?.profile);
+
+        // const profileAddress = renConcent1.profile?.address;
+        setProfileConcent(renConcent1.profile?.address);
+        state.setState({ profile: renConcent1?.data?.profile });
+      });
+    }
+    // setProfileConcent(metaCatAtk)
+
+    //     console.log(profileData,555);
+    //     console.log(getBaseInfo(profileData.accessToken));
+    // const renConcent = getBaseInfo(profileData.accessToken)
+
     const addressGetAccounts =
       window.localStorage.getItem("addressGetAccounts");
     setIdTokenWeb3(idTokenAuthenticateUser);
@@ -515,18 +571,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
     setLoginState(window.localStorage.getItem("LoginType"));
     // console.log(LoginType,666666666666);
-  }, [loginState, web3AuthAddress, idTokenWeb3]);
-  useEffect(() => {
     if (idTokenWeb3 && web3AuthAddress) {
       setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
-      // setToken('atk',idTokenWeb3+'-.-'+web3AuthAddress)
-
-      // window.location.href = '/profile?type=parcellist'
     }
-    // setShowWall(false)
-
-    // console.log(web3AuthAddress,idTokenWeb3,2222);
-  }, [web3AuthAddress, loginState, idTokenWeb3, showMenu]);
+  }, []);
+  // loginState,profilConent, web3AuthAddress, idTokenWeb3
+  // useEffect(() => {
+  //   if (idTokenWeb3 && web3AuthAddress) {
+  //     setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
+  //   }
+  // }, [web3AuthAddress, loginState, idTokenWeb3]);
 
   const login = React.useCallback(async () => {
     if (!web3auth) {
@@ -580,7 +634,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       setShowWall(item.value);
       if (item.type === "wallet") {
-        if (!profile.address && item.value === "metamask") {
+        if (!profile?.address && item?.value === "metamask") {
           connectToChain();
         }
         // if (!profile.address && item.value === 'walletconnect') {
@@ -660,6 +714,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           if (web3) {
             web3?.resetApp();
           }
+          window.localStorage.clear();
+          // window.localStorage.setItem("LoginType", null);
+          // window.localStorage.setItem("metaMaskAddress", null);
+          // window.localStorage.setItem("METACAT_atk", null);
           state.setState({
             accessToken: "",
             refreshToken: "",
@@ -680,6 +738,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const render = React.useMemo(() => {
     // console.log(web3AuthAddress,idTokenWeb3,1111);
+    console.log(profile);
 
     if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
       return MENU.map((item, idx) => {
@@ -785,17 +844,28 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         </li>
       );
     });
-  }, [profile, clickItem, clickOperationItem, idTokenWeb3, loading, showWall]);
+  }, [
+    profile,
+    clickItem,
+    web3AuthAddress,
+    clickOperationItem,
+    idTokenWeb3,
+    loading,
+    showWall,
+  ]);
 
   const getText = React.useMemo(() => {
+    console.log(profile?.address);
+
     let text = "Connect";
-    if (profile.address) {
-      if (profile.nickName) {
-        text = profile.nickName;
+    if (profile?.address) {
+      if (profile?.nickName) {
+        text = profile?.nickName;
       } else {
-        text = clipName(profile.address);
+        text = clipName(profile?.address);
+        setShowMenu(!showMenu);
       }
-    } else if (!profile.address) {
+    } else if (!profile?.address) {
       getAccounts();
       // console.log(web3AuthAddress,idTokenWeb3);
 
@@ -815,7 +885,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     return (
       <>
         <div style={{ display: "flex" }}>
-          {profile.address ||
+          {profile?.address ||
           (web3AuthAddress && providerWeb3auth !== null && idTokenWeb3) ? (
             <img
               className={cn("mr-1 ", style.avatar)}
@@ -829,7 +899,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             className={cn(
               "font-semibold truncate",
               style.walletText,
-              profile.address ? "text-xs" : "text-base"
+              profile?.address ? "text-xs" : "text-base"
             )}
           >
             {/* {provider===null?'Connect':text} */}

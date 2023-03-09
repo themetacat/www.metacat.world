@@ -67,7 +67,7 @@ export const client = () => {
     region: 'oss-cn-hongkong',
     endpoint: 'oss-cn-hongkong.aliyuncs.com',
     stsToken: '',
-    // crossOriginIsolated: true,
+    crossOriginIsolated: true,
     secure: true,
     accessKeyId: 'LTAI5tCXLNPjxpZkoDeAyDNL',
     accessKeySecret: '25qppPU9EUK5CVChJLTyBgnspL4mLk',
