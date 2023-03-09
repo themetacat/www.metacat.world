@@ -19,8 +19,8 @@ import Router, { useRouter } from "next/router";
 
 import { toast } from "react-hot-toast";
 import RPC from "../components/web3RPC";
-// import WalletConnectProvider from '@walletconnect/web3-provider';
-// import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import Web3Modal from 'web3modal';
 
 // import { useWalletProvider } from '../web3moda2';
 import { useWalletProvider } from "../components/web3modal";
@@ -155,13 +155,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
   const [loginState, setLoginState] = React.useState("web3Auth");
   const [profileConcent, setProfileConcent] = React.useState(null);
-  // const [w3, setw3] = React.useState(null)
+  const [w3, setw3] = React.useState(null)
 
-  // const provider = new WalletConnectProvider({
-  //   infuraId: "f9d7d835ed864a299a13e841a1b654f8",
-  // });
+  const provider = new WalletConnectProvider({
+    infuraId: "f9d7d835ed864a299a13e841a1b654f8",
+  });
 
-  // const [p1, setp1] = React.useState(provider)
+  const [p1, setp1] = React.useState(provider)
 
   const web3 = useWalletProvider();
 
@@ -309,70 +309,70 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     await newWeb3.clearCachedProvider();
   };
 
-  // const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
-  //   const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
-  //   providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
-  //     loginSignature(add, resD).then((resData) => {
-  //       checkLoginStatu(resData);
-  //     }, (res1) => {
+  const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
+    const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
+    providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
+      loginSignature(add, resD).then((resData) => {
+        checkLoginStatu(resData);
+      }, (res1) => {
 
-  //     })
-  //   }, (error) => {
-  //     if (w3) {
-  //       w3.resetApp()
-  //     }
-  //   })
+      })
+    }, (error) => {
+      if (w3) {
+        w3.resetApp()
+      }
+    })
 
-  //   if (!providerDa.on) {
-  //     return;
-  //   }
+    if (!providerDa.on) {
+      return;
+    }
 
-  //   //   //断开连接
-  //   provider.on('close', async () => {
-  //     removeToken('atk');
-  //     removeToken('rtk');
-  //     state.setState({
-  //       accessToken: '',
-  //       refreshToken: '',
-  //       profile: { address: null, nickName: null, avatar: null },
-  //     });
-  //     window.location.href = '/';
-  //     newWeb3.resetApp()
-  //     await provider.killSession()
-  //     await provider.clearCachedProvider();
-  //   });
-  //   provider.on('accountsChanged', async (accounts) => {
-  //     const addressData = await accounts[0];
-  //   });
-  // }, [w3])
+    //   //断开连接
+    provider.on('close', async () => {
+      removeToken('atk');
+      removeToken('rtk');
+      state.setState({
+        accessToken: '',
+        refreshToken: '',
+        profile: { address: null, nickName: null, avatar: null },
+      });
+      window.location.href = '/';
+      newWeb3.resetApp()
+      await provider.killSession()
+      await provider.clearCachedProvider();
+    });
+    provider.on('accountsChanged', async (accounts) => {
+      const addressData = await accounts[0];
+    });
+  }, [w3])
 
-  // const walletconnect = React.useCallback(async () => {
+  const walletconnect = React.useCallback(async () => {
 
-  //   const providerOptions = {
-  //     walletconnect: {
-  //       package: WalletConnectProvider,
-  //       options: {
-  //         infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
-  //         // rpc: {
-  //         //   56: 'https://mainnet.infura.io/v3',
-  //         // },
-  //         // network: 56,
-  //       },
-  //     },
-  //   };
-  //   const web3Modal = new Web3Modal({
-  //     network: 'mainnet',
-  //     cacheProvider: true,
-  //     providerOptions,
-  //   });
-  //   const providerDataText = await web3Modal.connect()
-  //   await web3Modal.toggleModal()
-  //   const web_3 = new WalletConnectProvider(providerDataText)
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+          // rpc: {
+          //   56: 'https://mainnet.infura.io/v3',
+          // },
+          // network: 56,
+        },
+      },
+    };
+    const web3Modal = new Web3Modal({
+      network: 'mainnet',
+      cacheProvider: true,
+      providerOptions,
+    });
+    const providerDataText = await web3Modal.connect()
+    await web3Modal.toggleModal()
+    const web_3 = new WalletConnectProvider(providerDataText)
 
-  //   setw3(web_3)
-  //   await subscribeProvider(providerDataText, web_3, web3Modal)
-  //   return web_3
-  // }, [subscribeProvider])
+    setw3(web_3)
+    await subscribeProvider(providerDataText, web_3, web3Modal)
+    return web_3
+  }, [subscribeProvider])
   const clientId =
     "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
 
@@ -551,11 +551,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       const renConcent = getBaseInfo(metaCatAtk);
 
       renConcent.then((renConcent1) => {
-        console.log(renConcent1?.data?.profile);
+        console.log(renConcent1?.data?.profile.nick_name);
 
         // const profileAddress = renConcent1.profile?.address;
         setProfileConcent(renConcent1.profile?.address);
-        state.setState({ profile: renConcent1?.data?.profile });
+        state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
+
       });
     }
     // setProfileConcent(metaCatAtk)
@@ -637,11 +638,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         if (!profile?.address && item?.value === "metamask") {
           connectToChain();
         }
-        // if (!profile.address && item.value === 'walletconnect') {
-        //   console.log(444444444);
+        if (!profile.address && item.value === 'walletconnect') {
+          console.log(444444444);
 
-        //   walletconnect()
-        // }
+          walletconnect()
+        }
       }
       if (item.type === "login") {
         // if (!web3auth) {
@@ -855,17 +856,20 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   ]);
 
   const getText = React.useMemo(() => {
-    console.log(profile?.address);
+    console.log(profile);
 
     let text = "Connect";
     if (profile?.address) {
+        console.log(profile,profile?.nickName);
       if (profile?.nickName) {
+        console.log(profile);
         text = profile?.nickName;
       } else {
         text = clipName(profile?.address);
         setShowMenu(!showMenu);
       }
     } else if (!profile?.address) {
+      
       getAccounts();
       // console.log(web3AuthAddress,idTokenWeb3);
 
