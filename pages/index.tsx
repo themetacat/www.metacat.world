@@ -726,10 +726,8 @@ const loginCon = window.localStorage.getItem("LoginType")
         }
         setShowMenu(false);
     
-      } else if(loginState === "walletConnect"){
-        
+      } else if(window.localStorage.getItem("LoginType")  === "walletConnect"){
             if (item.value === "resetApp") {
-           
             removeToken("atk");
             removeToken("rtk");
             removeToken("address");
