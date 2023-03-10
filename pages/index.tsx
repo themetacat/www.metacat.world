@@ -335,7 +335,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         refreshToken: '',
         profile: { address: null, nickName: null, avatar: null },
       });
-      window.location.href = '/';
+      if (pathname !== "/") {
+        window.location.href = "/";
+      }else{
+        window.location.reload();
+      }
       newWeb3.resetApp()
       await provider.killSession()
       await provider.clearCachedProvider();
@@ -426,6 +430,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       console.log("web3auth not initialized yet");
       return;
     }
+    console.log(111);
+    
     window.localStorage.setItem("LoginType", null);
     window.localStorage.setItem("addressGetAccounts", null);
     web3auth.logout();
@@ -675,10 +681,11 @@ const loginCon = window.localStorage.getItem("LoginType")
   const clickOperationItem = React.useCallback(
     async (item) => {
       console.log(loginState,item.value,profile?.address);
-
+      const loginCon = window.localStorage.getItem("LoginType")
+      setLoginState(loginCon);
       // console.log(idTokenWeb3,web3AuthAddress,profile?.address,);
       // return;
-      if (loginState === "web3Auth") {
+      if (window.localStorage.getItem("LoginType") === "web3Auth") {
         if (item.value === "resetApp") {
           setProviderWeb3auth(null);
           setWeb3AuthAddress(null);
@@ -689,7 +696,7 @@ const loginCon = window.localStorage.getItem("LoginType")
           removeToken("atk");
         }
         setShowMenu(false);
-      } else if (loginState === "metaMask") {
+      } else if (window.localStorage.getItem("LoginType") === "metaMask" &&profile?.address) {
         if (item.value === "resetApp") {
           removeToken("atk");
           removeToken("rtk");
@@ -713,6 +720,8 @@ const loginCon = window.localStorage.getItem("LoginType")
           // console.log(res)
           if (pathname !== "/") {
             window.location.href = "/";
+          }else{
+            window.location.reload();
           }
         }
         setShowMenu(false);
@@ -731,6 +740,8 @@ const loginCon = window.localStorage.getItem("LoginType")
             });
             if (pathname !== "/") {
               window.location.href = "/";
+            }else{
+              window.location.reload();
             }
             window.localStorage.setItem("LoginType", null);
             window.localStorage.setItem("METACAT_atk", null);
