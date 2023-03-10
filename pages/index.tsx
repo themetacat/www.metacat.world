@@ -112,12 +112,12 @@ const WALLET = [
     value: "metamask",
     type: "wallet",
   },
-  // {
-  //   label: 'Wallet Connect',
-  //   icon: '/images/walletconnect.png',
-  //   value: 'walletconnect',
-  //   type: 'wallet',
-  // },
+  {
+    label: 'Wallet Connect',
+    icon: '/images/walletconnect.png',
+    value: 'walletconnect',
+    type: 'wallet',
+  },
   {
     label: "Others(Meta,Twitter...)",
     icon: "/images/v5/login.jpg",
@@ -262,7 +262,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         async (res) => {
           const { address: addr, provider } = res;
           connect(addr, provider);
-          console.log(res, "address");
           window.localStorage.setItem("metaMaskAddress", res.address);
         },
         (err) => {
@@ -289,7 +288,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const onClick = React.useCallback(
     (event) => {
-      console.log(showMenu, idTokenWeb3, 888888888888);
       if (idTokenWeb3 === null) {
         setShowMenu(false);
       }
@@ -310,6 +308,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   };
 
   const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
+    
     const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
     providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
       loginSignature(add, resD).then((resData) => {
@@ -347,7 +346,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   }, [w3])
 
   const walletconnect = React.useCallback(async () => {
-
+   
     const providerOptions = {
       walletconnect: {
         package: WalletConnectProvider,
@@ -368,9 +367,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     const providerDataText = await web3Modal.connect()
     await web3Modal.toggleModal()
     const web_3 = new WalletConnectProvider(providerDataText)
-
     setw3(web_3)
     await subscribeProvider(providerDataText, web_3, web3Modal)
+    window.localStorage.setItem('LoginType','walletConnect')
     return web_3
   }, [subscribeProvider])
   const clientId =
@@ -423,7 +422,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   }, []);
 
   const logout = React.useCallback(() => {
-    console.log("退出");
     if (!web3auth) {
       console.log("web3auth not initialized yet");
       return;
@@ -435,7 +433,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     setWeb3AuthAddress(null);
 
     setProviderWeb3auth(null);
-    console.log(idTokenWeb3, web3AuthAddress);
 
     if (pathname !== "/") {
       window.location.href = "/";
@@ -450,7 +447,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     }
     removeToken("atk");
     setIdTokenWeb3(null);
-    // console.log(getToken('atk'),555555555555);
 
     // setShowMenu(false);
   }, [web3auth, idTokenWeb3, web3AuthAddress, pathname]);
@@ -466,7 +462,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     const addressGetAccounts = await rpc.getAccounts();
     // setGetAccountsState(false)
     window.localStorage.setItem("addressGetAccounts", addressGetAccounts);
-    console.log(window.localStorage.getItem("addressGetAccounts"), 6666666);
 
     setWeb3AuthAddress(addressGetAccounts);
     // resolve(address)
@@ -477,7 +472,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   }, [providerWeb3auth]);
 
   const authenticateUser = React.useCallback(async () => {
-    // console.log(web3AuthAddress,888888888888)
 
     // const promise = new Promise(async (resolve, reject) => {
     if (!web3auth) {
@@ -514,13 +508,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     const profilemetaMask = window.localStorage.getItem("metaMaskAddress");
     if (profilemetaMask !== null) {
       const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-      console.log(metaCatAtk, 888887588);
-      console.log(getBaseInfo(metaCatAtk));
       if (metaCatAtk) {
         const renConcent = getBaseInfo(profileData.accessToken);
-        console.log(renConcent);
         // setProfileConcent(renConcent)
-        // console.log(profileConcent,55655);
         renConcent.then((renConcent1) => {
           // const profileAddress = renConcent1.profile?.address;
           setProfileConcent(renConcent1.profile?.address);
@@ -538,20 +528,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
     const profilemetaMask = window.localStorage.getItem("metaMaskAddress");
     const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-    console.log(metaCatAtk);
 
     if (!metaCatAtk) {
-      console.log(1);
 
       setTimeout(() => {
         profilConent();
       }, 2000);
     } else {
-      console.log(2);
       const renConcent = getBaseInfo(metaCatAtk);
 
       renConcent.then((renConcent1) => {
-        console.log(renConcent1?.data?.profile.nick_name);
 
         // const profileAddress = renConcent1.profile?.address;
         setProfileConcent(renConcent1.profile?.address);
@@ -569,13 +555,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       window.localStorage.getItem("addressGetAccounts");
     setIdTokenWeb3(idTokenAuthenticateUser);
     setWeb3AuthAddress(addressGetAccounts);
-
-    setLoginState(window.localStorage.getItem("LoginType"));
-    // console.log(LoginType,666666666666);
+const loginCon = window.localStorage.getItem("LoginType")
+    setLoginState(loginCon);
+    console.log(loginState,666666666666,window.localStorage.getItem("LoginType"));
     if (idTokenWeb3 && web3AuthAddress) {
       setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
     }
-  }, []);
+  }, [loginState]);
   // loginState,profilConent, web3AuthAddress, idTokenWeb3
   // useEffect(() => {
   //   if (idTokenWeb3 && web3AuthAddress) {
@@ -639,7 +625,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           connectToChain();
         }
         if (!profile.address && item.value === 'walletconnect') {
-          console.log(444444444);
 
           walletconnect()
         }
@@ -689,7 +674,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const clickOperationItem = React.useCallback(
     async (item) => {
-      // console.log(loginState);
+      console.log(loginState,item.value,profile?.address);
 
       // console.log(idTokenWeb3,web3AuthAddress,profile?.address,);
       // return;
@@ -704,7 +689,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           removeToken("atk");
         }
         setShowMenu(false);
-      } else if (profile?.address && loginState === "metaMask") {
+      } else if (loginState === "metaMask") {
         if (item.value === "resetApp") {
           removeToken("atk");
           removeToken("rtk");
@@ -731,7 +716,28 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           }
         }
         setShowMenu(false);
+    
+      } else if(loginState === "walletConnect"){
+        
+            if (item.value === "resetApp") {
+           
+            removeToken("atk");
+            removeToken("rtk");
+            removeToken("address");
+            state.setState({
+              accessToken: "",
+              refreshToken: "",
+              profile: { address: null, nickName: null, avatar: null },
+            });
+            if (pathname !== "/") {
+              window.location.href = "/";
+            }
+            window.localStorage.setItem("LoginType", null);
+            window.localStorage.setItem("METACAT_atk", null);
+            window.localStorage.clear()
+          }
       }
+    
     },
     [logout, pathname, web3, loginState, profile]
     // w3
@@ -739,7 +745,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const render = React.useMemo(() => {
     // console.log(web3AuthAddress,idTokenWeb3,1111);
-    console.log(profile);
 
     if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
       return MENU.map((item, idx) => {
@@ -856,7 +861,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   ]);
 
   const getText = React.useMemo(() => {
-    console.log(profile);
 
     let text = "Connect";
     if (profile?.address) {
