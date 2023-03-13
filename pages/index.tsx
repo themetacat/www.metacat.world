@@ -349,8 +349,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     });
   }, [w3])
 
+
   const walletconnect = React.useCallback(async () => {
-   
+    setLoading(true);
     const providerOptions = {
       walletconnect: {
         package: WalletConnectProvider,
@@ -374,6 +375,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     setw3(web_3)
     await subscribeProvider(providerDataText, web_3, web3Modal)
     window.localStorage.setItem('LoginType','walletConnect')
+    setLoading(false);
+   
     return web_3
   }, [subscribeProvider])
   const clientId =
@@ -473,10 +476,20 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     // resolve(address)
     // reject(address)
     // })
-
+    
+    if (idTokenWeb3 && web3AuthAddress) {
+      setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
+      const webGetBase = getBaseInfo(getToken('atk'))
+      webGetBase.then((webGetBase1) => {
+        // const profileAddress = renConcent1.profile?.address;
+      state.setState({ profile: { address: webGetBase1?.data?.profile?.address, nickName: webGetBase1?.data?.profile?.nick_name, avatar: webGetBase1?.data?.profile?.avatar }});
+      });
+    }
+   
     // return promise
-  }, [providerWeb3auth]);
+  }, [providerWeb3auth,idTokenWeb3,web3AuthAddress]);
 
+  
   const authenticateUser = React.useCallback(async () => {
 
     // const promise = new Promise(async (resolve, reject) => {
@@ -484,6 +497,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       console.log("web3auth not initialized yet");
       return;
     }
+    
 
     const idTokenAuthenticateUser = await web3auth.authenticateUser();
     setIdTokenWeb3(idTokenAuthenticateUser.idToken);
@@ -495,6 +509,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     // })
     // if(idToken||idTokenWeb3){
     setShowMenu(true);
+    
     // }
     //  const address1= getAccounts()
     //  setToken('atk',idToken+'-'+address1)
@@ -502,6 +517,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     // setToken('atk',idToken.idToken+'-.-'+'0x60d136A10c67D534BB7822c175a44C855b2D9B57')
 
     // return promise
+  
+    
+   
   }, [
     idTokenWeb3,
     web3AuthAddress,
@@ -515,11 +533,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     if (profilemetaMask !== null) {
       const metaCatAtk = window.localStorage.getItem("METACAT_atk");
       if (metaCatAtk) {
-        const renConcent = getBaseInfo(profileData.accessToken);
+        const renConcent = getBaseInfo(metaCatAtk);
         // setProfileConcent(renConcent)
         renConcent.then((renConcent1) => {
           // const profileAddress = renConcent1.profile?.address;
           setProfileConcent(renConcent1.profile?.address);
+          state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
         });
       }
     }
@@ -541,6 +560,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         profilConent();
       }, 2000);
     } else {
+      
       const renConcent = getBaseInfo(metaCatAtk);
 
       renConcent.then((renConcent1) => {
@@ -550,6 +570,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
 
       });
+    
     }
     // setProfileConcent(metaCatAtk)
 
@@ -559,11 +580,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
     const addressGetAccounts =
       window.localStorage.getItem("addressGetAccounts");
-    setIdTokenWeb3(idTokenAuthenticateUser);
-    setWeb3AuthAddress(addressGetAccounts);
+    // setIdTokenWeb3(idTokenAuthenticateUser);
+    // setWeb3AuthAddress(addressGetAccounts);
 const loginCon = window.localStorage.getItem("LoginType")
     setLoginState(loginCon);
-    console.log(loginState,666666666666,window.localStorage.getItem("LoginType"));
+    
+    
     if (idTokenWeb3 && web3AuthAddress) {
       setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
     }
@@ -589,15 +611,17 @@ const loginCon = window.localStorage.getItem("LoginType")
       setProviderWeb3auth(web3authProvider);
       const idtoken = authenticateUser();
       idtoken.then((res) => {
-        // console.log(res,web3AuthAddress, 2222);
       });
       if (idtoken !== null) {
         const address3 = getAccounts();
         address3.then((res) => {
+          
           // WalletLoginError: Failed to connect with wallet. Already connected
+          // window.localStorage.setItem("metaMaskAddress", res);
         });
         // }else{
         //   setWeb3AuthAddress(null)
+       
       }
     } catch (error) {
       if (
@@ -616,15 +640,30 @@ const loginCon = window.localStorage.getItem("LoginType")
         }
       }
     }
-
+    // const renConcent = getBaseInfo(`${idTokenWeb3}-.-${web3AuthAddress}`);
+    // console.log(renConcent);
+    
+    // // setProfileConcent(renConcent)
+    // renConcent.then((renConcent1) => {
+    //   // const profileAddress = renConcent1.profile?.address;
+    //   setProfileConcent(renConcent1.profile?.address);
+    //   state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
+    // });
     // setLoginState('web3Auth')
     window.localStorage.setItem("LoginType", "web3Auth");
+
+    
   }, [providerWeb3auth, web3auth, showMenu, web3AuthAddress, idTokenWeb3]);
+
 
   const clickItem = React.useCallback(
     (item) => {
+      
+      if(!profile?.address){
+        window.localStorage.clear()
+      }
       // console.log(!profile.address,item.value === 'metamask');
-
+// setLoading(true)
       setShowWall(item.value);
       if (item.type === "wallet") {
         if (!profile?.address && item?.value === "metamask") {
@@ -680,9 +719,9 @@ const loginCon = window.localStorage.getItem("LoginType")
 
   const clickOperationItem = React.useCallback(
     async (item) => {
-      console.log(loginState,item.value,profile?.address);
-      const loginCon = window.localStorage.getItem("LoginType")
-      setLoginState(loginCon);
+      // console.log(loginState,item.value,profile?.address);
+      // const loginCon = window.localStorage.getItem("LoginType")
+      // setLoginState(loginCon);
       // console.log(idTokenWeb3,web3AuthAddress,profile?.address,);
       // return;
       if (window.localStorage.getItem("LoginType") === "web3Auth") {
@@ -832,7 +871,7 @@ const loginCon = window.localStorage.getItem("LoginType")
               ></img>
               <span>{item.label}</span>
             </div>
-            {loading === true ? (
+            {/* {loading === true ? (
               <img
                 alt="/"
                 src="/images/loading.png"
@@ -848,13 +887,13 @@ const loginCon = window.localStorage.getItem("LoginType")
                 src="/images/v5/arrow.png"
                 className={cn(style.activeWallet, loading ? " hidden" : null)}
               ></img>
-            )}
+            )} */}
 
-            {/* {loading ? (
+            {loading===true? (
               <img src="/images/loading.png" className={cn('animate-spin', style.loading)} />
             ) : (
               <img src="/images/v5/arrow.png" className={style.activeWallet}></img>
-            )} */}
+            )}
           </div>
         </li>
       );
@@ -873,9 +912,10 @@ const loginCon = window.localStorage.getItem("LoginType")
 
     let text = "Connect";
     if (profile?.address) {
-        console.log(profile,profile?.nickName);
-      if (profile?.nickName) {
-        console.log(profile);
+      
+        // console.log(profile,profile?.nickName);
+      if (profile?.nickName&&profile?.address) {
+        // console.log(profile);
         text = profile?.nickName;
       } else {
         text = clipName(profile?.address);
