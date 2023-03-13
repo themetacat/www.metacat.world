@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { v4 as uuid } from 'uuid';
 
 import CoverImg from '../cover-img';
-import ParcelsState from '../parcels-dcl-state';
+// import ParcelsState from '../parcels-dcl-state';
 import style from './index.module.css';
 
 type Props = {
