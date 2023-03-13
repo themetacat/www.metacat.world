@@ -1,48 +1,53 @@
-/* eslint-disable @next/next/no-img-element */
-
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import "tailwindcss/tailwind.css";
-import { Web3AuthCore } from "@web3auth/core";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import {
-  CHAIN_NAMESPACES,
-  SafeEventEmitterProvider,
-  WALLET_ADAPTERS,
-} from "@web3auth/base";
+import { v4 as uuid } from 'uuid';
+import { toast } from 'react-hot-toast';
+import Page from "../components/page";
+
 import Rekv from "rekv";
-import Link from "next/link";
+import { useRouter, withRouter } from 'next/router';
+import Tab4 from '../components/tab4'
 
-import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
+import { SITE_NAME, META_DESCRIPTION } from "../common/const";
+import style from "./index.module.css";
+import DclCard from '../components/parcels-dcl-card';
+import store from '../store/profile';
+import WalletBtn from "../components/wallet-btn";
+import Card from '../components/parcels-card';
+import ParcelList from "../components/parcelList";
+import Tab3 from '../components/tab3';
+import ParcelsTab from '../components/parcels-tab'
+import RentSet from '../components/parcels_rent_set';
+import Popup from '../components/popup';
+import Status from '../components/status'
+import { convert, getToken, setToken } from '../common/utils';
 
-import Router, { useRouter } from "next/router";
 
-import { toast } from "react-hot-toast";
-import RPC from "../components/web3RPC";
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal from 'web3modal';
-
-// import { useWalletProvider } from '../web3moda2';
-import { useWalletProvider } from "../components/web3modal";
+import { getBaseInfo, refreshToken, getParcelList2 } from '../service';
 
 import {
-  getNonce,
-  loginSignature,
-  getBaseInfo,
-  getCVEventList,
-} from "../service";
-import { req_user_logout } from "../service/z_api";
-
-import { convert, getToken, removeToken, setToken } from "../common/utils";
-
-import style from "./index.module.css";
-import base_info from "./api/base_info";
-
-type Props = {
-  name?: string;
-  address?: string;
-  onClickHandler?: () => void;
-};
+  req_parcels_cancel,
+  req_parcels_leased,
+  req_dcl_parcel_list,
+  req_dcl_cancel,
+  req_dcl_leased,
+  req_cv_parcel_traffic,
+  req_cv_parcel_traffic_daily,
+  req_cv_parcel_month_traffic_detail,
+  req_deceData_parcel_traffic_daily,
+  req_dece_parcel_traffic_list,
+  req_dece_parcel_traffic,
+  req_building_list,
+  req_cv_parcel_traffic_list,
+  req_get_user_wearable,
+  req_set_wearable_show_status,
+  req_bind_ver_email_code,
+  req_userBuilder_apply_become,
+  req_user_add_or_edit_building,
+  req_get_building_detail_info,
+  req_builder_del_self_building,
+} from '../service/z_api';
 
 interface IProfileData {
   accessToken: string;
@@ -66,971 +71,860 @@ const INITIAL_STATE: IProfileData = {
   },
 };
 
-const MENU = [
+const TAB3 = [
   {
-    label: "Setting",
-    icon: "/images/v5/Settings.png",
-    value: "/profile/setting",
-    type: "operation",
+    label: 'Parcel List',
+    type: 'parcellist',
   },
   {
-    label: "My Parcels",
-    icon: "/images/v5/MyParcels.png",
-    value: "/profile?type=parcellist",
-    type: "operation",
+    label: 'Traffic Report',
+    type: 'trafficreport',
   },
   {
-    label: "My Wearables",
-    icon: "/images/icon/wearables.png",
-    value: "/profile?type=wearablelist",
-    type: "operation",
+    label: 'My Wearables',
+    type: 'wearablelist',
   },
   {
-    label: "My Buildings",
-    icon: "/images/icon/buildingIcon.png",
-    value: "/profile?type=building",
-    type: "operation",
-  },
-  {
-    label: "Sign Out",
-    icon: "/images/v5/Signout.png",
-    value: "resetApp",
-    type: "operation",
+    label: 'My Buildings',
+    type: 'building',
   },
   // {
-  //   label: 'Sign Out',
-  //   icon: '/images/v5/Signout.png',
-  //   value: 'resetAppWeb3',
-  //   type: 'operation',
+  //   label: 'SALES REPORT',
   // },
 ];
-
-const WALLET = [
+const TABData = [
   {
-    label: "MetaMask",
-    icon: "/images/v5/Maskgroup.png",
-    value: "metamask",
-    type: "wallet",
+    label: 'Voxels',
+    icon: '/images/cvLogo.png',
+    type: 'cryptovoxels',
   },
   {
-    label: 'Wallet Connect',
-    icon: '/images/walletconnect.png',
-    value: 'walletconnect',
-    type: 'wallet',
+    label: 'Decentraland',
+    icon: '/images/Decentraland.jpg',
+    type: 'decentraland',
   },
-  {
-    label: "Others(Meta,Twitter...)",
-    icon: "/images/v5/login.jpg",
-    value: "loginConnevt",
-    type: "login",
-  },
-  // {
-  //   label: 'Login Out',
-  //   icon: '/images/walletconnect.png',
-  //   value: 'loginOut',
-  //   type: 'loginOut',
-  // },
 ];
-
+const Nav = [
+  {
+    label: 'All',
+    state: 1,
+    num: 0,
+  },
+];
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
+const meta = {
+  title: ` ${SITE_NAME}`,
+  description: META_DESCRIPTION,
+};
 
-export default function WalletBtn({ name, address, onClickHandler }: Props) {
-  const [showMenu, setShowMenu] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const profileData = state.useState(
-    "accessToken",
-    "idToken",
-    "refreshToken",
-    "profile"
-  );
-  const { accessToken, idToken, refreshToken, profile } = profileData;
-
-  const [showWall, setShowWall] = React.useState(null);
-  const [providerWeb3auth, setProviderWeb3auth] =
-    useState<SafeEventEmitterProvider | null>(null);
-
-  const [web3auth, setWeb3auth] = useState<Web3AuthCore | null>(null);
-
-  const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
-  const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
-  const [loginState, setLoginState] = React.useState("web3Auth");
-  const [profileConcent, setProfileConcent] = React.useState(null);
-  const [w3, setw3] = React.useState(null)
-
-  const provider = new WalletConnectProvider({
-    infuraId: "f9d7d835ed864a299a13e841a1b654f8",
-  });
-
-  const [p1, setp1] = React.useState(provider)
-
-  const web3 = useWalletProvider();
-
+export default function PageNew( r) {
+  const nav_Label = React.useRef(null);
   const router = useRouter();
+  const [nav, setNav] = React.useState(Nav);
+  const [tokenWearable, setTokenWearable] = React.useState(null);
+  const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
+  const [loading, setLoading] = React.useState(false);
+  const [routeTab, setRouteTab] = React.useState( 'parcellist');
+  const [tabState, setTabState] = React.useState('cryptovoxels');
+  const [showTab, setShowTab] = React.useState(TAB3[0].label);
+  const [parcelsIds, setParcelsIds] = React.useState([]);
+  const [selectedIds, setSelectedIds] = React.useState([]);
+  const [dataSource, setDataSource] = React.useState([]);
+  const [cardState, setCardState] = React.useState(false);
+  const [dclDataSource, setDclDataSource] = React.useState([]);
+  const [rent_set_state, set_rent_set_state] = React.useState(false);
+  const cls = cn('flex-1', style.bottomLine);
+  const [status, set_status] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const [type, set_type] = React.useState(false);
+  const [value, set_value] = React.useState('');
+  const [label, setLabel] = React.useState('');
+  const [cartData, setCartData] = React.useState([]);
+  const [navLabel, setNavLabel] = React.useState('All');
+  const changeTab3 = React.useCallback(
+    async (l, t) => {
+      setTabState('cryptovoxels');
+      setShowTab(l);
+      setRouteTab(t);
+      // router?.replace(`/profile?type=${t}`);
+      // router?.replace(`/type=${t}`);
+    },
+    [showTab],
+  );
+  const onTabChange = React.useCallback(
+    async (tab) => {
+      if (tabState === tab) return;
+      setLoading(true);
+      setTabState(tab);
+      setParcelsIds([]);
+      setSelectedIds([]);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
+      if (tab === 'cryptovoxels') {
+        // setDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'decentraland') {
+        // setDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'dcl' }));
+      }
+    },
+    [tabState],
+  );
+  const changeNavTab = React.useCallback(
+    (nav_label, index = 0) => {
+      // console.log(nav_label,222222222222222);
 
-  const { pathname } = router;
+      // setNavLabel(navLabel);
+      setNavLabel(nav_label);
+      setCardState(false);
+      // setManySetState(false);
+      nav_Label.current = nav_label;
+      // changeNum(dataSource, nav_label);
+      // console.log(Nav);
 
+      const set_nav = Nav.map((item, i) => {
+        if (index === i) return { ...item, state: 1 };
+        return { ...item, state: 0 };
+      });
+      // console.log(set_nav);
+      setNav(set_nav);
+    },
+    [Nav, setCardState,  setNavLabel, setNav, dataSource, cartData],
+  );
+    // 过滤数组 拿到每一项对应的数量
+    const changeNum = React.useCallback(
+      (data, current_label = 'All') => {
+        if (current_label === 'All') {
+          const current_all = data.slice();
+          setCartData(current_all);
+        }
+        if (current_label === 'For rent') {
+          const current_forRent = data.filter((item) => item.status === 'for_rent');
+          setCartData(current_forRent);
+        }
+        if (current_label === 'Leased') {
+          const current_leased = data.filter((item) => item.status === 'leased');
+          setCartData(current_leased);
+        }
+        if (current_label === 'Not for rent') {
+          const notForRent = data.filter((item) => item.status === 'not_for_rent');
+          setCartData(notForRent);
+        }
+        if (nav_Label.current === null) {
+          changeNavTab('All');
+        }
+      },
+      [Nav, setCartData, navLabel, setLabel, setNavLabel, cartData],
+    );
+  const manyChange = React.useCallback(
+    (many_label, data, sta = true) => {
+      const ids = [];
+      if (many_label === 'Rent out several')
+        data.forEach((item) => {
+          if (item.status === 'not_for_rent') ids.push(item.parcelId);
+        });
+      if (many_label === 'Cancel lease for multiple' || many_label === 'Mark several as leased')
+        data.forEach((item) => {
+          if (item.status === 'for_rent') ids.push(item.parcelId);
+        });
+      setParcelsIds(ids);
+      setCardState(sta);
+      setLabel(many_label);
+      setSelectedIds([]);
+      changeNum(dataSource, nav_Label.current);
+    },
+    [setParcelsIds, setLabel, setCardState, changeNavTab, changeNum, nav_Label, dataSource],
+  );
+  const refreshTK = React.useCallback(async () => {
+ 
+    const rToken = getToken('rtk');
+    if (rToken&&window.localStorage.getItem("LoginType")==='metaMask') {
+      const res = await refreshToken(rToken);
+      const { code, data, msg } = res;
+      if (code === 100003) {
+        toast.error('Token timeout');
+        window.location.href = '/';
+        return null;
+      }
+      if (code !== 100000) {
+        toast.error(msg);
+        return null;
+      }
+      const { accessToken, refreshToken: rtk } = convert(data);
+     
+      setToken('atk', accessToken);
+      setToken('rtk', rtk);
+      state.setState({ accessToken, refreshToken: rtk });
+      return accessToken;
+    }
+    return null;
+  }, [null]);
   const resultHandler = React.useCallback(
-    (res) => {
+    (res, callback) => {
       const { code, msg, data } = res;
       if (code === 100000) {
         return convert(data);
       }
+      if (code === 100003) {
+        refreshTK().then((token) => {
+          if (token && callback) {
+            callback(token);
+          }
+        });
+        return null;
+      }
+
       toast.error(msg);
 
       return null;
     },
-    [null]
+    [refreshTK],
   );
 
-  const checkLoginStatu = React.useCallback(
-    (res) => {
-      const data = resultHandler(res);
-      // const idToken =  web3auth.authenticateUser();
-      if (data) {
-        state.setState({
-          accessToken: data.accessToken,
-          profile: data.profile,
-          refreshToken: data.refreshToken,
-        });
-        setToken("atk", data.accessToken);
-        setToken("rtk", data.refreshToken);
-
-        // Router.push({
-        //   pathname: "/profile",
-        //   query: {
-        //     type: "parcellist",
-        //   },
-        // });
-      }
-      setShowMenu(false);
-      setLoading(false);
-    },
-    [resultHandler]
-  );
-
-  const requireNonce = React.useCallback(
-    async (addr) => {
-      const res = await getNonce(addr);
-      return resultHandler(res);
-    },
-    [resultHandler]
-  );
-
-  const connect = React.useCallback(
-    async (addr, providerCon) => {
-      const nonceData = await requireNonce(addr);
-      if (nonceData) {
-        const { address: add, nonce } = nonceData;
-        providerCon
-          .request({ method: "personal_sign", params: [nonce, add] })
-          .then(
-            async (signature) => {
-              const result = await loginSignature(add, signature);
-              checkLoginStatu(result);
-            },
-            (error: any) => {
-              setLoading(false);
-            }
-          );
-      }
-    },
-    [requireNonce, checkLoginStatu]
-  );
-
-  const connectToChain = React.useCallback(async () => {
-    setLoading(true);
-
-    if (
-      typeof (window as any).ethereum === "undefined" ||
-      !(window as any).ethereum.isMetaMask
-    ) {
-      setLoading(false);
-      setShowMenu(false);
-      window.open("https://metamask.io/");
-      return;
-    }
-    try {
-      // removeToken(profile.address, 'atk');
-      // removeToken(profile.address, 'rtk');
-      // state.setState({
-      //   accessToken: '',
-      //   refreshToken: '',
-      //   profile: { address: null, nickName: null, avatar: null },
-      // });
-
-      web3.connect().then(
-        async (res) => {
-          const { address: addr, provider } = res;
-          connect(addr, provider);
-          window.localStorage.setItem("metaMaskAddress", res.address);
-        },
-        (err) => {
-          setLoading(false);
-        }
-      );
-      window.localStorage.setItem("LoginType", "metaMask");
-    } catch {
-      setLoading(false);
-    }
-  }, [web3, connect]);
-
-  const clipName = React.useCallback(
-    (addres) => {
-      if (addres?.length > 8) {
-        const end = addres.length - 4;
-        const all = addres.slice(4, end);
-        return addres.replace(all, "***");
-      }
-      return addres;
-    },
-    [null]
-  );
-
-  const onClick = React.useCallback(
-    (event) => {
-      if (idTokenWeb3 === null) {
-        setShowMenu(false);
-      }
-      event.nativeEvent.stopImmediatePropagation();
-      setShowMenu(!showMenu);
-      if (onClickHandler) {
-        onClickHandler();
-      }
-    },
-    [showMenu, onClickHandler, idTokenWeb3]
-  );
-
-  const closeApp = async (newWeb3) => {
-    if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.close) {
-      await newWeb3.currentProvider.close();
-    }
-    await newWeb3.clearCachedProvider();
-  };
-
-  const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
-    
-    const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
-    providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
-      loginSignature(add, resD).then((resData) => {
-        checkLoginStatu(resData);
-      }, (res1) => {
-
-      })
-    }, (error) => {
-      if (w3) {
-        w3.resetApp()
-      }
-    })
-
-    if (!providerDa.on) {
-      return;
-    }
-
-    //   //断开连接
-    provider.on('close', async () => {
-      removeToken('atk');
-      removeToken('rtk');
-      state.setState({
-        accessToken: '',
-        refreshToken: '',
-        profile: { address: null, nickName: null, avatar: null },
-      });
-      if (pathname !== "/") {
-        window.location.href = "/";
-      }else{
-        window.location.reload();
-      }
-      newWeb3.resetApp()
-      await provider.killSession()
-      await provider.clearCachedProvider();
-    });
-    provider.on('accountsChanged', async (accounts) => {
-      const addressData = await accounts[0];
-    });
-  }, [w3])
-
-
-  const walletconnect = React.useCallback(async () => {
-    setLoading(true);
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
-          // rpc: {
-          //   56: 'https://mainnet.infura.io/v3',
-          // },
-          // network: 56,
-        },
-      },
-    };
-    const web3Modal = new Web3Modal({
-      network: 'mainnet',
-      cacheProvider: true,
-      providerOptions,
-    });
-    const providerDataText = await web3Modal.connect()
-    await web3Modal.toggleModal()
-    const web_3 = new WalletConnectProvider(providerDataText)
-    setw3(web_3)
-    await subscribeProvider(providerDataText, web_3, web3Modal)
-    window.localStorage.setItem('LoginType','walletConnect')
-    setLoading(false);
-   
-    return web_3
-  }, [subscribeProvider])
-  const clientId =
-    "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
-
-  useEffect(() => {
-    const init = async () => {
+  const requestData = React.useCallback(
+    async (token: string) => {
+      setLoading(true);
       try {
-        const coreWeb3auth = new Web3AuthCore({
-          clientId,
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: "0x1",
-            rpcTarget:
-              "https://mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
-          },
-        });
-
-        setWeb3auth(coreWeb3auth);
-        const torusWalletAdapter = new TorusWalletAdapter({
-          adapterSettings: {
-            buttonSize: 0,
-          },
-          clientId,
-          initParams: {
-            whiteLabel: {
-              theme: {
-                isDark: window.localStorage.getItem("darkLight") === "false",
-                colors: { primary: "#00a8ff" },
-              },
-              logoDark: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
-              logoLight: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
-            },
-          },
-          sessionTime: 3600 * 24 * 7, // 1 hour in seconds
-        });
-
-        coreWeb3auth.configureAdapter(torusWalletAdapter);
-
-        await coreWeb3auth.init();
-
-        if (coreWeb3auth.provider) {
-          setProviderWeb3auth(coreWeb3auth.provider);
+        const res = await getParcelList2(token);
+        const data = resultHandler(res, requestData);
+        setLoading(false);
+        if (!data) {
+          return;
         }
-      } catch (error) {
-        console.error(error);
+        setDataSource(data.parcelList);
+        changeNum(data.parcelList, nav_Label.current);
+      } catch {
+        setError(true);
       }
-    };
-    init();
-  }, []);
+    },
+    [resultHandler, tabState, nav_Label],
+  );
 
-  const logout = React.useCallback(() => {
-    if (!web3auth) {
-      console.log("web3auth not initialized yet");
-      return;
+  const reqDclData = React.useCallback(
+    async (token: string) => {
+      try {
+        const res = await req_dcl_parcel_list(token);
+        const data = resultHandler(res, reqDclData);
+        setLoading(false);
+        if (!data) {
+          return;
+        }
+        setDclDataSource(data.parcelList);
+        changeNum(data.parcelList, nav_Label.current);
+      } catch {
+        setError(true);
+      }
+    },
+    [resultHandler, tabState, nav_Label],
+  );
+  const onRetry = React.useCallback(async () => {
+    const accessToken = getToken('atk');
+    if (accessToken && tabState === 'cryptovoxels') {
+      requestData(accessToken);
     }
-    console.log(111);
-    
-    window.localStorage.setItem("LoginType", null);
-    window.localStorage.setItem("addressGetAccounts", null);
-    web3auth.logout();
-    window.localStorage.clear();
-    setWeb3AuthAddress(null);
-
-    setProviderWeb3auth(null);
-
-    if (pathname !== "/") {
-      window.location.href = "/";
-      window.localStorage.setItem("LoginType", null);
-      window.localStorage.setItem("addressGetAccounts", null);
-      window.localStorage.clear();
-    } else {
-      window.location.reload();
-      window.localStorage.setItem("LoginType", null);
-      window.localStorage.setItem("addressGetAccounts", null);
-      window.localStorage.clear();
+    if (accessToken && tabState === 'decentraland') {
+      reqDclData(accessToken);
     }
-    removeToken("atk");
-    setIdTokenWeb3(null);
-
-    // setShowMenu(false);
-  }, [web3auth, idTokenWeb3, web3AuthAddress, pathname]);
-  const getAccounts = React.useCallback(async () => {
-    // setGetAccountsState(true)
-    // const promise = new Promise(async (resolve, reject) => {
-    if (!providerWeb3auth) {
-      console.log("provider not initialized yet");
-      return;
-    }
-    const rpc = new RPC(providerWeb3auth);
-
-    const addressGetAccounts = await rpc.getAccounts();
-    // setGetAccountsState(false)
-    window.localStorage.setItem("addressGetAccounts", addressGetAccounts);
-
-    setWeb3AuthAddress(addressGetAccounts);
-    // resolve(address)
-    // reject(address)
-    // })
-    
-    if (idTokenWeb3 && web3AuthAddress) {
-      setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
-      const webGetBase = getBaseInfo(getToken('atk'))
-      webGetBase.then((webGetBase1) => {
-        // const profileAddress = renConcent1.profile?.address;
-      state.setState({ profile: { address: webGetBase1?.data?.profile?.address, nickName: webGetBase1?.data?.profile?.nick_name, avatar: webGetBase1?.data?.profile?.avatar }});
-      });
-    }
-   
-    // return promise
-  }, [providerWeb3auth,idTokenWeb3,web3AuthAddress]);
-
-  
-  const authenticateUser = React.useCallback(async () => {
-
-    // const promise = new Promise(async (resolve, reject) => {
-    if (!web3auth) {
-      console.log("web3auth not initialized yet");
-      return;
-    }
-    
-
-    const idTokenAuthenticateUser = await web3auth.authenticateUser();
-    setIdTokenWeb3(idTokenAuthenticateUser.idToken);
-    window.localStorage.setItem(
-      "idTokenAuthenticateUser",
-      idTokenAuthenticateUser.idToken
-    );
-    // resolve(idToken)
-    // })
-    // if(idToken||idTokenWeb3){
-    setShowMenu(true);
-    
+    // if (accessToken && routeTab === 'building') {
+    //   reqBuilderData(accessToken);
     // }
-    //  const address1= getAccounts()
-    //  setToken('atk',idToken+'-'+address1)
+  }, [requestData, getToken, reqDclData]);
 
-    // setToken('atk',idToken.idToken+'-.-'+'0x60d136A10c67D534BB7822c175a44C855b2D9B57')
-
-    // return promise
-  
-    
-   
-  }, [
-    idTokenWeb3,
-    web3AuthAddress,
-    showMenu,
-    providerWeb3auth,
-    idTokenWeb3,
-    web3auth,
-  ]);
-  const profilConent = React.useCallback(async () => {
-    const profilemetaMask = window.localStorage.getItem("metaMaskAddress");
-    if (profilemetaMask !== null) {
-      const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-      if (metaCatAtk) {
-        const renConcent = getBaseInfo(metaCatAtk);
-        // setProfileConcent(renConcent)
-        renConcent.then((renConcent1) => {
-          // const profileAddress = renConcent1.profile?.address;
-          setProfileConcent(renConcent1.profile?.address);
-          state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
-        });
-      }
-    }
-  }, [profileData]);
-
-  useEffect(() => {
-    // const LoginType = window.localStorage.getItem("LoginType") === "web3Auth";
-    // console.log(window.localStorage.getItem("LoginType"));
-    const idTokenAuthenticateUser = window.localStorage.getItem(
-      "idTokenAuthenticateUser"
-    );
-
-    const profilemetaMask = window.localStorage.getItem("metaMaskAddress");
-    const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-
-    if (!metaCatAtk) {
-
-      setTimeout(() => {
-        profilConent();
-      }, 2000);
-    } else {
-      
-      const renConcent = getBaseInfo(metaCatAtk);
-
-      renConcent.then((renConcent1) => {
-
-        // const profileAddress = renConcent1.profile?.address;
-        setProfileConcent(renConcent1.profile?.address);
-        state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
-
-      });
-    
-    }
-    // setProfileConcent(metaCatAtk)
-
-    //     console.log(profileData,555);
-    //     console.log(getBaseInfo(profileData.accessToken));
-    // const renConcent = getBaseInfo(profileData.accessToken)
-
-    const addressGetAccounts =
-      window.localStorage.getItem("addressGetAccounts");
-    // setIdTokenWeb3(idTokenAuthenticateUser);
-    // setWeb3AuthAddress(addressGetAccounts);
-const loginCon = window.localStorage.getItem("LoginType")
-    setLoginState(loginCon);
-    
-    
-    if (idTokenWeb3 && web3AuthAddress) {
-      setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
-    }
-  }, [loginState]);
-  // loginState,profilConent, web3AuthAddress, idTokenWeb3
-  // useEffect(() => {
-  //   if (idTokenWeb3 && web3AuthAddress) {
-  //     setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
-  //   }
-  // }, [web3AuthAddress, loginState, idTokenWeb3]);
-
-  const login = React.useCallback(async () => {
-    if (!web3auth) {
-      console.log("web3auth not initialized yet");
-      return;
-    }
-
-    try {
-      const web3authProvider = await web3auth.connectTo(
-        WALLET_ADAPTERS.TORUS_EVM
-      );
-
-      setProviderWeb3auth(web3authProvider);
-      const idtoken = authenticateUser();
-      idtoken.then((res) => {
-      });
-      if (idtoken !== null) {
-        const address3 = getAccounts();
-        address3.then((res) => {
-          
-          // WalletLoginError: Failed to connect with wallet. Already connected
-          // window.localStorage.setItem("metaMaskAddress", res);
-        });
-        // }else{
-        //   setWeb3AuthAddress(null)
-       
-      }
-    } catch (error) {
-      if (
-        error.message === "Failed to connect with wallet. Already connected"
-      ) {
-        getAccounts();
-        const idtoken = authenticateUser();
-        idtoken.then((res) => {
-          console.log(res);
-        });
-        if (idtoken !== null) {
-          const address3 = getAccounts();
-          address3.then((res) => {
-            console.log(res);
-          });
-        }
-      }
-    }
-    // const renConcent = getBaseInfo(`${idTokenWeb3}-.-${web3AuthAddress}`);
-    // console.log(renConcent);
-    
-    // // setProfileConcent(renConcent)
-    // renConcent.then((renConcent1) => {
-    //   // const profileAddress = renConcent1.profile?.address;
-    //   setProfileConcent(renConcent1.profile?.address);
-    //   state.setState({ profile: { address: renConcent1?.data?.profile?.address, nickName: renConcent1?.data?.profile?.nick_name, avatar: renConcent1?.data?.profile?.avatar }});
-    // });
-    // setLoginState('web3Auth')
-    window.localStorage.setItem("LoginType", "web3Auth");
-
-    
-  }, [providerWeb3auth, web3auth, showMenu, web3AuthAddress, idTokenWeb3]);
-
-
-  const clickItem = React.useCallback(
-    (item) => {
-      
-      if(!profile?.address){
-        window.localStorage.clear()
-      }
-      // console.log(!profile.address,item.value === 'metamask');
-// setLoading(true)
-      setShowWall(item.value);
-      if (item.type === "wallet") {
-        if (!profile?.address && item?.value === "metamask") {
-          connectToChain();
-        }
-        if (!profile.address && item.value === 'walletconnect') {
-
-          walletconnect()
-        }
-      }
-      if (item.type === "login") {
-        // if (!web3auth) {
-        //   console.log("web3auth not initialized yet");
-        //   return;
-        // }
-        // const web3authProvider = await web3auth.connectTo(
-        //   WALLET_ADAPTERS.TORUS_EVM,
-        // );
-        // setProvider(web3authProvider);
-        // init()
-        login();
-        // authenticateUser()
-        // getAccounts()
-      }
-      if (item.type === "loginOut") {
-        logout();
-      }
-    },
-    [profile, connectToChain, login]
-    // walletconnect
-  );
-
-  // const demo = React.useCallback(async () => {
-  //   console.log(await p1.enable())
-  //   const i = await p1.enable();
-
-  //   provider.on("accountsChanged", (accounts: string[]) => {
-  //     console.log(accounts);
-  //   });
-
-  //   // Subscribe to chainId change
-  //   provider.on("chainChanged", (chainId: number) => {
-  //     console.log(chainId);
-  //   });
-
-  //   // Subscribe to session disconnection
-  //   provider.on("disconnect", (code: number, reason: string) => {
-  //     console.log(code, reason);
-  //   });
-  //   return await i
-  //   // return  i
-  // }, [p1])
-
-  const clickOperationItem = React.useCallback(
-    async (item) => {
-      // console.log(loginState,item.value,profile?.address);
-      // const loginCon = window.localStorage.getItem("LoginType")
-      // setLoginState(loginCon);
-      // console.log(idTokenWeb3,web3AuthAddress,profile?.address,);
-      // return;
-      if (window.localStorage.getItem("LoginType") === "web3Auth") {
-        if (item.value === "resetApp") {
-          setProviderWeb3auth(null);
-          setWeb3AuthAddress(null);
-          // console.log(11111);
-
-          logout();
-
-          removeToken("atk");
-        }
-        setShowMenu(false);
-      } else if (window.localStorage.getItem("LoginType") === "metaMask" &&profile?.address) {
-        if (item.value === "resetApp") {
-          removeToken("atk");
-          removeToken("rtk");
-          removeToken("address");
-          // if (w3) {
-          //   w3.resetApp()
-          // }
-          if (web3) {
-            web3?.resetApp();
-          }
-          window.localStorage.clear();
-          // window.localStorage.setItem("LoginType", null);
-          // window.localStorage.setItem("metaMaskAddress", null);
-          // window.localStorage.setItem("METACAT_atk", null);
-          state.setState({
-            accessToken: "",
-            refreshToken: "",
-            profile: { address: null, nickName: null, avatar: null },
-          });
-          // const res = await req_user_logout(accessToken);
-          // console.log(res)
-          if (pathname !== "/") {
-            window.location.href = "/";
-          }else{
-            window.location.reload();
-          }
-        }
-        setShowMenu(false);
-    
-      } else if(window.localStorage.getItem("LoginType")  === "walletConnect"){
-            if (item.value === "resetApp") {
-            removeToken("atk");
-            removeToken("rtk");
-            removeToken("address");
-            state.setState({
-              accessToken: "",
-              refreshToken: "",
-              profile: { address: null, nickName: null, avatar: null },
-            });
-            if (pathname !== "/") {
-              window.location.href = "/";
-            }else{
-              window.location.reload();
-            }
-            window.localStorage.setItem("LoginType", null);
-            window.localStorage.setItem("METACAT_atk", null);
-            window.localStorage.clear()
-          }
-      }
-    
-    },
-    [logout, pathname, web3, loginState, profile]
-    // w3
-  );
-
-  const render = React.useMemo(() => {
-    // console.log(web3AuthAddress,idTokenWeb3,1111);
-
-    if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
-      return MENU.map((item, idx) => {
-        return (
-          <li
-            className={cn(
-              "flex justify-between  items-center",
-              style.menuItem,
-              idx === MENU.length - 1 ? style.last : null
-            )}
-            key={idx}
-          >
-            {item.value === "resetApp" ? (
-              <div
-                className="w-full flex justify-between  items-center p-3 text-xs"
-                onClick={() => {
-                  clickOperationItem(item);
-                }}
-              >
-                <div className="flex items-center justify-around">
-                  <img
-                    src={item.icon}
-                    className={cn("mr-2", style.operation)}
-                  ></img>
-                  <span>{item.label}</span>
-                </div>
-                <img
-                  src="/images/v5/arrow-simple.png"
-                  className={style.activeOperation}
-                ></img>
-              </div>
-            ) : (
-              <Link href={item.value}>
-                <div className="w-full flex justify-between  items-center p-3 text-xs">
-                  <div className="flex items-center justify-around">
-                    <img
-                      src={item.icon}
-                      className={cn("mr-2", style.operation)}
-                    ></img>
-                    <span>{item.label}</span>
-                  </div>
-                  <img
-                    src="/images/v5/arrow-simple.png"
-                    className={style.activeOperation}
-                  ></img>
-                </div>
-                {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
-              </Link>
-            )}
-          </li>
+  const select = React.useCallback(
+    (id, ids) => {
+      if (ids.findIndex((item) => item === id) === -1) return;
+      if (selectedIds.findIndex((item) => item === id) !== -1) {
+        selectedIds.splice(
+          selectedIds.findIndex((item) => item === id),
+          1,
         );
-      });
+        setSelectedIds([...selectedIds]);
+      } else {
+        selectedIds.push(id);
+        setSelectedIds([...selectedIds]);
+      }
+    },
+    [state, selectedIds],
+  );
+
+  const renderContent = React.useMemo(() => {
+    if (loading) {
+      return <Status status="loading" />;
     }
-    return WALLET.map((item, idx) => {
+    if (error) {
+      return <Status retry={onRetry} status="error" />;
+    }
+    if (cartData.length === 0) {
+      return <Status status="empty" />;
+    }
+    if (tabState === 'cryptovoxels') {
       return (
-        <li
-          className={cn(
-            "flex justify-around items-center text-xs",
-            style.walletItem
-          )}
-          key={idx}
-          onClick={() => {
-            clickItem(item);
-          }}
-        >
-          <div
-            className={cn(
-              "flex justify-between items-center w-full h-full",
-              style.walletContent
-            )}
-          >
-            <div className="flex items-center justify-around">
-              <img
-                src={item.icon}
-                className={cn("mr-2", style.walletLogo)}
-              ></img>
-              <span>{item.label}</span>
-            </div>
-            {/* {loading === true ? (
-              <img
-                alt="/"
-                src="/images/loading.png"
-                className={cn(
-                  "animate-spin",
-                  style.loading,
-                  loading && item.value === showWall ? null : " hidden"
-                )}
-              />
-            ) : (
-              <img
-                alt=""
-                src="/images/v5/arrow.png"
-                className={cn(style.activeWallet, loading ? " hidden" : null)}
-              ></img>
-            )} */}
-
-            {loading===true? (
-              <img src="/images/loading.png" className={cn('animate-spin', style.loading)} />
-            ) : (
-              <img src="/images/v5/arrow.png" className={style.activeWallet}></img>
-            )}
-          </div>
-        </li>
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
+          {dataSource.map((card) => {
+            return (
+              <Card
+                {...card}
+                parcelsIds={parcelsIds}
+                state={cardState}
+                key={uuid()}
+                selectedIds={selectedIds}
+                onClick={(id, ids) => {
+                  select(id, ids);
+                }}
+              ></Card>
+            );
+          })}
+        </div>
       );
-    });
+    }
+    if (tabState === 'decentraland') {
+      return (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-7">
+            {dclDataSource.map((card) => {
+              return (
+                <DclCard
+                  {...card}
+                  parcelsIds={parcelsIds}
+                  state={cardState}
+                  key={uuid()}
+                  y
+                  selectedIds={selectedIds}
+                  onClick={(id, ids) => {
+                    select(id, ids);
+                  }}
+                ></DclCard>
+              );
+            })}
+          </div>
+        </>
+      );
+    }
   }, [
-    profile,
-    clickItem,
-    web3AuthAddress,
-    clickOperationItem,
-    idTokenWeb3,
+    error,
+    dataSource,
     loading,
-    showWall,
+    onRetry,
+    changeNum,
+    parcelsIds,
+    setCardState,
+    tabState,
+    reqDclData,
   ]);
+  const tag1 = () => {
+    if (label === 'Cancel lease for multiple') return 'Cancel leased';
+    return 'Mark as leased';
+  };
+  const req_event = React.useCallback(async () => {
+    if (selectedIds.length === 0) return;
+    // 批量挂出
+    if (label === 'Rent out several') {
+      set_rent_set_state(true);
+      // setManySetState(false);
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, updateOrAdd: 'add' }));
+    }
+    if (s.type === 'cv') {
+      // 批量标记已出租
+      if (label === 'Mark several as leased') {
+        // const token = await refreshTK();
+        const token = await tokenWearable;
+        const result = await req_parcels_leased(token, selectedIds.join(','));
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
+        } else if (result.code === 100003) {
+          const tokenNew = await refreshTK();
+          const resultNew = await req_parcels_leased(tokenNew, selectedIds.join(','));
+          if (resultNew.code === 100000) {
+            store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
+          } else {
+            store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+          }
 
-  const getText = React.useMemo(() => {
-
-    let text = "Connect";
-    if (profile?.address) {
-      
-        // console.log(profile,profile?.nickName);
-      if (profile?.nickName&&profile?.address) {
-        // console.log(profile);
-        text = profile?.nickName;
-      } else {
-        text = clipName(profile?.address);
-        setShowMenu(!showMenu);
+        }
+        set_rent_set_state(true);
+        // setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
       }
-    } else if (!profile?.address) {
-      
-      getAccounts();
-      // console.log(web3AuthAddress,idTokenWeb3);
+      // 批量取消出租
+      if (label === 'Cancel lease for multiple') {
+        const token = await refreshTK();
+        const result = await req_parcels_cancel(token, selectedIds.join(','));
+        if (result.code === 100000)
+          store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
+        else store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
 
-      if (web3AuthAddress && idTokenWeb3) {
-        // console.log(web3AuthAddress&&idTokenWeb3);
-
-        text = web3AuthAddress;
-        // setShowWall(false)
-        setShowMenu(!showMenu);
-        // setLoading(false)
-      } else {
-        text = "Connect";
-        setShowMenu(true);
+        set_rent_set_state(true);
+        // setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
       }
     }
+    if (s.type === 'dcl') {
+      // 批量标记已出租
+      if (label === 'Mark several as leased') {
+        const token = await refreshTK();
+        const result = await req_dcl_leased(token, selectedIds.join(','));
+        if (result.code === 100000) {
+          store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
+        } else {
+          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        }
+        set_rent_set_state(true);
+        // setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
+      }
+      // 批量取消出租
+      if (label === 'Cancel lease for multiple') {
+        const token = await refreshTK();
+        const result = await req_dcl_cancel(token, selectedIds.join(','));
+        if (result.code === 100000)
+          store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
+        else store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
+        set_rent_set_state(true);
+        // setManySetState(false);
+        setCardState(false);
+        store.setState(() => ({ parcels_cardState: false }));
+      }
+    }
+  }, [selectedIds, setCardState, set_rent_set_state]);
 
-    return (
-      <>
-        <div style={{ display: "flex" }}>
-          {profile?.address ||
-          (web3AuthAddress && providerWeb3auth !== null && idTokenWeb3) ? (
-            <img
-              className={cn("mr-1 ", style.avatar)}
-              src={profile.avatar || "/images/icon.png"}
-            />
-          ) : (
-            <img className="mr-1" src="/images/v5/wallet.png" />
-          )}
-          <div
-            title={text}
-            className={cn(
-              "font-semibold truncate",
-              style.walletText,
-              profile?.address ? "text-xs" : "text-base"
-            )}
-          >
-            {/* {provider===null?'Connect':text} */}
-            {text}
+  const tag2 = () => {
+    if (cardState) {
+      return (
+        <div className={style.succeedOrCancel}>
+          <div className={style.container}>
+            <div className={style.info}>
+              selected ({selectedIds.length}/{parcelsIds.length})
+            </div>
+            <div
+              className={style.succeed}
+              onClick={() => {
+                req_event();
+                if (selectedIds.length === 0) return;
+                if (label === 'Rent out several') {
+                  store.setState(() => ({
+                    parcels_cardState: false,
+                    rentOutState: true,
+                    id: null,
+                  }));
+                }
+              }}
+            >
+              {label === 'Rent out several' ? 'Rent out' : tag1()}
+            </div>
+            <div
+              className={style.cancel}
+              onClick={() => {
+                manyChange(label, cartData);
+                setCardState(false);
+                setSelectedIds([]);
+                store.setState(() => ({ parcels_cardState: false }));
+              }}
+            >
+              Close
+            </div>
           </div>
         </div>
-      </>
-    );
-  }, [
-    profile,
-    clipName,
-    web3AuthAddress,
-    providerWeb3auth,
-    idTokenWeb3,
-    logout,
-  ]);
-
-  const requireBaseData = React.useCallback(
-    async (tk) => {
-      const res = await getBaseInfo(tk);
-      const { data } = res;
-      const { address: addr, avatar } = data;
-      const newProfile = Object.assign({ address: addr, avatar }, profile);
-      state.setState({ profile: newProfile });
-    },
-    [profile]
-  );
-
-  // React.useEffect(() => {
-  //   if (web3.data.address && !profile.address) {
-  //     const tk = getToken(web3.data.address, 'atk');
-  //     if (tk) {
-  //       // requireBaseData(tk)
-  //     }
-  //   }
-  // }, [web3, getToken, requireBaseData]);
-
-  const close = React.useCallback(() => {
-    if (profile?.address) {
-      setShowMenu(false);
+      );
     }
-  }, [profile]);
-
-  React.useEffect(() => {
-    document.addEventListener("click", close);
-    return () => {
-      document.removeEventListener("click", close);
-    };
-  }, [close]);
-  const unloggedInView = (
-    <button onClick={login} className="card">
-      Login
-    </button>
+    return <div></div>;
+  };
+  const close_rent_set = React.useCallback(
+    (current_state) => {
+      manyChange(label, cartData, false);
+      set_rent_set_state(current_state);
+      // setManySetState(false);
+      setSelectedIds([]);
+      store.setState(() => ({ rentOutState: false }));
+    },
+    [rent_set_state, manyChange],
   );
-  const loggedInView = (
-    <button onClick={logout} className="card">
-      LogOut
-    </button>
-  );
+  const randerCardList = React.useMemo(() => {
+    if (routeTab === 'parcellist') {
+      return (
+        <>
+          <div className={cn('tab-list flex ', style.allHeight)}>
+            <div className={cls}></div>
+            <div className={cn('main-content flex px-0', style.tabtext)}>
+              {TABData.map((item) => {
+                return (
+                  <Tab4
+                    active={tabState === item.type}
+                    isMini={true}
+                    key={item.label}
+                    label={item.label}
+                    icon={item.icon}
+                    onClick={() => {
+                      onTabChange(item.type);
+                    }}
+                  />
+                );
+              })}
+              <div className={cls} />
+            </div>
+            <div className={cls} />
+          </div>
+          {/* 导航 */}
+          <div className={style.nav}>
+            <div className={style.nav_left}>
+              {nav.map((item, index) => {
+                return (
+                  <>
+                    <ParcelsTab
+                      dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
+                      label={item.label}
+                      state={item.state}
+                      num={item.num}
+                      key={item.label}
+                      onClick={() => {
+                        changeNavTab(item.label, index);
+                      }}
+                    />
+                  </>
+                );
+              })}
+            </div>
+          </div>
+          {/* 导航结束 */}
+          {/* 卡片开始 */}
+          <div className={cn('main-content mt-8', style.content)} style={{ marginTop: '-20px' }}>
+            {renderContent}
+          </div>
 
+          {/* 卡片结束 */}
+          {tag2()}
+          <RentSet
+            state={rent_set_state}
+            onClick={(current_state) => {
+              close_rent_set(current_state);
+            }}
+            selectedIds={selectedIds}
+          />
+          <Popup status={status} type={type} value={value} />
+        </>
+      );
+    }
+    // if (routeTab === 'trafficreport') {
+    //   if (showType === 'cryptovoxels') {
+    //     return (
+    //       <>
+    //         <div className={cn('tab-list flex mt-5', style.allHeight)}>
+    //           <div className={cls}></div>
+    //           <div className={cn('main-content flex px-0', style.tabtext)}>
+    //             {REPORTTAB.map((item) => {
+    //               return (
+    //                 <Tab4
+    //                   active={tabState === item.type}
+    //                   isMini={true}
+    //                   key={item.label}
+    //                   label={item.label}
+    //                   icon={item.icon}
+    //                   onClick={() => {
+    //                     onTabChangeTR(item.type);
+    //                   }}
+    //                 />
+    //               );
+    //             })}
+    //             <div className={cls} />
+    //           </div>
+    //           <div className={cls} />
+    //         </div>
+    //         <div className={cn(style.content)}>
+    //           <BaseChart>
+    //             <BaseBar
+    //               id={'parcel1'}
+    //               labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
+    //               dataHandlder={req_cv_parcel_traffic}
+    //               barWidth={20}
+    //               limit={21}
+    //               textColor={style.nftColor}
+    //               // token={refreshTK()}
+    //               token={tokenWearable}
+    //             ></BaseBar>
+    //           </BaseChart>
+
+    //           <BaseChart className=" my-5" type={true}>
+    //             <PieChart
+    //               id="piechart2"
+    //               labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+    //               dataHandlder={req_cv_parcel_traffic_daily}
+              
+    //               token={tokenWearable}
+    //               textColor={style.nftColor}
+    //               options={[
+    //                 {
+    //                   label: 'Day',
+    //                   value: 'day',
+    //                 },
+    //                 {
+    //                   label: 'Week',
+    //                   value: 'week',
+    //                 },
+    //                 {
+    //                   label: 'Month',
+    //                   value: 'month',
+    //                 },
+    //               ]}
+    //             ></PieChart>
+    //           </BaseChart>
+    //           <BaseChart className=" my-5" type={true}>
+    //             <ProfileDetail
+    //               label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+    //               dataHandlder={req_cv_parcel_month_traffic_detail}
+    //               // token={refreshTK()}
+    //               token={tokenWearable}
+    //               textColor={style.nftColor}
+    //             ></ProfileDetail>
+    //           </BaseChart>
+    //         </div>
+    //       </>
+    //     );
+    //   }
+    //   if (showType === 'decentraland') {
+    //     return (
+    //       <>
+    //         <div className={cn('tab-list flex ', style.allHeight)}>
+    //           <div className={cls}></div>
+    //           <div className="main-content flex px-0">
+    //             {REPORTTAB.map((item) => {
+    //               return (
+    //                 <Tab4
+    //                   active={tabState === item.type}
+    //                   isMini={true}
+    //                   key={item.label}
+    //                   label={item.label}
+    //                   icon={item.icon}
+    //                   onClick={() => {
+    //                     onTabChangeTR(item.type);
+    //                   }}
+    //                 />
+    //               );
+    //             })}
+    //             <div className={cls} />
+    //           </div>
+    //           <div className={cls} />
+    //         </div>
+    //         <div className={cn(style.content)}>
+    //           <BaseChart>
+    //             <BaseBarDece
+    //               id={'parcel1'}
+    //               labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
+    //               dataHandlder={req_dece_parcel_traffic}
+    //               barWidth={20}
+    //               limit={21}
+    //               textColor={style.deceColor}
+           
+    //               token={tokenWearable}
+    //             ></BaseBarDece>
+    //           </BaseChart>
+    //           <BaseChart className=" my-5" type={true}>
+    //             <PieChartDece
+    //               id="piechart2"
+    //               labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+    //               dataHandlder={req_deceData_parcel_traffic_daily}
+  
+    //               token={tokenWearable}
+    //               textColor={style.deceColor}
+    //               options={[
+    //                 {
+    //                   label: 'Day',
+    //                   value: 'day',
+    //                 },
+    //                 {
+    //                   label: 'Week',
+    //                   value: 'week',
+    //                 },
+    //                 {
+    //                   label: 'Month',
+    //                   value: 'month',
+    //                 },
+    //               ]}
+    //             ></PieChartDece>
+    //           </BaseChart>
+    //           <BaseChart className=" my-5" type={true}>
+    //             <ProfileDetailDece
+    //               label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+    //               dataHandlder={req_dece_parcel_traffic_list}
+        
+    //               token={tokenWearable}
+    //               textColor={style.deceColor}
+    //             ></ProfileDetailDece>
+    //           </BaseChart>
+    //         </div>
+    //       </>
+    //     );
+    //   }
+    // }
+    // if (routeTab === 'wearablelist') {
+    //   return (
+    //     <>
+    //       {statue === 1 ? <>
+    //         <div className={style.createrCont}>
+    //           <span className={style.join}>Join Creators to show your works</span>
+    //           <span className={style.apply} onClick={addWorkWerable}>Apply</span>
+    //         </div>
+    //       </> : null}
+    //       {statue === 2 ? <>
+    //         <div className={style.createrCont}>
+    //           <span className={style.join}>Waiting to become a creator</span>
+    //         </div>
+    //       </> : null}
+    //       <div className={style.wearablesContainer}>
+    //         <div className={style.title}>
+    //           <div className={style.wearables}></div>
+    //           <div className={style.texteated}>Wearables Created</div>
+    //         </div>
+    //         <div className={style.wearablesNav}>
+    //           <div className={style.left}>
+    //             {wearablesNav.map((item, index) => {
+                  
+    //               return (
+    //                 <>
+    //                   <div
+    //                     onClick={() => {
+    //                       setWearablesNavState(item.type);
+    //                       wearablesState.current = item.type;
+    //                       setShowOrHideState(false);
+    //                       if (item.type === 'all') {
+    //                         setWearablesCreatorsData(wearablesCreatorsOriginData);
+    //                       }
+    //                       if (item.type === 'shown') {
+    //                         setWearablesCreatorsData(wearablesShowData);
+    //                       }
+    //                       if (item.type === 'hidden') {
+    //                         setWearablesCreatorsData(wearablesHideData);
+    //                       }
+    //                     }}
+    //                     className={cn(
+    //                       style.wearablesNavItem,
+    //                       wearablesNavState === item.type ? style.wearableNavAction : null,
+    //                     )}
+    //                     key={uuid()}
+    //                   >
+    //                     <div>
+    //                       {item.label}
+    //                       <span style={{ marginLeft: '2px' }}>
+    //                         {item.type === 'all' ? wearablesCreatorsOriginData.length : null}
+    //                         {item.type === 'shown' ? wearablesShowData.length : null}
+    //                         {item.type === 'hidden' ? wearablesHideData.length : null}
+    //                       </span>
+    //                     </div>
+    //                   </div>
+    //                 </>
+    //               );
+    //             })}
+    //           </div>
+    //           {
+    //             statue === 1 || statue === 2 ? null :
+    //               <div
+    //                 className={style.right}
+    //                 onClick={() => {
+    //                   setShowOrHideState(!showOrHideState);
+    //                 }}
+    //                 onMouseLeave={() => {
+    //                   setTimeout(() => {
+    //                     setShowOrHideState(false);
+    //                   }, 2000);
+    //                 }}
+    //               >
+    //                 <img src="/images/Settings.png" />
+    //                 <div>Batch setting</div>
+    //                 <ul
+    //                   className={
+    //                     wearablesNavState === 'all' && showOrHideState
+    //                       ? style.showOrHideList
+    //                       : style.showOrHideList1
+    //                   }
+    //                   onMouseLeave={() => {
+    //                     setShowOrHideState(false);
+    //                   }}
+    //                 >
+    //                   {showOrHideState
+    //                     ? showOrHide[wearablesNavState].map((item, index) => {
+    //                       return (
+    //                         <li
+    //                           className={style.showOrHideItem}
+    //                           key={index}
+    //                           onClick={() => {
+    //                             settingShowOrHide(item.type);
+    //                           }}
+
+    //                         >
+    //                           {item.label}
+    //                         </li>
+    //                       );
+    //                     })
+    //                     : null}
+    //                 </ul>
+    //               </div>
+
+    //           }
+
+    //         </div>
+    //         <div style={{ marginTop: '22px', marginBottom: '50px' }}>{creatorsReander}</div>
+    //       </div>
+    //     </>
+    //   );
+    // }
+
+    // if (routeTab === 'building') {
+    //   return (
+    //     <>
+    //       <>
+    //         <div className={style.buildingContainer}>
+    //           <div className={cn('main-content mt-8', style.content)} style={{ marginTop: "-20px" }}>{renderBuilding}
+    //           </div>
+    //         </div>
+    //       </>
+    //       : <></>
+    //     </>
+    //   )
+
+    // }
+  }, [
+    showTab,
+    // status,
+    // type,
+    // value,
+    // selectedIds,
+    // rent_set_state,
+    // s,
+    // cartData,
+    // manySetLabel,
+    // renderContent,
+    // renderBuilding,
+    // renderWerable,
+    // dataSource,
+    // dataBuildSource,
+    // reqBuilderData,
+    tabState,
+    routeTab,
+    // creatorsReander,
+  ]);
   return (
-    <div className={cn("cursor-pointer", style.btn)}>
-      <div
-        className={cn(
-          "flex justify-center items-center w-full h-full text-xs",
-          style.btnDiv
-        )}
-        onClick={onClick}
-      >
-        {getText}
-      </div>
-      <div style={{ borderRadius: "6px" }}>
-        <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
-      </div>
-    </div>
+    <Page meta={meta} className={cn("", style.page)}>
+     <WalletBtn/>
+
+     {/* <div className={cn(style.tableList)}>
+                {TAB3.map((item) => {
+                  return (
+                    <Tab3
+                      label={item.label}
+                      key={item.label}
+                      active={routeTab === item.type}
+                      onClick={() => {
+                        changeTab3(item.label, item.type);
+                      }}
+                    />
+                  );
+                })}
+              </div>
+              {randerCardList}
+              <ParcelList/> */}
+    </Page>
   );
 }
