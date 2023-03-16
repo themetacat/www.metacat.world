@@ -71,7 +71,7 @@ module.exports = {
     'header/header': 'off',
     'consistent-return': 'off',
     'import/no-dynamic-require': 'off',
-    'global-require': 'off',
+    'global-require': 'on',
     '@typescript-eslint/ban-ts-comment': 'off',
     'prefer-object-spread': 'warn',
     camelcase: 'off',

@@ -3,23 +3,23 @@ import cn from "classnames";
 import "tailwindcss/tailwind.css";
 import { v4 as uuid } from 'uuid';
 import { toast } from 'react-hot-toast';
-import Page from "../page";
+import Page from "../../components/page";
 
 import Rekv from "rekv";
 import { useRouter, withRouter } from 'next/router';
-import Tab4 from '../tab4'
+import Tab4 from '../../components/tab4'
 
 import { SITE_NAME, META_DESCRIPTION } from "../../common/const";
 import style from "./index.module.css";
-import DclCard from '../parcels-dcl-card';
+import DclCard from '../../components/parcels-dcl-card';
 import store from '../../store/profile';
-import WalletBtn from "../wallet-btn";
-import Card from '../parcels-card';
-import Tab3 from '../tab3';
-import ParcelsTab from '../parcels-tab'
-import RentSet from '../parcels_rent_set';
-import Popup from '../popup';
-import Status from '../status'
+import WalletBtn from "../../components/wallet-btn";
+import Card from '../../components/parcels-card';
+import Tab3 from '../../components/tab3';
+import ParcelsTab from '../../components/parcels-tab'
+import RentSet from '../../components/parcels_rent_set';
+import Popup from '../../components/popup';
+import Status from '../../components/status'
 import { convert, getToken, setToken } from '../../common/utils';
 
 

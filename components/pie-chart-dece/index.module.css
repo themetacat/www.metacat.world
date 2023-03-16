@@ -1,0 +1,35 @@
+.stackBar {
+  box-sizing: border-box;
+  width: 100%;
+  height: 460px;
+  padding: 20px;
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-shadow: inset 0 0 15px rgba(24, 255, 241, 0.3);
+}
+.content {
+  height: 460px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.header {
+  justify-content: space-between;
+  height: 30px;
+  display: flex;
+  margin-bottom: 30px;
+}
+.border {
+  box-sizing: border-box;
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.6);
+}
+.totop {
+  height: 700px;
+  margin-top: -170px;
+}
+.tobottom {
+  margin-top: 100px;
+}
+.bg {
+  background-color: #010202;
+  border-bottom: #333333 solid 1px;
+}

@@ -20,6 +20,16 @@ import ParcelsTab from '../parcels-tab'
 import RentSet from '../parcels_rent_set';
 import Popup from '../popup';
 import Status from '../status'
+
+
+import BaseChart from '../base-chart';
+import BaseBarDece from '../parcel-basebardece';
+import PieChartDece from '../pie-chart-dece';
+import ProfileDetailDece from '../profiledetail-dece';
+import BaseBar from '../parcel-base-bar';
+import PieChart from '../pie-chart';
+import ProfileDetail from '../profiledetail';
+
 import { convert, getToken, setToken } from '../../common/utils';
 
 
@@ -109,6 +119,18 @@ const TAB3 = [
   //   label: 'SALES REPORT',
   // },
 ];
+const REPORTTAB = [
+    {
+      label: 'Voxels',
+      icon: '/images/cvLogo.png',
+      type: 'cryptovoxels',
+    },
+    {
+      label: 'Decentraland',
+      icon: '/images/Decentraland.jpg',
+      type: 'decentraland',
+    },
+  ];
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
 export default function ParcelList() {
   const nav_Label = React.useRef(null);
@@ -117,7 +139,7 @@ export default function ParcelList() {
   const [tokenWearable, setTokenWearable] = React.useState(null);
   const s = store.useState('rentOutState', 'id', 'status', 'parcels_cardState', 'type');
   const [loading, setLoading] = React.useState(false);
-  const [routeTab, setRouteTab] = React.useState( 'parcellist');
+  const [routeTab, setRouteTab] = React.useState( 'trafficreport');
   const [tabState, setTabState] = React.useState('cryptovoxels');
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -134,6 +156,13 @@ export default function ParcelList() {
   const [label, setLabel] = React.useState('');
   const [cartData, setCartData] = React.useState([]);
   const [navLabel, setNavLabel] = React.useState('All');
+
+
+
+  const [showType, setShowType] = React.useState('cryptovoxels');
+
+
+
   const changeTab3 = React.useCallback(
     async (l, t) => {
       setTabState('cryptovoxels');
@@ -326,7 +355,11 @@ export default function ParcelList() {
     [resultHandler, tabState, nav_Label],
   );
   const onRetry = React.useCallback(async () => {
+    console.log(1111);
+    
     const accessToken = getToken('atk');
+    console.log(accessToken);
+    
     if (accessToken && tabState === 'cryptovoxels') {
       requestData(accessToken);
     }
@@ -372,6 +405,7 @@ export default function ParcelList() {
     navLabel,
     getToken,
     requestData,
+    
     // builderSat,
     // buildState,
     // statue,
@@ -406,6 +440,8 @@ export default function ParcelList() {
   );
 
   const renderContent = React.useMemo(() => {
+    console.log(tabState);
+    
     if (loading) {
       return <Status status="loading" />;
     }
@@ -469,355 +505,186 @@ export default function ParcelList() {
     tabState,
     reqDclData,
   ]);
-  const tag1 = () => {
-    if (label === 'Cancel lease for multiple') return 'Cancel leased';
-    return 'Mark as leased';
-  };
-  const req_event = React.useCallback(async () => {
-    if (selectedIds.length === 0) return;
-    // 批量挂出
-    if (label === 'Rent out several') {
-      set_rent_set_state(true);
-      // setManySetState(false);
-      setCardState(false);
-      store.setState(() => ({ parcels_cardState: false, updateOrAdd: 'add' }));
-    }
-    if (s.type === 'cv') {
-      // 批量标记已出租
-      if (label === 'Mark several as leased') {
-        // const token = await refreshTK();
-        const token = await tokenWearable;
-        const result = await req_parcels_leased(token, selectedIds.join(','));
-        if (result.code === 100000) {
-          store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
-        } else if (result.code === 100003) {
-          const tokenNew = await refreshTK();
-          const resultNew = await req_parcels_leased(tokenNew, selectedIds.join(','));
-          if (resultNew.code === 100000) {
-            store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
-          } else {
-            store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
-          }
 
-        }
-        set_rent_set_state(true);
-        // setManySetState(false);
-        setCardState(false);
-        store.setState(() => ({ parcels_cardState: false }));
-      }
-      // 批量取消出租
-      if (label === 'Cancel lease for multiple') {
-        const token = await refreshTK();
-        const result = await req_parcels_cancel(token, selectedIds.join(','));
-        if (result.code === 100000)
-          store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
-        else store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
-
-        set_rent_set_state(true);
-        // setManySetState(false);
-        setCardState(false);
-        store.setState(() => ({ parcels_cardState: false }));
-      }
-    }
-    if (s.type === 'dcl') {
-      // 批量标记已出租
-      if (label === 'Mark several as leased') {
-        const token = await refreshTK();
-        const result = await req_dcl_leased(token, selectedIds.join(','));
-        if (result.code === 100000) {
-          store.setState(() => ({ rentOutState: false, status: 'Successfully marked!' }));
-        } else {
-          store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
-        }
-        set_rent_set_state(true);
-        // setManySetState(false);
-        setCardState(false);
-        store.setState(() => ({ parcels_cardState: false }));
-      }
-      // 批量取消出租
-      if (label === 'Cancel lease for multiple') {
-        const token = await refreshTK();
-        const result = await req_dcl_cancel(token, selectedIds.join(','));
-        if (result.code === 100000)
-          store.setState(() => ({ rentOutState: false, status: 'Successfully cancelled!' }));
-        else store.setState(() => ({ rentOutState: false, status: 'Failed!' }));
-        set_rent_set_state(true);
-        // setManySetState(false);
-        setCardState(false);
-        store.setState(() => ({ parcels_cardState: false }));
-      }
-    }
-  }, [selectedIds, setCardState, set_rent_set_state]);
-
-  const tag2 = () => {
-    if (cardState) {
-      return (
-        <div className={style.succeedOrCancel}>
-          <div className={style.container}>
-            <div className={style.info}>
-              selected ({selectedIds.length}/{parcelsIds.length})
-            </div>
-            <div
-              className={style.succeed}
-              onClick={() => {
-                req_event();
-                if (selectedIds.length === 0) return;
-                if (label === 'Rent out several') {
-                  store.setState(() => ({
-                    parcels_cardState: false,
-                    rentOutState: true,
-                    id: null,
-                  }));
-                }
-              }}
-            >
-              {label === 'Rent out several' ? 'Rent out' : tag1()}
-            </div>
-            <div
-              className={style.cancel}
-              onClick={() => {
-                manyChange(label, cartData);
-                setCardState(false);
-                setSelectedIds([]);
-                store.setState(() => ({ parcels_cardState: false }));
-              }}
-            >
-              Close
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return <div></div>;
-  };
-  const close_rent_set = React.useCallback(
-    (current_state) => {
-      manyChange(label, cartData, false);
-      set_rent_set_state(current_state);
-      // setManySetState(false);
+  const onTabChangeTR = React.useCallback(
+    async (tab) => {
+      setShowType(tab);
+      if (tabState === tab) return;
+      setLoading(true);
+      setTabState(tab);
+      setParcelsIds([]);
       setSelectedIds([]);
-      store.setState(() => ({ rentOutState: false }));
+      setCardState(false);
+      store.setState(() => ({ parcels_cardState: false, id: null }));
+      if (tab === 'cryptovoxels') {
+        // setDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'cv' }));
+      }
+      if (tab === 'decentraland') {
+        // setDclDataSource(orginData.parcelList);
+        store.setState(() => ({ type: 'dcl' }));
+      }
     },
-    [rent_set_state, manyChange],
+    [ tabState],
   );
+
+
   const randerCardList = React.useMemo(() => {
-    if (routeTab === 'parcellist') {
-      return (
-        <>
-        <div style={{width:"1200px",margin:"0 auto"}}>
-          <div className={cn('tab-list flex ', style.allHeight)}>
-            <div className={cls}></div>
-            <div className={cn('main-content  flex px-0', style.tabtext)}>
-              {TABData.map((item) => {
-                return (
-                  <Tab4
-                    active={tabState === item.type}
-                    isMini={true}
-                    key={item.label}
-                    label={item.label}
-                    icon={item.icon}
-                    onClick={() => {
-                      onTabChange(item.type);
-                    }}
-                  />
-                );
-              })}
-              <div className={cls} />
-            </div>
-            <div className={cls} />
-          </div>
-          {/* 导航 */}
-          <div className={style.nav}>
-            <div className={style.nav_left}>
-              {nav.map((item, index) => {
-                return (
-                  <>
-                    <ParcelsTab
-                      dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
-                      label={item.label}
-                      state={item.state}
-                      num={item.num}
+ 
+    if (routeTab === 'trafficreport') {
+      console.log(tokenWearable,'哈哈哈哈哈',showType);
+      
+      if (showType === 'cryptovoxels') {
+        return (
+            // <>111</>
+          <>
+            <div className={cn('tab-list flex mt-5', style.allHeight)}>
+              <div className={cls}></div>
+              <div className={cn('main-content flex px-0', style.tabtext)}>
+                {REPORTTAB.map((item) => {
+                  return (
+                    <Tab4
+                      active={tabState === item.type}
+                      isMini={true}
                       key={item.label}
+                      label={item.label}
+                      icon={item.icon}
                       onClick={() => {
-                        changeNavTab(item.label, index);
+                        onTabChangeTR(item.type);
                       }}
                     />
-                  </>
-                );
-              })}
+                  );
+                })}
+                <div className={cls} />
+              </div>
+              <div className={cls} />
             </div>
-          </div>
-          {/* 导航结束 */}
-          {/* 卡片开始 */}
-          <div className={cn('main-content mt-8', style.content)} >
-            {renderContent}
-          </div>
+            <div className={cn(style.content)}>
+              <BaseChart>
+                <BaseBar
+                  id={'parcel1'}
+                  labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
+                  dataHandlder={req_cv_parcel_traffic}
+                  barWidth={20}
+                  limit={21}
+                  textColor={style.nftColor}
+                  // token={refreshTK()}
+                  token={tokenWearable}
+                ></BaseBar>
+              </BaseChart>
 
-          {/* 卡片结束 */}
-          {tag2()}
-          <RentSet
-            state={rent_set_state}
-            onClick={(current_state) => {
-              close_rent_set(current_state);
-            }}
-            selectedIds={selectedIds}
-          />
-          <Popup status={status} type={type} value={value} />
-          </div>
-        </>
-      );
-    }
-    // if (routeTab === 'trafficreport') {
-    //   if (showType === 'cryptovoxels') {
-    //     return (
-    //       <>
-    //         <div className={cn('tab-list flex mt-5', style.allHeight)}>
-    //           <div className={cls}></div>
-    //           <div className={cn('main-content flex px-0', style.tabtext)}>
-    //             {REPORTTAB.map((item) => {
-    //               return (
-    //                 <Tab4
-    //                   active={tabState === item.type}
-    //                   isMini={true}
-    //                   key={item.label}
-    //                   label={item.label}
-    //                   icon={item.icon}
-    //                   onClick={() => {
-    //                     onTabChangeTR(item.type);
-    //                   }}
-    //                 />
-    //               );
-    //             })}
-    //             <div className={cls} />
-    //           </div>
-    //           <div className={cls} />
-    //         </div>
-    //         <div className={cn(style.content)}>
-    //           <BaseChart>
-    //             <BaseBar
-    //               id={'parcel1'}
-    //               labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
-    //               dataHandlder={req_cv_parcel_traffic}
-    //               barWidth={20}
-    //               limit={21}
-    //               textColor={style.nftColor}
-    //               // token={refreshTK()}
-    //               token={tokenWearable}
-    //             ></BaseBar>
-    //           </BaseChart>
-
-    //           <BaseChart className=" my-5" type={true}>
-    //             <PieChart
-    //               id="piechart2"
-    //               labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
-    //               dataHandlder={req_cv_parcel_traffic_daily}
+              <BaseChart className=" my-5" type={true}>
+                <PieChart
+                  id="piechart2"
+                  labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+                  dataHandlder={req_cv_parcel_traffic_daily}
               
-    //               token={tokenWearable}
-    //               textColor={style.nftColor}
-    //               options={[
-    //                 {
-    //                   label: 'Day',
-    //                   value: 'day',
-    //                 },
-    //                 {
-    //                   label: 'Week',
-    //                   value: 'week',
-    //                 },
-    //                 {
-    //                   label: 'Month',
-    //                   value: 'month',
-    //                 },
-    //               ]}
-    //             ></PieChart>
-    //           </BaseChart>
-    //           <BaseChart className=" my-5" type={true}>
-    //             <ProfileDetail
-    //               label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
-    //               dataHandlder={req_cv_parcel_month_traffic_detail}
-    //               // token={refreshTK()}
-    //               token={tokenWearable}
-    //               textColor={style.nftColor}
-    //             ></ProfileDetail>
-    //           </BaseChart>
-    //         </div>
-    //       </>
-    //     );
-    //   }
-    //   if (showType === 'decentraland') {
-    //     return (
-    //       <>
-    //         <div className={cn('tab-list flex ', style.allHeight)}>
-    //           <div className={cls}></div>
-    //           <div className="main-content flex px-0">
-    //             {REPORTTAB.map((item) => {
-    //               return (
-    //                 <Tab4
-    //                   active={tabState === item.type}
-    //                   isMini={true}
-    //                   key={item.label}
-    //                   label={item.label}
-    //                   icon={item.icon}
-    //                   onClick={() => {
-    //                     onTabChangeTR(item.type);
-    //                   }}
-    //                 />
-    //               );
-    //             })}
-    //             <div className={cls} />
-    //           </div>
-    //           <div className={cls} />
-    //         </div>
-    //         <div className={cn(style.content)}>
-    //           <BaseChart>
-    //             <BaseBarDece
-    //               id={'parcel1'}
-    //               labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
-    //               dataHandlder={req_dece_parcel_traffic}
-    //               barWidth={20}
-    //               limit={21}
-    //               textColor={style.deceColor}
+                  token={tokenWearable}
+                  textColor={style.nftColor}
+                  options={[
+                    {
+                      label: 'Day',
+                      value: 'day',
+                    },
+                    {
+                      label: 'Week',
+                      value: 'week',
+                    },
+                    {
+                      label: 'Month',
+                      value: 'month',
+                    },
+                  ]}
+                ></PieChart>
+              </BaseChart>
+              <BaseChart className=" my-5" type={true}>
+                <ProfileDetail
+                  label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+                  dataHandlder={req_cv_parcel_month_traffic_detail}
+                  // token={refreshTK()}
+                  token={tokenWearable}
+                  textColor={style.nftColor}
+                ></ProfileDetail>
+              </BaseChart>
+            </div>
+          </>
+        );
+      }
+      if (showType === 'decentraland') {
+        return (
+            // <>111</>
+          <>
+            <div className={cn('tab-list flex ', style.allHeight)}>
+              <div className={cls}></div>
+              <div className={cn('main-content flex px-0', style.tabtext)}>
+                {REPORTTAB.map((item) => {
+                  return (
+                    <Tab4
+                      active={tabState === item.type}
+                      isMini={true}
+                      key={item.label}
+                      label={item.label}
+                      icon={item.icon}
+                      onClick={() => {
+                        onTabChangeTR(item.type);
+                      }}
+                    />
+                  );
+                })}
+                <div className={cls} />
+              </div>
+              <div className={cls} />
+            </div>
+            <div className={cn(style.content)}>
+              <BaseChart>
+                <BaseBarDece
+                  id={'parcel1'}
+                  labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
+                  dataHandlder={req_dece_parcel_traffic}
+                  barWidth={20}
+                  limit={21}
+                  textColor={style.deceColor}
            
-    //               token={tokenWearable}
-    //             ></BaseBarDece>
-    //           </BaseChart>
-    //           <BaseChart className=" my-5" type={true}>
-    //             <PieChartDece
-    //               id="piechart2"
-    //               labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
-    //               dataHandlder={req_deceData_parcel_traffic_daily}
-  
-    //               token={tokenWearable}
-    //               textColor={style.deceColor}
-    //               options={[
-    //                 {
-    //                   label: 'Day',
-    //                   value: 'day',
-    //                 },
-    //                 {
-    //                   label: 'Week',
-    //                   value: 'week',
-    //                 },
-    //                 {
-    //                   label: 'Month',
-    //                   value: 'month',
-    //                 },
-    //               ]}
-    //             ></PieChartDece>
-    //           </BaseChart>
-    //           <BaseChart className=" my-5" type={true}>
-    //             <ProfileDetailDece
-    //               label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
-    //               dataHandlder={req_dece_parcel_traffic_list}
+                  token={tokenWearable}
+                ></BaseBarDece>
+              </BaseChart>
+              <BaseChart className=" my-5" >
+                <PieChartDece
+                  id="piechart2"
+                  labelText={'PERCENTAGE OF PARCEL TRAFFIC '}
+                  dataHandlder={req_deceData_parcel_traffic_daily}
+                  token={tokenWearable}
+                  textColor={style.deceColor}
+                  options={[
+                    {
+                      label: 'Day',
+                      value: 'day',
+                    },
+                    {
+                      label: 'Week',
+                      value: 'week',
+                    },
+                    {
+                      label: 'Month',
+                      value: 'month',
+                    },
+                  ]}
+                ></PieChartDece>
+              </BaseChart>
+              <BaseChart className=" my-5" type={true}>
+                <ProfileDetailDece
+                  label={'DETAILED TRAFFIC INFORMATION LIST OF PARCELS'}
+                  dataHandlder={req_dece_parcel_traffic_list}
         
-    //               token={tokenWearable}
-    //               textColor={style.deceColor}
-    //             ></ProfileDetailDece>
-    //           </BaseChart>
-    //         </div>
-    //       </>
-    //     );
-    //   }
-    // }
+                  token={tokenWearable}
+                  textColor={style.deceColor}
+                ></ProfileDetailDece>
+              </BaseChart>
+            </div>
+          </>
+        );
+      }
+    }
     // if (routeTab === 'wearablelist') {
     //   return (
     //     <>
@@ -954,7 +821,7 @@ export default function ParcelList() {
     // s,
     // cartData,
     // manySetLabel,
-    renderContent,
+    tokenWearable,
     // renderBuilding,
     // renderWerable,
     dataSource,

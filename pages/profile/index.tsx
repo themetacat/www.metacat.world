@@ -3,28 +3,28 @@ import cn from "classnames";
 import "tailwindcss/tailwind.css";
 import { v4 as uuid } from "uuid";
 import { toast } from "react-hot-toast";
-import Page from "../components/page";
+import Page from "../../components/page";
 
 import Rekv from "rekv";
 import { useRouter, withRouter } from "next/router";
-import Tab4 from "../components/tab4";
+import Tab4 from "../../components/tab4";
 
-import { SITE_NAME, META_DESCRIPTION } from "../common/const";
+import { SITE_NAME, META_DESCRIPTION } from "../../common/const";
 import style from "./index.module.css";
-import DclCard from "../components/parcels-dcl-card";
-import store from "../store/profile";
-import WalletBtn from "../components/wallet-btn";
-import Card from "../components/parcels-card";
-import ParcelList from "../components/parcelList";
-import Tab3 from "../components/tab3";
-import ParcelsTab from "../components/parcels-tab";
-import RentSet from "../components/parcels_rent_set";
-import Popup from "../components/popup";
-import Trafficreport from "../components/trafficreport";
-import Status from "../components/status";
-import { convert, getToken, setToken } from "../common/utils";
+import DclCard from "../../components/parcels-dcl-card";
+import store from "../../store/profile";
+import WalletBtn from "../../components/wallet-btn";
+import Card from "../../components/parcels-card";
+import ParcelList from "../../components/parcelList";
+import Tab3 from "../../components/tab3";
+import ParcelsTab from "../../components/parcels-tab";
+import RentSet from "../../components/parcels_rent_set";
+import Popup from "../../components/popup";
+import Trafficreport from "../../components/trafficreport";
+import Status from "../../components/status";
+import { convert, getToken, setToken } from "../../common/utils";
 
-import { getBaseInfo, refreshToken, getParcelList2 } from "../service";
+import { getBaseInfo, refreshToken, getParcelList2 } from "../../service";
 
 import {
   req_parcels_cancel,
@@ -47,7 +47,7 @@ import {
   req_user_add_or_edit_building,
   req_get_building_detail_info,
   req_builder_del_self_building,
-} from "../service/z_api";
+} from "../../service/z_api";
 
 interface IProfileData {
   accessToken: string;
@@ -154,8 +154,8 @@ export default function PageNew(r) {
       setTabState("cryptovoxels");
       setShowTab(l);
       setRouteTab(t);
-      router?.replace(`/profile?type=${t}`);
-      // router?.replace(`/?type=${t}`);
+      // router?.replace(`/profile?type=${t}`);
+      router?.replace(`/?type=${t}`);
     },
     [showTab]
   );
@@ -209,7 +209,7 @@ export default function PageNew(r) {
   // );
 
 useEffect(()=>{
-  console.log(router);
+//   console.log(router);
   setRouteTab(r.router?.query?.type)
 },[r.router?.query?.type])
 
@@ -253,7 +253,7 @@ useEffect(()=>{
   // );
 
   React.useEffect(() => {
-
+    setRouteTab('parcellist')
     setNavLabel("All");
     const accessToken = getToken("atk");
     console.log(accessToken, "accn",routeTab);
@@ -263,8 +263,7 @@ useEffect(()=>{
       // if(routeTab === 'parcellist'){
       // setRouteTab('parcellist')
       // }else{
-        router?.replace(`/profile?type=parcellist`);
-        // setRouteTab(router.query.type)
+        setRouteTab(router.query.type)
       // }
 
       // if (tabState === "cryptovoxels") requestData(accessToken);

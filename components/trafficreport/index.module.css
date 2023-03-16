@@ -160,6 +160,8 @@
   .tabtext{
      border-bottom: 1px solid #012a30;
      display: flex;
+     width: 1200px;
+     margin: 0 auto;
   }
   .allHeight {
     height: 48px;

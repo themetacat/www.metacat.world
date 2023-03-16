@@ -30,11 +30,18 @@
 .miniCanHover:hover > .miniTabIcon {
   transform: scale(1);
 }
+.miniCanHover{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+}
 
 .miniTabIcon {
   width: 20px;
   height: 20px;
   border-radius: 16px;
+  background-size: contain;
 }
 
 .active {

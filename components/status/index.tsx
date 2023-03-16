@@ -20,11 +20,12 @@ export default function Status({ status, retry, addWork, addWorkWerable, unloadB
   const commonCls = cn(
     'flex w-full flex-col justify-center items-center py-10',
     mini ? style.mini : style.baseText,
+   
   );
   if (status === 'loading') {
     return (
       <div className={cn(commonCls, 'animate-spin')}>
-        <img src="/images/loading.png" className="animate-spin w-8 h-8" />
+        <img src="/images/loading.png" className={cn('animate-spin  w-8 h-8' ,style.commonCls1)} />
       </div>
     );
   }

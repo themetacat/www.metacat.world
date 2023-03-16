@@ -10,8 +10,15 @@
   display: flex;
 }
 
-
-
+.parselist{
+/* width: 100vw;
+height: 100vh; */
+}
+.randerCardList{
+  background-color: #000 !important;
+  /* width: 1200px; */
+  margin: 0 auto;
+}
 
 .anPage {
   min-width: 1440px;
@@ -158,6 +165,7 @@ color: #0F191B;
 .allHeight {
   height: 48px;
   margin-top: 15px;
+  padding-top: 15px;
 }
 
 .content {
@@ -182,7 +190,6 @@ color: #0F191B;
 
 .nav {
   width: 1200px;
-  background-color: #111a1b;
   margin: 15px auto 20px;
   display: flex;
   justify-content: space-between;
@@ -352,7 +359,13 @@ color: #0F191B;
   margin: 0px auto;
   margin-top: 20px;
 }
-
+.dataSourceCard{
+  display: grid;
+  margin-top: 20px;
+  gap: 1.25rem;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 .wearablesContainer {
   width: 1200px;
   margin: 0 auto;

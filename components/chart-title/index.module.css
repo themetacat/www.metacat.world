@@ -1,0 +1,17 @@
+.icon{
+  width: 4px;
+  height: 14px;
+  margin-right: 6px;
+}
+.title1{
+  color: #000;
+}
+.tits{
+  color: #fff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+}
+.chartTitle{
+  display: flex;
+}
