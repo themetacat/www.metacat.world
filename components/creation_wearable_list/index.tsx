@@ -9,7 +9,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 
 
-
 import { req_detailWearableDcl_list } from '../../service/z_api';
 
 import styles from './index.module.css';
