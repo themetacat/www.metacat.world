@@ -604,7 +604,7 @@ export default function ParcelList() {
         <>
         <div style={{width:"1200px",margin:"0 auto"}}>
           <div className={cn('tab-list flex ', style.allHeight)}>
-            <div className={cls}></div>
+            {/* <div className={cls}></div> */}
             <div className={cn('main-content  flex px-0', style.tabtext)}>
               {TABData.map((item) => {
                 return (
@@ -622,7 +622,7 @@ export default function ParcelList() {
               })}
               <div className={cls} />
             </div>
-            <div className={cls} />
+            {/* <div className={cls} /> */}
           </div>
           {/* 导航 */}
           <div className={style.nav}>
