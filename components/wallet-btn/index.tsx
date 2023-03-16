@@ -111,12 +111,12 @@ const WALLET = [
   //   value: 'walletconnect',
   //   type: 'wallet',
   // },
-  {
-    label: 'Others(Meta,Twitter...)',
-    icon: '/images/v5/login.jpg',
-    value: 'loginConnevt',
-    type: 'login',
-  },
+  // {
+  //   label: 'Others(Meta,Twitter...)',
+  //   icon: '/images/v5/login.jpg',
+  //   value: 'loginConnevt',
+  //   type: 'login',
+  // },
   // {
   //   label: 'Login Out',
   //   icon: '/images/walletconnect.png',

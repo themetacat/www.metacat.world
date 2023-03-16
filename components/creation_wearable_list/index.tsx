@@ -1,14 +1,14 @@
 import React from 'react';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import * as Three from "Three";
+import * as Three from "three";
 import cn from 'classnames';
 import { Scene, WebGLRenderer, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper } from 'three';
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 
-import * as THREE from 'three';
+
 
 import { req_detailWearableDcl_list } from '../../service/z_api';
 
