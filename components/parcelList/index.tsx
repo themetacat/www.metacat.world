@@ -246,7 +246,6 @@ export default function ParcelList() {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
-     console.log(accessToken,333);
      
       setToken('atk', accessToken);
       setToken('rtk', rtk);
@@ -290,7 +289,6 @@ export default function ParcelList() {
   const requestData = React.useCallback(
     async (token: string) => {
       setLoading(true);
-      console.log(11111,token);
       
       try {
         const res = await getParcelList2(token);
@@ -349,7 +347,7 @@ export default function ParcelList() {
     setNavLabel('All')
     // req_building_list(walletAddress)
     const accessToken = getToken('atk');
-    console.log(accessToken,"accn");
+    // console.log(accessToken,"accn");
     
     setTokenWearable(accessToken)
     if(accessToken){

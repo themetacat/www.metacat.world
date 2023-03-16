@@ -168,7 +168,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
   );
   const onRetry = React.useCallback(() => {
     const accessToken = getToken('atk');
-    console.log(accessToken,55655);
+    // console.log(accessToken,55655);
     requestData(accessToken);
   }, []);
   const render = React.useMemo(() => {
@@ -214,7 +214,7 @@ export default function PieChartZ({ id, options, labelText, dataHandlder, token,
 
   React.useEffect(() => {
       const accessToken = getToken('atk');
-      console.log(accessToken,55655);
+      // console.log(accessToken,55655);
       
     // console.log(accessToken,
     //   getParcelList2(accessToken))

@@ -118,6 +118,8 @@ const meta = {
 };
 
 export default function PageNew(r) {
+    console.log(r);
+    
   const nav_Label = React.useRef(null);
   const router = useRouter();
   const [nav, setNav] = React.useState(Nav);
@@ -130,7 +132,7 @@ export default function PageNew(r) {
     "type"
   );
   const [loading, setLoading] = React.useState(false);
-  const [routeTab, setRouteTab] = React.useState(null);
+  const [routeTab, setRouteTab] = React.useState([] ||'parcellist');
   const [tabState, setTabState] = React.useState("cryptovoxels");
   const [showTab, setShowTab] = React.useState(TAB3[0].label);
   const [parcelsIds, setParcelsIds] = React.useState([]);
@@ -149,16 +151,17 @@ export default function PageNew(r) {
   const [navLabel, setNavLabel] = React.useState("All");
   const changeTab3 = React.useCallback(
     async (l, t) => {
-      console.log(router);
+      console.log(router,t);
 
       setTabState("cryptovoxels");
       setShowTab(l);
       setRouteTab(t);
-      // router?.replace(`/profile?type=${t}`);
-      router?.replace(`/?type=${t}`);
+      router?.replace(`/profile?type=${t}`);
+    //   router?.replace(`/?type=${t}`);
     },
     [showTab]
   );
+
 
  
 
@@ -208,10 +211,10 @@ export default function PageNew(r) {
   //   [refreshTK]
   // );
 
-useEffect(()=>{
-//   console.log(router);
-  setRouteTab(r.router?.query?.type)
-},[r.router?.query?.type])
+// useEffect(()=>{
+// //   console.log(router);
+//   setRouteTab(r.router?.query?.type)
+// },[r.router?.query?.type])
 
   // const requestData = React.useCallback(
   //   async (token: string) => {
@@ -251,28 +254,29 @@ useEffect(()=>{
   //   },
   //   [resultHandler, tabState, nav_Label]
   // );
-
   React.useEffect(() => {
-    setRouteTab('parcellist')
+    // setRouteTab('parcellist')
     setNavLabel("All");
     const accessToken = getToken("atk");
-    console.log(accessToken, "accn",routeTab);
-
+  
+    
+    
+    setRouteTab(router?.query?.type)
     setTokenWearable(accessToken);
-    if (accessToken) {
-      // if(routeTab === 'parcellist'){
-      // setRouteTab('parcellist')
-      // }else{
-        setRouteTab(router.query.type)
-      // }
-
-      // if (tabState === "cryptovoxels") requestData(accessToken);
-      // if (tabState === "decentraland") reqDclData(accessToken);
-    }
+    // if (accessToken) {
+    // //   if(router?.query?.type === 'parcellist'){
+    // //   setRouteTab('parcellist')
+    // //   }else{
+    //     setRouteTab(router?.query?.type)
+    // //   }
+    // //   setRouteTab(r?.router?.query?.type);
+    //   // if (tabState === "cryptovoxels") requestData(accessToken);
+    //   // if (tabState === "decentraland") reqDclData(accessToken);
+    // }
 
   }, [
     tokenWearable,
-    router.query.type,
+    router?.query?.type,
     navLabel,
     getToken,
     // requestData,
@@ -283,7 +287,6 @@ useEffect(()=>{
 
   
  
-console.log(router);
 
 
   return (

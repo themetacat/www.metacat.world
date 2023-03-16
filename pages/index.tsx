@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import Page from "../components/page";
 
 import Rekv from "rekv";
-import { useRouter, withRouter } from "next/router";
+import { Router, useRouter, withRouter } from "next/router";
 import Tab4 from "../components/tab4";
 
 import { SITE_NAME, META_DESCRIPTION } from "../common/const";
@@ -147,18 +147,18 @@ export default function PageNew(r) {
   const [label, setLabel] = React.useState("");
   const [cartData, setCartData] = React.useState([]);
   const [navLabel, setNavLabel] = React.useState("All");
-  const changeTab3 = React.useCallback(
-    async (l, t) => {
-      console.log(router);
+  // const changeTab3 = React.useCallback(
+  //   async (l, t) => {
+  //     console.log(router);
 
-      setTabState("cryptovoxels");
-      setShowTab(l);
-      setRouteTab(t);
-      router?.replace(`/profile?type=${t}`);
-      // router?.replace(`/?type=${t}`);
-    },
-    [showTab]
-  );
+  //     setTabState("cryptovoxels");
+  //     setShowTab(l);
+  //     setRouteTab(t);
+  //     // router?.replace(`/profile?type=${t}`);
+  //     // router?.replace(`/?type=${t}`);
+  //   },
+  //   [showTab]
+  // );
 
  
 
@@ -253,6 +253,7 @@ useEffect(()=>{
   // );
 
   React.useEffect(() => {
+console.log(Router);
 
     setNavLabel("All");
     const accessToken = getToken("atk");
@@ -263,7 +264,7 @@ useEffect(()=>{
       // if(routeTab === 'parcellist'){
       // setRouteTab('parcellist')
       // }else{
-        router?.replace(`/profile?type=parcellist`);
+        // router?.replace(`/profile?type=parcellist`);
         // setRouteTab(router.query.type)
       // }
 
@@ -291,7 +292,7 @@ console.log(router);
     <Page meta={meta} className={cn("", style.page)}>
       <WalletBtn />
 
-      <div className={cn("", style.parselist)}>
+      {/* <div className={cn("", style.parselist)}>
         <div className={cn(style.tableList)}>
           {TAB3.map((item) => {
             return (
@@ -308,7 +309,7 @@ console.log(router);
         </div>
       </div>
       {routeTab === "parcellist" ? <ParcelList /> : null}
-      {routeTab === "trafficreport" ? <Trafficreport /> : null}
+      {routeTab === "trafficreport" ? <Trafficreport /> : null} */}
     </Page>
   );
 }

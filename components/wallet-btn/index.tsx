@@ -180,6 +180,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         setToken("atk", data.accessToken);
         setToken("rtk", data.refreshToken);
+        Router.push({
+          pathname: '/profile',
+          query: {
+            type: 'parcellist',
+          },
+        });
       }
       setShowMenu(false);
       setLoading(false);
@@ -768,7 +774,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const getText = React.useMemo(() => {
     let text = "Connect";
     if (profile?.address) {
-      router?.replace(`/profile?type=parcellist`);
       if (profile?.nickName && profile?.address) {
         // console.log(profile);
         text = profile?.nickName;
