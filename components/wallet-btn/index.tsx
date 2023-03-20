@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import "tailwindcss/tailwind.css";
 import { Web3AuthCore } from "@web3auth/core";
+import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal";
+import WalletConnect from "@walletconnect/client";
+import NodeWalletConnect from "@walletconnect/node";
 import Page from "../page";
 import {
   CHAIN_NAMESPACES,
@@ -27,6 +30,7 @@ import {
   loginSignature,
   getBaseInfo,
   getCVEventList,
+
 } from "../../service";
 
 import { convert, getToken, removeToken, setToken } from "../../common/utils";
@@ -99,7 +103,7 @@ const WALLET = [
     label: "MetaMask",
     icon: "/images/v5/Maskgroup.png",
     value: "metamask",
-    type: "wallet",
+    type: "walletMetaMask",
   },
   {
     label: "Wallet Connect",
@@ -130,7 +134,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     "profile"
   );
   const { accessToken, idToken, refreshToken, profile } = profileData;
-
+  const [showModal, setShowModal] = useState(false);
   const [showWall, setShowWall] = React.useState(null);
   const [providerWeb3auth, setProviderWeb3auth] =
     useState<SafeEventEmitterProvider | null>(null);
@@ -157,6 +161,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const resultHandler = React.useCallback(
     (res) => {
+
+      
       const { code, msg, data } = res;
       if (code === 100000) {
         return convert(data);
@@ -195,6 +201,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const requireNonce = React.useCallback(
     async (addr) => {
+      
       const res = await getNonce(addr);
       return resultHandler(res);
     },
@@ -278,17 +285,24 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler, idTokenWeb3]
   );
 
+
   const subscribeProvider = React.useCallback(
     async (providerDa, newWeb3, modal) => {
+      console.log(8989);
+      
       const { nonce, address: add } = await requireNonce(
+      
+        
         providerDa.accounts[0]
       );
+
       providerDa
         .request({ method: "personal_sign", params: [nonce, add] })
         .then(
           (resD) => {
             loginSignature(add, resD).then(
               (resData) => {
+                
                 checkLoginStatu(resData);
               },
               (res1) => {}
@@ -327,11 +341,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         const addressData = await accounts[0];
       });
     },
-    [w3]
+    [w3,requireNonce]
   );
 
   const walletconnect = React.useCallback(async () => {
     setLoading(true);
+    console.log(11111);
+    
     const providerOptions = {
       walletconnect: {
         package: WalletConnectProvider,
@@ -343,21 +359,56 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           // network: 56,
         },
       },
+      
     };
+    
     const web3Modal = new Web3Modal({
       network: "mainnet",
       cacheProvider: true,
       providerOptions,
     });
-    const providerDataText = await web3Modal.connect();
-    await web3Modal.toggleModal();
-    const web_3 = new WalletConnectProvider(providerDataText);
-    setw3(web_3);
-    await subscribeProvider(providerDataText, web_3, web3Modal);
+    // 'https://registry.walletconnect.com/api/v2/wallets'
+{/* <WalletConnectQRCodeModal
+         size={256}
+           onClose={() => setShowModal(false)}
+           URI={web3Modal.cachedProvider}
+         /> */}
+console.log(web3Modal,Web3Modal,web3Modal.cachedProvider,8888888);
+
+const connector = new WalletConnect({
+  bridge: "https://bridge.walletconnect.org",
+  qrcodeModal: WalletConnectQRCodeModal,
+});
+// console.log(WalletConnect,999);
+
+// const uri = connector.uri
+// const clientId = connector.clientId
+//     WalletConnectQRCodeModal?.open(uri, 
+//       () => {
+//     console.log("QR Code Modal closed");
+// },  )
+// await this.setState({ connector });
+// console.log(connector,8899,uri);
+connector.createSession().then(() => {
+  // get uri for QR Code modal
+  const uri = connector.uri;
+  // display QR Code modal
+  WalletConnectQRCodeModal.open(uri, () => {
+    console.log("QR Code Modal closed");
+  });
+});
+    // console.log(3334,providerOptions.walletconnect.qrcodeModal, );
+
+    // const providerDataText = await web3Modal.connect();
+    // setShowModal(true);
+    // await web3Modal.toggleModal();
+    // const web_3 = new WalletConnectProvider(providerDataText);
+    // setw3(web_3);
+    // await subscribeProvider(providerDataText, web_3, web3Modal);
+
     window.localStorage.setItem("LoginType", "walletConnect");
     setLoading(false);
-   
-    return web_3;
+    // return web_3;
   }, [subscribeProvider]);
   const clientId =
     "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
@@ -580,14 +631,14 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       }
 
       setShowWall(item.value);
-      if (item.type === "wallet") {
+      // if (item.type === "wallet") {
         if (!profile?.address && item?.value === "metamask") {
           connectToChain();
         }
         if (!profile.address && item.value === "walletconnect") {
           walletconnect();
         }
-      }
+      // }
       if (item.type === "login") {
         login();
       }
@@ -746,6 +797,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                 src="/images/v5/arrow.png"
                 className={style.activeWallet}
               ></img>
+              {/* {showModal && (
+       <QRCodeModal
+         size={256}
+           onClose={() => setShowModal(false)}
+           URI={web3Modal.cachedProvider}
+         />
+         )}  */}
             {/* {loading === true ? (
               <img
                 src="/images/loading.png"

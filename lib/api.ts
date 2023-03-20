@@ -658,6 +658,7 @@ class API {
     return json;
   }
 
+
   public async updateBaseInfo(
     token: string,
     nickName: string,

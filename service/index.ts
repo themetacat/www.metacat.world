@@ -531,6 +531,7 @@ export const getBaseInfo = async (token: string) => {
   return json;
 };
 
+
 export const updateBaseInfo = async (
   token: string,
   nickName: string,
