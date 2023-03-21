@@ -1,12 +1,12 @@
-import React from 'react';
-import Web3Modal, { IProviderControllerOptions } from 'web3modal';
-import Rekv from 'rekv';
-import Web3 from 'web3';
+import React, { useCallback } from "react";
+import Web3Modal, { IProviderControllerOptions } from "web3modal";
+import Rekv from "rekv";
+import Web3 from "web3";
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 
-import { getChainData } from './utils';
-import { IAssetData } from './interface';
-import { apiGetAccountAssets } from './api';
+import { getChainData } from "./utils";
+import { IAssetData } from "./interface";
+import { apiGetAccountAssets } from "./api";
 
 interface ChainData {
   chianId: number;
@@ -42,7 +42,7 @@ interface IAppState {
 
 const INITIAL_STATE: IAppState = {
   fetching: false,
-  address: '',
+  address: "",
   web3: null,
   provider: null,
   connected: false,
@@ -68,18 +68,22 @@ const state = new Rekv<IAppState>(INITIAL_STATE);
 export const ProviderContext = React.createContext<{
   data: IAppState | undefined;
   connect: () => Promise<Iconnect | undefined>;
-  getAccountAssets: (_address: string, _chainId: number) => Promise<IAssetData[] | undefined>;
+  getAccountAssets: (
+    _address: string,
+    _chainId: number
+  ) => Promise<IAssetData[] | undefined>;
   resetApp: () => Promise<IAppState>;
   // @ts-ignore
 }>({});
 
 function initWeb3(provider: any) {
   const web3 = new Web3(provider);
+
   web3.eth.extend({
     methods: [
       {
-        name: 'chainId',
-        call: 'eth_chainId',
+        name: "chainId",
+        call: "eth_chainId",
         // @ts-ignore
         outputFormatter: web3.utils.hexToNumber,
       },
@@ -97,23 +101,27 @@ export default function Web3ModalProvider({
   options?: Options;
 }) {
   const web3ModalRef = React.useRef<Web3Modal>(null);
+
   const value = state.useState(
-    'fetching',
-    'address',
-    'web3',
-    'provider',
-    'connected',
-    'chainId',
-    'networkId',
-    'assets',
-    'showModal',
-    'pendingRequest',
-    'result',
+    "fetching",
+    "address",
+    "web3",
+    "provider",
+    "connected",
+    "chainId",
+    "networkId",
+    "assets",
+    "showModal",
+    "pendingRequest",
+    "result"
   );
 
   const { chainId, web3, address } = value;
 
-  const getNetwork = (cid = chainId) => getChainData(cid)?.network;
+  const getNetwork = useCallback(
+    (cid = chainId) => getChainData(cid)?.network,
+    [chainId]
+  );
 
   const resetApp = async () => {
     // @ts-ignore
@@ -122,7 +130,7 @@ export default function Web3ModalProvider({
       await web3.currentProvider.disconnect();
     }
 
-    await web3ModalRef.current?.clearCachedProvider();
+    web3ModalRef.current?.clearCachedProvider();
     state.setState({ ...INITIAL_STATE });
     return INITIAL_STATE;
   };
@@ -146,7 +154,7 @@ export default function Web3ModalProvider({
     if (!provider.on) {
       return;
     }
-    provider.on('close', () => resetApp());
+    provider.on("close", () => resetApp());
     // provider.on('accountsChanged', async (accounts: string[]) => {
     //   // eslint-disable-next-line no-underscore-dangle
     //   const _address = accounts[0];
@@ -171,7 +179,7 @@ export default function Web3ModalProvider({
     // });
   };
 
-  const onConnect = async () => {
+  const onConnect = React.useCallback(async () => {
     if (!window.web3 || !window.ethereum || !window.ethereum.isMetaMask) {
       return;
     }
@@ -179,7 +187,9 @@ export default function Web3ModalProvider({
     try {
       const provider = await web3ModalRef.current?.connect();
 
-      // const provider = await web3ModalRef.current;
+      // const provider =  web3ModalRef.current;
+      console.log(provider);
+
       await subscribeProvider(provider);
 
       const w3 = initWeb3(provider);
@@ -209,7 +219,7 @@ export default function Web3ModalProvider({
     } catch (err) {
       // console.log('onConnect error: ', err);
     }
-  };
+  }, [getNetwork, subscribeProvider]);
 
   React.useEffect(() => {
     // eslint-disable-next-line prefer-object-spread
@@ -229,7 +239,7 @@ export default function Web3ModalProvider({
         //   },
         // },
       },
-      options,
+      options
     );
 
     const w3Modal = new Web3Modal(params);
@@ -239,7 +249,7 @@ export default function Web3ModalProvider({
     if (w3Modal.cachedProvider) {
       onConnect();
     }
-  }, [options]);
+  }, [getNetwork, options]);
 
   const ctx = {
     data: value,
@@ -248,7 +258,9 @@ export default function Web3ModalProvider({
     resetApp,
   };
 
-  return <ProviderContext.Provider value={ctx}>{children}</ProviderContext.Provider>;
+  return (
+    <ProviderContext.Provider value={ctx}>{children}</ProviderContext.Provider>
+  );
 }
 
 export const useWalletProvider = () => {

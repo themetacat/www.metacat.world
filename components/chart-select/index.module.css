@@ -1,0 +1,122 @@
+.option {
+  color: #aaaaaa;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 40px;
+  min-width: 69px;
+  padding: 0 10px;
+  height: 40px;
+  background-color: #010202;
+  border-bottom: #333333 solid 1px;
+}
+.just{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.ul{
+  list-style: none;
+}
+.option:nth-child(1){
+  border-radius: 4px 4px 0px 0px;
+}
+.option:last-child{
+  border-radius:  0px 0px 4px 4px;
+  border-bottom: 0px;
+  border-bottom: #333333 solid 1px;
+}
+.option:hover {
+  color: #fff;
+  font-weight: 500;
+}
+.option:active {
+  color: #999999;
+  font-weight: 500;
+}
+.option1 {
+  color: #aaaaaa;
+  font-weight: 400;
+
+  font-size: 12px;
+  min-width: 69px;
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  padding: 0 10px;
+  height: 40px;
+  background-color: #fff;
+}
+.option1:nth-child(1){
+  border-radius: 4px 4px 0px 0px;
+  color: #000;
+}
+.option1:last-child{
+  border-radius:  0px 0px 4px 4px;
+  /* border-bottom: 0px; */
+}
+.option1:hover {
+  color: #000;
+  font-weight: 500;
+}
+.option1:active {
+  color: #000;
+  font-weight: 500;
+}
+.selectDiv {
+  z-index: 1005;
+  cursor: pointer;
+  position: relative;
+  min-width: 80px;
+}
+.selecter {
+  height: 40px;
+  /* width: 80px; */
+  padding: 0 10px;
+  z-index: 1005;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+}
+.selecter1{
+  height: 30px;
+  /* width: 80px; */
+  padding: 0 10px;
+  z-index: 1005;
+  color: #000;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  
+}
+
+.border {
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.show {
+  display: none;
+}
+
+.frame {
+  width: 10px;
+  height: 10px;
+}
+
+.frame:hover {
+  filter: brightness(150%);
+}
+.frame:active {
+  filter: brightness(75%);
+}
+
+.active {
+  filter: brightness(150%);
+}
+.a {
+  filter: brightness(150%);
+  /* color: #000; */
+}
+
