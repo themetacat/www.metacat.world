@@ -46,11 +46,11 @@ export default function BaseBarDece({
       if (!dom) {
         return;
       }
-      chart.current = new Chart({
-        container: id,
-        autoFit: true,
-        height: 210,
-      });
+      // chart.current = new Chart({
+      //   container: id,
+      //   autoFit: true,
+      //   height: 210,
+      // });
       if (limit && dt?.length > limit) {
         const l = dt.length;
         const da = l - limit;

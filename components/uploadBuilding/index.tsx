@@ -52,15 +52,9 @@ export default function uploadBuilding({ imgUrl, cover,coverImg, closeBuild, sho
 
   const customRequest = React.useCallback(
     async ({
-      action,
-      data,
+    
       file,
-      filename,
-      headers,
-      onError,
-      onProgress,
-      onSuccess,
-      withCredentials,
+     
     }) => {
       const fileInd = file.type.indexOf('image')
       if(fileInd === -1){

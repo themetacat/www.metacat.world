@@ -1417,7 +1417,7 @@ export const req_user_add_or_edit_building = async ( token: string,
 export const req_get_building_detail_info = async ( building_link)=> {
   
   const search = qs.stringify({   
-    building_link:building_link
+    building_link,
   } ,{ addQueryPrefix: true });
   
   const url = `api/user_building_detail_info${search}`;
