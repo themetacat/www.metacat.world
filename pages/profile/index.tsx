@@ -1945,7 +1945,7 @@ function ProfilePage(r) {
             <div className={cn(style.content)}>
             
               
-              <BaseChart>
+              {/* <BaseChart>
                 <BaseBar
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1957,48 +1957,9 @@ function ProfilePage(r) {
                   token={tokenWearable}
                   defaultColor={[130, 137, 195]}
                 ></BaseBar>
-                   {/* <BaseBar
-            id={'basebar2'}
-            className="mt-5"
-            limit={21}
-            labelText={'Monthly Parcel Minted'}
-            dataHandlder={req_cv_parcel_traffic}
-            defaultColor={[130, 137, 195]}
-            barWidth={18}
-            token={tokenWearable}
-            textColor={style.cvColor}
-          ></BaseBar> */}
-              </BaseChart>
-                    {/* <BaseVoxelsData
-            id={'stackbar'}
-            className="mt-5"
-            labelText={'Traffic'}
-            dataHandler={getCvTrafficStats}
-            barWidth={18}
-            textColor={style.cvColor}
-            options={[
-              {
-                label: 'Daily',
-                value: 'daily',
-              },
-              {
-                label: 'Weekly',
-                value: 'weekly',
-              },
-              {
-                label: 'Monthly',
-                value: 'monthly',
-              },
-              {
-                label: 'Quarterly',
-                value: 'quarterly',
-              },
-              {
-                label: 'Yearly',
-                value: 'yearly',
-              },
-            ]}
-          ></BaseVoxelsData> */}
+                  
+              </BaseChart> */}
+                
               {/* <BaseChart className=" my-5">
                 <TrafficBar
                   id={'parcel3'}
@@ -2072,7 +2033,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart>
+              {/* <BaseChart>
                 <BaseBarDece
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -2083,7 +2044,7 @@ function ProfilePage(r) {
                   // token={refreshTK()}
                   token={tokenWearable}
                 ></BaseBarDece>
-              </BaseChart>
+              </BaseChart> */}
               <BaseChart className=" my-5" type={true}>
                 <PieChartDece
                   id="piechart2"
