@@ -374,7 +374,7 @@ function Map({
 
         const min = new MiniMap(minIsLandLayer, params);
         if (min) {
-          min.addTo(pageMap);
+          min?.addTo(pageMap);
         }
       }
     },

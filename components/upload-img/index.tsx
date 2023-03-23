@@ -40,15 +40,9 @@ export default function UploadBuilding({ imgUrl, afterUpload, beginUpload }: Pro
 
   const customRequest = React.useCallback(
     async ({
-      action,
-      data,
+  
       file,
-      filename,
-      headers,
-      onError,
-      onProgress,
-      onSuccess,
-      withCredentials,
+     
     }) => {
       const size = file.size / 1024 / 1024;
       if (size >= 1) {
