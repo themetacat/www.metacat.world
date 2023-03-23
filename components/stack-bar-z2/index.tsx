@@ -381,16 +381,8 @@ export default function StackBar({
         className={cn('flex items-center', style.border)}
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
-        <ChartSelecter
-          options={optionsPrice}
-          showArrow={true}
-          onClick={changePriceStatic}
-          defaultLabel={optionsPrice[0].value}
-          hasBorder={false}
-        ></ChartSelecter>
-        {priceType ? '丨' : null}
-        {priceType ? (
-          <ChartSelecter
+        
+         <ChartSelecter
             options={options}
             showArrow={true}
             onClick={changeStatic}
@@ -398,6 +390,15 @@ export default function StackBar({
             defaultLabel={options[0].value}
             hasBorder={false}
           ></ChartSelecter>
+        {priceType ? '丨' : null}
+        {priceType ? (
+         <ChartSelecter
+         options={optionsPrice}
+         showArrow={true}
+         onClick={changePriceStatic}
+         defaultLabel={optionsPrice[0].value}
+         hasBorder={false}
+       ></ChartSelecter>
         ) : null}
       </div>
     );
