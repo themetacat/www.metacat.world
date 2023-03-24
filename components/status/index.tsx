@@ -26,7 +26,7 @@ export default function Status({ status, retry, addWork, addWorkWerable, unloadB
       <div className={cn(commonCls, 'animate-spin')}>
         <img src="/images/loading.png" className="animate-spin w-8 h-8" />
       </div>
-    );
+    )
   }
 
   if (status === 'loadingDetail') {

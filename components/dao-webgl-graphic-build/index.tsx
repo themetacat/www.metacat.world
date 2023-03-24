@@ -66,7 +66,7 @@ export default function DaoWebglCard({
   const sceneRef = React.useRef(null);
   const [selecete, setSelecete] = React.useState(false);
   const goToDetail = React.useCallback(() => {
-    console.log(type,address);
+    // console.log(type,address);
     
     if (type === 'topicNewBuilding') {
       // router.replace(`/wearables/detail/${model.id}?type=${'topicNewBuilding'}&address=${address}`);

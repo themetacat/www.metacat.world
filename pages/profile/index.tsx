@@ -1950,7 +1950,7 @@ function ProfilePage(r) {
             <div className={cn(style.content)}>
             
               
-              {/* <BaseChart>
+              <BaseChart>
                 <BaseBar
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -1963,7 +1963,7 @@ function ProfilePage(r) {
                   defaultColor={[130, 137, 195]}
                 ></BaseBar>
                   
-              </BaseChart> */}
+              </BaseChart>
                 
               {/* <BaseChart className=" my-5">
                 <TrafficBar
@@ -2038,7 +2038,7 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              {/* <BaseChart>
+              <BaseChart>
                 <BaseBarDece
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
@@ -2049,7 +2049,7 @@ function ProfilePage(r) {
                   // token={refreshTK()}
                   token={tokenWearable}
                 ></BaseBarDece>
-              </BaseChart> */}
+              </BaseChart>
               <BaseChart className=" my-5" type={true}>
                 <PieChartDece
                   id="piechart2"

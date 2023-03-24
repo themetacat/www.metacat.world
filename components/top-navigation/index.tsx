@@ -172,6 +172,12 @@ const parcels = [
     type: 'playerOne',
     link: '/parcels?tab=playerOne',
   },
+  {
+    label: 'W3rld',
+    icon: 'https://pbs.twimg.com/profile_images/1603344186488623108/ed9A-3hx_400x400.jpg',
+    type: 'w3rld',
+    link: '/parcels?tab=w3rld',
+  },
 ];
 const eventList = [
   {
@@ -305,6 +311,8 @@ const analyticsData = [
     type: 'playerOne',
     link: '/analytics?type=playerOne',
   },
+ 
+ 
 ];
 
 // const routerTab = [
