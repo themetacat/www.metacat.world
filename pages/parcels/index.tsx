@@ -55,6 +55,7 @@ import {
   getDCLEventList,
   getDCLParcelList,
   getSomSpaceList,
+  getW3rldList,
   getTopicList,
   getOncyberParcelList,
   getCvParcelSoldTotalStats,
@@ -166,6 +167,12 @@ const TAB = [
     icon: '/images/somniumspace.png',
     type: 'somniumspace',
     link: '/parcels?tab=somniumspace',
+  },
+  {
+    label: 'W3rld',
+    icon: 'https://pbs.twimg.com/profile_images/1603344186488623108/ed9A-3hx_400x400.jpg',
+    type: 'w3rld',
+    link: '/parcels?tab=w3rld',
   },
   {
     label: 'RareRooms',
@@ -366,6 +373,7 @@ export default function Index(props) {
   const [typeListSubstrata, setTypeListSubstrata] = React.useState([]);
   const [typeListPlayerOne, setTypeListPlayerOne] = React.useState([]);
   const [typeListsomniumspace, setTypeListSomniumspace] = React.useState([]);
+  const [typeListW3rld, setTypeListW3rld] = React.useState([]);
   const [topicList, setTopicList] = React.useState([]);
   const [fixedState, setFixedState] = React.useState(false);
   const [fixedStatePage, setFixedStatePage] = React.useState(false);
@@ -375,6 +383,7 @@ export default function Index(props) {
 
   const [dataSource, setDataSource] = React.useState([]);
   const [dataSourceSomSpace, setDataSourceSomSpace] = React.useState([]);
+  const [dataSourceWr3ld, setDataSourceWr3ld] = React.useState([]);
   const [dataSourceMona, setDataSourceMona] = React.useState([]);
   const [dataSourceOrcyber, setDataSourceOrcyber] = React.useState([]);
   const [dataSourceProto, setDataSourceProto] = React.useState([]);
@@ -528,6 +537,22 @@ export default function Index(props) {
           setPageNumber(currentPage);
           setTypeListSomniumspace(type_total)
           setDataSourceSomSpace(res.data.parcel_list)
+
+
+        }
+      }else if (tab === 'w3rld') {
+        if (subTab === 'parcel') {
+
+
+          const res = await getW3rldList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          // console.log(res.data.parcel_list);
+
+          // setPageNumber(currentPage);
+          setTotalPage(total_page);
+          setPageNumber(currentPage);
+          setTypeListW3rld(type_total)
+          setDataSourceWr3ld(res.data.parcel_list)
 
 
         }
@@ -836,6 +861,9 @@ export default function Index(props) {
       subIndex = SUBTABDECE.findIndex((item) => item.type === subTabState);
     } else if (tabState === 'somniumspace') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    
+    } else if (tabState === 'w3rld') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
     else if (tabState === 'mona') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
@@ -895,7 +923,12 @@ export default function Index(props) {
       setSubTabState(SUBTABSomSpace[subIndex]?.type);
       router.replace(`/parcels?tab=somniumspace`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-    } else if (tab === 'mona') {
+  } else if (tab === 'w3rld') {
+    sub = SUBTAB[subIndex]?.type;
+    setSubTabState(SUBTABSomSpace[subIndex]?.type);
+    router.replace(`/parcels?tab=w3rld`);
+    // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+  } else if (tab === 'mona') {
 
 
       sub = SUBTAB[subIndex]?.type;
@@ -1349,6 +1382,30 @@ export default function Index(props) {
               )}
             >
               {dataSourceSomSpace.map((card, idx) => {
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'w3rld') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceWr3ld.map((card, idx) => {
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}
             </div>
@@ -3011,6 +3068,11 @@ export default function Index(props) {
             {tabState === 'somniumspace' ? (
               <div style={{ marginTop: "20px" }}>
                 <SwiperTagParcels {...typeListsomniumspace} onActive={onTypeChangeHandler} tags={typeListsomniumspace} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'w3rld' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListW3rld} onActive={onTypeChangeHandler} tags={typeListW3rld} label={typeState} />
               </div>
             ) : ''}
             {subTabState === 'space' && dataSource.length === 0 && <SpaceBuilding />}

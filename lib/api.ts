@@ -224,6 +224,7 @@ class API {
     return json;
   }
 
+
   public async getSearchDetail(
     query,
     page:number,
@@ -308,6 +309,23 @@ class API {
   ): Promise<any> {
     const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
     const url = `${this.url}/get_dcl_parcel_list${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_dcl_parcel_list${search}`;
+    
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getW3rldList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
+    const url = `${this.url}/get_w3rlds_list${search}`;
     // const url = `http://8.130.23.16/api/v1/get_dcl_parcel_list${search}`;
     
 
