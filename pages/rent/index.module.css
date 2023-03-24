@@ -1,0 +1,386 @@
+.containerBanner {
+  position: relative;
+  width: 1200px;
+  height: 200px;
+  margin: 0 auto;
+  background: #000;
+}
+.containerBanner .banner {
+  height: 130px;
+  margin-top: 20px;
+  margin-bottom: 67px;
+  margin-left: 200px;
+}
+.allHeight {
+  height: 48px;
+}
+.bottomLine {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+.filterNav {
+  width: 1200px;
+  margin: 30px auto 0;
+  padding: 20px;
+  background: #0c1416;
+}
+.dclFilterNav {
+  width: 1200px;
+  margin: 30px auto 0;
+  padding: 1px 20px 20px;
+  background: #0c1416;
+}
+.navItem .title {
+  width: 60px;
+  margin-top: 3px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 17px;
+}
+.navItem .list {
+  flex-wrap: wrap;
+  margin-left: 40px;
+  color: #ccc;
+}
+.navItem .list .c {
+  cursor: pointer;
+}
+.navItem .list .i {
+  width: 200px;
+  cursor: pointer;
+}
+.navItem .list .i .active {
+  color: #fff;
+}
+.navItem .list .active {
+  color: #00d0ec;
+}
+.sort {
+  position: relative;
+  width: 1200px;
+  height: 40px;
+  margin: 0 auto;
+}
+.sort .sortMode {
+  position: absolute;
+  right: -55px;
+  bottom: -12px;
+  width: 420px;
+  height: 100%;
+}
+.sort .sortMode .sortModeItem {
+  position: relative;
+  color: #999;
+  cursor: pointer;
+}
+.sort .sortMode .sortModeItem .title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 40px;
+}
+.sort .sortMode .sortModeItem .active {
+  color: #fff;
+}
+.sort .sortMode .sortModeItem img {
+  width: 16px;
+  height: 16px;
+  margin-top: 13px;
+  margin-left: 5px;
+}
+.sort .sortMode .sortModeItem::after {
+  position: absolute;
+  bottom: 12px;
+  left: -13px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.sort .clearSort {
+  margin-top: 10px;
+  cursor: pointer;
+}
+.sort .clearSort div {
+  color: #999;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px;
+}
+.sort .clearSort .active {
+  color: #fff;
+}
+.sortMode2 {
+  position: absolute;
+  right: -174px;
+  bottom: -12px;
+  width: 420px;
+  height: 100%;
+}
+.sortMode2 .sortModeItem {
+  position: relative;
+  color: #999;
+  cursor: pointer;
+}
+.sortMode2 .sortModeItem .title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 40px;
+}
+.sortMode2 .sortModeItem .active {
+  color: #fff;
+}
+.sortMode2 .sortModeItem img {
+  width: 16px;
+  height: 16px;
+  margin-top: 13px;
+  margin-left: 5px;
+}
+.sortMode2 .sortModeItem::after {
+  position: absolute;
+  bottom: 12px;
+  left: -13px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.content {
+  min-height: 650px;
+}
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1000px;
+  margin: auto;
+  background: #fff;
+  opacity: 0.3;
+}
+.detailCard {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 680px;
+  height: 400px;
+  margin: auto;
+  padding: 30px;
+  background: #000;
+}
+.imgContanier {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+.imgContanier .toTitle {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  display: flex;
+  margin-top: -10px;
+  margin-right: -60px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+.imgContanier .toTitle img {
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+}
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.contactTitle {
+  margin-top: 35px;
+  margin-left: 83px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  font-style: normal;
+}
+.right {
+  position: relative;
+  margin-left: 20px;
+}
+.right h2 {
+  position: relative;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 28px;
+}
+.right h2 span {
+  vertical-align: super;
+}
+.right .endTime {
+  margin-top: 20px;
+  margin-bottom: 35px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  font-style: normal;
+}
+.detail1 {
+  margin-top: 10px;
+  color: #ddd;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+}
+.detail1 img {
+  width: 14px;
+  height: 14px;
+  margin-top: 5px;
+  margin-right: 7px;
+}
+.detail1 .plot {
+  margin: 12px 0;
+}
+.detail1 .plot div {
+  margin-top: 2px;
+}
+.detail1 .info {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.detail1 .info .info_item {
+  position: relative;
+  margin-top: 2px;
+  margin-right: 8px;
+  font-size: 14px;
+}
+.detail1 .info .info_item::after {
+  position: absolute;
+  right: -4px;
+  bottom: 4px;
+  width: 1px;
+  height: 15px;
+  background: #999;
+  transform: scaleX(0.5);
+  content: ' ';
+}
+.detail1 .info .info_item:last-child::after {
+  width: 0;
+  content: ' ';
+}
+.price {
+  position: relative;
+  margin: 25px 0;
+  color: #ffb800;
+  font-weight: 600;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 22px;
+}
+.contact1 {
+  position: absolute;
+  right: -22px;
+  bottom: 9px;
+  display: flex;
+}
+.contact1 div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 42px;
+  margin-right: 30px;
+  background: #00d0ec;
+  cursor: pointer;
+}
+.contact1 div img {
+  width: 16px;
+  height: 16px;
+  margin-left: 22px;
+}
+.contact1 div div {
+  margin-left: 5px;
+}
+.contact2 {
+  position: absolute;
+  right: -22px;
+  bottom: 9px;
+  display: flex;
+}
+.contact2 div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 42px;
+  margin-right: 30px;
+  background: #00d0ec;
+  cursor: pointer;
+}
+.contact2 div img {
+  width: 16px;
+  height: 16px;
+  margin-left: 22px;
+}
+.contact2 div div {
+  margin-left: 5px;
+}
+.close {
+  position: absolute;
+  top: 15px;
+  top: 24px;
+  right: 30px;
+  right: 24px;
+  width: 16px;
+  height: 16px;
+  color: #999;
+  font-size: 26px;
+  cursor: pointer;
+}
+.shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 260px;
+  background: #000;
+  opacity: 0.4;
+}
+.sd {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 260px;
+  background: #000;
+  opacity: 0;
+}
+.hover_text {
+  position: absolute;
+  top: -35px;
+  left: 98px;
+  height: 41px;
+  padding: 12px;
+  color: #fff;
+  font-size: 12px;
+  background: #000;
+}
+.zhezhao {
+  width: 114px;
+  height: 42px;
+  background: #000;
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+.guan {
+  width: 20px;
+  max-width: none;
+  height: 20px;
+}

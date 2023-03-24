@@ -1,0 +1,68 @@
+.miniActive {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+.miniNormal {
+  color: #aaa;
+  font-size: 14px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+.miniBase {
+  position: relative;
+  z-index: 1;
+  min-width: 171px;
+  padding: 0 10px;
+  height: 100%;
+
+}
+.miniActive > .miniCanHover,
+.miniCanHover:hover {
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+.miniActive > .miniCanHover > .miniTabIcon,
+.miniCanHover:hover > .miniTabIcon {
+  transform: scale(1);
+}
+.miniTabIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 16px;
+}
+.active {
+  color: #fff;
+  font-size: 30px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+.normal {
+  color: #aaa;
+  font-size: 26px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+.base {
+  min-width: 300px;
+  padding: 0 30px;
+}
+.active > .canHover,
+.canHover:hover {
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+}
+.active > .canHover > .tabIcon,
+.canHover:hover > .tabIcon {
+  width: 44px;
+  height: 44px;
+}
+.tabIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+}

@@ -1,0 +1,211 @@
+.signBack {
+  /* height: 286px; */
+  /* background-color: black; */
+  /* background-image: url('/images/imgConent/biaotilan.png'); */
+  margin-top: 30px;
+}
+.backImage{
+  background-image: url('/images/imgConent/biaotilan.png');
+  /* padding-top: 90px; */
+}
+
+.anPage {
+  min-width: 1440px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.sign {
+  width: 1087px;
+  height: 125px;
+  margin-bottom: 67px;
+}
+.info {
+  color: #fff;
+}
+.content {
+  min-height: 650px;
+  /* padding: 20px 0; */
+  margin-bottom: 30px;
+  flex: 1 auto;
+}
+
+.table,
+.chartList {
+  max-width: 1860px;
+  min-width: 1380px;
+}
+
+.chartList {
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  min-height: 650px;
+}
+
+.desc {
+  height: 34px;
+  text-align: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: -0.022em;
+  color: #AAAAAA;
+  opacity: 0.6;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.searchbtn {
+  height: 44px;
+  padding: 9px 16px 9px 16px;
+  color: rgba(153, 153, 153, 1);
+  /* background: rgba(27, 241, 255, 1); */
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  border-radius: 0px 8px 8px 0px;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  align-items: center;
+  color: #111A1B;
+}
+.active {
+  color: rgba(17, 26, 27, 1);
+  background: rgba(0, 208, 236, 1);
+}
+.searchbtn:active {
+  filter: brightness(75%);
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+}
+
+.searchIcon {
+  width: 30px;
+  height: 30px;
+  filter: contrast(0);
+}
+
+.active > .searchIcon,
+.searchbtn:hover > .searchIcon,
+.searchbtn:active > .searchIcon {
+  filter: none;
+}
+
+.jumper {
+  right: 120px;
+  bottom: 26%;
+}
+
+.bottomLine {
+  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
+}
+
+.allHeight {
+  /* height: 48px; */
+  /* padding-top: 76px; */
+  border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
+}
+
+.navCOntainer {
+  width: 100%;
+  /* height: 60px; */
+  /* background: #111a1b; */
+}
+.nav {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  border-bottom: 1px solid rgba(0, 208, 236,0.1);
+  margin-top: 20px;
+  z-index: 9999999 !important;
+}
+
+.item {
+ padding-bottom: 6px;
+  /* margin-right: 50px; */
+  background: rgba(255, 255, 255, 0.05);
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #aaaaaa;
+  cursor: pointer;
+  border-radius: 8px 8px 0px 0px;
+  padding: 9px 30px 9px 30px;
+}
+.item:hover {
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  color: #000000;
+  filter: brightness(125%);
+}
+
+
+.item:active{
+  filter: brightness(75%);
+}
+.action {
+  color: #000000;
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+  border-radius: 8px 8px 0px 0px;
+  padding: 9px 30px 9px 30px;
+}
+
+.fix1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  z-index: 21;
+  margin: 0 auto;
+  background-image: url('/images/imgConent/biaotilan.png')
+}
+.fix2 {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  padding-top: 36px;
+  width: 100%;
+  background: #000;
+  margin: 0 auto;
+  z-index: 20;
+  background-image: url('/images/imgConent/biaotilan.png')
+}
+.fix3 {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  padding-top: 30px;
+  padding-left: 18%;
+  background: #000;
+  z-index: 999999999;
+     background-image: url('/images/imgConent/buildersBeiJingTu.png');
+  margin: 0 auto;
+  z-index: 21;
+}
+.fix4 {
+  position: fixed;
+  top: 175px;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 20;
+}
+.search {
+  width: 100%;
+  /* padding: 20px 0; */
+  padding-top: 30px;
+  margin-bottom: 20px;
+  background: #111a1b;
+}

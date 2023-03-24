@@ -1,0 +1,28 @@
+
+.content{
+  height: 331px;
+}
+
+.header {
+  height: 30px;
+  margin-bottom: 30px;
+}
+.border {
+  box-sizing: border-box;
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.6);
+}
+.selecterLong {
+  width: 134px;
+}
+.totop {
+  width: 100%;
+  max-height: 700px;
+}
+.mt {
+  margin-top: 150px;
+}
+.bg {
+  background-color: #010202;
+  border-bottom: #333 solid 1px;
+}

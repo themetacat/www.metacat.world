@@ -1,0 +1,48 @@
+.error {
+  position: fixed;
+  top: 50px;
+  right: 50%;
+  margin-right: -95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 94px;
+  height: 40px;
+  background: #00d0ec;
+  opacity: 0.8;
+}
+.error img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+.error p {
+  color: #000;
+  font-weight: 400;
+  font-size: 16px;
+  font-style: normal;
+}
+.succeed {
+  position: fixed;
+  top: 50px;
+  right: 50%;
+  margin-right: -95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  background: #00d0ec;
+  opacity: 0.8;
+  padding: 0 10px;
+}
+.succeed img {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+.succeed p {
+  color: #000;
+  font-weight: 400;
+  font-size: 14px;
+  font-style: normal;
+}

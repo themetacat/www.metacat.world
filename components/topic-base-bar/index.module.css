@@ -1,0 +1,58 @@
+.baseBar {
+  height: 350px;
+  width: 100%;
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  box-sizing: border-box;
+  box-shadow: inset 0px 0px 15px rgba(24, 255, 241, 0.3);
+  padding: 20px;
+}
+
+.content {
+  border-radius: 8px;
+  height: 310px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.header {
+  height: 30px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.totop {
+  margin-top: -50px;
+}
+
+.helper {
+  position: absolute !important;
+  left: 110px;
+  top: -9px;
+  z-index: 8;
+  color: #fff;
+  width: 28px;
+  height: 48px;
+}
+
+.helperInfo {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #0f191b;
+  border-radius: 14px;
+}
+
+.helperInfo:hover {
+  filter: brightness(125%);
+}
+
+.helperInfo > img {
+  width: 16px;
+  height: 16px;
+}
+.info {
+  width: 200px;
+}

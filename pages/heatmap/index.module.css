@@ -1,0 +1,32 @@
+.bottomLine {
+  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
+}
+
+.contentHeader {
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.1);
+}
+
+.container{
+  background-image: url('/images/imgConent/biaotilan.png');
+  /* padding-top: 60px; */
+}
+
+.allHeight {
+  padding-top: 48px;
+}
+
+.content {
+  min-height: 650px;
+}
+
+.mapContanier {
+  /* z-index: 1001; */
+  /* height: calc(100vh - 172px - 68px - 76px); */
+  height: calc(100vh - 165px);
+}
+.full {
+  height: 100vh;
+}
+.aaa{
+  z-index: 99999 !important;
+}

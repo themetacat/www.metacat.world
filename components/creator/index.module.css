@@ -1,0 +1,190 @@
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999999;
+  margin: auto;
+}
+.container .bg {
+  width: 100%;
+  height: 150%;
+  background: #fff;
+  opacity: 0.3;
+}
+.container .requestCard {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999999999;
+  width: 450px;
+  height: 350px;
+  margin: auto;
+  background: #000;
+}
+.container .requestCard .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 58px;
+  padding: 0 30px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 20px;
+  background: #000;
+  border-bottom: 1px solid rgba(0, 208, 236, 0.2);
+}
+.container .requestCard .header img {
+  cursor: pointer;
+}
+.container .requestCard .detail {
+  padding: 0 30px;
+}
+.container .requestCard .detail .address {
+  margin: 23px 0 10px 0;
+  color: #999;
+  font-weight: 500;
+  font-size: 16px;
+}
+.container .requestCard .detail .text {
+  width: 390px;
+  height: 45px;
+  padding: 0 20px;
+  color: #666;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 45px;
+  background: #001518;
+  border: 1px solid #000;
+  cursor: pointer;
+}
+.container .requestCard .detail .text:hover {
+  border: 1px solid #00d0ec;
+}
+.container .requestCard .detail .email {
+  margin: 23px 0 2px 0;
+  color: #999;
+  font-weight: 500;
+  font-size: 16px;
+}
+.container .requestCard .detail .hint {
+  margin-bottom: 10px;
+  color: #777;
+  font-weight: 400;
+  font-size: 12px;
+}
+.container .requestCard .detail .emailInput {
+  display: flex;
+  align-items: center;
+  width: 390px;
+  height: 45px;
+  padding: 0 20px;
+  color: #666;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 45px;
+  background: #001518;
+  border: 1px solid #000;
+}
+.container .requestCard .detail .emailInput input {
+  flex: 1;
+  width: 340px;
+  height: 22px;
+  color: #fff;
+  background: #001518;
+  border: none;
+  outline: none;
+  caret-color: #00d0ec;
+}
+.container .requestCard .detail .emailInput .emailClear {
+  width: 19px;
+  height: 19px;
+}
+.container .requestCard .detail .emailInput:hover {
+  border: 1px solid #00d0ec;
+}
+.container .requestCard .detail .submit {
+  width: 135px;
+  height: 39px;
+  margin-top: 20px;
+  color: #0f191b;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 39px;
+  text-align: center;
+  background: #00d0ec;
+  cursor: pointer;
+}
+.container .requestCard .detail .code {
+  width: 100%;
+  height: 74px;
+  margin-bottom: 20px;
+}
+.container .requestCard .detail .code .title {
+  margin-bottom: 10px;
+  color: #999;
+  font-weight: 500;
+  font-size: 16px;
+}
+.container .requestCard .detail .code .inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  background-color: #001518;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+.container .requestCard .detail .code .inputContainer img {
+  position: absolute;
+  right: 100px;
+  bottom: 11px;
+  width: 19px;
+  height: 19px;
+  cursor: pointer;
+}
+.container .requestCard .detail .code .inputContainer input {
+  width: 300px;
+  height: 24px;
+  padding: 0 20px;
+  color: #fff;
+  background: #001518;
+  border: none;
+  border-right: 1px solid #003a42;
+  outline: none;
+  caret-color: #00d0ec;
+}
+.container .requestCard .detail .code .inputContainer .getCode {
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+}
+.container .requestCard .detail .code .inputContainer .getCode2 {
+  color: #999;
+  font-weight: 400;
+  font-size: 12px;
+}
+.container .requestCard .detail .code .inputContainer .reacquire {
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+}
+.container .requestCard .detail .code .inputContainer .time {
+  margin-left: 15px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
+}
+.dn {
+  display: none;
+}
+.icon {
+  width: 19px;
+  height: 19px;
+}

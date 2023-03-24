@@ -1,0 +1,87 @@
+.miniActive {
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+}
+.miniNormal {
+  // color: #aaa;
+  font-size: 14px;
+}
+.miniBase {
+  vertical-align: middle;   
+  text-align: center;
+  align-items: center;
+  // position: relative;
+  // z-index: 1;
+  // height: 100%;
+  // background: rgba(255, 255, 255, 0.05);
+  // border-radius: 12px 12px 0px 0px;
+}
+.miniNormal :hover{
+  // text-align: center;
+  // color: rgba(17, 26, 27, 1);
+  // font-weight: 400;
+  // border-radius: 12px  12px 0px 0px;
+  // background: linear-gradient(90deg, rgba(0, 208, 236, 1) 0%, rgba(0, 236, 179, 1) 100%);
+  // filter: brightness(125%);
+  // cursor: pointer;
+}
+.miniActive > .miniCanHover,
+.miniCanHover:hover {
+  font-family: 'PingFang SC';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 22px;
+color: #000000;
+  cursor: pointer;
+}
+.miniActive > .miniCanHover > .miniTabIcon,
+.miniCanHover:hover > .miniTabIcon {
+  transform: scale(1);
+}
+.miniTabIcon {
+  // width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 16px;
+  background-repeat: no-repeat;
+  // line-height: 20px;
+ 
+}
+
+.active {
+  color: #fff;
+  font-size: 30px;
+  background-color: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(0, 208, 236, 0.5);
+  border-bottom: transparent;
+}
+.normal {
+  color: #aaa;
+  font-size: 26px;
+  border-bottom: 0.5px solid rgba(0, 208, 236, 0.5);
+}
+.base {
+  min-width: 300px;
+  padding: 0 30px;
+}
+.active > .canHover,
+.canHover:hover {
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+}
+.active > .canHover > .tabIcon,
+.canHover:hover > .tabIcon {
+  width: 44px;
+  height: 44px;
+}
+.tabIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 20px;
+}

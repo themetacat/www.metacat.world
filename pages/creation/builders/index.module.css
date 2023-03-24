@@ -1,0 +1,175 @@
+.bottomLine {
+  position: relative;
+  z-index: 1;
+  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
+}
+.allHeight {
+  /* height: 48px; */
+  border-bottom: 0.5px solid  rgba(217, 217, 217, 0.3);
+  padding-top: 32px;
+}
+.jumper {
+  right: 8% !important;
+  bottom: 30% !important;
+}
+.backImage{
+  background-image: url('/images/imgConent/biaotilan.png') !important;
+
+  /* background-image: url('/images/imgConent/buildersBeiJingTu.png') !important; */
+}
+.bannerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 217px;
+}
+.bannerContainer img {
+  width: 1200px;
+}
+.nav {
+  width: 100%;
+  height: 60px;
+  background: #0e2b30;
+}
+.nav .navcontainer {
+  display: flex;
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+}
+.nav .navcontainer .navItem {
+  box-sizing: border-box;
+  margin-right: 70px;
+  color: #999;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 60px;
+  cursor: pointer;
+}
+.nav .navcontainer .navItem:hover {
+  color: #fff;
+}
+.nav .navcontainer .action {
+  color: #fff;
+  border-bottom: 4px solid #00d0ec;
+}
+.title {
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+.title .cn {
+  display: flex;
+  width: 1200px;
+  margin: 0 auto;
+  color: #fff;
+}
+.title .cn div {
+  width: 4px;
+  height: 16px;
+  margin-top: 4px;
+  margin-right: 8px;
+  background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+border-radius: 4px;
+}
+.institutions{
+  display: inline-block;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  align-items: center;
+  color: #FFFFFF;
+}
+.cardList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1200px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+.cardList3 {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 1200px; */
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+.cls {
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.cls:nth-child(3n) {
+  margin-right: 0;
+}
+.fix1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  margin: 0 auto;
+  background-image: url('/images/imgConent/buildersBeiJingTu.png')
+}
+.fix2 {
+  position: fixed;
+  top: 60px;
+  padding-top: 0px;
+  left: 0;
+  width: 100%;
+  background: #000;
+  margin: 0 auto;
+  padding-top: 32px;
+  z-index: 9;
+  background-image: url('/images/imgConent/buildersBeiJingTu.png')
+}
+.fix3 {
+  position: fixed;
+  top: 124px;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 9;
+}
+.imgContanier {
+  width: 100%;
+  height: 172px;
+  overflow: hidden;
+}
+.imgContanier .title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 66px;
+  color: #DDDDDD;
+  text-align: center;
+  margin-top: 35px;
+}
+.imgContanier .text {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+.imgContanier .text .t {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  /* letter-spacing: 0.4em; */
+  margin:0 30px ;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  opacity: 0.6;
+}
+.imgContanier .text .hengxian {
+  width: 200px;
+  height: 1px;
+  background-color: #999;
+  margin-top: 10px;
+}

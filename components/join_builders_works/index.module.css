@@ -1,0 +1,210 @@
+.container2{
+    width: 450px;
+    /* height: 368px; */
+    background: #000000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -180px;
+    margin-top: -150px;
+    border-radius: 16px;
+    padding-bottom: 37px;
+    z-index: 99999;
+   
+}
+.warn {
+  color: rgba(255, 214, 70, 1);
+}
+.sub{
+ cursor: not-allowed;
+}
+.warnContent > img {
+  width: 14px;
+  height: 14px;
+}
+.warnContent {
+  min-height: 16px;
+  color: red;
+}
+.containerBox{
+    width: 100%;
+    /* position: relative; */
+}
+.topBox{
+    /* height: 30px; */
+    display: flex;
+    border-bottom: 1px solid rgba(0, 208, 236,0.2);
+    position: relative;
+}
+.topBox span:nth-child(1){
+    display: inline-block;
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #FFFFFF;
+    margin: 19px 0px 11px 30px;
+}
+.topBox span:last-child{
+    position: absolute;
+    top: 22px;
+    right: 34px;
+    width: 16px;
+    height: 16px;
+    color: #999999;
+}
+.emailBox{
+    padding-left: 30px;
+}
+.emailBox p:nth-child(1){
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    align-items: center;
+    color: #999999;
+    margin-top: 25px;
+    margin-bottom: 2px;
+}
+.emailBox p:nth-child(2){
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    align-items: center;
+    color: #777777;
+    margin-bottom: 10px;
+}
+.emailBox input{
+    background: rgba(0, 208, 236, 0.1);
+    border: 1px solid #01DAD9;
+    border-radius: 8px;
+    width: 390px;
+    height: 45px;
+    padding: 11.75px 0px 13.25px 20px;
+    color: #FFFFFF;
+}
+.containerBox .emailBox input:focus-within {
+    border: 1px solid #003a42;
+  }
+  .codeText{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    align-items: center;
+    color: #999999;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.getCodeBox{
+    position: relative;
+    width: 390px;
+}
+.a{
+    display: inline-block;
+    position: absolute;
+    top: 23px;
+    right: 90.5px;
+    height: 1px;
+    width: 24px;
+    background: #00D0EC;
+    opacity: 0.2;
+    transform: rotate(-90deg);
+}
+.n{
+    position: absolute;
+    cursor: pointer;
+    top: 13.75px;
+    right: 14.25px;
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    align-items: center;
+    color: #FFFFFF;
+}
+.next{
+    text-align: center;
+    line-height: 39px;
+    margin-top: 30px;
+    background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+    opacity: 0.5;
+    border-radius: 8px;
+    width: 390px;
+    height: 39px;
+    color: #0F191B;
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+}
+.next:hover {
+    cursor: pointer;
+    filter: brightness(155%);
+    background: linear-gradient(92.54deg, #00D0EC 0%, #00ECB3 99.53%);
+    opacity: 1;
+  }
+  .next:active {
+    filter: brightness(75%);
+  }
+ .getCode {
+    color: #fff;
+    font-weight: 400;
+    font-size: 12px;
+    cursor: pointer;
+  }
+.getCode2 {
+    color: #999;
+    font-weight: 400;
+    font-size: 12px;
+  }
+ .reacquire {
+    color: #fff;
+    font-weight: 400;
+    font-size: 12px;
+    cursor: pointer;
+  }
+.time {
+    margin-left: 15px;
+    color: #fff;
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .emailBoxCon{
+
+  }
+  .add{
+    display: inline-block;
+    margin-left: 12.27px;
+    color: #aaa;
+    width: 18px;
+    height: 18px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+.send{
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    align-items: center;
+    color: #999999;
+    margin-top: 27px;
+    margin-bottom: 32px;
+    display: flex;
+  }
+.send img:nth-child(1){
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+  }
+  .send img:nth-child(2){
+    width: 24px;
+    height: 24px;
+    margin-left: 20px;
+  }
