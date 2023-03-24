@@ -252,14 +252,14 @@ export default function Annular({
       setLoading(false);
       setData(result.data);
       setShowData(result.data[showType][priceShowType]);
-      console.log(iconImgLight,666);
+      // console.log(iconImgLight,666);
       
       if(iconImgLight===true){
-        console.log(111);
+        // console.log(111);
         
         initChart1(result.data[showType][priceShowType], showType);
       }else{
-        console.log(222);
+        // console.log(222);
         
         initChart(result.data[showType][priceShowType], showType);
       }

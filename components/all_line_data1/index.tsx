@@ -86,7 +86,7 @@ export default function AllLineData({
   const [showType, setShowType] = React.useState(options[0].value);
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const chart = React.useRef(null);
-console.log(priceShowType,'priceShowType');
+// console.log(priceShowType,'priceShowType');
 
   const transfromData = React.useCallback(
     (data, type) => {
@@ -118,7 +118,7 @@ console.log(priceShowType,'priceShowType');
 
   const initChart = React.useCallback(
     (data) => {
-      console.log('得得得得');
+      // console.log('得得得得');
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -520,7 +520,6 @@ console.log(priceShowType,'priceShowType');
   );
   const initChartUsd = React.useCallback(
     (data) => {
-      console.log('呀呀呀呀呀呀');
       
       const dom = document.getElementById(id);
       if (!dom) {
@@ -937,11 +936,9 @@ console.log(priceShowType,'priceShowType');
     }
     setLoading(false);
     if (result&&priceShowType==='floor_price_usd') {
-      console.log(22222222);
       
       initChartUsd(result);
     }else{
-      console.log(555555555);
       
       initChart(result);
     }
@@ -969,7 +966,6 @@ console.log(priceShowType,'priceShowType');
 
   const changePriceStatic = React.useCallback(
     (val) => {
-      console.log(priceShowType );
       
       setPriceShowType(val);
       if (dataSource && chart.current) {

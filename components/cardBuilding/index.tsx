@@ -58,7 +58,7 @@ export default function CardBuilding({
   
   const jumpToParcel = React.useCallback(() => {
     // window.open(building_link||buildingLink);
-    console.log(buildingLink,"building_linkbuilding_linkbuilding_link");
+    // console.log(buildingLink,"building_linkbuilding_linkbuilding_link");
     if(buildingLink){
       // const c=buildingLink.slice(7)
       window.open(`/detail?building_link=${buildingLink}`);

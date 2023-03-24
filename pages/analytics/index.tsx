@@ -1736,7 +1736,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       } else if (anchorName === 'AverageParcelPrice') {
         const idValCon = document.querySelector('.analytics_allLine1__W4ibX, .analytics_allLine2__xUO23');
         if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
-        console.log(window && window.scrollY);
+        // console.log(window && window.scrollY);
 
         window.scrollTo({
           top: 850,

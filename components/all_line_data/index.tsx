@@ -86,7 +86,7 @@ export default function AllLineData({
   const [showType, setShowType] = React.useState(options[0].value);
   const [priceShowType, setPriceShowType] = React.useState(priceOptions[0].value);
   const chart = React.useRef(null);
-console.log(priceShowType,'priceShowType');
+// console.log(priceShowType,'priceShowType');
 
   const transfromData = React.useCallback(
     (data, type) => {
@@ -118,6 +118,7 @@ console.log(priceShowType,'priceShowType');
 
   const initChart = React.useCallback(
     (data) => {
+      // console.log('得得得得');
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -519,6 +520,7 @@ console.log(priceShowType,'priceShowType');
   );
   const initChartUsd = React.useCallback(
     (data) => {
+      
       const dom = document.getElementById(id);
       if (!dom) {
         return;
@@ -583,7 +585,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
               result[showKeyTypes[0]]?.value,
             )}</span>
-                <span>ETH</span>
+                <span>USD</span>
               </span>
             </span>
           </div>
@@ -596,7 +598,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
               result[showKeyTypes[1]]?.value,
             )}</span>
-          <span>ETH</span>
+          <span>USD</span>
                   </span>
                 </span>
               </div>
@@ -610,7 +612,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
               result[showKeyTypes[2]]?.value,
             )}</span>
-          <span>ETH</span>
+          <span>USD</span>
                 </span>
               </span>
             </div>
@@ -623,7 +625,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
               result[showKeyTypes[3]]?.value,
             )}</span>
-          <span>ETH</span>
+          <span>USD</span>
               </span>
             </span>
           </div>
@@ -637,7 +639,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
               result[showKeyTypes[4]]?.value,
             )}</span>
-          <span>ETH</span>
+          <span>USD</span>
             </span>
           </span>
         </div>
@@ -650,7 +652,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend6.color[1]}, ${legend6.color[2]}, 1);">${formatNum(
               result[showKeyTypes[5]]?.value,
             )}</span>
-          <span>ETH</span>
+          <span>USD</span>
           </span>
         </span>
       </div>
@@ -664,7 +666,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
               result[showKeyTypes[6]]?.value,
             )}</span>
-        <span>ETH</span>
+        <span>USD</span>
         </span>
       </span>
     </div>
@@ -678,7 +680,7 @@ console.log(priceShowType,'priceShowType');
             }, ${legend8.color[1]}, ${legend8.color[2]}, 1);">${formatNum(
               result[showKeyTypes[7]]?.value,
             )}</span>
-          <span>ETH</span>
+          <span>USD</span>
           </span>
         </span>
       </div>
@@ -916,7 +918,7 @@ console.log(priceShowType,'priceShowType');
       chart.current.removeInteraction('legend-active')
       chart.current.render();
     },
-    [showType],
+    [showType,priceShowType],
   );
 
   const requestData = React.useCallback(async () => {
@@ -933,10 +935,12 @@ console.log(priceShowType,'priceShowType');
       setError(true);
     }
     setLoading(false);
-    if (result&&priceShowType==='floor_price') {
-      initChart(result);
-    }else{
+    if (result&&priceShowType==='floor_price_usd') {
+      
       initChartUsd(result);
+    }else{
+      
+      initChart(result);
     }
     return result;
   }, [showType, dataHandlder,priceShowType]);
@@ -962,7 +966,6 @@ console.log(priceShowType,'priceShowType');
 
   const changePriceStatic = React.useCallback(
     (val) => {
-      console.log(priceShowType );
       
       setPriceShowType(val);
       if (dataSource && chart.current) {
@@ -1013,7 +1016,7 @@ console.log(priceShowType,'priceShowType');
         <div className={style.mt}>
           <Status mini={true} status="loading" />;
         </div>
-      )
+      );
     }
 
     if (error) {
