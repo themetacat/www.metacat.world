@@ -1,0 +1,121 @@
+.container {
+  position: relative;
+  /* width: 1760px; */
+  margin: 15px auto;
+}
+.base {
+  width: 12% !important;
+  min-height: 40px;
+  padding: 0 50px;
+  /* border: 1px solid #086975; */
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius:8px 8px 0px 0px ;
+  box-sizing: border-box;
+  font-weight: 500;
+  color: rgba(153, 153, 153, 1);
+  line-height: 40px;
+}
+
+.active {
+  background: linear-gradient(90deg, rgba(0, 208, 236, 1) 4.81%, rgba(0, 236, 179, 1) 150.96%);
+  font-weight: 600;
+  color: black;
+  /* margin-left: 50%; */
+  /* position: absolute;
+  left: 50%; */
+}
+
+.active > .canHover,
+.canHover:hover {
+  cursor: pointer;
+}
+
+.tabIcon {
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 20px;
+}
+
+.p1 {
+  padding: 0 45px;
+}
+
+.p3 {
+  padding: 0 40px;
+}
+.p4 {
+  padding: 0 25px;
+}
+.p5 {
+  padding: 0 25px;
+}
+.n {
+  white-space: nowrap;
+}
+.n:hover {
+  color: #fff;
+}
+.n1{
+  white-space: nowrap;
+}
+.n1:hover{
+  color: #000;
+}
+
+.fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0 auto;
+  z-index: index !important;
+}
+
+.swiper {
+  margin: 0px !important;
+  display: flex;
+  /* position: relative; */
+}
+
+.per {
+  width: 76px;
+  height: 38px;
+  background: linear-gradient(90deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  left: 0px;
+  cursor: pointer;
+}
+.per1 {
+  width: 76px;
+  height:38px;
+ 
+  background:  linear-gradient(90deg,#fffa 4.81%,#fffffa 150.96%);
+  left: 0px;
+  cursor: pointer;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.next {
+  width: 76px;
+  background: linear-gradient(270deg, #0f191b 4.81%, rgba(15, 25, 27, 0) 150.96%);
+  right: 0px;
+  cursor: pointer;
+  height: 40px;
+}
+.next1 {
+  width: 76px;
+  background:  linear-gradient(90deg,#fffa 4.81%,#fffffa 150.96%);
+  right: 0px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.swiper-wrapper {
+  transition-timing-function: linear !important;
+  
+}
+.underline{
+  width: 1800px !important;
+}

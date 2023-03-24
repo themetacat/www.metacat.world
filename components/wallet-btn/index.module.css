@@ -1,0 +1,116 @@
+.btn{
+  width: 120px;
+  height: 36px;
+  background: linear-gradient(270deg, rgba(0, 236, 179, 1) 10.81%, rgba(0, 208, 236, 1) 150.96%);
+
+  color: black;
+  position: relative;
+  border-radius: 8px;
+}
+
+.btnDiv>img{
+  width: 15px;
+  height: 13px;
+}
+
+.avatar{
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 11px !important;
+}
+
+.menu{
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  cursor: pointer;
+}
+
+.menuItem{
+  background-color: rgba(15, 25, 27, 1);
+  color: rgba(204, 204, 204, 1);
+  min-width: 149px;
+  min-height: 50px;
+  box-sizing: border-box;
+  border-bottom: solid 1px rgba(0, 208, 236, .2)
+}
+
+.menuItem:nth-child(1){
+  border-radius: 6px 6px 0px 0px;
+}
+.menuItem:last-child{
+  border-radius:0px 0px 6px 6px ;
+}
+
+.last{
+  border: none
+}
+
+.walletItem{
+  background-color: rgba(15, 25, 27, 1);
+  color: rgba(204, 204, 204, 1);
+  width: 240px;
+  height: 70px;
+  padding: 12px;
+}
+
+.walletContent{
+  border: 0.5px solid rgba(0, 208, 236, 0.2);
+  box-sizing: border-box;
+  padding: 12px;
+  color:rgba(204, 204, 204, 1);
+}
+
+.walletContent:hover{
+  filter: brightness(125%);
+}
+
+.walletContent:active{
+  filter: brightness(75%);
+}
+
+
+.menuItem>img{
+  width: 16px;
+  height: 16px;
+}
+.menuItem:hover{
+  filter: brightness(125%);
+}
+.menuItem:active{
+  filter: brightness(75%);
+}
+
+.walletLogo{
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+}
+
+.activeOperation{
+  width: 10px;
+  height: 10px;
+}
+
+.loading{
+  width: 20px;
+  height: 20px;
+}
+
+.activeWallet{
+  width: 6px;
+  height: 10px;
+}
+
+.operation{
+  width: 17px;
+  height: 17px;
+}
+
+.toast{
+  font-size: 14px;
+}
+
+.walletText{
+  max-width: 68px;
+}

@@ -1,0 +1,16 @@
+.icon{
+  width: 4px;
+  height: 14px;
+  margin-right: 6px;
+}
+.imgBox{
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-left: 4px;
+  margin-right: 2px;
+  padding-top: 3px;
+}
+.title1{
+  color: #000;
+}

@@ -1,0 +1,71 @@
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  /* background-image: url('/images/imgConent/1.png'); */
+  background-image: url("/images/Mask groupbeijingtutu.png");
+  /* background-image: url('/images/Snipaste.png'); */
+  overflow: hidden;
+  /* animation: animateColor 5s linear infinite; */
+  pointer-events: all;
+}
+.container1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  /* background-image: url('/images/imgConent/1.png'); */
+  /* background-image: url("/images/Mask groupbeijingtutu.png"); */
+  background-image: url('/images/Snipaste.png');
+  overflow: hidden;
+  /* animation: animateColor 5s linear infinite; */
+  pointer-events: all;
+}
+
+@keyframes animateColor {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.container span {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.container span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #00ff0a;
+  box-shadow: 0 0 10px #00ff0a,
+              0 0 20px #00ff0a,
+              0 0 40px #00ff0a,
+              0 0 60px #00ff0a,
+              0 0 80px #00ff0a,
+              0 0 100px #00ff0a;
+  border-radius: 50%;
+  transition: 5s;
+  transform: scale(0);
+  animation: animateColor 5s linear infinite;
+}
+
+.container span:hover::before {
+  transition: 0s;
+  transform: scale(0.5);
+}

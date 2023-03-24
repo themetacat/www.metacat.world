@@ -1,0 +1,52 @@
+.container {
+  width: 660px;
+  height: 417px;
+  margin-right: 20px;
+  padding: 20px;
+  background: #000;
+  position: relative;
+  border-radius: 8px;
+}
+.container1{
+  width: 660px;
+  height: 417px;
+  margin-right: 20px;
+  padding: 20px;
+  background: #fafbfc;
+  position: relative;
+  border-radius: 8px;
+}
+.header {
+  height: 30px;
+  margin-bottom: 30px;
+}
+.border {
+  background: rgba(0, 236, 222, 0.05);
+  border: 0.5px solid rgba(1, 218, 217, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.selecterLong {
+  width: 134px;
+}
+.totop {
+  width: 500px;
+  height: 300px;
+}
+.mt {
+  margin-top: 150px;
+}
+.bg {
+  background-color: #010202;
+  border-bottom: #333 solid 1px;
+}
+.mr {
+  position: absolute;
+  left: -17px;
+  top: 60px;
+}
+.ml {
+  position: absolute;
+  left: 10px;
+  top: 60px;
+}
