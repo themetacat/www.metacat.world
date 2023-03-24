@@ -302,11 +302,11 @@ export default function BaseBar({
       if (!dom) {
         return;
       }
-      // chart.current = new Chart({
-      //   container: id,
-      //   autoFit: true,
-      //   height: 210,
-      // });
+      chart.current = new Chart({
+        container: id,
+        autoFit: true,
+        height: 210,
+      });
       if (limit && da?.length > limit) {
         const l =da.length;
         const d = l - limit;
