@@ -2213,8 +2213,12 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   ]}
                   priceOptions={[
                     {
+                      label: 'USD',
+                      value: 'floor_price_usd',
+                    },
+                    {
                       label: 'ETH',
-                      value: 'eth',
+                      value: 'floor_price',
                     },
                   ]}
                 ></AlllineData> :
@@ -2241,8 +2245,12 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     ]}
                     priceOptions={[
                       {
+                        label: 'USD',
+                        value: 'floor_price_usd',
+                      },
+                      {
                         label: 'ETH',
-                        value: 'eth',
+                        value: 'floor_price',
                       },
                     ]}
                   ></AlllineData1>}
