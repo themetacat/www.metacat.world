@@ -73,6 +73,7 @@ import {
   req_webb_sold_sum_stats,
   req_sales_amount_percent,
   req_avg_parcel_price,
+  req_all_time_data,
   req_sales_amount_stack,
   req_metaindex_ethprice,
   req_all_number_sales,
@@ -1918,6 +1919,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       textColor={style.allColor}
                       labelText="Average Parcel Price"
                       dataHandlder={req_avg_parcel_price}
+                      dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                       legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
@@ -1942,6 +1944,10 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                         {
                           label: 'Quarterly',
                           value: 'quarterly',
+                        },
+                        {
+                          label: 'All time',
+                          value: 'allTime',
                         },
                         // {
                         //   label: 'Year',
@@ -1966,6 +1972,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       textColor={style.allColor}
                       labelText="Average Parcel Price"
                       dataHandlder={req_avg_parcel_price}
+                      dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                       legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
@@ -1990,6 +1997,10 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                         {
                           label: 'Quarterly',
                           value: 'quarterly',
+                        },
+                        {
+                          label: 'All time',
+                          value: 'allTime',
                         },
                         // {
                         //   label: 'Year',
@@ -2018,6 +2029,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     textColor={style.allColor}
                     labelText="Parcel Sales Amount"
                     dataHandlder={req_sales_amount_stack}
+                    dataHandlderAlltime={req_all_time_data}
                     legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                     legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
@@ -2047,6 +2059,10 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                         label: 'Yearly',
                         value: 'yearly',
                       },
+                      {
+                        label: 'All time',
+                        value: 'allTime',
+                      },
                     ]}
                     priceOptions={[
                       {
@@ -2066,6 +2082,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       textColor={style.allColor}
                       labelText="Parcel Sales Amount"
                       dataHandlder={req_sales_amount_stack}
+                      dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                       legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
@@ -2095,6 +2112,10 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                           label: 'Yearly',
                           value: 'yearly',
                         },
+                        {
+                          label: 'All time',
+                          value: 'allTime',
+                        },
                       ]}
                       priceOptions={[
                         {
@@ -2115,6 +2136,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     HyperlinkJump={() => scrollToAnchor('NumberofParcelSales')}
                     id="NumberofParcelSales"
                     textColor={style.allColor}
+                    dataHandlderAlltime={req_all_time_data}
                     labelText="Number of Parcel Sales"
                     dataHandlder={req_all_number_sales}
                     legend1={{ label: 'Otherside', color: [255, 248, 187] }}
@@ -2146,6 +2168,10 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                         label: 'Yearly',
                         value: 'yearly',
                       },
+                      {
+                        label: 'All time',
+                        value: 'allTime',
+                      },
                     ]}
                   ></AllPillar2> :
                     <AllPillar3
@@ -2155,6 +2181,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       textColor={style.allColor}
                       labelText="Number of Parcel Sales"
                       dataHandlder={req_all_number_sales}
+                      dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                       legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
@@ -2183,6 +2210,10 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                         {
                           label: 'Yearly',
                           value: 'yearly',
+                        },
+                        {
+                          label: 'All time',
+                          value: 'allTime',
                         },
                       ]}
                     ></AllPillar3>

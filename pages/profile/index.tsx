@@ -2350,7 +2350,7 @@ function ProfilePage(r) {
               </div>
             </div>
             {randerCardList}
-            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
+            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer iconImgLight={false}/></div>
           </div>
         </div>
         {creatorState ? (

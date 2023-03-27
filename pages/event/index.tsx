@@ -491,7 +491,7 @@ export default function Event(props) {
             </div>
 
             {/* </Layout> */}
-            <Footer />
+            <Footer iconImgLight={false}/>
         </Page>
     );
 }

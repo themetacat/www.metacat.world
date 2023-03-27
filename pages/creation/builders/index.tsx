@@ -261,7 +261,7 @@ export default function Builders() {
         <TopJumper classname={style.jumper}></TopJumper>
 
         <div className={style.cardList}>{reander2}</div>
-        <Footer></Footer>
+        <Footer iconImgLight={false}></Footer>
       </Page>
     </>
   );

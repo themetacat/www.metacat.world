@@ -217,7 +217,7 @@ export default function TopicIndex() {
         {renderStatus}
       </div>
 
-      <Footer />
+      <Footer iconImgLight={false}/>
     </Page>
   );
 }

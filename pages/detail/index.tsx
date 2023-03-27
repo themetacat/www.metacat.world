@@ -374,7 +374,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
           </div>
         </div>
 
-        <Footer />
+        <Footer iconImgLight={false}/>
       </Page>
       {addbuild === true ?
         <>
