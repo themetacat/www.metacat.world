@@ -179,15 +179,12 @@ export default function Wearables(props) {
     return () => document.removeEventListener('scroll', listener);
   }, [fixedState]);
 
-  
-
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
-      <div className={fixedState ? style.fix1 : null} id='switch'>
+      <div className={fixedState ? style.fix1 : null} id="switch">
         <PageHeader className="relative z-10" active={'Build'} />
       </div>
-      <div className={cn("bg-black relative", style.backImage)}>
-
+      <div className={cn('bg-black relative', style.backImage)}>
         {/* <div
           className={cn('tab-list flex mt-5', style.allHeight, fixedState ? style.fix2 : null)}
           id="switch"
@@ -306,9 +303,13 @@ export default function Wearables(props) {
               : null}
           </div>
           <div className={cn(style.navCOntainer)}>
-            <div className={cn('',style.nav, 
-            // fixedState ? style.fix3 : null
-            )}>
+            <div
+              className={cn(
+                '',
+                style.nav,
+                // fixedState ? style.fix3 : null
+              )}
+            >
               {/*  */}
               {nav.map((item, idx) => {
                 return (
@@ -379,7 +380,7 @@ export default function Wearables(props) {
         <TopJumper classname={style.jumper}></TopJumper>
       </div>
 
-      <Footer />
+      <Footer iconImgLight={false} />
     </Page>
   );
 }

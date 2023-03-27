@@ -557,7 +557,7 @@ requestPersonal(newAdd);
         </div>
       </div>
       {rander}
-      <Footer />
+      <Footer iconImgLight={false}/>
     </Page>
   );
 }
