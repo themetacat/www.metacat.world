@@ -132,7 +132,7 @@ export default function Wearables() {
       </div>
       <div className={style.cardList}>{reander}</div>
       <TopJumper classname={style.jumper}></TopJumper>
-      <Footer></Footer>
+      <Footer iconImgLight={false}></Footer>
     </Page>
   );
 }

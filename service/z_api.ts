@@ -704,6 +704,18 @@ export const req_learn_article_list = async (page: number, count: number, type: 
   return json;
 };
 
+export const req_all_time_data = async ( type: string) => {
+  const search = qs.stringify({  type }, { addQueryPrefix: true });
+  const url = `/api/all_time_data${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_learn_others_list = async (page: number, count: number, type: string) => {
   const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
   const url = `/api/get_others_list${search}`;

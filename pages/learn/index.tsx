@@ -285,7 +285,7 @@ function Learn(r) {
         </div>
       ) : null}
       <TopJumper></TopJumper>
-      <Footer />
+      <Footer  iconImgLight={false}/>
     </Page>
   );
 }

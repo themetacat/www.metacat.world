@@ -446,7 +446,7 @@ export default function TopicIndex(props) {
       }
 
 
-      <Footer />
+      <Footer iconImgLight={false}/>
     </Page>
   );
 }

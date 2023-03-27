@@ -302,7 +302,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer iconImgLight={false}/>
     </Page>
   );
 }
