@@ -13,6 +13,7 @@ import { convert, formatNum } from '../../common/utils';
 type Props = {
   id?: string;
   labelText?: string;
+  textCount?: string;
   dataHandlder?;
   HyperlinkJump?;
   legend1?;
@@ -65,6 +66,7 @@ export default function AllPillarNum3({
   labelText,
   dataHandlder,
   HyperlinkJump,
+  textCount,
   legend1,
   legend2,
   legend3,
@@ -529,7 +531,7 @@ export default function AllPillarNum3({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-      <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
+      <ChartTitle textCount={textCount} iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>
