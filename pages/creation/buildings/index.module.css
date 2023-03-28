@@ -28,7 +28,6 @@
   margin-bottom: 20px;
 }
 .bottomLine {
-  /* border-bottom: 0.5px solid rgba(0, 208, 236, 0.5); */
   position: relative;
   z-index: 1;
 }
