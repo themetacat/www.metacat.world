@@ -8,11 +8,9 @@ import Router, { useRouter } from 'next/router';
 
 import { toast } from 'react-hot-toast';
 
+import { useWalletProvider } from '../web3modal';
 // import WalletConnectProvider from '@walletconnect/web3-provider';
 // import Web3Modal from 'web3modal';
-
-import { useWalletProvider } from '../web3modal';
-
 
 import { getNonce, loginSignature, getBaseInfo } from '../../service';
 import { req_user_logout } from '../../service/z_api';
@@ -164,11 +162,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const connect = React.useCallback(
-    async (addr, providerCon) => {
+    async (addr, provider) => {
       const nonceData = await requireNonce(addr);
       if (nonceData) {
         const { address: add, nonce } = nonceData;
-        providerCon.request({ method: 'personal_sign', params: [nonce, add] }).then(
+        provider.request({ method: 'personal_sign', params: [nonce, add] }).then(
           async (signature) => {
             const result = await loginSignature(add, signature);
             checkLoginStatu(result);
@@ -236,33 +234,30 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler],
   );
 
-  const closeApp = async (newWeb3) => {
-    if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.close) {
-      await newWeb3.currentProvider.close();
-    }
-    await newWeb3.clearCachedProvider();
-  };
+  // const closeApp = async (newWeb3) => {
+  //   if (newWeb3 && newWeb3.currentProvider && newWeb3.currentProvider.close) {
+  //     await newWeb3.currentProvider.close();
+  //   }
+  //   await newWeb3.clearCachedProvider();
+  // };
 
-  // const subscribeProvider = React.useCallback(async (providerDa, newWeb3, modal) => {
-  //   const { nonce, address: add } = await requireNonce(providerDa.accounts[0]);
-  //   providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then((resD) => {
-  //     loginSignature(add, resD).then((resData) => {
-  //       checkLoginStatu(resData);
-  //     }, (res1) => {
-  //       console.log(1);
-
-  //     })
+  // const subscribeProvider = React.useCallback(async (provider, newWeb3, modal) => {
+  //   const { nonce, address: add } = await requireNonce(provider.accounts[0]);
+  //   provider.request({ method: 'personal_sign', params: [nonce, add] }).then((res) => {
+  //     loginSignature(add, res).then((res) => {
+  //       checkLoginStatu(res);
+  //     }, () => { })
   //   }, (error) => {
   //     if (w3) {
   //       w3.resetApp()
   //     }
   //   })
 
-  //   if (!providerDa.on) {
+  //   if (!provider.on) {
   //     return;
   //   }
 
-  //   //   //断开连接
+  //   //断开连接
   //   provider.on('close', async () => {
   //     removeToken('atk');
   //     removeToken('rtk');
@@ -274,12 +269,14 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //     window.location.href = '/';
   //     newWeb3.resetApp()
   //     await provider.killSession()
-  //     await provider.clearCachedProvider();
+  //     // await provider.clearCachedProvider();
   //   });
-  //   provider.on('accountsChanged', async (accounts) => {
-  //     const addressData = await accounts[0];
-  //     console.log('切换账号')
-  //   });
+
+  //   //切换账号
+  //   // provider.on('accountsChanged', async (accounts) => {
+  //   //   let address = await accounts[0];
+  //   //   console.log('切换账号')
+  //   // });
   // }, [w3])
 
   // const walletconnect = React.useCallback(async () => {
@@ -288,7 +285,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //     walletconnect: {
   //       package: WalletConnectProvider,
   //       options: {
-  //         infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+  //         infuraId: '7b9fdfd5be844ea3b9f2988619123ced',//以太坊连接必填
   //         // rpc: {
   //         //   56: 'https://mainnet.infura.io/v3',
   //         // },
@@ -301,12 +298,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //     cacheProvider: true,
   //     providerOptions,
   //   });
-  //   const providerDataText = await web3Modal.connect()
+  //   const provider = await web3Modal.connect()
   //   await web3Modal.toggleModal()
-  //   const web_3 = new WalletConnectProvider(providerDataText)
+  //   const web_3 = new WalletConnectProvider(provider)
 
   //   setw3(web_3)
-  //   await subscribeProvider(providerDataText, web_3, web3Modal)
+  //   await subscribeProvider(provider, web_3, web3Modal)
   //   return web_3
   // }, [subscribeProvider])
 
@@ -317,11 +314,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         if (!profile.address && item.value === 'metamask') {
           connectToChain();
         }
-        // if (!profile.address && item.value === 'walletconnect') {
-        //   console.log(444444444);
-
-        //   walletconnect()
-        // }
+        if (!profile.address && item.value === 'walletconnect') {
+          // walletconnect()
+        }
       }
     },
     [profile, connectToChain],
@@ -331,22 +326,21 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //   console.log(await p1.enable())
   //   const i = await p1.enable();
 
+  //
+  // provider.on("accountsChanged", (accounts: string[]) => {
+  //   console.log(accounts);
+  // });
 
-  //   provider.on("accountsChanged", (accounts: string[]) => {
-  //     console.log(accounts);
-  //   });
+  // // Subscribe to chainId change
+  // provider.on("chainChanged", (chainId: number) => {
+  //   console.log(chainId);
+  // });
 
-  //   // Subscribe to chainId change
-  //   provider.on("chainChanged", (chainId: number) => {
-  //     console.log(chainId);
-  //   });
-
-  //   // Subscribe to session disconnection
-  //   provider.on("disconnect", (code: number, reason: string) => {
-  //     console.log(code, reason);
-  //   });
+  // // Subscribe to session disconnection
+  // provider.on("disconnect", (code: number, reason: string) => {
+  //   console.log(code, reason);
+  // });
   //   return await i
-  //   // return  i
   // }, [p1])
 
   const clickOperationItem = React.useCallback(
@@ -528,8 +522,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       >
         {getText}
       </div>
-      <div style={{ borderRadius: "6px" }}>
-        <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
+      <div style={{borderRadius:"6px"}}>
+      <ul className={cn('list-none mt-2 z-20', style.menu)}>{showMenu && render}</ul>
       </div>
     </div>
   );

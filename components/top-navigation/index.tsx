@@ -330,8 +330,7 @@ const analyticsData = [
 
 
 
-export default function darkLightPageHeader({ active, className, iconImgLight }: Props) {
-  const router = useRouter();
+export default function PageHeader({ active, className, iconImgLight }: Props) {
   const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
@@ -400,7 +399,6 @@ export default function darkLightPageHeader({ active, className, iconImgLight }:
       iconImgLight(false)
     }
   }
-console.log(router.pathname==='/analytics',444,darkLight);
 
   useEffect(() => {
 
@@ -420,7 +418,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
       <div
         className={cn(
           ' flex items-center  w-full flex-flow',
-          darkLight === true &&router.pathname==='/analytics'? style.header1 : style.header,
+          darkLight === true ? style.header1 : style.header,
         )}
       >
         <div className={cn(" flex-flow", style.one,)}>
@@ -511,7 +509,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
               heatmapState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
             } */}
             {heatmapState ? (
-              <TwoNav iconImgLight={darkLight} options={heatmapData} className={style.cn} location={darkLight === true&&router.pathname==='/analytics' ?style.location3State:style.location3}></TwoNav>
+              <TwoNav iconImgLight={darkLight} options={heatmapData} className={style.cn} location={darkLight === true ?style.location3State:style.location3}></TwoNav>
             ) : null}
           </div>
 
@@ -735,9 +733,8 @@ console.log(router.pathname==='/analytics',444,darkLight);
           : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>}
         {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
         {
-          router.pathname==='/analytics'&&darkLight === true ? <img onClick={router.pathname==='/analytics'?btnDark:null} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" /> : <img onClick={router.pathname==='/analytics'?btnDark:null} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
+          darkLight === true ? <img onClick={btnDark} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" /> : <img onClick={btnDark} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
         }
-       
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
         <Toaster
           toastOptions={{

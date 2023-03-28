@@ -300,7 +300,7 @@ export default function TopicIndex(props) {
           {
             wearableList.map((card) => {
 
-              return <CreationWearableList {...card} models={wearableList} />
+              return <CreationWearableList {...card} model={wearableList} />
             })
           }
         </div>
@@ -408,7 +408,11 @@ export default function TopicIndex(props) {
               {/* {renderStatusList} */}
               {
                 wearableList.map((card, idx) => {
-                  return <CreationWearableList {...card} key={idx} model={wearableList} />
+                  const scenes = [];
+                  return <CreationWearableList   
+                  initFinish={(se) => {
+                    scenes.push(se);
+                  }}  graphicId={`dao-${idx}`} {...card} key={idx} model={wearableList} />
                 })
               }
             </div>

@@ -115,14 +115,14 @@ export default function ChartSelecter({
         {options.map((x) => {
           return (
             <li
-              className={cn('flex items-center', style.option)}
+              className={cn('flex items-center', iconImgLight===true?style.option1:style.option)}
               key={x.value}
               onClick={(e) => {
                 e.stopPropagation();
                 itemOnClick(x);
               }}
             >
-              <span className={cn(selectedOption === x.label ? style.active : '')}>{x.label}</span>
+              <span className={cn(selectedOption === x.label ? style.active : '', )}>{x.label}</span>
             </li>
           );
         })}

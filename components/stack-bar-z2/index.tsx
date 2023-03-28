@@ -38,6 +38,7 @@ type Props = {
   keyTypes?: Array<string>;
   optionsPrice?: Array<optionItem>;
   textColor?;
+  iconImgLight?;
 };
 
 export default function StackBar({
@@ -55,6 +56,7 @@ export default function StackBar({
   barWidth = 25,
   keyTypes = ['primary', 'secondary'],
   optionsPrice,
+  iconImgLight,
   textColor,
 }: Props) {
   const [staticType, setStaticType] = React.useState(options[0].value);
@@ -184,7 +186,7 @@ export default function StackBar({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: 'rgba(255, 255, 255, 0.15)',
+                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -203,11 +205,11 @@ export default function StackBar({
         line: {
           style: {
             lineWidth: 1,
-            stroke: 'rgba(255, 255, 255, .15)',
+            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill: 'rgba(255,255, 255, 0.85)' },
+          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
           offsetX: 25,
           offsetY: 0,
           rotate: 1,
@@ -361,11 +363,13 @@ export default function StackBar({
       return (
         <>
           <IconLabel
+            iconImgLight={iconImgLight}
             text={legend1.label}
             color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
             className="mr-5"
           ></IconLabel>
           <IconLabel
+            iconImgLight={iconImgLight}
             text={legend2.label}
             color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
           ></IconLabel>
@@ -417,10 +421,10 @@ export default function StackBar({
   }, [loading, error, onRetry]);
 
   return (
-    <div className={cn('w-full p-5', style.content, className)}>
+    <div className={cn('w-full p-5', iconImgLight===true?style.content1:style.content, className)}>
       <div>
         <div className={cn('w-full flex justify-between item-center', style.header)}>
-          <ChartTitle text={labelText} color={textColor}></ChartTitle>
+          <ChartTitle iconImgLight={iconImgLight} text={labelText} color={textColor}></ChartTitle>
           <div className="flex items-center">
             <div className="flex items-center mr-7">{getLenged}</div>
             {getSelect}

@@ -662,6 +662,7 @@ class API {
     token: string,
   ): Promise<any> {
     const url = `${this.url}/user/get_dcl_parcel_traffic_detail_info`;
+   
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',

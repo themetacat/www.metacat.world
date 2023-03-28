@@ -50,6 +50,7 @@ export default function Profile({
       router.replace(`/topic/${address}?type=wearables&from=profile`);
     }
   }, [address]);
+  
   return (
     <div className={cn('flex justify-between items-center ', classname, style.profile)}>
       <div className={cn(' justify-between items-center', style.container)}>
@@ -62,7 +63,7 @@ export default function Profile({
 
         <div className={cn('ml-8', style.info)}>
           <div className="flex">
-            {address && address !== '' && name ? (
+            {address && address !== '' || name ? (
               <ProfileIconLabel
                 label={name}
                 address={address}

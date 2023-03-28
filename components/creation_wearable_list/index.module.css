@@ -4,13 +4,19 @@
   width: 288px;
   border-radius: 6px 6px 0px 0px;
   position: relative;
-
   max-width: 385px;
   background: rgba(0, 236, 222, 0.05);
   background: rgba(255, 255, 255, 0.05);
   border: 0.5px solid rgba(255, 255, 255, 0.3);
   box-shadow: inset 0px 0px 12px rgba(255, 255, 255, 0.15);
   border-radius: 8px;
+}
+.graphic {
+  min-height: 260px;
+  text-align: center;
+  margin: 15px 15px 0px 15px;
+  width: 260px;
+  border-radius: 6px 6px 0px 0px;
 }
 .container:hover {
   box-shadow: 0 6px 25px rgb(255 255 255 / 30%), inset 0 0 15px rgb(255 255 255 / 15%);

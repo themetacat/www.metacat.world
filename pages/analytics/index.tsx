@@ -13,6 +13,7 @@ import Page from '../../components/page';
 
 // import PageHeader from '../../components/page-header';
 import PageHeader from '../../components/top-navigation';
+// import PageHeader from '../../components/top-nav';
 
 import Footer from '../../components/footer';
 
@@ -100,8 +101,17 @@ import style from './index.module.css';
 const BaseBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar'), {
   ssr: false,
 });
+const BaseBar1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/base-bar1'), {
+  ssr: false,
+});
 const BaseVoxelsData = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/base_Voxels_Data'),
+  {
+    ssr: false,
+  },
+);
+const BaseVoxelsData1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/base_Voxels_Data1'),
   {
     ssr: false,
   },
@@ -112,14 +122,32 @@ const BaseBarData = dynamic(
     ssr: false,
   },
 );
+const BaseBarData1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/base-barData1'),
+  {
+    ssr: false,
+  },
+);
 const ChartLine = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-line'), {
+  ssr: false,
+});
+const ChartLine1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-line1'), {
   ssr: false,
 });
 const StackBar = dynamic(() => import(/* webpackPrefetch: true */ '../../components/stack-bar'), {
   ssr: false,
 });
+const StackBar1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/stack-bar1'), {
+  ssr: false,
+});
 const StackBarZ = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z'),
+  {
+    ssr: false,
+  },
+);
+const StackBarZ1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z1'),
   {
     ssr: false,
   },
@@ -130,8 +158,20 @@ const ChartLineSimple = dynamic(
     ssr: false,
   },
 );
+const ChartLineSimple1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-simple1'),
+  {
+    ssr: false,
+  },
+);
 const ChartNftworlds = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-ChartNftworlds'),
+  {
+    ssr: false,
+  },
+);
+const ChartNftworlds1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-ChartNftworlds1'),
   {
     ssr: false,
   },
@@ -142,8 +182,20 @@ const ChartLineToolTipSimple = dynamic(
     ssr: false,
   },
 );
+const ChartLineToolTipSimple1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple1'),
+  {
+    ssr: false,
+  },
+);
 const ChartLineSandBox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-line-sandbox'),
+  {
+    ssr: false,
+  },
+);
+const ChartLineSandBox1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-sandbox1'),
   {
     ssr: false,
   },
@@ -154,23 +206,49 @@ const ChartOtherside = dynamic(
     ssr: false,
   },
 );
+const ChartOtherside1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-otherside1'),
+  {
+    ssr: false,
+  },
+);
 const ChartLineToolTipSimpleSandbox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox'),
+  { ssr: false },
+);
+const ChartLineToolTipSimpleSandbox1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-line-tooltip-simple-sandbox1'),
   { ssr: false },
 );
 const ChartWebb = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-Webb'), {
   ssr: false,
 });
+const ChartWebb1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/chart-Webb1'), {
+  ssr: false,
+});
+
 const ChartSandBox = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-sandBox'),
+  { ssr: false },
+);
+const ChartSandBox1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-sandBox1'),
   { ssr: false },
 );
 const ChartSomniumSpace = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/chart-SomniumSpace'),
   { ssr: false },
 );
+const ChartSomniumSpace1 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/chart-SomniumSpace1'),
+  { ssr: false },
+);
 const StackBarZ2 = dynamic(
   () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z2'),
+  { ssr: false },
+);
+const StackBarZ3 = dynamic(
+  () => import(/* webpackPrefetch: true */ '../../components/stack-bar-z3'),
   { ssr: false },
 );
 const Annular = dynamic(
@@ -364,7 +442,8 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
     if (showType === 'cryptovoxels') {
       return (
         <>
-          <BaseVoxelsData
+          {darkLight === true ? <BaseVoxelsData1
+            iconImgLight={darkLight}
             id={'stackbar'}
             className="mt-5"
             labelText={'Traffic'}
@@ -393,8 +472,39 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'yearly',
               },
             ]}
-          ></BaseVoxelsData>
-          <ChartLine
+          ></BaseVoxelsData1> : <BaseVoxelsData
+            iconImgLight={darkLight}
+            id={'stackbar'}
+            className="mt-5"
+            labelText={'Traffic'}
+            dataHandler={getCvTrafficStats}
+            barWidth={18}
+            textColor={style.cvColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+          ></BaseVoxelsData>}
+          {darkLight === true ? <ChartLine1
+            iconImgLight={darkLight}
             id={'chartline1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
@@ -428,8 +538,44 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'usd',
               },
             ]}
-          ></ChartLine>
-          <StackBar
+          ></ChartLine1> : <ChartLine
+            iconImgLight={darkLight}
+            id={'chartline1'}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            dataHandlder={getCvParcelAvgPriceStats}
+            textColor={style.cvColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+            ]}
+          ></ChartLine>}
+          {darkLight === true ? <StackBar1
+            iconImgLight={darkLight}
             id={'stackbar'}
             className="mt-5"
             labelText={'Number of Parcel Sales'}
@@ -458,8 +604,39 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'yearly',
               },
             ]}
-          ></StackBar>
-          <StackBarZ2
+          ></StackBar1> : <StackBar
+            iconImgLight={darkLight}
+            id={'stackbar'}
+            className="mt-5"
+            labelText={'Number of Parcel Sales'}
+            dataHandler={getCvParcelSoldTotalStats}
+            barWidth={18}
+            textColor={style.cvColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+          ></StackBar>}
+          {darkLight === true ? <StackBarZ3
+            iconImgLight={darkLight}
             id={'stackbar1'}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
@@ -499,8 +676,50 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'usd',
               },
             ]}
-          ></StackBarZ2>
-          <BaseBar
+          ></StackBarZ3> : <StackBarZ2
+            iconImgLight={darkLight}
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={getCvParcelSoldSumStats}
+            isEth={true}
+            barWidth={18}
+            textColor={style.cvColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+            ]}
+          ></StackBarZ2>}
+          {darkLight === true ? <BaseBar1
+            iconImgLight={darkLight}
             id={'basebar2'}
             className="mt-5"
             labelText={'Monthly Parcel Minted'}
@@ -508,15 +727,33 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
             defaultColor={[130, 137, 195]}
             barWidth={18}
             textColor={style.cvColor}
-          ></BaseBar>
-          <ChartLineSimple
+          ></BaseBar1> : <BaseBar
+            iconImgLight={darkLight}
+            id={'basebar2'}
+            className="mt-5"
+            labelText={'Monthly Parcel Minted'}
+            dataHandlder={getCvMintStats}
+            defaultColor={[130, 137, 195]}
+            barWidth={18}
+            textColor={style.cvColor}
+          ></BaseBar>}
+          {darkLight === true ? <ChartLineSimple1
+            iconImgLight={darkLight}
             id={'chartlinesimple'}
             className="mt-5"
             labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getCvParcelOwnerStats}
             defaultColor={[255, 224, 206]}
             textColor={style.cvColor}
-          ></ChartLineSimple>
+          ></ChartLineSimple1> : <ChartLineSimple
+            iconImgLight={darkLight}
+            id={'chartlinesimple'}
+            className="mt-5"
+            labelText={'Total Number of Landlords At The End of Each Month'}
+            dataHandlder={getCvParcelOwnerStats}
+            defaultColor={[255, 224, 206]}
+            textColor={style.cvColor}
+          ></ChartLineSimple>}
         </>
       );
     }
@@ -524,8 +761,9 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
     if (showType === 'decentraland') {
       return (
         <>
-          <BaseBarData
+          {darkLight===true?<BaseBarData1
             id={'stackbar'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Traffic'}
             dataHandler={getDecentralandStats}
@@ -554,9 +792,41 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'yearly',
               },
             ]}
-          ></BaseBarData>
+          ></BaseBarData1>:<BaseBarData
+          id={'stackbar'}
+          iconImgLight={darkLight}
+          className="mt-5"
+          labelText={'Traffic'}
+          dataHandler={getDecentralandStats}
+          barWidth={18}
+          textColor={style.cvColor}
+          legend2={{ label: '', color: [225, 110, 92] }}
+          options={[
+            {
+              label: 'Daily',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly',
+              value: 'quarterly',
+            },
+            {
+              label: 'Yearly',
+              value: 'yearly',
+            },
+          ]}
+        ></BaseBarData>}
 
-          <ChartLine
+          {darkLight === true ? <ChartLine1
+            iconImgLight={darkLight}
             id={'dcl-chartline-1'}
             className="mt-5"
             labelText={'Average Parcel Price'}
@@ -597,9 +867,52 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'mana',
               },
             ]}
-          ></ChartLine>
-          <ChartLineToolTipSimple
+          ></ChartLine1> : <ChartLine
+            iconImgLight={darkLight}
+            id={'dcl-chartline-1'}
+            className="mt-5"
+            labelText={'Average Parcel Price'}
+            dataHandlder={getDclParcelAvgPriceStats}
+            legend1={{ label: 'Separate Land', color: [240, 117, 97] }}
+            legend2={{ label: 'Land in Estate', color: [255, 190, 114] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.dclColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+              {
+                label: 'MANA',
+                value: 'mana',
+              },
+            ]}
+          ></ChartLine>}
+          {darkLight===true? <ChartLineToolTipSimple1
             id={'dcl-chartline-2'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Number of Parcel Sales'}
             dataHandlder={getDclParcelSoldTotalStats}
@@ -629,10 +942,91 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 value: 'yearly',
               },
             ]}
-          ></ChartLineToolTipSimple>
+          ></ChartLineToolTipSimple1>:<ChartLineToolTipSimple
+            id={'dcl-chartline-2'}
+            iconImgLight={darkLight}
+            className="mt-5"
+            labelText={'Number of Parcel Sales'}
+            dataHandlder={getDclParcelSoldTotalStats}
+            legend1={{ label: 'Land', color: [240, 117, 97] }}
+            legend2={{ label: 'Estate', color: [255, 190, 114] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.dclColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+          ></ChartLineToolTipSimple>}
           <>
             <span className="hidden"></span>
-            <StackBarZ2
+            {darkLight === true ? <StackBarZ3
+              id={'stackbar1'}
+              iconImgLight={darkLight}
+              className="mt-5"
+              labelText={'Parcel Sales Amount'}
+              dataHandler={getDclParcelSoldSumStats}
+              legend1={{ label: 'Land', color: [240, 117, 97] }}
+              legend2={{ label: 'Estate', color: [255, 190, 114] }}
+              keyTypes={['land', 'estate']}
+              barWidth={18}
+              isEth={true}
+              textColor={style.dclColor}
+              options={[
+                {
+                  label: 'Daily',
+                  value: 'daily',
+                },
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+                {
+                  label: 'Quarterly',
+                  value: 'quarterly',
+                },
+                {
+                  label: 'Yearly',
+                  value: 'yearly',
+                },
+              ]}
+              optionsPrice={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
+                },
+                {
+                  label: 'MANA',
+                  value: 'mana',
+                },
+              ]}
+            ></StackBarZ3> : <StackBarZ2
+              iconImgLight={darkLight}
               id={'stackbar1'}
               className="mt-5"
               labelText={'Parcel Sales Amount'}
@@ -679,18 +1073,27 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   value: 'mana',
                 },
               ]}
-            ></StackBarZ2>
+            ></StackBarZ2>}
           </>
           <>
             <span className="hidden"></span>
-            <ChartLineSimple
+            {darkLight===true?<ChartLineSimple1
               id={'chartlinesimple2'}
               className="mt-5"
+              iconImgLight={darkLight}
               labelText={'Total Number of Landlords At The End of Each Month'}
               dataHandlder={getDclParcelOwnerStats}
               defaultColor={[255, 105, 40]}
               textColor={style.dclColor}
-            ></ChartLineSimple>
+            ></ChartLineSimple1>:<ChartLineSimple
+            id={'chartlinesimple2'}
+            className="mt-5"
+            iconImgLight={darkLight}
+            labelText={'Total Number of Landlords At The End of Each Month'}
+            dataHandlder={getDclParcelOwnerStats}
+            defaultColor={[255, 105, 40]}
+            textColor={style.dclColor}
+          ></ChartLineSimple>}
           </>
         </>
       );
@@ -698,8 +1101,9 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
     if (showType === 'sandbox') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight === true ? <ChartLineSandBox1
             id={'chartline1'}
+            iconImgLight={darkLight}
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_sandbox_avg_price_stats}
@@ -734,10 +1138,48 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1> : <ChartLineSandBox
+            id={'chartline1'}
+            iconImgLight={darkLight}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            dataHandlder={req_sandbox_avg_price_stats}
+            legend1={{ label: 'Primary', color: [119, 152, 238] }}
+            textColor={style.sandboxColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineSandBox>}
+         {darkLight===true?<ChartLineToolTipSimpleSandbox1
             id={'dcl-chartline-2'}
             className="mt-5"
+            iconImgLight={darkLight}
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_sandbox_sold_total_stats}
             legend1={{ label: 'Land', color: [42, 97, 237] }}
@@ -766,8 +1208,41 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1>:<ChartLineToolTipSimpleSandbox
+          id={'dcl-chartline-2'}
+          className="mt-5"
+          iconImgLight={darkLight}
+          labelText={'Number of Parcel Sales'}
+          dataHandlder={req_sandbox_sold_total_stats}
+          legend1={{ label: 'Land', color: [42, 97, 237] }}
+          keyTypes={['land', 'estate']}
+          textColor={style.sandboxColor}
+          options={[
+            {
+              label: 'Daily',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly',
+              value: 'quarterly',
+            },
+            {
+              label: 'Yearly',
+              value: 'yearly',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ1
+            iconImgLight={darkLight}
             id={'stackbar1'}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
@@ -812,15 +1287,70 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></StackBarZ>
-          <ChartSandBox
+          ></StackBarZ1> : <StackBarZ
+            id={'stackbar1'}
+            iconImgLight={darkLight}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_sandbox_sold_sun_stats}
+            legend1={{ label: 'Land', color: [119, 152, 238] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.sandboxColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>}
+          {darkLight===true?<ChartSandBox1
+            iconImgLight={darkLight}
             id={'chartlinesimple'}
             className="mt-5"
             labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getSandboxOwnerStats}
             defaultColor={[119, 152, 238]}
             textColor={style.sandboxColor}
-          ></ChartSandBox>
+          ></ChartSandBox1>:<ChartSandBox
+          iconImgLight={darkLight}
+          id={'chartlinesimple'}
+          className="mt-5"
+          labelText={'Total Number of Landlords At The End of Each Month'}
+          dataHandlder={getSandboxOwnerStats}
+          defaultColor={[119, 152, 238]}
+          textColor={style.sandboxColor}
+        ></ChartSandBox>}
         </>
       );
     }
@@ -828,7 +1358,8 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       return (
         <>
           <>
-            <ChartLineSandBox
+            {darkLight === true ? <ChartLineSandBox1
+              iconImgLight={darkLight}
               id={'chartline1'}
               labelText={'Average Parcel Price'}
               className="mt-5"
@@ -864,9 +1395,47 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 },
               ]}
               tabState={showType}
-            ></ChartLineSandBox>
-            <ChartLineToolTipSimpleSandbox
+            ></ChartLineSandBox1> : <ChartLineSandBox
+              iconImgLight={darkLight}
+              id={'chartline1'}
+              labelText={'Average Parcel Price'}
+              className="mt-5"
+              dataHandlder={req_somniumspace__avg_price_stats}
+              legend1={{ label: 'Primary', color: [250, 216, 23] }}
+              textColor={style.spaceColor}
+              options={[
+                {
+                  label: 'Daily price',
+                  value: 'daily',
+                },
+                {
+                  label: 'Weekly price',
+                  value: 'weekly',
+                },
+                {
+                  label: 'Monthly price',
+                  value: 'monthly',
+                },
+                {
+                  label: 'Quarterly price',
+                  value: 'quarterly',
+                },
+              ]}
+              priceOptions={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
+                },
+              ]}
+              tabState={showType}
+            ></ChartLineSandBox>}
+            {darkLight===true?<ChartLineToolTipSimpleSandbox1
               id={'dcl-chartline-2'}
+              iconImgLight={darkLight}
               className="mt-5"
               labelText={'Number of Parcel Sales'}
               dataHandlder={req_somniumspace_sold_total_stats}
@@ -896,8 +1465,86 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 },
               ]}
               tabState={showType}
-            ></ChartLineToolTipSimpleSandbox>
-            <StackBarZ
+            ></ChartLineToolTipSimpleSandbox1>:<ChartLineToolTipSimpleSandbox
+            id={'dcl-chartline-2'}
+            iconImgLight={darkLight}
+            className="mt-5"
+            labelText={'Number of Parcel Sales'}
+            dataHandlder={req_somniumspace_sold_total_stats}
+            legend1={{ label: 'Land', color: [250, 159, 23] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.spaceColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineToolTipSimpleSandbox>}
+            {darkLight === true ? <StackBarZ1
+              textColor={style.spaceColor}
+              id={'stackbar1'}
+              className="mt-5"
+              labelText={'Parcel Sales Amount'}
+              dataHandler={req_somniumspace_sold_sum_stats}
+              legend1={{ label: 'Land', color: [250, 216, 23] }}
+              keyTypes={['land', 'estate']}
+              barWidth={18}
+              iconImgLight={darkLight}
+              isEth={true}
+              showMarkerType="sandbox"
+              options={[
+                {
+                  label: 'Daily',
+                  value: 'daily',
+                },
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+                {
+                  label: 'Quarterly',
+                  value: 'quarterly',
+                },
+                {
+                  label: 'Yearly',
+                  value: 'yearly',
+                },
+              ]}
+              optionsPrice={[
+                {
+                  label: 'USD',
+                  value: 'usd',
+                },
+                {
+                  label: 'ETH',
+                  value: 'eth',
+                },
+              ]}
+              tabState={showType}
+            ></StackBarZ1> : <StackBarZ
+              iconImgLight={darkLight}
               textColor={style.spaceColor}
               id={'stackbar1'}
               className="mt-5"
@@ -941,15 +1588,25 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 },
               ]}
               tabState={showType}
-            ></StackBarZ>
-            <ChartSomniumSpace
+            ></StackBarZ>}
+            {darkLight===true?<ChartSomniumSpace1
               id={'charnftworlds'}
               className="mt-5"
+              iconImgLight={darkLight}
               labelText={'Total Number of Landlords At The End of Each Month'}
               dataHandlder={getchartSomniumSpace}
               defaultColor={[194, 157, 135]}
               textColor={style.cvColor}
-            ></ChartSomniumSpace>
+            ></ChartSomniumSpace1>:
+            <ChartSomniumSpace
+              id={'charnftworlds'}
+              className="mt-5"
+              iconImgLight={darkLight}
+              labelText={'Total Number of Landlords At The End of Each Month'}
+              dataHandlder={getchartSomniumSpace}
+              defaultColor={[194, 157, 135]}
+              textColor={style.cvColor}
+            ></ChartSomniumSpace>}
           </>
         </>
       );
@@ -957,8 +1614,9 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
     if (showType === 'nftworlds') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight===true?<ChartLineSandBox1
             id={'chartline1'}
+            iconImgLight={darkLight}
             labelText={'Average Parcel Price'}
             className="mt-5"
             dataHandlder={req_ntfworlds_avg_price_stats}
@@ -993,10 +1651,48 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1>:<ChartLineSandBox
+          id={'chartline1'}
+          iconImgLight={darkLight}
+          labelText={'Average Parcel Price'}
+          className="mt-5"
+          dataHandlder={req_ntfworlds_avg_price_stats}
+          legend1={{ label: 'Primary', color: [175, 234, 101] }}
+          textColor={style.nftColor}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly price',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly price',
+              value: 'quarterly',
+            },
+          ]}
+          priceOptions={[
+            {
+              label: 'USD',
+              value: 'usd',
+            },
+            {
+              label: 'ETH',
+              value: 'eth',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineSandBox>}
+         {darkLight===true? <ChartLineToolTipSimpleSandbox1
             id={'dcl-chartline-2'}
             className="mt-5"
+            iconImgLight={darkLight}
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_ntfworlds_sold_total_stats}
             legend1={{ label: 'Land', color: [33, 238, 29] }}
@@ -1025,9 +1721,87 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1>: <ChartLineToolTipSimpleSandbox
+          id={'dcl-chartline-2'}
+          className="mt-5"
+          iconImgLight={darkLight}
+          labelText={'Number of Parcel Sales'}
+          dataHandlder={req_ntfworlds_sold_total_stats}
+          legend1={{ label: 'Land', color: [33, 238, 29] }}
+          keyTypes={['land', 'estate']}
+          textColor={style.nftColor}
+          options={[
+            {
+              label: 'Daily',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly',
+              value: 'quarterly',
+            },
+            {
+              label: 'Yearly',
+              value: 'yearly',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ1
             id={'stackbar1'}
+            className="mt-5"
+            iconImgLight={darkLight}
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_ntfworlds_sold_sum_stats}
+            legend1={{ label: 'Land', color: [175, 234, 101] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.nftColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ1> : <StackBarZ
+            id={'stackbar1'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_ntfworlds_sold_sum_stats}
@@ -1070,23 +1844,33 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></StackBarZ>
-          <ChartNftworlds
+          ></StackBarZ>}
+         {darkLight===true? <ChartNftworlds1
             id={'charnftworlds'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getChartNftworlds}
             defaultColor={[175, 234, 101]}
             textColor={style.nftColor}
-          ></ChartNftworlds>
+          ></ChartNftworlds1>: <ChartNftworlds
+            id={'charnftworlds'}
+            iconImgLight={darkLight}
+            className="mt-5"
+            labelText={'Total Number of Landlords At The End of Each Month'}
+            dataHandlder={getChartNftworlds}
+            defaultColor={[175, 234, 101]}
+            textColor={style.nftColor}
+          ></ChartNftworlds>}
         </>
       );
     }
     if (showType === 'worldwidewebb') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight===true?<ChartLineSandBox1
             id={'chartline1'}
+            iconImgLight={darkLight}
             labelText={'Average Parcel Price'}
             className="mt-5"
             legend1={{ label: 'Primary', color: [245, 120, 157] }}
@@ -1121,9 +1905,47 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1>:<ChartLineSandBox
+          id={'chartline1'}
+          iconImgLight={darkLight}
+          labelText={'Average Parcel Price'}
+          className="mt-5"
+          legend1={{ label: 'Primary', color: [245, 120, 157] }}
+          dataHandlder={req_webb_parcel_avg_price_stats}
+          textColor={style.webbColor}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly price',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly price',
+              value: 'quarterly',
+            },
+          ]}
+          priceOptions={[
+            {
+              label: 'USD',
+              value: 'usd',
+            },
+            {
+              label: 'ETH',
+              value: 'eth',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineSandBox>}
+          {darkLight===true?<ChartLineToolTipSimpleSandbox1
             id={'dcl-chartline-2'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_webb_sold_total_stats}
@@ -1153,9 +1975,88 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1>:<ChartLineToolTipSimpleSandbox
+          id={'dcl-chartline-2'}
+          iconImgLight={darkLight}
+          className="mt-5"
+          labelText={'Number of Parcel Sales'}
+          dataHandlder={req_webb_sold_total_stats}
+          legend1={{ label: 'Land', color: [244, 68, 79] }}
+          keyTypes={['land', 'estate']}
+          textColor={style.webbColor}
+          options={[
+            {
+              label: 'Daily',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly',
+              value: 'quarterly',
+            },
+            {
+              label: 'Yearly',
+              value: 'yearly',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ1
             id={'stackbar1'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            iconImgLight={darkLight}
+            dataHandler={req_webb_sold_sum_stats}
+            legend1={{ label: 'Land', color: [245, 120, 157] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.webbColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+
+            ]}
+            tabState={showType}
+          ></StackBarZ1> : <StackBarZ
+            id={'stackbar1'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_webb_sold_sum_stats}
@@ -1199,22 +2100,32 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
 
             ]}
             tabState={showType}
-          ></StackBarZ>
-          <ChartWebb
+          ></StackBarZ>}
+           {darkLight === true ?<ChartWebb1
             id={'chartworldwidewebb'}
             className="mt-5"
+            iconImgLight={darkLight}
             labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getchartWebb}
             defaultColor={[245, 120, 157]}
             textColor={style.webbColor}
-          ></ChartWebb>
+          ></ChartWebb1>: <ChartWebb
+            id={'chartworldwidewebb'}
+            className="mt-5"
+            iconImgLight={darkLight}
+            labelText={'Total Number of Landlords At The End of Each Month'}
+            dataHandlder={getchartWebb}
+            defaultColor={[245, 120, 157]}
+            textColor={style.webbColor}
+          ></ChartWebb>}
         </>
       );
     }
     if (showType === 'otherside') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight === true ? <ChartLineSandBox1
+            iconImgLight={darkLight}
             id={'chartline1'}
             labelText={'Average Parcel Price'}
             className="mt-5"
@@ -1250,8 +2161,46 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1> : <ChartLineSandBox
+            iconImgLight={darkLight}
+            id={'chartline1'}
+            labelText={'Average Parcel Price'}
+            className="mt-5"
+            legend1={{ label: 'Primary', color: [255, 248, 187] }}
+            dataHandlder={req_otherside_avg_price}
+            textColor={style.othersideColor}
+            options={[
+              {
+                label: 'Daily price',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly price',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly price',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly price',
+                value: 'quarterly',
+              },
+            ]}
+            priceOptions={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineSandBox>}
+          {darkLight === true ? <ChartLineToolTipSimpleSandbox1
+            iconImgLight={darkLight}
             id={'dcl-chartline-2'}
             className="mt-5"
             labelText={'Number of Parcel Sales'}
@@ -1282,8 +2231,87 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1> :
+            <ChartLineToolTipSimpleSandbox
+              iconImgLight={darkLight}
+              id={'dcl-chartline-2'}
+              className="mt-5"
+              labelText={'Number of Parcel Sales'}
+              dataHandlder={req_otherside_sales_num}
+              legend1={{ label: 'Land', color: [237, 195, 133] }}
+              keyTypes={['land', 'estate']}
+              textColor={style.othersideColor}
+              options={[
+                {
+                  label: 'Daily',
+                  value: 'daily',
+                },
+                {
+                  label: 'Weekly',
+                  value: 'weekly',
+                },
+                {
+                  label: 'Monthly',
+                  value: 'monthly',
+                },
+                {
+                  label: 'Quarterly',
+                  value: 'quarterly',
+                },
+                {
+                  label: 'Yearly',
+                  value: 'yearly',
+                },
+              ]}
+              tabState={showType}
+            ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ1
+            iconImgLight={darkLight}
+            id={'stackbar1'}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_otherside_sales_amount}
+            legend1={{ label: 'Land', color: [255, 248, 187] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.othersideColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ1> : <StackBarZ
+            iconImgLight={darkLight}
             id={'stackbar1'}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
@@ -1328,22 +2356,33 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
             ]}
             tabState={showType}
           ></StackBarZ>
-          <ChartOtherside
+          }
+          {darkLight === true ? <ChartOtherside1
+            iconImgLight={darkLight}
             id={'charnftworlds'}
             className="mt-5"
             labelText={'Total Number of Landlords At The End of Each Month'}
             dataHandlder={getchartOtherside}
             defaultColor={[194, 157, 135]}
             textColor={style.othersideColor}
-          ></ChartOtherside>
+          ></ChartOtherside1> : <ChartOtherside
+            iconImgLight={darkLight}
+            id={'charnftworlds'}
+            className="mt-5"
+            labelText={'Total Number of Landlords At The End of Each Month'}
+            dataHandlder={getchartOtherside}
+            defaultColor={[194, 157, 135]}
+            textColor={style.othersideColor}
+          ></ChartOtherside>}
         </>
       );
     }
     if (showType === 'netvrk') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight===true?<ChartLineSandBox1
             id={'netvrk1'}
+            iconImgLight={darkLight}
             labelText={'Average Parcel Price'}
             className="mt-5"
             legend1={{ label: 'Primary', color: [196, 148, 254] }}
@@ -1378,10 +2417,48 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1>:<ChartLineSandBox
+          id={'netvrk1'}
+          iconImgLight={darkLight}
+          labelText={'Average Parcel Price'}
+          className="mt-5"
+          legend1={{ label: 'Primary', color: [196, 148, 254] }}
+          dataHandlder={req_netvrk_avg_price}
+          textColor={style.osdColor}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly price',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly price',
+              value: 'quarterly',
+            },
+          ]}
+          priceOptions={[
+            {
+              label: 'USD',
+              value: 'usd',
+            },
+            {
+              label: 'ETH',
+              value: 'eth',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineSandBox>}
+         {darkLight===true? <ChartLineToolTipSimpleSandbox1
             id={'netvrk2'}
             className="mt-5"
+            iconImgLight={darkLight}
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_netvrk_sales_num}
             legend1={{ label: 'Land', color: [148, 159, 254] }}
@@ -1410,9 +2487,42 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1>: <ChartLineToolTipSimpleSandbox
+            id={'netvrk2'}
+            className="mt-5"
+            iconImgLight={darkLight}
+            labelText={'Number of Parcel Sales'}
+            dataHandlder={req_netvrk_sales_num}
+            legend1={{ label: 'Land', color: [148, 159, 254] }}
+            keyTypes={['land', 'estate']}
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            tabState={showType}
+          ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ1
             id={'netvrk3'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_netvrk_sales_amount}
@@ -1455,15 +2565,61 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></StackBarZ>
+          ></StackBarZ1> : <StackBarZ
+            id={'netvrk3'}
+            iconImgLight={darkLight}
+            className="mt-5"
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_netvrk_sales_amount}
+            legend1={{ label: 'Land', color: [196, 148, 254] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>}
         </>
       );
     }
     if (showType === 'aavegotchi') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight===true?<ChartLineSandBox1
             id={'netvrk1'}
+            iconImgLight={darkLight}
             labelText={'Average Parcel Price'}
             className="mt-5"
             legend1={{ label: 'Primary', color: [250, 216, 23] }}
@@ -1498,10 +2654,48 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1>:<ChartLineSandBox
+          id={'netvrk1'}
+          iconImgLight={darkLight}
+          labelText={'Average Parcel Price'}
+          className="mt-5"
+          legend1={{ label: 'Primary', color: [250, 216, 23] }}
+          dataHandlder={req_aavegotchi_avg_price}
+          textColor={style.spaceColor}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly price',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly price',
+              value: 'quarterly',
+            },
+          ]}
+          priceOptions={[
+            {
+              label: 'USD',
+              value: 'usd',
+            },
+            {
+              label: 'ETH',
+              value: 'eth',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineSandBox>}
+         {darkLight===true? <ChartLineToolTipSimpleSandbox1
             id={'netvrk2'}
             className="mt-5"
+            iconImgLight={darkLight}
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_aavegotchi_sales_num}
             legend1={{ label: 'Land', color: [250, 159, 23] }}
@@ -1530,10 +2724,43 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1>:<ChartLineToolTipSimpleSandbox
+          id={'netvrk2'}
+          className="mt-5"
+          iconImgLight={darkLight}
+          labelText={'Number of Parcel Sales'}
+          dataHandlder={req_aavegotchi_sales_num}
+          legend1={{ label: 'Land', color: [250, 159, 23] }}
+          keyTypes={['land', 'estate']}
+          textColor={style.spaceColor}
+          options={[
+            {
+              label: 'Daily',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly',
+              value: 'quarterly',
+            },
+            {
+              label: 'Yearly',
+              value: 'yearly',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ1
             id={'netvrk3'}
             className="mt-5"
+            iconImgLight={darkLight}
             labelText={'Parcel Sales Amount'}
             dataHandler={req_aavegotchi_sales_amount}
             legend1={{ label: 'Land', color: [250, 216, 23] }}
@@ -1575,15 +2802,61 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></StackBarZ>
+          ></StackBarZ1> : <StackBarZ
+            id={'netvrk3'}
+            className="mt-5"
+            iconImgLight={darkLight}
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_aavegotchi_sales_amount}
+            legend1={{ label: 'Land', color: [250, 216, 23] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.spaceColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>}
         </>
       );
     }
     if (showType === 'playerOne') {
       return (
         <>
-          <ChartLineSandBox
+          {darkLight===true?<ChartLineSandBox1
             id={'netvrk1'}
+            iconImgLight={darkLight}
             labelText={'Average Parcel Price'}
             className="mt-5"
             legend1={{ label: 'Primary', color: [196, 148, 254] }}
@@ -1618,9 +2891,47 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineSandBox>
-          <ChartLineToolTipSimpleSandbox
+          ></ChartLineSandBox1>:<ChartLineSandBox
+          id={'netvrk1'}
+          iconImgLight={darkLight}
+          labelText={'Average Parcel Price'}
+          className="mt-5"
+          legend1={{ label: 'Primary', color: [196, 148, 254] }}
+          dataHandlder={req_playerone_avg_price}
+          textColor={style.osdColor}
+          options={[
+            {
+              label: 'Daily price',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly price',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly price',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly price',
+              value: 'quarterly',
+            },
+          ]}
+          priceOptions={[
+            {
+              label: 'USD',
+              value: 'usd',
+            },
+            {
+              label: 'ETH',
+              value: 'eth',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineSandBox>}
+         {darkLight===true? <ChartLineToolTipSimpleSandbox1
             id={'netvrk2'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Number of Parcel Sales'}
             dataHandlder={req_playerone_sales_num}
@@ -1650,9 +2961,42 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></ChartLineToolTipSimpleSandbox>
-          <StackBarZ
+          ></ChartLineToolTipSimpleSandbox1>:<ChartLineToolTipSimpleSandbox
+          id={'netvrk2'}
+          iconImgLight={darkLight}
+          className="mt-5"
+          labelText={'Number of Parcel Sales'}
+          dataHandlder={req_playerone_sales_num}
+          legend1={{ label: 'Land', color: [148, 159, 254] }}
+          keyTypes={['land', 'estate']}
+          textColor={style.osdColor}
+          options={[
+            {
+              label: 'Daily',
+              value: 'daily',
+            },
+            {
+              label: 'Weekly',
+              value: 'weekly',
+            },
+            {
+              label: 'Monthly',
+              value: 'monthly',
+            },
+            {
+              label: 'Quarterly',
+              value: 'quarterly',
+            },
+            {
+              label: 'Yearly',
+              value: 'yearly',
+            },
+          ]}
+          tabState={showType}
+        ></ChartLineToolTipSimpleSandbox>}
+          {darkLight === true ? <StackBarZ
             id={'netvrk3'}
+            iconImgLight={darkLight}
             className="mt-5"
             labelText={'Parcel Sales Amount'}
             dataHandler={req_playerone_sales_amount}
@@ -1695,11 +3039,56 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               },
             ]}
             tabState={showType}
-          ></StackBarZ>
+          ></StackBarZ> : <StackBarZ
+            id={'netvrk3'}
+            className="mt-5"
+            iconImgLight={darkLight}
+            labelText={'Parcel Sales Amount'}
+            dataHandler={req_playerone_sales_amount}
+            legend1={{ label: 'Land', color: [196, 148, 254] }}
+            keyTypes={['land', 'estate']}
+            barWidth={18}
+            isEth={true}
+            showMarkerType="sandbox"
+            textColor={style.osdColor}
+            options={[
+              {
+                label: 'Daily',
+                value: 'daily',
+              },
+              {
+                label: 'Weekly',
+                value: 'weekly',
+              },
+              {
+                label: 'Monthly',
+                value: 'monthly',
+              },
+              {
+                label: 'Quarterly',
+                value: 'quarterly',
+              },
+              {
+                label: 'Yearly',
+                value: 'yearly',
+              },
+            ]}
+            optionsPrice={[
+              {
+                label: 'USD',
+                value: 'usd',
+              },
+              {
+                label: 'ETH',
+                value: 'eth',
+              },
+            ]}
+            tabState={showType}
+          ></StackBarZ>}
         </>
       );
     }
-  }, [showType]);
+  }, [showType, darkLight]);
 
 
   const scrollToAnchor = (anchorName) => {
@@ -2139,7 +3528,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     dataHandlderAlltime={req_all_time_data}
                     labelText="Number of Parcel Sales"
                     dataHandlder={req_all_number_sales}
-                    legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                     legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                     legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -2228,7 +3617,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   labelText="Floor Price"
                   textColor={style.allColor}
                   dataHandlder={req_avg_creater_price}
-                  legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                   legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
                   legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -2288,7 +3677,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
               </div>
               {/* </a> */}
               <div className={cn('', darkLight === true ? style.allLineLight : style.table)}>
-                <div className={cn('', )}>
+                <div className={cn('',)}>
                   <AnalyticsInfo
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('ComprehensiveData')}
@@ -2299,12 +3688,12 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 </div>
               </div>
               <div className={cn(' mt-7', darkLight === true ? style.allLineLight1 : style.table)}>
-                <div className={cn('', )}>
+                <div className={cn('',)}>
                   <AnalyticsInfoSale iconImgLight={darkLight} HyperlinkJump={() => scrollToAnchor('ParcelSalesAmountM2M')} options={types} id="ParcelSalesAmountM2M" labelText={'Parcel Sales Amount'} textColor={style.allColor}></AnalyticsInfoSale>
                 </div>
               </div>
               <div className={cn('w-full h-auto ', style.tableBox)}>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)} style={{marginBottom:"0px" ,marginTop:"0px"}}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer2)} style={{ marginBottom: "0px", marginTop: "0px" }}>
                   <AnalyticsAverage
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('AverageParcelPriceM2M')}
@@ -2321,7 +3710,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     ]}
                   ></AnalyticsAverage>
                 </div>
-                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px",marginBottom:"0px",marginTop:"0px" }}>
+                <div className={cn('', darkLight === true ? style.allLineLight : style.tabContainer3)} style={{ marginLeft: "20px", marginBottom: "0px", marginTop: "0px" }}>
                   <AnalyticsInfoNum
                     iconImgLight={darkLight}
                     HyperlinkJump={() => scrollToAnchor('NumberofParcelSalesM2M')}
@@ -2329,7 +3718,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 </div>
               </div>
 
-              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom:"0px" }}>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom: "0px" }}>
                 {darkLight === true ? <AllPillarNum
                   iconImgLight={darkLight}
                   HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
@@ -2435,7 +3824,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                 }
               </div>
               <div className={cn('', darkLight === true ? style.allLineLight : style.allLinen)}
-              style={{ marginBottom:"0px" }}>
+                style={{ marginBottom: "0px" }}>
                 {darkLight === true ? <AllPillarNum2
                   iconImgLight={darkLight}
                   id="NumberOfParcelRent"
@@ -2551,12 +3940,13 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
         <>
           <div className={cn('', darkLight === true ? style.tmbg1 : style.tmbg,)}>
             <Switch
+              iconImgLight={darkLight}
               onActive={changeType}
               options={types}
               defaultValue={showType}
               id="switch"
               showType={showType}
-              className={offsetWidthNum <= 1200 ? style.headNum : style.aboslute}
+              className={offsetWidthNum <= 1200 || darkLight === true ? style.headNum : style.aboslute}
               fixedS={fixedState}
             ></Switch>
 
@@ -2576,7 +3966,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
             <div
               className={cn(
                 'w-full mt-7 p-5 flex flex-col justify-start items-center',
-                style.chartList,
+                darkLight === true ? style.chartList1 : style.chartList,
               )}
               style={{ marginTop: "25px" }}
             >
@@ -2821,7 +4211,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       </div>
       {reander}
       {/* <div className={style.container}>{reander}</div>  */}
-      <Footer    iconImgLight={darkLight}/>
+      <Footer iconImgLight={darkLight} />
     </Page>
   );
 }
