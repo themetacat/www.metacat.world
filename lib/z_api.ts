@@ -826,6 +826,26 @@ class API {
     return json;
   }
 
+  public async req_dcl_land_rent_data(type: string) {
+    // const url = `${this.url}/analytics/dcl_land_rent_data`;
+    // const result = await fetch(url, {
+    //   method: 'get',
+    //   mode: 'cors',
+    // });
+    // const json = await result.json();
+
+    // return json;
+    const search = qs.stringify({  type }, { addQueryPrefix: true });
+    const url = `${this.url}/analytics/dcl_land_rent_data${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   public async req_num_of_rent() {
     const url = `${this.url}/analytics/num_of_rent`;
     const result = await fetch(url, {

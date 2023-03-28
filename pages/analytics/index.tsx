@@ -92,6 +92,7 @@ import {
   req_aavegotchi_sales_amount,
   req_avg_creater_price,
   req_sales_rent_sum_price,
+  req_dcl_land_rent_data,
   req_num_of_rent
 } from '../../service/z_api';
 
@@ -297,6 +298,18 @@ const AllPillarNum = dynamic(() => import(/* webpackPrefetch: true */ '../../com
   ssr: false,
 });
 const AllPillarNum1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum1'), {
+  ssr: false,
+});
+const DclLandNum = dynamic(() => import(/* webpackPrefetch: true */ '../../components/dcl_landNum'), {
+  ssr: false,
+});
+const DclLandNum1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/dcl_landNum1'), {
+  ssr: false,
+});
+const DclLandAmount = dynamic(() => import(/* webpackPrefetch: true */ '../../components/dcl_landAmount'), {
+  ssr: false,
+});
+const DclLandAmount1 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/dcl_landAmount1'), {
   ssr: false,
 });
 const AllPillarNum2 = dynamic(() => import(/* webpackPrefetch: true */ '../../components/all_pillarNum2'), {
@@ -3928,6 +3941,210 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   // ]}
                   ></AllPillarNum3>}
               </div>
+              <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom: "0px" }}>
+                {
+                  darkLight === true ?
+                  <DclLandAmount1
+                    iconImgLight={darkLight}
+                    // HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
+                    id="DclLandAmount1"
+                    textColor={style.allColor}
+                    labelText="DCL Land Rent Amount"
+                    dataHandlder={req_dcl_land_rent_data}
+                    // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    // legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      // {
+                      //   label: 'Daily',
+                      //   value: 'daily',
+                      // },
+                      {
+                        label: 'Weekly',
+                        value: 'weekly',
+                      },
+                      {
+                        label: 'Monthly',
+                        value: 'monthly',
+                      },
+                      // {
+                      //   label: 'Quarterly',
+                      //   value: 'quarterly',
+                      // },
+                      // {
+                      //   label: 'Yearly',
+                      //   value: 'yearly',
+                      // },
+                    ]}
+                    priceOptions={[
+                      {
+                        label: 'USD',
+                        value: 'usd',
+                      },
+                      {
+                        label: 'ETH',
+                        value: 'eth',
+                      },
+                    ]}
+                  ></DclLandAmount1>:
+                  <DclLandAmount
+                  iconImgLight={darkLight}
+                  // HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
+                  id="DclLandAmount"
+                  textColor={style.allColor}
+                  labelText="DCL Land Rent Amount"
+                  dataHandlder={req_dcl_land_rent_data}
+                  // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  // legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  options={[
+                    // {
+                    //   label: 'Daily',
+                    //   value: 'daily',
+                    // },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    // {
+                    //   label: 'Quarterly',
+                    //   value: 'quarterly',
+                    // },
+                    // {
+                    //   label: 'Yearly',
+                    //   value: 'yearly',
+                    // },
+                  ]}
+                  priceOptions={[
+                    {
+                      label: 'USD',
+                      value: 'usd',
+                    },
+                    {
+                      label: 'ETH',
+                      value: 'eth',
+                    },
+                  ]}
+                ></DclLandAmount>
+                }
+            
+                  </div>
+                  <div className={cn('', darkLight === true ? style.allLineLight : style.allLineb)} style={{ marginBottom: "0px" }}>
+                {
+                  darkLight === true ?
+                  <DclLandNum1
+                    iconImgLight={darkLight}
+                    // HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
+                    id="DclLandNum1"
+                    textColor={style.allColor}
+                    labelText="Number of DCL Land Rent"
+                    dataHandlder={req_dcl_land_rent_data}
+                    // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                    // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                    // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                    // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                    // legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                    // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                    // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                    options={[
+                      // {
+                      //   label: 'Daily',
+                      //   value: 'daily',
+                      // },
+                      {
+                        label: 'Weekly',
+                        value: 'weekly',
+                      },
+                      {
+                        label: 'Monthly',
+                        value: 'monthly',
+                      },
+                      // {
+                      //   label: 'Quarterly',
+                      //   value: 'quarterly',
+                      // },
+                      // {
+                      //   label: 'Yearly',
+                      //   value: 'yearly',
+                      // },
+                    ]}
+                    priceOptions={[
+                      {
+                        label: 'USD',
+                        value: 'usd',
+                      },
+                      {
+                        label: 'ETH',
+                        value: 'eth',
+                      },
+                    ]}
+                  ></DclLandNum1>:
+                  <DclLandNum
+                  iconImgLight={darkLight}
+                  // HyperlinkJump={() => scrollToAnchor('ParcelRentAmount')}
+                  id="DclLandNum"
+                  textColor={style.allColor}
+                  labelText="Number of DCL Land Rent"
+                  dataHandlder={req_dcl_land_rent_data}
+                  // legend1={{ label: 'Otherside', color: [255, 248, 187] }}
+                  // legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
+                  // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
+                  // legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
+                  // legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
+                  // legend7={{ label: 'Somnium ', color: [240, 201, 124] }}
+                  // legend8={{ label: 'Netvrk', color: [192, 151, 234] }}
+                  options={[
+                    // {
+                    //   label: 'Daily',
+                    //   value: 'daily',
+                    // },
+                    {
+                      label: 'Weekly',
+                      value: 'weekly',
+                    },
+                    {
+                      label: 'Monthly',
+                      value: 'monthly',
+                    },
+                    // {
+                    //   label: 'Quarterly',
+                    //   value: 'quarterly',
+                    // },
+                    // {
+                    //   label: 'Yearly',
+                    //   value: 'yearly',
+                    // },
+                  ]}
+                  // priceOptions={[
+                  //   {
+                  //     label: 'USD',
+                  //     value: 'usd',
+                  //   },
+                  //   {
+                  //     label: 'ETH',
+                  //     value: 'eth',
+                  //   },
+                  // ]}
+                ></DclLandNum>
+                }
+            
+                  </div>
             </div>
           </div>
           <TopJumper></TopJumper>

@@ -3,7 +3,7 @@ import { Chart } from '@antv/g2';
 import cn from 'classnames';
 import style from './index.module.css';
 
-import ChartTitle from '../chart-title2';
+import ChartTitle from '../chart-title';
 import Status from '../status';
 import IconLabel from '../icon-label';
 import ChartSelecter from '../chart-select';
@@ -61,7 +61,7 @@ const showKeyTypes = [
   'Netvrk',
 ];
 
-export default function AllPillarNum1({
+export default function Dcl_landNum({
   id,
   labelText,
   dataHandlder,
@@ -143,6 +143,10 @@ export default function AllPillarNum1({
           },
         },
         customContent: (name, items) => {
+          // console.log(name, 666, items[0]?.value);
+          // const a = { name: 'Decentraland' };
+          // items.push(a)
+          // console.log(items,22);
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -159,32 +163,33 @@ export default function AllPillarNum1({
             return;
           }
           items.forEach((item, index) => {
-            result[item.name] = item;
+            // console.log(item, showKeyTypes[3], result);
+            // console.log(result[showKeyTypes[3]]);
+
+            // result[item.name] = 'Decentraland';
+            // console.log(655, Number(result[showKeyTypes[3]]?.value));
           });
           const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
-            Number(result[showKeyTypes[3]]?.value) +
+            // Number(result[showKeyTypes[3]]?.value) +
             // Number(result[showKeyTypes[0]]?.value) +
             // Number(result[showKeyTypes[1]]?.value) +
             // Number(result[showKeyTypes[2]]?.value) +
             // Number(result[showKeyTypes[3]]?.value) +
-            Number(result[showKeyTypes[5]]?.value) ,
+            Number(items[0]?.value),
             // Number(result[showKeyTypes[7]]?.value) +
             // Number(result[showKeyTypes[5]]?.value),
           )} 
-          <span style="font-size:12px; color:#fff; font-weight:400;">${result[
-            showKeyTypes[3]
-          ]?.priceStaticT?.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
+          <span style="font-size:12px; color:#fff; font-weight:400;">${items[0]?.priceStaticT?.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
       <div style="color:#fff;margin-bottom:12px">
       <span style="color:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1);">
       ${showKeyTypes[3]}:
         <span style="color:#fff;">
-          <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend4.color[0]
-            }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[3]]?.value,
-            )}</span>
-          <span>${result[showKeyTypes[3]]?.priceStaticT?.toLocaleUpperCase()}</span>
+          <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
+            legend4.color[0]
+          }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(items[0]?.value)}</span>
+          <span>${items[0]?.priceStaticT?.toLocaleUpperCase()}</span>
         </span>
       </span>
     </div>
@@ -192,14 +197,7 @@ export default function AllPillarNum1({
    
 
   <div style="color:#fff;margin-bottom:12px">
-  <span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
-  ${showKeyTypes[5]}:
-    <span style="color:#fff;">
-      <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${legend6.color[1]
-            }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
-      <span>${result[showKeyTypes[3]]?.priceStaticT?.toLocaleUpperCase()}</span>
-    </span>
-  </span>
+ 
 </div>
 
 
@@ -244,7 +242,8 @@ export default function AllPillarNum1({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+                  stroke:
+                    iconImgLight === true ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -263,11 +262,11 @@ export default function AllPillarNum1({
         line: {
           style: {
             lineWidth: 1,
-            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+            stroke: iconImgLight === true ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
+          style: { fill: iconImgLight === true ? '#000' : 'rgba(255,255, 255, 0.85)' },
           offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
           rotate: showType === 'yearly' ? 0 : 1,
@@ -304,15 +303,15 @@ export default function AllPillarNum1({
           // if (tVal === 'NFT Worlds') {
           //   return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           // }
-          if (tVal === 'Decentraland') {
+          if (tVal) {
             return `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
           }
           // if (tVal === 'Worldwide Webb') {
           //   return `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
           // }
-          if (tVal === 'Voxels') {
-            return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
-          }
+          // if (tVal === 'Voxels') {
+          //   return `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          // }
           // if (tVal === 'Somnium Space') {
           //   return `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
           // }
@@ -339,21 +338,21 @@ export default function AllPillarNum1({
             //     fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
             //   };
             // }
-            if (tVal === 'Decentraland') {
+            // if (tVal) {
               return {
                 fill: `l(270) 0:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 0.2) 1:rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`,
               };
-            }
+            // }
             // if (tVal === 'Worldwide Webb') {
             //   return {
             //     fill: `l(270) 0:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 0.2) 1:rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`,
             //   };
             // }
-            if (tVal === 'Voxels') {
-              return {
-                fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
-              };
-            }
+            // if (tVal === 'Voxels') {
+            //   return {
+            //     fill: `l(270) 0:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 0.2) 1:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`,
+            //   };
+            // }
             // if (tVal === 'Somnium Space') {
             //   return {
             //     fill: `l(270) 0:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 0.2) 1:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`,
@@ -367,18 +366,15 @@ export default function AllPillarNum1({
             // }
           },
         })
-        .tooltip(
-          'time*value*name*staticT*priceStaticT',
-          (time, value, name, staticT, priceStaticT) => {
-            return {
-              value,
-              time,
-              name,
-              staticT,
-              priceStaticT,
-            };
-          },
-        )
+        .tooltip('time*value*staticT*priceStaticT', (time, value, staticT, priceStaticT) => {
+          return {
+            value,
+            time,
+            // name,
+            staticT,
+            priceStaticT,
+          };
+        })
         .adjust({
           type: 'stack',
           reverseOrder: false,
@@ -390,8 +386,8 @@ export default function AllPillarNum1({
 
   const requestData = React.useCallback(async () => {
     setLoading(true);
-    const result = await dataHandlder();
-    
+    const result = await dataHandlder('amount');
+
     setLoading(false);
 
     if (result.code === 100000 && result.data[showType] && result.data[showType][priceShowType]) {
@@ -413,7 +409,6 @@ export default function AllPillarNum1({
 
   const changeStatic = React.useCallback(
     (val) => {
-      
       setShowType(val);
       if (dataSource && chart.current) {
         updata(val, priceShowType);
@@ -440,7 +435,7 @@ export default function AllPillarNum1({
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           options={options}
           showArrow={true}
           onClick={changeStatic}
@@ -451,7 +446,7 @@ export default function AllPillarNum1({
         ></ChartSelecter>
         丨
         <ChartSelecter
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           options={priceOptions}
           showArrow={true}
           onClick={changePriceStatic}
@@ -468,7 +463,6 @@ export default function AllPillarNum1({
   const getLenged = React.useMemo(() => {
     return (
       <>
-
         {/* <IconLabel
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
@@ -485,7 +479,7 @@ export default function AllPillarNum1({
           className="mr-5"
         ></IconLabel> */}
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
@@ -495,12 +489,12 @@ export default function AllPillarNum1({
           color={`rgb(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]})`}
           className="mr-5"
         ></IconLabel> */}
-        <IconLabel
+        {/* <IconLabel
          iconImgLight={iconImgLight}
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
           className="mr-5"
-        ></IconLabel>
+        ></IconLabel> */}
         {/* <IconLabel
           text={legend7.label}
           color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
@@ -545,7 +539,12 @@ export default function AllPillarNum1({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle textCount={textCount} iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
+        <ChartTitle
+          iconImgLight={iconImgLight}
+          Hyperlink={HyperlinkJump}
+          text={labelText}
+          color={textColor}
+        ></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

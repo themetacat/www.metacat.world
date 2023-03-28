@@ -804,6 +804,19 @@ export const req_sales_rent_sum_price = async () => {
   return json;
 };
 
+export const req_dcl_land_rent_data = async (type: string) => {
+
+  const search = qs.stringify({  type }, { addQueryPrefix: true });
+  const url = `/api/req_dcl_land_rent_data${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_num_of_rent = async () => {
   const url = '/api/get_sales_num_of_rent';
   const result = await fetch(url, {
