@@ -478,12 +478,12 @@ export default function Dcl_landNum({
           color={`rgb(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]})`}
           className="mr-5"
         ></IconLabel> */}
-        <IconLabel
+        {/* <IconLabel
           iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
-        ></IconLabel>
+        ></IconLabel> */}
         {/* <IconLabel
           text={legend5.label}
           color={`rgb(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]})`}
@@ -545,7 +545,7 @@ export default function Dcl_landNum({
           text={labelText}
           color={textColor}
         ></ChartTitle>
-        <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
+        {/* <div className={cn('flex items-center', style.toright)}>{getLenged}</div> */}
         <div className="flex items-center">{getSelect}</div>
       </div>
       {rander}

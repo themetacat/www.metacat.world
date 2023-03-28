@@ -545,7 +545,7 @@ export default function Dcl_landNum({
           text={labelText}
           color={textColor}
         ></ChartTitle>
-        <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
+        {/* <div className={cn('flex items-center', style.toright)}>{getLenged}</div> */}
         <div className="flex items-center">{getSelect}</div>
       </div>
       {rander}
