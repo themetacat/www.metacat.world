@@ -330,7 +330,7 @@ const analyticsData = [
 
 
 
-export default function darkLightPageHeader({ active, className, iconImgLight }: Props) {
+export default function topNav({ active, className, iconImgLight }: Props) {
   const router = useRouter();
   const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
@@ -344,12 +344,7 @@ export default function darkLightPageHeader({ active, className, iconImgLight }:
   const [showStateVal, setShowStateVal] = React.useState(null);
   const [offsetWidthNum, setOffsetWidthNum] = React.useState(0);
   const [offsetHeighthNum, setOffsetHeightNum] = React.useState(0);
-  const [darkLight, setDarkLight] = React.useState(false);
-  useEffect(() => {
-    const darkBackColor = window.localStorage.getItem("darkLight") === "true";
 
-    setDarkLight(darkBackColor)
-  }, [darkLight])
   const jumpToData = React.useCallback(() => {
     window.open('https://www.k1ic.com/cvb-zh.html');
   }, []);
@@ -389,18 +384,7 @@ export default function darkLightPageHeader({ active, className, iconImgLight }:
   //   },
   //   []
   // );
-  const btnDark = () => {
-    if (darkLight === false) {
-      window.localStorage.setItem("darkLight", 'true')
-      setDarkLight(true)
-      iconImgLight(true)
-    } else {
-      window.localStorage.setItem("darkLight", 'false')
-      setDarkLight(false)
-      iconImgLight(false)
-    }
-  }
-console.log(router.pathname==='/analytics',444,darkLight);
+
 
   useEffect(() => {
 
@@ -409,7 +393,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
     setOffsetHeightNum(window.screen.availHeight)
     // console.log(offsetWidthNum, 8898,);
     // console.log(offsetWidthNum <= 1200);
-  }, [offsetHeighthNum, darkLight])
+  }, [offsetHeighthNum])
   return (
     <header
       className={cn('w-full flex flex-glow items-start ',
@@ -420,13 +404,13 @@ console.log(router.pathname==='/analytics',444,darkLight);
       <div
         className={cn(
           ' flex items-center  w-full flex-flow',
-          darkLight === true &&router.pathname==='/analytics'? style.header1 : style.header,
+        style.header,
         )}
       >
         <div className={cn(" flex-flow", style.one,)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
-            <img className={cn('flex-flow', style.metaImg)} src={darkLight === false ? "/images/imgConent/meta1.png" : '/images/imgConent/meta2.png'}></img>
+            <img className={cn('flex-flow', style.metaImg)} src={"/images/imgConent/meta1.png"}></img>
           </Link>
         </div>
         <div className={cn("flex flex-flow", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null, showStateVal === true ? style.showStateVal : null
@@ -434,11 +418,11 @@ console.log(router.pathname==='/analytics',444,darkLight);
           <div
             className={cn(
               'text-xl  text-gray-400 cursor-pointer  pointer-events-auto',
-              active === '/' ? style.active1 : null, style.nameCon, style.rightCon1
+              active === '/' ? style.active : null, style.nameCon, style.rightCon1
             )}
           >
             <Link href="/" prefetch>
-              <span className={cn('', active === '/' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Home</span>
+              <span className={cn('', active === '/' ? style.active : null)}>Home</span>
             </Link>
           </div>
           {/* <div
@@ -467,7 +451,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
           >
 
             <Link href={'/analytics'} prefetch>
-              <span className={cn('', analyticState === true && darkLight === true ? style.active1 : null, active === 'analytics' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)} >Analytics</span>
+              <span className={cn('', analyticState === true  ? style.active : null, active === 'analytics'? style.active : null)} >Analytics</span>
 
             </Link>
 
@@ -478,10 +462,9 @@ console.log(router.pathname==='/analytics',444,darkLight);
 
             {analyticState ? (
               <TwoNav
-                iconImgLight={darkLight}
                 options={analyticsData}
                 className={style.cn1}
-                location={darkLight === true ? style.locationAnalyticState : style.location4}
+                location={style.location4}
               ></TwoNav>
             ) : null}
           </div>
@@ -500,7 +483,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
             }}
           >
             <Link href={'/heatmap?type=cryptovoxels'} prefetch>
-              <span className={cn('', heatmapState === true && darkLight === true ? style.active1 : null, active === 'heatmap' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Heatmap</span>
+              <span className={cn('', heatmapState === true? style.active : null, active === 'heatmap' ? style.active : null,)}>Heatmap</span>
 
             </Link>
             <img src={heatmapState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
@@ -511,7 +494,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
               heatmapState === true ? <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img> : null
             } */}
             {heatmapState ? (
-              <TwoNav iconImgLight={darkLight} options={heatmapData} className={style.cn} location={darkLight === true&&router.pathname==='/analytics' ?style.location3State:style.location3}></TwoNav>
+              <TwoNav  options={heatmapData} className={style.cn} location={style.location3}></TwoNav>
             ) : null}
           </div>
 
@@ -530,7 +513,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
           // onClick={placeDataSet}
           >
             <Link href="/parcels?tab=cryptovoxels" prefetch>
-              <span className={cn('', ParcelsState === true && darkLight === true ? style.active1 : null, active === '/parcels' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Place</span>
+              <span className={cn('', ParcelsState === true ? style.active : null, active === '/parcels'? style.active : null, )}>Place</span>
             </Link>
             <img src={ParcelsState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
@@ -547,10 +530,9 @@ console.log(router.pathname==='/analytics',444,darkLight);
               //   location={style.parcels}
               // ></TwoNav>
               <TwoNavigation
-                iconImgLight={darkLight}
                 options={parcels}
                 className={style.cn}
-                location={darkLight === true ?style.parcels1: style.parcels}
+                location={ style.parcels}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -570,7 +552,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
           // onClick={placeDataSet}  
           >
             <Link href="/event?tab=cryptovoxels" prefetch>
-              <span className={cn('', EventState === true && darkLight === true ? style.active1 : null, active === '/event' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Event</span>
+              <span className={cn('', EventState === true ? style.active : null, active === '/event' ? style.active : null, )}>Event</span>
             </Link>
             <img src={EventState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
 
@@ -588,10 +570,9 @@ console.log(router.pathname==='/analytics',444,darkLight);
               //   location={style.parcels}
               // ></TwoNav>
               <TwoNavigation
-              iconImgLight={darkLight}
                 options={eventList}
                 className={style.cn}
-                location={darkLight === true ?style.eventListState:style.eventList}
+                location={style.eventList}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -613,7 +594,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
             }}
           >
             <Link href='/creation/builders' prefetch>
-              <span className={cn('', buildState === true && darkLight === true ? style.active1 : null, active === 'Build' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Creation</span>
+              <span className={cn('', buildState === true ? style.active : null, active === 'Build' ? style.active : null, )}>Creation</span>
             </Link>
             <img src={buildState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
             {/* {
@@ -625,10 +606,9 @@ console.log(router.pathname==='/analytics',444,darkLight);
 
             {buildState ? (
               <TwoNavigation
-              iconImgLight={darkLight}
                 options={build}
                 className={style.cn}
-                location={darkLight === true ?style.locationState:style.location}
+                location={style.location}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -677,7 +657,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
             }}
           >
             <Link href={'/learn?type=articles'} prefetch>
-              <span className={cn('', learnState === true && darkLight === true ? style.active1 : null, active === 'learn' && darkLight === true ? style.active1 : null, darkLight === true ? style.rightConHover : null)}>Learn</span>
+              <span className={cn('', learnState === true? style.active : null, active === 'learn' ? style.active : null, )}>Learn</span>
             </Link>
 
             <img src={learnState === true ? '/images/Frame-up.png' : '/images/Frame-down.png'} style={{ width: "12px", height: "15px", marginTop: "8px", marginLeft: "5.67px" }}></img>
@@ -690,10 +670,9 @@ console.log(router.pathname==='/analytics',444,darkLight);
 
             {learnState ? (
               <TwoNavigation
-              iconImgLight={darkLight}
                 options={learnCon}
                 className={style.cn2}
-                location={darkLight === true ?style.locationLearnState:style.locationLearn}
+                location={style.locationLearn}
               ></TwoNavigation>
             ) : null}
           </div>
@@ -734,9 +713,7 @@ console.log(router.pathname==='/analytics',444,darkLight);
           </div>
           : <div onClick={() => { setShowStateVal(true) }} className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div>}
         {/* <div className={cn('', style.frame)}>  <img src='/images/Frame.png'></img></div> */}
-        {
-          router.pathname==='/analytics'&&darkLight === true ? <img onClick={router.pathname==='/analytics'?btnDark:null} className={cn('', style.iconImgSun)} src="/images/moon.png" alt="" /> : <img onClick={router.pathname==='/analytics'?btnDark:null} className={cn('', style.iconImg)} src="/images/sunLight.png" alt="" />
-        }
+       
        
         <div className={cn('', style.wallbtn)}><WalletBtn></WalletBtn></div>
         <Toaster

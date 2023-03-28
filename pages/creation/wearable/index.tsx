@@ -7,7 +7,8 @@ import { Navigation } from 'swiper';
 
 import Page from '../../../components/page';
 // import PageHeader from '../../../components/page-header';
-import PageHeader from '../../../components/top-navigation';
+// import PageHeader from '../../../components/top-navigation';
+import PageHeader from '../../../components/top-nav';
 import Status from '../../../components/status';
 import Footer from '../../../components/footer';
 import TopicDetailCard from '../../../components/topic-detail-card';

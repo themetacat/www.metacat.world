@@ -7,8 +7,8 @@ import style from './index.module.css';
 import PagiNation from '../../components/pagination';
 
 import Page from '../../components/page';
-// import PageHeader from '../../components/page-header';
-import PageHeader from '../../components/top-navigation';
+import PageHeader from '../../components/top-nav';
+// import PageHeader from '../../components/top-navigation';
 import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Search from '../../components/search';

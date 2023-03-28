@@ -12,7 +12,8 @@ import { join } from 'path/posix';
 
 import Page from '../../components/page';
 // import PageHeader from '../../components/page-header';
-import PageHeader from '../../components/top-navigation';
+// import PageHeader from '../../components/top-navigation';
+import PageHeader from '../../components/top-nav';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';

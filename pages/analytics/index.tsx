@@ -2549,7 +2549,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
 
       return (
         <>
-          <div className={cn(style.tmbg,)}>
+          <div className={cn('', darkLight === true ? style.tmbg1 : style.tmbg,)}>
             <Switch
               onActive={changeType}
               options={types}
