@@ -32,6 +32,7 @@ export const getWearablesInfo = async () => {
 
 export const getFloorPrice = async () => {
   const url = `/api/v2/get_floor_price`;
+  // const url = `https://api.metacat.world/api/v1/home_page/get_floor_price`;
   const res = await fetch(url);
   const json = await res.json();
 
