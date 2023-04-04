@@ -374,7 +374,7 @@ function Map({
 
         const min = new MiniMap(minIsLandLayer, params);
         if (min) {
-          min.addTo(pageMap);
+          min?.addTo(pageMap);
         }
       }
     },
@@ -391,7 +391,7 @@ function Map({
           if (suburbs[i]) {
             const all = suburbs[i];
             if (all.geometry) {
-              console.log(all,all.geometry,222);
+              // console.log(all,all.geometry,222);
               const al = {
                 type: 'Feature',
                 geometry: all.position,

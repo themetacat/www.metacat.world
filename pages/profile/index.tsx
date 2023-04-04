@@ -12,7 +12,8 @@ import { join } from 'path/posix';
 
 import Page from '../../components/page';
 // import PageHeader from '../../components/page-header';
-import PageHeader from '../../components/top-navigation';
+// import PageHeader from '../../components/top-navigation';
+import PageHeader from '../../components/top-nav';
 import Footer from '../../components/footer';
 import Profile from '../../components/profile';
 import Tab from '../../components/tab';
@@ -34,6 +35,7 @@ import ProfileDetail from '../../components/profiledetail';
 import ProfileDetailDece from '../../components/profiledetail-dece';
 import { state } from '../../components/wallet-btn';
 import BaseBar from '../../components/parcel-base-bar';
+// import BaseBar from '../../components/base-bar';
 import BaseBarDece from '../../components/parcel-basebardece';
 import TrafficBar from '../../components/parcel-traffic_bar';
 import JoinModal from '../../components/v2/join-modal';
@@ -42,8 +44,11 @@ import DaoModelList2 from '../../components/dao-model-list2';
 import DaoWebglCard2 from '../../components/dao-webgl-graphic2';
 import JoinBuilders from '../../components/join_builders';
 import JoinBuildersAdd from '../../components/join_builders_add';
+import BaseVoxelsData from '../../components/base_Voxels_Data';
+
 import AddBuildings from '../../components/addBuilding';
 import JoinBuildersWork from '../../components/join_builders_works';
+
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
 import { useWalletProvider } from '../../components/web3modal';
@@ -1256,7 +1261,7 @@ function ProfilePage(r) {
       setCardState(sta);
       setLabel(many_label);
       setSelectedIds([]);
-      changeNum(dataSource, nav_Label);
+      changeNum(dataSource,  nav_Label.current);
     },
     [setParcelsIds, setLabel, setCardState, changeNavTab, changeNum, nav_Label, dataSource],
   );
@@ -1841,7 +1846,6 @@ function ProfilePage(r) {
     };
   }
 
-
   const creatorDisplay = React.useCallback(() => {
     setCreatorState(true);
   }, []);
@@ -1945,6 +1949,8 @@ function ProfilePage(r) {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
+            
+              
               <BaseChart>
                 <BaseBar
                   id={'parcel1'}
@@ -1955,8 +1961,11 @@ function ProfilePage(r) {
                   textColor={style.nftColor}
                   // token={refreshTK()}
                   token={tokenWearable}
+                  defaultColor={[130, 137, 195]}
                 ></BaseBar>
+                  
               </BaseChart>
+                
               {/* <BaseChart className=" my-5">
                 <TrafficBar
                   id={'parcel3'}
@@ -2312,7 +2321,7 @@ function ProfilePage(r) {
               </div>
             </div>
             {randerCardList}
-            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer /></div>
+            <div style={{ width: "100%" }} className={cn('', addbuild === true ? style.joinBuildersFooter : '')}><Footer iconImgLight={false}/></div>
           </div>
         </div>
         {creatorState ? (

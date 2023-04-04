@@ -704,6 +704,18 @@ export const req_learn_article_list = async (page: number, count: number, type: 
   return json;
 };
 
+export const req_all_time_data = async ( type: string) => {
+  const search = qs.stringify({  type }, { addQueryPrefix: true });
+  const url = `/api/all_time_data${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_learn_others_list = async (page: number, count: number, type: string) => {
   const search = qs.stringify({ page, count, type }, { addQueryPrefix: true });
   const url = `/api/get_others_list${search}`;
@@ -783,6 +795,19 @@ export const req_sales_amount_stack = async () => {
 
 export const req_sales_rent_sum_price = async () => {
   const url = '/api/get_sales_sum_price';
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_dcl_land_rent_data = async (type: string) => {
+
+  const search = qs.stringify({  type }, { addQueryPrefix: true });
+  const url = `/api/req_dcl_land_rent_data${search}`;
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',
@@ -1417,7 +1442,7 @@ export const req_user_add_or_edit_building = async ( token: string,
 export const req_get_building_detail_info = async ( building_link)=> {
   
   const search = qs.stringify({   
-    building_link:building_link
+    building_link,
   } ,{ addQueryPrefix: true });
   
   const url = `api/user_building_detail_info${search}`;

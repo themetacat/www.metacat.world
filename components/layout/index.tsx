@@ -90,7 +90,7 @@ export default function Layout({
             <SkipNavContent />
             <div className={className}>{children}</div>
           </main>
-          <Footer />
+          <Footer iconImgLight={false}/>
         </div>
       </div>
     </>

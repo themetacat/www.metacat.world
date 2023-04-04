@@ -777,6 +777,20 @@ class API {
     return json;
   }
 
+
+
+  public async req_all_time_data( type: string): Promise<any> {
+    const search = qs.stringify({  type }, { addQueryPrefix: true });
+    const url = `${this.url}/analytics/all_time_data${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
   public async req_avg_creater_price() {
     const url = `${this.url}/get_all_worlds_floor_price`;
     const result = await fetch(url, {
@@ -803,6 +817,26 @@ class API {
 
   public async req_sales_rent_sum_price() {
     const url = `${this.url}/analytics/rent_sum_price`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_dcl_land_rent_data(type: string) {
+    // const url = `${this.url}/analytics/dcl_land_rent_data`;
+    // const result = await fetch(url, {
+    //   method: 'get',
+    //   mode: 'cors',
+    // });
+    // const json = await result.json();
+
+    // return json;
+    const search = qs.stringify({  type }, { addQueryPrefix: true });
+    const url = `${this.url}/analytics/dcl_land_rent_data${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1532,7 +1566,7 @@ class API {
 
 
 
-// export default new API('https://api.metacat.world/api/v1');
-export default new API('http://8.130.23.16/api/v1');
+export default new API('https://api.metacat.world/api/v1');
+// export default new API('http://8.130.23.16/api/v1');
 // http://8.130.23.16/api/v1
 // https://api.metacat.world

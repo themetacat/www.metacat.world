@@ -7,7 +7,8 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import Page from '../../components/page';
-import PageHeader from '../../components/top-navigation';
+// import PageHeader from '../../components/top-navigation';
+import PageHeader from '../../components/top-nav';
 import Footer from '../../components/footer';
 import Tab from '../../components/tab';
 import Status from '../../components/status';

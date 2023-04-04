@@ -235,6 +235,21 @@ export const getDCLParcelList = async (
   return json;
 };
 
+export const getW3rldList = async (
+  page: number,
+  count: number,
+  query: string,
+  type: string,
+) => {
+  const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
+  const url = `/api/w3rld-parcel-list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getCarouseList = async () => {
   const url = `/api/carousel`;
 

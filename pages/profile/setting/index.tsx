@@ -548,7 +548,7 @@ export default function Settings() {
         closeEmail={closeEmail}
         modifyEmail={modifyEmail}
       ></ChangeEmail>
-      <Footer />
+      <Footer iconImgLight={false}/>
     </Page>
   );
 }

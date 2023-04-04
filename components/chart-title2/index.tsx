@@ -5,6 +5,7 @@ import style from './index.module.css';
 
 type Props = {
   text?: string;
+  textCount?: string;
   className?: string;
   color?: string;
   imgBox?;
@@ -16,13 +17,16 @@ const toLinkImh = () => {
   window.open('https://landworks.xyz/')
 }
 
-export default function ChartTitle2({ text, Hyperlink, iconImgLight, imgBox, toLink, className, color }: Props) {
+export default function ChartTitle2({ text, Hyperlink,textCount, iconImgLight, imgBox, toLink, className, color }: Props) {
   return (
     <div className={cn('flex items-center justify-start', className, style.chartTitle)}>
       <div className={cn(style.icon, color)}></div>
+     
       <div className={cn(' text-white font-medium text-sm', iconImgLight === true ? style.title1 : style.title)} onClick={Hyperlink}>{text}</div>
+      <span className={cn('text-white',iconImgLight === true ? style.title1 : style.title)}>(</span>
+      <div className={cn(' text-white font-medium text-sm', iconImgLight === true ? style.title1 : style.title)} onClick={Hyperlink}>{textCount}</div>
       <span onClick={toLinkImh}><span className={cn('', style.imgBox)}><img src={imgBox}></img></span></span>
-      <span className={cn('',)}>)</span>
+      <span className={cn('text-white',iconImgLight === true ? style.title1 : style.title)}>)</span>
     </div>
    
   );

@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import cn from 'classnames';
 import Page from '../../../components/page';
 // import PageHeader from '../../../components/page-header';
-import PageHeader from '../../../components/top-navigation';
+// import PageHeader from '../../../components/top-navigation';
+import PageHeader from '../../../components/top-nav';
 import InfoCard from '../../../components/info_card';
 import Tab from '../../../components/tab';
 import TopJumper from '../../../components/jump-to-top';
@@ -261,7 +262,7 @@ export default function Builders() {
         <TopJumper classname={style.jumper}></TopJumper>
 
         <div className={style.cardList}>{reander2}</div>
-        <Footer></Footer>
+        <Footer iconImgLight={false}></Footer>
       </Page>
     </>
   );

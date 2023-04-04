@@ -1,7 +1,10 @@
+
+
+
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
-
+import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
 
 import WalletBtn from '../wallet-btn';
@@ -172,6 +175,12 @@ const parcels = [
     type: 'playerOne',
     link: '/parcels?tab=playerOne',
   },
+  {
+    label: 'W3rld',
+    icon: 'https://pbs.twimg.com/profile_images/1603344186488623108/ed9A-3hx_400x400.jpg',
+    type: 'w3rld',
+    link: '/parcels?tab=w3rld',
+  },
 ];
 const eventList = [
   {
@@ -305,6 +314,8 @@ const analyticsData = [
     type: 'playerOne',
     link: '/analytics?type=playerOne',
   },
+ 
+ 
 ];
 
 // const routerTab = [
@@ -319,7 +330,7 @@ const analyticsData = [
 
 
 
-export default function darkLightPageHeader({ active, className, iconImgLight }: Props) {
+export default function PageHeader({ active, className, iconImgLight }: Props) {
   const headerRef = React.useRef(null)
   const [buildState, setBuildState] = React.useState(false);
   const [heatmapState, setHeatmapState] = React.useState(false);
@@ -413,7 +424,7 @@ export default function darkLightPageHeader({ active, className, iconImgLight }:
         <div className={cn(" flex-flow", style.one,)}>
           {/* <img className={cn('mr-4 bg-white', style.logo)} src="/images/1.png"></img> */}
           <Link href="/" prefetch>
-            <img className={cn('flex-flow', style.metaImg)} src={darkLight === false ? "/images/imgConent/meta1.png" : '/images/image/meta1.png'}></img>
+            <img className={cn('flex-flow', style.metaImg)} src={darkLight === false ? "/images/imgConent/meta1.png" : '/images/imgConent/meta2.png'}></img>
           </Link>
         </div>
         <div className={cn("flex flex-flow", style.headerTop, offsetWidthNum <= 1200 ? style.headsa : null, showStateVal === true ? style.showStateVal : null
@@ -642,7 +653,6 @@ export default function darkLightPageHeader({ active, className, iconImgLight }:
             {
               wearableState === false ? <img src='/images/icon/shang.png' style={{ width: "15px", height: "20px", marginTop: "4px", marginLeft: "5.67px" }}></img> : <img src='/images/icon/xia.png' style={{ width: "10px", height: "11px", marginTop: "6px", marginLeft: "10.67px" }}></img>
             }
-
             {wearableState ? (
               <TwoNavigation
                 options={wearable}

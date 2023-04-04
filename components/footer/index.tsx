@@ -1,7 +1,9 @@
 import React from 'react';
+
 import dynamic from 'next/dynamic';
 import cn from 'classnames';
 import style from './index.module.css';
+
 
 const ReactTooltip = dynamic(() => import('react-tooltip'), {
   ssr: false,
@@ -10,8 +12,9 @@ type Props = {
   iconImgLight?;
 };
 
+
 export default function Footer(iconImgLight:Props) {
-  
+
   return (
     <footer className={cn("py-10 flex text-white items-center relative",iconImgLight.iconImgLight===true?style.footContent1:style.footContent)}>
       <div className="flex sm:flex-row flex-col sm:items-center main-content">
@@ -82,6 +85,7 @@ export default function Footer(iconImgLight:Props) {
           >
             <img src={iconImgLight.iconImgLight ===false?"/images/emailW.png" :'/images/image/emailW.png' }/>
           </a>
+        
           <ReactTooltip
             id="code"
             effect="solid"
@@ -92,6 +96,7 @@ export default function Footer(iconImgLight:Props) {
           >
             <img src="/images/code.jpg" className="w-24 h-24" />
           </ReactTooltip>
+      
         </section>
       </div>
       <ReactTooltip

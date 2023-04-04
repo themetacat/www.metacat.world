@@ -8,7 +8,8 @@ import HeatMapCard from '../heatmap-card';
 import { convert } from '../../../common/utils';
 
 // import Logo from './icons/icon-logo';
-import PageHeader from '../../top-navigation';
+// import PageHeader from '../../top-navigation';
+import PageHeader from '../../top-nav';
 import Footer from '../../footer';
 import Carousel from '../carousel';
 
@@ -200,7 +201,7 @@ export default function Layout({
             <SkipNavContent />
             <div className={className}>{children}</div>
           </main>
-          <Footer />
+          <Footer iconImgLight={false}/>
         </div>
       </div>
     </>

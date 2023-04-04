@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function AnimationBack({ className,iconImgLight, pointNum = 1000 }: Props) {
-  console.log(iconImgLight,555);
+  // console.log(iconImgLight,555);
 
   const render = React.useMemo(() => {
     const all = [];

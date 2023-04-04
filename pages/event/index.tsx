@@ -10,7 +10,8 @@ import Page from '../../components/page';
 
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
-import PageHeader from '../../components/top-navigation';
+// import PageHeader from '../../components/top-navigation';
+import PageHeader from '../../components/top-nav';
 import Footer from '../../components/footer';
 import SwiperTagParcels from '../../components/swiper-tagParcels';
 import Tab from '../../components/hometabParcels';
@@ -391,7 +392,7 @@ export default function Event(props) {
             {/* <Layout> */}
             <div className={style.containerBox} ref={headerRef}>
                 <div id="switch" className={cn(' z-10', fixedState ? style.fix1 : null)}>
-                    <PageHeader className="" active={'/event'} />
+                    <PageHeader className="" active={'/event'} iconImgLight={false}/>
                 </div>
                 <div
                     className={cn(
@@ -491,7 +492,7 @@ export default function Event(props) {
             </div>
 
             {/* </Layout> */}
-            <Footer />
+            <Footer iconImgLight={false}/>
         </Page>
     );
 }

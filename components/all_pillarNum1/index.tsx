@@ -13,6 +13,7 @@ import { convert, formatNum } from '../../common/utils';
 type Props = {
   id?: string;
   labelText?: string;
+  textCount?: string;
   dataHandlder?;
   legend1?;
   legend2?;
@@ -76,6 +77,7 @@ export default function AllPillarNum1({
   legend8,
   options,
   priceOptions,
+  textCount,
   limit,
   textColor,
   imgBox,
@@ -389,6 +391,7 @@ export default function AllPillarNum1({
   const requestData = React.useCallback(async () => {
     setLoading(true);
     const result = await dataHandlder();
+    
     setLoading(false);
 
     if (result.code === 100000 && result.data[showType] && result.data[showType][priceShowType]) {
@@ -542,7 +545,7 @@ export default function AllPillarNum1({
   return (
     <div className={style.container}>
       <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
+        <ChartTitle textCount={textCount} iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor} imgBox={imgBox} toLink={toLink}></ChartTitle>
         <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
         <div className="flex items-center">{getSelect}</div>
       </div>

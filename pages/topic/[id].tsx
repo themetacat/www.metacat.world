@@ -414,7 +414,7 @@ export default function Topic({ base_info, parcel_list, traffic_list, wearable }
         </div>
       </div>
       {rander}
-      <Footer />
+      <Footer iconImgLight={false}/>
     </Page>
   );
 }
