@@ -627,7 +627,7 @@ function ProfilePage(r) {
 
   const reqWearablesData = React.useCallback(async () => {
     // const result = await req_get_user_wearable(await refreshTK());
-    console.log(tokenWearable,555555555555555555555555555555);
+  
     
     const result = await req_get_user_wearable(await tokenWearable);
     if (result.code === 100000) {

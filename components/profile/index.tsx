@@ -63,7 +63,7 @@ export default function Profile({
 
         <div className={cn('ml-8', style.info)}>
           <div className="flex">
-            {address && address !== '' || !name && name === '' ? (
+            {address && address !== '' || name && name === '' ? (
               <ProfileIconLabel
                 label={name}
                 address={address}
