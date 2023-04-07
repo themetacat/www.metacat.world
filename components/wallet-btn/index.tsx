@@ -108,18 +108,18 @@ const WALLET = [
     value: "metamask",
     type: "walletMetaMask",
   },
-  {
-    label: "Wallet Connect",
-    icon: "/images/walletconnect.png",
-    value: "walletconnect",
-    type: "wallet",
-  },
-  {
-    label: "Others(Meta,Twitter...)",
-    icon: "/images/v5/login.jpg",
-    value: "loginConnevt",
-    type: "login",
-  },
+  // {
+  //   label: "Wallet Connect",
+  //   icon: "/images/walletconnect.png",
+  //   value: "walletconnect",
+  //   type: "wallet",
+  // },
+  // {
+  //   label: "Others(Meta,Twitter...)",
+  //   icon: "/images/v5/login.jpg",
+  //   value: "loginConnevt",
+  //   type: "login",
+  // },
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
