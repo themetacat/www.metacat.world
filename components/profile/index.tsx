@@ -63,7 +63,7 @@ export default function Profile({
 
         <div className={cn('ml-8', style.info)}>
           <div className="flex">
-            {address && address !== '' || name ? (
+            {address && address !== '' || !name && name === '' ? (
               <ProfileIconLabel
                 label={name}
                 address={address}
@@ -74,7 +74,7 @@ export default function Profile({
                 classname={'text-2xl font-semibold '}
               ></ProfileIconLabel>
             ) : null}
-            {!name && name === '' ? (
+            {/* {!name && name === '' ? (
               <ProfileIconLabel
                 label={address}
                 icon="/images/v5/copy.png"
@@ -82,7 +82,7 @@ export default function Profile({
                 onClick={copyName}
                 classname={cn(' text-sm', style.address)}
               ></ProfileIconLabel>
-            ) : null}
+            ) : null} */}
 
             {/* {creatorsState === 1 ? (
               <div className={style.cd} onClick={onClick}>

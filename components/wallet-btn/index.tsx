@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import "tailwindcss/tailwind.css";
@@ -290,14 +291,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const subscribeProvider = React.useCallback(
     async (providerDa, newWeb3, modal) => {
-      console.log(8989);
       
       const { nonce, address: add } = await requireNonce(
       
         
         providerDa.accounts[0]
       );
-console.log(4);
 
       providerDa
         .request({ method: "personal_sign", params: [nonce, add] })
@@ -356,10 +355,10 @@ console.log(4);
         package: WalletConnectProvider,
         options: {
           infuraId: "7b9fdfd5be844ea3b9f2988619123ced",
-          rpc: {
-            56: 'https://mainnet.infura.io/v3',
-          },
-          network: 56,
+          // rpc: {
+          //   56: 'https://mainnet.infura.io/v3',
+          // },
+          // network: 56,
         },
       },
       
@@ -371,13 +370,14 @@ console.log(4);
       providerOptions,
     });
     console.log(web3Modal,'web3Modal');
-
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org",
-      qrcodeModal: WalletConnectQRCodeModal,
+      // qrcodeModal: WalletConnectQRCodeModal,
     });
-    console.log(connector.on,999);
+    console.log(connector.on,999,WalletConnectQRCodeModal,);
 
+   
+    
 
 // 新加
     connector.on("session_update", async (error, payload) => {
@@ -417,26 +417,28 @@ console.log(4);
 
 
 
-// 连接钱包
-provider.enable().then(() => {
-  // 链接成功处理
-  console.log("Connection Successful");
+// // 连接钱包
+// provider.enable().then(() => {
+//   console.log(222);
+  
+//   // 链接成功处理
+//   console.log("Connection Successful");
 
-  // 建立会话
-  connector.createSession().then(() => {
-    // 获取用于生成二维码的URI
-    // eslint-disable-next-line prefer-destructuring
-    const uri = connector.uri;
+//   // 建立会话
+//   connector.createSession().then(() => {
+//     // 获取用于生成二维码的URI
+//     // eslint-disable-next-line prefer-destructuring
+//     const uri = connector.uri;
 
-    // 打开二维码模态对话框
-    WalletConnectQRCodeModal.open(uri, () => {
-      console.log("QR Code Modal closed");
-    });
-  });
-}).catch((error) => {
-  // 连接失败处理
-  console.error(error);
-});
+//     // 打开二维码模态对话框
+//     WalletConnectQRCodeModal.open(uri, () => {
+//       console.log("QR Code Modal closed");
+//     });
+//   });
+// }).catch((error) => {
+//   // 连接失败处理
+//   console.error(error);
+// });
 
 
     
@@ -480,25 +482,26 @@ provider.enable().then(() => {
   
 
     // 原来的
-    // const providerDataText = await web3Modal.connect();
+    const provider = await web3Modal.connect();
 
    
-    // setShowModal(true);
-    // console.log(1,providerDataText);
+    setShowModal(true);
+    console.log(1,provider);
     
-    // await web3Modal.toggleModal();
-    // console.log(2,web3Modal);
-    // const web_3 = new WalletConnectProvider(providerDataText);
-    // setw3(web_3);
-    // console.log(3,web_3);
+    await web3Modal.toggleModal();
+    console.log(2,web3Modal);
+    const web_3 = new WalletConnectProvider(provider);
+    setw3(web_3);
+    console.log(3,web_3);
     
-    // await subscribeProvider(providerDataText, web_3, web3Modal);
+    await subscribeProvider(provider, web_3, web3Modal);
 // 截止
 
     window.localStorage.setItem("LoginType", "walletConnect");
     setLoading(false);
     // return web_3;
   }, [subscribeProvider]);
+
 
  
   const clientId =
@@ -729,6 +732,8 @@ provider.enable().then(() => {
 
   const clickItem = React.useCallback(
     (item) => {
+  
+      
       if (!profile?.address) {
         window.localStorage.clear();
       }

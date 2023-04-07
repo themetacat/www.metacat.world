@@ -264,7 +264,6 @@ export default function Web3ModalProvider({
 
 export const useWalletProvider = () => {
   const ctx = React.useContext(ProviderContext);
-console.log(ctx,'ctx');
 
   return ctx;
 };
