@@ -13,6 +13,8 @@ import {
 import Rekv from "rekv";
 import Link from "next/link";
 
+// import Web3 from "web3";
+
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 
 import Router, { useRouter } from "next/router";
@@ -380,39 +382,39 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     
 
 // 新加
-    connector.on("session_update", async (error, payload) => {
-      console.log(`connector.on("session_update")`, payload);
+  //   connector.on("session_update", async (error, payload) => {
+  //     console.log(`connector.on("session_update")`, payload);
   
-      if (error) {
-        throw error;
-      }
-  console.log(payload);
+  //     if (error) {
+  //       throw error;
+  //     }
+  // console.log(payload);
   
-      const { chainId, accounts } = payload.params[0];
+  //     const { chainId, accounts } = payload.params[0];
    
-      // 通过 payload.params 拿到 accounts 和 chainId，对 DApp 的 state 进行更新
-      this.onSessionUpdate(accounts, chainId);
-    });
-    // 处理连接事件
-    connector.on("connect", (error, payload) => {
-      console.log(`connector.on("connect")`, payload);
+  //     // 通过 payload.params 拿到 accounts 和 chainId，对 DApp 的 state 进行更新
+  //     this.onSessionUpdate(accounts, chainId);
+  //   });
+  //   // 处理连接事件
+  //   connector.on("connect", (error, payload) => {
+  //     console.log(`connector.on("connect")`, payload);
   
-      if (error) {
-        throw error;
-      }
-      console.log(payload);
-    });
-  // 处理断开连接事件
-    connector.on("disconnect", (error, payload) => {
-      console.log(`connector.on("disconnect")`, payload);
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     console.log(payload);
+  //   });
+  // // 处理断开连接事件
+  //   connector.on("disconnect", (error, payload) => {
+  //     console.log(`connector.on("disconnect")`, payload);
   
-      if (error) {
-        throw error;
-      }
-      console.log(payload);
-       // 连接已断开 
-  console.log('连接已断开');
-    });
+  //     if (error) {
+  //       throw error;
+  //     }
+  //     console.log(payload);
+  //      // 连接已断开 
+  // console.log('连接已断开');
+  //   });
   // 截止
 
 
@@ -461,16 +463,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
 
 // 现有
-// connector.createSession().then(() => {
-//   // eslint-disable-next-line prefer-destructuring
-//   const uri = connector.uri
-//   // display QR Code modal
-//   console.log(connector,'connector',uri);
+connector.createSession().then(() => {
+  // eslint-disable-next-line prefer-destructuring
+  const uri = connector.uri
+  // display QR Code modal
+  console.log(connector,'connector',uri);
   
-//   WalletConnectQRCodeModal.open(uri, () => {
-//     console.log("QR Code Modal closed");
-//   });
-// });
+  WalletConnectQRCodeModal.open(uri, () => {
+    console.log("QR Code Modal closed");
+  });
+});
 // 截止
 
 
@@ -482,6 +484,50 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   
 
     // 原来的
+    // const provider = await web3Modal.connect();
+
+   
+    // setShowModal(true);
+    // console.log(1,provider);
+    
+    // await web3Modal.toggleModal();
+    // console.log(2,web3Modal);
+    // const web_3 = new WalletConnectProvider(provider);
+    // setw3(web_3);
+    // console.log(3,web_3);
+    
+    // await subscribeProvider(provider, web_3, web3Modal);
+// 截止
+
+    window.localStorage.setItem("LoginType", "walletConnect");
+    setLoading(false);
+    // return web_3;
+  }, [subscribeProvider]);
+  useEffect(()=>{
+    const providerOptions = {
+      walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+          infuraId: "7b9fdfd5be844ea3b9f2988619123ced",
+          // rpc: {
+          //   56: 'https://mainnet.infura.io/v3',
+          // },
+          // network: 56,
+        },
+      },
+      
+    };
+    const web3Modal = new Web3Modal({
+      network: "mainnet",
+      cacheProvider: true,
+      providerOptions,
+    });
+    const connector = new WalletConnect({
+      bridge: "https://bridge.walletconnect.org",
+      // qrcodeModal: WalletConnectQRCodeModal,
+    });
+    async function initializeWeb3() {
+     
     const provider = await web3Modal.connect();
 
    
@@ -495,12 +541,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     console.log(3,web_3);
     
     await subscribeProvider(provider, web_3, web3Modal);
-// 截止
-
-    window.localStorage.setItem("LoginType", "walletConnect");
-    setLoading(false);
-    // return web_3;
-  }, [subscribeProvider]);
+    }
+    initializeWeb3();
+  },[])
 
 
  
