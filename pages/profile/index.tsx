@@ -1459,7 +1459,6 @@ function ProfilePage(r) {
     setNavLabel('All')
     req_building_list(walletAddress)
     const accessToken = getToken('atk');
-    console.log(accessToken,"accn");
     
     setTokenWearable(accessToken)
     setRouteTab(r.router.query.type);

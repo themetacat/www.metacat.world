@@ -449,7 +449,7 @@ export default function Index(props) {
                   <div className="flex justify-around items-center text-xl font-semibold ">
                     <div
                       onClick={() => {
-                        jumpToUrl('https://www.metacat.world/build/builders');
+                        jumpToUrl('https://www.metacat.world/creation/builders');
                       }}
                       className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark02 to-mainLight02 bg-opacity-20 text-mainDark rounded-lg flex justify-center items-center"
                     >
