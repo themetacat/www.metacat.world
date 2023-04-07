@@ -542,7 +542,7 @@ export const getBaseInfo = async (token: string) => {
     },
   });
   const json = await res.json();
-
+  
   return json;
 };
 

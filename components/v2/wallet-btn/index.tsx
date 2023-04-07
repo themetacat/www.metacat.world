@@ -414,13 +414,12 @@ export default function WalletBtn({
             key={idx}
           >
             {item.value === 'resetApp' ? (
-              <div
-                className="w-full flex justify-between  items-center p-3 text-xs"
+               <div className={cn("w-full flex justify-between  items-center p-3 text-xs",style.li1)}
                 onClick={() => {
                   clickOperationItem(item);
                 }}
               >
-                <div className="flex items-center justify-around">
+               <div className={cn("flex items-center justify-around",style.li2)}>
                   <img src={item.icon} className={cn('mr-2', style.operation)}></img>
                   <span>{item.label}</span>
                 </div>
@@ -428,8 +427,8 @@ export default function WalletBtn({
               </div>
             ) : (
               <Link href={item.value}>
-                <div className="w-full flex justify-between  items-center p-3 text-xs">
-                  <div className="flex items-center justify-around">
+                <div className={cn("w-full flex justify-between  items-center p-3 text-xs",style.li1)}>
+                  <div className={cn("flex items-center justify-around",style.li2)}>
                     <img src={item.icon} className={cn('mr-2', style.operation)}></img>
                     <span>{item.label}</span>
                   </div>

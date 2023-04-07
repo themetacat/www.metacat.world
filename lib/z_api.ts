@@ -865,6 +865,7 @@ class API {
       method: 'get',
       mode: 'cors',
     });
+    
     const json = await result.json();
 
     return json;

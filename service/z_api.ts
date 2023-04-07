@@ -1,5 +1,7 @@
 import * as qs from 'qs';
 
+// const controller = new AbortController();
+
 // 设置单个或批量出租
 
 export const req_parcels_rent_out = async (
@@ -31,8 +33,14 @@ export const req_parcels_rent_out = async (
     },
     body: search,
   });
-  const json = await result.json();
 
+
+  const json = await result.json();
+  // json.then((result)=>{
+  // console.log(222);
+  
+  // })
+ 
   return json;
 };
 
@@ -750,6 +758,7 @@ export const req_sales_amount_percent = async () => {
     method: 'get',
     mode: 'cors',
   });
+
   const json = await result.json();
 
   return json;
@@ -763,7 +772,20 @@ export const req_avg_parcel_price = async () => {
     method: 'get',
     mode: 'cors',
   });
-  const json = await result.json();
+//   const a = 2
+// console.log(a+1);
+const json = await result.json();
+
+
+// console.log(json.code,6666,json)
+// if(json.code !==10000){
+//   console.log(23);
+//   const jsonNext =  result.json();
+//   console.log(jsonNext);
+  
+//   return jsonNext;
+// }
+  // const json = await result.json();
 
   return json;
 };
@@ -836,8 +858,17 @@ export const req_metaindex_ethprice = async () => {
     method: 'get',
     mode: 'cors',
   });
-  const json = await result.json();
+ 
+// const json = await result.json();
+//  try{
+//   console.log(88888,result.json());
+  
+//  }catch{
+//   console.log(9999,result.json());
+//  }
 
+ const json = await result.json();
+//  console.log(6666)
   return json;
 };
 
