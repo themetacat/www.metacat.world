@@ -19,3 +19,9 @@
 .p1{
   color: #000;
 }
+.foot{
+  text-align: center;
+  width: 1200px;
+  margin: 0 auto;
+  cursor: pointer;
+}
