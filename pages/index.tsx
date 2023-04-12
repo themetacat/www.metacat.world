@@ -333,7 +333,7 @@ export default function Index(props) {
             <div className="main-content pb-12">
               <div className="flex justify-between items-end pt-12 pb-7">
                 <span className="text-white font-bold text-2xl">Analytics</span>
-                <ViewMore link="https://www.metacat.world/analytics"></ViewMore>
+                {/* <ViewMore link="https://www.metacat.world/analytics"></ViewMore> */}
               </div>
               <div className="flex justify-between items-center">
                 <FloorPriceCard items={floorData} title={'Floor Price'} />
@@ -446,53 +446,6 @@ export default function Index(props) {
                   <div className=" text-4xl font-medium text-white my-12 text-center">
                     About metaverse buildings, about metaverse builders.
                   </div>
-                  <div className="flex justify-around items-center text-xl font-semibold ">
-                    <div
-                      onClick={() => {
-                        jumpToUrl('https://www.metacat.world/creation/builders');
-                      }}
-                      className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark02 to-mainLight02 bg-opacity-20 text-mainDark rounded-lg flex justify-center items-center"
-                    >
-                      EXPLORE BUILDERS
-                    </div>
-                    <div
-                      // onClick={() => {
-                      //   jumpToUrl('/profile?type=parcellist');
-                      // }}
-                      // onClick={jumpToUrlEnt}
-                      onClick={() => {
-                        // console.log(buildStateVal);
-
-                        if (buildStateVal === 1) {
-                          if (addState && emailState) {
-                            // console.log("两个都有啊");
-                            // setJoinBuilders(true)
-                            router.replace(`/profile?type=building`)
-                          } else if (!addState || !emailState) {
-                            // console.log("你想要啥");
-                            setShowModalBuilder(true);
-                          }
-                        } else if (buildStateVal !== 1) {
-                          toast.error('You have become builder')
-                        }
-                      }}
-                      className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
-                    >
-                      JOIN BUILDERS
-                    </div>
-                    {/* {
-                      joinBuilders === true ?
-                        <div>
-                          <JoinModalBuild
-                            turnOff={turnOff}
-                            retProps={retProps}
-                            // clickHeader={dragJoin}
-                            emailState={emailState}
-                          ></JoinModalBuild>
-                        </div>
-                        : null
-                    } */}
-                  </div>
                 </div>
               </div>
             </div>
@@ -509,34 +462,7 @@ export default function Index(props) {
                   <div className=" text-4xl font-medium text-white my-12 text-center">
                     About metaverse wearables, about wearable creators
                   </div>
-                  <div className="flex justify-around items-center text-xl font-semibold">
-                    <div
-                      onClick={() => {
-                        jumpToUrl('https://www.metacat.world/wearables');
-                      }}
-                      className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark02 to-mainLight02 bg-opacity-20 text-mainDark rounded-lg flex justify-center items-center"
-                    >
-                      EXPLORE CREATORS
-                    </div>
-                    <div
-                      className="event-hand py-4 px-7 bg-gradient-to-r from-mainDark to-mainLight text-black rounded-lg flex justify-center items-center"
-                      onClick={() => {
-                        // setShowModal(true);
-                        // console.log(createrStateVal);
-
-                        if (createrStateVal === 1) {
-                          setShowModal(true);
-                        } else if (createrStateVal === 4)
-                          router.replace('/profile?type=wearablelist')
-                        else  {
-                          toast.error('You have become creater')
-                        }
-                      }
-                      }
-                    >
-                      JOIN CREATORS
-                    </div>
-                  </div>
+           
                 </div>
                 <CarouseSinglePic imgs={creatorCarouselList}></CarouseSinglePic>
               </div>
@@ -547,7 +473,7 @@ export default function Index(props) {
             <div className="main-content  pb-12">
               <div className="flex justify-between items-end pt-12">
                 <span className="text-white font-bold text-2xl">Learn</span>
-                <ViewMore link="https://www.metacat.world/learn?type=articles"></ViewMore>
+                {/* <ViewMore link="https://www.metacat.world/learn?type=articles"></ViewMore> */}
               </div>
               <div className="flex flex-col justify-between items-center">
                 {learnData.map((item, idx) => {
