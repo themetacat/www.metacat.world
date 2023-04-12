@@ -11,6 +11,7 @@ import Page from '../../components/page';
 // import PageHeader from '../../components/page-header';
 import PageHeader from '../../components/top-navigation';
 import CardBuilding from '../../components/cardBuilding';
+import AddBuildings from '../../components/addBuilding';
 import Footer from '../../components/footer';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../common/const';
@@ -375,7 +376,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
 
         <Footer iconImgLight={false}/>
       </Page>
-      {/* {addbuild === true ?
+      {addbuild === true ?
         <>
           <AddBuildings
             Save={Save}
@@ -385,7 +386,7 @@ export default function buildingDetail({ buildingLinkCon, artist, id }) {
             clickHeader={drag}
             saveIcon={saveIcon}
           />
-        </> : ''} */}
+        </> : ''}
     </>
   );
 }
