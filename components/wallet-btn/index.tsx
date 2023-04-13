@@ -187,7 +187,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const requireNonce = React.useCallback(
     async (addr) => {
       const res = await getNonce(addr);
-      console.log(res, 'res');
+      // console.log(res, 'res');
 
       return resultHandler(res);
     },
@@ -196,12 +196,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connect = React.useCallback(
     async (addr, providerCon) => {
-      console.log(addr);
+      // console.log(addr);
 
       const nonceData = await requireNonce(addr);
-      console.log(11111);
+      // console.log(11111);
 
-      console.log(nonceData);
+      // console.log(nonceData);
 
       if (nonceData) {
         const { address: add, nonce } = nonceData;
@@ -231,7 +231,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     try {
       web3.connect().then(
         async (res) => {
-          console.log(res, 55555555);
+          // console.log(res, 55555555);
 
           const { address: addr, provider: provid } = res;
           connect(addr, provid);
@@ -275,14 +275,14 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const subscribeProvider = React.useCallback(
     async (providerDa, newWeb3, modal) => {
-      console.log(providerDa, newWeb3, modal);
+      // console.log(providerDa, newWeb3, modal);
       //  const nonce = window.localStorage.getItem('walletconnect')
       const { nonce, address: add } = await requireNonce(providerDa.accounts);
 
       providerDa.request({ method: 'personal_sign', params: [nonce, add] }).then(
         (resD) => {
           loginSignature(add, resD).then((resData) => {
-            console.log(5);
+            // console.log(5);
 
             checkLoginStatu(resData);
           });
@@ -330,62 +330,66 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const walletconnect = React.useCallback(async () => {
     setLoading(true);
-
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
-          // rpc: {
-          //   56: 'https://mainnet.infura.io/v3',
-          // },
-          // network: 56,
-        },
+try{
+  const providerOptions = {
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        infuraId: '7b9fdfd5be844ea3b9f2988619123ced',
+        // rpc: {
+        //   56: 'https://mainnet.infura.io/v3',
+        // },
+        // network: 56,
       },
-    };
+    },
+  };
 
-    const web3Modal = new Web3Modal({
-      network: 'mainnet',
-      cacheProvider: true,
-      providerOptions,
+  const web3Modal = new Web3Modal({
+    network: 'mainnet',
+    cacheProvider: true,
+    providerOptions,
+  });
+  // console.log(web3Modal, 'web3Modal');
+  const connector = new WalletConnect({
+    bridge: 'https://bridge.walletconnect.org',
+    // qrcodeModal: WalletConnectQRCodeModal,
+  });
+  // console.log(WalletConnectQRCodeModal, 'WalletConnectQRCodeModal');
+
+  await provider.enable();
+  // console.log(provider);
+
+ 
+
+  // console.log(walletconnect, 'walletconnect');
+  // console.log(web3Modal, ',web3Modal');
+
+  // 现有
+  connector.createSession().then((response) => {
+    // eslint-disable-next-line prefer-destructuring
+    const uri = connector.uri;
+    // display QR Code modal
+    WalletConnectQRCodeModal.open(uri, () => {
+      console.log('QR Code Modal closed');
     });
-    console.log(web3Modal, 'web3Modal');
-    const connector = new WalletConnect({
-      bridge: 'https://bridge.walletconnect.org',
-      // qrcodeModal: WalletConnectQRCodeModal,
-    });
-    console.log(WalletConnectQRCodeModal, 'WalletConnectQRCodeModal');
+  });
+  provider.enable().then((result) => {
+    const resultAddress = result[0];
+    // console.log(resultAddress, 'resultAddress');
+    window.localStorage.setItem('walletconnectAdd', resultAddress);
+    connect(resultAddress, provider);
 
-    await provider.enable();
-    console.log(provider);
+    const accessToken = getToken('atk');
+    // console.log(accessToken);
+  });
+setTimeout(()=>{
+  WalletConnectQRCodeModal.close();
+},2000)
+}catch(error){
+window.location.reload()
 
-    provider.enable().then((result) => {
-      const resultAddress = result[0];
-      console.log(resultAddress, 'resultAddress');
-      window.localStorage.setItem('walletconnectAdd', resultAddress);
-
-      connect(resultAddress, provider);
-
-      const accessToken = getToken('atk');
-      console.log(accessToken);
-    });
-
-    console.log(walletconnect, 'walletconnect');
-    console.log(web3Modal, ',web3Modal');
-
-    // 现有
-    connector.createSession().then((response) => {
-      // eslint-disable-next-line prefer-destructuring
-      const uri = connector.uri;
-      // display QR Code modal
-      const address = connector.accounts[0];
-      WalletConnectQRCodeModal.open(uri, () => {
-        console.log('QR Code Modal closed');
-      });
-    });
-  setTimeout(()=>{
-    WalletConnectQRCodeModal.close();
-  },2000)
+}
+   
 
     // 原来的
     // const provider = await web3Modal.connect();
