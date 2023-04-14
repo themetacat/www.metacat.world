@@ -26,7 +26,7 @@ type Props = {
   
     router.replace(newType.link);
   }, []);
-  console.log(props.iconImgLight);
+  // console.log(props.iconImgLight);
   
 
   return (

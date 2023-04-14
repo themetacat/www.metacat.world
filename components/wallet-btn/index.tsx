@@ -196,12 +196,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connect = React.useCallback(
     async (addr, providerCon) => {
-      // console.log(addr);
 
       const nonceData = await requireNonce(addr);
-      // console.log(11111);
 
-      // console.log(nonceData);
 
       if (nonceData) {
         const { address: add, nonce } = nonceData;
@@ -389,7 +386,7 @@ setTimeout(()=>{
 window.location.reload()
 
 }
-   
+
 
     // 原来的
     // const provider = await web3Modal.connect();
@@ -411,11 +408,7 @@ window.location.reload()
     // return web_3;
   }, [subscribeProvider]);
   // console.log(window.localStorage.getItem('walletconnect'))
-  useEffect(() => {
-    // const { accessToken, refreshToken: rtk } = convert(data);
-    const a = getToken('atk');
-    console.log(a);
-  }, []);
+ 
 
   const clientId =
     'BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs';
@@ -693,6 +686,7 @@ window.location.reload()
         setShowMenu(false);
       } else if (window.localStorage.getItem('LoginType') === 'wallextConnect') {
         if (item.value === 'resetApp') {
+        
           removeToken('atk');
           removeToken('rtk');
           removeToken('address');

@@ -137,7 +137,7 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
   }, []);
 
   React.useEffect(() => {
-    console.log(email);
+    // console.log(email);
 
     setEmail(value);
     const t = getToken('atk');

@@ -191,7 +191,6 @@ export default function Index(props) {
   const requestPersonal = React.useCallback(
     async (token: string) => {
       const res = await getBaseInfo(token);
-        // console.log(res,9999999999999);
       // console.log(res);
       setAddState(res.data?.profile?.address)
       setEmailState(res.data?.profile?.email)
@@ -465,11 +464,9 @@ export default function Index(props) {
 
                         if (buildStateVal === 1) {
                           if (addState && emailState) {
-                            // console.log("两个都有啊");
                             // setJoinBuilders(true)
                             router.replace(`/profile?type=building`)
                           } else if (!addState || !emailState) {
-                            // console.log("你想要啥");
                             setShowModalBuilder(true);
                           }
                         } else if (buildStateVal !== 1) {
