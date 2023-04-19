@@ -87,7 +87,6 @@ export default function CreationWearableList({
     }, [fixedState]);
 
     const InforPage = () => {
-        // console.log("查看信息页面？");
         if (isExists === 2) {
             router.replace(`/topic/${creatorAddress}?type=wearables`);
         }

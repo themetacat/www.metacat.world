@@ -196,9 +196,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connect = React.useCallback(
     async (addr, providerCon) => {
+      // console.log(addr);
 
       const nonceData = await requireNonce(addr);
+      // console.log(11111);
 
+      // console.log(nonceData);
 
       if (nonceData) {
         const { address: add, nonce } = nonceData;
@@ -686,7 +689,9 @@ window.location.reload()
         setShowMenu(false);
       } else if (window.localStorage.getItem('LoginType') === 'wallextConnect') {
         if (item.value === 'resetApp') {
-        
+          // provider.close().then(()=>{
+          //   console.log('Wallet disconnected!');
+          // })
           removeToken('atk');
           removeToken('rtk');
           removeToken('address');
