@@ -11,6 +11,13 @@
 .selecterLong {
   width: 134px;
 }
+.cheartitle{
+  position: absolute;
+}
+.getSelect{
+  position: absolute;
+  right: 40px;
+}
 .ov {
   height: 400px;
   overflow: hidden;
