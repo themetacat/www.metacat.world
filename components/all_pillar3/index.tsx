@@ -134,7 +134,6 @@ export default function AllLine3({
           },
         },
         customContent: (name, items) => {
-          
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -190,13 +189,14 @@ export default function AllLine3({
               <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${
             legend3.color[2]
           }, 1);">
-              ${showKeyTypes[2]}:
-                <span style="color:#fff;">
-                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
-                    legend3.color[0]
-                  }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-            parseInt(result[showKeyTypes[2]]?.value, 10),
-          )}</span>
+            
+          ${showKeyTypes[2]}:
+          <span style="color:#fff;">
+            <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+              legend3.color[0]
+            }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
+    result[showKeyTypes[2]]?.value,
+  )}</span>
                 </span>
               </span>
             </div>
@@ -247,10 +247,11 @@ export default function AllLine3({
       <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
       ${showKeyTypes[6]}:
         <span style="color:#fff;">
-          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]
-            }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[6]]?.value,
-            )}</span>
+          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+            legend7.color[0]
+          }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[6]]?.value,
+          )}</span>
         </span>
       </span>
     </div>
@@ -294,7 +295,55 @@ export default function AllLine3({
         },
       });
 
-      chart.current.legend(false);
+      // chart.current.legend(false);
+      chart.current.legend({
+        position: 'top',
+        marker: (name, index, item) => {
+          let fill = '';
+          if (name === 'Otherside') {
+            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (name === 'The Sandbox') {
+            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (name === 'NFT Worlds') {
+            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (name === 'Decentraland') {
+            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (name === 'Worldwide Webb') {
+            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (name === 'Voxels') {
+            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (name === 'Somnium Space') {
+            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+
+          if (name === 'Netvrk') {
+            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+          return {
+            symbol: 'circle',
+            style: {
+              fill,
+              lineWidth: 1,
+              opacity: 1,
+              fillOpacity: 1,
+            },
+          };
+        },
+
+        attachLast: true,
+        itemName: {
+          style: {
+            fill: iconImgLight === true ? '#000' : '#fff',
+          },
+        },
+        // values:['Otherside']
+      });
 
       // 设置横纵轴
       // 设置横纵轴
@@ -307,7 +356,8 @@ export default function AllLine3({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+                  stroke:
+                    iconImgLight === true ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -326,11 +376,11 @@ export default function AllLine3({
         line: {
           style: {
             lineWidth: 1,
-            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+            stroke: iconImgLight === true ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
+          style: { fill: iconImgLight === true ? '#000' : 'rgba(255,255, 255, 0.85)' },
           offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
           rotate: showType === 'yearly' ? 0 : 1,
@@ -449,7 +499,7 @@ export default function AllLine3({
       if (!dom) {
         return;
       }
-      
+
       chart.current = new Chart({
         container: id,
         autoFit: true,
@@ -524,13 +574,13 @@ export default function AllLine3({
               <span style="color:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${
             legend3.color[2]
           }, 1);">
-              ${showKeyTypes[2]}:
-                <span style="color:#fff;">
-                  <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${
-                    legend3.color[0]
-                  }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
-            parseInt(result[showKeyTypes[2]]?.value, 10),
-          )}</span>
+                ${showKeyTypes[2]}:
+          <span style="color:#fff;">
+            <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+              legend3.color[0]
+            }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
+    result[showKeyTypes[2]]?.value,
+  )}</span>
                 </span>
               </span>
             </div>
@@ -581,10 +631,11 @@ export default function AllLine3({
       <span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
       ${showKeyTypes[6]}:
         <span style="color:#fff;">
-          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]
-            }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
-              result[showKeyTypes[6]]?.value,
-            )}</span>
+          <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${
+            legend7.color[0]
+          }, ${legend7.color[1]}, ${legend7.color[2]}, 1);">${formatNum(
+            result[showKeyTypes[6]]?.value,
+          )}</span>
         </span>
       </span>
     </div>
@@ -628,8 +679,55 @@ export default function AllLine3({
         },
       });
 
-      chart.current.legend(false);
+      // chart.current.legend(false);
+      chart.current.legend({
+        position: 'top',
+        marker: (name, index, item) => {
+          let fill = '';
+          if (name === 'Otherside') {
+            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (name === 'The Sandbox') {
+            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (name === 'NFT Worlds') {
+            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (name === 'Decentraland') {
+            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (name === 'Worldwide Webb') {
+            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (name === 'Voxels') {
+            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (name === 'Somnium Space') {
+            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
 
+          if (name === 'Netvrk') {
+            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+          return {
+            symbol: 'circle',
+            style: {
+              fill,
+              lineWidth: 1,
+              opacity: 1,
+              fillOpacity: 1,
+            },
+          };
+        },
+
+        attachLast: true,
+        itemName: {
+          style: {
+            fill: iconImgLight === true ? '#000' : '#fff',
+          },
+        },
+        // values:['Otherside']
+      });
       // 设置横纵轴
       // 设置横纵轴
       chart.current.axis('value', {
@@ -641,7 +739,8 @@ export default function AllLine3({
                 return {
                   lineDash: [5, 5],
                   lineWidth: 1,
-                  stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+                  stroke:
+                    iconImgLight === true ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)',
                 };
               }
               return null;
@@ -660,11 +759,11 @@ export default function AllLine3({
         line: {
           style: {
             lineWidth: 1,
-            stroke: iconImgLight===true?'rgba(0, 0, 0, 0.15)':'rgba(255, 255, 255, 0.15)',
+            stroke: iconImgLight === true ? 'rgba(0, 0, 0, 0.15)' : 'rgba(255, 255, 255, 0.15)',
           },
         },
         label: {
-          style: { fill:iconImgLight===true?'#000': 'rgba(255,255, 255, 0.85)' },
+          style: { fill: iconImgLight === true ? '#000' : 'rgba(255,255, 255, 0.85)' },
           offsetX: showType === 'yearly' ? 0 : 25,
           offsetY: 0,
           rotate: showType === 'yearly' ? 0 : 1,
@@ -678,9 +777,8 @@ export default function AllLine3({
       chart.current.scale('time', {
         type: 'cat',
         mask: 'YYYY.MM.DD',
-        tickCount:30,
+        tickCount: 30,
         // max:${name}
-
       });
       chart.current
         .interval()
@@ -785,14 +883,13 @@ export default function AllLine3({
     setLoading(true);
     let result = null;
     try {
-      if (!result&&showType!=='allTime') {
-        
+      if (!result && showType !== 'allTime') {
         const res = await dataHandlder();
         result = res.data;
         setDataSource(result);
-      }else{
+      } else {
         const res = await dataHandlderAlltime('num');
-        
+
         result = res.data;
         setDataSource(result);
       }
@@ -800,9 +897,9 @@ export default function AllLine3({
       setError(true);
     }
     setLoading(false);
-    if (result&&showType!=='allTime') {
+    if (result && showType !== 'allTime') {
       initChart(result);
-    }else{
+    } else {
       initChartAll(result);
     }
     return result;
@@ -835,7 +932,7 @@ export default function AllLine3({
         style={{ color: 'rgba(255,255,255, 0.3)' }}
       >
         <ChartSelecter
-        iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           options={options}
           showArrow={true}
           onClick={changeStatic}
@@ -870,51 +967,50 @@ export default function AllLine3({
   const getLenged = React.useMemo(() => {
     return (
       <>
-   
         <IconLabel
-        iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend1.label}
           color={`rgb(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend2.label}
           color={`rgb(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend3.label}
           color={`rgb(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend4.label}
           color={`rgb(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend5.label}
           color={`rgb(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend6.label}
           color={`rgb(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]})`}
           className="mr-5"
         ></IconLabel>
-             <IconLabel
-              iconImgLight={iconImgLight}
+        <IconLabel
+          iconImgLight={iconImgLight}
           text={legend7.label}
           color={`rgb(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]})`}
           className="mr-5"
         ></IconLabel>
         <IconLabel
-         iconImgLight={iconImgLight}
+          iconImgLight={iconImgLight}
           text={legend8.label}
           color={`rgb(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]})`}
           className="mr-5"
@@ -934,11 +1030,17 @@ export default function AllLine3({
 
   return (
     <div className={style.container}>
-      <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
-        <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
-        <div className={cn('flex items-center')}>{getSelect}</div>
-      </div>
+      {/* <div className={cn('w-full flex justify-between item-center', style.header)}> */}
+        <ChartTitle
+         className={style.cheartitle} 
+          iconImgLight={iconImgLight}
+          Hyperlink={HyperlinkJump}
+          text={labelText}
+          color={textColor}
+        ></ChartTitle>
+        {/* <div className={cn('flex items-center', style.toright)}>{getLenged}</div> */}
+        <div className={cn('flex items-center',style.getSelect)}>{getSelect}</div>
+      {/* </div> */}
       {rander}
     </div>
   );

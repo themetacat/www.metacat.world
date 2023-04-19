@@ -1,6 +1,6 @@
 .header {
-  height: 30px;
-  margin-bottom: 30px;
+  /* height: 30px;
+  margin-bottom: 30px; */
 }
 .border {
   background: rgba(0, 236, 222, 0.05);
@@ -8,8 +8,17 @@
   box-sizing: border-box;
   border-radius: 4px;
 }
+.getSelect{
+  position: absolute;
+  right: 40px;
+
+}
 .selecterLong {
   width: 134px;
+}
+.cheartitle{
+  position: absolute;
+  
 }
 .ov {
   height: 400px;

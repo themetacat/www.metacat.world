@@ -329,7 +329,7 @@
 
 .allLine {
   width: 1340px;
-  height: 519px;
+  /* height: 519px; */
   background: #000;
   margin-top: 20px;
   padding: 20px;
@@ -354,7 +354,7 @@
 }
 .allLine1,.allLine2 {
   width: 1340px;
-  height: 519px;
+  /* height: 519px; */
   background: #000;
   margin-top: 20px;
   padding: 20px;
