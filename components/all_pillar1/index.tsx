@@ -139,6 +139,7 @@ export default function AllPillar1({
           },
         },
         customContent: (name, items) => {
+          const total = items.reduce((sum, item) => sum + item.value, 0);
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -157,15 +158,15 @@ export default function AllPillar1({
           items.forEach((item, index) => {
             result[item.name] = item;
           });
-          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
-            Number(result[showKeyTypes[6]]?.value) +
-            Number(result[showKeyTypes[0]]?.value) +
-            Number(result[showKeyTypes[1]]?.value) +
-            Number(result[showKeyTypes[2]]?.value) +
-            Number(result[showKeyTypes[3]]?.value) +
-            Number(result[showKeyTypes[4]]?.value) +
-            Number(result[showKeyTypes[7]]?.value) +
-            Number(result[showKeyTypes[5]]?.value),
+          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(total
+            // Number(result[showKeyTypes[6]]?.value) +
+            // Number(result[showKeyTypes[0]]?.value) +
+            // Number(result[showKeyTypes[1]]?.value) +
+            // Number(result[showKeyTypes[2]]?.value) +
+            // Number(result[showKeyTypes[3]]?.value) +
+            // Number(result[showKeyTypes[4]]?.value) +
+            // Number(result[showKeyTypes[7]]?.value) +
+            // Number(result[showKeyTypes[5]]?.value),
           )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
             showKeyTypes[1]
           ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
@@ -529,10 +530,13 @@ ${showKeyTypes[6]}:
           },
         },
         customContent: (name, items) => {
+          const total = items.reduce((sum, item) => sum + item.value, 0);
+        
+          
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
-
+          console.log(items,'items');
           const result = {
             thesandbox: null,
             nftworlds: null,
@@ -546,19 +550,21 @@ ${showKeyTypes[6]}:
           }
           items.forEach((item, index) => {
             result[item.name] = item;
+           
+            
+            console.log(item.value,Number(result[showKeyTypes[2]]?.value),555,result,666,items.value);
           });
-          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
-            Number(result[showKeyTypes[6]]?.value) +
-            Number(result[showKeyTypes[0]]?.value) +
-            Number(result[showKeyTypes[1]]?.value) +
-            Number(result[showKeyTypes[2]]?.value) +
-            Number(result[showKeyTypes[3]]?.value) +
-            Number(result[showKeyTypes[4]]?.value) +
-            Number(result[showKeyTypes[7]]?.value) +
-            Number(result[showKeyTypes[5]]?.value),
-          )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
-            showKeyTypes[1]
-          ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
+          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(total
+            // Number(result[showKeyTypes[6]]?.value)+
+            // Number(result[showKeyTypes[0]]?.value)+
+            // Number(result[showKeyTypes[1]]?.value)+
+            // Number(result[showKeyTypes[2]]?.value)+
+            // Number(result[showKeyTypes[3]]?.value)+
+            // Number(result[showKeyTypes[4]]?.value)+
+            // Number(result[showKeyTypes[7]]?.value)+
+            // Number(result[showKeyTypes[5]]?.value),
+          )} <span style="font-size:12px; color:#fff; font-weight:400;">${priceShowType.toLocaleUpperCase()}</span> 
+          <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
          
@@ -572,7 +578,7 @@ ${showKeyTypes[6]}:
             }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
               result[showKeyTypes[0]]?.value,
             )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -586,7 +592,7 @@ ${showKeyTypes[6]}:
             }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
               result[showKeyTypes[1]]?.value,
             )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -599,7 +605,7 @@ ${showKeyTypes[6]}:
             }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
               result[showKeyTypes[2]]?.value,
             )}</span>
-            <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
           </span>
         </span>
       </div>
@@ -612,7 +618,7 @@ ${showKeyTypes[6]}:
             }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
               result[showKeyTypes[3]]?.value,
             )}</span>
-          <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
         </span>
       </span>
     </div>
@@ -625,7 +631,7 @@ ${showKeyTypes[6]}:
             }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
               result[showKeyTypes[4]]?.value,
             )}</span>
-        <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
       </span>
     </span>
   </div>
@@ -636,7 +642,7 @@ ${showKeyTypes[6]}:
     <span style="color:#fff;">
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${legend6.color[1]
             }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
@@ -647,7 +653,7 @@ ${showKeyTypes[6]}:
 <span style="color:#fff;">
 <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${legend7.color[1]
             }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
-<span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
 </span>
 </span>
 </div>
@@ -658,7 +664,7 @@ ${showKeyTypes[6]}:
     <span style="color:#fff;">
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]}, ${legend8.color[1]
             }, ${legend8.color[2]}, 1);">${formatNum(result[showKeyTypes[7]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      <span>${priceShowType.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
@@ -945,6 +951,7 @@ ${showKeyTypes[6]}:
     },
     [updata, priceShowType, dataSource, chart.current],
   );
+console.log(priceOptions,'priceOptions',showKeyTypes,priceShowType);
 
   const changePriceStatic = React.useCallback(
     (val) => {
