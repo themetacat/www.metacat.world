@@ -536,7 +536,6 @@ ${showKeyTypes[6]}:
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
-          console.log(items,'items');
           const result = {
             thesandbox: null,
             nftworlds: null,
@@ -552,7 +551,7 @@ ${showKeyTypes[6]}:
             result[item.name] = item;
            
             
-            console.log(item.value,Number(result[showKeyTypes[2]]?.value),555,result,666,items.value);
+           
           });
           const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(total
             // Number(result[showKeyTypes[6]]?.value)+
@@ -951,7 +950,6 @@ ${showKeyTypes[6]}:
     },
     [updata, priceShowType, dataSource, chart.current],
   );
-console.log(priceOptions,'priceOptions',showKeyTypes,priceShowType);
 
   const changePriceStatic = React.useCallback(
     (val) => {
