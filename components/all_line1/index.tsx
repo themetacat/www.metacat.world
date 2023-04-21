@@ -319,7 +319,55 @@ export default function AllLine1({
         },
       });
 
-      chart.current.legend(false);
+      // chart.current.legend(false);
+      chart.current.legend({
+        position: 'top',
+        marker: (name, index, item) => {
+          let fill = '';
+          if (name === 'Otherside') {
+            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (name === 'The Sandbox') {
+            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (name === 'NFT Worlds') {
+            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (name === 'Decentraland') {
+            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (name === 'Worldwide Webb') {
+            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (name === 'Voxels') {
+            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (name === 'Somnium Space') {
+            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+
+          if (name === 'Netvrk') {
+            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+          return {
+            symbol: 'circle',
+            style: {
+              fill,
+              lineWidth: 1,
+              opacity: 1,
+              fillOpacity: 1,
+            },
+          };
+        },
+
+        attachLast: true,
+        itemName: {
+          style: {
+            fill: iconImgLight === true ? '#000' : '#fff',
+          },
+        },
+        // values:['Otherside']
+      });
 
       // 设置横纵轴
       chart.current.axis('value', {
@@ -691,7 +739,55 @@ export default function AllLine1({
         },
       });
 
-      chart.current.legend(false);
+      // chart.current.legend(false);
+      chart.current.legend({
+        position: 'top',
+        marker: (name, index, item) => {
+          let fill = '';
+          if (name === 'Otherside') {
+            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (name === 'The Sandbox') {
+            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (name === 'NFT Worlds') {
+            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (name === 'Decentraland') {
+            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (name === 'Worldwide Webb') {
+            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (name === 'Voxels') {
+            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (name === 'Somnium Space') {
+            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+
+          if (name === 'Netvrk') {
+            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+          return {
+            symbol: 'circle',
+            style: {
+              fill,
+              lineWidth: 1,
+              opacity: 1,
+              fillOpacity: 1,
+            },
+          };
+        },
+
+        attachLast: true,
+        itemName: {
+          style: {
+            fill: iconImgLight === true ? '#000' : '#fff',
+          },
+        },
+        // values:['Otherside']
+      });
 
       // 设置横纵轴
       chart.current.axis('value', {
@@ -1034,11 +1130,11 @@ export default function AllLine1({
 
   return (
     <div className={style.container}>
-      <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
-        <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
-        <div className={cn('flex items-center')}>{getSelect}</div>
-      </div>
+      {/* <div className={cn('w-full flex justify-between item-center', style.header)}> */}
+        <ChartTitle iconImgLight={iconImgLight} className={style.cheartitle} Hyperlink={HyperlinkJump} text={labelText}  color={textColor}></ChartTitle>
+        {/* <div className={cn('flex items-center', style.toright)}>{getLenged}</div> */}
+        <div className={cn('flex items-center',style.getSelect)}>{getSelect}</div>
+      {/* </div> */}
       {rander}
     </div>
   );
