@@ -307,10 +307,7 @@ export default function AllLineData({
           },
         },
       });
-      // console.log(chart.current.legend(true));
       // console.log(chart.current);
-      // setView(chart.current.legend(true))
-      // console.log(chart.current.legend(true));
 
       //  chart.current.legend(true)
 
@@ -709,10 +706,7 @@ export default function AllLineData({
           },
         },
       });
-      // console.log(chart.current.legend(true));
       // console.log(chart.current);
-      // setView(chart.current.legend(true))
-      // console.log(chart.current.legend(true));
 
       //  chart.current.legend(true)
 

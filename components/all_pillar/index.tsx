@@ -139,6 +139,7 @@ export default function AllPillar1({
           },
         },
         customContent: (name, items) => {
+          const total = items.reduce((sum, item) => sum + item.value, 0);
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
@@ -157,18 +158,16 @@ export default function AllPillar1({
           items.forEach((item, index) => {
             result[item.name] = item;
           });
-          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
-            Number(result[showKeyTypes[6]]?.value) +
-            Number(result[showKeyTypes[0]]?.value) +
-            Number(result[showKeyTypes[1]]?.value) +
-            Number(result[showKeyTypes[2]]?.value) +
-            Number(result[showKeyTypes[3]]?.value) +
-            Number(result[showKeyTypes[4]]?.value) +
-            Number(result[showKeyTypes[7]]?.value) +
-            Number(result[showKeyTypes[5]]?.value),
-          )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
-            showKeyTypes[1]
-          ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
+          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(total
+            // Number(result[showKeyTypes[6]]?.value) +
+            // Number(result[showKeyTypes[0]]?.value) +
+            // Number(result[showKeyTypes[1]]?.value) +
+            // Number(result[showKeyTypes[2]]?.value) +
+            // Number(result[showKeyTypes[3]]?.value) +
+            // Number(result[showKeyTypes[4]]?.value) +
+            // Number(result[showKeyTypes[7]]?.value) +
+            // Number(result[showKeyTypes[5]]?.value),
+          )} <span style="font-size:12px; color:#fff; font-weight:400;"> ${priceShowType.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
          
@@ -182,7 +181,7 @@ export default function AllPillar1({
             }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
               result[showKeyTypes[0]]?.value,
             )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+              <span>${priceShowType.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -196,7 +195,7 @@ export default function AllPillar1({
             }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
               result[showKeyTypes[1]]?.value,
             )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+              <span>${priceShowType.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -209,7 +208,7 @@ export default function AllPillar1({
             }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
               result[showKeyTypes[2]]?.value,
             )}</span>
-            <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
           </span>
         </span>
       </div>
@@ -222,7 +221,7 @@ export default function AllPillar1({
             }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
               result[showKeyTypes[3]]?.value,
             )}</span>
-          <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          <span>${priceShowType.toLocaleUpperCase()}</span>
         </span>
       </span>
     </div>
@@ -235,7 +234,7 @@ export default function AllPillar1({
             }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
               result[showKeyTypes[4]]?.value,
             )}</span>
-        <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+        <span>${priceShowType.toLocaleUpperCase()}</span>
       </span>
     </span>
   </div>
@@ -246,18 +245,18 @@ export default function AllPillar1({
     <span style="color:#fff;">
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${legend6.color[1]
             }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      <span>${priceShowType.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
 
 <div style="color:#fff;margin-bottom:12px">
-<span style="color:rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1);">
+<span style="color:rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1);">
 ${showKeyTypes[6]}:
 <span style="color:#fff;">
 <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${legend7.color[1]
             }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
-<span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+<span>${priceShowType.toLocaleUpperCase()}</span>
 </span>
 </span>
 </div>
@@ -268,7 +267,7 @@ ${showKeyTypes[6]}:
     <span style="color:#fff;">
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]}, ${legend8.color[1]
             }, ${legend8.color[2]}, 1);">${formatNum(result[showKeyTypes[7]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      <span>${priceShowType.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
@@ -299,7 +298,55 @@ ${showKeyTypes[6]}:
         },
       });
 
-      chart.current.legend(false);
+      // chart.current.legend(false);
+      chart.current.legend({
+        position: 'top',
+        marker: (name, index, item) => {
+          let fill = '';
+          if (name === 'Otherside') {
+            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (name === 'The Sandbox') {
+            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (name === 'NFT Worlds') {
+            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (name === 'Decentraland') {
+            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (name === 'Worldwide Webb') {
+            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (name === 'Voxels') {
+            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (name === 'Somnium Space') {
+            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+
+          if (name === 'Netvrk') {
+            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+          return {
+            symbol: 'circle',
+            style: {
+              fill,
+              lineWidth: 1,
+              opacity: 1,
+              fillOpacity: 1,
+            },
+          };
+        },
+
+        attachLast: true,
+        itemName: {
+          style: {
+            fill: iconImgLight === true ? '#000' : '#fff',
+          },
+        },
+        // values:['Otherside']
+      });
 
       // 设置横纵轴
       chart.current.axis('value', {
@@ -481,10 +528,12 @@ ${showKeyTypes[6]}:
           },
         },
         customContent: (name, items) => {
+          const total = items.reduce((sum, item) => sum + item.value, 0);
+        
+          
           const container = document.createElement('div');
           container.className = 'g2-tooltip';
           const title = `<div class="g2-tooltip-title" style="margin-top: 12px;margin-bottom: 12px;' ">Date: <span style="color:#fff; margin-left:5px">${name}</span></div>`;
-
           const result = {
             thesandbox: null,
             nftworlds: null,
@@ -498,19 +547,21 @@ ${showKeyTypes[6]}:
           }
           items.forEach((item, index) => {
             result[item.name] = item;
+           
+            
+           
           });
-          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
-            Number(result[showKeyTypes[6]]?.value) +
-            Number(result[showKeyTypes[0]]?.value) +
-            Number(result[showKeyTypes[1]]?.value) +
-            Number(result[showKeyTypes[2]]?.value) +
-            Number(result[showKeyTypes[3]]?.value) +
-            Number(result[showKeyTypes[4]]?.value) +
-            Number(result[showKeyTypes[7]]?.value) +
-            Number(result[showKeyTypes[5]]?.value),
-          )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
-            showKeyTypes[1]
-          ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
+          const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(total
+            // Number(result[showKeyTypes[6]]?.value)+
+            // Number(result[showKeyTypes[0]]?.value)+
+            // Number(result[showKeyTypes[1]]?.value)+
+            // Number(result[showKeyTypes[2]]?.value)+
+            // Number(result[showKeyTypes[3]]?.value)+
+            // Number(result[showKeyTypes[4]]?.value)+
+            // Number(result[showKeyTypes[7]]?.value)+
+            // Number(result[showKeyTypes[5]]?.value),
+          )} <span style="font-size:12px; color:#fff; font-weight:400;">${priceShowType.toLocaleUpperCase()}</span> 
+          <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
          
@@ -524,7 +575,7 @@ ${showKeyTypes[6]}:
             }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
               result[showKeyTypes[0]]?.value,
             )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -538,7 +589,7 @@ ${showKeyTypes[6]}:
             }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
               result[showKeyTypes[1]]?.value,
             )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -551,7 +602,7 @@ ${showKeyTypes[6]}:
             }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
               result[showKeyTypes[2]]?.value,
             )}</span>
-            <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
           </span>
         </span>
       </div>
@@ -564,7 +615,7 @@ ${showKeyTypes[6]}:
             }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
               result[showKeyTypes[3]]?.value,
             )}</span>
-          <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
         </span>
       </span>
     </div>
@@ -577,7 +628,7 @@ ${showKeyTypes[6]}:
             }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
               result[showKeyTypes[4]]?.value,
             )}</span>
-        <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
       </span>
     </span>
   </div>
@@ -588,7 +639,7 @@ ${showKeyTypes[6]}:
     <span style="color:#fff;">
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${legend6.color[1]
             }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
@@ -599,7 +650,7 @@ ${showKeyTypes[6]}:
 <span style="color:#fff;">
 <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${legend7.color[1]
             }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
-<span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${priceShowType.toLocaleUpperCase()}</span>
 </span>
 </span>
 </div>
@@ -610,7 +661,7 @@ ${showKeyTypes[6]}:
     <span style="color:#fff;">
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]}, ${legend8.color[1]
             }, ${legend8.color[2]}, 1);">${formatNum(result[showKeyTypes[7]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      <span>${priceShowType.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
@@ -641,7 +692,55 @@ ${showKeyTypes[6]}:
         },
       });
 
-      chart.current.legend(false);
+      // chart.current.legend(false);
+      chart.current.legend({
+        position: 'top',
+        marker: (name, index, item) => {
+          let fill = '';
+          if (name === 'Otherside') {
+            fill = `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
+          }
+          if (name === 'The Sandbox') {
+            fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
+          }
+          if (name === 'NFT Worlds') {
+            fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
+          }
+          if (name === 'Decentraland') {
+            fill = `rgba(${legend4.color[0]}, ${legend4.color[1]}, ${legend4.color[2]}, 1)`;
+          }
+          if (name === 'Worldwide Webb') {
+            fill = `rgba(${legend5.color[0]}, ${legend5.color[1]}, ${legend5.color[2]}, 1)`;
+          }
+          if (name === 'Voxels') {
+            fill = `rgba(${legend6.color[0]}, ${legend6.color[1]}, ${legend6.color[2]}, 1)`;
+          }
+          if (name === 'Somnium Space') {
+            fill = `rgba(${legend7.color[0]}, ${legend7.color[1]}, ${legend7.color[2]}, 1)`;
+          }
+
+          if (name === 'Netvrk') {
+            fill = `rgba(${legend8.color[0]}, ${legend8.color[1]}, ${legend8.color[2]}, 1)`;
+          }
+          return {
+            symbol: 'circle',
+            style: {
+              fill,
+              lineWidth: 1,
+              opacity: 1,
+              fillOpacity: 1,
+            },
+          };
+        },
+
+        attachLast: true,
+        itemName: {
+          style: {
+            fill: iconImgLight === true ? '#000' : '#fff',
+          },
+        },
+        // values:['Otherside']
+      });
 
       // 设置横纵轴
       chart.current.axis('value', {
@@ -806,16 +905,30 @@ ${showKeyTypes[6]}:
     if (result.code === 100000 &&showType!=='allTime'
       // && result.data[showType] && result.data[showType][priceShowType]
       ) {
+        
       setDataSource(result.data);
       initChart(result.data);
       // initChart(result.data[showType][priceShowType])
     } else if(result.code === 100000 &&showType==='allTime'){
+      
       setDataSource(resultAll.data);
       initChartAll(resultAll.data);
     }else {
       setError(true);
     }
- 
+    // try {
+    //   if (!result&&showType!=='allTime') {
+    //     const res = await dataHandlder();
+    //    setDataSource(result.data);
+    //          initChart(result.data);
+    //   }else{
+    //     const res = await dataHandlderAlltime('sum');
+    //     initChartAll(result.data);
+    //     setDataSource(result);
+    //   }
+    // } catch (ex) {
+    //   setError(true);
+    // }
   }, [showType, priceShowType, dataHandlder]);
   const updata = React.useCallback(
     (st, pt) => {
@@ -956,7 +1069,7 @@ ${showKeyTypes[6]}:
   React.useEffect(() => {
     requestData();
     return () => {
-      if (chart.current) {
+      if (chart?.current) {
         chart.current.destroy();
       }
     };
@@ -964,11 +1077,11 @@ ${showKeyTypes[6]}:
 
   return (
     <div className={style.container}>
-      <div className={cn('w-full flex justify-between item-center', style.header)}>
-        <ChartTitle iconImgLight={iconImgLight} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
-        <div className={cn('flex items-center', style.toright)}>{getLenged}</div>
-        <div className="flex items-center">{getSelect}</div>
-      </div>
+      {/* <div className={cn('w-full flex justify-between item-center', style.header)}> */}
+        <ChartTitle iconImgLight={iconImgLight} className={style.cheartitle} Hyperlink={HyperlinkJump} text={labelText} color={textColor}></ChartTitle>
+        {/* <div className={cn('flex items-center', style.toright)}>{getLenged}</div> */}
+        <div className={cn('flex items-center',style.getSelect)}>{getSelect}</div>
+      {/* </div> */}
       {rander}
     </div>
   );

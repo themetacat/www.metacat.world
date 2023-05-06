@@ -272,7 +272,7 @@ export default function Topic({ base_info, parcel_list, wearable_list, traffic_l
     }
     const strAdd = router.asPath
     const newAdd = strAdd.split('=')[1]
-console.log(newAdd);
+// console.log(newAdd);
 requestPersonal(newAdd);
     // const a = getToken('address');
     
@@ -287,7 +287,7 @@ requestPersonal(newAdd);
     searchList();
     
     const accessToken = getToken('atk');
-    console.log(accessToken,111,getToken('atk'));
+    // console.log(accessToken,111,getToken('atk'));
     
     if (accessToken) {
       requestPersonal(accessToken);

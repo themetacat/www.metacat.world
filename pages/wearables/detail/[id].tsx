@@ -164,7 +164,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
   }, [animation, artworkData]);
 
   const toWearableDao = () => {
-    console.log(creatorAddress);
+    // console.log(creatorAddress);
 
     if (isExists === 1) {
       
