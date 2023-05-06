@@ -6,7 +6,7 @@ import { Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper 
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
-
+// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { req_set_wearable_show_status } from '../../service/z_api';
 
 import styles from './index.module.css';
@@ -108,6 +108,7 @@ export default function DaoWebglCard({
     loader.load(model.coverImg, function (chunks) {
       for (let i = 0; i < chunks?.length; i += 1) {
         const chunk = chunks[i];
+        
         // displayPalette( chunk.palette );
         const mesh = new VOXMesh(chunk);
         mesh.name = 'targetMesh';

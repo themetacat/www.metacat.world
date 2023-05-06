@@ -412,7 +412,7 @@ export default function TopicIndex(props) {
                   return <CreationWearableList   
                   initFinish={(se) => {
                     scenes.push(se);
-                  }}  graphicId={`dao-${idx}`} {...card} key={idx} model={wearableList} />
+                  }}  graphicId={`${idx}`} {...card} key={idx} model={wearableList} />
                 })
               }
             </div>

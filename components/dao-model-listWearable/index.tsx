@@ -115,7 +115,6 @@ export default function DaoModelList({
         // camera.updateProjectionMatrix();
 
         // scene.userData.controls.update();
-
         renderer.current.render(scene, camera);
       });
     },
@@ -160,6 +159,7 @@ export default function DaoModelList({
             </>
       );
     });
+    
     setAllScene(scenes);
     return modelEle;
   }, [models, wearablesShowOrHideState, wearablesShowOrHide, onClick, address]);

@@ -66,6 +66,10 @@
   color: #CCCCCC;
 
 }
+.graphicAll{
+  height: auto !important;
+  /* padding-left: 20px; */
+}
 .opese{
   position: absolute;
   right: 20px;
@@ -73,6 +77,8 @@
 }
 .imgBoxCon{
   padding: 15px 15px 0px 15px;
+  height: 270px;
+  position: relative !important;
 }
 .text {
   display: inline-block;
