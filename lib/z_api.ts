@@ -1295,7 +1295,7 @@ class API {
   ) {
     const search = qs.stringify({ page, count }, { addQueryPrefix: true });
     const url = `${this.url}/wearable/get_dcl_wearable_list${search}`;
-    // const url = `http://8.130.23.16/api/v1/get_cv_space_buildings${search}`;
+    // const url = `http://8.130.23.16/api/v1/get_dcl_wearable_list${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
@@ -1567,7 +1567,7 @@ class API {
 
 
 
-export default new API('https://api.metacat.world/api/v1');
-// export default new API('http://8.130.23.16/api/v1');
+// export default new API('https://api.metacat.world/api/v1');
+export default new API('http://8.130.23.16/api/v1');
 // // http://8.130.23.16/api/v1
 // https://api.metacat.world

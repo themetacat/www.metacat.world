@@ -8,6 +8,12 @@
     opacity: 1;
     background-image: url('/images/imgConent/biaotilan.png')
   }
+  .graphicAll{
+    height: 500px !important;
+    width: 500px !important;
+
+    /* padding-left: 20px; */
+  }
   .content {
     min-height: 650px;
     padding: 30px;
@@ -57,12 +63,17 @@
 border-radius: 16px !important;
   }
   .container{
-      display: flex;
+  
+      /* display: flex; */
+      padding: 15px 15px 0px 15px;
+      position: relative !important;
 
   }
   .instructionBox{
-      margin-left: 20px;
+      margin-right: 20px;
       width: 630px;
+      position: absolute;
+      right: -35px;
   }
   .productionName1{
     font-family: 'PingFang SC';

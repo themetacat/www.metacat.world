@@ -94,12 +94,10 @@ export default function CreationWearableList({
     sceneRef.current = scene;
     scene.background = new THREE.Color(0x00202829);
     loader.load(
-      'https://peer.decentraland.org/content/contents/bafybeibg3jfamfckeykhutfzhbzlrfzrlnkexruavisp5pwurfvbmtj4oq',
+      url,
       function (gltf) {
-        console.log(gltf);
         
         const modelGlft = gltf.scene;
-console.log(gltf.scene);
 
         scene.add(modelGlft);
       },
