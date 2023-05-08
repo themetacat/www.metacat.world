@@ -404,15 +404,16 @@ export default function TopicIndex(props) {
       {
         tabStateList === 'decentraland' ?
           <>
-            <div className={cn('main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center', style.content)}>
+            <div className={cn('main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center', style.content)}>
               {/* {renderStatusList} */}
               {
                 wearableList.map((card, idx) => {
+                  
                   const scenes = [];
                   return <CreationWearableList   
                   initFinish={(se) => {
                     scenes.push(se);
-                  }}  graphicId={`${idx}`} {...card} key={idx} model={wearableList} />
+                  }}  graphicId={idx} {...card} key={idx} model={wearableList} />
                 })
               }
             </div>

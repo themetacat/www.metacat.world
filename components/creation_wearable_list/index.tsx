@@ -23,12 +23,14 @@ interface Props {
   contract_address?;
   item_id?;
   openseaUrl?;
+  key?;
   graphicId?;
   opensea_url?;
 }
 
 export default function CreationWearableList({
   idx,
+  key,
   cover_img,
   model,
   creator_name,
@@ -57,7 +59,7 @@ export default function CreationWearableList({
     },
     [item_id, contract_address],
   );
-  // console.log(model,'model');
+  console.log(model,'model');
 
   const init = () => {
     const scene = new THREE.Scene();
@@ -69,7 +71,8 @@ export default function CreationWearableList({
     // camera.fov = 75;
     
     scene.userData.camera = camera;
-    // const sceneElement = document.getElementById('canvas');
+    
+    const sceneElement = document.getElementById(idx);
     scene.userData.element = canvasRef.current;
     const controls = new OrbitControls(camera, scene.userData.element);
     controls.target.set(0, 2, 0);
@@ -95,6 +98,7 @@ export default function CreationWearableList({
     scene.background = new THREE.Color(0x00202829);
     loader.load(
       url,
+      //  'https://peer.decentraland.org/content/contents/bafybeibg3jfamfckeykhutfzhbzlrfzrlnkexruavisp5pwurfvbmtj4oq',
       function (gltf) {
         
         const modelGlft = gltf.scene;
@@ -113,22 +117,6 @@ export default function CreationWearableList({
     }
     animate();
 
-    //   function onMouseMove(ev) {
-
-    //     // 计算鼠标的相对位置
-    //     const mouseX = ev.clientX / window.innerWidth;
-    // const mouseY = ev.clientY / window.innerHeight;
-
-    //     // 将位置值映射到-1和1之间
-    //     const targetX = mouseX * 2 - 1;
-    //     const targetY = - (mouseY * 2 - 1);
-
-    //     // 将相机位置朝向目标位置
-    //     camera.rotation.x = Math.atan(targetY * 0.2);
-    //     camera.rotation.y = Math.atan(targetX * 0.2);
-    //   }
-
-    //   canvasRef.current.addEventListener('mousemove', onMouseMove);
   };
 
   const triggerModelRotation = React.useCallback((roatation) => {
