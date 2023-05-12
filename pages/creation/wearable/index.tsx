@@ -130,8 +130,39 @@ export default function TopicIndex(props) {
     router.replace(`/creation/${t}`);
   }, []);
 
+//   React.useEffect(() => {
+
+   
+//     const scrollChange = () => {
+
+//         const scrollHeight = document.querySelector('.wearable_contentDecentraland__yCHG0')?.scrollHeight
+//         const clientHeight = document.querySelector('.wearable_contentDecentraland__yCHG0')?.clientHeight
+//         const scrollTop = document.querySelector('.wearable_contentDecentraland__yCHG0')?.scrollTop
+// console.log(scrollChange,clientHeight,scrollTop);
+
+//         if (scrollTop + clientHeight >= scrollHeight - 1) {
+
+// //           const resWear =  req_wearableDcl_list(1, 4);
+// //           resWear.then((resWearItrm)=>{
+// //             console.log(resWearItrm);
+// //             wearableList.push(resWearItrm.data)
+// // console.log(wearableList,'wearableList')
+
+// //           })
+//             // requestData(pageNum, count)
+//         }
+
+//         document.addEventListener('scroll', scrollChange);
+//         return () => document.removeEventListener('scroll', scrollChange);
+//     }
 
 
+//     window.addEventListener('scroll', scrollChange, true)
+//     // scrollChange()
+//     return () => {
+//         window.removeEventListener('scroll', scrollChange, false)
+//     }
+// }, [wearableList]);
 
 
   const requestData =async (page: number, count: number) => {
@@ -157,10 +188,16 @@ export default function TopicIndex(props) {
         setBuilders(convert(data));
         setTotalPage(total_page);
       } else if (tabStateList === 'decentraland') {
-        const resWear = await req_wearableDcl_list(page, count);
-
-        setWearableList(resWear.data)
-        setTotalPage(resWear.total_page);
+        //  setTimeout(()=>{
+          const resWear = await req_wearableDcl_list(page, count);
+          // resWear.then(()=>{
+          //   setWearableList(resWear.data)
+          //   setTotalPage(resWear.total_page);
+          // })
+          setWearableList(resWear.data)
+          setTotalPage(resWear.total_page);
+        // },3000)
+        
         // console.log(resWear);
       } else if (tabStateList === 'mona') {
 
@@ -226,11 +263,12 @@ export default function TopicIndex(props) {
   // }, []);
   React.useEffect(() => {
     // const tab = router.query.tab;
- 
     setTabStateList(router.query.tab)
     onTabChangeList(router.query.tab)
     requestData(1, 20)
   }, [router.query.tab]);
+
+  
 
   const renderStatus = React.useMemo(() => {
     if (loading) {
@@ -274,7 +312,7 @@ export default function TopicIndex(props) {
 
   }, [loading, error,]);
 
-  const renderStatusList = React.useMemo(() => {
+  const renderStatusList = () => {
     if (loading) {
       return <Status status="loading" />;
     }
@@ -291,30 +329,30 @@ export default function TopicIndex(props) {
 
       // return (
       <>
-        <div
-          className={cn(
-            "w-full  top-0 left-0 grid grid-cols-4 gap-4 z-10",
-            style.buildingsCon,
-          )}
-        >
-          {
-            wearableList.map((card) => {
-
-              return <CreationWearableList {...card} model={wearableList} />
-            })
-          }
+        
+         <div className={cn('main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center', style.content)}>
+       
+        {
+                wearableList.map((card, idx) => {
+                  const scenes = [];
+                  return <CreationWearableList   
+                  initFinish={(se) => {
+                    scenes.push(se);
+                  }}  graphicId={idx} {...card} key={idx} model={wearableList} />
+                })
+              }
         </div>
         <PagiNation
-          total={totalPage}
-          pageNumber={pageNumber - 1}
-          pageSize={9}
-          pageChange={onPageChangeHandler}
-        />
+              total={totalPage}
+              pageNumber={pageNumber - 1}
+              pageSize={9}
+              pageChange={onPageChangeHandler}
+            />
       </>
       // );
     }
 
-  }, [loading, error,]);
+  };
 
   // React.useEffect(() => {
   //   const listener = () => {
@@ -404,16 +442,15 @@ export default function TopicIndex(props) {
       {
         tabStateList === 'decentraland' ?
           <>
-            <div className={cn('main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center', style.content)}>
+              <div className={cn('main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center', style.contentDecentraland)}>
               {/* {renderStatusList} */}
               {
                 wearableList.map((card, idx) => {
-                  
                   const scenes = [];
                   return <CreationWearableList   
                   initFinish={(se) => {
                     scenes.push(se);
-                  }}  graphicId={idx} {...card} key={idx} model={wearableList} />
+                  }}  graphicId={idx}  {...card} key={idx} model={wearableList} />
                 })
               }
             </div>

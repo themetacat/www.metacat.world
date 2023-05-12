@@ -108,6 +108,7 @@ export default function DaoWebglCard({
     loader.load(model.coverImg, function (chunks) {
       for (let i = 0; i < chunks?.length; i += 1) {
         const chunk = chunks[i];
+        console.log(chunks,'chunks');
         
         // displayPalette( chunk.palette );
         const mesh = new VOXMesh(chunk);

@@ -350,7 +350,6 @@ export default function Event(props) {
             const scrollHeight = document.querySelector('.detailName')?.scrollHeight
             const clientHeight = document.querySelector('.detailName')?.clientHeight
             const scrollTop = document.querySelector('.detailName')?.scrollTop
-
             if (scrollTop + clientHeight >= scrollHeight - 1) {
 
 

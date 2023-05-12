@@ -75,7 +75,12 @@ export default function CreationWearableList({
     res.then((resWear) => {
         
       setCoverImg(resWear.data.cover_img);
-    
+      setCreatorName(resWear.data.creator_name);
+      setWearableName(resWear.data.wearable_name);
+      setCreatorAddress(resWear.data.creator_address);
+      setDescription(resWear.data.description);
+      setIsExists(resWear.data.is_exists);
+      setContact(resWear.data.contact);
    
     const scene = new THREE.Scene();
     // console.log(scene, 5656);
@@ -146,13 +151,76 @@ export default function CreationWearableList({
     //   }
 
     //   canvasRef.current.addEventListener('mousemove', onMouseMove);
-  }, [coverImg]);
+  }, [coverImg,router.query.contract_address, router.query.item_id]);
 
   React.useEffect(() => {
     init();
-    console.log(router.query.contract_address, router.query.item_id);
-    
-    reqWearableList(router.query.contract_address, router.query.item_id);
+    // console.log(router.query.contract_address, router.query.item_id);
+    // const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id);
+    // // console.log(res,1222);
+    // res.then((resWear) => {
+        
+    //   setCoverImg(resWear.data.cover_img);
+    //   setCreatorName(resWear.data.creator_name);
+    //   setWearableName(resWear.data.wearable_name);
+    //   setCreatorAddress(resWear.data.creator_address);
+    //   setDescription(resWear.data.description);
+    //   setIsExists(resWear.data.is_exists);
+    //   setContact(resWear.data.contact);
+    //   const scene = new THREE.Scene();
+    //   // console.log(scene, 5656);
+  
+    //   const camera = new THREE.PerspectiveCamera(45, 0.5, 1, 1000);
+    //   camera.position.z = 3;
+    //   camera.position.set(0, 5, 5);
+    //   // camera.fov = 75;
+  
+    //   scene.userData.camera = camera;
+    //   // const sceneElement = document.getElementById('canvas');
+    //   scene.userData.element = canvasRef.current;
+    //   const controls = new OrbitControls(camera, scene.userData.element);
+    //   controls.target.set(0, 2, 0);
+  
+    //   controls.minDistance = 5;
+    //   controls.maxDistance = 5;
+    //   controls.enablePan = true;
+    //   controls.enableZoom = false;
+    //   scene.userData.controls = controls;
+    //   scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
+    //   const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
+    //   renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientWidth);
+  
+    //   // document.body.appendChild(renderer.domElement);
+  
+    //   const loader = new GLTFLoader();
+    //   const url = coverImg;
+    //   // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    //   // directionalLight.position.set(0.2, 0.2, 0.2); // 设置光源方向
+    //   // scene.add(directionalLight);
+    //   sceneRef.current = scene;
+    //   scene.background = new THREE.Color(0x00202829);
+    //   loader?.load(
+    //       // 'https://peer.decentraland.org/content/contents/bafybeibg3jfamfckeykhutfzhbzlrfzrlnkexruavisp5pwurfvbmtj4oq',
+    //       resWear?.data?.cover_img,
+    //     function (gltf) {
+  
+    //       const modelGlft = gltf.scene;
+  
+    //       scene.add(modelGlft);
+    //     },
+    //     undefined,
+    //     (error) => {
+    //       console.log(error);
+    //     },
+    //   );
+    //   function animate() {
+    //     requestAnimationFrame(animate);
+  
+    //     renderer.render(scene, camera);
+    //   }
+    //   animate();
+    // });
+    // reqWearableList(router.query.contract_address, router.query.item_id);
   }, [router.query.contract_address, router.query.item_id]);
 
   React.useEffect(() => {

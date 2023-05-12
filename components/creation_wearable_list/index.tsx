@@ -21,6 +21,7 @@ interface Props {
   creator_name?;
   wearable_name?;
   contract_address?;
+  initDe: () => void;
   item_id?;
   openseaUrl?;
   key?;
@@ -35,6 +36,7 @@ export default function CreationWearableList({
   model,
   creator_name,
   wearable_name,
+  initDe,
   graphicId,
   contract_address,
   item_id,
@@ -47,7 +49,7 @@ export default function CreationWearableList({
   const router = useRouter();
   const sceneRef = React.useRef(null);
 
-  const [selecete, setSelecete] = React.useState(false);
+  const [selecete, setSelecete] = React.useState([]);
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(
     (l, t) => {
@@ -59,9 +61,13 @@ export default function CreationWearableList({
     },
     [item_id, contract_address],
   );
-  console.log(model,'model');
+  // console.log(model,'model');
 
   const init = () => {
+    const loader = new GLTFLoader();
+    const hemisphereLight = new HemisphereLight(0xaaaaaa, 0x444444);
+    const rendererList = [];
+
     const scene = new THREE.Scene();
     // console.log(scene, 5656);
 
@@ -69,12 +75,12 @@ export default function CreationWearableList({
     camera.position.z = 3;
     camera.position.set(0, 5, 5);
     // camera.fov = 75;
-    
     scene.userData.camera = camera;
-    
-    const sceneElement = document.getElementById(idx);
+
+    const sceneElement = document.getElementById(graphicId);
+
     scene.userData.element = canvasRef.current;
-    const controls = new OrbitControls(camera, scene.userData.element);
+    const controls = new OrbitControls(camera, sceneElement);
     controls.target.set(0, 2, 0);
 
     controls.minDistance = 5;
@@ -82,41 +88,97 @@ export default function CreationWearableList({
     controls.enablePan = true;
     controls.enableZoom = false;
     scene.userData.controls = controls;
-    scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
+    scene.add(hemisphereLight);
+    const renderer = new THREE.WebGLRenderer({
+      canvas: sceneElement,
+      antialias: true,
+    });
+    rendererList.push(renderer);
+    console.log(renderer.domElement, 'renderer.domElement');
+    console.log(rendererList, 'rendererList');
+
     renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientWidth);
-
+    // renderer.clear();
     // document.body.appendChild(renderer.domElement);
+    // const loader = new GLTFLoader();
+    console.log(cover_img, model);
+    const coverImages = [];
+    model.forEach((item) => {
+      coverImages.push(item.cover_img);
+    });
+    console.log(coverImages, 'coverImages');
 
-    const loader = new GLTFLoader();
-    const url = cover_img;
-
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    // directionalLight.position.set(0.2, 0.2, 0.2); // 设置光源方向
-    // scene.add(directionalLight);
+    // const url= coverImages.splice(0, 16);
+    const url= cover_img;
     sceneRef.current = scene;
     scene.background = new THREE.Color(0x00202829);
-    loader.load(
-      url,
-      //  'https://peer.decentraland.org/content/contents/bafybeibg3jfamfckeykhutfzhbzlrfzrlnkexruavisp5pwurfvbmtj4oq',
-      function (gltf) {
-        
-        const modelGlft = gltf.scene;
+    // console.log(url.join());
+    // url.forEach((item) => {
+    //   console.log(item, 'urlurlurl');
+     
+    //   // coverImages.push(item.cover_img)
+    // });
 
-        scene.add(modelGlft);
-      },
-      undefined,
-      (error) => {
-        console.log(error);
-      },
-    );
-    function animate() {
-      requestAnimationFrame(animate);
 
-      renderer.render(scene, camera);
-    }
-    animate();
+    // loader.load(
+    //   url,
 
+    //   function (gltf) {
+    //     const modelGlft = gltf.scene;
+
+    //     scene.add(modelGlft);
+    //   },
+    //   undefined,
+    //   (error) => {
+    //     console.log(error);
+    //   },
+    // );
+    // function animate() {
+    //   requestAnimationFrame(animate);
+
+    //   renderer.render(scene, camera);
+    // }
+    // console.log(renderer);
+    // animate();
+
+    // // 销毁旧的renderer
+    // function destroyRenderer() {
+    //   console.log(222);
+
+    //   const rendererDis = rendererList.shift();
+    //   console.log(rendererDis, 'rendererDisrendererDisrendererDisrendererDis');
+
+    //   rendererDis.dispose();
+    // }
+
+    // // 检查渲染器数量并销毁其中一个
+    // function checkRendererCount() {
+    //   console.log(11111);
+
+    //   const maxRendererCount = 15;
+    //   while (rendererList.length >= maxRendererCount) {
+    //     destroyRenderer();
+    //   }
+    // }
+    // checkRendererCount();
+    // // 监听window.resize事件，更新渲染器大小
+    // function handleWindowResize(rendererDis) {
+    //   window.addEventListener('resize', () => {
+    //     const w = window.innerWidth;
+    //     const h = window.innerHeight;
+    //     renderer.setSize(w, h);
+    //   });
+    // }
+    // 创建并显示一个新的canvas和渲染器
+    // function addCanvas() {
+    //   const canvas = document.createElement('canvas');
+    //   document.body.appendChild(canvas);
+
+    //   const renderer = createRenderer(canvas);
+    //   handleWindowResize(renderer);
+
+    //   checkRendererCount();
+    // }
   };
 
   const triggerModelRotation = React.useCallback((roatation) => {
@@ -126,7 +188,9 @@ export default function CreationWearableList({
   }, []);
 
   React.useEffect(() => {
-    init();
+    // setTimeout(() => {
+    //   init();
+    // }, 3000);
     // function animate() {
     //   requestAnimationFrame(animate);
     // }
@@ -145,15 +209,15 @@ export default function CreationWearableList({
             triggerModelRotation(false);
           }}
         >
-          {/* <img src={cover_img} alt="" className={styles.boxCon} /> */}
-          <canvas
+          <img src={cover_img} alt="" className={styles.boxCon} />
+          {/* <canvas
             className={cn(
               'absolute w-full h-full top-0 left-0 flex-auto  bg-transparent',
               styles.graphicAll,
             )}
             ref={canvasRef}
-            // id="canvas"
-          ></canvas>
+            id={graphicId}
+          ></canvas> */}
         </div>
         <div className={cn('')}>
           <div>
