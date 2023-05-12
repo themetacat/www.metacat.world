@@ -151,7 +151,7 @@ export default function CreationWearableList({
     //   }
 
     //   canvasRef.current.addEventListener('mousemove', onMouseMove);
-  }, [coverImg,router.query.contract_address, router.query.item_id]);
+  }, [router.query.contract_address, router.query.item_id]);
 
   React.useEffect(() => {
     init();
