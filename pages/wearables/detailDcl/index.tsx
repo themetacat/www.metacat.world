@@ -113,7 +113,7 @@ export default function CreationWearableList({
         resWear?.data?.cover_img,
         function (gltf) {
           modelGlft = gltf.scene;
-          modelGlft.scale.set(1.3, 1.3, 1.3);
+          // modelGlft.scale.set(1.3, 1.3, 1.3);
           modelGlft.position.set(0, 1.3, 0);
           scene.add(modelGlft);
 
@@ -174,6 +174,19 @@ export default function CreationWearableList({
           <span className={style.productionName}>{wearableName}</span>
         </div>
         <div className={cn('relative w-full h-full', style.container)}>
+          {
+            coverImg === 'https://peer.decentraland.org/lambdas/collections/contents/urn:decentraland:matic:collections-v2:0xcc45ca8992dad5003769f59ade46ba132908dc6b:0/thumbnail'?<img src={coverImg} alt=""className={cn(
+              'absolute w-full h-full top-0 left-0 flex-auto  bg-transparent',
+              style.graphicAll,
+            )} />: <canvas
+            className={cn(
+              'absolute w-full h-full top-0 left-0 flex-auto  bg-transparent',
+              style.graphicAll,
+            )}
+            ref={canvasRef}
+            // id="canvas
+          ></canvas>
+          }
           {/* <img src={coverImg} alt="" className={style.imgBox} /> */}
           <canvas
             className={cn(
