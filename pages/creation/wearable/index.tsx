@@ -182,7 +182,6 @@ export default function TopicIndex(props) {
         const res = await req_wearable_list(page, count);
         // console.log(res,page, "req_wearable_listreq_wearable_list");
 
-        // console.log(res.total_page);
         const { data, total_page } = res;
 
         setBuilders(convert(data));
