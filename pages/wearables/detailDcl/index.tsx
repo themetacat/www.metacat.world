@@ -53,27 +53,27 @@ export default function CreationWearableList({
   const [contact, setContact] = React.useState(null);
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
 
-  const reqWearableList = React.useCallback((l, t) => {
-    
-    const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id);
-    // console.log(res,1222);
-    res.then((resWear) => {
-        
-      setCoverImg(resWear.data.cover_img);
-      setCreatorName(resWear.data.creator_name);
-      setWearableName(resWear.data.wearable_name);
-      setCreatorAddress(resWear.data.creator_address);
-      setDescription(resWear.data.description);
-      setIsExists(resWear.data.is_exists);
-      setContact(resWear.data.contact);
-    });
-  },[router.query.contract_address, router.query.item_id]);
+  const reqWearableList = React.useCallback(
+    (l, t) => {
+      const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id);
+      // console.log(res,1222);
+      res.then((resWear) => {
+        setCoverImg(resWear.data.cover_img);
+        setCreatorName(resWear.data.creator_name);
+        setWearableName(resWear.data.wearable_name);
+        setCreatorAddress(resWear.data.creator_address);
+        setDescription(resWear.data.description);
+        setIsExists(resWear.data.is_exists);
+        setContact(resWear.data.contact);
+      });
+    },
+    [router.query.contract_address, router.query.item_id],
+  );
 
-  const init =  React.useCallback(() => {
+  const init = React.useCallback(() => {
     // reqWearableList(contract_address, item_id);
     const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id);
     res.then((resWear) => {
-        
       setCoverImg(resWear.data.cover_img);
       setCreatorName(resWear.data.creator_name);
       setWearableName(resWear.data.wearable_name);
@@ -81,146 +81,63 @@ export default function CreationWearableList({
       setDescription(resWear.data.description);
       setIsExists(resWear.data.is_exists);
       setContact(resWear.data.contact);
-   
-    const scene = new THREE.Scene();
-    // console.log(scene, 5656);
+      const scene = new THREE.Scene();
+      const aspectRatio = 500 / 500;
+      const camera = new THREE.PerspectiveCamera(45, 0.5, 1, 1000);
+      camera.position.z = 10;
+      camera.position.set(0, 2, 5);
+      scene.userData.camera = camera;
+      // const sceneElement = document.getElementById('canvas');
+      scene.userData.element = canvasRef.current;
+      const controls = new OrbitControls(camera, scene.userData.element);
+      controls.target.set(0, 2, 0);
+      camera.lookAt(0, 2, 0); // 设置相机的目标位置
+//       camera.aspect = canvasRef.current.clientWidth / canvasRef.current.clientWidth;
+// camera.updateProjectionMatrix();
+      controls.minDistance = 3;
+      controls.maxDistance = 7;
+      controls.enablePan = true;
+      controls.enableZoom = false;
+      scene.userData.controls = controls;
+      scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
+      const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
+      renderer.setSize(500,500);
 
-    const camera = new THREE.PerspectiveCamera(45, 0.5, 1, 1000);
-    camera.position.z = 3;
-    camera.position.set(0, 5, 5);
-    // camera.fov = 75;
+      const loader = new GLTFLoader();
+      const url = coverImg;
+      sceneRef.current = scene;
+      scene.background = new THREE.Color(0x00102525);
+      let modelGlft;
 
-    scene.userData.camera = camera;
-    // const sceneElement = document.getElementById('canvas');
-    scene.userData.element = canvasRef.current;
-    const controls = new OrbitControls(camera, scene.userData.element);
-    controls.target.set(0, 2, 0);
-
-    controls.minDistance = 5;
-    controls.maxDistance = 5;
-    controls.enablePan = true;
-    controls.enableZoom = false;
-    scene.userData.controls = controls;
-    scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
-    renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientWidth);
-
-    // document.body.appendChild(renderer.domElement);
-
-    const loader = new GLTFLoader();
-    const url = coverImg;
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    // directionalLight.position.set(0.2, 0.2, 0.2); // 设置光源方向
-    // scene.add(directionalLight);
-    sceneRef.current = scene;
-    scene.background = new THREE.Color(0x00202829);
-    loader?.load(
-        // 'https://peer.decentraland.org/content/contents/bafybeibg3jfamfckeykhutfzhbzlrfzrlnkexruavisp5pwurfvbmtj4oq',
+      loader?.load(
         resWear?.data?.cover_img,
-      function (gltf) {
+        function (gltf) {
+          modelGlft = gltf.scene;
+          modelGlft.scale.set(1.3, 1.3, 1.3);
+          modelGlft.position.set(0, 1.3, 0);
+          scene.add(modelGlft);
 
-        const modelGlft = gltf.scene;
-
-        scene.add(modelGlft);
-      },
-      undefined,
-      (error) => {
-        console.log(error);
-      },
-    );
-    function animate() {
-      requestAnimationFrame(animate);
-
-      renderer.render(scene, camera);
-    }
-    animate();
-});
-    //   function onMouseMove(ev) {
-
-    //     // 计算鼠标的相对位置
-    //     const mouseX = ev.clientX / window.innerWidth;
-    // const mouseY = ev.clientY / window.innerHeight;
-
-    //     // 将位置值映射到-1和1之间
-    //     const targetX = mouseX * 2 - 1;
-    //     const targetY = - (mouseY * 2 - 1);
-
-    //     // 将相机位置朝向目标位置
-    //     camera.rotation.x = Math.atan(targetY * 0.2);
-    //     camera.rotation.y = Math.atan(targetX * 0.2);
-    //   }
-
-    //   canvasRef.current.addEventListener('mousemove', onMouseMove);
+         
+        },
+        undefined,
+        (error) => {
+          console.log(error);
+        },
+      );
+      function animate() {
+        requestAnimationFrame(animate);
+        if (modelGlft) {
+          // 判断模型是否已加载完成
+          modelGlft.rotation.y += 0.01; // 控制模型自动旋转
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+    });
   }, [router.query.contract_address, router.query.item_id]);
 
   React.useEffect(() => {
     init();
-    // console.log(router.query.contract_address, router.query.item_id);
-    // const res = req_detailWearableDcl_list(router.query.contract_address, router.query.item_id);
-    // // console.log(res,1222);
-    // res.then((resWear) => {
-        
-    //   setCoverImg(resWear.data.cover_img);
-    //   setCreatorName(resWear.data.creator_name);
-    //   setWearableName(resWear.data.wearable_name);
-    //   setCreatorAddress(resWear.data.creator_address);
-    //   setDescription(resWear.data.description);
-    //   setIsExists(resWear.data.is_exists);
-    //   setContact(resWear.data.contact);
-    //   const scene = new THREE.Scene();
-    //   // console.log(scene, 5656);
-  
-    //   const camera = new THREE.PerspectiveCamera(45, 0.5, 1, 1000);
-    //   camera.position.z = 3;
-    //   camera.position.set(0, 5, 5);
-    //   // camera.fov = 75;
-  
-    //   scene.userData.camera = camera;
-    //   // const sceneElement = document.getElementById('canvas');
-    //   scene.userData.element = canvasRef.current;
-    //   const controls = new OrbitControls(camera, scene.userData.element);
-    //   controls.target.set(0, 2, 0);
-  
-    //   controls.minDistance = 5;
-    //   controls.maxDistance = 5;
-    //   controls.enablePan = true;
-    //   controls.enableZoom = false;
-    //   scene.userData.controls = controls;
-    //   scene.add(new HemisphereLight(0xaaaaaa, 0x444444));
-    //   const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
-    //   renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientWidth);
-  
-    //   // document.body.appendChild(renderer.domElement);
-  
-    //   const loader = new GLTFLoader();
-    //   const url = coverImg;
-    //   // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    //   // directionalLight.position.set(0.2, 0.2, 0.2); // 设置光源方向
-    //   // scene.add(directionalLight);
-    //   sceneRef.current = scene;
-    //   scene.background = new THREE.Color(0x00202829);
-    //   loader?.load(
-    //       // 'https://peer.decentraland.org/content/contents/bafybeibg3jfamfckeykhutfzhbzlrfzrlnkexruavisp5pwurfvbmtj4oq',
-    //       resWear?.data?.cover_img,
-    //     function (gltf) {
-  
-    //       const modelGlft = gltf.scene;
-  
-    //       scene.add(modelGlft);
-    //     },
-    //     undefined,
-    //     (error) => {
-    //       console.log(error);
-    //     },
-    //   );
-    //   function animate() {
-    //     requestAnimationFrame(animate);
-  
-    //     renderer.render(scene, camera);
-    //   }
-    //   animate();
-    // });
-    // reqWearableList(router.query.contract_address, router.query.item_id);
   }, [router.query.contract_address, router.query.item_id]);
 
   React.useEffect(() => {

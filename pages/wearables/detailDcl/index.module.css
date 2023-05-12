@@ -11,7 +11,9 @@
   .graphicAll{
     height: 500px !important;
     width: 500px !important;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /* padding-left: 20px; */
   }
   .content {
