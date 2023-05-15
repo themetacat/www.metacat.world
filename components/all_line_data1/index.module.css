@@ -12,6 +12,7 @@
 }
 .cheartitle{
   position: absolute;
+  z-index: 99999;
   
 }
 .border {
