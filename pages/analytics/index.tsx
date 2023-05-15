@@ -4234,7 +4234,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       const idValCon = document.querySelector('.analytics_topContainer__GZXEO');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
       window.scrollTo({
-        top: 300,
+        top: 500,
         left: 100,
         behavior: 'smooth'
       });
@@ -4259,7 +4259,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
       const idValCon = document.querySelector('.analytics_allLine3__CQ_qr');
       if (idValCon) { idValCon.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
       window.scrollTo({
-        top: 1850,
+        top: 1650,
         left: 100,
         behavior: 'smooth'
       });
