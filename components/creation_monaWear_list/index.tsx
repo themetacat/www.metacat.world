@@ -50,7 +50,7 @@ export default function CreationMonaWearableList({
         const res = req_detailWearableMona_list( creator_address,wearable_id)
 
         router.replace(`/wearables/detailMona/?creator_address=${creator_address}&wearable_id=${wearable_id}`);
-    }, [wearable_id]);
+    }, [wearable_id,creator_address]);
 
 
 

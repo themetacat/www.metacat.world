@@ -329,7 +329,7 @@
 
 .allLine {
   width: 1340px;
-  /* height: 519px; */
+  height: 440px;
   background: #000;
   margin-top: 20px;
   padding: 20px;
@@ -338,6 +338,7 @@
 .allLinen {
   width: 1340px;
   height: 519px;
+  height: 440px;
   background: #000;
   margin-top: 20px;
   padding: 20px;
@@ -355,6 +356,7 @@
 .allLine1,.allLine2 {
   width: 1340px;
   /* height: 519px; */
+  height: 440px;
   background: #000;
   margin-top: 20px;
   padding: 20px;
@@ -362,6 +364,7 @@
 }
 .allLineLight {
   width: 1340px;
+  height: 440px;
   height: 519px;
   background: #fafbfc;
   border-radius: 8px;
@@ -372,6 +375,7 @@
 .allLineLight3 {
   width: 1340px;
   height: 519px;
+  height: 440px;
   background: #fafbfc;
   border-radius: 8px;
   margin-top: 30px;
