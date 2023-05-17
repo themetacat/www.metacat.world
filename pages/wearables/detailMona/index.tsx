@@ -11,8 +11,8 @@ import { Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
 import Page from '../../../components/page';
-import PageHeader from '../../../components/top-navigation';
-
+// import PageHeader from '../../../components/top-navigation';
+import PageHeader from '../../../components/top-nav';
 
 import { req_detailWearableMona_list } from '../../../service/z_api';
 
