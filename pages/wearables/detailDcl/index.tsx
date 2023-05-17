@@ -10,7 +10,7 @@ import { Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper 
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 import Page from '../../../components/page';
-import PageHeader from '../../../components/top-navigation';
+import PageHeader from '../../../components/top-nav';
 
 import { req_detailWearableDcl_list } from '../../../service/z_api';
 
@@ -162,7 +162,7 @@ export default function CreationWearableList({
   return (
     <Page className="min-h-screen" meta={meta}>
       <div className={cn('', fixedState ? style.fix1 : null)}>
-        <PageHeader className="relative z-10" active={'wearables'} />
+        <PageHeader className="relative z-10" active={'wearables'} iconImgLight={false}/>
       </div>
       <div
         className={cn('main-content flex flex-col justify-start items-start mt-5', style.content)}
