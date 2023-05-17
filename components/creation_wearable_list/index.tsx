@@ -94,19 +94,19 @@ export default function CreationWearableList({
       antialias: true,
     });
     rendererList.push(renderer);
-    console.log(renderer.domElement, 'renderer.domElement');
-    console.log(rendererList, 'rendererList');
+    // console.log(renderer.domElement, 'renderer.domElement');
+    // console.log(rendererList, 'rendererList');
 
     renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientWidth);
     // renderer.clear();
     // document.body.appendChild(renderer.domElement);
     // const loader = new GLTFLoader();
-    console.log(cover_img, model);
+    // console.log(cover_img, model);
     const coverImages = [];
     model.forEach((item) => {
       coverImages.push(item.cover_img);
     });
-    console.log(coverImages, 'coverImages');
+    // console.log(coverImages, 'coverImages');
 
     // const url= coverImages.splice(0, 16);
     const url= cover_img;

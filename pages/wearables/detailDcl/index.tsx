@@ -83,7 +83,8 @@ export default function CreationWearableList({
       setContact(resWear.data.contact);
       const scene = new THREE.Scene();
       const aspectRatio = 500 / 500;
-      const camera = new THREE.PerspectiveCamera(45, 0.5, 1, 1000);
+      const camera = new THREE.PerspectiveCamera(30, 1, 2, 1000);
+      // (45,0.5,1,1000)
       camera.position.z = 10;
       camera.position.set(0, 1, 5);
       scene.userData.camera = camera;
