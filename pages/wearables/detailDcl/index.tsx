@@ -85,7 +85,7 @@ export default function CreationWearableList({
       const aspectRatio = 500 / 500;
       const camera = new THREE.PerspectiveCamera(45, 0.5, 1, 1000);
       camera.position.z = 10;
-      camera.position.set(0, 2, 5);
+      camera.position.set(0, 1, 5);
       scene.userData.camera = camera;
       // const sceneElement = document.getElementById('canvas');
       scene.userData.element = canvasRef.current;
@@ -114,7 +114,7 @@ export default function CreationWearableList({
         function (gltf) {
           modelGlft = gltf.scene;
           // modelGlft.scale.set(1.3, 1.3, 1.3);
-          modelGlft.position.set(0, 1.3, 0);
+          modelGlft.position.set(0, 1, 0);
           scene.add(modelGlft);
 
          

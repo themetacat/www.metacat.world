@@ -142,7 +142,7 @@ export default function CreationWearableList({
             function (gltf) {
               modelGlft = gltf.scene;
               // modelGlft.scale.set(1.3, 1.3, 1.3);
-              modelGlft.position.set(0, 1.3, 0);
+              modelGlft.position.set(0, 1, 0);
               scene.add(modelGlft);
     
              

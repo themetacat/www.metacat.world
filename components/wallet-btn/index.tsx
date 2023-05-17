@@ -662,7 +662,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           removeToken('rtk');
           removeToken('address');
           // if (w3) {
-          //   w3.resetApp()
+          //   w3.resetApp()a
           // }
           if (web3) {
             web3?.resetApp();
@@ -800,13 +800,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         text = profile?.nickName;
       } else {
         text = clipName(profile?.address);
-        setShowMenu(!showMenu);
+        // setShowMenu(!showMenu);
       }
     } else if (!profile?.address) {
       getAccounts();
       if (web3AuthAddress && idTokenWeb3) {
         text = web3AuthAddress;
-        setShowMenu(!showMenu);
+        // setShowMenu(!showMenu);
       } else {
         text = 'Connect';
         // setShowMenu(true);
