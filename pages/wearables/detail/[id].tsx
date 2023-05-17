@@ -319,7 +319,7 @@ export async function getServerSideProps(context) {
   } else {
     res = await api.getDaoWearableDetail(id);
   }
-  
+
   const { artwork, artist } = res.data[0];
   return {
     props: {
