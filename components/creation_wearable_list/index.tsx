@@ -112,34 +112,29 @@ export default function CreationWearableList({
     const url= cover_img;
     sceneRef.current = scene;
     scene.background = new THREE.Color(0x00202829);
-    // console.log(url.join());
-    // url.forEach((item) => {
-    //   console.log(item, 'urlurlurl');
-     
-    //   // coverImages.push(item.cover_img)
-    // });
 
 
-    // loader.load(
-    //   url,
 
-    //   function (gltf) {
-    //     const modelGlft = gltf.scene;
+    loader.load(
+      url,
 
-    //     scene.add(modelGlft);
-    //   },
-    //   undefined,
-    //   (error) => {
-    //     console.log(error);
-    //   },
-    // );
-    // function animate() {
-    //   requestAnimationFrame(animate);
+      function (gltf) {
+        const modelGlft = gltf.scene;
 
-    //   renderer.render(scene, camera);
-    // }
-    // console.log(renderer);
-    // animate();
+        scene.add(modelGlft);
+      },
+      undefined,
+      (error) => {
+        console.log(error);
+      },
+    );
+    function animate() {
+      requestAnimationFrame(animate);
+
+      renderer.render(scene, camera);
+    }
+    console.log(renderer);
+    animate();
 
     // // 销毁旧的renderer
     // function destroyRenderer() {
@@ -187,15 +182,13 @@ export default function CreationWearableList({
     }
   }, []);
 
-  React.useEffect(() => {
-    // setTimeout(() => {
-    //   init();
-    // }, 3000);
-    // function animate() {
-    //   requestAnimationFrame(animate);
-    // }
-    // animate();
-  }, []);
+  // React.useEffect(() => {
+  //     init();
+  //   function animate() {
+  //     requestAnimationFrame(animate);
+  //   }
+  //   animate();
+  // }, []);
 
   return (
     <>
