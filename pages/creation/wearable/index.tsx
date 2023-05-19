@@ -180,6 +180,7 @@ export default function TopicIndex(props) {
       // setPageNumber(newPage)
       if (tabStateList === 'cryptovoxels') {
         const res = await req_wearable_list(page, count);
+
         // console.log(res,page, "req_wearable_listreq_wearable_list");
 
         const { data, total_page } = res;
@@ -218,10 +219,32 @@ export default function TopicIndex(props) {
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
-
+     
       const requestNumber = number + 1;
+// window.localStorage.setItem('pageTotal',requestNumber.toString())
+// router.replace(`/creation/wearable?tab=cryptovoxels&&page=${requestNumber}`);
+// if(requestNumber !==1){
+//   // window.location.reload(true)
+// }
 
-      await requestData(requestNumber, pageCount);
+         requestData(requestNumber, pageCount);
+      
+      // await requestData(pageNumber, pageCount);;
+    },
+    [pageCount,tabStateList],
+  );
+  const onPageChangeHandlerVox = React.useCallback(
+    async (number: number) => {
+     
+      const requestNumber = number + 1;
+window.localStorage.setItem('pageTotal',requestNumber.toString())
+router.replace(`/creation/wearable?tab=cryptovoxels&page=${requestNumber}`);
+if(requestNumber !==1){
+  // window.location.reload(true)
+}
+
+         requestData(requestNumber, pageCount);
+      
       // await requestData(pageNumber, pageCount);;
     },
     [pageCount,tabStateList],
@@ -236,7 +259,7 @@ export default function TopicIndex(props) {
     // subIndex = subIndex === -1 ? 0 : subIndex;
     setTabStateList(tab);
     // let sub = '';
-    router.replace(`/creation/wearable?tab=${tab}`);
+    router.replace(`/creation/wearable?tab=${tab}&page=1`);
     // setPageNumber(1)
     // requestData(1, pageCount);
     // if (tab === 'cryptovoxels') {
@@ -264,7 +287,15 @@ export default function TopicIndex(props) {
     // const tab = router.query.tab;
     setTabStateList(router.query.tab)
     onTabChangeList(router.query.tab)
-    requestData(1, 20)
+    window.localStorage.setItem('pageTotal','1')
+    const a = window.localStorage.getItem('pageTotal')
+    const pageTotal = parseInt(a, 10);
+    if(pageTotal === 1){
+      requestData(1, 20)
+    }else{
+      requestData(pageTotal, 20)
+    }
+   
   }, [router.query.tab]);
 
   
@@ -303,7 +334,7 @@ export default function TopicIndex(props) {
             total={totalPage}
             pageNumber={pageNumber - 1}
             pageSize={9}
-            pageChange={onPageChangeHandler}
+            pageChange={onPageChangeHandlerVox}
           />
         </>
       );
@@ -434,7 +465,7 @@ export default function TopicIndex(props) {
       </div>
       {/* <div className={cn('main-content', style.content)}>{renderStatusList}</div> */}
       {
-        tabStateList === 'cryptovoxels' ?
+        tabStateList === 'cryptovoxels'  ?
           <div className={cn('main-content', style.content)}>{renderStatus}</div>
           : null
       }
