@@ -41,7 +41,7 @@ const build = [
   {
     label: 'Wearable',
     type: 'wearable',
-    link: '/creation/wearable?tab=cryptovoxels',
+    link: '/creation/wearable?tab=cryptovoxels&page=1',
   },
   // {
   //   label: 'Space Buildings',
