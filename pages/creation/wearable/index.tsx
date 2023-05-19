@@ -261,11 +261,16 @@ export default function TopicIndex(props) {
     // subIndex = subIndex === -1 ? 0 : subIndex;
     setTabStateList(tab);
     // let sub = '';
-    const a = window.localStorage.getItem('pageTotal');
-    const pageTotal = parseInt(a, 10);
-console.log(pageTotal);
+   
+    if (tab === 'cryptovoxels') {
+      const a = window.localStorage.getItem('pageTotal');
+      const pageTotal = parseInt(a, 10);
+      router.replace(`/creation/wearable?tab=${tab}&page=${pageTotal}`);
+    } else {
+      window.localStorage.setItem('pageTotal', '1');
+      router.replace(`/creation/wearable?tab=${tab}`);
+    }
 
-   router.replace(`/creation/wearable?tab=${tab}&page=${pageTotal}`);
     // setPageNumber(1)
     // requestData(1, pageCount);
     // if (tab === 'cryptovoxels') {
@@ -292,20 +297,25 @@ console.log(pageTotal);
     setTabStateList(router.query.tab);
 
     // window.localStorage.setItem('pageTotal',router.query.page.toString())
-    const a = window.localStorage.getItem('pageTotal');
-    const pageTotal = parseInt(a, 10);
-    const b = router.query.page.toString();
-    const pageTotalB = parseInt(b, 10);
-    if (pageTotal !== pageTotalB) {
-      window.localStorage.setItem('pageTotal', router.query.page.toString());
-      requestData(pageTotalB, 20);
+    if (router.query.tab === 'cryptovoxels') {
+      const a = window.localStorage.getItem('pageTotal');
+      const pageTotal = parseInt(a, 10);
+      const b = router.query.page.toString();
+      const pageTotalB = parseInt(b, 10);
+      if (pageTotal !== pageTotalB) {
+        window.localStorage.setItem('pageTotal', router.query.page.toString());
+        requestData(pageTotalB, 20);
+      } else {
+        window.localStorage.setItem('pageTotal', router.query.page.toString());
+        requestData(pageTotalB, 20);
+      }
     } else {
-      window.localStorage.setItem('pageTotal', router.query.page.toString());
-      requestData(pageTotalB, 20);
+      requestData(1, 20);
     }
-    setTimeout(() => {
+
+    // setTimeout(() => {
       onTabChangeList(router.query.tab);
-    }, 2000);
+    // }, 2000);
   }, [router.query.tab, router.query.page]);
 
   const renderStatus = React.useMemo(() => {
