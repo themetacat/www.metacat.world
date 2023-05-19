@@ -47,7 +47,7 @@ export default function CreationMonaWearableList({
     const [selecete, setSelecete] = React.useState(false);
     // const [saveIconVal, setSaveIconVal] = React.useState(false);
     const goToDetail = React.useCallback((l, t) => {
-        const res = req_detailWearableMona_list( creator_address,wearable_id)
+        // const res = req_detailWearableMona_list( creator_address,wearable_id)
 
         router.replace(`/wearables/detailMona/?creator_address=${creator_address}&wearable_id=${wearable_id}`);
     }, [wearable_id,creator_address]);
@@ -57,7 +57,7 @@ export default function CreationMonaWearableList({
 
     return (
         <>
-            <div className={styles.container}>
+            <div className={styles.container} onClick={() => { goToDetail(wearable_id, creator_address) }}>
                 <div className={styles.imgBoxCon}><img src={cover_img} alt="" className={styles.boxCon} /></div>
                 <div>
                     {openseaUrl || opensea_url ? (
@@ -74,7 +74,7 @@ export default function CreationMonaWearableList({
                     <div className={styles.title}>{wearable_name}</div>
                     <div className={styles.totalCon}><span className={styles.artist}>Wearable Artist：</span><span className={styles.text}>{creator_name}</span></div>
                 </div>
-                <div className={styles.detailBox} onClick={() => { goToDetail(wearable_id, creator_address) }}>Detail
+                <div className={styles.detailBox} >Detail
                     <img className=" ml-1" src="/images/v5/arrow-simple.png"></img>
                 </div>
             </div>

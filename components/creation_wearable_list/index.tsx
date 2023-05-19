@@ -53,7 +53,8 @@ export default function CreationWearableList({
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
   const goToDetail = React.useCallback(
     (l, t) => {
-      const res = req_detailWearableDcl_list(contract_address, item_id);
+      
+      // const res = req_detailWearableDcl_list(contract_address, item_id);
 
       router.replace(
         `/wearables/detailDcl/?contract_address=${contract_address}&item_id=${item_id}`,
@@ -192,7 +193,9 @@ export default function CreationWearableList({
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container}   onClick={() => {
+              goToDetail(item_id, contract_address);
+            }}>
         <div
           className={cn('relative w-full h-full', styles.imgBoxCon)}
           onMouseEnter={() => {
@@ -233,9 +236,7 @@ export default function CreationWearableList({
           </div>
           <div
             className={styles.detailBox}
-            onClick={() => {
-              goToDetail(item_id, contract_address);
-            }}
+          
           >
             Detail
             <img className=" ml-1" src="/images/v5/arrow-simple.png"></img>
