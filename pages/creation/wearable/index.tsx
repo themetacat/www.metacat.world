@@ -26,7 +26,11 @@ import { convert } from '../../../common/utils';
 
 import { SITE_NAME, META_DESCRIPTION } from '../../../common/const';
 
-import { req_wearableDcl_list, req_wearable_list, req_wearableMona_list } from '../../../service/z_api';
+import {
+  req_wearableDcl_list,
+  req_wearable_list,
+  req_wearableMona_list,
+} from '../../../service/z_api';
 
 import style from './index.module.css';
 
@@ -109,7 +113,6 @@ export default function TopicIndex(props) {
     // },
   ];
 
-
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [builders, setBuilders] = React.useState([]);
@@ -121,7 +124,7 @@ export default function TopicIndex(props) {
   // const [type, setTYPE] = React.useState(null);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [tabState, setTabState] = React.useState('wearable');
-  const [tabStateList, setTabStateList] = React.useState( props.query.tab || 'cryptovoxels' );
+  const [tabStateList, setTabStateList] = React.useState(props.query.tab || 'cryptovoxels');
   const [fixedState, setFixedState] = React.useState(false);
 
   const cls = cn('flex-1', style.bottomLine);
@@ -130,42 +133,39 @@ export default function TopicIndex(props) {
     router.replace(`/creation/${t}`);
   }, []);
 
-//   React.useEffect(() => {
+  //   React.useEffect(() => {
 
-   
-//     const scrollChange = () => {
+  //     const scrollChange = () => {
 
-//         const scrollHeight = document.querySelector('.wearable_contentDecentraland__yCHG0')?.scrollHeight
-//         const clientHeight = document.querySelector('.wearable_contentDecentraland__yCHG0')?.clientHeight
-//         const scrollTop = document.querySelector('.wearable_contentDecentraland__yCHG0')?.scrollTop
-// console.log(scrollChange,clientHeight,scrollTop);
+  //         const scrollHeight = document.querySelector('.wearable_contentDecentraland__yCHG0')?.scrollHeight
+  //         const clientHeight = document.querySelector('.wearable_contentDecentraland__yCHG0')?.clientHeight
+  //         const scrollTop = document.querySelector('.wearable_contentDecentraland__yCHG0')?.scrollTop
+  // console.log(scrollChange,clientHeight,scrollTop);
 
-//         if (scrollTop + clientHeight >= scrollHeight - 1) {
+  //         if (scrollTop + clientHeight >= scrollHeight - 1) {
 
-// //           const resWear =  req_wearableDcl_list(1, 4);
-// //           resWear.then((resWearItrm)=>{
-// //             console.log(resWearItrm);
-// //             wearableList.push(resWearItrm.data)
-// // console.log(wearableList,'wearableList')
+  // //           const resWear =  req_wearableDcl_list(1, 4);
+  // //           resWear.then((resWearItrm)=>{
+  // //             console.log(resWearItrm);
+  // //             wearableList.push(resWearItrm.data)
+  // // console.log(wearableList,'wearableList')
 
-// //           })
-//             // requestData(pageNum, count)
-//         }
+  // //           })
+  //             // requestData(pageNum, count)
+  //         }
 
-//         document.addEventListener('scroll', scrollChange);
-//         return () => document.removeEventListener('scroll', scrollChange);
-//     }
+  //         document.addEventListener('scroll', scrollChange);
+  //         return () => document.removeEventListener('scroll', scrollChange);
+  //     }
 
+  //     window.addEventListener('scroll', scrollChange, true)
+  //     // scrollChange()
+  //     return () => {
+  //         window.removeEventListener('scroll', scrollChange, false)
+  //     }
+  // }, [wearableList]);
 
-//     window.addEventListener('scroll', scrollChange, true)
-//     // scrollChange()
-//     return () => {
-//         window.removeEventListener('scroll', scrollChange, false)
-//     }
-// }, [wearableList]);
-
-
-  const requestData =async (page: number, count: number) => {
+  const requestData = async (page: number, count: number) => {
     setLoading(true);
     setError(false);
     try {
@@ -189,20 +189,19 @@ export default function TopicIndex(props) {
         setTotalPage(total_page);
       } else if (tabStateList === 'decentraland') {
         //  setTimeout(()=>{
-          const resWear = await req_wearableDcl_list(page, count);
-          // resWear.then(()=>{
-          //   setWearableList(resWear.data)
-          //   setTotalPage(resWear.total_page);
-          // })
-          setWearableList(resWear.data)
-          setTotalPage(resWear.total_page);
+        const resWear = await req_wearableDcl_list(page, count);
+        // resWear.then(()=>{
+        //   setWearableList(resWear.data)
+        //   setTotalPage(resWear.total_page);
+        // })
+        setWearableList(resWear.data);
+        setTotalPage(resWear.total_page);
         // },3000)
-        
+
         // console.log(resWear);
       } else if (tabStateList === 'mona') {
-
         const resMona = await req_wearableMona_list(page, count);
-        setWearableListMona(resMona.data)
+        setWearableListMona(resMona.data);
         setTotalPage(resMona.total_page);
       }
       // setTotalPage(total_page);
@@ -211,7 +210,7 @@ export default function TopicIndex(props) {
     } catch (err) {
       setError(true);
     }
-  }
+  };
 
   const onRetry = React.useCallback(() => {
     requestData(pageNumber, pageCount);
@@ -219,38 +218,41 @@ export default function TopicIndex(props) {
 
   const onPageChangeHandler = React.useCallback(
     async (number: number) => {
-     
       const requestNumber = number + 1;
-// window.localStorage.setItem('pageTotal',requestNumber.toString())
-// router.replace(`/creation/wearable?tab=cryptovoxels&&page=${requestNumber}`);
-// if(requestNumber !==1){
-//   // window.location.reload(true)
-// }
+      // window.localStorage.setItem('pageTotal',requestNumber.toString())
+      // router.replace(`/creation/wearable?tab=cryptovoxels&&page=${requestNumber}`);
+      // if(requestNumber !==1){
+      //   // window.location.reload(true)
+      // }
 
-         requestData(requestNumber, pageCount);
-      
+      requestData(requestNumber, pageCount);
+
       // await requestData(pageNumber, pageCount);;
     },
-    [pageCount,tabStateList],
+    [pageCount, tabStateList],
   );
   const onPageChangeHandlerVox = React.useCallback(
     async (number: number) => {
-     
       const requestNumber = number + 1;
-window.localStorage.setItem('pageTotal',requestNumber.toString())
-router.replace(`/creation/wearable?tab=cryptovoxels&page=${requestNumber}`);
-if(requestNumber !==1){
-  // window.location.reload(true)
-}
+      // window.localStorage.setItem('pageTotal',requestNumber.toString())
+      // const a = window.localStorage.getItem('pageTotal');
+      // const pageTotal = parseInt(a, 10);
 
-         requestData(requestNumber, pageCount);
-      
+      router.replace(`/creation/wearable?tab=cryptovoxels&page=${requestNumber}`);
+      window.localStorage.setItem('pageTotal', requestNumber.toString());
+
+      if (requestNumber !== 1) {
+        // window.location.reload(true)
+      }
+
+      requestData(requestNumber, pageCount);
+
       // await requestData(pageNumber, pageCount);;
     },
-    [pageCount,tabStateList],
+    [pageCount, tabStateList, router.query.page],
   );
 
-  const onTabChangeList =  (tab) => {
+  const onTabChangeList = (tab) => {
     // setPageNumber(pageNumber)
     // let subIndex;
     // // if (tabStateList === 'cryptovoxels') {
@@ -259,7 +261,10 @@ if(requestNumber !==1){
     // subIndex = subIndex === -1 ? 0 : subIndex;
     setTabStateList(tab);
     // let sub = '';
-    router.replace(`/creation/wearable?tab=${tab}&page=1`);
+    const a = window.localStorage.getItem('pageTotal');
+    const pageTotal = parseInt(a, 10);
+
+    router.replace(`/creation/wearable?tab=${tab}&page=${pageTotal}`);
     // setPageNumber(1)
     // requestData(1, pageCount);
     // if (tab === 'cryptovoxels') {
@@ -278,27 +283,29 @@ if(requestNumber !==1){
     // }
   };
 
-
-
   // React.useEffect(() => {
   //   requestData(pageNumber, pageCount);
   // }, []);
   React.useEffect(() => {
     // const tab = router.query.tab;
-    setTabStateList(router.query.tab)
-    onTabChangeList(router.query.tab)
-    window.localStorage.setItem('pageTotal','1')
-    const a = window.localStorage.getItem('pageTotal')
-    const pageTotal = parseInt(a, 10);
-    if(pageTotal === 1){
-      requestData(1, 20)
-    }else{
-      requestData(pageTotal, 20)
-    }
-   
-  }, [router.query.tab]);
+    setTabStateList(router.query.tab);
 
-  
+    // window.localStorage.setItem('pageTotal',router.query.page.toString())
+    const a = window.localStorage.getItem('pageTotal');
+    const pageTotal = parseInt(a, 10);
+    const b = router.query.page.toString();
+    const pageTotalB = parseInt(b, 10);
+    if (pageTotal === 1 && pageTotal !== pageTotalB) {
+      window.localStorage.setItem('pageTotal', '1');
+      requestData(1, 20);
+    } else {
+      window.localStorage.setItem('pageTotal', router.query.page.toString());
+      requestData(pageTotalB, 20);
+    }
+    setTimeout(() => {
+      onTabChangeList(router.query.tab);
+    }, 2000);
+  }, [router.query.tab, router.query.page]);
 
   const renderStatus = React.useMemo(() => {
     if (loading) {
@@ -317,18 +324,12 @@ if(requestNumber !==1){
 
       return (
         <>
-          <div
-            className={cn(
-              '',
-              style.buildingsCon,
-            )}
-          >
+          <div className={cn('', style.buildingsCon)}>
             <DaoModelList2
               models={builders}
               type={'topic'}
               address={router.query.id}
             ></DaoModelList2>
-
           </div>
           <PagiNation
             total={totalPage}
@@ -339,8 +340,7 @@ if(requestNumber !==1){
         </>
       );
     }
-
-  }, [loading, error,]);
+  }, [loading, error]);
 
   const renderStatusList = () => {
     if (loading) {
@@ -359,29 +359,36 @@ if(requestNumber !==1){
 
       // return (
       <>
-        
-         <div className={cn('main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center', style.content)}>
-       
-        {
-                wearableList.map((card, idx) => {
-                  const scenes = [];
-                  return <CreationWearableList   
-                  initFinish={(se) => {
-                    scenes.push(se);
-                  }}  graphicId={idx} {...card} key={idx} model={wearableList} />
-                })
-              }
+        <div
+          className={cn(
+            'main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center',
+            style.content,
+          )}
+        >
+          {wearableList.map((card, idx) => {
+            const scenes = [];
+            return (
+              <CreationWearableList
+                initFinish={(se) => {
+                  scenes.push(se);
+                }}
+                graphicId={idx}
+                {...card}
+                key={idx}
+                model={wearableList}
+              />
+            );
+          })}
         </div>
         <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-      </>
+          total={totalPage}
+          pageNumber={pageNumber - 1}
+          pageSize={9}
+          pageChange={onPageChangeHandler}
+        />
+      </>;
       // );
     }
-
   };
 
   // React.useEffect(() => {
@@ -408,7 +415,7 @@ if(requestNumber !==1){
             id="switch"
           >
             <div className={cls}></div>
-            <div className={cn("main-content flex px-0")}>
+            <div className={cn('main-content flex px-0')}>
               {TAB.map((item, index) => {
                 return (
                   <Tab
@@ -431,14 +438,16 @@ if(requestNumber !==1){
             <div className={style.title}>Metaverse Wearable</div>
             <div className={style.text}>
               <div className={style.hengxian}></div>
-              <div className={style.t}>ALL THE GENIUS VIRTUAL OUTFITS FOR DRESSING UP YOUR AVATAR</div>
+              <div className={style.t}>
+                ALL THE GENIUS VIRTUAL OUTFITS FOR DRESSING UP YOUR AVATAR
+              </div>
               <div className={style.hengxian}></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className={cn("flex px-0 relative", style.headNum)}>
+      <div className={cn('flex px-0 relative', style.headNum)}>
         {TABList.map((item, index) => {
           return (
             <div
@@ -464,71 +473,77 @@ if(requestNumber !==1){
         })}
       </div>
       {/* <div className={cn('main-content', style.content)}>{renderStatusList}</div> */}
-      {
-        tabStateList === 'cryptovoxels'  ?
-          <div className={cn('main-content', style.content)}>{renderStatus}</div>
-          : null
-      }
-      {
-        tabStateList === 'decentraland' ?
-          <>
-              <div className={cn('main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center', style.contentDecentraland)}>
-              {/* {renderStatusList} */}
-              {
-                wearableList.map((card, idx) => {
-                  const scenes = [];
-                  return <CreationWearableList   
+      {tabStateList === 'cryptovoxels' ? (
+        <div className={cn('main-content', style.content)}>{renderStatus}</div>
+      ) : null}
+      {tabStateList === 'decentraland' ? (
+        <>
+          <div
+            className={cn(
+              'main-content grid grid-cols-1   lg:grid-cols-4  gap-5  justify-center',
+              style.contentDecentraland,
+            )}
+          >
+            {/* {renderStatusList} */}
+            {wearableList.map((card, idx) => {
+              const scenes = [];
+              return (
+                <CreationWearableList
                   initFinish={(se) => {
                     scenes.push(se);
-                  }}  graphicId={idx}  {...card} key={idx} model={wearableList} />
-                })
-              }
-            </div>
-            <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-          </>
-          : null
-      }
-      {
-        tabStateList === 'mona' ?
-          <>
-            <div className={cn('main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center', style.content)}>
-              {/* {renderStatusList} */}
-              {
-                wearableListMona.map((card, idx) => {
-                  return <CreationMonaWearableList {...card} key={idx} model={wearableListMona} />
-                })
-              }
-            </div>
-            <PagiNation
-              total={totalPage}
-              pageNumber={pageNumber - 1}
-              pageSize={9}
-              pageChange={onPageChangeHandler}
-            />
-          </>
-          : null
-      }
+                  }}
+                  graphicId={idx}
+                  {...card}
+                  key={idx}
+                  model={wearableList}
+                />
+              );
+            })}
+          </div>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+        </>
+      ) : null}
+      {tabStateList === 'mona' ? (
+        <>
+          <div
+            className={cn(
+              'main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center',
+              style.content,
+            )}
+          >
+            {/* {renderStatusList} */}
+            {wearableListMona.map((card, idx) => {
+              return <CreationMonaWearableList {...card} key={idx} model={wearableListMona} />;
+            })}
+          </div>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+        </>
+      ) : null}
 
-
-      <Footer iconImgLight={false}/>
+      <Footer iconImgLight={false} />
     </Page>
   );
 }
 export async function getServerSideProps({ locale = 'en-US', query }) {
   return {
-      props: {
-          messages: {
-              ...require(`../../../messages/common/${locale}.json`),
-              ...require(`../../../messages/index/${locale}.json`),
-          },
-          now: new Date().getTime(),
-          locale,
-          query,
+    props: {
+      messages: {
+        ...require(`../../../messages/common/${locale}.json`),
+        ...require(`../../../messages/index/${locale}.json`),
       },
+      now: new Date().getTime(),
+      locale,
+      query,
+    },
   };
 }
