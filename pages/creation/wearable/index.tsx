@@ -263,8 +263,9 @@ export default function TopicIndex(props) {
     // let sub = '';
     const a = window.localStorage.getItem('pageTotal');
     const pageTotal = parseInt(a, 10);
+console.log(pageTotal);
 
-    router.replace(`/creation/wearable?tab=${tab}&page=${pageTotal}`);
+   router.replace(`/creation/wearable?tab=${tab}&page=${pageTotal}`);
     // setPageNumber(1)
     // requestData(1, pageCount);
     // if (tab === 'cryptovoxels') {
@@ -295,9 +296,9 @@ export default function TopicIndex(props) {
     const pageTotal = parseInt(a, 10);
     const b = router.query.page.toString();
     const pageTotalB = parseInt(b, 10);
-    if (pageTotal === 1 && pageTotal !== pageTotalB) {
-      window.localStorage.setItem('pageTotal', '1');
-      requestData(1, 20);
+    if (pageTotal !== pageTotalB) {
+      window.localStorage.setItem('pageTotal', router.query.page.toString());
+      requestData(pageTotalB, 20);
     } else {
       window.localStorage.setItem('pageTotal', router.query.page.toString());
       requestData(pageTotalB, 20);
