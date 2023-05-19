@@ -188,7 +188,7 @@ export default function WearablesDetail({ artwork, artist, id }) {
   return (
     <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className="bg-black relative">
-        <PageHeader className="relative z-10" active={'wearables'} />
+        <PageHeader className="relative z-10"  active={'Build'} />
       </div>
 
       <div

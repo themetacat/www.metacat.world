@@ -170,7 +170,7 @@ export default function CreationWearableList({
     return (
         <Page className="min-h-screen" meta={meta}>
             <div className={cn('', fixedState ? style.fix1 : null)}>
-                <PageHeader className="relative z-10" active={'wearables'} />
+                <PageHeader className="relative z-10" active={'Build'} />
             </div>
             <div
                 className={cn('main-content flex flex-col justify-start items-start mt-5', style.content)}
