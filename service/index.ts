@@ -40,6 +40,56 @@ export const getOncyberParcelList = async (page: number, count: number, query: s
   return json;
 };
 
+export const getViverseParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/viverse_worlds_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getCreateraParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/createra_space_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getMuseParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/muse_space_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getSwivelmetaParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/swivelmeta_space_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getMocaParcelList = async (page: number, count: number, query: string, type: string) => {
+  const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
+  const url = `/api/moca_room_list${search}`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getProtoParcelList = async (page: number, count: number, query: string, type: string) => {
   const search = qs.stringify({ page, count, query, type}, { addQueryPrefix: true });
   const url = `/api/prooto-parcel-list${search}`;
@@ -304,6 +354,13 @@ export const getCvPriceMapLevelThree = async () => {
 
 export const getCvPriceMapLevelOne = async () => {
   const url = `https://api.metacat.world/api/v1/get_cv_price_map_level_one`; // /api/cv_traffic_map_level_three;
+  const res = await fetch(url);
+  const json = await res.json();
+  return json;
+};
+
+export const getNetVrkMap = async () => {
+  const url = `http://8.130.23.16/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
   const res = await fetch(url);
   const json = await res.json();
   return json;

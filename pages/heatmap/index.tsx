@@ -35,6 +35,9 @@ const DecentralandMap = dynamic(() => import('../../components/decentraland-map'
 const SandboxMap = dynamic(() => import('../../components/sandbox-map'), {
   ssr: false,
 });
+const NetVrkLandMap = dynamic(() => import('../../components/netvrk_land_map'), {
+  ssr: false,
+});
 
 const SomniumMap = dynamic(() => import('../../components/somnium-map'), {
   ssr: false,
@@ -86,6 +89,11 @@ const TAB = [
     icon: '/images/tz1and.png',
     type: 'tz1and',
   },
+  // {
+  //   label: 'Netvrk',
+  //   icon: '/images/tz1and.png',
+  //   type: 'netvrk',
+  // },
 ];
 
 export default function MapPage(props) {
@@ -232,6 +240,22 @@ export default function MapPage(props) {
           }}
           backColor="#000"
         ></TzLandMap>
+      );
+    }
+    if (mapType === 'netvrk') {
+      return (
+        <NetVrkLandMap
+          // fullScreenOnClick={showFull}
+          // zoomControl={true}
+          // zoomLimit={[3, 9]}
+          // dragging={true}
+          // initZoom={4}
+          // defaultStatic={staticType}
+          // loadFinish={() => {
+          //   setLoading(false);
+          // }}
+          // backColor="#000"
+        ></NetVrkLandMap>
       );
     }
 

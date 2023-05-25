@@ -473,6 +473,7 @@ function OtherSideMap({
 
         const insMesh = new InstancedMesh(insGeometry, pointsMaterial, parcels.length);
         const transform = new Object3D();
+        
         const allAttr = [];
         for (let i = 0; i < parcels.length; i += 1) {
           const x = parcels[i].properties.coordinates[0] - orgCenter[0];
