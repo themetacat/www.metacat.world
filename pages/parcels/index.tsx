@@ -397,6 +397,11 @@ export default function Index(props) {
   const [typeState, setTypeState] = React.useState(props.query.type || 'All');
   const [typeList, setTypeList] = React.useState([]);
   const [typeListMona, setTypeListMona] = React.useState([]);
+  const [typeListViverse, setTypeListViverse] = React.useState([]);
+  const [typeListCreatera, setTypeListCreatera] = React.useState([]);
+  const [typeListMuse, setTypeListMuse] = React.useState([]);
+  const [typeListSwivelmeta, setTypeListSwivelmeta] = React.useState([]);
+  const [typeListMoca, setTypeListMoca] = React.useState([]);
   const [typeListOncyber, setTypeListOncyber] = React.useState([]);
   const [typeListProto, setTypeListProto] = React.useState([]);
   const [typeListRare, setTypeListRare] = React.useState([]);
@@ -616,7 +621,7 @@ export default function Index(props) {
           const res = await getSwivelmetaParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           setDataSourceSwivelmeta(res.data.parcel_list)
-          setTypeListMona(type_total)
+          setTypeListSwivelmeta(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
         }
@@ -627,7 +632,7 @@ export default function Index(props) {
           const res = await getMuseParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           setDataSourceMuse(res.data.parcel_list)
-          setTypeListMona(type_total)
+          setTypeListMuse(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
         }
@@ -638,7 +643,7 @@ export default function Index(props) {
           const res = await getCreateraParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           setDataSourceCreatera(res.data.parcel_list)
-          setTypeListMona(type_total)
+          setTypeListCreatera(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
         }
@@ -649,7 +654,7 @@ export default function Index(props) {
           const res = await getViverseParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           setDataSourceViverse(res.data.parcel_list)
-          setTypeListMona(type_total)
+          setTypeListViverse(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
         }
@@ -660,7 +665,7 @@ export default function Index(props) {
           const res = await getMocaParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
           setDataSourceMoca(res.data.parcel_list)
-          setTypeListMona(type_total)
+          setTypeListMoca(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
         }
@@ -3281,6 +3286,31 @@ export default function Index(props) {
             {tabState === 'mona' ? (
               <div style={{ marginTop: "20px" }}>
                 <SwiperTagParcels {...typeListMona} onActive={onTypeChangeHandler} tags={typeListMona} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'viverse' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListViverse} onActive={onTypeChangeHandler} tags={typeListViverse} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'createra' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListCreatera} onActive={onTypeChangeHandler} tags={typeListCreatera} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'muse' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListMuse} onActive={onTypeChangeHandler} tags={typeListMuse} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'swivelmeta' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListSwivelmeta} onActive={onTypeChangeHandler} tags={typeListSwivelmeta} label={typeState} />
+              </div>
+            ) : ''}
+            {tabState === 'moca' ? (
+              <div style={{ marginTop: "20px" }}>
+                <SwiperTagParcels {...typeListMoca} onActive={onTypeChangeHandler} tags={typeListMoca} label={typeState} />
               </div>
             ) : ''}
             {tabState === 'oncyber' ? (
