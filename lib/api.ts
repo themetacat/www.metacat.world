@@ -56,6 +56,76 @@ class API {
     return json;
   }
 
+  public async getMocaParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_moca_room_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getSwivelmetaParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_swivelmeta_space_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getMuseParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_muse_space_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+  
+  public async getCreateraParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_createra_space_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getViverseParcelList(
+    page: number,
+    count: number,
+    query: string,
+    type: string,
+  ): Promise<any> {
+    const search = qs.stringify({ page, count , query, type}, { addQueryPrefix: true });
+    const url = `${this.url}/get_viverse_worlds_list${search}`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getProtoParcelList(
     page: number,
     count: number,
@@ -405,6 +475,14 @@ class API {
 
   public async getCvPriceMapLevelOne(): Promise<any> {
     const url = `${this.url}/get_cv_price_map_level_one`; // `${this.url}/get_cv_traffic_map_level_three`;
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+  
+  public async getNetVrkMap(): Promise<any> {
+    const url = `${this.url}/get_netvrk_price_map`; // `${this.url}/get_cv_traffic_map_level_three`;
     const res = await fetch(url);
     const json = await res.json();
 

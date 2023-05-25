@@ -79,6 +79,12 @@ import {
   refreshToken,
   getBaseInfo,
   getMonaParcelList,
+  getViverseParcelList,
+getCreateraParcelList,
+getMuseParcelList,
+getSwivelmetaParcelList,
+getMocaParcelList,
+
 } from '../../service';
 
 
@@ -150,6 +156,36 @@ const TAB = [
     icon: 'https://oncyber.io/images/logo.png',
     type: 'oncyber',
     link: '/parcels?tab=oncyber',
+  },
+  {
+    label: 'MoCA',
+    icon: 'https://rooms.museumofcryptoart.com/_next/static/media/moca-logo.d31b8d61.svg',
+    type: 'moca',
+    link: '/parcels?tab=moca',
+  },
+  {
+    label: 'Swivelmeta',
+    icon: 'https://uploads-ssl.webflow.com/6264fde21ad96bbae92b6810/627e74272361a5f78c4beb54_Favicon%20Logo_SwivelMeta_32x32.png',
+    type: 'swivelmeta',
+    link: '/parcels?tab=swivelmeta',
+  },
+  {
+    label: 'Muse',
+    icon: 'https://www.muse.place/favicon-32x32.png',
+    type: 'muse',
+    link: '/parcels?tab=muse',
+  },
+  {
+    label: 'Createra',
+    icon: 'https://createra.fun/activities/news/official.jpg',
+    type: 'createra',
+    link: '/parcels?tab=createra',
+  },
+  {
+    label: 'Viverse',
+    icon: 'https://www.viverse.com/images/viverse-logo-newS.svg',
+    type: 'viverse',
+    link: '/parcels?tab=viverse',
   },
   {
     label: 'Mona',
@@ -386,6 +422,11 @@ export default function Index(props) {
   const [dataSourceSomSpace, setDataSourceSomSpace] = React.useState([]);
   const [dataSourceWr3ld, setDataSourceWr3ld] = React.useState([]);
   const [dataSourceMona, setDataSourceMona] = React.useState([]);
+  const [dataSourceMoca, setDataSourceMoca] = React.useState([]);
+  const [dataSourceSwivelmeta, setDataSourceSwivelmeta] = React.useState([]);
+  const [dataSourceMuse, setDataSourceMuse] = React.useState([]);
+  const [dataSourceCreatera, setDataSourceCreatera] = React.useState([]);
+  const [dataSourceViverse, setDataSourceViverse] = React.useState([]);
   const [dataSourceOrcyber, setDataSourceOrcyber] = React.useState([]);
   const [dataSourceProto, setDataSourceProto] = React.useState([]);
   const [dataSourceRare, setDataSourceRare] = React.useState([]);
@@ -400,6 +441,7 @@ export default function Index(props) {
   const [dataSourceSandbox, setDataSourceSandbox] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [hasMore, setHasMore] = React.useState(true);
+
 
   const [percent, setPercent] = React.useState(0);
   const [tabPercent, setTabPercent] = React.useState(0);
@@ -557,31 +599,74 @@ export default function Index(props) {
 
 
         }
-      } else if (tab === 'mona') {
+      } 
+      else if (tab === 'mona') {
         if (subTab === 'parcel') {
           const res = await getMonaParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
-
-          // const typeArray = type_total.map((item) => {
-          //   const name = item.name;
-          //   const count = item.name;
-          //   return { name, count };
-
-
-          // });
           setDataSourceMona(res.data.parcel_list)
-
           setTypeListMona(type_total)
           setPageNumber(currentPage);
           setTotalPage(total_page);
-
-          // if (needUpdateTypeList) {
-          //   setTypeList(type_total);
-          // }
-          // data = parcel_list;
         }
 
-      } else if (tab === 'oncyber') {
+      } 
+      else if (tab === 'swivelmeta') {
+        if (subTab === 'parcel') {
+          const res = await getSwivelmetaParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceSwivelmeta(res.data.parcel_list)
+          setTypeListMona(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+
+      } 
+      else if (tab === 'muse') {
+        if (subTab === 'parcel') {
+          const res = await getMuseParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceMuse(res.data.parcel_list)
+          setTypeListMona(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+
+      } 
+      else if (tab === 'createra') {
+        if (subTab === 'parcel') {
+          const res = await getCreateraParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceCreatera(res.data.parcel_list)
+          setTypeListMona(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+
+      } 
+      else if (tab === 'viverse') {
+        if (subTab === 'parcel') {
+          const res = await getViverseParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceViverse(res.data.parcel_list)
+          setTypeListMona(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+
+      } 
+      else if (tab === 'moca') {
+        if (subTab === 'parcel') {
+          const res = await getMocaParcelList(page, 40, query, type);
+          const { parcel_list, total_page, type_total, page: currentPage } = res.data;
+          setDataSourceMoca(res.data.parcel_list)
+          setTypeListMona(type_total)
+          setPageNumber(currentPage);
+          setTotalPage(total_page);
+        }
+
+      } 
+      else if (tab === 'oncyber') {
         if (subTab === 'parcel') {
           const res = await getOncyberParcelList(page, 40, query, type);
           const { parcel_list, total_page, type_total, page: currentPage } = res.data;
@@ -869,6 +954,21 @@ export default function Index(props) {
     else if (tabState === 'mona') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
+    else if (tabState === 'moca') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'swivelmeta') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'muse') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'viverse') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
+    else if (tabState === 'createra') {
+      subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
+    }
     else if (tabState === 'protoworld') {
       subIndex = SUBTABSomSpace.findIndex((item) => item.type === subTabState);
     }
@@ -929,7 +1029,8 @@ export default function Index(props) {
     setSubTabState(SUBTABSomSpace[subIndex]?.type);
     router.replace(`/parcels?tab=w3rld`);
     // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
-  } else if (tab === 'mona') {
+  } 
+  else if (tab === 'mona') {
 
 
       sub = SUBTAB[subIndex]?.type;
@@ -938,7 +1039,58 @@ export default function Index(props) {
       router.replace(`/parcels?tab=mona`);
       // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
 
-    } else if (tab === 'protoworld') {
+    } 
+  else if (tab === 'moca') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=moca`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } 
+  else if (tab === 'swivelmeta') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=swivelmeta`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } 
+  else if (tab === 'muse') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=muse`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } 
+  else if (tab === 'createra') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=createra`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } 
+  else if (tab === 'viverse') {
+
+
+      sub = SUBTAB[subIndex]?.type;
+      setSubTabState(SUBTABMona[subIndex]?.type);
+
+      router.replace(`/parcels?tab=viverse`);
+      // router.replace(`/parcels?tab=decentraland&subTab=${SUBTABDECE[subIndex]?.type}`);
+
+    } 
+    else if (tab === 'protoworld') {
 
 
       sub = SUBTAB[subIndex]?.type;
@@ -1431,6 +1583,131 @@ export default function Index(props) {
               )}
             >
               {dataSourceMona.map((card, idx) => {
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'viverse') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceViverse.map((card, idx) => {
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'moca') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceMoca.map((card, idx) => {
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'swivelmeta') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceSwivelmeta.map((card, idx) => {
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'muse') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceMuse.map((card, idx) => {
+
+                return <Card {...card} typeState={typeState} key={uuid()}></Card>;
+              })}
+            </div>
+            <div className={style.pagiNation}>
+              <PagiNation
+                total={totalPage}
+                pageNumber={pageNumber - 1}
+                pageSize={9}
+                pageChange={onPageChangeHandler}
+              />
+            </div>
+          </>
+        )
+      }
+      if (tabState === 'createra') {
+        return (
+          <>
+            <div
+              className={cn(
+                'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5',
+                style.bottomContent,
+              )}
+            >
+              {dataSourceCreatera.map((card, idx) => {
 
                 return <Card {...card} typeState={typeState} key={uuid()}></Card>;
               })}

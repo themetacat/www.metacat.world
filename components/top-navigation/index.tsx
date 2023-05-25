@@ -104,6 +104,36 @@ const parcels = [
     link: '/parcels?tab=mona',
   },
   {
+    label: 'MoCA',
+    icon: 'https://rooms.museumofcryptoart.com/_next/static/media/moca-logo.d31b8d61.svg',
+    type: 'moca',
+    link: '/parcels?tab=moca',
+  },
+  {
+    label: 'Swivelmeta',
+    icon: 'https://uploads-ssl.webflow.com/6264fde21ad96bbae92b6810/627e74272361a5f78c4beb54_Favicon%20Logo_SwivelMeta_32x32.png',
+    type: 'swivelmeta',
+    link: '/parcels?tab=swivelmeta',
+  },
+  {
+    label: 'Muse',
+    icon: 'https://www.muse.place/favicon-32x32.png',
+    type: 'muse',
+    link: '/parcels?tab=muse',
+  },
+  {
+    label: 'Createra',
+    icon: 'https://createra.fun/activities/news/official.jpg',
+    type: 'createra',
+    link: '/parcels?tab=createra',
+  },
+  {
+    label: 'Viverse',
+    icon: 'https://www.viverse.com/images/viverse-logo-newS.svg',
+    type: 'viverse',
+    link: '/parcels?tab=viverse',
+  },
+  {
     label: 'Protoworld',
     icon: '/images/protoworld.png',
     type: 'protoworld',
