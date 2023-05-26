@@ -21,6 +21,7 @@ import Tab from '../../../components/tab';
 import AnimationBack from '../../../components/animation-back';
 import CreationWearableList from '../../../components/creation_wearable_list';
 import CreationMonaWearableList from '../../../components/creation_monaWear_list';
+import CreationNifyWearableList from '../../../components/creation_nifyWear_list';
 
 import { convert } from '../../../common/utils';
 
@@ -30,6 +31,7 @@ import {
   req_wearableDcl_list,
   req_wearable_list,
   req_wearableMona_list,
+  req_wearableNiftyIsland_list,
 } from '../../../service/z_api';
 
 import style from './index.module.css';
@@ -81,6 +83,11 @@ export default function TopicIndex(props) {
       icon: 'https://monaverse.com/branding/mona-logo-white.svg',
       type: 'mona',
     },
+    {
+      label: 'NiftyIsland',
+      icon: '/images/NiftyIsland.png',
+      type: 'niftyIsland',
+    },
     // {
     //   label: 'The Sandbox',
     //   icon: '/images/home-icon.svg',
@@ -118,6 +125,7 @@ export default function TopicIndex(props) {
   const [builders, setBuilders] = React.useState([]);
   const [wearableList, setWearableList] = React.useState([]);
   const [wearableListMona, setWearableListMona] = React.useState([]);
+  const [wearableListNiftyIsland, setWearableListNiftyIsland] = React.useState([]);
   const [pageCount, setPageCount] = React.useState(20);
   const [totalPage, setTotalPage] = React.useState(1);
   // const [query, setQuery] = React.useState(null);
@@ -187,7 +195,8 @@ export default function TopicIndex(props) {
 
         setBuilders(convert(data));
         setTotalPage(total_page);
-      } else if (tabStateList === 'decentraland') {
+      } 
+      else if (tabStateList === 'decentraland') {
         //  setTimeout(()=>{
         const resWear = await req_wearableDcl_list(page, count);
         // resWear.then(()=>{
@@ -199,10 +208,16 @@ export default function TopicIndex(props) {
         // },3000)
 
         // console.log(resWear);
-      } else if (tabStateList === 'mona') {
+      } 
+      else if (tabStateList === 'mona') {
         const resMona = await req_wearableMona_list(page, count);
         setWearableListMona(resMona.data);
         setTotalPage(resMona.total_page);
+      }
+      else if (tabStateList === 'niftyIsland') {
+        const resNIFTY = await req_wearableNiftyIsland_list(page, count);
+        setWearableListNiftyIsland(resNIFTY.data);
+        setTotalPage(resNIFTY.total_page);
       }
       // setTotalPage(total_page);
       setPageNumber(page);
@@ -530,6 +545,27 @@ export default function TopicIndex(props) {
             {/* {renderStatusList} */}
             {wearableListMona.map((card, idx) => {
               return <CreationMonaWearableList {...card} key={idx} model={wearableListMona} />;
+            })}
+          </div>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+        </>
+      ) : null}
+      {tabStateList === 'niftyIsland' ? (
+        <>
+          <div
+            className={cn(
+              'main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center',
+              style.content,
+            )}
+          >
+            {/* {renderStatusList} */}
+            {wearableListNiftyIsland.map((card, idx) => {
+              return <CreationNifyWearableList {...card} key={idx} model={wearableListNiftyIsland} />;
             })}
           </div>
           <PagiNation

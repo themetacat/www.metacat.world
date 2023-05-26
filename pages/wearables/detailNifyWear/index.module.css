@@ -1,0 +1,115 @@
+.fix1 {
+    position: fixed;
+    left: 0;
+    margin: 0 auto;
+    width: 100%;
+    background: #000;
+    z-index: 11;
+    opacity: 1;
+    background-image: url('/images/imgConent/biaotilan.png')
+  }
+  .graphicAll{
+    height: 500px !important;
+    width: 500px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding-left: 20px; */
+  }
+  .content {
+    min-height: 650px;
+    padding: 30px;
+    flex: 1 auto;
+    position: relative;
+    margin-top: 60px;
+  }
+  .headerBox{
+      display: flex;
+      margin: 20px 0px;
+  }
+  .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: rgba(0, 208, 236, 0.2);
+    padding: 5px;
+  }
+.authorName{
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #666666;
+    cursor: pointer;
+}
+.headerBox>img{
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    filter: brightness(75%);
+}
+
+.productionName{
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+  .imgBox{
+      width: 500px;
+      height: 500px;
+      /* background: linear-gradient(0deg, #131A1B, #131A1B), url(image.png); */
+border-radius: 16px !important;
+  }
+  .container{
+    padding: 15px 15px 0px 15px;
+    position: relative !important;
+
+  }
+  .instructionBox{
+    margin-right: 20px;
+    width: 630px;
+    position: absolute;
+    bottom:200px;
+    right: -10px;
+}
+  .productionName1{
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    align-items: center;
+    color: #FFFFFF;
+    margin-top: 30px;
+    display: inline-block;
+  }
+  .inst{
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    align-items: center;
+    color: #999999;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  .infoRow {
+    background-color: rgba(0, 208, 236, 0.05);
+  }
+  .createrName{
+    font-family: 'PingFang SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    align-items: center;
+    text-align: right;
+    letter-spacing: -0.019em;
+    color: #666666;
+  }

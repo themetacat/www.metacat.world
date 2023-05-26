@@ -104,7 +104,7 @@ export default function Builders() {
   const onTabChange = React.useCallback((t) => {
     setTabState(t);
     if (t === 'wearable') {
-      router.replace(`/creation/wearable?tab=cryptovoxels`);
+      router.replace(`/creation/wearable?tab=cryptovoxels&page=1`);
     } else {
       router.replace(`/creation/${t}`);
     }
