@@ -83,11 +83,11 @@ export default function TopicIndex(props) {
       icon: 'https://monaverse.com/branding/mona-logo-white.svg',
       type: 'mona',
     },
-    {
-      label: 'NiftyIsland',
-      icon: '/images/NiftyIsland.png',
-      type: 'niftyIsland',
-    },
+    // {
+    //   label: 'NiftyIsland',
+    //   icon: '/images/NiftyIsland.png',
+    //   type: 'niftyIsland',
+    // },
     // {
     //   label: 'The Sandbox',
     //   icon: '/images/home-icon.svg',
