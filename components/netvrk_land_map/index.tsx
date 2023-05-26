@@ -99,7 +99,7 @@ console.log(resDA.data.parcels);
     // console.log( shapeTal.shape.map((item) => console.log(item));
     // const size = 25; // 正方形大小
     const area =  resDA.data.parcels.map((item)=>{
-      // console.log(item);
+      // console.log(item)
       const { weight, height } = item.properties;
     
       return weight * height;

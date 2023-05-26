@@ -1327,6 +1327,20 @@ export const req_wearableMona_list = async (page: number, count: number,
   return json;
 };
 
+export const req_wearableNiftyIsland_list = async (page: number, count: number,
+  ) => {
+  const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+  const url = `/api/get_wearableNiftyIsland_list_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
 export const req_detailWearableDcl_list = async (contract_address, item_id,
   ) => {
   const search = qs.stringify({ contract_address, item_id, }, { addQueryPrefix: true });
@@ -1345,6 +1359,20 @@ export const req_detailWearableMona_list = async (creator_address,wearable_id,
   ) => {
   const search = qs.stringify({creator_address,  wearable_id, }, { addQueryPrefix: true });
   const url = `/api/get_wearableMonaDetail_list${search}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+  });
+
+  const json = await result.json();
+
+  return json;
+};
+
+export const req_detailNiftyisland_list = async (avatar_id
+  ) => {
+  const search = qs.stringify({avatar_id }, { addQueryPrefix: true });
+  const url = `/api/get_wearableNiftyisland_listDetail_list${search}`;
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',

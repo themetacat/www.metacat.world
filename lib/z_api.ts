@@ -1322,6 +1322,22 @@ class API {
     return json;
   }
 
+  public async req_wearableNiftyIsland_list(page: number, count: number,
+    //  world: string,
+  ) {
+    const search = qs.stringify({ page, count }, { addQueryPrefix: true });
+    // const url = `${this.url}/wearable/get_mona_wearable_list${search}`;
+    const url = `${this.url}/wearable/get_niftyisland_avatars_list${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
   public async req_detailWearableDcl_list(contract_address, item_id,
   ) {
     const search = qs.stringify({ contract_address, item_id }, { addQueryPrefix: true });
@@ -1340,6 +1356,20 @@ class API {
   ) {
     const search = qs.stringify({ creator_address, wearable_id }, { addQueryPrefix: true });
     const url = `${this.url}/wearable/get_mona_wearable_detail${search}`;
+    const result = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+
+    const json = await result.json();
+
+    return json;
+  }
+
+  public async req_detailNiftyisland_list( avatar_id,
+  ) {
+    const search = qs.stringify({  avatar_id }, { addQueryPrefix: true });
+    const url = `${this.url}/wearable/get_niftyisland_avatar_detail${search}`;
     const result = await fetch(url, {
       method: 'get',
       mode: 'cors',
