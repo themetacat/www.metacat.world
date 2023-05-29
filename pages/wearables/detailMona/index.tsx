@@ -15,7 +15,7 @@ import Page from '../../../components/page';
 import PageHeader from '../../../components/top-nav';
 
 import { req_detailWearableMona_list } from '../../../service/z_api';
-
+import Footer from '../../../components/footer';
 
 import style from './index.module.css';
 
@@ -233,6 +233,7 @@ export default function CreationWearableList({
 
                 </div>
             </div>
+            <Footer iconImgLight={false}/>
         </Page>
     );
 }
