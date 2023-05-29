@@ -113,3 +113,8 @@ border-radius: 16px !important;
     letter-spacing: -0.019em;
     color: #666666;
   }
+  .fooBox{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+  }
