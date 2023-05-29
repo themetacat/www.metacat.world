@@ -239,7 +239,9 @@ export default function CreationWearableList({
           </div>
         </div>
       </div>
-      <Footer iconImgLight={false}/>
+      <div className={cn('',style.fooBox)}>
+      <Footer  iconImgLight={false}/>
+      </div>
     </Page>
   );
 }
