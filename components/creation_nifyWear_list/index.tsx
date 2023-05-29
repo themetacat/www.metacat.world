@@ -57,7 +57,10 @@ export default function CreationNifyWearableList({
     },
     [avatar_id],
   );
-
+  React.useEffect(() => {
+ 
+    // reqWearableList
+  }, [cover_img]);
   
   const togglePlay = () => {
     const video = videoRef.current;
@@ -70,6 +73,13 @@ export default function CreationNifyWearableList({
     }
   };
 
+  React.useEffect(() => {
+    // cover_img 属性发生变化时更换 src 属性
+    if (videoRef && videoRef.current) {
+      videoRef.current.src = cover_img;
+      videoRef.current.load();
+    }
+  }, [cover_img]);
   const handleEnded = () => {
     videoRef.current.currentTime = 0;
     videoRef.current.play();
@@ -82,9 +92,11 @@ export default function CreationNifyWearableList({
       
       >
         <div className={styles.imgBoxCon}>
+      
           <video id="my-video"  className={styles.boxCon} ref={videoRef}  onEnded={handleEnded}>
-            <source src={cover_img} type="video/mp4" />
-          </video>
+          <source src={cover_img} type="video/mp4" />
+        </video>
+          
           <div id="my-controls"  >
             <button id="play-pause-btn" onClick={togglePlay} className={styles.transmit}>   {isPlaying ? <img src='/images/icon/zanting.png' ></img> : <img src='/images/icon/bofang.png'></img>}</button>
           </div>
