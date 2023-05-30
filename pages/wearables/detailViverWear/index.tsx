@@ -15,7 +15,7 @@ import Page from '../../../components/page';
 // import PageHeader from '../../../components/top-navigation';
 import PageHeader from '../../../components/top-nav';
 
-import { req_detailNiftyisland_list } from '../../../service/z_api';
+import { req_detailViverse_list } from '../../../service/z_api';
 import Footer from '../../../components/footer';
 import style from './index.module.css';
 
@@ -62,9 +62,10 @@ export default function CreationWearableList({
   const [contact, setContact] = React.useState(null);
   // const [saveIconVal, setSaveIconVal] = React.useState(false);
 
+  
   const reqWearableList =  React.useMemo(() => {
-    if(router.query.avatar_id){
-    const res = req_detailNiftyisland_list(router.query.avatar_id);
+    if(router.query.wearable_id){
+    const res = req_detailViverse_list(router.query.wearable_id);
     res.then((resWear) => {
       setCoverImgBo(resWear.data.cover_img);
       setCreatorName(resWear.data.creator_name);
@@ -75,7 +76,7 @@ export default function CreationWearableList({
       setContact(resWear.data.contact);
     });
 }
-}, [router.query.avatar_id]);
+}, [router.query.wearable_id]);
 
   React.useEffect(() => {
     const listener = () => {
@@ -106,7 +107,7 @@ export default function CreationWearableList({
     //     });
     // }
     reqWearableList
-  }, [router.query.avatar_id]);
+  }, [router.query.wearable_id]);
 
 
   return (
@@ -124,7 +125,7 @@ export default function CreationWearableList({
         </div>
 {
     coverImgBo?<div className={style.container}>
-    <video width="500" height="500" controls ref={videoRef} >
+    <video width="500" height="500"  className={style.conVideo} controls ref={videoRef} >
       <source src={coverImgBo} type="video/mp4" />
     </video>
   </div>:null

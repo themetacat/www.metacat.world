@@ -160,7 +160,7 @@ export default function CreationWearableList({
   };
 
   return (
-    <Page className="min-h-screen" meta={meta}>
+    <Page className={cn('min-h-screen flex flex-col', style.anPage)} meta={meta}>
       <div className={cn('', fixedState ? style.fix1 : null)}>
         <PageHeader className="relative z-10"  active={'Build'} iconImgLight={false}/>
       </div>

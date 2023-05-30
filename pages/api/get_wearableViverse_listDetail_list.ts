@@ -1,0 +1,10 @@
+import api from '../../lib/z_api';
+
+export default async (req, res) => {
+ 
+  const { wearable_id} = req.query;
+  const data = await api.req_detailViverse_list( wearable_id);
+  res.statusCode = 200;
+
+  res.json(data);
+};
