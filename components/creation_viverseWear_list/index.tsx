@@ -17,7 +17,7 @@ interface Props {
   cover_img?;
   creator_name?;
   wearable_name?;
-  avatar_name?;
+  name?;
   contract_address?;
   item_id?;
   wearable_id;
@@ -32,7 +32,7 @@ export default function CreationViverWearableList({
   model,
   creator_name,
   wearable_name,
-  avatar_name,
+  name,
   wearable_id,
   contract_address,
   creator_address,
@@ -114,7 +114,7 @@ export default function CreationViverWearableList({
           ) : null}
         </div>
         <div className={styles.footerBox} >
-          <div className={styles.title}>{creator_name}</div>
+          <div className={styles.title}>{name}</div>
           <div className={styles.totalCon}>
             <span className={styles.artist}>Wearable Artist：</span>
             <span className={styles.text}>{creator_name}</span>
