@@ -24,7 +24,7 @@
   }
   .headerBox{
       display: flex;
-      margin: 20px 0px;
+     margin-bottom: 20px;
   }
   .icon {
     width: 28px;
@@ -71,6 +71,11 @@ border-radius: 16px !important;
       position: relative !important;
 
   }
+  .anPage {
+    min-width: 1440px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
   .instructionBox{
       margin-right: 20px;
       width: 630px;
@@ -85,7 +90,7 @@ border-radius: 16px !important;
     line-height: 28px;
     align-items: center;
     color: #FFFFFF;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     display: inline-block;
   }
   .inst{
@@ -114,7 +119,7 @@ border-radius: 16px !important;
     color: #666666;
   }
   .fooBox{
-    position: absolute;
+    /* position: absolute;
     bottom: 0px;
-    width: 100%;
+    width: 100%; */
   }

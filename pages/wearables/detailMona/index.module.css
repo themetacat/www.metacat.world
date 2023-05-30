@@ -75,6 +75,11 @@ border-radius: 16px !important;
     position: absolute;
     left:522px;
 }
+.anPage {
+  min-width: 1440px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
   .productionName1{
     font-family: 'PingFang SC';
     font-style: normal;
@@ -83,7 +88,7 @@ border-radius: 16px !important;
     line-height: 28px;
     align-items: center;
     color: #FFFFFF;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     display: inline-block;
   }
   .inst{
@@ -112,7 +117,7 @@ border-radius: 16px !important;
     color: #666666;
   }
   .fooBox{
-    position: absolute;
+    /* position: absolute;
     bottom: 0px;
-    width: 100%;
+    width: 100%; */
   }

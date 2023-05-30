@@ -8,6 +8,11 @@
     opacity: 1;
     background-image: url('/images/imgConent/biaotilan.png')
   }
+  .anPage {
+    min-width: 1440px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+  }
   .graphicAll{
     height: 500px !important;
     width: 500px !important;
@@ -21,7 +26,7 @@
     padding: 30px;
     flex: 1 auto;
     position: relative;
-    margin-top: 60px;
+    /* margin-top: 60px; */
   }
   .headerBox{
       display: flex;
@@ -70,16 +75,15 @@ border-radius: 16px !important;
     position: relative !important;
 
   }
-  .anPage {
-    min-width: 1440px;
-    overflow-x: scroll;
-    overflow-y: hidden;
+  .conVideo{
+    background-color: #000;
+    height: 500px;
   }
   .instructionBox{
     margin-right: 20px;
     width: 630px;
     position: absolute;
-    bottom:250px;
+    top: 123px;
     right: -10px;
 }
   .productionName1{
