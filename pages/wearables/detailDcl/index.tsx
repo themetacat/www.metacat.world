@@ -111,8 +111,8 @@ export default function CreationWearableList({
       let modelGlft;
     
       loader?.load(
-        // resWear?.data?.cover_img,
-        'http://8.130.23.16/sandbox/assets/de497247-e854-462f-ad67-e2b9447af14f/glb',
+        resWear?.data?.cover_img,
+        // 'http://8.130.23.16/sandbox/assets/de497247-e854-462f-ad67-e2b9447af14f/glb',
         function (gltf) {
           modelGlft = gltf.scene;
           modelGlft.position.set(0, 1, 0);
