@@ -190,7 +190,8 @@ export default function JoinBuildersAdd({ turnBuild, value, clickHeader, nextBtn
             <p className={styles.send}>You can also send your works to our：
               <a
                 href="https://twitter.com/Metacat007"
-                target="_blank"
+                 target="_blank" 
+                 rel="noreferrer,noopener"
                 data-tip="Twitter"
 
               > <img src="/images/youxiang.png" alt="" /></a>

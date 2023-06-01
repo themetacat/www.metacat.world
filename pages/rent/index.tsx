@@ -1286,7 +1286,8 @@ export default function Rent() {
                   img={cardInfo.cover_img_url}
                   error="/images/default-cover.png"
                 ></CoverImg>
-                <a href={cardInfo.parcel_page_url} target="_blank">
+                <a href={cardInfo.parcel_page_url}  target="_blank" 
+                rel="noreferrer,noopener">
                   <div
                     className={imgState ? style.shade : style.sd}
                     onMouseOver={() => {
@@ -1383,7 +1384,8 @@ export default function Rent() {
                 cardInfo.owner.twitter_name ? (
                   <a
                     href={`https://twitter.com/${cardInfo.owner.twitter_name}`}
-                    target="_blank"
+                    target="_blank" 
+                    rel="noreferrer,noopener"
                     data-tip="twitter"
                   >
                     <div>

@@ -75,7 +75,9 @@ export default function ProfileIconLabel({
         <img className={cn(" cursor-pointer", style.imgInsturation)} src={icon} onClick={iconClick}></img>
       ) : null}
       {isLink ? (
-        <a href={link} target="_blank" title={link} className={style.a}>
+        <a href={link}  
+        target="_blank" 
+        rel="noreferrer,noopener" title={link} className={style.a}>
           {label || clipName(address)}
         </a>
       ) : (

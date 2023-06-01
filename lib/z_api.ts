@@ -1360,6 +1360,8 @@ class API {
     const url = `${this.url}/wearable/get_dcl_wearable_detail${search}`;
     const result = await fetch(url, {
       method: 'get',
+      headers: {
+'Access-Control-Allow-Origin':'*'},
       mode: 'cors',
     });
 
