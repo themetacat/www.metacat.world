@@ -261,7 +261,8 @@ export default function JoinBuilders({ turnOff, value, clickHeader, nextBtn, bui
                 > <img src="/images/youxiang.png" alt="" /></a>
                 <a
                   href="https://twitter.com/Metacat007"
-                  target="_blank"
+                  target="_blank" 
+                  rel="noreferrer,noopener"
                   data-tip="Twitter"
 
                 ><img src="/images/ttt.png" alt="" /></a>

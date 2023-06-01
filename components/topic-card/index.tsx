@@ -15,7 +15,8 @@ type Props = {
 
 export default function TopicCard({ topicId, name, type, imgUrlList }: Props) {
   return (
-    <a href={`/topic/${topicId}`} target="_blank">
+    <a href={`/topic/${topicId}`}  target="_blank" 
+    rel="noreferrer,noopener">
       <div className={cn('relative', style.topicCard)}>
         {/* <div
           className={cn(

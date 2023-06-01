@@ -109,16 +109,15 @@ export default function CreationWearableList({
       sceneRef.current = scene;
       scene.background = new THREE.Color(0x00102525);
       let modelGlft;
-
+    
       loader?.load(
-        resWear?.data?.cover_img,
+        // resWear?.data?.cover_img,
+        'http://8.130.23.16/sandbox/assets/de497247-e854-462f-ad67-e2b9447af14f/glb',
         function (gltf) {
           modelGlft = gltf.scene;
-          // modelGlft.scale.set(1.3, 1.3, 1.3);
           modelGlft.position.set(0, 1, 0);
-          scene.add(modelGlft);
-
-         
+          // modelGlft.scale.set(0.05, 0.05, 0.05);
+          scene.add(modelGlft); 
         },
         undefined,
         (error) => {

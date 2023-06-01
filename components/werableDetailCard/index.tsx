@@ -25,7 +25,8 @@ export default function WerableDetailCard({ topicId, creatorName, name, imgUrlLi
                     window.open(detailUrl);
                 }
             }}
-            target="_blank"
+             target="_blank" 
+             rel="noreferrer,noopener"
         >
             <div className={cn('relative', style.topicCard)}>
                 {/* <div

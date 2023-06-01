@@ -31,15 +31,17 @@ export default function Footer(iconImgLight:Props) {
           <a
             href="https://twitter.com/Metacat007"
             target="_blank"
+            rel="noreferrer,noopener"
             data-tip="Twitter"
             className="w-10 h-10 mr-14"
           >
-            <img src={iconImgLight.iconImgLight ===true?'/images/twitter.png':'/images/image/twitter.png'} />
+            <img src={iconImgLight.iconImgLight ===true?'/images/image/twitter.png':' /images/twitter.png'} />
           </a>
-
+         
           <a
             href="https://discord.gg/yRt6be237P"
-            target="_blank"
+             target="_blank" 
+             rel="noreferrer,noopener"
             data-tip="Discord"
             className="w-10 h-10 mr-14"
           >
@@ -48,7 +50,8 @@ export default function Footer(iconImgLight:Props) {
 
           <a
             href="https://medium.com/@themetacat"
-            target="_blank"
+             target="_blank" 
+             rel="noreferrer,noopener"
             data-tip="Medium"
             className="w-10 h-10  rounded-full mr-14 justify-center items-center flex bg-transparent"
           >

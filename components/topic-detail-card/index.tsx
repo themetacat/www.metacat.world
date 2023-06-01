@@ -23,7 +23,8 @@ export default function TopicDetailCard({ topicId, name, imgUrlList, coverImg, d
           window.open(detailUrl);
         }
       }}
-      target="_blank"
+       target="_blank" 
+       rel="noreferrer,noopener"
     >
       <div className={cn('relative', style.topicCard)}>
         {/* <div
