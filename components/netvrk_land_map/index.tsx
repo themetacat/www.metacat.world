@@ -109,6 +109,12 @@ console.log(resDA.data.parcels);
 const coordinatesNum = resDA.data.parcels.map((parcel) => {
 // 使用数组解构获取 coordinates 数组中的第一个值和第二个值
 const [coordinatesX, coordinatesY] = parcel.geometry.coordinates;
+// const a = [0.7071046 ,-0.707109, 0.707109, 0.7071046 ,-718.9200439, 2943.7104492]
+// console.log(a);
+// const coordinatesXF = 7071046*coordinatesX+707109*coordinatesY-718.9200439
+// const coordinatesYF = -0.707109*coordinatesX+0.7071046*coordinatesY+2943.7104492
+// console.log(coordinatesXF,coordinatesYF);
+
 return[coordinatesX, coordinatesY]
 });
 

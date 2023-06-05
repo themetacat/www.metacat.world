@@ -7,7 +7,6 @@ import { Scene, PerspectiveCamera, HemisphereLight, DirectionalLight, BoxHelper 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { VOXLoader, VOXMesh } from 'three/examples/jsm/loaders/VOXLoader.js';
 
-import { req_detailWearableMona_list } from '../../service/z_api';
 
 import styles from './index.module.css';
 
@@ -49,7 +48,7 @@ export default function CreationViverWearableList({
   
   const goToDetail = React.useCallback(
     (l, t) => {
-      // const res = req_detailWearableMona_list( creator_address,wearable_id)
+      // const res = ( creator_address,wearable_id)
 
       router.replace(
         `/wearables/detailViverWear/?wearable_id=${wearable_id}`,

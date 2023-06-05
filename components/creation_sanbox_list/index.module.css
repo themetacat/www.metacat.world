@@ -1,0 +1,99 @@
+.container{
+  min-height: 260px;
+  /* margin: 15px 15px 0px 15px; */
+  width: 288px;
+  border-radius: 6px 6px 0px 0px;
+  position: relative;
+
+  max-width: 385px;
+  background: rgba(0, 236, 222, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0px 0px 12px rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+.container:hover {
+  box-shadow: 0 6px 25px rgb(255 255 255 / 30%), inset 0 0 15px rgb(255 255 255 / 15%);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+.boxCon{
+  /* width: 260px; */
+  width: 100%;
+  border-radius: 6px 6px 0px 0px;
+  height: 260px;
+}
+.footerBox{
+  height: 72px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0px 15px 0px 15px;
+  padding: 15px 19.08px 10px 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+ 
+}
+.title {
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  overflow: hidden;
+  width: 158px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  align-items: center;
+  color: #FFFFFF;
+}
+.totalCon{
+  justify-content: left;
+ 
+}
+.artist{
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  align-items: center;
+  color: #CCCCCC;
+
+}
+.opese{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  width: 37.65px;
+  height: 38.59px;
+}
+.imgBoxCon{
+  padding: 15px 15px 0px 15px;
+}
+.text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 82px;
+  color: #888;
+  font-size: 12px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 12px;
+}
+.detailBox{
+  display: flex;
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+  color: #777;
+  font-size: 12px;
+  cursor: pointer;
+}
+.detailBox > img {
+  width: 10px;
+  height: 10.5px;
+  margin-top: 3px;
+  filter: brightness(75%);
+}

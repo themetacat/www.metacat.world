@@ -23,6 +23,7 @@ import CreationWearableList from '../../../components/creation_wearable_list';
 import CreationMonaWearableList from '../../../components/creation_monaWear_list';
 import CreationNifyWearableList from '../../../components/creation_nifyWear_list';
 import CreationViverWearableList from '../../../components/creation_viverseWear_list';
+import CreationSandBoxWearableList from '../../../components/creation_sanbox_list';
 
 import { convert } from '../../../common/utils';
 
@@ -33,7 +34,8 @@ import {
   req_wearable_list,
   req_wearableMona_list,
   req_wearableNiftyIsland_list,
-  req_wearableViverse_list
+  req_wearableViverse_list,
+  req_wearableSandBox_list
 } from '../../../service/z_api';
 
 import style from './index.module.css';
@@ -95,11 +97,11 @@ export default function TopicIndex(props) {
       icon: 'https://www.viverse.com/images/viverse-logo-newS.svg',
       type: 'viverse',
     },
-    // {
-    //   label: 'The Sandbox',
-    //   icon: '/images/home-icon.svg',
-    //   type: 'sandbox',
-    // },
+    {
+      label: 'The Sandbox',
+      icon: '/images/home-icon.svg',
+      type: 'sandbox',
+    },
     // {
     //     label: 'Somnium Space',
     //     icon: '/images/somniumspace.png',
@@ -134,6 +136,7 @@ export default function TopicIndex(props) {
   const [wearableListMona, setWearableListMona] = React.useState([]);
   const [wearableListNiftyIsland, setWearableListNiftyIsland] = React.useState([]);
   const [wearableListViverse, setWearableListViverse] = React.useState([]);
+  const [wearableListSandBox, setWearableListSandBox] = React.useState([]);
   const [pageCount, setPageCount] = React.useState(20);
   const [totalPage, setTotalPage] = React.useState(1);
   // const [query, setQuery] = React.useState(null);
@@ -230,6 +233,11 @@ export default function TopicIndex(props) {
       else if (tabStateList === 'viverse') {
         const resNIFTY = await req_wearableViverse_list(page, count);
         setWearableListViverse(resNIFTY.data);
+        setTotalPage(resNIFTY.total_page);
+      }
+      else if (tabStateList === 'sandbox') {
+        const resNIFTY = await req_wearableSandBox_list(page, count);
+        setWearableListSandBox(resNIFTY.data);
         setTotalPage(resNIFTY.total_page);
       }
       // setTotalPage(total_page);
@@ -590,6 +598,27 @@ export default function TopicIndex(props) {
      
             {wearableListViverse.map((card, idx) => {
               return <CreationViverWearableList {...card} key={idx} model={wearableListViverse} />;
+            })}
+          </div>
+          <PagiNation
+            total={totalPage}
+            pageNumber={pageNumber - 1}
+            pageSize={9}
+            pageChange={onPageChangeHandler}
+          />
+        </>
+      ) : null}
+      {tabStateList === 'sandbox' ? (
+        <>
+          <div
+            className={cn(
+              'main-content grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5  justify-center',
+              style.contentOne,
+            )}
+          >
+     
+            {wearableListSandBox.map((card, idx) => {
+              return <CreationSandBoxWearableList {...card} key={idx} model={wearableListSandBox} />;
             })}
           </div>
           <PagiNation
