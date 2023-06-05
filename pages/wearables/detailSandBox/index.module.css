@@ -121,3 +121,10 @@ border-radius: 16px !important;
     bottom: 0px;
     width: 100%; */
   }
+  .opese{
+    width: 32px;
+    height: 32px;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+  }

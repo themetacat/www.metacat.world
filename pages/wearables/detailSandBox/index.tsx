@@ -107,7 +107,7 @@ export default function CreationWearableList({
           setCreatorName(resWear.data.creator_name);
           setWearableName(resWear.data.avatar_name);
           setCreatorUrl(resWear.data.created_by_url);
-          setCreatorAddress(resWear.data.creator_address);
+          setCreatorAddress(resWear.data.opensea_url);
           setDescription(resWear.data.description);
           setIsExists(resWear.data.is_exists);
           setContact(resWear.data.contact);
@@ -183,7 +183,20 @@ export default function CreationWearableList({
                     <img className="ml-1 mr-2" src="/images/v5/arrow-simple.png"></img>
                     <span className={style.productionName}>{wearableName}</span>
                 </div>
+               
                 <div className={style.container}>
+                <div
+              className={cn('w-full h-full z-10')}
+            >
+            <img
+              src="/images/Nomal.png"
+              className={cn('absolute z-20', style.opese)}
+              onClick={() => {
+                window.open(creatorAddress);
+              }}
+            ></img>
+            
+          </div>
                     {/* <img src={coverImg} alt="" className={style.imgBox} /> */}
                     <canvas
             className={cn(

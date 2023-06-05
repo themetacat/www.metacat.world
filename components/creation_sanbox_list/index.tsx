@@ -59,12 +59,12 @@ export default function CreationMonaWearableList({
             <div className={styles.container} >
                 <div className={styles.imgBoxCon}><img src={cover_img} alt="" className={styles.boxCon} /></div>
                 <div>
-                    {openseaUrl || opensea_url ||created_by_url? (
+                    {openseaUrl || opensea_url ? (
                         <img
                             src="/images/Nomal.png"
                             className={cn('absolute z-20', styles.opese)}
                             onClick={() => {
-                                window.open(openseaUrl || opensea_url||created_by_url);
+                                window.open(openseaUrl || opensea_url);
                             }}
                         ></img>
                     ) : null}
