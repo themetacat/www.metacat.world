@@ -496,7 +496,6 @@ export default function AllLineData({
             fill:  iconImgLight===true?'#000':'#fff'
           }
         },
-        // values:['Otherside']
       });
       // chart.current.on('legend-item-name:click', (ev) => {
       //   ev.target.attrs.fill= ev.target.attrs.fill=='#fff'?'#fff':'#000'
