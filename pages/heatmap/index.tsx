@@ -245,16 +245,16 @@ export default function MapPage(props) {
     if (mapType === 'netvrk') {
       return (
         <NetVrkLandMap
-          // fullScreenOnClick={showFull}
-          // zoomControl={true}
-          // zoomLimit={[3, 9]}
-          // dragging={true}
-          // initZoom={4}
-          // defaultStatic={staticType}
-          // loadFinish={() => {
-          //   setLoading(false);
-          // }}
-          // backColor="#000"
+          fullScreenOnClick={showFull}
+          zoomControl={true}
+          zoomLimit={[3, 9]}
+          dragging={true}
+          initZoom={4}
+          defaultStatic={staticType}
+          loadFinish={() => {
+            setLoading(false);
+          }}
+          backColor="#000"
         ></NetVrkLandMap>
       );
     }

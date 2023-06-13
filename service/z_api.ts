@@ -792,7 +792,8 @@ const json = await result.json();
 
 export const req_avg_creater_price = async () => {
   // const url = 'http://8.130.23.16/api/v1/get_all_worlds_floor_price';
-  const url = 'https://api.metacat.world/api/v1/get_all_worlds_floor_price';
+  // const url = 'http://47.243.184.241/api/v1/get_all_worlds_floor_price';
+  const url = '/api/get_all_worlds_floor_price';
   const result = await fetch(url, {
     method: 'get',
     mode: 'cors',

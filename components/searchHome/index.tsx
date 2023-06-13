@@ -31,7 +31,11 @@ export default function Search({ text, setTypeVal, setVal, onSearch, showState, 
       // setVal(value)  !==''
       // router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
       // router.replace(`http://localhost:3001/search?q=${value}&type=${setTypeVal}`)
-      router.replace(`https://search.metacat.world/search?q=${value}&type=${setTypeVal}`)
+   
+      const encodedString = encodeURIComponent(value)
+      
+      router.replace(`https://search.metacat.world/search?q=${encodedString}&type=${setTypeVal}`)
+     
       // router.replace(`/search?q=${value}`)
     } else {
       // toast.error('Please enter the content');
