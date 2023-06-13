@@ -29,7 +29,7 @@ type Props = {
 };
 /**
  * The Sandbox
-NFT Worlds
+Topia Worlds
 Decentraland
 Worldwide Webb
 Cryptovoxels
@@ -47,7 +47,7 @@ const keyTypes = [
 
 const showKeyTypes = [
   'The Sandbox',
-  'NFT Worlds',
+  'Topia Worlds',
   'Decentraland',
   'Worldwide Webb',
   'Voxels',
@@ -369,7 +369,7 @@ ${showKeyTypes[6]}:
           if (tVal === 'The Sandbox') {
             return `rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`;
           }
-          if (tVal === 'NFT Worlds') {
+          if (tVal === 'Topia Worlds') {
             return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
           if (tVal === 'Decentraland') {
@@ -399,7 +399,7 @@ ${showKeyTypes[6]}:
                 fill: `l(270) 0:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 0.2) 1:rgba(${legend1.color[0]}, ${legend1.color[1]}, ${legend1.color[2]}, 1)`,
               };
             }
-            if (tVal === 'NFT Worlds') {
+            if (tVal === 'Topia Worlds') {
               return {
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };

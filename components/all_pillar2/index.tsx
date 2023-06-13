@@ -31,7 +31,7 @@ type Props = {
 };
 /**
  * The Sandbox
-NFT Worlds
+Topia Worlds
 Decentraland
 Worldwide Webb
 Cryptovoxels
@@ -50,7 +50,7 @@ const keyTypes = [
 const showKeyTypes = [
   'Otherside',
   'The Sandbox',
-  'NFT Worlds',
+  'Topia Worlds',
   'Decentraland',
   'Worldwide Webb',
   'Voxels',
@@ -306,7 +306,7 @@ export default function AllLine3({
           if (name === 'The Sandbox') {
             fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (name === 'NFT Worlds') {
+          if (name === 'Topia Worlds') {
             fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
           if (name === 'Decentraland') {
@@ -406,7 +406,7 @@ export default function AllLine3({
           if (tVal === 'The Sandbox') {
             return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (tVal === 'NFT Worlds') {
+          if (tVal === 'Topia Worlds') {
             return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
           if (tVal === 'Decentraland') {
@@ -439,7 +439,7 @@ export default function AllLine3({
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
-            if (tVal === 'NFT Worlds') {
+            if (tVal === 'Topia Worlds') {
               return {
                 fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };
@@ -690,7 +690,7 @@ export default function AllLine3({
           if (name === 'The Sandbox') {
             fill = `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (name === 'NFT Worlds') {
+          if (name === 'Topia Worlds') {
             fill = `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
           if (name === 'Decentraland') {
@@ -791,7 +791,7 @@ export default function AllLine3({
           if (tVal === 'The Sandbox') {
             return `rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`;
           }
-          if (tVal === 'NFT Worlds') {
+          if (tVal === 'Topia Worlds') {
             return `rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`;
           }
           if (tVal === 'Decentraland') {
@@ -824,7 +824,7 @@ export default function AllLine3({
                 fill: `l(270) 0:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 0.2) 1:rgba(${legend2.color[0]}, ${legend2.color[1]}, ${legend2.color[2]}, 1)`,
               };
             }
-            if (tVal === 'NFT Worlds') {
+            if (tVal === 'Topia Worlds') {
               return {
                 fill: `l(270) 0:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 0.2) 1:rgba(${legend3.color[0]}, ${legend3.color[1]}, ${legend3.color[2]}, 1)`,
               };

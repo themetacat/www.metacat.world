@@ -295,11 +295,17 @@ const analyticsData = [
     type: 'sandbox',
     link: '/analytics?type=sandbox',
   },
+  // {
+  //   label: 'NFT Worlds',
+  //   icon: '/images/worlds.svg',
+  //   type: 'nftworlds',
+  //   link: '/analytics?type=nftworlds',
+  // },
   {
-    label: 'NFT Worlds',
-    icon: '/images/worlds.svg',
-    type: 'nftworlds',
-    link: '/analytics?type=nftworlds',
+    label: 'Topia Worlds',
+    icon: '/images/topic.jpg',
+    type: 'topiaworlds',
+    link: '/analytics?type=topiaWorlds',
   },
   {
     label: 'Decentraland',

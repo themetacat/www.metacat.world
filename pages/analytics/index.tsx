@@ -346,9 +346,9 @@ const types = [
     value: 'sandbox',
   },
   {
-    label: 'NFT Worlds',
-    icon: '/images/worlds.svg',
-    value: 'nftworlds',
+    label: 'Topia Worlds',
+    icon: '/images/topic.jpg',
+    value: 'topiaWorlds',
   },
   {
     label: 'Decentraland',
@@ -1624,7 +1624,8 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
         </>
       );
     }
-    if (showType === 'nftworlds') {
+    
+    if (showType === 'topiaWorlds') {
       return (
         <>
           {darkLight===true?<ChartLineSandBox1
@@ -3244,7 +3245,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   textColor={style.allColor}
                   legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
-                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                   legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
                   legend5={{ label: 'Otherside', color: [255, 248, 187] }}
                   legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -3324,7 +3325,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                       legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                       legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                       legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3377,7 +3378,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                       legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                       legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                       legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3434,7 +3435,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     dataHandlderAlltime={req_all_time_data}
                     legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                    legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                     legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                     legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                     legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3487,7 +3488,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                       legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                       legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                       legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3543,7 +3544,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     dataHandlder={req_all_number_sales}
                     legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                    legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                     legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                     legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                     legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3586,7 +3587,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                       dataHandlderAlltime={req_all_time_data}
                       legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                       legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                      legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                      legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                       legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                       legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                       legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3632,7 +3633,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                   dataHandlder={req_avg_creater_price}
                   legend1={{ label: 'Otherside', color: [254, 217, 112] }}
                   legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                   legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                   legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                   legend6={{ label: 'Voxels ', color: [244, 210, 191] }}
@@ -3664,7 +3665,7 @@ export default function AnalyticsIndex(props, iconImgLight: Props) {
                     dataHandlder={req_avg_creater_price}
                     legend1={{ label: 'Otherside', color: [255, 248, 187] }}
                     legend2={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                    // legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                    legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                     legend4={{ label: 'Decentraland', color: [240, 117, 97] }}
                     legend5={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                     legend6={{ label: 'Voxels ', color: [244, 210, 191] }}

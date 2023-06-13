@@ -164,36 +164,45 @@ const svgHeight  = '100%'
 
     // const dragBehavior = d3.drag().on('drag', (event) => {
     //   const [x, y] = d3.pointer(event);
-    //   // const [x, y] = [event.pageX, event.pageY];
-    //   console.log(x, y);
+    //   // console.log(x, y);
     //   svg.select('#gMap').attr('transform', `translate(${x},${y})`);
-    //   console.log(22222222222, svg.attr('transform', `translate(${x},${y})`));
+    //   // console.log(22222222222, svg.attr('transform', `translate(${x},${y})`));
       
     //   // svg.attr('transform', d3.event.transform);
       
     // });
 
+    const dragBehavior = d3.drag()  .on('drag', (event) => {
+      const [x, y] = d3.pointer(event);
+      const [lastX, lastY] = d3.select('#gMap').attr('transform').match(/(-*\d+(\.\d+)?)/g) || [0, 0];
+      const newX = parseInt(lastX, 10) + (x - lastX);
+      const newY = parseInt(lastY, 10) + (y - lastY);
+      d3.select('#gMap').attr('transform', `translate(${newX}, ${newY})`);
+    })
 
-// 记录上一个拖动事件结束时的坐标
-let lastX = 0;
-let lastY = 0;
-const dragBehavior = d3.drag()
-.on('drag', (event) => {
-console.log(d3.pointer(event)[0],6666666666666);
 
-const newX = d3.pointer(event)[0];
-const newY = d3.pointer(event)[1];
-const deltaX = newX - lastX;
-const deltaY = newY - lastY;
-svg.select('#gMap').attr('transform', `translate(${deltaX}, ${deltaY})`);
-lastX = newX;
-lastY = newY;
-})
-.on('start', (event) => {
-let [lastXq, lastYq] = d3.pointer(event);
-[lastXq, lastYq]= d3.pointer(event);
-svg.select('#gMap').attr('transform', `translate(${lastXq}, ${lastYq})`);
-})
+// // 记录上一个拖动事件结束时的坐标
+// let lastX = 0;
+// let lastY = 0;
+// const dragBehavior = d3.drag()
+// .on('drag', (event) => {
+//   const newX = d3.pointer(event)[0];
+//   const newY = d3.pointer(event)[1];
+//   const deltaX = newX - lastX;
+//   const deltaY = newY - lastY;
+//   svg.select('#gMap')
+//     .attr('transform', `translate(${deltaX}, ${deltaY})`)
+//     .attrTween('transform', () => d3.interpolateString(`translate(${deltaX}, ${deltaY})`, `translate(0, 0)`).ease(d3.easeLinear));
+//   lastX = newX;
+//   lastY = newY;
+// })
+// .on('start', (event) => {
+//   let [lastXq, lastYq] = d3.pointer(event);
+//   [lastXq, lastYq]= d3.pointer(event);
+//   svg.select('#gMap')
+//     .attr('transform', `translate(${lastXq}, ${lastYq})`)
+//     .attrTween('transform', () => d3.interpolateString(`translate(${lastXq}, ${lastYq})`, `translate(0, 0)`).ease(d3.easeLinear));
+// })
 
     // 绘制地图路径
     gMap

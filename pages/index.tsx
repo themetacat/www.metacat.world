@@ -171,6 +171,7 @@ export default function Index(props) {
   const requestFloorData = React.useCallback(async () => {
     const res = await getFloorPrice();
     const { data } = res;
+    
     setFloorData(convert(data));
   }, []);
 
@@ -342,7 +343,7 @@ export default function Index(props) {
                   dataHandlder={req_sales_amount_percent}
                   legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
                   legend2={{ label: 'Netvrk', color: [192, 151, 234] }}
-                  legend3={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend3={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                   legend4={{ label: 'Somnium ', color: [240, 201, 124] }}
                   legend5={{ label: 'Otherside', color: [255, 248, 187] }}
                   legend6={{ label: 'Decentraland', color: [240, 117, 97] }}
@@ -386,7 +387,7 @@ export default function Index(props) {
                   dataHandlder={req_sales_amount_stack}
                   limit={5}
                   legend1={{ label: 'The Sandbox', color: [119, 152, 238] }}
-                  legend2={{ label: 'NFT Worlds', color: [175, 234, 101] }}
+                  legend2={{ label: 'Topia Worlds', color: [175, 234, 101] }}
                   legend3={{ label: 'Decentraland', color: [240, 117, 97] }}
                   legend4={{ label: 'Worldwide Webb', color: [245, 120, 157] }}
                   legend5={{ label: 'Voxels ', color: [244, 210, 191, 1] }}

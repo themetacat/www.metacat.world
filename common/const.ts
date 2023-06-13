@@ -25,10 +25,10 @@ export const ICON_DATA = [
     world: 'sandbox',
   },
   {
-    label: 'NFT Worlds',
-    icon: '/images/worlds.svg',
-    value: 'nftworlds',
-    world: 'nftworlds',
+    label: 'Topia Worlds',
+    icon: '/images/topic.jpg',
+    value: 'topiaworlds',
+    world: 'topiaworlds',
   },
   {
     label: 'Decentraland',

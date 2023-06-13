@@ -110,7 +110,7 @@ export default function Annular({
                   if (tVal.data.name === 'The Sandbox') {
                     return `rgba(119, 152, 238)`;
                   }
-                  if (tVal.data.name === 'NFT Worlds') {
+                  if (tVal.data.name === 'Topia Worlds') {
                     return `rgba(175, 234, 101)`;
                   }
                   if (tVal.data.name === 'Decentraland') {

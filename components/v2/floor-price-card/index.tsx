@@ -45,10 +45,12 @@ export default function FloorPriceCard({ title, items, className }: Props) {
 
   React.useEffect(() => {
     const result = items.map((x) => {
+      
       const n = ICON_DATA.find((y) => y.world === x.world);
       if (!n) {
         return null;
       }
+      
       return {
         icon: n.icon,
         label: n.label,
