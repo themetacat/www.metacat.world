@@ -162,16 +162,38 @@ const svgHeight  = '100%'
     // });
 
 
-    const dragBehavior = d3.drag().on('drag', (event) => {
-      const [x, y] = d3.pointer(event);
-      // const [x, y] = [event.pageX, event.pageY];
-      console.log(x, y);
-      svg.select('#gMap').attr('transform', `translate(${x},${y})`);
-      console.log(22222222222, svg.attr('transform', `translate(${x},${y})`));
+    // const dragBehavior = d3.drag().on('drag', (event) => {
+    //   const [x, y] = d3.pointer(event);
+    //   // const [x, y] = [event.pageX, event.pageY];
+    //   console.log(x, y);
+    //   svg.select('#gMap').attr('transform', `translate(${x},${y})`);
+    //   console.log(22222222222, svg.attr('transform', `translate(${x},${y})`));
       
-      // svg.attr('transform', d3.event.transform);
+    //   // svg.attr('transform', d3.event.transform);
       
-    });
+    // });
+
+
+// 记录上一个拖动事件结束时的坐标
+let lastX = 0;
+let lastY = 0;
+const dragBehavior = d3.drag()
+.on('drag', (event) => {
+console.log(d3.pointer(event)[0],6666666666666);
+
+const newX = d3.pointer(event)[0];
+const newY = d3.pointer(event)[1];
+const deltaX = newX - lastX;
+const deltaY = newY - lastY;
+svg.select('#gMap').attr('transform', `translate(${deltaX}, ${deltaY})`);
+lastX = newX;
+lastY = newY;
+})
+.on('start', (event) => {
+let [lastXq, lastYq] = d3.pointer(event);
+[lastXq, lastYq]= d3.pointer(event);
+svg.select('#gMap').attr('transform', `translate(${lastXq}, ${lastYq})`);
+})
 
     // 绘制地图路径
     gMap
@@ -562,3 +584,87 @@ export default Map;
 //     d3.select(this).attr('fill', 'lightgray');
 //     svg.select('.tooltip').remove();
 //   });
+
+
+
+
+
+
+// const requestPriceMapOneData = ()=>{
+//   const svg = d3.select(svgRef.current)
+//   const gMap = svg.append('g').attr('id', 'gMap');
+//   const res = getNetVrkMap();
+//   res.then((resDA)=>{
+//   d3.csv('https://nft.netvrk.co/data/data.csv').then((data) => {
+//     // // 创建地理投影
+//     const projection = d3.geoMercator();
+//     const symbol = d3
+//       .symbol()
+//       .type(d3.symbolSquare)
+//       .size((d, i) => area[i]);
+// const svgWidth = '100%'
+// const svgHeight  = '100%'
+//     // 创建地理路径生成器
+//     const path = d3.geoPath().projection(projection);
+//     const dragBehavior = d3.drag().on('drag', (event) => {
+//       const [x, y] = d3.pointer(event);
+//       console.log(x, y);
+//       svg.select('#gMap').attr('transform', `translate(${x},${y})`);
+//       console.log(22222222222, svg.attr('transform', `translate(${x},${y})`));
+//     });
+
+//     // 绘制地图路径
+//     gMap
+//       .selectAll('rect')
+//       .data(resDA.data.parcels)
+//       .enter()
+//       .append('rect')
+//       .attr('class', 'web-annotation')
+//       .attr('id', (d, i) => idArea[i])
+//       .attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
+//       .attr('x', (d, i) => coordinatesNum[i][0])
+//       .attr('y', (d, i) => coordinatesNum[i][1])
+//       .attr('width', (d, i) => lengthUnit[i][0])
+//   .attr('height', (d, i) => lengthUnit[i][1])
+//       .attr('transform', (d, i) => {
+//         const matrixValue = matrixNum[i][0];
+//         const isMatrixNaN = matrixValue.some(value => Number.isNaN(value));
+//         if (isMatrixNaN) {
+//           return 'matrix(1 0 0 1 0 0)'; // Default matrix value
+//         }
+//         const transformString = `matrix(${matrixValue.join(' ')})`;
+//         return transformString;
+//       })
+//       .attr('fill', 'red')
+//       .attr('stroke', 'white')
+//       .attr('stroke-width', 1)
+//       svg.call(dragBehavior)
+//     svg
+//       .selectAll('rect')
+//       .on('pointerover', function (event, d) {
+//         // Show Tooltip
+//         d3.select(this).attr('fill', 'red');
+//         const tooltip = svg.append('g').attr('class', 'tooltip').style('pointer-events', 'none');
+//         tooltip
+//           .append('rect')
+//           .attr('width', 150) 
+//           .attr('height', 30)
+//           .attr('fill', 'white')
+//           .attr('stroke', 'gray')
+//           .attr('stroke-width', 1);
+//         tooltip.append('text').attr('x', 5).attr('y', 20).text(d.properties.name);
+//         const [x, y] = d3.pointer(event);
+//         tooltip.attr('transform', `translate(${x + 10},${y + 20})`);
+//       })
+//       .on('pointermove', function (event) {
+//         const [x, y] = d3.pointer(event);
+//         console.log(x, y);
+//         svg.select('.tooltip').attr('transform', `translate(${x + 10},${y + 20})`);
+//       })
+//       .on('pointerout', function () {
+//         d3.select(this).attr('fill', 'lightgray');
+//         svg.select('.tooltip').remove();
+//       });
+
+
+//     })  
