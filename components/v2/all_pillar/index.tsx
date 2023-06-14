@@ -93,6 +93,7 @@ export default function AllPillar({
             priceStaticT: priceType,
           });
         });
+        
         return result;
       }
       data.forEach((element) => {
@@ -141,7 +142,7 @@ export default function AllPillar({
 
           const result = {
             thesandbox: null,
-            nftworlds: null,
+            topiaworlds: null,
             decentraland: null,
             worldwidewebb: null,
             voxels: null,
@@ -151,8 +152,10 @@ export default function AllPillar({
             return;
           }
           items.forEach((item, index) => {
+            
             result[item.name] = item;
           });
+          
           const title1 = `<div style="font-size:16px; font-weight:600; margin-bottom: 12px;">${formatNum(
             Number(result[showKeyTypes[6]]?.value) +
               Number(result[showKeyTypes[0]]?.value) +
@@ -163,7 +166,7 @@ export default function AllPillar({
               Number(result[showKeyTypes[5]]?.value),
           )} <span style="font-size:12px; color:#fff; font-weight:400;">${result[
             showKeyTypes[1]
-          ].priceStaticT.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
+          ]?.priceStaticT?.toLocaleUpperCase()}</span> <span style="font-size:12px; font-weight:400; color:#fff;">Total</span></div>`;
 
           const staticItem = `
           <div style="color:#fff;margin-bottom:12px">
@@ -173,7 +176,7 @@ ${showKeyTypes[6]}:
     <span style="margin:0px 5px; font-size:16px;font-weight:700; color:rgba(${legend7.color[0]}, ${
             legend7.color[1]
           }, ${legend7.color[2]}, 1);">${formatNum(result[showKeyTypes[6]]?.value)}</span>
-    <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+    <span>${result[showKeyTypes[1]]?.priceStaticT?.toLocaleUpperCase()}</span>
   </span>
 </span>
 </div>
@@ -189,7 +192,7 @@ ${showKeyTypes[6]}:
               }, ${legend1.color[1]}, ${legend1.color[2]}, 1);">${formatNum(
             result[showKeyTypes[0]]?.value,
           )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+              <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -205,7 +208,7 @@ ${showKeyTypes[6]}:
               }, ${legend2.color[1]}, ${legend2.color[2]}, 1);">${formatNum(
             result[showKeyTypes[1]]?.value,
           )}</span>
-              <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+              <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
             </span>
           </span>
         </div>
@@ -219,7 +222,7 @@ ${showKeyTypes[6]}:
             }, ${legend3.color[1]}, ${legend3.color[2]}, 1);">${formatNum(
             result[showKeyTypes[2]]?.value,
           )}</span>
-            <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+            <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
           </span>
         </span>
       </div>
@@ -233,7 +236,7 @@ ${showKeyTypes[6]}:
           }, ${legend4.color[1]}, ${legend4.color[2]}, 1);">${formatNum(
             result[showKeyTypes[3]]?.value,
           )}</span>
-          <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+          <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
         </span>
       </span>
     </div>
@@ -247,7 +250,7 @@ ${showKeyTypes[6]}:
         }, ${legend5.color[1]}, ${legend5.color[2]}, 1);">${formatNum(
             result[showKeyTypes[4]]?.value,
           )}</span>
-        <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+        <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
       </span>
     </span>
   </div>
@@ -259,7 +262,7 @@ ${showKeyTypes[6]}:
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend6.color[0]}, ${
             legend6.color[1]
           }, ${legend6.color[2]}, 1);">${formatNum(result[showKeyTypes[5]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
@@ -271,7 +274,7 @@ ${showKeyTypes[6]}:
       <span style="margin:0px 5px;font-size:16px;font-weight:700; color:rgba(${legend8.color[0]}, ${
             legend8.color[1]
           }, ${legend8.color[2]}, 1);">${formatNum(result[showKeyTypes[7]]?.value)}</span>
-      <span>${result[showKeyTypes[1]].priceStaticT.toLocaleUpperCase()}</span>
+      <span>${result[showKeyTypes[1]]?.priceStaticT.toLocaleUpperCase()}</span>
     </span>
   </span>
 </div>
