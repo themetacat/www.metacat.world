@@ -454,7 +454,7 @@ function OtherSideMap({
       // const { parcels, stats } = JSON.parse(res).data;
       const { parcels, stats } = res.data;
       const price = convert(stats?.price);
-
+ 
       if (price.levelOne) {
         colors[2].forEach(function (item, index) {
           Object.assign(item.ALL, price.levelOne[index].all);

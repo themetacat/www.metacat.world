@@ -89,11 +89,11 @@ const TAB = [
     icon: '/images/tz1and.png',
     type: 'tz1and',
   },
-  // {
-  //   label: 'Netvrk',
-  //   icon: '/images/tz1and.png',
-  //   type: 'netvrk',
-  // },
+  {
+    label: 'Netvrk',
+    icon: '/images/netvrk_logomark.svg',
+    type: 'netvrk',
+  },
 ];
 
 export default function MapPage(props) {
