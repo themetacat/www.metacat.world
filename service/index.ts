@@ -360,7 +360,7 @@ export const getCvPriceMapLevelOne = async () => {
 };
 
 export const getNetVrkMap = async () => {
-  const url = `http://8.130.23.16/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
+  const url = `http://47.243.184.241/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
   // const url = `http://47.243.184.241/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
   const res = await fetch(url);
   const json = await res.json();

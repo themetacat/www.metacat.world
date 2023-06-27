@@ -275,6 +275,12 @@ const heatmapData = [
     type: 'tz1and',
     link: '/heatmap?type=tz1and',
   },
+  {
+    label: 'Netvrk',
+    icon: '/images/netvrk_logomark.svg',
+    type: 'netvrk',
+    link: '/heatmap?type=netvrk',
+  },
 ];
 const analyticsData = [
   {
