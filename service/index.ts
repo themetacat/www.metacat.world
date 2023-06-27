@@ -359,9 +359,20 @@ export const getCvPriceMapLevelOne = async () => {
   return json;
 };
 
+export const getTzLandPriceMap = async () => {
+  const url = `/api/get_tz1and_price_map`;
+  
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getNetVrkMap = async () => {
-  const url = `http://47.243.184.241/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
+  const url = `/api/get_netvrk_price_map`;
+  // const url = `https://api.metacat.world/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
   // const url = `http://47.243.184.241/api/v1/get_netvrk_price_map`; // /api/cv_traffic_map_level_three;
+  
   const res = await fetch(url);
   const json = await res.json();
   return json;
@@ -453,6 +464,8 @@ export const getWorldsAverageSale = async () => {
   const json = await res.json();
   return json;
 };
+
+
 
 export const getWorldsNum = async () => {
   const url = `/api/worlds_stats_num`;
@@ -775,13 +788,7 @@ export const getDclTrafficMap = async () => {
   return json;
 };
 
-export const getTzLandPriceMap = async () => {
-  const url = `/api/get_tz1and_price_map`;
-  const result = await fetch(url);
-  const json = await result.json();
 
-  return json;
-};
 
 export const getTzLandParcelDetail = async (tokenId: string) => {
   const search = qs.stringify({ tokenId }, { addQueryPrefix: true });

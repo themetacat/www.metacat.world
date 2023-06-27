@@ -480,12 +480,19 @@ class API {
 
     return json;
   }
+
+  public async getTzLandPriceMap(): Promise<any> {
+    const url = `${this.url}/get_tz1and_price_map`;
+    const result = await fetch(url);
+    const json = await result.json();
+
+    return json;
+  }
   
   public async getNetVrkMap(): Promise<any> {
     const url = `${this.url}/get_netvrk_price_map`; // `${this.url}/get_cv_traffic_map_level_three`;
     const res = await fetch(url);
     const json = await res.json();
-
     return json;
   }
 
@@ -984,13 +991,7 @@ class API {
     return json;
   }
 
-  public async getTzLandPriceMap(): Promise<any> {
-    const url = `${this.url}/get_tz1and_price_map`;
-    const result = await fetch(url);
-    const json = await result.json();
 
-    return json;
-  }
 
   public async getTzLandParcelDetail(tokenId: string): Promise<any> {
     const search = qs.stringify({ token_id: tokenId }, { addQueryPrefix: true });

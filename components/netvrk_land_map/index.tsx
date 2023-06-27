@@ -232,7 +232,6 @@ const getSingleColor = React.useCallback(
 // );
 
 
-
 const requestPriceMapOneData = React.useCallback(()=>{
   // console.log(staticType.current);
   
@@ -424,7 +423,7 @@ const svgHeight  = '100%'
   // .on('click', handleLegendItemClick);
 
   // 定义点击事件处理程序
-  console.log(d3.select('.legend_legend__enz1F').selectAll('.legend_labelLi__5tElZ'));
+  // console.log(d3.select('.legend_legend__enz1F').selectAll('.legend_labelLi__5tElZ'));
 
 
 function handleLegendItemClick(eventX, d) {
