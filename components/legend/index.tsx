@@ -10,12 +10,13 @@ interface item {
 
 interface Props {
   title?: string;
+  styles?;
   options?: Array<item>;
   className?: string;
   active?: number;
 }
 
-export default function Legend({ title, options, className, active }: Props) {
+export default function Legend({ title, options, className,styles, active }: Props) {
   return (
     <div className={cn('flex flex-col justify-around items-center', style.legend, className)}>
       <div className="text-xs font-normal text-white flex items-center">{title}</div>

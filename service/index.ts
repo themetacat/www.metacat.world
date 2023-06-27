@@ -791,3 +791,14 @@ export const getTzLandParcelDetail = async (tokenId: string) => {
 
   return json;
 };
+
+export const getNetvrkDetail = async (tokenId: string) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/get_netvrk_detail${search}`;
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+

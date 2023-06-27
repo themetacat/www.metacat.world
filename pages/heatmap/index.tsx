@@ -290,7 +290,7 @@ export default function MapPage(props) {
 
             <div className={cn('tab-list flex', style.allHeight)}>
               <div className={cls}></div>
-              <div className="main-content flex px-0">
+              <div className=" flex px-0">
                 {TAB.map((item, index) => {
                   return (
                     <Tab
