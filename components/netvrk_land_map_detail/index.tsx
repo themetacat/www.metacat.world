@@ -176,6 +176,7 @@ interface Price {
               >
                 {options.name}
               </span>
+              <img src="/images/Nomal.png" className={styles.icon} onClick={jumpToOpenC}></img>
             </div>
             <div className={cn('mt-1 font-medium', styles.label)}>
               {getLabel(trafficType, options)}
