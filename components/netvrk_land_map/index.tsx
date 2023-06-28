@@ -137,7 +137,7 @@ const Map = (
     initZoom = zoomLimit[0],
     onClick,
     dragging = true,
-    backColor = 'black',
+    backColor = '##15282c',
     changeTypeControl = true,
     clickToJump = false,
     fullScreenOnClick,
@@ -403,13 +403,13 @@ const svgHeight  = '100%'
         const matrixValue = matrixNum[i][0];
         const isMatrixNaN = matrixValue.some(value => Number.isNaN(value));
         if (isMatrixNaN) {
-          return 'matrix(1 0 0 1 0 0)'; // Default matrix value
+          return 'matrix(1 0 0 1 0 0)'; // Default matrix value 
         }
         const transformString = `matrix(${matrixValue.join(' ')})`;
         return transformString;
       })
       .attr('fill', (d, i) => matchedColors[i])
-      .attr('stroke', 'white')
+      .attr('stroke', '#b0b0ba')
       .attr('stroke-width', 1)
       svg.call(dragBehavior).select('g').attr('transform', 'translate(-2151, -2190)');
 
@@ -428,7 +428,6 @@ const svgHeight  = '100%'
 
 function handleLegendItemClick(eventX, d) {
 setActiveColor(null)
-
 /// 获取图例列表元素
 const legendItems = document.querySelectorAll('.legend_labelLi__5tElZ');
 const clickedColors = d3.select(this).style('fill');// 使用正确的语法获取点击的颜色
@@ -460,12 +459,14 @@ legendItemsArray.some(item => {
    
     colorData.forEach((dataD, index) => {
       if (dataD.color === clickedColors) {
+        setActiveColor(index)
         const originalColor = dataD.color; // 保存原始的颜色
-        colorData[index].color = 'red'; // 将颜色改为红色
-        setTimeout(() => {
-          colorData[index].color = originalColor; // 恢复为之前的颜色
-          // 其他恢复操作...
-        }, 1000);
+        // colorData[index].color = 'red'; // 将颜色改为红色
+        // setTimeout(() => {
+        //   setActiveColor(null)
+        //   colorData[index].color = originalColor; // 恢复为之前的颜色
+        //   // 其他恢复操作...
+        // }, 1000);
       }
     });
   });
@@ -632,18 +633,22 @@ React.useEffect(() => {
   }, [fullScreen, fullScreenOnClick]);
   
 
-  const handleZoomIn = () => {
+  const handleZoomIn = React.useCallback(() => {
+    setIsParcelDetailVisible(false)
     const newScale = Math.min(scaleA + 0.2, maxScale);
     setScaleA(newScale);
     setZoomCount(prevCount => prevCount + 1);
-  };
+  },[scaleA]
+  );
 
-  const handleZoomOut = () => {
+
+  const handleZoomOut =  React.useCallback(() => {
+    setIsParcelDetailVisible(false)
     const newScale = Math.max(scaleA - 0.2, minScale);
     setScaleA(newScale);
     setZoomCount(prevCount => prevCount + 1);
-  };
-
+  },[scaleA]
+  );
 
   const changeStaticType = React.useCallback((value)=>{
     // console.log(5555555555);
@@ -657,6 +662,7 @@ window.location.reload()
 
   const closePop = () => {
     setIsParcelDetailVisible(false);
+    setActiveColor(null)
   };
 
 
@@ -687,7 +693,7 @@ window.location.reload()
             disabled={scaleA ===2}
           >
             <img
-              className={zoomLevel >= maxZoomLevel ? style.disable : null}
+              className={scaleA ===2.8 ? style.disable : null}
               src="./images/Union.png"
             ></img>
           </button>
@@ -697,7 +703,7 @@ window.location.reload()
              disabled={scaleA ===0.8}
           >
             <img
-              className={zoomLevel <= minZoomLevel ? style.disable : null}
+              className={scaleA ===0.8 ? style.disable : null}
               src="./images/Rectangle.png"
             ></img>
           </button>

@@ -254,7 +254,7 @@ export default function MapPage(props) {
           loadFinish={() => {
             setLoading(false);
           }}
-          backColor="#000"
+          backColor="#15282c"
         ></NetVrkLandMap>
       );
     }

@@ -135,3 +135,6 @@
     /* position: absolute; */
 
   }
+  .disable {
+    filter: brightness(25%);
+  }
