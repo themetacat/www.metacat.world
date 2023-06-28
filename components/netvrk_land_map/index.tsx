@@ -635,6 +635,7 @@ React.useEffect(() => {
 
   const handleZoomIn = React.useCallback(() => {
     setIsParcelDetailVisible(false)
+    setActiveColor(null)
     const newScale = Math.min(scaleA + 0.2, maxScale);
     setScaleA(newScale);
     setZoomCount(prevCount => prevCount + 1);
@@ -644,6 +645,7 @@ React.useEffect(() => {
 
   const handleZoomOut =  React.useCallback(() => {
     setIsParcelDetailVisible(false)
+    setActiveColor(null)
     const newScale = Math.max(scaleA - 0.2, minScale);
     setScaleA(newScale);
     setZoomCount(prevCount => prevCount + 1);
