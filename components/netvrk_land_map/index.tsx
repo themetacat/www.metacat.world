@@ -6,7 +6,7 @@ import style from './index.module.css';
 import Legend from '../legend';
 import { convert } from '../../common/utils';
 import Selecter from '../select';
-
+import Status from '../status';
 import ParcelDeatil from '../netvrk_land_map_detail';
 
 import {
@@ -162,6 +162,7 @@ const Map = (
 const [zoomLevel, setZoomLevel] = React.useState(initZoom);
 const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const [maxZoomLevel, setMaxZoomLevel] = React.useState(zoomLimit[1]);
+  const [loading, setLoading] = React.useState(false);
   const [fullScreen, setFullScreen] = React.useState(false);
   const [isParcelDetailVisible, setIsParcelDetailVisible] = React.useState(true);
   const [activeColor, setActiveColor] = React.useState(null);
@@ -170,8 +171,8 @@ const [minZoomLevel, setMinZoomLevel] = React.useState(zoomLimit[0]);
   const mapWidth = 1200; // 假设地图内容的宽度为 1000
 const mapHeight = 1000; // 假设地图内容的高度为 800
 
-const scaleX = 1000 / mapWidth;
-const scaleY = 800 / mapHeight;
+const scaleX = 1200 / mapWidth;
+const scaleY = 1000 / mapHeight;
 const minScale = Math.min(scaleX, scaleY);
 const maxScale = 2.8; // 设置最大比例为2
 
@@ -234,7 +235,7 @@ const getSingleColor = React.useCallback(
 
 const requestPriceMapOneData = React.useCallback(()=>{
   // console.log(staticType.current);
-  
+  setLoading(true);
   const svg = d3.select(svgRef.current)
   const gMap = svg.append('g').attr('id', 'gMap');
   const res = getNetVrkMap();
@@ -612,8 +613,11 @@ setIsParcelDetailVisible(true)
         xaa = clientX - containerRect.left;
         yaa = clientY - containerRect.top;
       });
-    })  
-
+    })
+    setTimeout(()=>{
+      setLoading(false);
+    },2000)
+   
   });
 }, [staticType.current]);
 
@@ -670,6 +674,16 @@ window.location.reload()
 
   return (
     <>
+        {loading ? (
+        <div
+          className={cn(
+            ' absolute h-full w-full z-50 flex items-center justify-center',
+            style.state,
+          )}
+        >
+          <Status status="loading" />
+        </div>
+      ) : null}
      <div className={cn('flex justify-between items-center', style.picker)}>
         {/* <div className={cn('flex justify-center items-center', style.type)}>TRAFFIC</div> */}
         <Selecter
@@ -702,10 +716,10 @@ window.location.reload()
           <button
             className={cn('flex justify-center items-center', style.zoomButtonrEACT)}
             onClick= {handleZoomOut}
-             disabled={scaleA ===0.8}
+             disabled={scaleA ===1}
           >
             <img
-              className={scaleA ===0.8 ? style.disable : null}
+              className={scaleA ===1 ? style.disable : null}
               src="./images/Rectangle.png"
             ></img>
           </button>
@@ -726,7 +740,7 @@ window.location.reload()
   ref={svgRef}  
   style={{ width: '100%', height: '100%', position:'relative',transform: `scale(${scaleA})` }} 
   viewBox={`0 0 ${mapWidth} ${mapHeight}`}
-   width="100%" height="100%"
+   width="100%" height="140%"
    >
   </svg>
 </div>

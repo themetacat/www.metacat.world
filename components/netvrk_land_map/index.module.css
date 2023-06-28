@@ -15,17 +15,17 @@
     fill: black;
     font-family: sans-serif;
   }
-  .fullBtn {
+  .fullBtn{
     z-index: 1001;
-    top: 20px;
-    left: 460px;
+    top:108px;
+    left: 80px;
     width: 40px;
     height: 40px;
-    background: rgba(0, 0, 0, 0.8);
-  border: 0.5px solid rgba(1, 218, 217, 0.6);
-  border-radius: 4px;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border: 0.5px solid rgba(0, 208, 236, 0.6) !important;
     box-sizing: border-box;
     cursor: pointer;
+    
   }
   .fullBtn > img {
     width: 30px;
@@ -105,10 +105,10 @@
     top: 3px;
     background-color: aquamarine;
   }
-  .zoom {
+  .zoom{
     position: absolute;
-    left: 420px;
-    top: 20px;
+    left: 30px;
+    top: calc(30px + 48px + 30px);
     z-index: 1001;
   }
   .legend {
