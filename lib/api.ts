@@ -908,6 +908,6 @@ class API {
 }
 
 // export default new API('https://api.metacat.world/api/v1');
-export default new API('http://8.130.23.16/api/v1');
+export default new API('http://47.243.184.241/api/v1');
 // http://8.130.23.16/
 // https://api.metacat.world

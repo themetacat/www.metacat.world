@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import cn from "classnames";
+import { toast } from "react-hot-toast";
 import "tailwindcss/tailwind.css";
 import { Web3AuthCore } from "@web3auth/core";
 import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal";
 import WalletConnect from "@walletconnect/client";
 import NodeWalletConnect from "@walletconnect/node";
+import MintConcent from "./mintContent";
 import Page from "../page";
 import {
   CHAIN_NAMESPACES,
@@ -18,7 +20,6 @@ import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 
 import Router, { useRouter } from "next/router";
 
-import { toast } from "react-hot-toast";
 import RPC from "../web3RPC";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal";
@@ -30,12 +31,12 @@ import {
   loginSignature,
   getBaseInfo,
   getCVEventList,
-
 } from "../../service";
 
 import { convert, getToken, removeToken, setToken } from "../../common/utils";
 import { SITE_NAME, META_DESCRIPTION } from "../../common/const";
 import style from "./index.module.css";
+import Web3 from "web3";
 
 type Props = {
   name?: string;
@@ -96,6 +97,12 @@ const MENU = [
     value: "resetApp",
     type: "operation",
   },
+  // {
+  //   label: "Mint",
+  //   icon: "/images/PicLogo.jpg",
+  //   value: "mintConnevt",
+  //   type: "mint",
+  // },
 ];
 
 const WALLET = [
@@ -117,6 +124,12 @@ const WALLET = [
     value: "loginConnevt",
     type: "login",
   },
+  // {
+  //   label: "Mint",
+  //   icon: "/images/PicLogo.jpg",
+  //   value: "mintConnevt",
+  //   type: "mint",
+  // },
 ];
 
 export const state = new Rekv<IProfileData>(INITIAL_STATE);
@@ -145,7 +158,17 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
   const [loginState, setLoginState] = React.useState("web3Auth");
   const [profileConcent, setProfileConcent] = React.useState(null);
+  const [mintConcent, setMintConcent] = React.useState(false);
   const [w3, setw3] = React.useState(null);
+  const [num, setNum] = useState(1);
+
+  const lower = () => {
+    setNum(num - 1);
+  };
+
+  const increase = () => {
+    setNum(num + 1);
+  };
 
   const provider = new WalletConnectProvider({
     infuraId: "f9d7d835ed864a299a13e841a1b654f8",
@@ -161,8 +184,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const resultHandler = React.useCallback(
     (res) => {
-
-      
       const { code, msg, data } = res;
       if (code === 100000) {
         return convert(data);
@@ -186,12 +207,12 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         });
         setToken("atk", data.accessToken);
         setToken("rtk", data.refreshToken);
-        Router.push({
-          pathname: '/profile',
-          query: {
-            type: 'parcellist',
-          },
-        });
+        // Router.push({
+        //   pathname: '/profile',
+        //   query: {
+        //     type: 'parcellist',
+        //   },
+        // });
       }
       setShowMenu(false);
       setLoading(false);
@@ -201,7 +222,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const requireNonce = React.useCallback(
     async (addr) => {
-      
       const res = await getNonce(addr);
       return resultHandler(res);
     },
@@ -244,7 +264,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     try {
       web3.connect().then(
         async (res) => {
+          console.log("connect==>", res);
           const { address: addr, provider } = res;
+
           connect(addr, provider);
           window.localStorage.setItem("metaMaskAddress", res.address);
         },
@@ -253,7 +275,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         }
       );
       window.localStorage.setItem("LoginType", "metaMask");
-    
     } catch {
       setLoading(false);
     }
@@ -285,14 +306,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     [showMenu, onClickHandler, idTokenWeb3]
   );
 
-
   const subscribeProvider = React.useCallback(
     async (providerDa, newWeb3, modal) => {
-      console.log(8989);
-      
       const { nonce, address: add } = await requireNonce(
-      
-        
         providerDa.accounts[0]
       );
 
@@ -302,7 +318,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
           (resD) => {
             loginSignature(add, resD).then(
               (resData) => {
-                
                 checkLoginStatu(resData);
               },
               (res1) => {}
@@ -331,7 +346,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         if (pathname !== "/") {
           window.location.href = "/";
         } else {
-          window.location.reload();
+          // window.location.reload();
         }
         newWeb3.resetApp();
         await provider.killSession();
@@ -341,70 +356,73 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         const addressData = await accounts[0];
       });
     },
-    [w3,requireNonce]
+    [w3, requireNonce]
   );
 
   const walletconnect = React.useCallback(async () => {
     setLoading(true);
-    console.log(11111);
-    
+
     const providerOptions = {
       walletconnect: {
         package: WalletConnectProvider,
         options: {
-          infuraId: "7b9fdfd5be844ea3b9f2988619123ced",
-          // rpc: {
-          //   56: 'https://mainnet.infura.io/v3',
-          // },
-          // network: 56,
+          infuraId: "f9d7d835ed864a299a13e841a1b654f8",
+          rpc: {
+            1:
+              "https://sepolia.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e",
+          },
+          network: 1,
         },
       },
-      
     };
-    
+
     const web3Modal = new Web3Modal({
-      network: "mainnet",
+      // network: "mainnet",
+      network: "sepolia",
       cacheProvider: true,
       providerOptions,
     });
     // 'https://registry.walletconnect.com/api/v2/wallets'
-{/* <WalletConnectQRCodeModal
+    {
+      /* <WalletConnectQRCodeModal
          size={256}
            onClose={() => setShowModal(false)}
            URI={web3Modal.cachedProvider}
-         /> */}
-console.log(web3Modal,Web3Modal,web3Modal.cachedProvider,8888888);
+         /> */
+    }
+    // console.log(web3Modal,Web3Modal,web3Modal.cachedProvider,8888888);
 
-const connector = new WalletConnect({
-  bridge: "https://bridge.walletconnect.org",
-  qrcodeModal: WalletConnectQRCodeModal,
-});
-// console.log(WalletConnect,999);
+    const connector = new WalletConnect({
+      bridge: "https://bridge.walletconnect.org",
+      qrcodeModal: WalletConnectQRCodeModal,
+    });
+    // console.log(WalletConnect,999);
 
-// const uri = connector.uri
-// const clientId = connector.clientId
-//     WalletConnectQRCodeModal?.open(uri, 
-//       () => {
-//     console.log("QR Code Modal closed");
-// },  )
-// await this.setState({ connector });
-// console.log(connector,8899,uri);
-connector.createSession().then(() => {
-  // get uri for QR Code modal
-  const uri = connector.uri;
-  // display QR Code modal
-  WalletConnectQRCodeModal.open(uri, () => {
-    console.log("QR Code Modal closed");
-  });
-});
+    // const uri = connector.uri
+    // const clientId = connector.clientId
+    //     WalletConnectQRCodeModal?.open(uri,
+    //       () => {
+    //     console.log("QR Code Modal closed");
+    // },  )
+    // await this.setState({ connector });
+    // console.log(connector,8899,uri);
+    // connector.createSession().then(() => {
+    //   // get uri for QR Code modal
+    //   const uri = connector.uri;
+    //   // display QR Code modal
+    //   WalletConnectQRCodeModal.open(uri, () => {
+    //     console.log("QR Code Modal closed");
+    //   });
+    // });
+
     // console.log(3334,providerOptions.walletconnect.qrcodeModal, );
 
-    // const providerDataText = await web3Modal.connect();
-    // setShowModal(true);
-    // await web3Modal.toggleModal();
-    // const web_3 = new WalletConnectProvider(providerDataText);
-    // setw3(web_3);
-    // await subscribeProvider(providerDataText, web_3, web3Modal);
+    const providerDataText = await web3Modal.connect();
+    setShowModal(true);
+    await web3Modal.toggleModal();
+    const web_3 = new WalletConnectProvider(providerDataText);
+    setw3(web_3);
+    await subscribeProvider(providerDataText, web_3, web3Modal);
 
     window.localStorage.setItem("LoginType", "walletConnect");
     setLoading(false);
@@ -420,9 +438,9 @@ connector.createSession().then(() => {
           clientId,
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: "0x1",
+            chainId: "0xaa36a7",
             rpcTarget:
-              "https://mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
+              "https://sepolia.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
           },
         });
 
@@ -480,7 +498,7 @@ connector.createSession().then(() => {
       window.localStorage.setItem("addressGetAccounts", null);
       window.localStorage.clear();
     } else {
-      window.location.reload();
+      // window.location.reload();
       window.localStorage.setItem("LoginType", null);
       window.localStorage.setItem("addressGetAccounts", null);
       window.localStorage.clear();
@@ -488,6 +506,7 @@ connector.createSession().then(() => {
     removeToken("atk");
     setIdTokenWeb3(null);
   }, [web3auth, idTokenWeb3, web3AuthAddress, pathname]);
+
   const getAccounts = React.useCallback(async () => {
     if (!providerWeb3auth) {
       console.log("provider not initialized yet");
@@ -632,12 +651,15 @@ connector.createSession().then(() => {
 
       setShowWall(item.value);
       // if (item.type === "wallet") {
-        if (!profile?.address && item?.value === "metamask") {
-          connectToChain();
-        }
-        if (!profile.address && item.value === "walletconnect") {
-          walletconnect();
-        }
+      if (!profile?.address && item?.value === "metamask") {
+        connectToChain();
+      }
+      if (!profile.address && item.value === "walletconnect") {
+        walletconnect();
+      }
+      // if (item.value === "mintConnevt") {
+      //   mintConnect();
+      // }
       // }
       if (item.type === "login") {
         login();
@@ -686,7 +708,7 @@ connector.createSession().then(() => {
           if (pathname !== "/") {
             window.location.href = "/";
           } else {
-            window.location.reload();
+            // window.location.reload();
           }
         }
         setShowMenu(false);
@@ -703,7 +725,7 @@ connector.createSession().then(() => {
           if (pathname !== "/") {
             window.location.href = "/";
           } else {
-            window.location.reload();
+            // window.location.reload();
           }
           window.localStorage.setItem("LoginType", null);
           window.localStorage.setItem("METACAT_atk", null);
@@ -716,58 +738,58 @@ connector.createSession().then(() => {
   );
 
   const render = React.useMemo(() => {
-    if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
-      return MENU.map((item, idx) => {
-        return (
-          <li
-            className={cn(
-              "flex justify-between  items-center",
-              style.menuItem,
-              idx === MENU.length - 1 ? style.last : null
-            )}
-            key={idx}
-          >
-            {item.value === "resetApp" ? (
-              <div
-                className={style.wordCon}
-                onClick={() => {
-                  clickOperationItem(item);
-                }}
-              >
-                <div className="flex items-center justify-around">
-                  <img
-                    src={item.icon}
-                    className={cn("mr-2", style.operation)}
-                  ></img>
-                  <span>{item.label}</span>
-                </div>
-                <img
-                  src="/images/v5/arrow-simple.png"
-                  className={style.activeOperation}
-                ></img>
-              </div>
-            ) : (
-              <Link href={item.value}>
-                <div className={style.wordCon}>
-                  <div>
-                    <img
-                      src={item.icon}
-                      className={cn("mr-2", style.operation)}
-                    ></img>
-                    <span>{item.label}</span>
-                  </div>
-                  <img
-                    src="/images/v5/arrow-simple.png"
-                    className={style.activeOperation}
-                  ></img>
-                </div>
-                {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
-              </Link>
-            )}
-          </li>
-        );
-      });
-    }
+    // if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
+    //   return MENU.map((item, idx) => {
+    //     return (
+    //       <li
+    //         className={cn(
+    //           "flex justify-between  items-center",
+    //           style.menuItem,
+    //           idx === MENU.length - 1 ? style.last : null
+    //         )}
+    //         key={idx}
+    //       >
+    //         {item.value === "resetApp" ? (
+    //           <div
+    //             className={style.wordCon}
+    //             onClick={() => {
+    //               clickOperationItem(item);
+    //             }}
+    //           >
+    //             <div className="flex items-center justify-around">
+    //               <img
+    //                 src={item.icon}
+    //                 className={cn("mr-2", style.operation)}
+    //               ></img>
+    //               <span>{item.label}</span>
+    //             </div>
+    //             <img
+    //               src="/images/v5/arrow-simple.png"
+    //               className={style.activeOperation}
+    //             ></img>
+    //           </div>
+    //         ) : (
+    //           <Link href={item.value}>
+    //             <div className={style.wordCon}>
+    //               <div>
+    //                 <img
+    //                   src={item.icon}
+    //                   className={cn("mr-2", style.operation)}
+    //                 ></img>
+    //                 <span>{item.label}</span>
+    //               </div>
+    //               <img
+    //                 src="/images/v5/arrow-simple.png"
+    //                 className={style.activeOperation}
+    //               ></img>
+    //             </div>
+    //             {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
+    //           </Link>
+    //         )}
+    //       </li>
+    //     );
+    //   });
+    // }
     return WALLET.map((item, idx) => {
       return (
         <li
@@ -794,10 +816,10 @@ connector.createSession().then(() => {
               <span>{item.label}</span>
             </div>
             <img
-                src="/images/v5/arrow.png"
-                className={style.activeWallet}
-              ></img>
-              {/* {showModal && (
+              src="/images/v5/arrow.png"
+              className={style.activeWallet}
+            ></img>
+            {/* {showModal && (
        <QRCodeModal
          size={256}
            onClose={() => setShowModal(false)}
@@ -900,21 +922,505 @@ connector.createSession().then(() => {
     };
   }, [close]);
 
+  const abi = [
+    {
+      inputs: [
+        { internalType: "address", name: "_owner", type: "address" },
+        { internalType: "string", name: "newURI", type: "string" },
+      ],
+      stateMutability: "nonpayable",
+      type: "constructor",
+    },
+    { inputs: [], name: "ApprovalCallerNotOwnerNorApproved", type: "error" },
+    { inputs: [], name: "ApprovalQueryForNonexistentToken", type: "error" },
+    { inputs: [], name: "BalanceQueryForZeroAddress", type: "error" },
+    { inputs: [], name: "MintERC2309QuantityExceedsLimit", type: "error" },
+    { inputs: [], name: "MintToZeroAddress", type: "error" },
+    { inputs: [], name: "MintZeroQuantity", type: "error" },
+    { inputs: [], name: "OwnerQueryForNonexistentToken", type: "error" },
+    { inputs: [], name: "OwnershipNotInitializedForExtraData", type: "error" },
+    { inputs: [], name: "TransferCallerNotOwnerNorApproved", type: "error" },
+    { inputs: [], name: "TransferFromIncorrectOwner", type: "error" },
+    {
+      inputs: [],
+      name: "TransferToNonERC721ReceiverImplementer",
+      type: "error",
+    },
+    { inputs: [], name: "TransferToZeroAddress", type: "error" },
+    { inputs: [], name: "URIQueryForNonexistentToken", type: "error" },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "approved",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      name: "Approval",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "owner",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "operator",
+          type: "address",
+        },
+        {
+          indexed: false,
+          internalType: "bool",
+          name: "approved",
+          type: "bool",
+        },
+      ],
+      name: "ApprovalForAll",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "fromTokenId",
+          type: "uint256",
+        },
+        {
+          indexed: false,
+          internalType: "uint256",
+          name: "toTokenId",
+          type: "uint256",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        { indexed: true, internalType: "address", name: "to", type: "address" },
+      ],
+      name: "ConsecutiveTransfer",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "previousOwner",
+          type: "address",
+        },
+        {
+          indexed: true,
+          internalType: "address",
+          name: "newOwner",
+          type: "address",
+        },
+      ],
+      name: "OwnershipTransferred",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
+          internalType: "address",
+          name: "from",
+          type: "address",
+        },
+        { indexed: true, internalType: "address", name: "to", type: "address" },
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
+        },
+      ],
+      name: "Transfer",
+      type: "event",
+    },
+    {
+      inputs: [],
+      name: "advance",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address[]", name: "recipients", type: "address[]" },
+      ],
+      name: "airdrop",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+      ],
+      name: "approve",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "owner", type: "address" }],
+      name: "balanceOf",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+      name: "getApproved",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "getBipEnglish",
+      outputs: [{ internalType: "string[]", name: "", type: "string[]" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "getInfo",
+      outputs: [
+        { internalType: "uint256", name: "", type: "uint256" },
+        { internalType: "uint256", name: "", type: "uint256" },
+        { internalType: "uint256", name: "", type: "uint256" },
+        { internalType: "uint256", name: "", type: "uint256" },
+        { internalType: "uint256", name: "", type: "uint256" },
+        { internalType: "uint256", name: "", type: "uint256" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "owner", type: "address" },
+        { internalType: "address", name: "operator", type: "address" },
+      ],
+      name: "isApprovedForAll",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+      name: "mint",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "name",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "owner",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+      name: "ownerOf",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "renounceOwnership",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+      ],
+      name: "safeTransferFrom",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+        { internalType: "bytes", name: "_data", type: "bytes" },
+      ],
+      name: "safeTransferFrom",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "recipient", type: "address" },
+        { internalType: "uint256", name: "amount", type: "uint256" },
+      ],
+      name: "send",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "operator", type: "address" },
+        { internalType: "bool", name: "approved", type: "bool" },
+      ],
+      name: "setApprovalForAll",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "string[]", name: "_BipEnglish", type: "string[]" },
+      ],
+      name: "setBipEnglish",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "string", name: "newURI", type: "string" }],
+      name: "setURI",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
+      name: "supportsInterface",
+      outputs: [{ internalType: "bool", name: "", type: "bool" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "symbol",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "tokenToBip",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+      name: "tokenURI",
+      outputs: [{ internalType: "string", name: "", type: "string" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "totalSupply",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "from", type: "address" },
+        { internalType: "address", name: "to", type: "address" },
+        { internalType: "uint256", name: "tokenId", type: "uint256" },
+      ],
+      name: "transferFrom",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+    {
+      inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+      name: "transferOwnership",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [
+        { internalType: "address", name: "addr", type: "address" },
+        { internalType: "uint256", name: "amount", type: "uint256" },
+      ],
+      name: "withdraw",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+  ];
+
+  const handleMintContent = () => {
+    setMintConcent(true);
+  };
+
+  const handleMint = async () => {
+    try {
+      toast.success("Successful");
+      const web3 = new Web3(Web3.givenProvider);
+      const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+      const contract = new web3.eth.Contract(abi as [], contractAddress);
+      console.log(contract.events.Transfer);
+      const mintNums = 1; // 在这里定义要mint的数量
+
+
+
+      const tx = await contract.methods.mint(mintNums).send({
+        from: profile.address,
+        value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
+      });
+
+      // 监听合约事件
+      // const event = contract.events.Transfer((error, event) => {
+      //   console.log(error, event);
+
+      //   if (!error) {
+      //     console.log("Event data:", event.returnValues);
+      //     // 在此处添加自定义的处理逻辑
+      //   } else {
+      //     console.error("Error:", error);
+      //   }
+      // });
+      // event(); 
+
+      contract.events.Transfer({ filter: {}, fromBlock: 
+        3842391,toBlock:'latest' },function(params){
+        
+      })
+      .on('data', (event) => {
+          console.log(event);
+          console.log(tx.events.Transfer.returnValues.to.toLowerCase(),11111,event.returnValues.to.toLowerCase());
+          
+          console.log(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase());
+          console.log(tx.transactionHash===event.transactionHash,666666666);
+          if(tx.transactionHash===event.transactionHash){
+            toast.success('hhhhhh')
+            alert('仅此一次成功了')
+          }
+      });
+      
+
+      //       const value = await contract.methods.getInfo()
+      // console.log(value);
+      if (tx) {
+        toast.success("Successful");
+      }
+
+      console.log("tx:", tx);
+      // mint 成功, 进行后续操作
+      console.log(tx.events.from);
+
+      
+      
+      
+    } catch (error) {
+      toast.error("something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    
+    window.ethereum.enable()
+    .then(() => {
+      console.log(223);
+        const web3 = new Web3(window.web3.currentProvider);
+        const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+        const dai = new web3.eth.Contract(abi as [], contractAddress);
+        
+        
+        dai.events.Transfer({ filter: {}, fromBlock: 
+          3840429,toBlock:'latest' },function(params){
+          
+        })
+        .on('data', (event) => {
+            // console.log(event);
+            // console.log(event.returnValues.to.toLowerCase());
+            
+            // if(event.returnValues.to)
+        });
+       
+    });
+}, []);
+
   return (
- 
-      <div className={cn("cursor-pointer", style.btn)}>
-        <div
-          className={cn(
-            "flex justify-center items-center w-full h-full text-xs",
-            style.btnDiv
-          )}
-          onClick={onClick}
-        >
-          {getText}
-        </div>
-        <div style={{ borderRadius: "6px", marginTop: "5px" }}>
-          <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
-        </div>
+    <div className={cn("cursor-pointer", style.btn)}>
+      <div
+        className={cn(
+          "flex justify-center items-center w-full h-full text-xs",
+          style.btnDiv
+        )}
+        onClick={onClick}
+      >
+        {getText}
       </div>
+      <div style={{ borderRadius: "6px", marginTop: "5px" }}>
+        <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
+      </div>
+      <button onClick={handleMintContent}>Mint</button>
+      {mintConcent === true ? (
+        <div className={cn(style.content)}>
+          <span>0.006</span>
+          <p className={cn(style.supply)}>Supply:</p>
+          <div className={cn(style.middleContent)}>
+            <div
+              className={cn(style.imgCon)}
+              onClick={num !== 1 ? lower : null}
+            >
+              <img src="/images/carousel-left.png" alt="" />
+            </div>
+            <span className={cn(style.num)}>{num}</span>
+            <div className={cn(style.imgCon)} onClick={increase}>
+              <img src="/images/carousel-right.png" alt="" />
+            </div>
+          </div>
+          <button className={cn(style.mintBtn)} onClick={handleMint}>
+            Mint
+          </button>
+        </div>
+      ) : null}
+    </div>
   );
 }
