@@ -33,6 +33,22 @@ const supportedChains: IChainData[] = [
       balance: '',
     },
   },
+  {
+    name: 'Ethereum Sepolia',
+    short_name: 'sepolia',
+    chain: 'ETH',
+    network: 'sepolia',
+    chain_id: 11155111,
+    network_id: 1,
+    rpc_url: 'https://sepolia.infura.io/v3/%API_KEY%',
+    native_currency: {
+      symbol: 'ETH',
+      name: 'Ethereum',
+      decimals: '18',
+      contractAddress: '',
+      balance: '',
+    },
+  },
   // {
   //   name: 'Ethereum Rinkeby',
   //   short_name: 'rin',

@@ -143,3 +143,51 @@ margin-top: 15px;
   padding-top: 10px;
   padding-left: 20px;
 }
+
+
+
+.content{
+  width: 200px;
+  height: 200px;
+  background-color: #191921;
+  text-align: center;
+  border: 20px;
+  color: #fff;
+}
+.middleContent{
+  display: flex;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
+  margin:20px  auto ;
+  padding-left: 20px;
+}
+.middleContent img{
+  width: 15px;
+  height: 15px;
+  display: block;
+  margin-top: 5px;
+ margin-left: 5px;
+}
+.imgCon{
+  width: 30px;
+  height: 30px;
+  border: 1px solid #4b4b51;
+  border-radius: 20%;
+}
+.num{
+  width: 100px;
+  height: 20px;
+  display: block;
+  text-align: center;
+}
+.supply{
+  display: block;
+}
+.mintBtn{
+  width: 160px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border: 1px solid #4b4b51;
+  border-radius: 15px;
+}

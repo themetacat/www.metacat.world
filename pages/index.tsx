@@ -177,7 +177,7 @@ export default function PageNew(r) {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
-      console.log(accessToken, 333);
+      // console.log(accessToken, 333);
 
       setToken("atk", accessToken);
       setToken("rtk", rtk);
@@ -209,7 +209,7 @@ export default function PageNew(r) {
   // );
 
 useEffect(()=>{
-  console.log(router);
+  // console.log(router);
   setRouteTab(r.router?.query?.type)
 },[r.router?.query?.type])
 
@@ -253,11 +253,11 @@ useEffect(()=>{
   // );
 
   React.useEffect(() => {
-console.log(Router);
+// console.log(Router);
 
     setNavLabel("All");
     const accessToken = getToken("atk");
-    console.log(accessToken, "accn",routeTab);
+    // console.log(accessToken, "accn",routeTab);
 
     setTokenWearable(accessToken);
     if (accessToken) {
@@ -285,7 +285,7 @@ console.log(Router);
 
   
  
-console.log(router);
+// console.log(router);
 
 
   return (

@@ -349,7 +349,7 @@ export default function ParcelList() {
     setNavLabel('All')
     // req_building_list(walletAddress)
     const accessToken = getToken('atk');
-    console.log(accessToken,"accn");
+    // console.log(accessToken,"accn");
     
     setTokenWearable(accessToken)
     if(accessToken){
