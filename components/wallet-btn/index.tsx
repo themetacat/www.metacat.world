@@ -738,58 +738,58 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   );
 
   const render = React.useMemo(() => {
-    // if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
-    //   return MENU.map((item, idx) => {
-    //     return (
-    //       <li
-    //         className={cn(
-    //           "flex justify-between  items-center",
-    //           style.menuItem,
-    //           idx === MENU.length - 1 ? style.last : null
-    //         )}
-    //         key={idx}
-    //       >
-    //         {item.value === "resetApp" ? (
-    //           <div
-    //             className={style.wordCon}
-    //             onClick={() => {
-    //               clickOperationItem(item);
-    //             }}
-    //           >
-    //             <div className="flex items-center justify-around">
-    //               <img
-    //                 src={item.icon}
-    //                 className={cn("mr-2", style.operation)}
-    //               ></img>
-    //               <span>{item.label}</span>
-    //             </div>
-    //             <img
-    //               src="/images/v5/arrow-simple.png"
-    //               className={style.activeOperation}
-    //             ></img>
-    //           </div>
-    //         ) : (
-    //           <Link href={item.value}>
-    //             <div className={style.wordCon}>
-    //               <div>
-    //                 <img
-    //                   src={item.icon}
-    //                   className={cn("mr-2", style.operation)}
-    //                 ></img>
-    //                 <span>{item.label}</span>
-    //               </div>
-    //               <img
-    //                 src="/images/v5/arrow-simple.png"
-    //                 className={style.activeOperation}
-    //               ></img>
-    //             </div>
-    //             {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
-    //           </Link>
-    //         )}
-    //       </li>
-    //     );
-    //   });
-    // }
+    if (profile?.address || (web3AuthAddress && idTokenWeb3)) {
+      return MENU.map((item, idx) => {
+        return (
+          <li
+            className={cn(
+              "flex justify-between  items-center",
+              style.menuItem,
+              idx === MENU.length - 1 ? style.last : null
+            )}
+            key={idx}
+          >
+            {item.value === "resetApp" ? (
+              <div
+                className={style.wordCon}
+                onClick={() => {
+                  clickOperationItem(item);
+                }}
+              >
+                <div className="flex items-center justify-around">
+                  <img
+                    src={item.icon}
+                    className={cn("mr-2", style.operation)}
+                  ></img>
+                  <span>{item.label}</span>
+                </div>
+                <img
+                  src="/images/v5/arrow-simple.png"
+                  className={style.activeOperation}
+                ></img>
+              </div>
+            ) : (
+              <Link href={item.value}>
+                <div className={style.wordCon}>
+                  <div>
+                    <img
+                      src={item.icon}
+                      className={cn("mr-2", style.operation)}
+                    ></img>
+                    <span>{item.label}</span>
+                  </div>
+                  <img
+                    src="/images/v5/arrow-simple.png"
+                    className={style.activeOperation}
+                  ></img>
+                </div>
+                {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
+              </Link>
+            )}
+          </li>
+        );
+      });
+    }
     return WALLET.map((item, idx) => {
       return (
         <li
@@ -1312,7 +1312,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         from: profile.address,
         value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
       });
-
+      const tokenToBip = await contract.methods.tokenToBip().call({})
+      console.log(tokenToBip,'tokenToBip');
+      
       // 监听合约事件
       // const event = contract.events.Transfer((error, event) => {
       //   console.log(error, event);
@@ -1325,7 +1327,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       //   }
       // });
       // event(); 
-
+      const eventDataElement = document.getElementById('eventData');
       contract.events.Transfer({ filter: {}, fromBlock: 
         3842391,toBlock:'latest' },function(params){
         
@@ -1340,6 +1342,23 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             toast.success('hhhhhh')
             alert('仅此一次成功了')
           }
+          if(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase()){
+            const eventDataElement = document.getElementById('eventData');
+            // console.log(event);
+            // console.log(event.returnValues.to.toLowerCase());
+             // 创建一个新的 <p> 元素来展示事件数据
+    const pElement = document.createElement('p');
+
+    // 将事件数据转为字符串
+    const eventDataString = JSON.stringify(event.blockNumber);
+
+    // 将事件数据添加到 <p> 元素中
+    pElement.textContent = eventDataString;
+
+    // 将 <p> 元素追加到 <div> 元素中
+    eventDataElement.appendChild(pElement);
+          }
+         
       });
       
 
@@ -1370,23 +1389,69 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
         const dai = new web3.eth.Contract(abi as [], contractAddress);
         
-        
+        const mintNums = 1; 
         dai.events.Transfer({ filter: {}, fromBlock: 
-          3840429,toBlock:'latest' },function(params){
+          3842937,toBlock:'latest' },function(params){
           
         })
         .on('data', (event) => {
+    //       console.log(event);
+console.log(event);
+
+    const tokenToBip =  dai.methods.tokenToBip(event.returnValues.tokenId).call({})
+    const tokenURI =  dai.methods.tokenURI(event.returnValues.tokenId).call({})
+    console.log(tokenToBip,'tokenToBip');
+    tokenToBip.then(result => {
+      console.log(result); // 输出 "daughter"
+          const eventDataElement = document.getElementById('eventData');
             // console.log(event);
             // console.log(event.returnValues.to.toLowerCase());
-            
-            // if(event.returnValues.to)
+             // 创建一个新的 <p> 元素来展示事件数据
+    const pElement = document.createElement('p');
+
+    // 将事件数据转为字符串
+    const eventDataString = JSON.stringify(result);
+
+    // 将事件数据添加到 <p> 元素中
+    pElement.textContent = eventDataString;
+
+    // 将 <p> 元素追加到 <div> 元素中
+    eventDataElement.appendChild(pElement);
+  });
+  tokenURI.then(result => {
+    console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
+    const eventDataElement = document.getElementById('imgTokenURI');
+    const imgElement = document.createElement('img');
+    fetch(result)
+    .then(response => response.text())
+    .then(content => {
+      console.log(content); // 输出网址链接内容
+      // 在这里对网址链接内容进行处理
+      const data = JSON.parse(content);
+      const imageURL = data.image;
+      const description = data.description;
+      console.log(imageURL); // 输出图片链接
+    // 将链接设置为img元素的src属性值
+    imgElement.setAttribute('src', imageURL);
+    const pElement = document.createElement('p');
+    pElement.textContent = description;
+    eventDataElement.appendChild(imgElement);
+    eventDataElement.appendChild(pElement);
+  })
+  .catch(error => {
+    console.log(error); // 错误处理
+  });
+  });
+    // 在页面上更新事件数据
+    // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
         });
        
     });
 }, []);
 
   return (
-    <div className={cn("cursor-pointer", style.btn)}>
+<> 
+   <div className={cn("cursor-pointer", style.btn)}>
       <div
         className={cn(
           "flex justify-center items-center w-full h-full text-xs",
@@ -1422,5 +1487,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         </div>
       ) : null}
     </div>
+    <div  className={cn("cursor-pointer", style.btnBox)}  id="eventData">
+<div id="imgTokenURI"></div>
+<div><p></p></div>
+    </div>
+    </>
   );
 }

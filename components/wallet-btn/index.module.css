@@ -144,8 +144,17 @@ margin-top: 15px;
   padding-left: 20px;
 }
 
-
-
+.btnBox{
+  width: 1000px;
+  height: 300px;
+  margin: -160px auto;
+  background-color: #fff;
+  z-index: 999999;
+}
+.btnBox img{
+  width: 150px !important;
+  height: 150px !important;
+}
 .content{
   width: 200px;
   height: 200px;
