@@ -1312,24 +1312,27 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         from: profile.address,
         value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
       });
-      const tokenToBip = await contract.methods.tokenToBip().call({})
-      console.log(tokenToBip,'tokenToBip');
+      console.log(tx);
       
-      // 监听合约事件
-      // const event = contract.events.Transfer((error, event) => {
-      //   console.log(error, event);
+      // const tokenToBip = await contract.methods.tokenToBip().call({})
+      // console.log(tokenToBip,'tokenToBip');
+      
+      // // 监听合约事件
+      // // const event = contract.events.Transfer((error, event) => {
+      // //   console.log(error, event);
 
-      //   if (!error) {
-      //     console.log("Event data:", event.returnValues);
-      //     // 在此处添加自定义的处理逻辑
-      //   } else {
-      //     console.error("Error:", error);
-      //   }
-      // });
-      // event(); 
-      const eventDataElement = document.getElementById('eventData');
+      // //   if (!error) {
+      // //     console.log("Event data:", event.returnValues);
+      // //     // 在此处添加自定义的处理逻辑
+      // //   } else {
+      // //     console.error("Error:", error);
+      // //   }
+      // // });
+      // // event(); 
+      // const eventDataElement = document.getElementById('eventData');
       contract.events.Transfer({ filter: {}, fromBlock: 
-        3842391,toBlock:'latest' },function(params){
+        3868463,toBlock:'latest' },function(params){
+        console.log(params,'数据');
         
       })
       .on('data', (event) => {
@@ -1359,9 +1362,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     eventDataElement.appendChild(pElement);
           }
          
-      });
+      })
       
-
+      .on('error', (error) => {
+        console.error(error);
+      });
       //       const value = await contract.methods.getInfo()
       // console.log(value);
       if (tx) {
@@ -1380,74 +1385,74 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     }
   };
 
-  useEffect(() => {
+//   useEffect(() => {
     
-    window.ethereum.enable()
-    .then(() => {
-      console.log(223);
-        const web3 = new Web3(window.web3.currentProvider);
-        const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
-        const dai = new web3.eth.Contract(abi as [], contractAddress);
+//     window.ethereum.enable()
+//     .then(() => {
+//       console.log(223);
+//         const web3 = new Web3(window.web3.currentProvider);
+//         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+//         const dai = new web3.eth.Contract(abi as [], contractAddress);
         
-        const mintNums = 1; 
-        dai.events.Transfer({ filter: {}, fromBlock: 
-          3842937,toBlock:'latest' },function(params){
+//         const mintNums = 1; 
+//         dai.events.Transfer({ filter: {}, fromBlock: 
+//           3842937,toBlock:'latest' },function(params){
           
-        })
-        .on('data', (event) => {
-    //       console.log(event);
-console.log(event);
+//         })
+//         .on('data', (event) => {
+//     //       console.log(event);
+// console.log(event);
 
-    const tokenToBip =  dai.methods.tokenToBip(event.returnValues.tokenId).call({})
-    const tokenURI =  dai.methods.tokenURI(event.returnValues.tokenId).call({})
-    console.log(tokenToBip,'tokenToBip');
-    tokenToBip.then(result => {
-      console.log(result); // 输出 "daughter"
-          const eventDataElement = document.getElementById('eventData');
-            // console.log(event);
-            // console.log(event.returnValues.to.toLowerCase());
-             // 创建一个新的 <p> 元素来展示事件数据
-    const pElement = document.createElement('p');
+//     const tokenToBip =  dai.methods.tokenToBip(event.returnValues.tokenId).call({})
+//     const tokenURI =  dai.methods.tokenURI(event.returnValues.tokenId).call({})
+//     console.log(tokenToBip,'tokenToBip');
+//     tokenToBip.then(result => {
+//       console.log(result); // 输出 "daughter"
+//           const eventDataElement = document.getElementById('eventData');
+//             // console.log(event);
+//             // console.log(event.returnValues.to.toLowerCase());
+//              // 创建一个新的 <p> 元素来展示事件数据
+//     const pElement = document.createElement('p');
 
-    // 将事件数据转为字符串
-    const eventDataString = JSON.stringify(result);
+//     // 将事件数据转为字符串
+//     const eventDataString = JSON.stringify(result);
 
-    // 将事件数据添加到 <p> 元素中
-    pElement.textContent = eventDataString;
+//     // 将事件数据添加到 <p> 元素中
+//     pElement.textContent = eventDataString;
 
-    // 将 <p> 元素追加到 <div> 元素中
-    eventDataElement.appendChild(pElement);
-  });
-  tokenURI.then(result => {
-    console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
-    const eventDataElement = document.getElementById('imgTokenURI');
-    const imgElement = document.createElement('img');
-    fetch(result)
-    .then(response => response.text())
-    .then(content => {
-      console.log(content); // 输出网址链接内容
-      // 在这里对网址链接内容进行处理
-      const data = JSON.parse(content);
-      const imageURL = data.image;
-      const description = data.description;
-      console.log(imageURL); // 输出图片链接
-    // 将链接设置为img元素的src属性值
-    imgElement.setAttribute('src', imageURL);
-    const pElement = document.createElement('p');
-    pElement.textContent = description;
-    eventDataElement.appendChild(imgElement);
-    eventDataElement.appendChild(pElement);
-  })
-  .catch(error => {
-    console.log(error); // 错误处理
-  });
-  });
-    // 在页面上更新事件数据
-    // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
-        });
+//     // 将 <p> 元素追加到 <div> 元素中
+//     eventDataElement.appendChild(pElement);
+//   });
+//   tokenURI.then(result => {
+//     console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
+//     const eventDataElement = document.getElementById('imgTokenURI');
+//     const imgElement = document.createElement('img');
+//     fetch(result)
+//     .then(response => response.text())
+//     .then(content => {
+//       console.log(content); // 输出网址链接内容
+//       // 在这里对网址链接内容进行处理
+//       const data = JSON.parse(content);
+//       const imageURL = data.image;
+//       const description = data.description;
+//       console.log(imageURL); // 输出图片链接
+//     // 将链接设置为img元素的src属性值
+//     imgElement.setAttribute('src', imageURL);
+//     const pElement = document.createElement('p');
+//     pElement.textContent = description;
+//     eventDataElement.appendChild(imgElement);
+//     eventDataElement.appendChild(pElement);
+//   })
+//   .catch(error => {
+//     console.log(error); // 错误处理
+//   });
+//   });
+//     // 在页面上更新事件数据
+//     // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
+//         });
        
-    });
-}, []);
+//     });
+// }, []);
 
   return (
 <> 
