@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { toast } from "react-hot-toast";
 import "tailwindcss/tailwind.css";
+import Status from '../status';
 import { Web3AuthCore } from "@web3auth/core";
 import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal";
 import WalletConnect from "@walletconnect/client";
@@ -67,30 +68,30 @@ const INITIAL_STATE: IProfileData = {
 };
 
 const MENU = [
-  {
-    label: "Setting",
-    icon: "/images/v5/Settings.png",
-    value: "/profile/setting",
-    type: "operation",
-  },
-  {
-    label: "My Parcels",
-    icon: "/images/v5/MyParcels.png",
-    value: "/profile?type=parcellist",
-    type: "operation",
-  },
-  {
-    label: "My Wearables",
-    icon: "/images/icon/wearables.png",
-    value: "/profile?type=wearablelist",
-    type: "operation",
-  },
-  {
-    label: "My Buildings",
-    icon: "/images/icon/buildingIcon.png",
-    value: "/profile?type=building",
-    type: "operation",
-  },
+  // {
+  //   label: "Setting",
+  //   icon: "/images/v5/Settings.png",
+  //   value: "/profile/setting",
+  //   type: "operation",
+  // },
+  // {
+  //   label: "My Parcels",
+  //   icon: "/images/v5/MyParcels.png",
+  //   value: "/profile?type=parcellist",
+  //   type: "operation",
+  // },
+  // {
+  //   label: "My Wearables",
+  //   icon: "/images/icon/wearables.png",
+  //   value: "/profile?type=wearablelist",
+  //   type: "operation",
+  // },
+  // {
+  //   label: "My Buildings",
+  //   icon: "/images/icon/buildingIcon.png",
+  //   value: "/profile?type=building",
+  //   type: "operation",
+  // },
   {
     label: "Sign Out",
     icon: "/images/v5/Signout.png",
@@ -112,18 +113,18 @@ const WALLET = [
     value: "metamask",
     type: "walletMetaMask",
   },
-  {
-    label: "Wallet Connect",
-    icon: "/images/walletconnect.png",
-    value: "walletconnect",
-    type: "wallet",
-  },
-  {
-    label: "Others(Meta,Twitter...)",
-    icon: "/images/v5/login.jpg",
-    value: "loginConnevt",
-    type: "login",
-  },
+  // {
+  //   label: "Wallet Connect",
+  //   icon: "/images/walletconnect.png",
+  //   value: "walletconnect",
+  //   type: "wallet",
+  // },
+  // {
+  //   label: "Others(Meta,Twitter...)",
+  //   icon: "/images/v5/login.jpg",
+  //   value: "loginConnevt",
+  //   type: "login",
+  // },
   // {
   //   label: "Mint",
   //   icon: "/images/PicLogo.jpg",
@@ -1300,6 +1301,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const handleMint = async () => {
     try {
       toast.success("Successful");
+      setLoading(true)
       const web3 = new Web3(Web3.givenProvider);
       const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
       const contract = new web3.eth.Contract(abi as [], contractAddress);
@@ -1331,37 +1333,68 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       // // event(); 
       // const eventDataElement = document.getElementById('eventData');
       contract.events.Transfer({ filter: {}, fromBlock: 
-        3868463,toBlock:'latest' },function(params){
-        console.log(params,'数据');
-        
+        3869068,toBlock:'latest' },function(params){
       })
       .on('data', (event) => {
           console.log(event);
+          setLoading(true)
           console.log(tx.events.Transfer.returnValues.to.toLowerCase(),11111,event.returnValues.to.toLowerCase());
           
           console.log(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase());
           console.log(tx.transactionHash===event.transactionHash,666666666);
           if(tx.transactionHash===event.transactionHash){
             toast.success('hhhhhh')
+            setLoading(false)
             alert('仅此一次成功了')
+           
           }
           if(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase()){
-            const eventDataElement = document.getElementById('eventData');
-            // console.log(event);
-            // console.log(event.returnValues.to.toLowerCase());
-             // 创建一个新的 <p> 元素来展示事件数据
-    const pElement = document.createElement('p');
-
-    // 将事件数据转为字符串
-    const eventDataString = JSON.stringify(event.blockNumber);
-
-    // 将事件数据添加到 <p> 元素中
-    pElement.textContent = eventDataString;
-
-    // 将 <p> 元素追加到 <div> 元素中
-    eventDataElement.appendChild(pElement);
+            const tokenToBip =  contract.methods.tokenToBip(event.returnValues.tokenId).call({})
+            const tokenURI =  contract.methods.tokenURI(event.returnValues.tokenId).call({})
+            console.log(tokenToBip,'tokenToBip');
+            tokenToBip.then(result => {
+              console.log(result); // 输出 "daughter"
+                  const eventDataElement = document.getElementById('eventData');
+                    // console.log(event);
+                    // console.log(event.returnValues.to.toLowerCase());
+                     // 创建一个新的 <p> 元素来展示事件数据
+            const pElement = document.createElement('p');
+        
+            // 将事件数据转为字符串
+            const eventDataString = JSON.stringify(result);
+        
+            // 将事件数据添加到 <p> 元素中
+            pElement.textContent = eventDataString;
+        
+            // 将 <p> 元素追加到 <div> 元素中
+            eventDataElement.appendChild(pElement);
+          });
+          tokenURI.then(result => {
+            console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
+            const eventDataElement = document.getElementById('imgTokenURI');
+            const imgElement = document.createElement('img');
+            fetch(result)
+            .then(response => response.text())
+            .then(content => {
+              console.log(content); // 输出网址链接内容
+              // 在这里对网址链接内容进行处理
+              const data = JSON.parse(content);
+              const imageURL = data.image;
+              const description = data.description;
+              console.log(imageURL); // 输出图片链接
+            // 将链接设置为img元素的src属性值
+            imgElement.setAttribute('src', imageURL);
+            const pElement = document.createElement('p');
+            pElement.textContent = description;
+            eventDataElement.appendChild(imgElement);
+            eventDataElement.appendChild(pElement);
+          })
+          // .catch(error => {
+          //   console.log(error); // 错误处理
+          // });
+          });
           }
-         
+          setLoading(false)
       })
       
       .on('error', (error) => {
@@ -1396,7 +1429,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         
 //         const mintNums = 1; 
 //         dai.events.Transfer({ filter: {}, fromBlock: 
-//           3842937,toBlock:'latest' },function(params){
+//           3869068,toBlock:'latest' },function(params){
           
 //         })
 //         .on('data', (event) => {
@@ -1492,6 +1525,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         </div>
       ) : null}
     </div>
+   {loading===true?<Status mini={true} status="loading" />:null} 
     <div  className={cn("cursor-pointer", style.btnBox)}  id="eventData">
 <div id="imgTokenURI"></div>
 <div><p></p></div>
