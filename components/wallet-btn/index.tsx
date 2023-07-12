@@ -93,7 +93,7 @@ const MENU = [
   //   type: "operation",
   // },
   {
-    label: "Sign Out",
+    label: "Disconnect",
     icon: "/images/v5/Signout.png",
     value: "resetApp",
     type: "operation",
@@ -159,6 +159,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
   const [loginState, setLoginState] = React.useState("web3Auth");
   const [profileConcent, setProfileConcent] = React.useState(null);
+  const [mintNum, setMintNum] = React.useState(null);
   const [mintConcent, setMintConcent] = React.useState(false);
   const [w3, setw3] = React.useState(null);
   const [num, setNum] = useState(1);
@@ -857,7 +858,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     if (profile?.address) {
       if (profile?.nickName && profile?.address) {
         // console.log(profile);
-        text = profile?.nickName;
+        // text = profile?.nickName;
+        text = profile?.address;
       } else {
         text = clipName(profile?.address);
         setShowMenu(!showMenu);
@@ -876,18 +878,21 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     return (
       <>
         <div style={{ display: "flex" }}>
-          {profile?.address ||
-          (web3AuthAddress && providerWeb3auth !== null && idTokenWeb3) ? (
+          {/* {profile?.address ||
+          (web3AuthAddress && providerWeb3auth !== null && idTokenWeb3) ? 
+          (
             <img
               className={cn("mr-1 ", style.avatar)}
               src={profile.avatar || "/images/icon.png"}
             />
-          ) : (
+          ) 
+          : 
+          (
             <img
               className={cn("mr-1 ", style.avatar)}
               src="/images/v5/wallet.png"
             />
-          )}
+          )} */}
           <div
             title={text}
             className={cn(
@@ -1300,6 +1305,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const handleMint = async () => {
     try {
+      console.log(mintNum,'mintNummintNummintNum');
+      
+      if(!profile?.address){
+        connectToChain();
+      }
       toast.success("Successful");
       setLoading(true)
       const web3 = new Web3(Web3.givenProvider);
@@ -1349,50 +1359,56 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
            
           }
           if(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase()){
+            const eventDataElement = document.getElementById('eventData');
             const tokenToBip =  contract.methods.tokenToBip(event.returnValues.tokenId).call({})
             const tokenURI =  contract.methods.tokenURI(event.returnValues.tokenId).call({})
-            console.log(tokenToBip,'tokenToBip');
-            tokenToBip.then(result => {
-              console.log(result); // 输出 "daughter"
-                  const eventDataElement = document.getElementById('eventData');
-                    // console.log(event);
-                    // console.log(event.returnValues.to.toLowerCase());
-                     // 创建一个新的 <p> 元素来展示事件数据
-            const pElement = document.createElement('p');
-        
-            // 将事件数据转为字符串
-            const eventDataString = JSON.stringify(result);
-        
-            // 将事件数据添加到 <p> 元素中
-            pElement.textContent = eventDataString;
-        
-            // 将 <p> 元素追加到 <div> 元素中
-            eventDataElement.appendChild(pElement);
-          });
-          tokenURI.then(result => {
-            console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
-            const eventDataElement = document.getElementById('imgTokenURI');
-            const imgElement = document.createElement('img');
-            fetch(result)
-            .then(response => response.text())
-            .then(content => {
-              console.log(content); // 输出网址链接内容
-              // 在这里对网址链接内容进行处理
-              const data = JSON.parse(content);
-              const imageURL = data.image;
-              const description = data.description;
-              console.log(imageURL); // 输出图片链接
-            // 将链接设置为img元素的src属性值
-            imgElement.setAttribute('src', imageURL);
-            const pElement = document.createElement('p');
-            pElement.textContent = description;
-            eventDataElement.appendChild(imgElement);
-            eventDataElement.appendChild(pElement);
-          })
+            const nameCon =  contract.methods.name().call({})
+            Promise.all([tokenToBip, tokenURI, nameCon])
+            .then(([tokenToBipResult, tokenURIResult, nameConResult]) => {
+              const gridContainer = document.createElement('div');
+              gridContainer.style.height = '200px';
+              console.log(nameConResult, 3333);
+          
+              // 处理 tokenToBip 数据
+              const tokenToBipPElement = document.createElement('span');
+              tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
+              gridContainer.appendChild(tokenToBipPElement);
+          
+              tokenToBipPElement.style.marginRight = '15px';
+          
+              // 处理 nameCon 数据
+              const nameConElement = document.createElement('span');
+              nameConElement.textContent = nameConResult.replace(/"/g, '');
+              gridContainer.appendChild(nameConElement);
+          
+              // 处理 tokenURI 数据
+              const imgTokenURIElement = document.createElement('div');
+              const imgElement = document.createElement('img');
+              const pElement = document.createElement('p');
+          
+              fetch(tokenURIResult)
+                .then(response => response.json())
+                .then(data => {
+                  const imageURL = data.image;
+                  imgElement.setAttribute('src', imageURL);
+                })
+                .catch(error => {
+                  console.error('Error fetching tokenURI:', error);
+                });
+          
+              imgTokenURIElement.appendChild(imgElement);
+              imgTokenURIElement.appendChild(pElement);
+              
+              gridContainer.appendChild(imgTokenURIElement);
+          
+              eventDataElement.appendChild(gridContainer);
+          
+              imgElement.style.width = '100px';
+              imgElement.style.height = '100px';
+            });
           // .catch(error => {
           //   console.log(error); // 错误处理
           // });
-          });
           }
           setLoading(false)
       })
@@ -1408,7 +1424,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       console.log("tx:", tx);
       // mint 成功, 进行后续操作
-      console.log(tx.events.from);
 
       
       
@@ -1418,78 +1433,138 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     }
   };
 
-//   useEffect(() => {
+  useEffect(() => {
     
-//     window.ethereum.enable()
-//     .then(() => {
-//       console.log(223);
-//         const web3 = new Web3(window.web3.currentProvider);
-//         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
-//         const dai = new web3.eth.Contract(abi as [], contractAddress);
+    window.ethereum.enable()
+    .then(() => {
+      console.log(223);
+        const web3 = new Web3(window.web3.currentProvider);
+        const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+        const dai = new web3.eth.Contract(abi as [], contractAddress);
         
-//         const mintNums = 1; 
-//         dai.events.Transfer({ filter: {}, fromBlock: 
-//           3869068,toBlock:'latest' },function(params){
+        const mintNums = 1; 
+        dai.events.Transfer({ filter: {}, fromBlock: 
+          3869068,toBlock:'latest' },function(params){
           
-//         })
-//         .on('data', (event) => {
-//     //       console.log(event);
-// console.log(event);
+        })
+        .on('data', (event) => {
+    //       console.log(event);
+console.log(event);
 
-//     const tokenToBip =  dai.methods.tokenToBip(event.returnValues.tokenId).call({})
-//     const tokenURI =  dai.methods.tokenURI(event.returnValues.tokenId).call({})
-//     console.log(tokenToBip,'tokenToBip');
-//     tokenToBip.then(result => {
-//       console.log(result); // 输出 "daughter"
-//           const eventDataElement = document.getElementById('eventData');
-//             // console.log(event);
-//             // console.log(event.returnValues.to.toLowerCase());
-//              // 创建一个新的 <p> 元素来展示事件数据
-//     const pElement = document.createElement('p');
+    const totalSupply =  dai.methods.totalSupply().call({})
+    const name =  dai.methods.name().call({})
+    totalSupply.then(result=>{
+console.log(result,'resultresult');
+setMintNum(result)
+    })
+    console.log(name);
+    
+    name.then(result=>{
+console.log(result,'resultresult');
+    })
+    const eventDataElement = document.getElementById('eventData');
+    const tokenToBip =  dai.methods.tokenToBip(event.returnValues.tokenId).call({})
+    const tokenURI =  dai.methods.tokenURI(event.returnValues.tokenId).call({})
+    const nameCon =  dai.methods.name().call({})
+    
+  //   console.log(tokenToBip,'tokenToBip');
+  //   tokenToBip.then(result => {
+  //     console.log(result); // 输出 "daughter"
+  //         const eventDataElement = document.getElementById('eventData');
+  //           // console.log(event);
+  //           // console.log(event.returnValues.to.toLowerCase());
+  //            // 创建一个新的 <p> 元素来展示事件数据
+  //   const pElement = document.createElement('p');
 
-//     // 将事件数据转为字符串
-//     const eventDataString = JSON.stringify(result);
+  //   // 将事件数据转为字符串
+  //   const eventDataString = JSON.stringify(result);
 
-//     // 将事件数据添加到 <p> 元素中
-//     pElement.textContent = eventDataString;
+  //   // 将事件数据添加到 <p> 元素中
+  //   pElement.textContent = eventDataString;
 
-//     // 将 <p> 元素追加到 <div> 元素中
-//     eventDataElement.appendChild(pElement);
-//   });
-//   tokenURI.then(result => {
-//     console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
-//     const eventDataElement = document.getElementById('imgTokenURI');
-//     const imgElement = document.createElement('img');
-//     fetch(result)
-//     .then(response => response.text())
-//     .then(content => {
-//       console.log(content); // 输出网址链接内容
-//       // 在这里对网址链接内容进行处理
-//       const data = JSON.parse(content);
-//       const imageURL = data.image;
-//       const description = data.description;
-//       console.log(imageURL); // 输出图片链接
-//     // 将链接设置为img元素的src属性值
-//     imgElement.setAttribute('src', imageURL);
-//     const pElement = document.createElement('p');
-//     pElement.textContent = description;
-//     eventDataElement.appendChild(imgElement);
-//     eventDataElement.appendChild(pElement);
-//   })
-//   .catch(error => {
-//     console.log(error); // 错误处理
-//   });
-//   });
-//     // 在页面上更新事件数据
-//     // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
-//         });
+  //   // 将 <p> 元素追加到 <div> 元素中
+  //   eventDataElement.appendChild(pElement);
+  // });
+  // tokenURI.then(result => {
+  //   console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
+  //   const eventDataElement = document.getElementById('imgTokenURI');
+  //   const imgElement = document.createElement('img');
+  //   fetch(result)
+  //   .then(response => response.text())
+  //   .then(content => {
+  //     console.log(content); // 输出网址链接内容
+  //     // 在这里对网址链接内容进行处理
+  //     const data = JSON.parse(content);
+  //     const imageURL = data.image;
+  //     const description = data.description;
+  //     console.log(imageURL); // 输出图片链接
+  //   // 将链接设置为img元素的src属性值
+  //   imgElement.setAttribute('src', imageURL);
+  //   const pElement = document.createElement('p');
+  //   pElement.textContent = description;
+  //   eventDataElement.appendChild(imgElement);
+  //   eventDataElement.appendChild(pElement);
+  // })
+  // })
+
+  // Promise.all([tokenToBip, tokenURI, nameCon])
+  // .then(([tokenToBipResult, tokenURIResult, nameConResult]) => {
+  //   const gridContainer = document.createElement('div');
+  //   gridContainer.style.height = '200px';
+  //   console.log(nameConResult, 3333);
+
+  //   // 处理 tokenToBip 数据
+  //   const tokenToBipPElement = document.createElement('span');
+  //   tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
+  //   gridContainer.appendChild(tokenToBipPElement);
+
+  //   tokenToBipPElement.style.marginRight = '15px';
+
+  //   // 处理 nameCon 数据
+  //   const nameConElement = document.createElement('span');
+  //   nameConElement.textContent = nameConResult.replace(/"/g, '');
+  //   gridContainer.appendChild(nameConElement);
+
+  //   // 处理 tokenURI 数据
+  //   const imgTokenURIElement = document.createElement('div');
+  //   const imgElement = document.createElement('img');
+  //   const pElement = document.createElement('p');
+
+  //   fetch(tokenURIResult)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       const imageURL = data.image;
+  //       imgElement.setAttribute('src', imageURL);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching tokenURI:', error);
+  //     });
+
+  //   imgTokenURIElement.appendChild(imgElement);
+  //   imgTokenURIElement.appendChild(pElement);
+    
+  //   gridContainer.appendChild(imgTokenURIElement);
+
+  //   eventDataElement.appendChild(gridContainer);
+
+  //   imgElement.style.width = '100px';
+  //   imgElement.style.height = '100px';
+  // });
+
+  // .catch(error => {
+  //   console.log(error); // 错误处理
+  // });
+  });
+    // 在页面上更新事件数据
+    // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
+        });
        
-//     });
-// }, []);
+    // });
+}, []);
 
   return (
 <> 
-   <div className={cn("cursor-pointer", style.btn)}>
+   <div className={cn("cursor-pointer", loading === true ?style.btnDis: style.btn)}>
       <div
         className={cn(
           "flex justify-center items-center w-full h-full text-xs",
@@ -1502,11 +1577,15 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       <div style={{ borderRadius: "6px", marginTop: "5px" }}>
         <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
       </div>
-      <button onClick={handleMintContent}>Mint</button>
-      {mintConcent === true ? (
+      {/* <button onClick={handleMintContent}>Mint</button> */}
+      {/* {mintConcent === true ? ( */}
         <div className={cn(style.content)}>
           <span>0.006</span>
-          <p className={cn(style.supply)}>Supply:</p>
+          <p className={cn(style.supply)}>Supply:
+          <span>{mintNum}</span>
+          <span>/</span>
+          <span>1984</span>
+          </p>
           <div className={cn(style.middleContent)}>
             <div
               className={cn(style.imgCon)}
@@ -1519,16 +1598,19 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
               <img src="/images/carousel-right.png" alt="" />
             </div>
           </div>
-          <button className={cn(style.mintBtn)} onClick={handleMint}>
+          {/* <button className={cn(style.mintBtn)} onClick={handleMint}>
             Mint
-          </button>
+          </button> */}
+          <button className={cn(mintNum === '1984'?style.mintBtnDis:style.mintBtn,)} disabled={mintNum === '1984'}  onClick={handleMint}>Mint</button> 
         </div>
-      ) : null}
+      {/* ) : null} */}
     </div>
    {loading===true?<Status mini={true} status="loading" />:null} 
-    <div  className={cn("cursor-pointer", style.btnBox)}  id="eventData">
-<div id="imgTokenURI"></div>
-<div><p></p></div>
+   <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5",style.dataSourceCard)}  id="eventData">
+    {/* <div  className={cn("cursor-pointer", style.btnBox)} > */}
+{/* <div id="imgTokenURI"></div> */}
+{/* </div> */}
+{/* <div><p></p></div> */}
     </div>
     </>
   );
