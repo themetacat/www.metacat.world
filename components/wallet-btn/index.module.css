@@ -175,8 +175,8 @@ margin-top: 15px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 .content{
-  width: 200px;
-  height: 200px;
+  width: 350px;
+  height: 300px;
   background-color: #191921;
   text-align: center;
   border: 20px;

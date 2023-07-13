@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { toast } from "react-hot-toast";
 import "tailwindcss/tailwind.css";
-import Status from '../status';
+import Status from "../status";
 import { Web3AuthCore } from "@web3auth/core";
 import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal";
 import WalletConnect from "@walletconnect/client";
@@ -66,7 +66,6 @@ const INITIAL_STATE: IProfileData = {
     avatar: null,
   },
 };
-
 const MENU = [
   // {
   //   label: "Setting",
@@ -152,7 +151,10 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [showWall, setShowWall] = React.useState(null);
   const [providerWeb3auth, setProviderWeb3auth] =
     useState<SafeEventEmitterProvider | null>(null);
-
+  const [ethBalance, setEthBalance] = useState("0");
+  const [ethBalanceNeed, setEthBalanceNeed] = useState(0);
+  const [balanceNum, setBalanceNum] = useState(false);
+  const [switcherNet, setSwitcherNet] = useState(false);
   const [web3auth, setWeb3auth] = useState<Web3AuthCore | null>(null);
 
   const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
@@ -253,6 +255,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
+
+
+    setTimeout(()=>{
+      setLoading(false);
+    },5000)
 
     if (
       typeof (window as any).ethereum === "undefined" ||
@@ -370,8 +377,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         options: {
           infuraId: "f9d7d835ed864a299a13e841a1b654f8",
           rpc: {
-            1:
-              "https://sepolia.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e",
+            1: "https://sepolia.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e",
           },
           network: 1,
         },
@@ -384,6 +390,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       cacheProvider: true,
       providerOptions,
     });
+    
     // 'https://registry.walletconnect.com/api/v2/wallets'
     {
       /* <WalletConnectQRCodeModal
@@ -392,7 +399,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
            URI={web3Modal.cachedProvider}
          /> */
     }
-    // console.log(web3Modal,Web3Modal,web3Modal.cachedProvider,8888888);
+    console.log(web3Modal,Web3Modal,web3Modal.cachedProvider,8888888);
 
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org",
@@ -434,6 +441,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
 
   useEffect(() => {
+
     const init = async () => {
       try {
         const coreWeb3auth = new Web3AuthCore({
@@ -1305,286 +1313,395 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const handleMint = async () => {
     try {
-      console.log(mintNum,'mintNummintNummintNum');
-      
-      if(!profile?.address){
-        connectToChain();
-      }
-      toast.success("Successful");
-      setLoading(true)
-      const web3 = new Web3(Web3.givenProvider);
-      const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
-      const contract = new web3.eth.Contract(abi as [], contractAddress);
-      console.log(contract.events.Transfer);
-      const mintNums = 1; // 在这里定义要mint的数量
+      if (typeof window.ethereum !== "undefined") {
+        // 请求用户授权连接 MetaMask
+        const networkVersion = window.ethereum.networkVersion;
+        if(networkVersion!=='11155111' ){
+          console.log('有没有问题');
+          setSwitcherNet(true)
+        }else{
+          setSwitcherNet(false)
+          await window.ethereum.request({ method: "eth_requestAccounts" });
 
-
-
-      const tx = await contract.methods.mint(mintNums).send({
-        from: profile.address,
-        value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
-      });
-      console.log(tx);
-      
-      // const tokenToBip = await contract.methods.tokenToBip().call({})
-      // console.log(tokenToBip,'tokenToBip');
-      
-      // // 监听合约事件
-      // // const event = contract.events.Transfer((error, event) => {
-      // //   console.log(error, event);
-
-      // //   if (!error) {
-      // //     console.log("Event data:", event.returnValues);
-      // //     // 在此处添加自定义的处理逻辑
-      // //   } else {
-      // //     console.error("Error:", error);
-      // //   }
-      // // });
-      // // event(); 
-      // const eventDataElement = document.getElementById('eventData');
-      contract.events.Transfer({ filter: {}, fromBlock: 
-        3869068,toBlock:'latest' },function(params){
-      })
-      .on('data', (event) => {
-          console.log(event);
-          setLoading(true)
-          console.log(tx.events.Transfer.returnValues.to.toLowerCase(),11111,event.returnValues.to.toLowerCase());
-          
-          console.log(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase());
-          console.log(tx.transactionHash===event.transactionHash,666666666);
-          if(tx.transactionHash===event.transactionHash){
-            toast.success('hhhhhh')
-            setLoading(false)
-            alert('仅此一次成功了')
-           
-          }
-          if(tx.events.Transfer.returnValues.to.toLowerCase()===event.returnValues.to.toLowerCase()){
-            const eventDataElement = document.getElementById('eventData');
-            const tokenToBip =  contract.methods.tokenToBip(event.returnValues.tokenId).call({})
-            const tokenURI =  contract.methods.tokenURI(event.returnValues.tokenId).call({})
-            const nameCon =  contract.methods.name().call({})
-            Promise.all([tokenToBip, tokenURI, nameCon])
-            .then(([tokenToBipResult, tokenURIResult, nameConResult]) => {
-              const gridContainer = document.createElement('div');
-              gridContainer.style.height = '200px';
-              console.log(nameConResult, 3333);
-          
-              // 处理 tokenToBip 数据
-              const tokenToBipPElement = document.createElement('span');
-              tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
-              gridContainer.appendChild(tokenToBipPElement);
-          
-              tokenToBipPElement.style.marginRight = '15px';
-          
-              // 处理 nameCon 数据
-              const nameConElement = document.createElement('span');
-              nameConElement.textContent = nameConResult.replace(/"/g, '');
-              gridContainer.appendChild(nameConElement);
-          
-              // 处理 tokenURI 数据
-              const imgTokenURIElement = document.createElement('div');
-              const imgElement = document.createElement('img');
-              const pElement = document.createElement('p');
-          
-              fetch(tokenURIResult)
-                .then(response => response.json())
-                .then(data => {
-                  const imageURL = data.image;
-                  imgElement.setAttribute('src', imageURL);
-                })
-                .catch(error => {
-                  console.error('Error fetching tokenURI:', error);
-                });
-          
-              imgTokenURIElement.appendChild(imgElement);
-              imgTokenURIElement.appendChild(pElement);
-              
-              gridContainer.appendChild(imgTokenURIElement);
-          
-              eventDataElement.appendChild(gridContainer);
-          
-              imgElement.style.width = '100px';
-              imgElement.style.height = '100px';
+          // 创建 Web3 实例
+          const web3 = new Web3(window.ethereum);
+  
+          // 获取当前账户地址
+          const accounts = await web3.eth.getAccounts();
+          const accountAddress = accounts[0];
+  
+          // 获取用户钱包中的 ETH 余额
+          const balance = await web3.eth.getBalance(accountAddress);
+  
+          // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
+          const ethBalance = Number(web3.utils.fromWei(balance, "ether"));
+  
+          setEthBalanceNeed(ethBalance);
+  
+          const price = 0.006;
+          const quantity = 1;
+  
+          // 对比 ETH 余额和数量与单价的乘积
+          if (ethBalance >= price * quantity) {
+            // 执行 mint 操作
+            // your mint logic here
+            console.log("Minting...");
+  
+            console.log(mintNum, "mintNummintNummintNum");
+  
+            if (!profile?.address) {
+              connectToChain();
+            }
+            toast.success("Successful");
+            setLoading(true);
+            const web3 = new Web3(Web3.givenProvider);
+            const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+            const contract = new web3.eth.Contract(abi as [], contractAddress);
+            console.log(contract.events.Transfer);
+            const mintNums = 1; // 在这里定义要mint的数量
+            setTimeout(()=>{
+              setLoading(false)
+            },5000)
+            const tx = await contract.methods.mint(mintNums).send({
+              from: profile.address,
+              value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
             });
-          // .catch(error => {
-          //   console.log(error); // 错误处理
-          // });
+            console.log(tx);
+   
+            // const tokenToBip = await contract.methods.tokenToBip().call({})
+            // console.log(tokenToBip,'tokenToBip');
+  
+            // // 监听合约事件
+            // // const event = contract.events.Transfer((error, event) => {
+            // //   console.log(error, event);
+  
+            // //   if (!error) {
+            // //     console.log("Event data:", event.returnValues);
+            // //     // 在此处添加自定义的处理逻辑
+            // //   } else {
+            // //     console.error("Error:", error);
+            // //   }
+            // // });
+            // // event();
+            // const eventDataElement = document.getElementById('eventData');
+            contract.events
+              .Transfer(
+                { filter: {}, fromBlock: 3869068, toBlock: "latest" },
+                function (params) {}
+              )
+              .on("data", (event) => {
+                console.log(event);
+                setLoading(true);
+                console.log(
+                  tx.events.Transfer.returnValues.to.toLowerCase(),
+                  11111,
+                  event.returnValues.to.toLowerCase()
+                );
+  
+                console.log(
+                  tx.events.Transfer.returnValues.to.toLowerCase() ===
+                    event.returnValues.to.toLowerCase()
+                );
+                console.log(
+                  tx.transactionHash === event.transactionHash,
+                  666666666
+                );
+                if (tx.transactionHash === event.transactionHash) {
+                  toast.success("hhhhhh");
+                  setLoading(false);
+                  alert("仅此一次成功了");
+                }
+                if (
+                  tx.events.Transfer.returnValues.to.toLowerCase() ===
+                  event.returnValues.to.toLowerCase()
+                ) {
+                  const eventDataElement = document.getElementById("eventData");
+                  const tokenToBip = contract.methods
+                    .tokenToBip(event.returnValues.tokenId)
+                    .call({});
+                  const tokenURI = contract.methods
+                    .tokenURI(event.returnValues.tokenId)
+                    .call({});
+                  const nameCon = contract.methods.name().call({});
+                  Promise.all([tokenToBip, tokenURI, nameCon]).then(
+                    ([tokenToBipResult, tokenURIResult, nameConResult]) => {
+                      const gridContainer = document.createElement("div");
+                      gridContainer.style.height = "200px";
+                      console.log(nameConResult, 3333);
+  
+                      // 处理 tokenToBip 数据
+                      const tokenToBipPElement = document.createElement("span");
+                      tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
+                      gridContainer.appendChild(tokenToBipPElement);
+  
+                      tokenToBipPElement.style.marginRight = "15px";
+  
+                      // 处理 nameCon 数据
+                      const nameConElement = document.createElement("span");
+                      nameConElement.textContent = nameConResult.replace(
+                        /"/g,
+                        ""
+                      );
+                      gridContainer.appendChild(nameConElement);
+  
+                      // 处理 tokenURI 数据
+                      const imgTokenURIElement = document.createElement("div");
+                      const imgElement = document.createElement("img");
+                      const pElement = document.createElement("p");
+  
+                      fetch(tokenURIResult)
+                        .then((response) => response.json())
+                        .then((data) => {
+                          const imageURL = data.image;
+                          imgElement.setAttribute("src", imageURL);
+                        })
+                        .catch((error) => {
+                          console.error("Error fetching tokenURI:", error);
+                        });
+  
+                      imgTokenURIElement.appendChild(imgElement);
+                      imgTokenURIElement.appendChild(pElement);
+  
+                      gridContainer.appendChild(imgTokenURIElement);
+  
+                      eventDataElement.appendChild(gridContainer);
+  
+                      imgElement.style.width = "100px";
+                      imgElement.style.height = "100px";
+                    }
+                  );
+                  // .catch(error => {
+                  //   console.log(error); // 错误处理
+                  // });
+                }
+                setLoading(false);
+              })
+  
+              .on("error", (error) => {
+                console.error(error);
+              });
+            //       const value = await contract.methods.getInfo()
+            // console.log(value);
+            if (tx) {
+              toast.success("Successful");
+            }
+  
+            console.log("tx:", tx);
+            // mint 成功, 进行后续操作
+          } else {
+            setBalanceNum(true);
+            alert("Your balance is insufficient");
+            console.log("Insufficient ETH balance");
           }
-          setLoading(false)
-      })
-      
-      .on('error', (error) => {
-        console.error(error);
-      });
-      //       const value = await contract.methods.getInfo()
-      // console.log(value);
-      if (tx) {
-        toast.success("Successful");
-      }
-
-      console.log("tx:", tx);
-      // mint 成功, 进行后续操作
-
-      
-      
-      
+          // } else {
+          //   console.log('MetaMask is not installed');
+        }
+        }
+       
     } catch (error) {
       toast.error("something went wrong");
     }
   };
 
   useEffect(() => {
-    
-    window.ethereum.enable()
-    .then(() => {
+    window.ethereum.enable().then(() => {
       console.log(223);
-        const web3 = new Web3(window.web3.currentProvider);
-        const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
-        const dai = new web3.eth.Contract(abi as [], contractAddress);
-        
-        const mintNums = 1; 
-        dai.events.Transfer({ filter: {}, fromBlock: 
-          3869068,toBlock:'latest' },function(params){
-          
-        })
-        .on('data', (event) => {
-    //       console.log(event);
-console.log(event);
+      const web3 = new Web3(window.web3.currentProvider);
+      const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+      const dai = new web3.eth.Contract(abi as [], contractAddress);
 
-    const totalSupply =  dai.methods.totalSupply().call({})
-    const name =  dai.methods.name().call({})
-    totalSupply.then(result=>{
-console.log(result,'resultresult');
-setMintNum(result)
-    })
-    console.log(name);
-    
-    name.then(result=>{
-console.log(result,'resultresult');
-    })
-    const eventDataElement = document.getElementById('eventData');
-    const tokenToBip =  dai.methods.tokenToBip(event.returnValues.tokenId).call({})
-    const tokenURI =  dai.methods.tokenURI(event.returnValues.tokenId).call({})
-    const nameCon =  dai.methods.name().call({})
-    
-  //   console.log(tokenToBip,'tokenToBip');
-  //   tokenToBip.then(result => {
-  //     console.log(result); // 输出 "daughter"
-  //         const eventDataElement = document.getElementById('eventData');
-  //           // console.log(event);
-  //           // console.log(event.returnValues.to.toLowerCase());
-  //            // 创建一个新的 <p> 元素来展示事件数据
-  //   const pElement = document.createElement('p');
+      const mintNums = 1;
+      dai.events
+        .Transfer(
+          { filter: {}, fromBlock: 3869068, toBlock: "latest" },
+          function (params) {}
+        )
+        .on("data", (event) => {
+          //       console.log(event);
+          console.log(event);
 
-  //   // 将事件数据转为字符串
-  //   const eventDataString = JSON.stringify(result);
+          const totalSupply = dai.methods.totalSupply().call({});
+          const name = dai.methods.name().call({});
+          totalSupply.then((result) => {
+            console.log(result, "resultresult");
+            setMintNum(result);
+          });
+          console.log(name);
 
-  //   // 将事件数据添加到 <p> 元素中
-  //   pElement.textContent = eventDataString;
+          name.then((result) => {
+            console.log(result, "resultresult");
+          });
+          const eventDataElement = document.getElementById("eventData");
+          const tokenToBip = dai.methods
+            .tokenToBip(event.returnValues.tokenId)
+            .call({});
+          const tokenURI = dai.methods
+            .tokenURI(event.returnValues.tokenId)
+            .call({});
+          const nameCon = dai.methods.name().call({});
 
-  //   // 将 <p> 元素追加到 <div> 元素中
-  //   eventDataElement.appendChild(pElement);
-  // });
-  // tokenURI.then(result => {
-  //   console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
-  //   const eventDataElement = document.getElementById('imgTokenURI');
-  //   const imgElement = document.createElement('img');
-  //   fetch(result)
-  //   .then(response => response.text())
-  //   .then(content => {
-  //     console.log(content); // 输出网址链接内容
-  //     // 在这里对网址链接内容进行处理
-  //     const data = JSON.parse(content);
-  //     const imageURL = data.image;
-  //     const description = data.description;
-  //     console.log(imageURL); // 输出图片链接
-  //   // 将链接设置为img元素的src属性值
-  //   imgElement.setAttribute('src', imageURL);
-  //   const pElement = document.createElement('p');
-  //   pElement.textContent = description;
-  //   eventDataElement.appendChild(imgElement);
-  //   eventDataElement.appendChild(pElement);
-  // })
-  // })
+          //   console.log(tokenToBip,'tokenToBip');
+          //   tokenToBip.then(result => {
+          //     console.log(result); // 输出 "daughter"
+          //         const eventDataElement = document.getElementById('eventData');
+          //           // console.log(event);
+          //           // console.log(event.returnValues.to.toLowerCase());
+          //            // 创建一个新的 <p> 元素来展示事件数据
+          //   const pElement = document.createElement('p');
 
-  // Promise.all([tokenToBip, tokenURI, nameCon])
-  // .then(([tokenToBipResult, tokenURIResult, nameConResult]) => {
-  //   const gridContainer = document.createElement('div');
-  //   gridContainer.style.height = '200px';
-  //   console.log(nameConResult, 3333);
+          //   // 将事件数据转为字符串
+          //   const eventDataString = JSON.stringify(result);
 
-  //   // 处理 tokenToBip 数据
-  //   const tokenToBipPElement = document.createElement('span');
-  //   tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
-  //   gridContainer.appendChild(tokenToBipPElement);
+          //   // 将事件数据添加到 <p> 元素中
+          //   pElement.textContent = eventDataString;
 
-  //   tokenToBipPElement.style.marginRight = '15px';
+          //   // 将 <p> 元素追加到 <div> 元素中
+          //   eventDataElement.appendChild(pElement);
+          // });
+          // tokenURI.then(result => {
+          //   console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
+          //   const eventDataElement = document.getElementById('imgTokenURI');
+          //   const imgElement = document.createElement('img');
+          //   fetch(result)
+          //   .then(response => response.text())
+          //   .then(content => {
+          //     console.log(content); // 输出网址链接内容
+          //     // 在这里对网址链接内容进行处理
+          //     const data = JSON.parse(content);
+          //     const imageURL = data.image;
+          //     const description = data.description;
+          //     console.log(imageURL); // 输出图片链接
+          //   // 将链接设置为img元素的src属性值
+          //   imgElement.setAttribute('src', imageURL);
+          //   const pElement = document.createElement('p');
+          //   pElement.textContent = description;
+          //   eventDataElement.appendChild(imgElement);
+          //   eventDataElement.appendChild(pElement);
+          // })
+          // })
 
-  //   // 处理 nameCon 数据
-  //   const nameConElement = document.createElement('span');
-  //   nameConElement.textContent = nameConResult.replace(/"/g, '');
-  //   gridContainer.appendChild(nameConElement);
+          // Promise.all([tokenToBip, tokenURI, nameCon]).then(
+          //   ([tokenToBipResult, tokenURIResult, nameConResult]) => {
+          //     const gridContainer = document.createElement("div");
+          //     gridContainer.style.height = "200px";
+          //     console.log(nameConResult, 3333);
 
-  //   // 处理 tokenURI 数据
-  //   const imgTokenURIElement = document.createElement('div');
-  //   const imgElement = document.createElement('img');
-  //   const pElement = document.createElement('p');
+          //     // 处理 tokenToBip 数据
+          //     const tokenToBipPElement = document.createElement("span");
+          //     tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
+          //     gridContainer.appendChild(tokenToBipPElement);
 
-  //   fetch(tokenURIResult)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       const imageURL = data.image;
-  //       imgElement.setAttribute('src', imageURL);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching tokenURI:', error);
-  //     });
+          //     tokenToBipPElement.style.marginRight = "15px";
 
-  //   imgTokenURIElement.appendChild(imgElement);
-  //   imgTokenURIElement.appendChild(pElement);
-    
-  //   gridContainer.appendChild(imgTokenURIElement);
+          //     // 处理 nameCon 数据
+          //     const nameConElement = document.createElement("span");
+          //     nameConElement.textContent = nameConResult.replace(/"/g, "");
+          //     gridContainer.appendChild(nameConElement);
 
-  //   eventDataElement.appendChild(gridContainer);
+          //     // 处理 tokenURI 数据
+          //     const imgTokenURIElement = document.createElement("div");
+          //     const imgElement = document.createElement("img");
+          //     const pElement = document.createElement("p");
 
-  //   imgElement.style.width = '100px';
-  //   imgElement.style.height = '100px';
-  // });
+          //     fetch(tokenURIResult)
+          //       .then((response) => response.json())
+          //       .then((data) => {
+          //         const imageURL = data.image;
+          //         imgElement.setAttribute("src", imageURL);
+          //       })
+          //       .catch((error) => {
+          //         console.error("Error fetching tokenURI:", error);
+          //       });
 
-  // .catch(error => {
-  //   console.log(error); // 错误处理
-  // });
-  });
-    // 在页面上更新事件数据
-    // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
+          //     imgTokenURIElement.appendChild(imgElement);
+          //     imgTokenURIElement.appendChild(pElement);
+
+          //     gridContainer.appendChild(imgTokenURIElement);
+
+          //     eventDataElement.appendChild(gridContainer);
+
+          //     imgElement.style.width = "100px";
+          //     imgElement.style.height = "100px";
+          //   }
+          // )
+
+          // .catch(error => {
+          //   console.log(error); // 错误处理
+          // });
         });
-       
+      // 在页面上更新事件数据
+      // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
+    });
+
     // });
-}, []);
+  }, []);
+
+  useEffect(() => {
+    async function fetchBalance() {
+      if (typeof window.ethereum !== "undefined") {
+        // 请求用户授权连接 MetaMask
+        // console.log(window.ethereum);
+        // const networkVersion = window.ethereum.networkVersion;
+        // console.log(networkVersion,668852);
+        // if(networkVersion!=='11155111' ){
+        //   console.log('有没有问题');
+        //   setSwitcherNet(true)
+        // }
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+
+        // 创建 Web3 实例
+        const web3 = new Web3(window.ethereum);
+
+        // 获取当前账户地址
+        const accounts = await web3.eth.getAccounts();
+        const accountAddress = accounts[0];
+
+        // 获取用户钱包中的 ETH 余额
+        const balance = await web3.eth.getBalance(accountAddress);
+
+        // 将 balance 单位由 wei 转换为以太币，并设置为保留三位小数
+        const ethBalance = Number(web3.utils.fromWei(balance, "ether")).toFixed(
+          3
+        );
+
+        setEthBalance(ethBalance);
+      } else {
+        console.log("MetaMask is not installed");
+      }
+    }
+
+    fetchBalance();
+  }, []);
 
   return (
-<> 
-   <div className={cn("cursor-pointer", loading === true ?style.btnDis: style.btn)}>
+    <>
       <div
         className={cn(
-          "flex justify-center items-center w-full h-full text-xs",
-          style.btnDiv
+          "cursor-pointer",
+          loading === true ? style.btnDis : style.btn
         )}
-        onClick={onClick}
       >
-        {getText}
-      </div>
-      <div style={{ borderRadius: "6px", marginTop: "5px" }}>
-        <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
-      </div>
-      {/* <button onClick={handleMintContent}>Mint</button> */}
-      {/* {mintConcent === true ? ( */}
+        <div
+          className={cn(
+            "flex justify-center items-center w-full h-full text-xs",
+            style.btnDiv
+          )}
+          onClick={onClick}
+        >
+          {getText}
+        </div>
+        <div style={{ borderRadius: "6px", marginTop: "5px" }}>
+          <ul className={cn("list-none mt-2 z-20")}>{showMenu && render}</ul>
+        </div>
+        {/* <button onClick={handleMintContent}>Mint</button> */}
+        {/* {mintConcent === true ? ( */}
         <div className={cn(style.content)}>
           <span>0.006</span>
-          <p className={cn(style.supply)}>Supply:
-          <span>{mintNum}</span>
-          <span>/</span>
-          <span>1984</span>
+          <p className={cn(style.supply)}>
+            Supply:
+            <span>{mintNum}</span>
+            <span>/</span>
+            <span>1984</span>
           </p>
           <div className={cn(style.middleContent)}>
             <div
@@ -1601,17 +1718,46 @@ console.log(result,'resultresult');
           {/* <button className={cn(style.mintBtn)} onClick={handleMint}>
             Mint
           </button> */}
-          <button className={cn(mintNum === '1984'?style.mintBtnDis:style.mintBtn,)} disabled={mintNum === '1984'}  onClick={handleMint}>Mint</button> 
+          {balanceNum === true ? (
+            <div>
+              <p>
+                ETH Balance: Youneed {ethBalanceNeed.toFixed(3)} ETH + gas fee{" "}
+                <br /> YouETH wallet Balance: {ethBalance} ETH
+              </p>
+            </div>
+          ) : null}
+          {switcherNet === true ? (
+            <div>
+              <p>
+              Please switch to Ethereum Sepolia
+              </p>
+            </div>
+          ) : null}
+          <button
+            className={cn(
+              mintNum === "1984" ? style.mintBtnDis : style.mintBtn
+            )}
+            disabled={mintNum === "1984"}
+            onClick={handleMint}
+          >
+            Mint
+          </button>
         </div>
-      {/* ) : null} */}
-    </div>
-   {loading===true?<Status mini={true} status="loading" />:null} 
-   <div className={cn("grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5",style.dataSourceCard)}  id="eventData">
-    {/* <div  className={cn("cursor-pointer", style.btnBox)} > */}
-{/* <div id="imgTokenURI"></div> */}
-{/* </div> */}
-{/* <div><p></p></div> */}
-    </div>
+        {/* ) : null} */}
+      </div>
+      {loading === true ? <Status mini={true} status="loading" /> : null}
+      <div
+        className={cn(
+          "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5",
+          style.dataSourceCard
+        )}
+        id="eventData"
+      >
+        {/* <div  className={cn("cursor-pointer", style.btnBox)} > */}
+        {/* <div id="imgTokenURI"></div> */}
+        {/* </div> */}
+        {/* <div><p></p></div> */}
+      </div>
     </>
   );
 }

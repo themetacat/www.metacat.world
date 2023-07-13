@@ -7,7 +7,7 @@ export function getChainData(chainId: number): IChainData | null {
   const chainData = supportedChains.filter((chain: any) => chain.chain_id === chainId)[0];
 
   if (!chainData) {
-    toast.error('Sorry, Please connect to Ethereum Mainnet.');
+    toast.error('Sorry, Please connect to Ethereum Sepolia.');
 
     return null;
   }
