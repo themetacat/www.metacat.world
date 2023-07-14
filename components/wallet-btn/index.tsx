@@ -1618,7 +1618,10 @@ console.log(tokenURIResult,'tokenURIResult');
                   .then((response) => response.json())
                   .then((data) => {
                     console.log(data);
+                    
                     const imageURL = data.image;
+                    console.log(imageURL);
+
                     imgElement.setAttribute("src", imageURL);
                   })
                   .catch((error) => {
