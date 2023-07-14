@@ -1510,7 +1510,11 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   };
 
   useEffect(() => {
-    if(window.ethereum){
+    const Addr = window.localStorage.getItem('metaMaskAddress')
+    if(window.ethereum&&Addr){
+   console.log(window.ethereum&&Addr);
+
+      console.log(Addr);
       window.ethereum.enable().then(() => {
         console.log(223);
         const web3 = new Web3(window.web3.currentProvider);
@@ -1520,7 +1524,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         const mintNums = 1;
         dai.events
           .Transfer(
-            { filter: {}, fromBlock:3882352, toBlock: "latest" },
+            { filter: {}, fromBlock:	3876408, toBlock: "latest" },
             function (params) {}
           )
           .on("data", (event) => {
@@ -1620,10 +1624,6 @@ console.log(tokenURIResult,'tokenURIResult');
                     console.log(data);
                     
                     const imageURL = data.image;
-                    console.log(imageURL,'1111');
-                    console.log(data.image,'22222222');
-                    console.log(data.name,'data.name');
-
                     imgElement.setAttribute("src",imageURL);
                     imgElement.setAttribute("src", data.image);
                   })
