@@ -1620,9 +1620,11 @@ console.log(tokenURIResult,'tokenURIResult');
                     console.log(data);
                     
                     const imageURL = data.image;
-                    console.log(imageURL);
+                    console.log(imageURL,'1111');
+                    console.log(data.image,'22222222');
 
-                    imgElement.setAttribute("src", imageURL);
+                    imgElement.setAttribute("src",imageURL);
+                    imgElement.setAttribute("src", data.image);
                   })
                   .catch((error) => {
                     console.error("Error fetching tokenURI:", error);
