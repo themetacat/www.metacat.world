@@ -1520,7 +1520,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         const mintNums = 1;
         dai.events
           .Transfer(
-            { filter: {}, fromBlock: 3882907, toBlock: "latest" },
+            { filter: {}, fromBlock:3882352, toBlock: "latest" },
             function (params) {}
           )
           .on("data", (event) => {
@@ -1592,6 +1592,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                 const gridContainer = document.createElement("div");
                 gridContainer.style.height = "200px";
                 console.log(nameConResult, 3333);
+console.log(tokenURIResult,'tokenURIResult');
 
                    // 处理 nameCon 数据
                    const nameConElement = document.createElement("span");
