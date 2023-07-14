@@ -1386,7 +1386,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             // const eventDataElement = document.getElementById('eventData');
             contract.events
               .Transfer(
-                { filter: {}, fromBlock: 3869068, toBlock: "latest" },
+                { filter: {}, fromBlock: tx.blockNumber, toBlock: "latest" },
                 function (params) {}
               )
               .on("data", (event) => {
@@ -1454,6 +1454,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                       fetch(tokenURIResult)
                         .then((response) => response.json())
                         .then((data) => {
+                     
+                        
                           const imageURL = data.image;
                           imgElement.setAttribute("src", imageURL);
                         })
@@ -1518,7 +1520,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         const mintNums = 1;
         dai.events
           .Transfer(
-            { filter: {}, fromBlock: 3869068, toBlock: "latest" },
+            { filter: {}, fromBlock: 3882907, toBlock: "latest" },
             function (params) {}
           )
           .on("data", (event) => {
@@ -1614,6 +1616,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                 fetch(tokenURIResult)
                   .then((response) => response.json())
                   .then((data) => {
+                    console.log(data);
                     const imageURL = data.image;
                     imgElement.setAttribute("src", imageURL);
                   })
