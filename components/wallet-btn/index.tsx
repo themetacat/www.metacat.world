@@ -1622,6 +1622,7 @@ console.log(tokenURIResult,'tokenURIResult');
                     const imageURL = data.image;
                     console.log(imageURL,'1111');
                     console.log(data.image,'22222222');
+                    console.log(data.name,'data.name');
 
                     imgElement.setAttribute("src",imageURL);
                     imgElement.setAttribute("src", data.image);
