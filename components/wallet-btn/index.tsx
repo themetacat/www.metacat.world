@@ -255,12 +255,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
-
-
     setTimeout(()=>{
       setLoading(false);
     },5000)
-
     if (
       typeof (window as any).ethereum === "undefined" ||
       !(window as any).ethereum.isMetaMask
@@ -271,6 +268,31 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       return;
     }
     try {
+      const networkId = await window.ethereum.request({ method: 'net_version' });
+console.log(networkId=== '11155111','networkId',networkId);
+      // 判断当前网络是否为 Ethereum Sepolia 网络
+      // await  window.ethereum.request({
+      //   method: 'wallet_switchEthereumChain',
+      //   params: [{ chainId: '11155111' }],
+      // });
+      if (networkId !== '11155111') {
+        // 根据需要跳转到引导转换网络的网页或执行其他逻辑
+        // window.open("https://example.com");
+        // return;
+        const chainId = "0x" + (11155111).toString(16);
+        console.log(chainId,'chainId');
+        
+        await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [
+          {
+            chainId: chainId,
+        
+          },
+        ],
+      });
+      }
+
       web3.connect().then(
         async (res) => {
           console.log("connect==>", res);
