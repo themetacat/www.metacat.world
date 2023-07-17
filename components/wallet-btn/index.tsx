@@ -1361,7 +1361,7 @@ console.log(networkId=== '11155111','networkId',networkId);
           setEthBalanceNeed(ethBalance);
   
           const price = 0.006;
-          const quantity = 1;
+          const quantity = num;
   
           // 对比 ETH 余额和数量与单价的乘积
           if (ethBalance >= price * quantity) {
