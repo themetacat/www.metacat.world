@@ -1333,6 +1333,13 @@ console.log(networkId=== '11155111','networkId',networkId);
     setMintConcent(true);
   };
 
+  const handlePaymentConfirmation = async () => {
+    setLoading(true);
+    // 执行支付确认逻辑或其他异步操作
+    // 确认支付完成后，可以将 setLoading(false) 设置为 false 来表示加载已完成
+  };
+  
+
   const handleMint = async () => {
     try {
       if (typeof window.ethereum !== "undefined") {
@@ -1340,7 +1347,8 @@ console.log(networkId=== '11155111','networkId',networkId);
         const networkVersion = window.ethereum.networkVersion;
         if(networkVersion!=='11155111' ){
           console.log('有没有问题');
-          setSwitcherNet(true)
+          // setSwitcherNet(true)
+          connectToChain()
         }else{
           setSwitcherNet(false)
           await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -1384,6 +1392,7 @@ console.log(networkId=== '11155111','networkId',networkId);
             setTimeout(()=>{
               setLoading(false)
             },5000)
+            window.ethereum.on('confirmation', handlePaymentConfirmation);
             const tx = await contract.methods.mint(mintNums).send({
               from: profile.address,
               value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
@@ -1458,16 +1467,11 @@ console.log(networkId=== '11155111','networkId',networkId);
                           ""
                         );
                         gridContainer.appendChild(nameConElement);
-  
                       // 处理 tokenToBip 数据
                       const tokenToBipPElement = document.createElement("span");
                       tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
                       gridContainer.appendChild(tokenToBipPElement);
-  
                       tokenToBipPElement.style.marginRight = "15px";
-  
-                    
-  
                       // 处理 tokenURI 数据
                       const imgTokenURIElement = document.createElement("div");
                       const imgElement = document.createElement("img");
@@ -1476,8 +1480,6 @@ console.log(networkId=== '11155111','networkId',networkId);
                       fetch(tokenURIResult)
                         .then((response) => response.json())
                         .then((data) => {
-                     
-                        
                           const imageURL = data.image;
                           imgElement.setAttribute("src", imageURL);
                         })
@@ -1510,14 +1512,14 @@ console.log(networkId=== '11155111','networkId',networkId);
             // console.log(value);
             if (tx) {
               toast.success("Successful");
-           
             }
-  
+            setLoading(false)
             console.log("tx:", tx);
             // mint 成功, 进行后续操作
          
           } else {
             setBalanceNum(true);
+
             // alert("Your balance is insufficient");
             console.log("Insufficient ETH balance");
           }
@@ -1551,15 +1553,13 @@ console.log(networkId=== '11155111','networkId',networkId);
           )
           .on("data", (event) => {
             //       console.log(event);
-            console.log(event);
+            console.log(event,2255888);
   
             const totalSupply = dai.methods.totalSupply().call({});
             const name = dai.methods.name().call({});
             totalSupply.then((result) => {
-              console.log(result, "resultresult");
               setMintNum(result);
             });
-            console.log(name);
   
             name.then((result) => {
               console.log(result, "resultresult");
@@ -1572,47 +1572,6 @@ console.log(networkId=== '11155111','networkId',networkId);
               .tokenURI(event.returnValues.tokenId)
               .call({});
             const nameCon = dai.methods.name().call({});
-  
-            //   console.log(tokenToBip,'tokenToBip');
-            //   tokenToBip.then(result => {
-            //     console.log(result); // 输出 "daughter"
-            //         const eventDataElement = document.getElementById('eventData');
-            //           // console.log(event);
-            //           // console.log(event.returnValues.to.toLowerCase());
-            //            // 创建一个新的 <p> 元素来展示事件数据
-            //   const pElement = document.createElement('p');
-  
-            //   // 将事件数据转为字符串
-            //   const eventDataString = JSON.stringify(result);
-  
-            //   // 将事件数据添加到 <p> 元素中
-            //   pElement.textContent = eventDataString;
-  
-            //   // 将 <p> 元素追加到 <div> 元素中
-            //   eventDataElement.appendChild(pElement);
-            // });
-            // tokenURI.then(result => {
-            //   console.log(result); // 输出 "http://8.130.23.16/api/v1/get_bip_info/40"
-            //   const eventDataElement = document.getElementById('imgTokenURI');
-            //   const imgElement = document.createElement('img');
-            //   fetch(result)
-            //   .then(response => response.text())
-            //   .then(content => {
-            //     console.log(content); // 输出网址链接内容
-            //     // 在这里对网址链接内容进行处理
-            //     const data = JSON.parse(content);
-            //     const imageURL = data.image;
-            //     const description = data.description;
-            //     console.log(imageURL); // 输出图片链接
-            //   // 将链接设置为img元素的src属性值
-            //   imgElement.setAttribute('src', imageURL);
-            //   const pElement = document.createElement('p');
-            //   pElement.textContent = description;
-            //   eventDataElement.appendChild(imgElement);
-            //   eventDataElement.appendChild(pElement);
-            // })
-            // })
-  
             Promise.all([tokenToBip, tokenURI, nameCon]).then(
               ([tokenToBipResult, tokenURIResult, nameConResult]) => {
                 const gridContainer = document.createElement("div");
@@ -1643,7 +1602,7 @@ console.log(tokenURIResult,'tokenURIResult');
                 fetch(tokenURIResult)
                   .then((response) => response.json())
                   .then((data) => {
-                    console.log(data);
+                    console.log(data,3333333);
                     
                     const imageURL = data.image;
                     imgElement.setAttribute("src",imageURL);
