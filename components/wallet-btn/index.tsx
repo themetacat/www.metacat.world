@@ -1494,16 +1494,27 @@ console.log(networkId=== '11155111','networkId',networkId);
       }
       
       sortedData.forEach(item => {
-        const itemContainer = document.createElement("div");
-        itemContainer.textContent = `${item.name}`;
-        // gridContainer.appendChild(itemContainer);
-        itemContainer.style.height = "200px";
-      
-      eventDataElement.appendChild(itemContainer);
-      const tokenToBipPElement = document.createElement("span");
-      tokenToBipPElement.textContent = `${tokenToBipResult}`;
-      tokenToBipPElement.style.marginLeft = "20px";
-      itemContainer.appendChild(tokenToBipPElement);
+         const itemContainer = document.createElement("div");
+  itemContainer.style.marginLeft = "20px";
+
+  itemContainer.textContent = `${item.name}`;
+  // gridContainer.appendChild(itemContainer);
+  itemContainer.style.height = "200px";
+
+eventDataElement.appendChild(itemContainer);
+const tokenToBip = contract.methods.tokenToBip(item.id).call({});
+
+tokenToBip.then(result => {
+  // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
+  console.log(result, 'tokenToBip result');
+  const tokenToBipPElement = document.createElement("span");
+  tokenToBipPElement.style.display = "flex";
+  tokenToBipPElement.style.justifyContent = "space-between";
+  tokenToBipPElement.textContent = `${result}`;
+  tokenToBipPElement.style.marginLeft = "20px";
+  itemContainer.appendChild(tokenToBipPElement);
+})
+
       
       // 处理 tokenURI 数据
       const imgTokenURIElement = document.createElement("div");
@@ -1755,15 +1766,25 @@ while (eventDataElement.firstChild) {
 
 sortedData.forEach(item => {
   const itemContainer = document.createElement("div");
+  itemContainer.style.marginLeft = "20px";
+
   itemContainer.textContent = `${item.name}`;
   // gridContainer.appendChild(itemContainer);
   itemContainer.style.height = "200px";
 
 eventDataElement.appendChild(itemContainer);
-const tokenToBipPElement = document.createElement("span");
-tokenToBipPElement.textContent = `${tokenToBipResult}`;
-tokenToBipPElement.style.marginLeft = "20px";
-itemContainer.appendChild(tokenToBipPElement);
+const tokenToBip = daiContract.methods.tokenToBip(item.id).call({});
+
+tokenToBip.then(result => {
+  // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
+  console.log(result, 'tokenToBip result');
+  const tokenToBipPElement = document.createElement("span");
+  tokenToBipPElement.style.display = "flex";
+  tokenToBipPElement.style.justifyContent = "space-between";
+  tokenToBipPElement.textContent = `${result}`;
+  tokenToBipPElement.style.marginLeft = "20px";
+  itemContainer.appendChild(tokenToBipPElement);
+})
 
 // 处理 tokenURI 数据
 const imgTokenURIElement = document.createElement("div");
@@ -1776,7 +1797,7 @@ const pElement = document.createElement("p");
                 imgTokenURIElement.appendChild(imgElement);
                 imgTokenURIElement.appendChild(pElement);
                 itemContainer.appendChild(imgTokenURIElement);
-                eventDataElement.appendChild(itemContainer);
+                // eventDataElement.appendChild(imgTokenURIElement);
                 imgElement.style.width = "100px";
                 imgElement.style.height = "100px";
 
