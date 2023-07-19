@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import cn from "classnames";
 import { toast } from "react-hot-toast";
 import "tailwindcss/tailwind.css";
@@ -156,7 +156,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [balanceNum, setBalanceNum] = useState(false);
   const [switcherNet, setSwitcherNet] = useState(false);
   const [web3auth, setWeb3auth] = useState<Web3AuthCore | null>(null);
-
+  const [obj,setobj] = useState({})
   const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
   const [loginState, setLoginState] = React.useState("web3Auth");
@@ -1456,48 +1456,167 @@ console.log(networkId=== '11155111','networkId',networkId);
                   const nameCon = contract.methods.name().call({});
                   Promise.all([tokenToBip, tokenURI, nameCon]).then(
                     ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                      const gridContainer = document.createElement("div");
-                      gridContainer.style.height = "200px";
-                      console.log(nameConResult, 3333);
-
-                        // 处理 nameCon 数据
-                        const nameConElement = document.createElement("span");
-                        nameConElement.textContent = nameConResult.replace(
-                          /"/g,
-                          ""
-                        );
-                        gridContainer.appendChild(nameConElement);
-                      // 处理 tokenToBip 数据
-                      const tokenToBipPElement = document.createElement("span");
-                      tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
-                      gridContainer.appendChild(tokenToBipPElement);
-                      tokenToBipPElement.style.marginRight = "15px";
-                      // 处理 tokenURI 数据
-                      const imgTokenURIElement = document.createElement("div");
-                      const imgElement = document.createElement("img");
-                      const pElement = document.createElement("p");
-  
+                      console.log(Promise.all,111,tokenToBipResult, tokenURIResult, nameConResult);
+                 
+                      setTimeout(() => {
                       fetch(tokenURIResult)
                         .then((response) => response.json())
                         .then((data) => {
-                          const imageURL = data.image;
-                          imgElement.setAttribute("src", imageURL);
-                        })
-                        .catch((error) => {
-                          console.error("Error fetching tokenURI:", error);
-                        });
-  
+                          console.log(data,3333333);
+                          const dataArray = [];
+                          dataArray.push(data);
+                          // const transformedArray = dataArray.reduce((acc, curr) => {
+                          //   acc[curr.id] = curr;
+                          //   return acc;
+                          // }, {});
+                          const transformedObject = {};
+      
+                          dataArray.forEach(event => {
+        transformedObject[event.id] = event;
+      });
+      
+      setobj((state)=>{ 
+        console.log(state,transformedObject,2222222);
+      
+       
+        const sortedKeys = Object?.keys(state).map(Number).sort((a, b) => b - a);
+        console.log(sortedKeys);
+        
+      const sortedData = sortedKeys?.map(key => state[key]);
+      console.log(sortedData,'sortedDatasortedDatasortedData');
+      
+      // const gridContainer = document.createElement("div");
+      
+      
+      // 移除旧的数据
+      while (eventDataElement.firstChild) {
+        eventDataElement.firstChild.remove();
+      }
+      
+      sortedData.forEach(item => {
+        const itemContainer = document.createElement("div");
+        itemContainer.textContent = `${item.name}`;
+        // gridContainer.appendChild(itemContainer);
+        itemContainer.style.height = "200px";
+      
+      eventDataElement.appendChild(itemContainer);
+      const tokenToBipPElement = document.createElement("span");
+      tokenToBipPElement.textContent = `${tokenToBipResult}`;
+      tokenToBipPElement.style.marginLeft = "20px";
+      itemContainer.appendChild(tokenToBipPElement);
+      
+      // 处理 tokenURI 数据
+      const imgTokenURIElement = document.createElement("div");
+      const imgElement = document.createElement("img");
+      const pElement = document.createElement("p");
+                          // console.log(transformedArray,5555555);
+                          imgElement.setAttribute("src", item.image);
+                      
+                 
                       imgTokenURIElement.appendChild(imgElement);
                       imgTokenURIElement.appendChild(pElement);
-  
-                      gridContainer.appendChild(imgTokenURIElement);
-  
-                      eventDataElement.appendChild(gridContainer);
-  
+                      itemContainer.appendChild(imgTokenURIElement);
+                      eventDataElement.appendChild(itemContainer);
                       imgElement.style.width = "100px";
                       imgElement.style.height = "100px";
+      
+      });
+      return {...state,...transformedObject}
+      })
+      // gridContainer.innerHTML = '';
+      // sortedData.forEach(item => {
+      // //   console.log(item,22344444);
+      // //   const itemContainer = document.createElement("div"); // 创建新的容器
+      // // //   const nameConElement = document.createElement("span");
+      // // //   nameConElement.textContent = `${item.name}#${item.id}`;
+      // // //   itemContainer.appendChild(nameConElement); // 将 span 添加到新容器中
+      // // //   gridContainer.appendChild(itemContainer); // 将新容器添加到 gridContainer 中
+      // // itemContainer.textContent = item.id;
+      // // eventDataElement.appendChild(itemContainer);
+      
+      // });
+      // 对 tokenIds 数组进行从大到小的排序
+      // event.returnValues.tokenId.sort((a, b) => b - a);
+      return
+      const gridContainer = document.createElement("div");
+      gridContainer.style.height = "200px";
+         // 处理 nameCon 数据
+         const nameConElement = document.createElement("span");
+         nameConElement.textContent =`${nameConResult.replace(/"/g, "")}#${event.returnValues.tokenId}` ;
+         gridContainer.appendChild(nameConElement);
+      // 处理 tokenToBip 数据
+      const tokenToBipPElement = document.createElement("span");
+      tokenToBipPElement.textContent = `${tokenToBipResult}`;
+      gridContainer.appendChild(tokenToBipPElement);
+      // nameConElement.style.marginRight = "15px";
+      // 处理 tokenURI 数据
+      const imgTokenURIElement = document.createElement("div");
+      const imgElement = document.createElement("img");
+      const pElement = document.createElement("p");
+                          // console.log(transformedArray,5555555);
+                          imgElement.setAttribute("src", data.image);
+                      
+                 
+                      imgTokenURIElement.appendChild(imgElement);
+                      imgTokenURIElement.appendChild(pElement);
+                      gridContainer.appendChild(imgTokenURIElement);
+                      eventDataElement.appendChild(gridContainer);
+                      imgElement.style.width = "100px";
+                      imgElement.style.height = "100px";
+                  
+                   
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching tokenURI:", error);
+                    });
+                    }, 3000); // 添加延迟，每隔1秒发送一个请求
                     }
-                  );
+                    
+                  )
+                  // Promise.all([tokenToBip, tokenURI, nameCon]).then(
+                  //   ([tokenToBipResult, tokenURIResult, nameConResult]) => {
+                  //     const gridContainer = document.createElement("div");
+                  //     gridContainer.style.height = "200px";
+                  //     console.log(nameConResult, 3333);
+
+                  //       // 处理 nameCon 数据
+                  //       const nameConElement = document.createElement("span");
+                  //       nameConElement.textContent = nameConResult.replace(
+                  //         /"/g,
+                  //         ""
+                  //       );
+                  //       gridContainer.appendChild(nameConElement);
+                  //     // 处理 tokenToBip 数据
+                  //     const tokenToBipPElement = document.createElement("span");
+                  //     tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
+                  //     gridContainer.appendChild(tokenToBipPElement);
+                  //     tokenToBipPElement.style.marginRight = "15px";
+                  //     // 处理 tokenURI 数据
+                  //     const imgTokenURIElement = document.createElement("div");
+                  //     const imgElement = document.createElement("img");
+                  //     const pElement = document.createElement("p");
+  
+                  //     fetch(tokenURIResult)
+                  //       .then((response) => response.json())
+                  //       .then((data) => {
+                  //         const imageURL = data.image;
+                  //         imgElement.setAttribute("src", imageURL);
+                  //       })
+                  //       .catch((error) => {
+                  //         console.error("Error fetching tokenURI:", error);
+                  //       });
+  
+                  //     imgTokenURIElement.appendChild(imgElement);
+                  //     imgTokenURIElement.appendChild(pElement);
+  
+                  //     gridContainer.appendChild(imgTokenURIElement);
+  
+                  //     eventDataElement.appendChild(gridContainer);
+  
+                  //     imgElement.style.width = "100px";
+                  //     imgElement.style.height = "100px";
+                  //   }
+                  // );
                   // .catch(error => {
                   //   console.log(error); // 错误处理
                   // });
@@ -1533,6 +1652,11 @@ console.log(networkId=== '11155111','networkId',networkId);
     }
   };
 
+
+  const connesmartContractct = useCallback(()=>{
+
+  },[])
+
   useEffect(() => {
     const Addr = window.localStorage.getItem('metaMaskAddress')
     if(window.ethereum&&Addr){
@@ -1543,20 +1667,38 @@ console.log(networkId=== '11155111','networkId',networkId);
         console.log(223);
         const web3 = new Web3(window.web3.currentProvider);
         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
-        const dai = new web3.eth.Contract(abi as [], contractAddress);
-  
+        const daiContract = new web3.eth.Contract(abi as [], contractAddress);
         const mintNums = 1;
-        dai.events
+        let existingTokenIds = new Set();
+        daiContract.events
           .Transfer(
-            { filter: {}, fromBlock:	3876408, toBlock: "latest" },
+            { filter: {
+              from:'0x0000000000000000000000000000000000000000'
+
+            }, fromBlock:	3876408, toBlock: "latest" },
             function (params) {}
           )
           .on("data", (event) => {
-            //       console.log(event);
-            console.log(event,2255888);
-  
-            const totalSupply = dai.methods.totalSupply().call({});
-            const name = dai.methods.name().call({});
+                  const tokenId = event.returnValues.tokenId;
+                  // if (existingTokenIds.has(tokenId)) {
+                  //     // 跳过该条数据，已存在相同的 tokenId
+                  //     return;
+                  // }
+              
+                  existingTokenIds.add(tokenId);
+                  // event.sort((event1, event2) => event2.returnValues.tokenId - event1.returnValues.tokenId);
+                  // 处理符合过滤条件的数据，例如输出到控制台
+                  console.log(event);
+          
+              // 将事件数据存储在一个数组中
+// const dataArray = [];
+// // event.forEach(events => {
+//   dataArray.push(event);
+// // });
+// console.log(dataArray,'5555555');
+
+            const totalSupply = daiContract.methods.totalSupply().call({});
+            const name = daiContract.methods.name().call({});
             totalSupply.then((result) => {
               setMintNum(result);
             });
@@ -1565,63 +1707,131 @@ console.log(networkId=== '11155111','networkId',networkId);
               console.log(result, "resultresult");
             });
             const eventDataElement = document.getElementById("eventData");
-            const tokenToBip = dai.methods
+            const tokenToBip = daiContract.methods
               .tokenToBip(event.returnValues.tokenId)
               .call({});
-            const tokenURI = dai.methods
+            const tokenURI = daiContract.methods
               .tokenURI(event.returnValues.tokenId)
               .call({});
-            const nameCon = dai.methods.name().call({});
+            const nameCon = daiContract.methods.name().call({});
             Promise.all([tokenToBip, tokenURI, nameCon]).then(
               ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                const gridContainer = document.createElement("div");
-                gridContainer.style.height = "200px";
-                console.log(nameConResult, 3333);
-console.log(tokenURIResult,'tokenURIResult');
-
-                   // 处理 nameCon 数据
-                   const nameConElement = document.createElement("span");
-                   nameConElement.textContent =`${nameConResult.replace(/"/g, "")}#${event.returnValues.tokenId}` ;
-                   
-                   gridContainer.appendChild(nameConElement);
-  
-                // 处理 tokenToBip 数据
-                const tokenToBipPElement = document.createElement("span");
-                tokenToBipPElement.textContent = `${tokenToBipResult}`;
-                gridContainer.appendChild(tokenToBipPElement);
-  
-                nameConElement.style.marginRight = "15px";
-  
-             
-  
-                // 处理 tokenURI 数据
-                const imgTokenURIElement = document.createElement("div");
-                const imgElement = document.createElement("img");
-                const pElement = document.createElement("p");
-  
+                console.log(Promise.all,111,tokenToBipResult, tokenURIResult, nameConResult);
+           
+                setTimeout(() => {
                 fetch(tokenURIResult)
                   .then((response) => response.json())
                   .then((data) => {
                     console.log(data,3333333);
-                    
-                    const imageURL = data.image;
-                    imgElement.setAttribute("src",imageURL);
-                    imgElement.setAttribute("src", data.image);
-                  })
-                  .catch((error) => {
-                    console.error("Error fetching tokenURI:", error);
-                  });
+                    const dataArray = [];
+                    dataArray.push(data);
+                    // const transformedArray = dataArray.reduce((acc, curr) => {
+                    //   acc[curr.id] = curr;
+                    //   return acc;
+                    // }, {});
+                    const transformedObject = {};
+
+                    dataArray.forEach(event => {
+  transformedObject[event.id] = event;
+});
+
+setobj((state)=>{ 
+  console.log(state,transformedObject,2222222);
+
+ 
+  const sortedKeys = Object?.keys(state).map(Number).sort((a, b) => b - a);
+  console.log(sortedKeys);
   
+const sortedData = sortedKeys?.map(key => state[key]);
+console.log(sortedData,'sortedDatasortedDatasortedData');
+
+// const gridContainer = document.createElement("div");
+
+
+// 移除旧的数据
+while (eventDataElement.firstChild) {
+  eventDataElement.firstChild.remove();
+}
+
+sortedData.forEach(item => {
+  const itemContainer = document.createElement("div");
+  itemContainer.textContent = `${item.name}`;
+  // gridContainer.appendChild(itemContainer);
+  itemContainer.style.height = "200px";
+
+eventDataElement.appendChild(itemContainer);
+const tokenToBipPElement = document.createElement("span");
+tokenToBipPElement.textContent = `${tokenToBipResult}`;
+tokenToBipPElement.style.marginLeft = "20px";
+itemContainer.appendChild(tokenToBipPElement);
+
+// 处理 tokenURI 数据
+const imgTokenURIElement = document.createElement("div");
+const imgElement = document.createElement("img");
+const pElement = document.createElement("p");
+                    // console.log(transformedArray,5555555);
+                    imgElement.setAttribute("src", item.image);
+                
+           
                 imgTokenURIElement.appendChild(imgElement);
                 imgTokenURIElement.appendChild(pElement);
-  
-                gridContainer.appendChild(imgTokenURIElement);
-  
-                eventDataElement.appendChild(gridContainer);
-  
+                itemContainer.appendChild(imgTokenURIElement);
+                eventDataElement.appendChild(itemContainer);
                 imgElement.style.width = "100px";
                 imgElement.style.height = "100px";
+
+});
+return {...state,...transformedObject}
+})
+// gridContainer.innerHTML = '';
+// sortedData.forEach(item => {
+// //   console.log(item,22344444);
+// //   const itemContainer = document.createElement("div"); // 创建新的容器
+// // //   const nameConElement = document.createElement("span");
+// // //   nameConElement.textContent = `${item.name}#${item.id}`;
+// // //   itemContainer.appendChild(nameConElement); // 将 span 添加到新容器中
+// // //   gridContainer.appendChild(itemContainer); // 将新容器添加到 gridContainer 中
+// // itemContainer.textContent = item.id;
+// // eventDataElement.appendChild(itemContainer);
+
+// });
+// 对 tokenIds 数组进行从大到小的排序
+// event.returnValues.tokenId.sort((a, b) => b - a);
+return
+const gridContainer = document.createElement("div");
+gridContainer.style.height = "200px";
+   // 处理 nameCon 数据
+   const nameConElement = document.createElement("span");
+   nameConElement.textContent =`${nameConResult.replace(/"/g, "")}#${event.returnValues.tokenId}` ;
+   gridContainer.appendChild(nameConElement);
+// 处理 tokenToBip 数据
+const tokenToBipPElement = document.createElement("span");
+tokenToBipPElement.textContent = `${tokenToBipResult}`;
+gridContainer.appendChild(tokenToBipPElement);
+// nameConElement.style.marginRight = "15px";
+// 处理 tokenURI 数据
+const imgTokenURIElement = document.createElement("div");
+const imgElement = document.createElement("img");
+const pElement = document.createElement("p");
+                    // console.log(transformedArray,5555555);
+                    imgElement.setAttribute("src", data.image);
+                
+           
+                imgTokenURIElement.appendChild(imgElement);
+                imgTokenURIElement.appendChild(pElement);
+                gridContainer.appendChild(imgTokenURIElement);
+                eventDataElement.appendChild(gridContainer);
+                imgElement.style.width = "100px";
+                imgElement.style.height = "100px";
+            
+             
+              })
+              .catch((error) => {
+                console.error("Error fetching tokenURI:", error);
+              });
+              }, 3000); // 添加延迟，每隔1秒发送一个请求
               }
+              
             )
   
             .catch(error => {
