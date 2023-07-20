@@ -1425,15 +1425,20 @@ console.log(networkId=== '11155111','networkId',networkId);
               // 获取交易收据
               console.log("收据: ", receipt);
               // 在这里执行交易成功后的逻辑操作
-              setLoading(false)
             })
             .catch((error) => {
               if (error.code === 4001) {
               setLoading(false)
               }
             })
-         
-      // setLoading(false)
+            .then((success) => {
+              // if (success.code === 0x1||1) {
+              setLoading(false)
+              console.log('成功');
+              // }
+            })
+
+      setLoading(false)
             contract.events
               .Transfer(
                 { filter: {}, fromBlock: tx.blockNumber, toBlock: "latest" },
