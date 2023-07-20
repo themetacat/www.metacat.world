@@ -165,7 +165,8 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [mintConcent, setMintConcent] = React.useState(false);
   const [w3, setw3] = React.useState(null);
   const [num, setNum] = useState(1);
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [editNum, setEditNum] = useState(0);
   const lower = () => {
     setNum(num - 1);
   };
@@ -1333,7 +1334,9 @@ console.log(networkId=== '11155111','networkId',networkId);
     setMintConcent(true);
   };
 
-  const handlePaymentConfirmation = async () => {
+  const handlePaymentConfirmation =  () => {
+  
+    
     setLoading(true);
     // 执行支付确认逻辑或其他异步操作
     // 确认支付完成后，可以将 setLoading(false) 设置为 false 来表示加载已完成
@@ -1342,6 +1345,7 @@ console.log(networkId=== '11155111','networkId',networkId);
 
   const handleMint = async () => {
     try {
+   
       if (typeof window.ethereum !== "undefined") {
         // 请求用户授权连接 MetaMask
         const networkVersion = window.ethereum.networkVersion;
@@ -1378,7 +1382,7 @@ console.log(networkId=== '11155111','networkId',networkId);
             console.log("Minting...");
   
             console.log(mintNum, "mintNummintNummintNum");
-  
+
             if (!profile?.address) {
               connectToChain();
             }
@@ -1391,14 +1395,40 @@ console.log(networkId=== '11155111','networkId',networkId);
             const mintNums = num; // 在这里定义要mint的数量
             setTimeout(()=>{
               setLoading(false)
+              setTimeout(()=>{
+                setLoading(true)
+              },3000)
             },5000)
-            window.ethereum.on('confirmation', handlePaymentConfirmation);
+          
             const tx = await contract.methods.mint(mintNums).send({
               from: profile.address,
               value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
             });
-            console.log(tx);
-   
+
+            // const response = await window.ethereum.send('eth_getTransactionReceipt', [transactionHash]);
+            // if (response && response.result) {
+            //   const { blockNumber, confirmations } = response.result;
+            //   console.log('区块号:', blockNumber);
+            //   console.log('确认数:', confirmations);}
+            // console.log(tx);
+            // window.ethereum.on('confirmation', (confirmationNumber, receipt) => {
+            //   console.log('确认信息：', confirmationNumber, receipt);
+            
+            //   // 设置 loading 为 true
+            //   setLoading(true);
+            // });
+
+      //       const transactionHash = tx.hash;
+      //  // 获取交易状态
+      //  const receipt = await provider.waitForTransaction(transactionHash);
+      //  if (receipt.status === 1) {
+      //   console.log("Transaction succeeded");
+      //   // 处理交易成功的逻辑
+      // } else {
+      //   console.log("Transaction failed");
+      //   // 处理交易失败的逻辑
+      // }
+      setLoading(false)
             // const tokenToBip = await contract.methods.tokenToBip().call({})
             // console.log(tokenToBip,'tokenToBip');
   
@@ -1506,7 +1536,6 @@ const tokenToBip = contract.methods.tokenToBip(item.id).call({});
 
 tokenToBip.then(result => {
   // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
-  console.log(result, 'tokenToBip result');
   const tokenToBipPElement = document.createElement("span");
   tokenToBipPElement.style.display = "flex";
   tokenToBipPElement.style.justifyContent = "space-between";
@@ -1671,11 +1700,8 @@ tokenToBip.then(result => {
   useEffect(() => {
     const Addr = window.localStorage.getItem('metaMaskAddress')
     if(window.ethereum&&Addr){
-   console.log(window.ethereum&&Addr);
 
-      console.log(Addr);
       window.ethereum.enable().then(() => {
-        console.log(223);
         const web3 = new Web3(window.web3.currentProvider);
         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
         const daiContract = new web3.eth.Contract(abi as [], contractAddress);
@@ -1727,13 +1753,13 @@ tokenToBip.then(result => {
             const nameCon = daiContract.methods.name().call({});
             Promise.all([tokenToBip, tokenURI, nameCon]).then(
               ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                console.log(Promise.all,111,tokenToBipResult, tokenURIResult, nameConResult);
+                // console.log(Promise.all,111,tokenToBipResult, tokenURIResult, nameConResult);
            
                 setTimeout(() => {
                 fetch(tokenURIResult)
                   .then((response) => response.json())
                   .then((data) => {
-                    console.log(data,3333333);
+                    // console.log(data,3333333);
                     const dataArray = [];
                     dataArray.push(data);
                     // const transformedArray = dataArray.reduce((acc, curr) => {
@@ -1747,14 +1773,14 @@ tokenToBip.then(result => {
 });
 
 setobj((state)=>{ 
-  console.log(state,transformedObject,2222222);
+  // console.log(state,transformedObject,2222222);
 
  
   const sortedKeys = Object?.keys(state).map(Number).sort((a, b) => b - a);
-  console.log(sortedKeys);
+  // console.log(sortedKeys);
   
 const sortedData = sortedKeys?.map(key => state[key]);
-console.log(sortedData,'sortedDatasortedDatasortedData');
+// console.log(sortedData,'sortedDatasortedDatasortedData');
 
 // const gridContainer = document.createElement("div");
 
@@ -1777,7 +1803,7 @@ const tokenToBip = daiContract.methods.tokenToBip(item.id).call({});
 
 tokenToBip.then(result => {
   // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
-  console.log(result, 'tokenToBip result');
+  // console.log(result, 'tokenToBip result');
   const tokenToBipPElement = document.createElement("span");
   tokenToBipPElement.style.display = "flex";
   tokenToBipPElement.style.justifyContent = "space-between";
@@ -1868,6 +1894,7 @@ const pElement = document.createElement("p");
     // });
   }, []);
 
+  
   useEffect(() => {
     async function fetchBalance() {
       if (typeof window.ethereum !== "undefined") {
@@ -1904,6 +1931,27 @@ const pElement = document.createElement("p");
 
     fetchBalance();
   }, []);
+
+
+  const handleNumChange = (event) => {
+    if (event.target.value < 1) {
+      event.target.value = 1;
+    }
+    const value = parseInt(event.target.value);
+    setEditNum(value);
+  };
+
+  const handleDoubleClick = () => {
+    setEditNum(num); // 设置初始值为之前的数据
+    setIsEditing(true);
+  };
+
+  const handleBlur =() => {
+    setIsEditing(false);
+    setNum(editNum); // 更新输入框数据到num
+   
+  
+  };
 
   return (
     <>
@@ -1942,7 +1990,21 @@ const pElement = document.createElement("p");
             >
               <img src="/images/carousel-left.png" alt="" />
             </div>
-            <span className={cn(style.num)}>{num}</span>
+            {isEditing ? (
+        <input
+          type="number"
+          className={cn(style.numIn)}
+          value={editNum}
+          onChange={handleNumChange}
+          onBlur={handleBlur}
+          style={{ appearance: "none" }}
+          autoFocus
+        />
+      ) : (
+        <span className={cn(style.num)} onClick={handleDoubleClick}>
+          {num<1?1:num}
+        </span>
+      )}
             <div className={cn(style.imgCon)} onClick={increase}>
               <img src="/images/carousel-right.png" alt="" />
             </div>
@@ -1950,10 +2012,10 @@ const pElement = document.createElement("p");
           {/* <button className={cn(style.mintBtn)} onClick={handleMint}>
             Mint
           </button> */}
-          {balanceNum === true ? (
+          {balanceNum === true||(0.006*num).toFixed(3)>=ethBalance ? (
             <div>
               <p>
-                ETH Balance: Youneed {ethBalanceNeed.toFixed(3)} ETH + gas fee{" "}
+                ETH Balance: Youneed {(0.006*num).toFixed(3)} ETH + gas fee{" "}
                 <br /> YouETH wallet Balance: {ethBalance} ETH
               </p>
             </div>
