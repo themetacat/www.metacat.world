@@ -1342,7 +1342,17 @@ console.log(networkId=== '11155111','networkId',networkId);
     // 确认支付完成后，可以将 setLoading(false) 设置为 false 来表示加载已完成
   };
   
-
+  function handleConfirmation(event) {
+    // 通过事件对象获取有关确认支付的信息
+    console.log("用户已确认支付");
+    console.log(event.detail); // 可能包含有关支付的其他信息
+  }
+  
+  function handleRejection(event) {
+    // 通过事件对象获取有关拒绝支付的信息
+    console.log("用户已拒绝支付");
+    console.log(event.detail); // 可能包含有关拒绝支付的其他信息
+  }
   const handleMint = async () => {
     try {
    
@@ -1355,8 +1365,16 @@ console.log(networkId=== '11155111','networkId',networkId);
           connectToChain()
         }else{
           setSwitcherNet(false)
-          await window.ethereum.request({ method: "eth_requestAccounts" });
-
+          await window.ethereum.request({ method: "eth_requestAccounts" })
+          // .catch((error) => {
+          //   if (error.code === 4001) {
+          //     // EIP-1193 userRejectedRequest error
+          //     console.log('Please connect to MetaMask.');
+          //     debugger
+          //   } else {
+          //     console.error(error);
+          //   }
+          // });
           // 创建 Web3 实例
           const web3 = new Web3(window.ethereum);
   
@@ -1380,7 +1398,6 @@ console.log(networkId=== '11155111','networkId',networkId);
             // 执行 mint 操作
             // your mint logic here
             console.log("Minting...");
-  
             console.log(mintNum, "mintNummintNummintNum");
 
             if (!profile?.address) {
@@ -1399,60 +1416,32 @@ console.log(networkId=== '11155111','networkId',networkId);
                 setLoading(true)
               },3000)
             },5000)
-          
+         
             const tx = await contract.methods.mint(mintNums).send({
               from: profile.address,
               value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
-            });
-
-            // const response = await window.ethereum.send('eth_getTransactionReceipt', [transactionHash]);
-            // if (response && response.result) {
-            //   const { blockNumber, confirmations } = response.result;
-            //   console.log('区块号:', blockNumber);
-            //   console.log('确认数:', confirmations);}
-            // console.log(tx);
-            // window.ethereum.on('confirmation', (confirmationNumber, receipt) => {
-            //   console.log('确认信息：', confirmationNumber, receipt);
-            
-            //   // 设置 loading 为 true
-            //   setLoading(true);
-            // });
-
-      //       const transactionHash = tx.hash;
-      //  // 获取交易状态
-      //  const receipt = await provider.waitForTransaction(transactionHash);
-      //  if (receipt.status === 1) {
-      //   console.log("Transaction succeeded");
-      //   // 处理交易成功的逻辑
-      // } else {
-      //   console.log("Transaction failed");
-      //   // 处理交易失败的逻辑
-      // }
-      setLoading(false)
-            // const tokenToBip = await contract.methods.tokenToBip().call({})
-            // console.log(tokenToBip,'tokenToBip');
-  
-            // // 监听合约事件
-            // // const event = contract.events.Transfer((error, event) => {
-            // //   console.log(error, event);
-  
-            // //   if (!error) {
-            // //     console.log("Event data:", event.returnValues);
-            // //     // 在此处添加自定义的处理逻辑
-            // //   } else {
-            // //     console.error("Error:", error);
-            // //   }
-            // // });
-            // // event();
-            // const eventDataElement = document.getElementById('eventData');
+            })
+            .on("receipt", (receipt) => {
+              // 获取交易收据
+              console.log("收据: ", receipt);
+              // 在这里执行交易成功后的逻辑操作
+              setLoading(false)
+            })
+            .catch((error) => {
+              if (error.code === 4001) {
+              setLoading(false)
+              }
+            })
+         
+      // setLoading(false)
             contract.events
               .Transfer(
                 { filter: {}, fromBlock: tx.blockNumber, toBlock: "latest" },
                 function (params) {}
               )
               .on("data", (event) => {
+                setLoading(false)
                 console.log(event);
-                setLoading(true);
                 console.log(
                   tx.events.Transfer.returnValues.to.toLowerCase(),
                   11111,
@@ -2015,8 +2004,8 @@ const pElement = document.createElement("p");
           {balanceNum === true||(0.006*num).toFixed(3)>=ethBalance ? (
             <div>
               <p>
-                ETH Balance: Youneed {(0.006*num).toFixed(3)} ETH + gas fee{" "}
-                <br /> YouETH wallet Balance: {ethBalance} ETH
+                ETH Balance: You need {(0.006*num).toFixed(3)} ETH + gas fee{" "}
+                <br /> You ETH wallet Balance: {ethBalance} ETH
               </p>
             </div>
           ) : null}
