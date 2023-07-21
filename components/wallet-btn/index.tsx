@@ -1888,6 +1888,19 @@ const pElement = document.createElement("p");
     // });
   }, []);
 
+
+  const handleAccountsChanged = ()=>{
+    state.setState({
+      accessToken: "",
+      refreshToken: "",
+      profile: { address: null, nickName: null, avatar: null },
+    });
+
+    if (pathname !== "/") {
+      window.location.href = "/";
+    } 
+  }
+
   
   useEffect(() => {
     async function fetchBalance() {
@@ -1908,6 +1921,10 @@ const pElement = document.createElement("p");
         // 获取当前账户地址
         const accounts = await web3.eth.getAccounts();
         const accountAddress = accounts[0];
+console.log(accounts,'accounts');
+if (window.ethereum) {
+  window.ethereum.on("accountsChanged", handleAccountsChanged);
+}
 
         // 获取用户钱包中的 ETH 余额
         const balance = await web3.eth.getBalance(accountAddress);
