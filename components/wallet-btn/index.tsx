@@ -1457,10 +1457,10 @@ console.log(networkId=== '11155111','networkId',networkId);
                   tx.events.Transfer.returnValues.to.toLowerCase() ===
                     event.returnValues.to.toLowerCase()
                 );
-                console.log(
-                  tx.transactionHash === event.transactionHash,
-                  666666666
-                );
+                // console.log(
+                //   tx.transactionHash === event.transactionHash,
+                //   666666666
+                // );
                 if (tx.transactionHash === event.transactionHash) {
                   toast.success("hhhhhh");
                   setLoading(false);
