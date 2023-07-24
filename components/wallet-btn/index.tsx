@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import cn from "classnames";
 import { toast } from "react-hot-toast";
+import { TokenboundClient } from "@tokenbound/sdk";
 import "tailwindcss/tailwind.css";
 import Status from "../status";
 import { Web3AuthCore } from "@web3auth/core";
 import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal";
 import WalletConnect from "@walletconnect/client";
+import { createWalletClient, http, custom, WalletClient } from 'viem'
+import { sepolia } from 'viem/chains'
 import NodeWalletConnect from "@walletconnect/node";
 import MintConcent from "./mintContent";
+// import { useEthersSigner } from './hooks'
 import Page from "../page";
 import {
   CHAIN_NAMESPACES,
@@ -38,6 +42,7 @@ import { convert, getToken, removeToken, setToken } from "../../common/utils";
 import { SITE_NAME, META_DESCRIPTION } from "../../common/const";
 import style from "./index.module.css";
 import Web3 from "web3";
+import { log } from "util";
 
 type Props = {
   name?: string;
@@ -959,6 +964,16 @@ console.log(networkId=== '11155111','networkId',networkId);
     };
   }, [close]);
 
+  // React.useEffect(() => {
+  //   const tokenBoundAccount = TokenboundClient.prepareCreateAccount({
+  //     tokenContract: "<token_contract_address>",
+  //     tokenId: "<token_id>",
+  //   });
+  //   console.log(tokenBoundAccount);
+  // }, []);
+
+  
+
   const abi = [
     {
       inputs: [
@@ -1329,30 +1344,8 @@ console.log(networkId=== '11155111','networkId',networkId);
       type: "function",
     },
   ];
-
-  const handleMintContent = () => {
-    setMintConcent(true);
-  };
-
-  const handlePaymentConfirmation =  () => {
-  
-    
-    setLoading(true);
-    // 执行支付确认逻辑或其他异步操作
-    // 确认支付完成后，可以将 setLoading(false) 设置为 false 来表示加载已完成
-  };
-  
-  function handleConfirmation(event) {
-    // 通过事件对象获取有关确认支付的信息
-    console.log("用户已确认支付");
-    console.log(event.detail); // 可能包含有关支付的其他信息
-  }
-  
-  function handleRejection(event) {
-    // 通过事件对象获取有关拒绝支付的信息
-    console.log("用户已拒绝支付");
-    console.log(event.detail); // 可能包含有关拒绝支付的其他信息
-  }
+ 
+ 
   const handleMint = async () => {
     try {
    
@@ -1384,7 +1377,7 @@ console.log(networkId=== '11155111','networkId',networkId);
   
           // 获取用户钱包中的 ETH 余额
           const balance = await web3.eth.getBalance(accountAddress);
-  
+          console.log(accountAddress,'accountAddres1111s');
           // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
           const ethBalance = Number(web3.utils.fromWei(balance, "ether"));
   
@@ -1527,6 +1520,53 @@ console.log(networkId=== '11155111','networkId',networkId);
 
 eventDataElement.appendChild(itemContainer);
 const tokenToBip = contract.methods.tokenToBip(item.id).call({});
+
+async function testTokenboundClass() {
+  const web3s = new Web3(window.ethereum);
+  await window.ethereum.request({ method: "eth_requestAccounts" });
+  // 获取当前账户地址
+  const accounts =  web3s.eth.getAccounts()
+
+  .then(accounts => {
+    const accountAddress = accounts[0];
+  // console.log(accountAddress,'accountAddress');
+
+    // 在这里进行后续操作
+
+
+ 
+  const walletClient: WalletClient = createWalletClient({
+    chain: sepolia,
+    account: web3s.eth.getAccounts()[0],
+    transport: window.ethereum ? custom(window.ethereum) : http(),
+  })
+
+  const tokenboundClient = new TokenboundClient({ walletClient, chainId: 11155111 })
+// console.log(walletClient,'walletClient');
+  if (!tokenboundClient) return
+
+  const tokenboundAccount = tokenboundClient.getAccount({
+    tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
+    tokenId: item.id,
+  })
+  // console.log('getAccount', tokenboundAccount)
+  const truncatedAccount = `${tokenboundAccount}`.slice(0, 6) + '...' + `${tokenboundAccount}`.slice(-4);
+
+  const tokenboundSpan = document.createElement("span");
+  tokenboundSpan.style.width='200px'
+  tokenboundSpan.style.overflow='hidden'
+  tokenboundSpan.style.display='inlineBlock'
+  tokenboundSpan.style.display='inline-block'
+  tokenboundSpan.textContent =  `${truncatedAccount}`;
+
+
+
+itemContainer.appendChild(tokenboundSpan);
+})
+ 
+}
+
+testTokenboundClass()
 
 tokenToBip.then(result => {
   // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
@@ -1687,11 +1727,48 @@ tokenToBip.then(result => {
   };
 
 
-  const connesmartContractct = useCallback(()=>{
+  // useEffect(() => {
+  //   async function testTokenboundClass() {
+  //     const web3s = new Web3(window.ethereum);
+  //     await window.ethereum.request({ method: "eth_requestAccounts" });
+  //     // 获取当前账户地址
+  //     const accounts =  web3s.eth.getAccounts()
+  
+  //     .then(accounts => {
+  //       const accountAddress = accounts[0];
+  //     console.log(accountAddress,'accountAddress');
 
-  },[])
+  //       // 在这里进行后续操作
+    
+     
+  //     const walletClient: WalletClient = createWalletClient({
+  //       chain: sepolia,
+  //       account: accountAddress,
+  //       transport: window.ethereum ? custom(window.ethereum) : http(),
+  //     })
+  //   console.log(custom(window.ethereum),'');
+    
+  //     const tokenboundClient = new TokenboundClient({ walletClient, chainId: 11155111 })
+  //   console.log(walletClient,'walletClient');
+  //     if (!tokenboundClient) return
+
+  //     const tokenboundAccount = tokenboundClient.getAccount({
+  //       tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
+  //       tokenId: '9',
+  //     })
+  //     console.log('getAccount', tokenboundAccount)
+  //   })
+     
+  //   }
+
+  //   testTokenboundClass()
+  // }, [])
+
 
   useEffect(() => {
+ 
+
+  
     const Addr = window.localStorage.getItem('metaMaskAddress')
     if(window.ethereum&&Addr){
 
@@ -1727,6 +1804,7 @@ tokenToBip.then(result => {
 //   dataArray.push(event);
 // // });
 // console.log(dataArray,'5555555');
+
 
             const totalSupply = daiContract.methods.totalSupply().call({});
             const name = daiContract.methods.name().call({});
@@ -1794,7 +1872,52 @@ sortedData.forEach(item => {
 
 eventDataElement.appendChild(itemContainer);
 const tokenToBip = daiContract.methods.tokenToBip(item.id).call({});
+async function testTokenboundClass() {
+  const web3s = new Web3(window.ethereum);
+  await window.ethereum.request({ method: "eth_requestAccounts" });
+  // 获取当前账户地址
+  const accounts =  web3s.eth.getAccounts()
 
+  .then(accounts => {
+    const accountAddress = accounts[0];
+  // console.log(accountAddress,'accountAddress');
+
+    // 在这里进行后续操作
+
+
+ 
+  const walletClient: WalletClient = createWalletClient({
+    chain: sepolia,
+    account: web3s.eth.getAccounts()[0],
+    transport: window.ethereum ? custom(window.ethereum) : http(),
+  })
+
+  const tokenboundClient = new TokenboundClient({ walletClient, chainId: 11155111 })
+// console.log(walletClient,'walletClient');
+  if (!tokenboundClient) return
+
+  const tokenboundAccount = tokenboundClient.getAccount({
+    tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
+    tokenId: item.id,
+  })
+  // console.log('getAccount', tokenboundAccount)
+  const truncatedAccount = `${tokenboundAccount}`.slice(0, 6) + '...' + `${tokenboundAccount}`.slice(-4);
+
+  const tokenboundSpan = document.createElement("span");
+  tokenboundSpan.style.width='200px'
+  tokenboundSpan.style.overflow='hidden'
+  tokenboundSpan.style.display='inlineBlock'
+  tokenboundSpan.style.display='inline-block'
+  tokenboundSpan.textContent =  `${truncatedAccount}`;
+
+
+
+itemContainer.appendChild(tokenboundSpan);
+})
+ 
+}
+
+testTokenboundClass()
 tokenToBip.then(result => {
   // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
   // console.log(result, 'tokenToBip result');
@@ -1805,6 +1928,7 @@ tokenToBip.then(result => {
   tokenToBipPElement.style.marginLeft = "20px";
   itemContainer.appendChild(tokenToBipPElement);
 })
+
 
 // 处理 tokenURI 数据
 const imgTokenURIElement = document.createElement("div");
@@ -1883,10 +2007,13 @@ const pElement = document.createElement("p");
         // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
       });
     }
-  
+
 
     // });
   }, []);
+ 
+
+
 
 
   const handleAccountsChanged = ()=>{
@@ -1921,10 +2048,11 @@ const pElement = document.createElement("p");
         // 获取当前账户地址
         const accounts = await web3.eth.getAccounts();
         const accountAddress = accounts[0];
-console.log(accounts,'accounts');
-if (window.ethereum) {
-  window.ethereum.on("accountsChanged", handleAccountsChanged);
-}
+        console.log(accountAddress,'5555555ddress');
+        
+        if (window.ethereum) {
+          window.ethereum.on("accountsChanged", handleAccountsChanged);
+        }
 
         // 获取用户钱包中的 ETH 余额
         const balance = await web3.eth.getBalance(accountAddress);
