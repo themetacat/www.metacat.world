@@ -7,8 +7,8 @@ import Status from "../status";
 import { Web3AuthCore } from "@web3auth/core";
 import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal";
 import WalletConnect from "@walletconnect/client";
-import { createWalletClient, http, custom, WalletClient } from 'viem'
-import { sepolia } from 'viem/chains'
+import { createWalletClient, http, custom, WalletClient, Account } from "viem";
+import { sepolia } from "viem/chains";
 import NodeWalletConnect from "@walletconnect/node";
 import MintConcent from "./mintContent";
 // import { useEthersSigner } from './hooks'
@@ -22,7 +22,6 @@ import Rekv from "rekv";
 import Link from "next/link";
 
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
-
 import Router, { useRouter } from "next/router";
 
 import RPC from "../web3RPC";
@@ -161,7 +160,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   const [balanceNum, setBalanceNum] = useState(false);
   const [switcherNet, setSwitcherNet] = useState(false);
   const [web3auth, setWeb3auth] = useState<Web3AuthCore | null>(null);
-  const [obj,setobj] = useState({})
+  const [obj, setobj] = useState({});
   const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
   const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
   const [loginState, setLoginState] = React.useState("web3Auth");
@@ -261,9 +260,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
   const connectToChain = React.useCallback(async () => {
     setLoading(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       setLoading(false);
-    },5000)
+    }, 5000);
     if (
       typeof (window as any).ethereum === "undefined" ||
       !(window as any).ethereum.isMetaMask
@@ -274,29 +273,30 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       return;
     }
     try {
-      const networkId = await window.ethereum.request({ method: 'net_version' });
-console.log(networkId=== '11155111','networkId',networkId);
+      const networkId = await window.ethereum.request({
+        method: "net_version",
+      });
+      console.log(networkId === "11155111", "networkId", networkId);
       // 判断当前网络是否为 Ethereum Sepolia 网络
       // await  window.ethereum.request({
       //   method: 'wallet_switchEthereumChain',
       //   params: [{ chainId: '11155111' }],
       // });
-      if (networkId !== '11155111') {
+      if (networkId !== "11155111") {
         // 根据需要跳转到引导转换网络的网页或执行其他逻辑
         // window.open("https://example.com");
         // return;
         const chainId = "0x" + (11155111).toString(16);
-        console.log(chainId,'chainId');
-        
+        console.log(chainId, "chainId");
+
         await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [
-          {
-            chainId: chainId,
-        
-          },
-        ],
-      });
+          method: "wallet_switchEthereumChain",
+          params: [
+            {
+              chainId: chainId,
+            },
+          ],
+        });
       }
 
       web3.connect().then(
@@ -418,7 +418,7 @@ console.log(networkId=== '11155111','networkId',networkId);
       cacheProvider: true,
       providerOptions,
     });
-    
+
     // 'https://registry.walletconnect.com/api/v2/wallets'
     {
       /* <WalletConnectQRCodeModal
@@ -427,7 +427,7 @@ console.log(networkId=== '11155111','networkId',networkId);
            URI={web3Modal.cachedProvider}
          /> */
     }
-    console.log(web3Modal,Web3Modal,web3Modal.cachedProvider,8888888);
+    console.log(web3Modal, Web3Modal, web3Modal.cachedProvider, 8888888);
 
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org",
@@ -469,7 +469,6 @@ console.log(networkId=== '11155111','networkId',networkId);
     "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
 
   useEffect(() => {
-
     const init = async () => {
       try {
         const coreWeb3auth = new Web3AuthCore({
@@ -972,8 +971,6 @@ console.log(networkId=== '11155111','networkId',networkId);
   //   console.log(tokenBoundAccount);
   // }, []);
 
-  
-
   const abi = [
     {
       inputs: [
@@ -1344,21 +1341,19 @@ console.log(networkId=== '11155111','networkId',networkId);
       type: "function",
     },
   ];
- 
- 
+
   const handleMint = async () => {
     try {
-   
       if (typeof window.ethereum !== "undefined") {
         // 请求用户授权连接 MetaMask
         const networkVersion = window.ethereum.networkVersion;
-        if(networkVersion!=='11155111' ){
-          console.log('有没有问题');
+        if (networkVersion !== "11155111") {
+          console.log("有没有问题");
           // setSwitcherNet(true)
-          connectToChain()
-        }else{
-          setSwitcherNet(false)
-          await window.ethereum.request({ method: "eth_requestAccounts" })
+          connectToChain();
+        } else {
+          setSwitcherNet(false);
+          await window.ethereum.request({ method: "eth_requestAccounts" });
           // .catch((error) => {
           //   if (error.code === 4001) {
           //     // EIP-1193 userRejectedRequest error
@@ -1370,22 +1365,22 @@ console.log(networkId=== '11155111','networkId',networkId);
           // });
           // 创建 Web3 实例
           const web3 = new Web3(window.ethereum);
-  
+
           // 获取当前账户地址
           const accounts = await web3.eth.getAccounts();
           const accountAddress = accounts[0];
-  
+
           // 获取用户钱包中的 ETH 余额
           const balance = await web3.eth.getBalance(accountAddress);
-          console.log(accountAddress,'accountAddres1111s');
+          console.log(accountAddress, "accountAddres1111s");
           // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
           const ethBalance = Number(web3.utils.fromWei(balance, "ether"));
-  
+
           setEthBalanceNeed(ethBalance);
-  
+
           const price = 0.006;
           const quantity = num;
-  
+
           // 对比 ETH 余额和数量与单价的乘积
           if (ethBalance >= price * quantity) {
             // 执行 mint 操作
@@ -1399,53 +1394,56 @@ console.log(networkId=== '11155111','networkId',networkId);
             toast.success("Successful");
             setLoading(true);
             const web3 = new Web3(Web3.givenProvider);
-            const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+            const contractAddress =
+              "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
             const contract = new web3.eth.Contract(abi as [], contractAddress);
             console.log(contract.events.Transfer);
             const mintNums = num; // 在这里定义要mint的数量
-            setTimeout(()=>{
-              setLoading(false)
-              setTimeout(()=>{
-                setLoading(true)
-              },3000)
-            },5000)
-         
-            const tx = await contract.methods.mint(mintNums).send({
-              from: profile.address,
-              value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
-            })
-            .on("receipt", (receipt) => {
-              // 获取交易收据
-              console.log("收据: ", receipt);
-              // 在这里执行交易成功后的逻辑操作
-            })
-            .catch((error) => {
-              if (error.code === 4001) {
-              setLoading(false)
-              }
-            })
-            .then((success) => {
-              // if (success.code === 0x1||1) {
-              setLoading(false)
-              console.log('成功');
-              // }
-            })
+            setTimeout(() => {
+              setLoading(false);
+              setTimeout(() => {
+                setLoading(true);
+              }, 3000);
+            }, 5000);
 
-      setLoading(false)
+            const tx = await contract.methods
+              .mint(mintNums)
+              .send({
+                from: profile.address,
+                value: web3.utils.toWei(`${0.006 * mintNums}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
+              })
+              .on("receipt", (receipt) => {
+                // 获取交易收据
+                console.log("收据: ", receipt);
+                // 在这里执行交易成功后的逻辑操作
+              })
+              .catch((error) => {
+                if (error.code === 4001) {
+                  setLoading(false);
+                }
+              })
+              .then((success) => {
+                // if (success.code === 0x1||1) {
+                setLoading(false);
+                console.log("成功");
+                // }
+              });
+
+            setLoading(false);
             contract.events
               .Transfer(
                 { filter: {}, fromBlock: tx.blockNumber, toBlock: "latest" },
                 function (params) {}
               )
               .on("data", (event) => {
-                setLoading(false)
+                setLoading(false);
                 console.log(event);
                 console.log(
                   tx.events.Transfer.returnValues.to.toLowerCase(),
                   11111,
                   event.returnValues.to.toLowerCase()
                 );
-  
+
                 console.log(
                   tx.events.Transfer.returnValues.to.toLowerCase() ===
                     event.returnValues.to.toLowerCase()
@@ -1473,305 +1471,210 @@ console.log(networkId=== '11155111','networkId',networkId);
                   const nameCon = contract.methods.name().call({});
                   Promise.all([tokenToBip, tokenURI, nameCon]).then(
                     ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                      console.log(Promise.all,111,tokenToBipResult, tokenURIResult, nameConResult);
-                 
+                      console.log(
+                        Promise.all,
+                        111,
+                        tokenToBipResult,
+                        tokenURIResult,
+                        nameConResult
+                      );
+
                       setTimeout(() => {
-                      fetch(tokenURIResult)
-                        .then((response) => response.json())
-                        .then((data) => {
-                          console.log(data,3333333);
-                          const dataArray = [];
-                          dataArray.push(data);
-                          // const transformedArray = dataArray.reduce((acc, curr) => {
-                          //   acc[curr.id] = curr;
-                          //   return acc;
-                          // }, {});
-                          const transformedObject = {};
-      
-                          dataArray.forEach(event => {
-        transformedObject[event.id] = event;
-      });
-      
-      setobj((state)=>{ 
-        console.log(state,transformedObject,2222222);
-      
-       
-        const sortedKeys = Object?.keys(state).map(Number).sort((a, b) => b - a);
-        console.log(sortedKeys);
-        
-      const sortedData = sortedKeys?.map(key => state[key]);
-      console.log(sortedData,'sortedDatasortedDatasortedData');
-      
-      // const gridContainer = document.createElement("div");
-      
-      
-      // 移除旧的数据
-      while (eventDataElement.firstChild) {
-        eventDataElement.firstChild.remove();
-      }
-      
-      sortedData.forEach(item => {
-         const itemContainer = document.createElement("div");
-  itemContainer.style.marginLeft = "20px";
+                        fetch(tokenURIResult)
+                          .then((response) => response.json())
+                          .then((data) => {
+                            console.log(data, 3333333);
+                            const dataArray = [];
+                            dataArray.push(data);
+                            // const transformedArray = dataArray.reduce((acc, curr) => {
+                            //   acc[curr.id] = curr;
+                            //   return acc;
+                            // }, {});
+                            const transformedObject = {};
 
-  itemContainer.textContent = `${item.name}`;
-  // gridContainer.appendChild(itemContainer);
-  itemContainer.style.height = "200px";
+                            dataArray.forEach((event) => {
+                              transformedObject[event.id] = event;
+                            });
 
-eventDataElement.appendChild(itemContainer);
-const tokenToBip = contract.methods.tokenToBip(item.id).call({});
+                            setobj((state) => {
+                              console.log(state, transformedObject, 2222222);
 
-async function testTokenboundClass() {
-  const web3s = new Web3(window.ethereum);
-  await window.ethereum.request({ method: "eth_requestAccounts" });
-  // 获取当前账户地址
-  const accounts =  web3s.eth.getAccounts()
+                              const sortedKeys = Object?.keys(state)
+                                .map(Number)
+                                .sort((a, b) => b - a);
+                              console.log(sortedKeys);
 
-  .then(accounts => {
-    const accountAddress = accounts[0];
-  // console.log(accountAddress,'accountAddress');
+                              const sortedData = sortedKeys?.map(
+                                (key) => state[key]
+                              );
+                              console.log(
+                                sortedData,
+                                "sortedDatasortedDatasortedData"
+                              );
 
-    // 在这里进行后续操作
+                              // const gridContainer = document.createElement("div");
 
+                              // 移除旧的数据
+                              while (eventDataElement.firstChild) {
+                                eventDataElement.firstChild.remove();
+                              }
 
- 
-  const walletClient: WalletClient = createWalletClient({
-    chain: sepolia,
-    account: web3s.eth.getAccounts()[0],
-    transport: window.ethereum ? custom(window.ethereum) : http(),
-  })
+                              sortedData.forEach((item) => {
+                                const itemContainer =
+                                  document.createElement("div");
+                                itemContainer.style.marginLeft = "20px";
 
-  const tokenboundClient = new TokenboundClient({ walletClient, chainId: 11155111 })
-// console.log(walletClient,'walletClient');
-  if (!tokenboundClient) return
+                                itemContainer.textContent = `${item.name}`;
+                                // gridContainer.appendChild(itemContainer);
+                                itemContainer.style.height = "300px";
 
-  const tokenboundAccount = tokenboundClient.getAccount({
-    tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
-    tokenId: item.id,
-  })
-  // console.log('getAccount', tokenboundAccount)
-  const truncatedAccount = `${tokenboundAccount}`.slice(0, 6) + '...' + `${tokenboundAccount}`.slice(-4);
+                                eventDataElement.appendChild(itemContainer);
+                                const tokenToBip = contract.methods
+                                  .tokenToBip(item.id)
+                                  .call({});
 
-  const tokenboundSpan = document.createElement("span");
-  tokenboundSpan.style.width='200px'
-  tokenboundSpan.style.overflow='hidden'
-  tokenboundSpan.style.display='inlineBlock'
-  tokenboundSpan.style.display='inline-block'
-  tokenboundSpan.textContent =  `${truncatedAccount}`;
+                                async function testTokenboundClass() {
+                                  const web3s = new Web3(window.ethereum);
+                                  await window.ethereum.request({
+                                    method: "eth_requestAccounts",
+                                  });
+                                  // 获取当前账户地址
+                                  const accounts = web3s.eth
+                                    .getAccounts()
 
+                                    .then((accounts) => {
+                                      const accountAddress = accounts[0];
+                                      // console.log(accountAddress,'accountAddress');
 
+                                      // 在这里进行后续操作
 
-itemContainer.appendChild(tokenboundSpan);
-})
- 
-}
+                                      const walletClient: WalletClient =
+                                        createWalletClient({
+                                          chain: sepolia,
+                                          account: web3s.eth.getAccounts()[0],
+                                          transport: window.ethereum
+                                            ? custom(window.ethereum)
+                                            : http(),
+                                        });
 
-testTokenboundClass()
+                                      const tokenboundClient =
+                                        new TokenboundClient({
+                                          walletClient,
+                                          chainId: 11155111,
+                                        });
+                                      // console.log(walletClient,'walletClient');
+                                      if (!tokenboundClient) return;
 
-tokenToBip.then(result => {
-  // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
-  const tokenToBipPElement = document.createElement("span");
-  tokenToBipPElement.style.display = "flex";
-  tokenToBipPElement.style.justifyContent = "space-between";
-  tokenToBipPElement.textContent = `${result}`;
-  tokenToBipPElement.style.marginLeft = "20px";
-  itemContainer.appendChild(tokenToBipPElement);
-})
+                                      const tokenboundAccount =
+                                        tokenboundClient.getAccount({
+                                          tokenContract:
+                                            "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                          tokenId: item.id,
+                                        });
+                                      // console.log('getAccount', tokenboundAccount)
+                                      const truncatedAccount =
+                                        `${tokenboundAccount}`.slice(0, 6) +
+                                        "..." +
+                                        `${tokenboundAccount}`.slice(-4);
 
-      
-      // 处理 tokenURI 数据
-      const imgTokenURIElement = document.createElement("div");
-      const imgElement = document.createElement("img");
-      const pElement = document.createElement("p");
-                          // console.log(transformedArray,5555555);
-                          imgElement.setAttribute("src", item.image);
-                      
-                 
-                      imgTokenURIElement.appendChild(imgElement);
-                      imgTokenURIElement.appendChild(pElement);
-                      itemContainer.appendChild(imgTokenURIElement);
-                      eventDataElement.appendChild(itemContainer);
-                      imgElement.style.width = "100px";
-                      imgElement.style.height = "100px";
-      
-      });
-      return {...state,...transformedObject}
-      })
-      // gridContainer.innerHTML = '';
-      // sortedData.forEach(item => {
-      // //   console.log(item,22344444);
-      // //   const itemContainer = document.createElement("div"); // 创建新的容器
-      // // //   const nameConElement = document.createElement("span");
-      // // //   nameConElement.textContent = `${item.name}#${item.id}`;
-      // // //   itemContainer.appendChild(nameConElement); // 将 span 添加到新容器中
-      // // //   gridContainer.appendChild(itemContainer); // 将新容器添加到 gridContainer 中
-      // // itemContainer.textContent = item.id;
-      // // eventDataElement.appendChild(itemContainer);
-      
-      // });
-      // 对 tokenIds 数组进行从大到小的排序
-      // event.returnValues.tokenId.sort((a, b) => b - a);
-      return
-      const gridContainer = document.createElement("div");
-      gridContainer.style.height = "200px";
-         // 处理 nameCon 数据
-         const nameConElement = document.createElement("span");
-         nameConElement.textContent =`${nameConResult.replace(/"/g, "")}#${event.returnValues.tokenId}` ;
-         gridContainer.appendChild(nameConElement);
-      // 处理 tokenToBip 数据
-      const tokenToBipPElement = document.createElement("span");
-      tokenToBipPElement.textContent = `${tokenToBipResult}`;
-      gridContainer.appendChild(tokenToBipPElement);
-      // nameConElement.style.marginRight = "15px";
-      // 处理 tokenURI 数据
-      const imgTokenURIElement = document.createElement("div");
-      const imgElement = document.createElement("img");
-      const pElement = document.createElement("p");
-                          // console.log(transformedArray,5555555);
-                          imgElement.setAttribute("src", data.image);
-                      
-                 
-                      imgTokenURIElement.appendChild(imgElement);
-                      imgTokenURIElement.appendChild(pElement);
-                      gridContainer.appendChild(imgTokenURIElement);
-                      eventDataElement.appendChild(gridContainer);
-                      imgElement.style.width = "100px";
-                      imgElement.style.height = "100px";
-                  
-                   
-                    })
-                    .catch((error) => {
-                      console.error("Error fetching tokenURI:", error);
-                    });
-                    }, 3000); // 添加延迟，每隔1秒发送一个请求
+                                      const tokenboundSpan =
+                                        document.createElement("span");
+                                      tokenboundSpan.style.width = "200px";
+                                      tokenboundSpan.style.overflow = "hidden";
+                                      tokenboundSpan.style.display =
+                                        "inlineBlock";
+                                      tokenboundSpan.style.display =
+                                        "inline-block";
+                                      tokenboundSpan.textContent = `${truncatedAccount}`;
+
+                                      itemContainer.appendChild(tokenboundSpan);
+                                    });
+                                }
+
+                                testTokenboundClass();
+
+                                tokenToBip.then((result) => {
+                                  // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
+                                  const tokenToBipPElement =
+                                    document.createElement("span");
+                                  tokenToBipPElement.style.display = "flex";
+                                  tokenToBipPElement.style.justifyContent =
+                                    "space-between";
+                                  tokenToBipPElement.textContent = `${result}`;
+                                  tokenToBipPElement.style.marginLeft = "20px";
+                                  itemContainer.appendChild(tokenToBipPElement);
+                                });
+
+                                // 处理 tokenURI 数据
+                                const imgTokenURIElement =
+                                  document.createElement("div");
+                                const imgElement =
+                                  document.createElement("img");
+                                const pElement = document.createElement("p");
+                                // console.log(transformedArray,5555555);
+                                imgElement.setAttribute("src", item.image);
+
+                                imgTokenURIElement.appendChild(imgElement);
+                                imgTokenURIElement.appendChild(pElement);
+                                itemContainer.appendChild(imgTokenURIElement);
+                                eventDataElement.appendChild(itemContainer);
+                                imgElement.style.width = "100px";
+                                imgElement.style.height = "100px";
+                              });
+                              return { ...state, ...transformedObject };
+                            });
+                         
+                          })
+                          .catch((error) => {
+                            console.error("Error fetching tokenURI:", error);
+                          });
+                      }, 3000); // 添加延迟，每隔1秒发送一个请求
                     }
-                    
-                  )
-                  // Promise.all([tokenToBip, tokenURI, nameCon]).then(
-                  //   ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                  //     const gridContainer = document.createElement("div");
-                  //     gridContainer.style.height = "200px";
-                  //     console.log(nameConResult, 3333);
-
-                  //       // 处理 nameCon 数据
-                  //       const nameConElement = document.createElement("span");
-                  //       nameConElement.textContent = nameConResult.replace(
-                  //         /"/g,
-                  //         ""
-                  //       );
-                  //       gridContainer.appendChild(nameConElement);
-                  //     // 处理 tokenToBip 数据
-                  //     const tokenToBipPElement = document.createElement("span");
-                  //     tokenToBipPElement.textContent = `${tokenToBipResult}#${event.returnValues.tokenId}`;
-                  //     gridContainer.appendChild(tokenToBipPElement);
-                  //     tokenToBipPElement.style.marginRight = "15px";
-                  //     // 处理 tokenURI 数据
-                  //     const imgTokenURIElement = document.createElement("div");
-                  //     const imgElement = document.createElement("img");
-                  //     const pElement = document.createElement("p");
-  
-                  //     fetch(tokenURIResult)
-                  //       .then((response) => response.json())
-                  //       .then((data) => {
-                  //         const imageURL = data.image;
-                  //         imgElement.setAttribute("src", imageURL);
-                  //       })
-                  //       .catch((error) => {
-                  //         console.error("Error fetching tokenURI:", error);
-                  //       });
-  
-                  //     imgTokenURIElement.appendChild(imgElement);
-                  //     imgTokenURIElement.appendChild(pElement);
-  
-                  //     gridContainer.appendChild(imgTokenURIElement);
-  
-                  //     eventDataElement.appendChild(gridContainer);
-  
-                  //     imgElement.style.width = "100px";
-                  //     imgElement.style.height = "100px";
-                  //   }
-                  // );
-                  // .catch(error => {
-                  //   console.log(error); // 错误处理
-                  // });
+                  );
+                 
                 }
                 setLoading(false);
               })
-  
+
               .on("error", (error) => {
                 console.error(error);
               });
-            //       const value = await contract.methods.getInfo()
-            // console.log(value);
             if (tx) {
               toast.success("Successful");
             }
-            setLoading(false)
+            setLoading(false);
             console.log("tx:", tx);
             // mint 成功, 进行后续操作
-         
           } else {
             setBalanceNum(true);
-
-            // alert("Your balance is insufficient");
             console.log("Insufficient ETH balance");
           }
-          // } else {
-          //   console.log('MetaMask is not installed');
         }
-        }
-       
+      }
     } catch (error) {
       toast.error("something went wrong");
     }
   };
+//   const web3s = new Web3(window.ethereum);
+//   const walletClient: WalletClient =
+//   createWalletClient({
+//     chain: sepolia,
+//     account: web3s.eth.getAccounts()[0],
+//     transport: window.ethereum
+//       ? custom(window.ethereum)
+//       : http(),
+//   });
 
+// const tokenboundClient = new TokenboundClient({
+//   walletClient,
+//   chainId: 11155111,
+// });
 
-  // useEffect(() => {
-  //   async function testTokenboundClass() {
-  //     const web3s = new Web3(window.ethereum);
-  //     await window.ethereum.request({ method: "eth_requestAccounts" });
-  //     // 获取当前账户地址
-  //     const accounts =  web3s.eth.getAccounts()
-  
-  //     .then(accounts => {
-  //       const accountAddress = accounts[0];
-  //     console.log(accountAddress,'accountAddress');
-
-  //       // 在这里进行后续操作
-    
-     
-  //     const walletClient: WalletClient = createWalletClient({
-  //       chain: sepolia,
-  //       account: accountAddress,
-  //       transport: window.ethereum ? custom(window.ethereum) : http(),
-  //     })
-  //   console.log(custom(window.ethereum),'');
-    
-  //     const tokenboundClient = new TokenboundClient({ walletClient, chainId: 11155111 })
-  //   console.log(walletClient,'walletClient');
-  //     if (!tokenboundClient) return
-
-  //     const tokenboundAccount = tokenboundClient.getAccount({
-  //       tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
-  //       tokenId: '9',
-  //     })
-  //     console.log('getAccount', tokenboundAccount)
-  //   })
-     
-  //   }
-
-  //   testTokenboundClass()
-  // }, [])
 
 
   useEffect(() => {
- 
-
-  
-    const Addr = window.localStorage.getItem('metaMaskAddress')
-    if(window.ethereum&&Addr){
-
+    const Addr = window.localStorage.getItem("metaMaskAddress");
+    if (window.ethereum && Addr) {
       window.ethereum.enable().then(() => {
         const web3 = new Web3(window.web3.currentProvider);
         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
@@ -1780,38 +1683,27 @@ tokenToBip.then(result => {
         let existingTokenIds = new Set();
         daiContract.events
           .Transfer(
-            { filter: {
-              from:'0x0000000000000000000000000000000000000000'
-
-            }, fromBlock:	3876408, toBlock: "latest" },
+            {
+              filter: {
+                from: "0x0000000000000000000000000000000000000000",
+              },
+              fromBlock: 3876408,
+              toBlock: "latest",
+            },
             function (params) {}
           )
           .on("data", (event) => {
-                  const tokenId = event.returnValues.tokenId;
-                  // if (existingTokenIds.has(tokenId)) {
-                  //     // 跳过该条数据，已存在相同的 tokenId
-                  //     return;
-                  // }
-              
-                  existingTokenIds.add(tokenId);
-                  // event.sort((event1, event2) => event2.returnValues.tokenId - event1.returnValues.tokenId);
-                  // 处理符合过滤条件的数据，例如输出到控制台
-                  console.log(event);
+            const tokenId = event.returnValues.tokenId;
           
-              // 将事件数据存储在一个数组中
-// const dataArray = [];
-// // event.forEach(events => {
-//   dataArray.push(event);
-// // });
-// console.log(dataArray,'5555555');
-
-
+            existingTokenIds.add(tokenId);
+          
+            // console.log(event);
             const totalSupply = daiContract.methods.totalSupply().call({});
             const name = daiContract.methods.name().call({});
             totalSupply.then((result) => {
               setMintNum(result);
             });
-  
+
             name.then((result) => {
               console.log(result, "resultresult");
             });
@@ -1823,200 +1715,217 @@ tokenToBip.then(result => {
               .tokenURI(event.returnValues.tokenId)
               .call({});
             const nameCon = daiContract.methods.name().call({});
-            Promise.all([tokenToBip, tokenURI, nameCon]).then(
-              ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                // console.log(Promise.all,111,tokenToBipResult, tokenURIResult, nameConResult);
-           
+            Promise.all([tokenToBip, tokenURI, nameCon])
+              .then(([tokenToBipResult, tokenURIResult, nameConResult]) => {
                 setTimeout(() => {
-                fetch(tokenURIResult)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    // console.log(data,3333333);
-                    const dataArray = [];
-                    dataArray.push(data);
-                    // const transformedArray = dataArray.reduce((acc, curr) => {
-                    //   acc[curr.id] = curr;
-                    //   return acc;
-                    // }, {});
-                    const transformedObject = {};
+                  fetch(tokenURIResult)
+                    .then((response) => response.json())
+                    .then((data) => {
+                      const dataArray = [];
+                      dataArray.push(data);
+                      const transformedObject = {};
+                      dataArray.forEach((event) => {
+                        transformedObject[event.id] = event;
+                      });
 
-                    dataArray.forEach(event => {
-  transformedObject[event.id] = event;
+                      setobj((state) => {
+                        const sortedKeys = Object?.keys(state)
+                          .map(Number)
+                          .sort((a, b) => b - a);
+                      
+                        const sortedData = sortedKeys?.map((key) => state[key]);
+                  
+                        // 移除旧的数据
+                        while (eventDataElement.firstChild) {
+                          eventDataElement.firstChild.remove();
+                        }
+
+                        sortedData.forEach((item) => {
+                          const itemContainer = document.createElement("div");
+                          itemContainer.style.marginLeft = "20px";
+
+                          itemContainer.textContent = `${item.name}`;
+                          // gridContainer.appendChild(itemContainer);
+                          itemContainer.style.height = "300px";
+
+                          eventDataElement.appendChild(itemContainer);
+                          const tokenToBip = daiContract.methods
+                            .tokenToBip(item.id)
+                            .call({});
+                          async function testTokenboundClass() {
+                            const web3s = new Web3(window.ethereum);
+                            await window.ethereum.request({
+                              method: "eth_requestAccounts",
+                            });
+                            // 获取当前账户地址
+                            const accounts = web3s.eth
+                              .getAccounts()
+
+                              .then((accounts) => {
+                                const accountAddress = accounts[0];
+                                const walletClient: WalletClient =
+                                  createWalletClient({
+                                    chain: sepolia,
+                                    account: web3s.eth.getAccounts()[0],
+                                    transport: window.ethereum
+                                      ? custom(window.ethereum)
+                                      : http(),
+                                  });
+
+                                const tokenboundClient = new TokenboundClient({
+                                  walletClient,
+                                  chainId: 11155111,
+                                });
+                                // console.log(walletClient,'walletClient');
+                                if (!tokenboundClient) return;
+
+                                const tokenboundAccount =
+                                  tokenboundClient.getAccount({
+                                    tokenContract:
+                                      "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                    tokenId: item.id,
+                                  });
+                           
+
+                                // console.log('getAccount', tokenboundAccount)
+                                const truncatedAccount =
+                                  `${tokenboundAccount}`.slice(0, 6) +
+                                  "..." +
+                                  `${tokenboundAccount}`.slice(-4);
+
+    const tokenboundSpan =document.createElement("span");
+    tokenboundSpan.style.width = "200px";
+
+    tokenboundSpan.style.overflow = "hidden";
+    tokenboundSpan.style.display = "inlineBlock";
+    tokenboundSpan.style.display = "inline-block";
+    tokenboundSpan.textContent = `${truncatedAccount}`;
+    tokenboundSpan.style.width = "100px";
+    tokenboundSpan.style.height = "50px";
+    tokenboundSpan.style.backgroundColor ='#c870d6'
+    tokenboundSpan.addEventListener("click", () => {
+      const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
+      // 在新窗口中打开链接
+      window.open(url);
+    })
+
+                                itemContainer.appendChild(tokenboundSpan);
+                              });
+
+                          }
+
+                          testTokenboundClass();
+
+                          tokenToBip.then((result) => {
+                            // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
+                            // console.log(result, 'tokenToBip result');
+                            const tokenToBipPElement =
+                              document.createElement("span");
+                            tokenToBipPElement.style.display = "flex";
+                            tokenToBipPElement.style.justifyContent =
+                              "space-between";
+                            tokenToBipPElement.textContent = `${result}`;
+                            tokenToBipPElement.style.marginLeft = "20px";
+                            itemContainer.appendChild(tokenToBipPElement);
+                          });
+
+                          // 处理 tokenURI 数据
+                          const imgTokenURIElement =
+                            document.createElement("div");
+                          const imgElement = document.createElement("img");
+                          const pElement = document.createElement("button");
+                          pElement.textContent = "Deploy Account";
+                          pElement.style.width = "100px";
+                          pElement.style.height = "50px";
+                          pElement.style.backgroundColor ='#f2f2f2'
+
+// 添加点击事件处理程序
+pElement.addEventListener("click", () => {
+console.log('在这里处理逻辑');
+async function createAccount() {
+  await window.ethereum.request({
+    method: "eth_requestAccounts",
+  });
+  const web3s = new Web3(window.ethereum);
+//   console.log(web3s);
+const accounts = web3s.eth.getAccounts()
+
+
+.then((accounts) => {
+  
+  const accountAddress = accounts[0];
+  // console.log(accountAddress,66666);
+  
+})
+// console.log(accounts,'accounts');
+//   web3s.eth.net.getId()
+//   .then(networkId => {
+//     console.log(networkId, '2345');
+//   })
+
+  const addR: unknown = window.localStorage.getItem('metaMaskAddress')
+const address = addR as  Account;
+const walletClient: WalletClient =
+createWalletClient({
+  chain: sepolia,
+  account: address,
+  transport: window.ethereum
+    ? custom(window.ethereum)
+    : http(),
 });
 
-setobj((state)=>{ 
-  // console.log(state,transformedObject,2222222);
-
- 
-  const sortedKeys = Object?.keys(state).map(Number).sort((a, b) => b - a);
-  // console.log(sortedKeys);
-  
-const sortedData = sortedKeys?.map(key => state[key]);
-// console.log(sortedData,'sortedDatasortedDatasortedData');
-
-// const gridContainer = document.createElement("div");
-
-
-// 移除旧的数据
-while (eventDataElement.firstChild) {
-  eventDataElement.firstChild.remove();
-}
-
-sortedData.forEach(item => {
-  const itemContainer = document.createElement("div");
-  itemContainer.style.marginLeft = "20px";
-
-  itemContainer.textContent = `${item.name}`;
-  // gridContainer.appendChild(itemContainer);
-  itemContainer.style.height = "200px";
-
-eventDataElement.appendChild(itemContainer);
-const tokenToBip = daiContract.methods.tokenToBip(item.id).call({});
-async function testTokenboundClass() {
-  const web3s = new Web3(window.ethereum);
-  await window.ethereum.request({ method: "eth_requestAccounts" });
-  // 获取当前账户地址
-  const accounts =  web3s.eth.getAccounts()
-
-  .then(accounts => {
-    const accountAddress = accounts[0];
-  // console.log(accountAddress,'accountAddress');
-
-    // 在这里进行后续操作
-
-
- 
-  const walletClient: WalletClient = createWalletClient({
-    chain: sepolia,
-    account: web3s.eth.getAccounts()[0],
-    transport: window.ethereum ? custom(window.ethereum) : http(),
-  })
-
-  const tokenboundClient = new TokenboundClient({ walletClient, chainId: 11155111 })
+const tokenboundClient = new TokenboundClient({
+walletClient,
+chainId: 11155111,
+});
 // console.log(walletClient,'walletClient');
-  if (!tokenboundClient) return
+if (!tokenboundClient) return;
 
-  const tokenboundAccount = tokenboundClient.getAccount({
+const tokenboundAccount =
+tokenboundClient.getAccount({
+  tokenContract:
+    "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+  tokenId: item.id,
+});
+
+  const createAccount = await tokenboundClient.createAccount({
     tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
     tokenId: item.id,
   })
-  // console.log('getAccount', tokenboundAccount)
-  const truncatedAccount = `${tokenboundAccount}`.slice(0, 6) + '...' + `${tokenboundAccount}`.slice(-4);
-
-  const tokenboundSpan = document.createElement("span");
-  tokenboundSpan.style.width='200px'
-  tokenboundSpan.style.overflow='hidden'
-  tokenboundSpan.style.display='inlineBlock'
-  tokenboundSpan.style.display='inline-block'
-  tokenboundSpan.textContent =  `${truncatedAccount}`;
-
-
-
-itemContainer.appendChild(tokenboundSpan);
-})
- 
 }
-
-testTokenboundClass()
-tokenToBip.then(result => {
-  // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
-  // console.log(result, 'tokenToBip result');
-  const tokenToBipPElement = document.createElement("span");
-  tokenToBipPElement.style.display = "flex";
-  tokenToBipPElement.style.justifyContent = "space-between";
-  tokenToBipPElement.textContent = `${result}`;
-  tokenToBipPElement.style.marginLeft = "20px";
-  itemContainer.appendChild(tokenToBipPElement);
-})
-
-
-// 处理 tokenURI 数据
-const imgTokenURIElement = document.createElement("div");
-const imgElement = document.createElement("img");
-const pElement = document.createElement("p");
-                    // console.log(transformedArray,5555555);
-                    imgElement.setAttribute("src", item.image);
-                
-           
-                imgTokenURIElement.appendChild(imgElement);
-                imgTokenURIElement.appendChild(pElement);
-                itemContainer.appendChild(imgTokenURIElement);
-                // eventDataElement.appendChild(imgTokenURIElement);
-                imgElement.style.width = "100px";
-                imgElement.style.height = "100px";
+createAccount()
 
 });
-return {...state,...transformedObject}
-})
-// gridContainer.innerHTML = '';
-// sortedData.forEach(item => {
-// //   console.log(item,22344444);
-// //   const itemContainer = document.createElement("div"); // 创建新的容器
-// // //   const nameConElement = document.createElement("span");
-// // //   nameConElement.textContent = `${item.name}#${item.id}`;
-// // //   itemContainer.appendChild(nameConElement); // 将 span 添加到新容器中
-// // //   gridContainer.appendChild(itemContainer); // 将新容器添加到 gridContainer 中
-// // itemContainer.textContent = item.id;
-// // eventDataElement.appendChild(itemContainer);
+                          // console.log(transformedArray,5555555);
+                          imgElement.setAttribute("src", item.image);
 
-// });
-// 对 tokenIds 数组进行从大到小的排序
-// event.returnValues.tokenId.sort((a, b) => b - a);
-return
-const gridContainer = document.createElement("div");
-gridContainer.style.height = "200px";
-   // 处理 nameCon 数据
-   const nameConElement = document.createElement("span");
-   nameConElement.textContent =`${nameConResult.replace(/"/g, "")}#${event.returnValues.tokenId}` ;
-   gridContainer.appendChild(nameConElement);
-// 处理 tokenToBip 数据
-const tokenToBipPElement = document.createElement("span");
-tokenToBipPElement.textContent = `${tokenToBipResult}`;
-gridContainer.appendChild(tokenToBipPElement);
-// nameConElement.style.marginRight = "15px";
-// 处理 tokenURI 数据
-const imgTokenURIElement = document.createElement("div");
-const imgElement = document.createElement("img");
-const pElement = document.createElement("p");
-                    // console.log(transformedArray,5555555);
-                    imgElement.setAttribute("src", data.image);
-                
-           
-                imgTokenURIElement.appendChild(imgElement);
-                imgTokenURIElement.appendChild(pElement);
-                gridContainer.appendChild(imgTokenURIElement);
-                eventDataElement.appendChild(gridContainer);
-                imgElement.style.width = "100px";
-                imgElement.style.height = "100px";
-            
-             
+                          imgTokenURIElement.appendChild(imgElement);
+                          imgTokenURIElement.appendChild(pElement);
+                          itemContainer.appendChild(imgTokenURIElement);
+                          // eventDataElement.appendChild(imgTokenURIElement);
+                          imgElement.style.width = "100px";
+                          imgElement.style.height = "100px";
+                        });
+                        return { ...state, ...transformedObject };
+                      });
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching tokenURI:", error);
+                    });
+                }, 3000); // 添加延迟，每隔1秒发送一个请求
               })
+
               .catch((error) => {
-                console.error("Error fetching tokenURI:", error);
+                console.log(error); // 错误处理
               });
-              }, 3000); // 添加延迟，每隔1秒发送一个请求
-              }
-              
-            )
-  
-            .catch(error => {
-              console.log(error); // 错误处理
-            });
           });
-        // 在页面上更新事件数据
-        // eventDataElement.innerHTML += `<p>${eventDataString}</p>`;
       });
     }
 
-
     // });
   }, []);
- 
 
-
-
-
-  const handleAccountsChanged = ()=>{
+  const handleAccountsChanged = () => {
     state.setState({
       accessToken: "",
       refreshToken: "",
@@ -2025,10 +1934,9 @@ const pElement = document.createElement("p");
 
     if (pathname !== "/") {
       window.location.href = "/";
-    } 
-  }
+    }
+  };
 
-  
   useEffect(() => {
     async function fetchBalance() {
       if (typeof window.ethereum !== "undefined") {
@@ -2048,8 +1956,8 @@ const pElement = document.createElement("p");
         // 获取当前账户地址
         const accounts = await web3.eth.getAccounts();
         const accountAddress = accounts[0];
-        console.log(accountAddress,'5555555ddress');
-        
+        console.log(accountAddress, "5555555ddress");
+
         if (window.ethereum) {
           window.ethereum.on("accountsChanged", handleAccountsChanged);
         }
@@ -2071,7 +1979,6 @@ const pElement = document.createElement("p");
     fetchBalance();
   }, []);
 
-
   const handleNumChange = (event) => {
     if (event.target.value < 1) {
       event.target.value = 1;
@@ -2085,11 +1992,9 @@ const pElement = document.createElement("p");
     setIsEditing(true);
   };
 
-  const handleBlur =() => {
+  const handleBlur = () => {
     setIsEditing(false);
     setNum(editNum); // 更新输入框数据到num
-   
-  
   };
 
   return (
@@ -2115,7 +2020,7 @@ const pElement = document.createElement("p");
         {/* <button onClick={handleMintContent}>Mint</button> */}
         {/* {mintConcent === true ? ( */}
         <div className={cn(style.content)}>
-          <span>{(0.006*num).toFixed(3)}</span>
+          <span>{(0.006 * num).toFixed(3)}</span>
           <p className={cn(style.supply)}>
             Supply:
             <span>{mintNum}</span>
@@ -2130,20 +2035,20 @@ const pElement = document.createElement("p");
               <img src="/images/carousel-left.png" alt="" />
             </div>
             {isEditing ? (
-        <input
-          type="number"
-          className={cn(style.numIn)}
-          value={editNum}
-          onChange={handleNumChange}
-          onBlur={handleBlur}
-          style={{ appearance: "none" }}
-          autoFocus
-        />
-      ) : (
-        <span className={cn(style.num)} onClick={handleDoubleClick}>
-          {num<1?1:num}
-        </span>
-      )}
+              <input
+                type="number"
+                className={cn(style.numIn)}
+                value={editNum}
+                onChange={handleNumChange}
+                onBlur={handleBlur}
+                style={{ appearance: "none" }}
+                autoFocus
+              />
+            ) : (
+              <span className={cn(style.num)} onClick={handleDoubleClick}>
+                {num < 1 ? 1 : num}
+              </span>
+            )}
             <div className={cn(style.imgCon)} onClick={increase}>
               <img src="/images/carousel-right.png" alt="" />
             </div>
@@ -2151,19 +2056,17 @@ const pElement = document.createElement("p");
           {/* <button className={cn(style.mintBtn)} onClick={handleMint}>
             Mint
           </button> */}
-          {balanceNum === true||(0.006*num).toFixed(3)>=ethBalance ? (
+          {balanceNum === true || (0.006 * num).toFixed(3) >= ethBalance ? (
             <div>
               <p>
-                ETH Balance: You need {(0.006*num).toFixed(3)} ETH + gas fee{" "}
+                ETH Balance: You need {(0.006 * num).toFixed(3)} ETH + gas fee{" "}
                 <br /> You ETH wallet Balance: {ethBalance} ETH
               </p>
             </div>
           ) : null}
           {switcherNet === true ? (
             <div>
-              <p>
-              Please switch to Ethereum Sepolia
-              </p>
+              <p>Please switch to Ethereum Sepolia</p>
             </div>
           ) : null}
           <button
