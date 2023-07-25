@@ -18,7 +18,7 @@ type Props = {
   selectedIds;
 };
 
-export default function rent_set({ state, onClick, selectedIds }: Props) {
+export default function Rent_set({ state, onClick, selectedIds }: Props) {
   const [show_built, set_show_built] = React.useState('Built');
   const [show_time, set_show_time] = React.useState('1 Month');
   const [parcel_state, set_parcel_state] = React.useState(false);

@@ -18,7 +18,6 @@ import Card from "../components/parcels-card";
 import ParcelList from "../components/parcelList";
 import Tab3 from "../components/tab3";
 import ParcelsTab from "../components/parcels-tab";
-import RentSet from "../components/parcels_rent_set";
 import Popup from "../components/popup";
 import Trafficreport from "../components/trafficreport";
 import Status from "../components/status";

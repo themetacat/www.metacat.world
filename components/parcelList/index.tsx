@@ -631,14 +631,14 @@ export default function ParcelList() {
                 return (
                   <>
                     <ParcelsTab
-                      dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
-                      label={item.label}
-                      state={item.state}
-                      num={item.num}
-                      key={item.label}
-                      onClick={() => {
-                        changeNavTab(item.label, index);
-                      }}
+                      // dataSource={tabState === 'cryptovoxels' ? dataSource : dclDataSource}
+                      // label={item.label}
+                      // state={item.state}
+                      // num={item.num}
+                      // key={item.label}
+                      // onClick={() => {
+                      //   changeNavTab(item.label, index);
+                      // }}
                     />
                   </>
                 );

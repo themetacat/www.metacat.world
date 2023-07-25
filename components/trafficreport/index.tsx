@@ -560,8 +560,8 @@ export default function ParcelList() {
               <div className={cls} />
             </div>
             <div className={cn(style.content)}>
-              <BaseChart>
-                <BaseBar
+              {/* <BaseChart> */}
+                {/* <BaseBar
                   id={'parcel1'}
                   labelText={'DAILY TRAFFIC OF ALL MY PARCELS '}
                   dataHandlder={req_cv_parcel_traffic}
@@ -570,8 +570,8 @@ export default function ParcelList() {
                   textColor={style.nftColor}
                   // token={refreshTK()}
                   token={tokenWearable}
-                ></BaseBar>
-              </BaseChart>
+                ></BaseBar> */}
+              {/* </BaseChart> */}
 
               <BaseChart className=" my-5" type={true}>
                 <PieChart
