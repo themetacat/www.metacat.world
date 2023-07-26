@@ -1533,66 +1533,80 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                                   .tokenToBip(item.id)
                                   .call({});
 
-                                async function testTokenboundClass() {
-                                  const web3s = new Web3(window.ethereum);
-                                  await window.ethereum.request({
-                                    method: "eth_requestAccounts",
-                                  });
-                                  // 获取当前账户地址
-                                  const accounts = web3s.eth
-                                    .getAccounts()
-
-                                    .then((accounts) => {
-                                      const accountAddress = accounts[0];
-                                      // console.log(accountAddress,'accountAddress');
-
-                                      // 在这里进行后续操作
-
-                                      const walletClient: WalletClient =
-                                        createWalletClient({
-                                          chain: sepolia,
-                                          account: web3s.eth.getAccounts()[0],
-                                          transport: window.ethereum
-                                            ? custom(window.ethereum)
-                                            : http(),
-                                        });
-
-                                      const tokenboundClient =
-                                        new TokenboundClient({
+                                  async function testTokenboundClass() {
+                                    const web3s = new Web3(window.ethereum);
+                                    await window.ethereum.request({
+                                      method: "eth_requestAccounts",
+                                    });
+                                    // 获取当前账户地址
+                                    const accounts = web3s.eth
+                                      .getAccounts()
+        
+                                      .then((accounts) => {
+                                        const accountAddress = accounts[0];
+                                        const walletClient: WalletClient =
+                                          createWalletClient({
+                                            chain: sepolia,
+                                            account: web3s.eth.getAccounts()[0],
+                                            transport: window.ethereum
+                                              ? custom(window.ethereum)
+                                              : http(),
+                                          });
+        
+                                        const tokenboundClient = new TokenboundClient({
                                           walletClient,
                                           chainId: 11155111,
                                         });
-                                      // console.log(walletClient,'walletClient');
-                                      if (!tokenboundClient) return;
-
-                                      const tokenboundAccount =
-                                        tokenboundClient.getAccount({
-                                          tokenContract:
-                                            "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
-                                          tokenId: item.id,
-                                        });
-                                      // console.log('getAccount', tokenboundAccount)
-                                      const truncatedAccount =
-                                        `${tokenboundAccount}`.slice(0, 6) +
-                                        "..." +
-                                        `${tokenboundAccount}`.slice(-4);
-
-                                      const tokenboundSpan =
-                                        document.createElement("span");
-                                      tokenboundSpan.style.width = "200px";
-                                      tokenboundSpan.style.overflow = "hidden";
-                                      tokenboundSpan.style.display =
-                                        "inlineBlock";
-                                      tokenboundSpan.style.display =
-                                        "inline-block";
-                                      tokenboundSpan.textContent = `${truncatedAccount}`;
-
-                                      itemContainer.appendChild(tokenboundSpan);
-                                    });
-                                }
-
-                                testTokenboundClass();
-
+                                        // console.log(walletClient,'walletClient');
+                                        if (!tokenboundClient) return;
+        
+                                        const tokenboundAccount =
+                                          tokenboundClient.getAccount({
+                                            tokenContract:
+                                              "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                            tokenId: item.id,
+                                          });
+                                   
+        
+                                        // console.log('getAccount', tokenboundAccount)
+                                        const truncatedAccount =
+                                          `${tokenboundAccount}`.slice(0, 6) +
+                                          "..." +
+                                          `${tokenboundAccount}`.slice(-4);
+        
+            const tokenboundSpan =document.createElement("span");
+            tokenboundSpan.style.width = "200px";
+        
+            tokenboundSpan.style.overflow = "hidden";
+            tokenboundSpan.style.display = "inlineBlock";
+            tokenboundSpan.style.display = "inline-block";
+            tokenboundSpan.textContent = `${truncatedAccount}`;
+            tokenboundSpan.style.width = "100px";
+            tokenboundSpan.style.height = "50px";
+            tokenboundSpan.style.backgroundColor ='#c870d6'
+            tokenboundSpan.addEventListener("click", () => {
+              const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
+              // 在新窗口中打开链接
+              window.open(url);
+            })
+            async function checkAddressType(address) {
+              const code = await web3.eth.getCode(address);
+              if (code === '0x') {
+                console.log('This is a normal address.');
+                pElement.textContent = "Deploy Account";
+              } else {
+                console.log('This is a contract address.');
+                pElement.textContent = 'Deployed';
+              }
+            }// 处理 tokenURI 数据
+            checkAddressType(tokenboundAccount)
+        
+                                        itemContainer.appendChild(tokenboundSpan);
+                                      });
+        
+                                  }
+        
+                                  testTokenboundClass();
                                 tokenToBip.then((result) => {
                                   // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
                                   const tokenToBipPElement =
@@ -1610,13 +1624,69 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                                   document.createElement("div");
                                 const imgElement =
                                   document.createElement("img");
-                                const pElement = document.createElement("p");
+                                  const pElement = document.createElement("button");
+                          pElement.textContent = "Deploy Account";
+                          pElement.style.width = "100px";
+                          pElement.style.height = "50px";
+                          pElement.style.backgroundColor ='#f2f2f2'
                                 // console.log(transformedArray,5555555);
                                 imgElement.setAttribute("src", item.image);
 
                                 imgTokenURIElement.appendChild(imgElement);
                                 imgTokenURIElement.appendChild(pElement);
                                 itemContainer.appendChild(imgTokenURIElement);
+                                // 添加点击事件处理程序
+pElement.addEventListener("click", () => {
+  console.log('在这里处理逻辑');
+  async function createAccount() {
+    await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const web3s = new Web3(window.ethereum);
+  //   console.log(web3s);
+  const accounts = web3s.eth.getAccounts()
+  
+  
+  .then((accounts) => {
+    
+    const accountAddress = accounts[0];
+    // console.log(accountAddress,66666);
+    
+  })
+  
+    const addR: unknown = window.localStorage.getItem('metaMaskAddress')
+  const address = addR as  Account;
+  const walletClient: WalletClient =
+  createWalletClient({
+    chain: sepolia,
+    account: address,
+    transport: window.ethereum
+      ? custom(window.ethereum)
+      : http(),
+  });
+  
+  const tokenboundClient = new TokenboundClient({
+  walletClient,
+  chainId: 11155111,
+  });
+  // console.log(walletClient,'walletClient');
+  if (!tokenboundClient) return;
+  
+  const tokenboundAccount =
+  tokenboundClient.getAccount({
+    tokenContract:
+      "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+    tokenId: item.id,
+  });
+  
+    const createAccount = await tokenboundClient.createAccount({
+      tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
+      tokenId: item.id,
+    })
+  }
+  createAccount()
+  
+  });
                                 eventDataElement.appendChild(itemContainer);
                                 imgElement.style.width = "100px";
                                 imgElement.style.height = "100px";
@@ -1786,7 +1856,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                                     tokenId: item.id,
                                   });
                            
-
+                                 
                                 // console.log('getAccount', tokenboundAccount)
                                 const truncatedAccount =
                                   `${tokenboundAccount}`.slice(0, 6) +
@@ -1808,7 +1878,17 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       // 在新窗口中打开链接
       window.open(url);
     })
-
+    async function checkAddressType(address) {
+      const code = await web3.eth.getCode(address);
+      if (code === '0x') {
+        console.log('This is a normal address.');
+        pElement.textContent = "Deploy Account";
+      } else {
+        console.log('This is a contract address.');
+        pElement.textContent = 'Deployed';
+      }
+    }// 处理 tokenURI 数据
+    checkAddressType(tokenboundAccount)
                                 itemContainer.appendChild(tokenboundSpan);
                               });
 
@@ -1828,13 +1908,13 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                             tokenToBipPElement.style.marginLeft = "20px";
                             itemContainer.appendChild(tokenToBipPElement);
                           });
-
-                          // 处理 tokenURI 数据
+                        
+                          
                           const imgTokenURIElement =
                             document.createElement("div");
                           const imgElement = document.createElement("img");
                           const pElement = document.createElement("button");
-                          pElement.textContent = "Deploy Account";
+                          // pElement.textContent = "Deploy Account";
                           pElement.style.width = "100px";
                           pElement.style.height = "50px";
                           pElement.style.backgroundColor ='#f2f2f2'
@@ -1857,11 +1937,6 @@ const accounts = web3s.eth.getAccounts()
   // console.log(accountAddress,66666);
   
 })
-// console.log(accounts,'accounts');
-//   web3s.eth.net.getId()
-//   .then(networkId => {
-//     console.log(networkId, '2345');
-//   })
 
   const addR: unknown = window.localStorage.getItem('metaMaskAddress')
 const address = addR as  Account;
@@ -1887,6 +1962,15 @@ tokenboundClient.getAccount({
     "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
   tokenId: item.id,
 });
+// async function checkAddressType(address) {
+//   const code = await web3.eth.getCode(address);
+//   if (code === '0x') {
+//     console.log('This is a normal address.');
+//   } else {
+//     console.log('This is a contract address.');
+//   }
+// }// 处理 tokenURI 数据
+// checkAddressType(tokenboundAccount)
 
   const createAccount = await tokenboundClient.createAccount({
     tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
