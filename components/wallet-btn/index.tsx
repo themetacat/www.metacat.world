@@ -1654,10 +1654,17 @@ pElement.addEventListener("click", () => {
     
   })
   
-    const addR: unknown = window.localStorage.getItem('metaMaskAddress')
+  const addR: unknown = window.localStorage.getItem('metaMaskAddress')
+
   const address = addR as  Account;
-  const walletClient: WalletClient =
-  createWalletClient({
+  const contract = new web3.eth.Contract(abi as [], contractAddress);
+  const ownerOfAddr =await contract.methods.ownerOf(item.id).call({});
+  console.log(ownerOfAddr,"你想要的地址");
+  console.log(ownerOfAddr===addR,'结果啊');
+  
+  if(ownerOfAddr===addR){
+    console.log(111111);
+    const walletClient: WalletClient =createWalletClient({
     chain: sepolia,
     account: address,
     transport: window.ethereum
@@ -1678,11 +1685,24 @@ pElement.addEventListener("click", () => {
       "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
     tokenId: item.id,
   });
+  // async function checkAddressType(address) {
+  //   const code = await web3.eth.getCode(address);
+  //   if (code === '0x') {
+  //     console.log('This is a normal address.');
+  //   } else {
+  //     console.log('This is a contract address.');
+  //   }
+  // }// 处理 tokenURI 数据
+  // checkAddressType(tokenboundAccount)
   
     const createAccount = await tokenboundClient.createAccount({
       tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
       tokenId: item.id,
     })
+  }else{
+    alert('No operation permission')
+  }
+  
   }
   createAccount()
   
@@ -1870,8 +1890,8 @@ pElement.addEventListener("click", () => {
     tokenboundSpan.style.display = "inlineBlock";
     tokenboundSpan.style.display = "inline-block";
     tokenboundSpan.textContent = `${truncatedAccount}`;
-    tokenboundSpan.style.width = "100px";
-    tokenboundSpan.style.height = "50px";
+    tokenboundSpan.style.width = "120px";
+    tokenboundSpan.style.height = "30px";
     tokenboundSpan.style.backgroundColor ='#c870d6'
     tokenboundSpan.addEventListener("click", () => {
       const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
@@ -1930,18 +1950,17 @@ async function createAccount() {
 //   console.log(web3s);
 const accounts = web3s.eth.getAccounts()
 
-
-.then((accounts) => {
-  
-  const accountAddress = accounts[0];
-  // console.log(accountAddress,66666);
-  
-})
-
   const addR: unknown = window.localStorage.getItem('metaMaskAddress')
+
 const address = addR as  Account;
-const walletClient: WalletClient =
-createWalletClient({
+const contract = new web3.eth.Contract(abi as [], contractAddress);
+const ownerOfAddr =await contract.methods.ownerOf(item.id).call({});
+console.log(ownerOfAddr,"你想要的地址");
+console.log(ownerOfAddr===addR,'结果啊');
+
+if(ownerOfAddr===addR){
+  console.log(111111);
+  const walletClient: WalletClient =createWalletClient({
   chain: sepolia,
   account: address,
   transport: window.ethereum
@@ -1976,6 +1995,11 @@ tokenboundClient.getAccount({
     tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
     tokenId: item.id,
   })
+}else{
+  alert('No operation permission')
+  toast.error('No operation permission')
+}
+
 }
 createAccount()
 
