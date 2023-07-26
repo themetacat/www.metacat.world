@@ -2054,30 +2054,35 @@ createAccount()
         // 请求用户授权连接 MetaMask
         // console.log(window.ethereum);
 
-        const networkId = await window.ethereum.request({
+        const networkId =  window.ethereum.request({
           method: "net_version",
         });
         console.log(networkId === "11155111", "networkId", networkId);
-        // await window.ethereum.request({ method: "eth_requestAccounts" });
-if(networkId !== "11155111"){
-  handleAccountsChanged()
-  // if (networkId !== "11155111") {
-  //   // 根据需要跳转到引导转换网络的网页或执行其他逻辑
-  //   // window.open("https://example.com");
-  //   // return;
-  //   const chainId = "0x" + (11155111).toString(16);
-  //   console.log(chainId, "chainId");
+        //  window.ethereum.request({ method: "eth_requestAccounts" })
+          console.log(networkId);
+          networkId.then(result => {
+            console.log(result); // 输出: 11155111
+            console.log(result === "11155111", result !== "11155111");
+            console.log(typeof result);
+          
+            if (result !== "11155111") {
+              window.localStorage.clear()
+              // removeToken("atk");
+              // removeToken("rtk");
+              // removeToken("address");
+              // state.setState({
+              //   accessToken: "",
+              //   refreshToken: "",
+              //   profile: { address: null, nickName: null, avatar: null },
+              // });
+          
+              // if (pathname !== "/") {
+              //   window.location.href = "/";
+              // }
+            }
+          });
+       
 
-  //   await window.ethereum.request({
-  //     method: "wallet_switchEthereumChain",
-  //     params: [
-  //       {
-  //         chainId: chainId,
-  //       },
-  //     ],
-  //   });
-  // }
-}
         // 创建 Web3 实例
         const web3 = new Web3(window.ethereum);
 
