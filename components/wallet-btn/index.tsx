@@ -1901,10 +1901,10 @@ pElement.addEventListener("click", () => {
     async function checkAddressType(address) {
       const code = await web3.eth.getCode(address);
       if (code === '0x') {
-        console.log('This is a normal address.');
+        // console.log('This is a normal address.');
         pElement.textContent = "Deploy Account";
       } else {
-        console.log('This is a contract address.');
+        // console.log('This is a contract address.');
         pElement.textContent = 'Deployed';
       }
     }// 处理 tokenURI 数据
@@ -1941,7 +1941,7 @@ pElement.addEventListener("click", () => {
 
 // 添加点击事件处理程序
 pElement.addEventListener("click", () => {
-console.log('在这里处理逻辑');
+// console.log('在这里处理逻辑');
 async function createAccount() {
   await window.ethereum.request({
     method: "eth_requestAccounts",
@@ -1955,11 +1955,10 @@ const accounts = web3s.eth.getAccounts()
 const address = addR as  Account;
 const contract = new web3.eth.Contract(abi as [], contractAddress);
 const ownerOfAddr =await contract.methods.ownerOf(item.id).call({});
-console.log(ownerOfAddr,"你想要的地址");
-console.log(ownerOfAddr===addR,'结果啊');
+// console.log(ownerOfAddr,"你想要的地址");
+// console.log(ownerOfAddr===addR,'结果啊');
 
 if(ownerOfAddr===addR){
-  console.log(111111);
   const walletClient: WalletClient =createWalletClient({
   chain: sepolia,
   account: address,
@@ -2045,19 +2044,40 @@ createAccount()
     }
   };
 
+
+
   useEffect(() => {
     async function fetchBalance() {
       if (typeof window.ethereum !== "undefined") {
+        
+       
         // 请求用户授权连接 MetaMask
         // console.log(window.ethereum);
-        // const networkVersion = window.ethereum.networkVersion;
-        // console.log(networkVersion,668852);
-        // if(networkVersion!=='11155111' ){
-        //   console.log('有没有问题');
-        //   setSwitcherNet(true)
-        // }
-        await window.ethereum.request({ method: "eth_requestAccounts" });
 
+        const networkId = await window.ethereum.request({
+          method: "net_version",
+        });
+        console.log(networkId === "11155111", "networkId", networkId);
+        // await window.ethereum.request({ method: "eth_requestAccounts" });
+if(networkId !== "11155111"){
+  handleAccountsChanged()
+  // if (networkId !== "11155111") {
+  //   // 根据需要跳转到引导转换网络的网页或执行其他逻辑
+  //   // window.open("https://example.com");
+  //   // return;
+  //   const chainId = "0x" + (11155111).toString(16);
+  //   console.log(chainId, "chainId");
+
+  //   await window.ethereum.request({
+  //     method: "wallet_switchEthereumChain",
+  //     params: [
+  //       {
+  //         chainId: chainId,
+  //       },
+  //     ],
+  //   });
+  // }
+}
         // 创建 Web3 实例
         const web3 = new Web3(window.ethereum);
 
