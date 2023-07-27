@@ -2053,34 +2053,34 @@ createAccount()
        
         // 请求用户授权连接 MetaMask
         // console.log(window.ethereum);
+if(profile.address !==null){
+  const networkId =await  window.ethereum.request({
+    method: "net_version",
+  });
+  // console.log(networkId === "11155111", "networkId", networkId);
+ 
+    if (networkId !== "11155111") {
+      removeToken("atk");
+      removeToken("rtk");
+      removeToken("address");
+      // if (w3) {
+      //   w3.resetApp()
+      // }
+      window.localStorage.clear();
 
-        const networkId =  window.ethereum.request({
-          method: "net_version",
-        });
-        console.log(networkId === "11155111", "networkId", networkId);
-        //  window.ethereum.request({ method: "eth_requestAccounts" })
-          console.log(networkId);
-          networkId.then(result => {
-            console.log(result); // 输出: 11155111
-            console.log(result === "11155111", result !== "11155111");
-            console.log(typeof result);
-          
-            if (result !== "11155111") {
-              window.localStorage.clear()
-              // removeToken("atk");
-              // removeToken("rtk");
-              // removeToken("address");
-              // state.setState({
-              //   accessToken: "",
-              //   refreshToken: "",
-              //   profile: { address: null, nickName: null, avatar: null },
-              // });
-          
-              // if (pathname !== "/") {
-              //   window.location.href = "/";
-              // }
-            }
-          });
+      state.setState({
+        accessToken: "",
+        refreshToken: "",
+        profile: { address: null, nickName: null, avatar: null },
+      });
+      if (pathname !== "/") {
+        window.location.href = "/";
+      
+        
+      }
+    
+    }
+}
        
 
         // 创建 Web3 实例
@@ -2110,7 +2110,7 @@ createAccount()
     }
 
     fetchBalance();
-  }, []);
+  }, [profile]);
 
   const handleNumChange = (event) => {
     if (event.target.value < 1) {
