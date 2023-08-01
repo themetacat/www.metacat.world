@@ -1437,23 +1437,23 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
               )
               .on("data", (event) => {
                 setLoading(false);
-                console.log(event);
-                console.log(
-                  tx.events.Transfer.returnValues.to.toLowerCase(),
-                  11111,
-                  event.returnValues.to.toLowerCase()
-                );
+                // console.log(event);
+                // console.log(
+                //   tx.events.Transfer.returnValues.to.toLowerCase(),
+                //   11111,
+                //   event.returnValues.to.toLowerCase()
+                // );
 
-                console.log(
-                  tx.events.Transfer.returnValues.to.toLowerCase() ===
-                    event.returnValues.to.toLowerCase()
-                );
+                // console.log(
+                //   tx.events.Transfer.returnValues.to.toLowerCase() ===
+                //     event.returnValues.to.toLowerCase()
+                // );
                 // console.log(
                 //   tx.transactionHash === event.transactionHash,
                 //   666666666
                 // );
                 if (tx.transactionHash === event.transactionHash) {
-                  toast.success("hhhhhh");
+                  // toast.success("hhhhhh");
                   setLoading(false);
                   alert("仅此一次成功了");
                 }
@@ -1462,22 +1462,16 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                   event.returnValues.to.toLowerCase()
                 ) {
                   const eventDataElement = document.getElementById("eventData");
-                  const tokenToBip = contract.methods
-                    .tokenToBip(event.returnValues.tokenId)
-                    .call({});
+                  // const tokenToBip = contract.methods
+                  //   .tokenToBip(event.returnValues.tokenId)
+                  //   .call({});
                   const tokenURI = contract.methods
                     .tokenURI(event.returnValues.tokenId)
                     .call({});
-                  const nameCon = contract.methods.name().call({});
-                  Promise.all([tokenToBip, tokenURI, nameCon]).then(
-                    ([tokenToBipResult, tokenURIResult, nameConResult]) => {
-                      console.log(
-                        Promise.all,
-                        111,
-                        tokenToBipResult,
-                        tokenURIResult,
-                        nameConResult
-                      );
+                  // const nameCon = contract.methods.name().call({});
+                  Promise.all([ tokenURI]).then(
+                    ([ tokenURIResult]) => {
+                    
 
                       setTimeout(() => {
                         fetch(tokenURIResult)
@@ -1769,8 +1763,9 @@ pElement.addEventListener("click", () => {
         const web3 = new Web3(window.web3.currentProvider);
         const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
         const daiContract = new web3.eth.Contract(abi as [], contractAddress);
-        const mintNums = 1;
-        let existingTokenIds = new Set();
+        // const mintNums = 1;
+        // let existingTokenIds = new Set();
+        const tokenPromises = [];
         daiContract.events
           .Transfer(
             {
@@ -1785,28 +1780,60 @@ pElement.addEventListener("click", () => {
           .on("data", (event) => {
             const tokenId = event.returnValues.tokenId;
           
-            existingTokenIds.add(tokenId);
-          
+            // existingTokenIds.add(tokenId);
+           // 添加每个 tokenId 的 Promise 到数组中
+//     tokenPromises.push(
+//       daiContract.methods.tokenToBip(tokenId).call({}),
+//       daiContract.methods.tokenURI(tokenId).call({})
+//     );
+//     // 添加 totalSupply 和 name 的 Promise 到数组中
+// tokenPromises.push(
+//   daiContract.methods.totalSupply().call({}),
+//   daiContract.methods.name().call({})
+// )
+
+// Promise.all(tokenPromises)
+//   .then(results => {
+//     const tokenToBipResults = results.slice(0, existingTokenIds.size * 2);
+//     const tokenURIs = results.slice(existingTokenIds.size * 2);
+
+//     // 获取 totalSupply 和 name 的结果
+//     const totalSupplyResult = results[results.length - 2];
+//     const nameResult = results[results.length - 1];
+
+//     // 处理获取到的结果
+//     console.log("tokenToBip results:", tokenToBipResults);
+//     console.log("tokenURIs:", tokenURIs);
+//     console.log("totalSupply:", totalSupplyResult);
+//     console.log("name:", nameResult);
+//   })
+//   .catch(error => {
+//     // 处理错误
+//     console.log("Error:", error);
+//   });
+//   console.log(tokenPromises,'tokenPromises');
+  
+//   return
             // console.log(event);
             const totalSupply = daiContract.methods.totalSupply().call({});
-            const name = daiContract.methods.name().call({});
+            // const name = daiContract.methods.name().call({});
             totalSupply.then((result) => {
               setMintNum(result);
             });
 
-            name.then((result) => {
-              console.log(result, "resultresult");
-            });
+            // name.then((result) => {
+            //   console.log(result, "resultresult");
+            // });
             const eventDataElement = document.getElementById("eventData");
-            const tokenToBip = daiContract.methods
-              .tokenToBip(event.returnValues.tokenId)
-              .call({});
+            // const tokenToBip = daiContract.methods
+            //   .tokenToBip(event.returnValues.tokenId)
+            //   .call({});
             const tokenURI = daiContract.methods
               .tokenURI(event.returnValues.tokenId)
               .call({});
-            const nameCon = daiContract.methods.name().call({});
-            Promise.all([tokenToBip, tokenURI, nameCon])
-              .then(([tokenToBipResult, tokenURIResult, nameConResult]) => {
+            // const nameCon = daiContract.methods.name().call({});
+            Promise.all([ tokenURI])
+              .then(([ tokenURIResult]) => {
                 setTimeout(() => {
                   fetch(tokenURIResult)
                     .then((response) => response.json())
@@ -1919,19 +1946,16 @@ pElement.addEventListener("click", () => {
                           tokenToBip.then((result) => {
                             // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
                             // console.log(result, 'tokenToBip result');
-                            const tokenToBipPElement =
-                              document.createElement("span");
+                            const tokenToBipPElement =document.createElement("span");
                             tokenToBipPElement.style.display = "flex";
-                            tokenToBipPElement.style.justifyContent =
-                              "space-between";
+                            tokenToBipPElement.style.justifyContent ="space-between";
                             tokenToBipPElement.textContent = `${result}`;
                             tokenToBipPElement.style.marginLeft = "20px";
                             itemContainer.appendChild(tokenToBipPElement);
                           });
                         
                           
-                          const imgTokenURIElement =
-                            document.createElement("div");
+                          const imgTokenURIElement =document.createElement("div");
                           const imgElement = document.createElement("img");
                           const pElement = document.createElement("button");
                           // pElement.textContent = "Deploy Account";

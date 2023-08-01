@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@alch/alchemy-web3": "^1.4.7",
     "@tokenbound/sdk": "^0.3.2",
     "@types/node": "18.14.4",
     "@types/react": "18.0.28",
