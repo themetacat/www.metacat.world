@@ -5,6 +5,7 @@ export default function index() {
   return (
     <>
         <HomePage/>
+        <div>222</div>
     </>
   )
 }
