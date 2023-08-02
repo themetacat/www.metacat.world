@@ -533,9 +533,9 @@ export default function HomePage({ onClickHandler }: Props) {
                 style.walletItem
               )}
               key={idx}
-              onClick={() => {
-                clickItem(item);
-              }}
+              // onClick={() => {
+              //   clickItem(item);
+              // }}
             >
               <div
                 className={cn(

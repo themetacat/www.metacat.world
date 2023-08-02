@@ -33,7 +33,7 @@ interface IProfileData {
 export default function TopNav() {
     const router = useRouter();
     const mintBag = ()=>{
-router.replace('/assets')
+router.replace('/assets/matic')
     }
   return (
     <>
