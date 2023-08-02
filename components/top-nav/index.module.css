@@ -1,0 +1,31 @@
+.homeContent{
+    display: flex;
+    position: relative;
+ }
+ .container{
+    margin:0 auto;
+    margin-top: 150px;
+    text-align: center;
+    width: 1200px;
+   }
+   .container p:first-child{
+    color: #fff;
+    font-size: 90px;
+   }
+   .PBox{
+    font-size: 30px;
+    color: #a3a1a2 !important;
+   }
+   .bttBox{
+    width: 200px;
+    text-align: center;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 30px;
+    margin: auto;
+    color: #a98fd8;
+    margin-top: 50px !important;
+    border: 2px solid #563d8a;
+    background-color: #170820;
+  
+   }

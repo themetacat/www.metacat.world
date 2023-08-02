@@ -13,7 +13,8 @@ import { SITE_NAME, META_DESCRIPTION } from "../common/const";
 import style from "./index.module.css";
 import DclCard from "../components/parcels-dcl-card";
 import store from "../store/profile";
-import WalletBtn from "../components/wallet-btn";
+import TopNav from "../components/top-nav";
+import HomePage from "../components/home-page";
 import Card from "../components/parcels-card";
 import ParcelList from "../components/parcelList";
 import Tab3 from "../components/tab3";
@@ -289,7 +290,8 @@ useEffect(()=>{
 
   return (
     <Page meta={meta} className={cn("", style.page)}>
-      <WalletBtn />
+      {/* <WalletBtn /> */}
+      <TopNav/>
 
       {/* <div className={cn("", style.parselist)}>
         <div className={cn(style.tableList)}>
