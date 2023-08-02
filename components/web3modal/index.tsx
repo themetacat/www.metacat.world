@@ -121,6 +121,7 @@ export default function Web3ModalProvider({
   const getNetwork = useCallback(
     (cid = chainId) => getChainData(cid)?.network,
     [chainId]
+    
   );
 
   const resetApp = async () => {
@@ -179,6 +180,7 @@ export default function Web3ModalProvider({
     // });
   };
 
+
   const onConnect = React.useCallback(async () => {
     if (!window.web3 || !window.ethereum || !window.ethereum.isMetaMask) {
       return;
@@ -188,7 +190,6 @@ export default function Web3ModalProvider({
       const provider = await web3ModalRef.current?.connect();
 
       // const provider =  web3ModalRef.current;
-      console.log(provider);
 
       await subscribeProvider(provider);
 
@@ -222,11 +223,14 @@ export default function Web3ModalProvider({
   }, [getNetwork, subscribeProvider]);
 
   React.useEffect(() => {
+    console.log(getNetwork,2222);
+    
     // eslint-disable-next-line prefer-object-spread
     const params = Object.assign(
       {
         disableInjectedProvider: false,
       },
+      
       {
         network: getNetwork(), // optional
         cacheProvider: true, // optional

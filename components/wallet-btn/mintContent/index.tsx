@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import cn from "classnames";
 import style from "./index.module.css";
 
-export default function index() {
+export default function WalletBtn() {
     const [num,setNum] = useState(1)
     const lower= ()=>{
         setNum(num - 1);
