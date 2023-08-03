@@ -23,6 +23,7 @@
     "leaflet": "^1.7.1",
     "next-intl": "^1.4.4",
     "react-hot-toast": "^2.2.0",
+    "react-router-dom": "^6.14.2",
     "typescript": "^5.1.6",
     "viem": "^1.2.13",
     "web3": "^1.7.1"

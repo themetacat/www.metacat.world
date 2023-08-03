@@ -1,12 +1,17 @@
 .page{
     width: 100%;
     height: 100vh;
+    background-color: rgba(0,0,0,0.8);
 }
 .container{
     width: 100vw;
-    background-color: rgba(0,0,0,0.8);
-
-    
+    /* height: 100vh; */
+    /* background-color: rgba(0,0,0,0.8); */
+}
+.mintBtn{
+  width: 200px;
+  height: 50px;
+  background-color: bisque;
 }
 .titleBox{
     width: 1200px;
@@ -20,7 +25,7 @@
     width: 1200px;
     margin: auto;
     display: grid;
-    padding-top: 20px;
+    margin-top: 20px;
     /* height: 300px; */
     gap: 1.25rem;
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -28,34 +33,17 @@
   }
   .boxContent{
     width: 270px;
-    height: 340px;
+    height: 370px;
     background-color: black;
     border-radius: 10px;
     color: #fff;
-    padding: 15px;
-    position: relative;
-  }
-  .worldCon{
-    position: absolute;
-    top: 15px;
-    left: 13px;
-    color: #fff;
-    font-size: 12px;
-    font-family: PingFang SC;
-    font-weight: 500;
-    padding: 3px 20px 3px 10px;
-    background: rgba(0, 0, 0, 1);
-    opacity: 50%;
-    border-radius: 8px 0px 8px 0px;
-    text-align: center;
-    line-height: 30px;
   }
   .boxContent img{
     border-radius: 10px 10px 0px 0px;
   }
   .textCon{
-margin-top: 10px;
-}
+    padding: 15px 12px ;
+  }
   .idP1{
 font-size: 16px;
 font-weight: 600;
@@ -69,20 +57,12 @@ font-weight: 600;
     margin-top: 5px;
     color: #4d4d50;
   }
-.cont{
-    margin: 0 auto;
-    width: 1200px;
-    color: #fff;
-}
-  .idNum{
-
-  }
-  .TbaAdd{
-    margin-top: 10px;
-  }
-  .totalNum{
-    margin-top: 20px;
-    font-size: 20px;
-    font-family: 700;
-    color: #9d9d9e;
+  .nothingInfo{
+    width: 100vw;
+    text-align: center;
+    color: #515151;
+    font-size: 26px;
+font-weight: 600;
+height: 30px;
+line-height: 300px;
   }

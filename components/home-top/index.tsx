@@ -101,14 +101,8 @@ interface IProfileData {
     //   type: "operation",
     // },
     {
-      label: "Bags",
-      // icon: "/images/v5/Signout.png",
-      value: "/bags",
-      type: "operation",
-    },
-    {
       label: "Disconnect",
-      // icon: "/images/v5/Signout.png",
+      icon: "/images/v5/Signout.png",
       value: "resetApp",
       type: "operation",
     },
@@ -504,10 +498,10 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                     }}
                   >
                     <div className="flex items-center justify-around">
-                      {/* <img
+                      <img
                         src={item.icon}
                         className={cn("mr-2", style.operation)}
-                      ></img> */}
+                      ></img>
                       <span>{item.label}</span>
                     </div>
                     <img
@@ -517,12 +511,12 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                   </div>
                 ) : (
                   <Link href={item.value}>
-                    <div className={cn('flex items-center justify-around',style.wordCon)}>
+                    <div className={style.wordCon}>
                       <div>
-                        {/* <img
+                        <img
                           src={item.icon}
                           className={cn("mr-2", style.operation)}
-                        ></img> */}
+                        ></img>
                         <span>{item.label}</span>
                       </div>
                       <img
@@ -617,10 +611,10 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 }}
               >
                 <div className="flex items-center justify-around">
-                  {/* <img
+                  <img
                     src={item.icon}
                     className={cn("mr-2", style.operation)}
-                  ></img> */}
+                  ></img>
                   <span>{item.label}</span>
                 </div>
                 <img
@@ -631,11 +625,11 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             ) : (
               <Link href={item.value}>
                 <div className={style.wordCon}>
-                <div className="flex items-center justify-around">
-                    {/* <img
+                  <div>
+                    <img
                       src={item.icon}
                       className={cn("mr-2", style.operation)}
-                    ></img> */}
+                    ></img>
                     <span>{item.label}</span>
                   </div>
                   <img
@@ -778,10 +772,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
         }
       }, [loginState]);
       const mintBag = ()=>{
-        console.log(11111,profile.address);
-        if(!profile.address){
-          connectToChain();
-        }
+        console.log(11111);
         
       }
   return (
@@ -806,11 +797,11 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           {/* <ul className={cn("list-none mt-2 z-20")}></ul> */}
           {showMenu && renderContent}
         </div>
-        {/* <div className={style.container}>
+        <div className={style.container}>
           <p>Pack Your Wearable.</p>
           <p  className={style.PBox}>UseERC-6551to package and sell your Wearables.</p>
           <div className={style.bttBox} onClick={mintBag}>Mint Bag</div>
-        </div> */}
+        </div>
     </div>
     </>
   )

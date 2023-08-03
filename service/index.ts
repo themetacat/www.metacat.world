@@ -10,6 +10,26 @@ export const getCVEventList = async (cursor: number, count: number) => {
   return json;
 };
 
+export const getBagsDetail = async () => {
+  const search = qs.stringify({  }, { addQueryPrefix: true });
+  const url = `/api/bags_detail_list`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
+export const getBagsList = async () => {
+  const search = qs.stringify({  }, { addQueryPrefix: true });
+  const url = `/api/bags_list`;
+
+  const res = await fetch(url);
+  const json = await res.json();
+
+  return json;
+};
+
 export const getCVParcelList = async (page: number, count: number, query: string, type: string) => {
   const search = qs.stringify({ page, count, query, type }, { addQueryPrefix: true });
   const url = `/api/cv-parcel-list${search}`;

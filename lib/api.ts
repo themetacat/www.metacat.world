@@ -290,6 +290,26 @@ class API {
     return json;
   }
 
+  public async getBagsDetail(): Promise<any> {
+    const search = qs.stringify({ }, { addQueryPrefix: true });
+    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=0x79EF3DA763754387F06022Cf66c2668854B3389B&pageSize=48&withMetadata=true`;
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getBagsList(): Promise<any> {
+    const search = qs.stringify({ }, { addQueryPrefix: true });
+    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=0x79EF3DA763754387F06022Cf66c2668854B3389B&contractAddresses[]=0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0&withMetadata=true&pageSize=48`;
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
   public async getDCLEventList(cursor: number, count: number): Promise<any> {
     const search = qs.stringify({ count, cursor }, { addQueryPrefix: true });
     const url = `${this.url}/get_dcl_event_list${search}`;
