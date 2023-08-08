@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, forwardRef,useState,useRef,useImperativeHandle} from "react";
 import cn from "classnames";
 import style from "./index.module.css";
+import Status from "../status";
 import Rekv from "rekv";
 import Link from "next/link";
 import Web3 from "web3";
 import { toast } from "react-hot-toast";
 import { useWalletProvider } from "../web3modal";
+import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
 import { Web3AuthCore } from "@web3auth/core";
 import RPC from "../web3RPC";
 import Router, { useRouter } from "next/router";
@@ -101,8 +103,14 @@ interface IProfileData {
     //   type: "operation",
     // },
     {
+      label: "Bags",
+      // icon: "/images/v5/Signout.png",
+      value: "/bags",
+      type: "operation",
+    },
+    {
       label: "Disconnect",
-      icon: "/images/v5/Signout.png",
+      // icon: "/images/v5/Signout.png",
       value: "resetApp",
       type: "operation",
     },
@@ -117,14 +125,19 @@ interface IProfileData {
 export default function HomePage({ onClickHandler }: Props,ref) {
     const router = useRouter();
     const funRef = useRef()
+    const [num, setNum] = useState(1);
     const { pathname } = router;
     const [showWall, setShowWall] = React.useState(null);
     const [loginState, setLoginState] = React.useState("web3Auth");
     const [showMenu, setShowMenu] = React.useState(false);
+    const [balanceNum, setBalanceNum] = useState(false);
+    const [switcherNet, setSwitcherNet] = useState(false);
     const [loading, setLoading] = React.useState(false);
     const [web3auth, setWeb3auth] = React.useState<Web3AuthCore | null>(null);
     const [providerWeb3auth, setProviderWeb3auth] =
     React.useState<SafeEventEmitterProvider | null>(null);
+    const [mintNum, setMintNum] = React.useState(null);
+    const [totalNum, setTotalNum] = React.useState(null);
     const [web3AuthAddress, setWeb3AuthAddress] = React.useState(null);
     const [idTokenWeb3, setIdTokenWeb3] = React.useState(null);
     const profileData = state.useState(
@@ -235,17 +248,17 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           const networkId = await window.ethereum.request({
             method: "net_version",
           });
-          console.log(networkId === "11155111", "networkId", networkId);
+          console.log(networkId === "80001", "networkId", networkId);
           // 判断当前网络是否为 Ethereum Sepolia 网络
           // await  window.ethereum.request({
           //   method: 'wallet_switchEthereumChain',
-          //   params: [{ chainId: '11155111' }],
+          //   params: [{ chainId: '80001' }],
           // });
-          if (networkId !== "11155111") {
+          if (networkId !== "80001") {
             // 根据需要跳转到引导转换网络的网页或执行其他逻辑
             // window.open("https://example.com");
             // return;
-            const chainId = "0x" + (11155111).toString(16);
+            const chainId = "0x" + (80001).toString(16);
             console.log(chainId, "chainId");
     
             await window.ethereum.request({
@@ -498,10 +511,10 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                     }}
                   >
                     <div className="flex items-center justify-around">
-                      <img
+                      {/* <img
                         src={item.icon}
                         className={cn("mr-2", style.operation)}
-                      ></img>
+                      ></img> */}
                       <span>{item.label}</span>
                     </div>
                     <img
@@ -511,12 +524,12 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                   </div>
                 ) : (
                   <Link href={item.value}>
-                    <div className={style.wordCon}>
+                    <div className={cn('flex items-center justify-around',style.wordCon)}>
                       <div>
-                        <img
+                        {/* <img
                           src={item.icon}
                           className={cn("mr-2", style.operation)}
-                        ></img>
+                        ></img> */}
                         <span>{item.label}</span>
                       </div>
                       <img
@@ -603,43 +616,43 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             )}
             key={idx}
           >
-            {item.value === "resetApp" ? (
-              <div
-                className={style.wordCon}
-                onClick={() => {
-                  clickOperationItem(item);
-                }}
-              >
-                <div className="flex items-center justify-around">
-                  <img
-                    src={item.icon}
-                    className={cn("mr-2", style.operation)}
-                  ></img>
-                  <span>{item.label}</span>
-                </div>
-                <img
-                  src="/images/v5/arrow-simple.png"
-                  className={style.activeOperation}
-                ></img>
-              </div>
-            ) : (
-              <Link href={item.value}>
-                <div className={style.wordCon}>
-                  <div>
+         {item.value === "resetApp" ? (
+                  <div
+                    className={style.wordCon}
+                    onClick={() => {
+                      clickOperationItem(item);
+                    }}
+                  >
+                    <div className="flex items-center justify-around">
+                      {/* <img
+                        src={item.icon}
+                        className={cn("mr-2", style.operation)}
+                      ></img> */}
+                      <span>{item.label}</span>
+                    </div>
                     <img
-                      src={item.icon}
-                      className={cn("mr-2", style.operation)}
+                      src="/images/v5/arrow-simple.png"
+                      className={style.activeOperation}
                     ></img>
-                    <span>{item.label}</span>
                   </div>
-                  <img
-                    src="/images/v5/arrow-simple.png"
-                    className={style.activeOperation}
-                  ></img>
-                </div>
-                {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
-              </Link>
-            )}
+                ) : (
+                  <Link href={item.value}>
+                    <div className={cn('flex items-center justify-around',style.wordCon)}>
+                      <div>
+                        {/* <img
+                          src={item.icon}
+                          className={cn("mr-2", style.operation)}
+                        ></img> */}
+                        <span>{item.label}</span>
+                      </div>
+                      <img
+                        src="/images/v5/arrow-simple.png"
+                        className={style.activeOperation}
+                      ></img>
+                    </div>
+                    {/* <div className="grid">{provider ? loggedInView : unloggedInView}</div> */}
+                  </Link>
+                )}
           </li>
         );
       });
@@ -771,10 +784,285 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
         }
       }, [loginState]);
-      const mintBag = ()=>{
-        console.log(11111);
+      const abi = [{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getInfo","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"send","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+      const mintBag =async ()=>{
+        try {
+          if (typeof window.ethereum !== "undefined") {
+            // 请求用户授权连接 MetaMask
+            const networkVersion = window.ethereum.networkVersion;
+            if (networkVersion !== "80001") {
+              console.log("有没有问题");
+              connectToChain();
+            } else {
+              setSwitcherNet(false);
+              setLoading(true)
+
+              await window.ethereum.request({ method: "eth_requestAccounts" });
+          console.log(window.ethereum.request({ method: "eth_requestAccounts" }));
+          
+              // 创建 Web3 实例
+              const web3Con = new Web3(window.ethereum);
+
+              // 获取当前账户地址
+              const accounts = await web3Con.eth.getAccounts();
+              const accountAddress = accounts[0];
+    
+              // 获取用户钱包中的 ETH 余额
+              // const balance = await web3Con.eth.getBalance(accountAddress);
+              // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
+              // const ethBalance = Number(web3Con.utils.fromWei(balance, "ether"));
+              console.log(accountAddress, "accountAddres1111s");
+            
+    
+              // 对比 ETH 余额和数量与单价的乘积
+              // if (ethBalance >= price * quantity) {
+                // 执行 mint 操作
+                // your mint logic here
+                console.log("Minting...");
+                console.log(mintNum, "mintNummintNummintNum");
+    
+                if (!profile?.address) {
+                  connectToChain();
+                }
+                toast.success("Successful");
+                setLoading(true);
+                const web3a = new Web3(Web3.givenProvider);
+                const contractAddress =
+                  "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0";
+                      
+                // const contractAddress = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0";
+                const contract = new web3a.eth.Contract(abi as [], contractAddress);
+                console.log(contract.methods.ownerOf(1).call({}),3333);
+                // const mintNums = num; // 在这里定义要mint的数量
+                setTimeout(() => {
+                  setLoading(false);
+                  setTimeout(() => {
+                    setLoading(true);
+                  }, 3000);
+                }, 5000);
+    
+                const tx = await contract.methods
+                  .mint(profile.address)
+                  .send({
+                    from: profile.address,
+                    // value: web3a.utils.toWei(`${0.006 * 1}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
+                  })
+                  .on("receipt", (receipt) => {
+                    // 获取交易收据
+                    console.log("收据: ", receipt);
+                    router.replace('/bags')
+                    // 在这里执行交易成功后的逻辑操作
+                  })
+                  .catch((error) => {
+                    console.log('错误错误错误！！！');
+                    
+                    if (error.code === 4001) {
+                      setLoading(false);
+                    }
+                  })
+                  .then((success) => {
+                    // if (success.code === 0x1||1) {
+                    setLoading(false);
+                    console.log("成功");
+                 
+                    // }
+                  });
+    
+                setLoading(false);
+                // contract.events
+                //   .Transfer(
+                //     { filter: {}, fromBlock: tx.blockNumber, toBlock: "latest" },
+                //     function (params) {}
+                //   )
+                //   .on("data", (event) => {
+                //     setLoading(false);
+                //     console.log(contract,55555);
+                    
+                //     const totalSupply = contract.methods.totalSupply().call({});
+                //     // const name = daiContract.methods.name().call({});
+                //     totalSupply.then((result) => {
+                //       setMintNum(result);
+                //     });
+                //     if (tx.transactionHash === event.transactionHash) {
+                //       // toast.success("hhhhhh");
+                //       setLoading(false);
+                //       alert("仅此一次成功了");
+                //     }
+                //     setLoading(false);
+                //   })
+    
+                //   .on("error", (error) => {
+                //     console.error(error);
+                //   });
+                if (tx) {
+                  toast.success("Successful");
+                }
+                setLoading(false);
+                console.log("tx:", tx);
+                // mint 成功, 进行后续操作
+              // } else {
+              //   setBalanceNum(true);
+              //   console.log("Insufficient ETH balance");
+              // }
+            }
+          }
+        } catch (error) {
+          toast.error("something went wrong");
+        }
         
       }
+      const handleAccountsChanged = () => {
+        state.setState({
+          accessToken: "",
+          refreshToken: "",
+          profile: { address: null, nickName: null, avatar: null },
+        });
+    
+        if (pathname !== "/") {
+          window.location.href = "/";
+        }
+      };
+
+      useEffect(() => {
+        async function fetchBalance() {
+          if (typeof window.ethereum !== "undefined") {
+            
+           
+            // 请求用户授权连接 MetaMask
+            // console.log(window.ethereum);
+    if(profile.address !==null){
+      const networkId =await  window.ethereum.request({
+        method: "net_version",
+      });
+      // console.log(networkId === "11155111", "networkId", networkId);
+     
+        if (networkId !== "80001") {
+          removeToken("atk");
+          removeToken("rtk");
+          removeToken("address");
+          // if (w3) {
+          //   w3.resetApp()
+          // }
+          window.localStorage.clear();
+    
+          state.setState({
+            accessToken: "",
+            refreshToken: "",
+            profile: { address: null, nickName: null, avatar: null },
+          });
+          if (pathname !== "/") {
+            window.location.href = "/";
+          
+            
+          }
+        
+        }
+    }
+           
+    
+            // 创建 Web3 实例
+            const web3 = new Web3(window.ethereum);
+    
+            // 获取当前账户地址
+            const accounts = await web3.eth.getAccounts();
+            const accountAddress = accounts[0];
+            console.log(accountAddress, "5555555ddress");
+    
+            if (window.ethereum) {
+              window.ethereum.on("accountsChanged", handleAccountsChanged);
+            }
+    
+            // 获取用户钱包中的 ETH 余额
+            const balance = await web3.eth.getBalance(accountAddress);
+    
+            // 将 balance 单位由 wei 转换为以太币，并设置为保留三位小数
+            const ethBalance = Number(web3.utils.fromWei(balance, "ether")).toFixed(
+              3
+            );
+    
+            // setEthBalance(ethBalance);
+          } else {
+            console.log("MetaMask is not installed");
+          }
+        }
+    
+        fetchBalance();
+      }, [profile]);
+
+      useEffect(()=>{
+       if(window.ethereum){
+         
+    // 创建 Web3 实例
+      const web3Con = new Web3('https://polygon-mumbai.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e');
+      // const web3Con = new Web3(window.web3.currentProvider);
+            
+      const contractAddressCon = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0";
+      const daiContract = new web3Con.eth.Contract(abi as [], contractAddressCon);
+        console.log(daiContract.methods.getInfo().call({}));
+      const totalSupply = daiContract.methods.getInfo().call({});
+      // const name = daiContract.methods.name().call({});
+        console.log(totalSupply,66665);
+
+      totalSupply.then((result) => { 
+      console.log(result,'resultresultresult');
+
+      setMintNum(result[1]);
+      setTotalNum(result[0])
+       })
+      }
+      }, []);
+
+
+      const clientId =
+      "BMZn0DvGmTwd5z8riV1hiTES5s0IUai_BXKuvhiCJxRQeVFmY6pGAFnP4ZLp8wYa69jh1oVhDxXpGm8DH4_etQs";
+
+      useEffect(() => {
+        const init = async () => {
+          try {
+            const coreWeb3auth = new Web3AuthCore({
+              clientId,
+              chainConfig: {
+                chainNamespace: CHAIN_NAMESPACES.EIP155,
+                chainId: "0xaa36a7",
+                rpcTarget:
+                  "https://polygon-mumbai.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
+              },
+            });
+    
+            setWeb3auth(coreWeb3auth);
+            const torusWalletAdapter = new TorusWalletAdapter({
+              adapterSettings: {
+                buttonSize: 0,
+              },
+              clientId,
+              initParams: {
+                whiteLabel: {
+                  theme: {
+                    isDark: window.localStorage.getItem("darkLight") === "false",
+                    colors: { primary: "#00a8ff" },
+                  },
+                  logoDark: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+                  logoLight: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
+                  defaultLanguage: "en",
+                },
+              },
+              sessionTime: 3600 * 24 * 7, // 1 hour in seconds
+            });
+    
+            coreWeb3auth.configureAdapter(torusWalletAdapter);
+    
+            await coreWeb3auth.init();
+    
+            if (coreWeb3auth.provider) {
+              setProviderWeb3auth(coreWeb3auth.provider);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        init();
+      }, []);
+
   return (
     <>
     <div className={cn('',style.homeContent)}>
@@ -797,12 +1085,17 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           {/* <ul className={cn("list-none mt-2 z-20")}></ul> */}
           {showMenu && renderContent}
         </div>
+       
         <div className={style.container}>
           <p>Pack Your Wearable.</p>
           <p  className={style.PBox}>UseERC-6551to package and sell your Wearables.</p>
-          <div className={style.bttBox} onClick={mintBag}>Mint Bag</div>
+          <div className={style.bttBox} onClick={mintBag}>Mint Bag
+          <p className={cn(style.supply)}>{mintNum}/{totalNum}</p>
+          </div>
         </div>
+       
     </div>
+    {loading === true ? <div className={style.loadingSet}><Status mini={true} status="loading" /></div> : null}
     </>
   )
 }

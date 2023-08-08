@@ -10,9 +10,10 @@ export const getCVEventList = async (cursor: number, count: number) => {
   return json;
 };
 
-export const getBagsDetail = async () => {
-  const search = qs.stringify({  }, { addQueryPrefix: true });
-  const url = `/api/bags_detail_list`;
+export const getBagsDetail = async (TBAAddress) => {
+  const search = qs.stringify({ TBAAddress }, { addQueryPrefix: true });
+  
+  const url = `/api/bags_detail_list${search}`;
 
   const res = await fetch(url);
   const json = await res.json();
@@ -20,9 +21,20 @@ export const getBagsDetail = async () => {
   return json;
 };
 
-export const getBagsList = async () => {
-  const search = qs.stringify({  }, { addQueryPrefix: true });
-  const url = `/api/bags_list`;
+export const getBagsNum = async (tokenId) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/bags_num_list${search}`;
+
+  const res = await fetch(url);
+  
+  const json = await res.json();
+
+  return json;
+};
+
+export const getBagsList = async (address) => {
+  const search = qs.stringify({ address }, { addQueryPrefix: true });
+  const url = `/api/bags_list${search}`;
 
   const res = await fetch(url);
   const json = await res.json();

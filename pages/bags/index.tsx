@@ -4,7 +4,7 @@ import Page from "../../components/page";
 import { TokenboundClient } from "@tokenbound/sdk";
 import { SITE_NAME, META_DESCRIPTION } from "../../common/const";
 import { createWalletClient, http, custom, WalletClient, Account } from "viem";
-import { sepolia } from "viem/chains";
+import { polygonMumbai } from "viem/chains";
 import cn from "classnames";
 import style from "./index.module.css";
 import Router, { useRouter } from "next/router";
@@ -19,28 +19,33 @@ export default function Bags() {
   const [dataInfoList, setDataInfoList] = React.useState([] || null);
   const [dataInfoId, setDataInfoId] = React.useState(null);
   const [truncatedAdd, setTruncatedAdd] = React.useState([]);
+  const [truncatedAddress, setTruncatedAddress] = useState(null);
+  const textRef = React.useRef(null);
   const meta = {
     title: ` ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
 
-  const detailClick = () => {
-    // const dynamicValue = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"
-    // router.replace(`/assets/matic?value=${dynamicValue}`);
+  const detailClick = (name) => {
+    const dynamicValue = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"
+    const tokenID = parseInt(name, 16);
+    // console.log(tokenID);
+    router.replace(`/assets/matic?value=${dynamicValue}&tokenId=${tokenID}`);
   };
   const handleMint = useCallback(() => {
     const getData = async () => {
       try {
-        const response = await getBagsList(); // 假设 getBagsList 是一个异步函数
-        console.log(response, 333);
+        const addr = window.localStorage.getItem('metaMaskAddress')
+        const response = await getBagsList(addr); // 假设 getBagsList 是一个异步函数
+        // console.log(response, 333);
         setDataInfo(response.ownedNfts);
         if(response.ownedNfts.length===0){
           setDataInfoList(null)
         }
-        console.log(
-          response.ownedNfts.id.tokenId,
-          "response.ownedNfts.id.tokenId"
-        );
+        // console.log(
+        //   response.ownedNfts.id.tokenId,
+        //   "response.ownedNfts.id.tokenId"
+        // );
 
         // console.log(dataInfo, 666);
       } catch (error) {
@@ -423,25 +428,26 @@ export default function Bags() {
 
   useEffect(() => {
     handleMint();
+    handleCopyClick()
   }, []);
   useEffect(() => {
-    console.log(dataInfo, 518888);
+    // console.log(dataInfo, 518888);
     
-    console.log(dataInfoId, "dataInfoId");
+    // console.log(dataInfoId, "dataInfoId");
     const fetchData = async () => {
       const web3s = new Web3(window.ethereum);
       for (const item of dataInfo) {
         const a = parseInt(item.id.tokenId, 16);
-  
+  setDataInfoId(a)
         const accounts = await web3s.eth.getAccounts();
         const walletClient: WalletClient = createWalletClient({
-          chain: sepolia,
+          chain: polygonMumbai,
           account: accounts[0] as `0x${string}`,
           transport: window.ethereum ? custom(window.ethereum) : http(),
         });
         const tokenboundClient = new TokenboundClient({
           walletClient,
-          chainId: 11155111,
+          chainId: 80001,
         });
   
         if (!tokenboundClient) return;
@@ -465,7 +471,14 @@ export default function Bags() {
   
    
     fetchData();
-  }, [dataInfo, dataInfoId]);
+  }, [dataInfo]);
+
+
+  const handleCopyClick =()=>{
+    console.log('复制');
+    
+  }
+  
 
   return (
     <Page meta={meta} className={cn("", style.page)}>
@@ -475,7 +488,6 @@ export default function Bags() {
         {dataInfoList === null ? (
           <>
           <p className={style.nothingInfo}>You do not own any bags</p>
-          {/* <div className={style.mintBtn}>Mint</div> */}
           </>
         ) : (
           <div
@@ -486,18 +498,21 @@ export default function Bags() {
             id="eventData"
           >
             {dataInfo.map((item,index) => {
+              // console.log(item,66666);
+              
                 const truncatedAddress = truncatedAdd[index]; // 获取与当前项目对应的truncatedAdd值
               return (
                 <div
                   className={style.boxContent}
-                  onClick={detailClick}
+                  onClick={()=>{detailClick(item.id.tokenId)}}
                   key={index}
                 >
                   <img src="/images/untitled.png" alt="" />
                   <div className={style.textCon}>
                     <p className={style.idP1}>{item.metadata.name}</p>
                     <p className={style.idP2}>{item.metadata.description}</p>
-                    <p className={style.idP3}>{truncatedAddress}</p>
+                    <div onClick={handleCopyClick}>
+                      <p className={style.idP3} ref={textRef} data-clipboard-text={truncatedAddress}>{truncatedAddress}</p></div>
                   </div>
                 </div>
               );

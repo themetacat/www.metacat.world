@@ -2,8 +2,8 @@
 import api from '../../lib/api';
 
 export default async (req, res) => {
-//   const { cursor, count } = req.query;
-  const data = await api.getBagsList();
+  const { cursor, address,count } = req.query;
+  const data = await api.getBagsList(address);
 
   res.statusCode = 200;
 

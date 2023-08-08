@@ -3,10 +3,14 @@
     height: 100vh;
 }
 .container{
+  height: 100vh;
     width: 100vw;
     background-color: rgba(0,0,0,0.8);
 
     
+}
+.supply{
+  display: block;
 }
 .titleBox{
     width: 1200px;
@@ -34,6 +38,14 @@
     color: #fff;
     padding: 15px;
     position: relative;
+  }
+  .icon{
+    width: 23.53px;
+    height: 24.12px;
+    border-radius: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
   .worldCon{
     position: absolute;
@@ -79,6 +91,7 @@ font-weight: 600;
   }
   .TbaAdd{
     margin-top: 10px;
+    cursor: pointer;
   }
   .totalNum{
     margin-top: 20px;
@@ -86,3 +99,13 @@ font-weight: 600;
     font-family: 700;
     color: #9d9d9e;
   }
+  .nothingInfo{
+    width: 100vw;
+    margin-left: -50%;
+    text-align: center;
+    color: #515151;
+    font-size: 26px;
+font-weight: 600;
+line-height: 300px;
+  }
+  

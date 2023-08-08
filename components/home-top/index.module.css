@@ -166,6 +166,7 @@
    display: flex;
    line-height: 40px;
    padding-top: 10px;
+   cursor: pointer;
    padding-left: 20px;
  }
  
@@ -235,6 +236,8 @@
  }
  .supply{
    display: block;
+   font-size: 12px !important;
+
  }
  .mintBtn{
    width: 160px;
@@ -328,4 +331,10 @@ font-size: 25px;
   border: 2px solid #563d8a;
   background-color: #170820;
 
+ }
+ .loadingSet{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-55%,90%);
  }

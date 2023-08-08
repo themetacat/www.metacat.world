@@ -292,8 +292,8 @@ useEffect(()=>{
   return (
     <Page meta={meta} className={cn("", style.page)}>
       {/* <WalletBtn /> */}
-      <TopNav/>
-      {/* <HomeTop/> */}
+      {/* <TopNav/> */}
+      <HomeTop/>
 
       {/* <div className={cn("", style.parselist)}>
         <div className={cn(style.tableList)}>
