@@ -162,6 +162,11 @@
    text-overflow: ellipsis;
    white-space:nowrap;
  }
+ .titCon img:first-child{
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+ }
  .wordCon{
    display: flex;
    cursor: pointer;
@@ -295,6 +300,7 @@ font-size: 25px;
   position: absolute;
   left: 20px;
   top: 30px;
+ display: flex;
   color: #fff;
   font-size: 25px;
   font-weight: 600;

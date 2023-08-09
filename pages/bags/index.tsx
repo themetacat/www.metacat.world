@@ -26,11 +26,19 @@ export default function Bags() {
     description: META_DESCRIPTION,
   };
 
-  const detailClick = (name) => {
-    const dynamicValue = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"
+  const detailClick = (name,address) => {
+    // const dynamicValue = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"
     const tokenID = parseInt(name, 16);
     // console.log(tokenID);
-    router.replace(`/assets/matic?value=${dynamicValue}&tokenId=${tokenID}`);
+    
+    
+    // router.replace(`/assets/matic?value=${dynamicValue}&tokenId=${tokenID}`);
+    if(address=== "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"){
+      router.replace(`/assets/matic/${address}/${tokenID}`);
+    }else{
+      alert('Contract address error')
+    }
+    
   };
   const handleMint = useCallback(() => {
     const getData = async () => {
@@ -504,7 +512,7 @@ export default function Bags() {
               return (
                 <div
                   className={style.boxContent}
-                  onClick={()=>{detailClick(item.id.tokenId)}}
+                  onClick={()=>{detailClick(item.id.tokenId,item.contract.address)}}
                   key={index}
                 >
                   <img src="/images/untitled.png" alt="" />

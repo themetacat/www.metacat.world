@@ -2,12 +2,14 @@ import React, { useCallback, useEffect, forwardRef,useState,useRef,useImperative
 import cn from "classnames";
 import style from "./index.module.css";
 import Status from "../status";
+import Page from "../../components/page";
 import Rekv from "rekv";
 import Link from "next/link";
 import Web3 from "web3";
 import { toast } from "react-hot-toast";
 import { useWalletProvider } from "../web3modal";
 import { TorusWalletAdapter } from "@web3auth/torus-evm-adapter";
+import { SITE_NAME, META_DESCRIPTION } from "../../common/const";
 import { Web3AuthCore } from "@web3auth/core";
 import RPC from "../web3RPC";
 import Router, { useRouter } from "next/router";
@@ -123,6 +125,11 @@ interface IProfileData {
   ];
   export const state = new Rekv<IProfileData>(INITIAL_STATE);
 export default function HomePage({ onClickHandler }: Props,ref) {
+  const meta = {
+    title: ` ${SITE_NAME}`,
+    description: META_DESCRIPTION,
+  };
+
     const router = useRouter();
     const funRef = useRef()
     const [num, setNum] = useState(1);
@@ -1064,10 +1071,12 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, []);
 
   return (
+    // <Page meta={meta}>
     <>
     <div className={cn('',style.homeContent)}>
       <div className={cn('',style.homeC)}>
-      <div className={style.titCon}>Wearable Pack</div>
+      
+      <div className={style.titCon}>  <img src="/images/20230809103925.png" alt="" />Wearable Pack</div>
         <div className={cn('',style.btnContent)}>
         <div
           className={cn(
@@ -1097,5 +1106,6 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     </div>
     {loading === true ? <div className={style.loadingSet}><Status mini={true} status="loading" /></div> : null}
     </>
+    // </Page>
   )
 }

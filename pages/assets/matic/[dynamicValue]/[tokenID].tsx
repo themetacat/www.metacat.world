@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import HomePage from "../../../components/home-page";
-import Page from "../../../components/page";
+import HomePage from "../../../../components/home-page";
+import Page from "../../../../components/page";
 import { toast } from "react-hot-toast";
-import { SITE_NAME, META_DESCRIPTION } from "../../../common/const";
+import { SITE_NAME, META_DESCRIPTION } from "../../../../common/const";
 import { createWalletClient, http, custom, WalletClient, Account } from "viem";
 import { TokenboundClient } from "@tokenbound/sdk";
 import { polygonMumbai } from "viem/chains";
@@ -10,17 +10,20 @@ import cn from "classnames";
 import style from "./index.module.css";
 import Router, { useRouter } from "next/router";
 import { v4 as uuid } from "uuid";
-import Card from "../../../components/parcels-card";
+import Card from "../../../../components/parcels-card";
 import Web3 from "web3";
 
 const dataSource = [{}];
 
-import { getBagsDetail ,getBagsNum} from "../../../service";
+import { getBagsDetail ,getBagsNum} from "../../../../service";
+import { setTimeout } from "timers/promises";
 
 export default function Matic() {
   const router = useRouter();
+  const { dynamicValue, tokenID } = router.query;
+
   const [dataInfo, setDataInfo] = React.useState([] || null);
-  const { tokenId } = router.query;
+  // const { tokenId } = router.query;
   const [decodedToken, setDecodedToken] = useState('');
   const [tokenboundAccountNum, setTokenboundAccountNum] = useState('');
   const [title, setTitle] = useState('');
@@ -59,8 +62,7 @@ export default function Matic() {
       // console.log(router.query.tokenId);
       
       try {
-        const response = await getBagsNum(router.query.tokenId); // 假设 getBagsDetail 是一个异步函数
-        console.log(response.contract.address, 333);
+        const response = await getBagsNum(tokenID); // 假设 getBagsDetail 是一个异步函数
         setWorld(response.contract.address)
       
         
@@ -72,23 +74,33 @@ export default function Matic() {
     };
 
     getData();
-  }, [router.query.tokenId]);
-  // console.log(getBagsDetail(7));
-  
+  }, [tokenID]);
 
-  // useEffect(() => {
-  //   handleMint();
-  // }, [router.query.tokenId]);
   useEffect(() => {
-    handleMint();
-    handleBag()
-    // console.log(dataInfo,58888);
-    // if (Array.isArray(dataInfo)) {
-    //   dataInfo.map((item => {
-    //     console.log(item);
-    //   }));
-    // }
-  },[router.query.tokenId,tokenboundAccountNum,dataInfoList,world]);
+    if(router.query){
+      handleMint();
+      handleBag()
+    }
+   
+  },[router.query,tokenboundAccountNum,dataInfoList,world]);
+
+  useEffect(() => {
+    const { dynamicValue, tokenID } = router.query;
+console.log(router.query,333333);
+console.log(tokenID,66656);
+console.log(router);
+
+if(tokenID!==undefined ){
+  if (dynamicValue !== "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0") {
+    alert('Contract address error');
+    router.replace('/'); // 跳转回首页
+  // } else {
+  //   // 这里可以处理 dynamicValue 和 tokenID 的其他逻辑
+  //   // 可以根据需要进行页面跳转或其他操作
+  }
+}
+   
+  }, [router.query]);
 
     const handleCopyClick = () => {
       const textToCopy = tokenboundAccountNum;
@@ -124,6 +136,7 @@ useEffect(() => {
     // for (const item of dataInfo) {
       // const a = parseInt(item.id.tokenId, 16);
 
+
       const accounts = await web3s.eth.getAccounts();
       const walletClient: WalletClient = createWalletClient({
         chain: polygonMumbai,
@@ -139,9 +152,8 @@ useEffect(() => {
 
       const tokenboundAccount = tokenboundClient?.getAccount({
         tokenContract: "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0",
-        tokenId: router.query.tokenId as string,
+        tokenId: tokenID as string,
       });
-      // console.log(tokenboundAccount,22222);
       
       setTokenboundAccountNum(tokenboundAccount)
       const truncatedAccount =
@@ -158,7 +170,7 @@ useEffect(() => {
 
  
   fetchData();
-}, [router.query.tokenId,]);
+}, [tokenID,]);
 
 const jumpToOpenC = (item)=>{
   console.log(item,'w22');

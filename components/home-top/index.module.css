@@ -297,9 +297,15 @@ font-size: 25px;
   position: absolute;
   left: 20px;
   top: 30px;
+  display: flex;
   color: #fff;
   font-size: 25px;
   font-weight: 600;
+ }
+ .titCon img:first-child{
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
  }
  .container{
   position: absolute;
