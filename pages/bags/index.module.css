@@ -52,6 +52,10 @@ font-weight: 600;
     font-size: 12px;
     font-weight: 400;
     margin-top: 5px;
+    width: 240px;
+    overflow: hidden;
+   white-space: nowrap;
+  text-overflow: ellipsis;
   }
   .idP3{
     margin-top: 5px;
