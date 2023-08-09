@@ -1076,7 +1076,9 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     <div className={cn('',style.homeContent)}>
       <div className={cn('',style.homeC)}>
       
-      <div className={style.titCon}>  <img src="/images/20230809103925.png" alt="" />Wearable Pack</div>
+      <div className={style.titCon}>  
+      {/* <img src="/images/20230809103925.png" alt="" /> */}
+      Wearable Pack</div>
         <div className={cn('',style.btnContent)}>
         <div
           className={cn(
@@ -1097,7 +1099,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
        
         <div className={style.container}>
           <p>Pack Your Wearable.</p>
-          <p  className={style.PBox}>UseERC-6551to package and sell your Wearables.</p>
+          <p  className={style.PBox}>Use ERC-6551 to package and sell your Wearables.</p>
           <div className={style.bttBox} onClick={mintBag}>Mint Bag
           <p className={cn(style.supply)}>{mintNum}/{totalNum}</p>
           </div>

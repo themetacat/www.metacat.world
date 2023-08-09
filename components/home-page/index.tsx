@@ -791,7 +791,9 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     <>
     <div className={cn('',style.homeContent)}>
       <div className={cn('',style.homeC)}>
-      <div className={style.titCon} onClick={goBack}>  <img src="/images/20230809103925.png" alt="" />Wearable Pack</div>
+      <div className={style.titCon} onClick={goBack}>  
+      {/* <img src="/images/20230809103925.png" alt="" /> */}
+      Wearable Pack</div>
         <div className={cn('',style.btnContent)}>
         <div
           className={cn(
