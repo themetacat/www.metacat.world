@@ -289,7 +289,7 @@ class API {
 
     return json;
   }
-
+//详情页列表页
   public async getBagsDetail(TBAAddress): Promise<any> {
     const search = qs.stringify({ TBAAddress}, { addQueryPrefix: true });
     const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=${TBAAddress}&pageSize=100&withMetadata=true`;
@@ -298,7 +298,7 @@ class API {
 
     return json;
   }
-
+//详情页TBA
   public async getBagsNum(tokenId): Promise<any> {
     const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
     const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&tokenId=${tokenId}&refreshCache=false`;
@@ -311,7 +311,7 @@ class API {
 
     return json;
   }
-
+//列表页
   public async getBagsList(address): Promise<any> {
     const search = qs.stringify({ address}, { addQueryPrefix: true });
     const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&withMetadata=true&pageSize=48`;

@@ -29,9 +29,8 @@ export default function Bags() {
   const detailClick = (name,address) => {
     // const dynamicValue = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"
     const tokenID = parseInt(name, 16);
-    // console.log(tokenID);
+    console.log(address);
     
-
     // router.replace(`/assets/matic?value=${dynamicValue}&tokenId=${tokenID}`);
     if(address){
       router.replace(`/assets/matic/${address}/${tokenID}`);
@@ -461,7 +460,7 @@ export default function Bags() {
         if (!tokenboundClient) return;
   
         const tokenboundAccount = tokenboundClient.getAccount({
-          tokenContract: "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0",
+          tokenContract: "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c",
           tokenId: a.toString(),
         });
   

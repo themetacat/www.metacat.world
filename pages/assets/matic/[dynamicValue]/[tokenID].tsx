@@ -151,7 +151,7 @@ useEffect(() => {
       if (!tokenboundClient) return;
 
       const tokenboundAccount = tokenboundClient?.getAccount({
-        tokenContract: "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0",
+        tokenContract: "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c",
         tokenId: tokenID as string,
       });
       
