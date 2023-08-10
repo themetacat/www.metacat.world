@@ -37,6 +37,7 @@
     background-color: black;
     border-radius: 10px;
     color: #fff;
+    position: relative;
   }
   .boxContent img{
     border-radius: 10px 10px 0px 0px;
@@ -47,6 +48,14 @@
   .idP1{
 font-size: 16px;
 font-weight: 600;
+  }
+  .icon{
+    width: 23.53px;
+    height: 24.12px;
+    border-radius: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
   .idP2{
     font-size: 12px;

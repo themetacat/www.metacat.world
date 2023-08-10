@@ -86,12 +86,12 @@ export default function Matic() {
 
   useEffect(() => {
     const { dynamicValue, tokenID } = router.query;
-console.log(router.query,333333);
-console.log(tokenID,66656);
-console.log(router);
+// console.log(router.query,333333);
+// console.log(tokenID,66656);
+console.log(dynamicValue);
 
 if(tokenID!==undefined ){
-  if (dynamicValue !== "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0") {
+  if (dynamicValue !== "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c") {
     alert('Contract address error');
     router.replace('/'); // 跳转回首页
   // } else {
@@ -190,7 +190,7 @@ const jumpToOpenC = (item)=>{
             <p className={style.idNum}>{title}</p>
             <div onClick={handleCopyClick}>
               <p className={style.TbaAdd}>
-                {tokenboundAccountNum}
+              Wallect: {tokenboundAccountNum}
               </p>
             </div>
             <p className={style.totalNum}>{dataInfo.length} Wearables</p>
@@ -204,7 +204,7 @@ const jumpToOpenC = (item)=>{
           >
              {dataInfoList === null ? (
           <>
-          <p className={style.nothingInfo}>You do not own any bags</p>
+          <p className={style.nothingInfo}>You don&apos;t have any wearable in this bag.</p>
           </>
         ) : (
            <>

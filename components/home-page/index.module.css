@@ -296,6 +296,12 @@ font-size: 25px;
   top: 60px;
   right: 10px;
  }
+ .iconSvg{
+  color: #fff;
+  position: absolute;
+  right: 180px;
+  top: 25px;
+ }
  .titCon{
   position: absolute;
   left: 20px;

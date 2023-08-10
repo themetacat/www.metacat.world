@@ -290,29 +290,30 @@ useEffect(()=>{
 
 
   return (
-    <Page meta={meta} className={cn("", style.page)}>
-      {/* <WalletBtn /> */}
-      {/* <TopNav/> */}
+    // <Page meta={meta} className={cn("", style.page)}>
+      // {/* <WalletBtn /> */}
+      // {/* <TopNav/> */}
+      <>
       <HomeTop/>
-
-      {/* <div className={cn("", style.parselist)}>
-        <div className={cn(style.tableList)}>
-          {TAB3.map((item) => {
-            return (
-              <Tab3
-                label={item.label}
-                key={item.label}
-                active={routeTab === item.type}
-                onClick={() => {
-                  changeTab3(item.label, item.type);
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
-      {routeTab === "parcellist" ? <ParcelList /> : null}
-      {routeTab === "trafficreport" ? <Trafficreport /> : null} */}
-    </Page>
+      </>
+      // {/* <div className={cn("", style.parselist)}>
+      //   <div className={cn(style.tableList)}>
+      //     {TAB3.map((item) => {
+      //       return (
+      //         <Tab3
+      //           label={item.label}
+      //           key={item.label}
+      //           active={routeTab === item.type}
+      //           onClick={() => {
+      //             changeTab3(item.label, item.type);
+      //           }}
+      //         />
+      //       );
+      //     })}
+      //   </div>
+      // </div>
+      // {routeTab === "parcellist" ? <ParcelList /> : null}
+      // {routeTab === "trafficreport" ? <Trafficreport /> : null} */}
+    // </Page>
   );
 }

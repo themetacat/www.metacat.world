@@ -301,7 +301,7 @@ class API {
 
   public async getBagsNum(tokenId): Promise<any> {
     const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
-    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0&tokenId=${tokenId}&refreshCache=false`;
+    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&tokenId=${tokenId}&refreshCache=false`;
 
 
     const res = await fetch(url);
@@ -314,7 +314,7 @@ class API {
 
   public async getBagsList(address): Promise<any> {
     const search = qs.stringify({ address}, { addQueryPrefix: true });
-    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0&withMetadata=true&pageSize=48`;
+    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&withMetadata=true&pageSize=48`;
 
     const res = await fetch(url);
     const json = await res.json();

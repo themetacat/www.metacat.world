@@ -31,9 +31,9 @@ export default function Bags() {
     const tokenID = parseInt(name, 16);
     // console.log(tokenID);
     
-    
+
     // router.replace(`/assets/matic?value=${dynamicValue}&tokenId=${tokenID}`);
-    if(address=== "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"){
+    if(address){
       router.replace(`/assets/matic/${address}/${tokenID}`);
     }else{
       alert('Contract address error')
@@ -436,7 +436,7 @@ export default function Bags() {
 
   useEffect(() => {
     handleMint();
-    handleCopyClick()
+    // handleCopyClick()
   }, []);
   useEffect(() => {
     // console.log(dataInfo, 518888);
@@ -482,9 +482,26 @@ export default function Bags() {
   }, [dataInfo]);
 
 
-  const handleCopyClick =()=>{
-    console.log('复制');
-    
+  const jumpToOpenC =(name,address)=>{
+    const web3s = new Web3(window.ethereum);
+    const chainId =  web3s.eth.getChainId();
+    chainId.then((chainIdNum)=>{
+const tokenID = parseInt(name, 16);
+if(chainIdNum===80001){
+  if(address){
+    window.open(`https://testnets.opensea.io/assets/mumbai/${address}/${tokenID}`);
+  }else{
+    alert('Contract address error')
+  }
+}else if(chainIdNum===137){
+  if(address){
+    window.open(`https://opensea.io/assets/mumbai/${address}/${tokenID}`);
+  }else{
+    alert('Contract address error')
+  }
+}
+    })
+   
   }
   
 
@@ -495,7 +512,7 @@ export default function Bags() {
         <p className={style.titleBox}>Bags</p>
         {dataInfoList === null ? (
           <>
-          <p className={style.nothingInfo}>You do not own any bags</p>
+          <p className={style.nothingInfo}>You don&apos;t own any bags</p>
           </>
         ) : (
           <div
@@ -512,15 +529,16 @@ export default function Bags() {
               return (
                 <div
                   className={style.boxContent}
-                  onClick={()=>{detailClick(item.id.tokenId,item.contract.address)}}
+               
                   key={index}
                 >
                   <img src="/images/untitled.png" alt="" />
-                  <div className={style.textCon}>
+                  <img src="/images/Nomal.png" className={style.icon} onClick={()=>{jumpToOpenC(item.id.tokenId,item.contract.address)}}></img>
+                  <div className={style.textCon}    onClick={()=>{detailClick(item.id.tokenId,item.contract.address)}}>
                     <p className={style.idP1}>{item.metadata.name}</p>
                     <p className={style.idP2}>{item.metadata.description}</p>
-                    <div onClick={handleCopyClick}>
-                      <p className={style.idP3} ref={textRef} data-clipboard-text={truncatedAddress}>{truncatedAddress}</p></div>
+                    <div >
+                      <p className={style.idP3} ref={textRef} data-clipboard-text={truncatedAddress}>Wallect: {truncatedAddress}</p></div>
                   </div>
                 </div>
               );
