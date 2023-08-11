@@ -528,12 +528,14 @@ if(chainIdNum===80001){
               return (
                 <div
                   className={style.boxContent}
-               
+                  onClick={()=>{detailClick(item.id.tokenId,item.contract.address)}}
                   key={index}
                 >
                   <img src={item.metadata.image} alt="" />
-                  <img src="/images/Nomal.png" className={style.icon} onClick={()=>{jumpToOpenC(item.id.tokenId,item.contract.address)}}></img>
-                  <div className={style.textCon}    onClick={()=>{detailClick(item.id.tokenId,item.contract.address)}}>
+                  <img src="/images/Nomal.png" className={style.icon} onClick={(event)=>{
+                    event.stopPropagation();
+                    jumpToOpenC(item.id.tokenId,item.contract.address)}}></img>
+                  <div className={style.textCon}>
                     <p className={style.idP1}>{item.metadata.name}</p>
                     <p className={style.idP2}>{item.metadata.description}</p>
                     <div >

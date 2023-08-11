@@ -114,6 +114,32 @@
   background-color: rgba(0,0,0,0.8);
   background-image:linear-gradient(45deg, #1d071e 0%, #000000 100%);
  }
+ .page1{
+  width: 100%;
+  height: 100vh;
+  /* background-color: rgba(0,0,0,0.8);
+  background-image:linear-gradient(45deg, #1d071e 0%, #000000 100%); */
+ }
+ .page1 {
+  position: relative;
+}
+
+.page1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* 遮罩层的颜色和透明度 */
+  z-index: 1; /* 确保遮罩层在页面元素之上 */
+}
+
+/* .page1 .homeContent {
+  filter: grayscale(100%); 
+  z-index: 2; 确保内容在遮罩层上面
+} */
+
  .menuItem>img{
    width: 16px;
    height: 16px;
@@ -201,12 +227,19 @@
    grid-template-columns: repeat(1, minmax(0, 1fr));
    grid-template-columns: repeat(4, minmax(0, 1fr));
  }
+ .gasMax{
+font-size: 12px;
+white-space: nowrap;
+transform: scale(0.8);
+margin-top: 26px;
+ }
  .content{
-   width: 350px;
-   height: 220px;
+   width: 300px;
+   height: 330px;
    padding: 20px;
    border-radius: 20px;
    background-color: #191921;
+   filter: brightness(150%);
    text-align: center;
    border: 20px;
    position: absolute;
@@ -214,13 +247,15 @@
    top: 37%;
    color: #fff;
    margin-top: 20px;
+   z-index: 99999;
  }
  .content1{
-   width: 350px;
-   min-height: 300px;
+  width: 300px;
+   height: 330px;
    padding: 20px;
    border-radius: 20px;
    background-color: #191921;
+   filter: brightness(150%);
    text-align: center;
    border: 20px;
    position: absolute;
@@ -228,13 +263,15 @@
    top: 37%;
    color: #fff;
    margin-top: 20px;
+   z-index: 99999;
  }
  .middleContent{
    display: flex;
    /* margin-top: 20px;
    margin-bottom: 20px; */
    margin:20px  auto ;
-   padding-left: 70px;
+   margin-top: 40px;
+   padding-left: 50px;
  }
  .middleContent img{
    width: 15px;
@@ -263,10 +300,14 @@
    color: #191921;
    appearance: none;
  }
+ .supply1{
+   display: block;
+   font-size: 12px !important;
+  margin-top: 20px;
+ }
  .supply{
    display: block;
    font-size: 12px !important;
-
  }
  .mintBtn{
    width: 160px;
@@ -277,7 +318,7 @@
    border-radius: 15px;
    position: absolute;
    bottom: 10px;
-   left: 90px;
+   left: 80px;
  }
  .mintBtnDis{
    width: 160px;

@@ -1064,32 +1064,47 @@ web3.eth.getBalance(walletAddress)
         init();
       }, []);
 
-      const handleBlur = () => {
+      const handleBlur = useCallback(() => {
+        
         setIsEditing(false);
-        setNum(editNum); // 更新输入框数据到num
-      };
+       
+        if(((0.01 * editNum).toFixed(2)>=ethBalance)===true){
+          setBalanceNum(true)
+        }else{
+          setBalanceNum(false)
+        }
+        if(editNum>totalNum-mintNum){
+          setEditNum(totalNum-mintNum)
+        }else{
+          setNum(editNum); // 更新输入框数据到num
+        }
+
+      },[ethBalance,editNum,totalNum,mintNum]);
       const handleNumChange = (event) => {
         if (event.target.value < 1) {
           event.target.value = 1;
         }
         const value = parseInt(event.target.value);
         setEditNum(value);
+        if(editNum>totalNum-mintNum){
+          setEditNum(totalNum-mintNum)
+        }
       };
       const handleDoubleClick = () => {
         setEditNum(num); // 设置初始值为之前的数据
         setIsEditing(true);
       };
 
-      const increase = () => {
+      const increase = useCallback(() => {
         setNum(num + 1);
-      };
-
+       
+      },[editNum,totalNum,mintNum,num]);
       const lower = () => {
         setNum(num - 1);
       };
 
   return (
-    <Page meta={meta} className={cn("", style.page)}>
+    <Page meta={meta} className={cn("" ,mintContent===true?style.page1:style.page)}>
     <>
     <div className={cn('',style.homeContent)}>
       <div className={cn('',style.homeC)}>
@@ -1144,7 +1159,7 @@ web3.eth.getBalance(walletAddress)
     <>
     <div className={cn((0.01 * num).toFixed(3) >= ethBalance?style.content1:style.content,)}>
             <span>{(0.01 * num).toFixed(2)}</span>
-            <p className={cn(style.supply)}>
+            <p className={cn(style.supply1)}>
               Supply:
               <span>{mintNum}</span>
               <span>/</span>
@@ -1186,7 +1201,7 @@ web3.eth.getBalance(walletAddress)
             </button> */}
             {balanceNum===true ? (
               <div>
-                <p>
+                <p className={style.gasMax}>
                 MATIC Balance: You need {(0.01 * num).toFixed(2)} MATIC + gas fee{" "}
                   <br /> You MATIC wallet Balance: {ethBalance} MATIC
                 </p>
