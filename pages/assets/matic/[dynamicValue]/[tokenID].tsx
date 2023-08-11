@@ -173,11 +173,11 @@ useEffect(() => {
 }, [tokenID,]);
 
 const jumpToOpenC = (item)=>{
-  console.log(item,'w22');
+  // console.log(item,'w22');
   const idToken = item.id.tokenId
-  console.log(idToken);
+  // console.log(idToken);
   const decimalValue = parseInt(idToken, 16);
-  console.log(decimalValue,556);
+  // console.log(decimalValue,556);
   // window.open(`https://opensea.io/assets/matic/${world}/${decimalValue}`)
   window.open(`https://testnets.opensea.io/assets/mumbai/${item.contract.address}/${decimalValue}`)
 }

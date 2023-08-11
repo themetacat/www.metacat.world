@@ -29,7 +29,7 @@ export default function Bags() {
   const detailClick = (name,address) => {
     // const dynamicValue = "0x6a7e3ce7e3a629b29f9d01be650a381b3c7f03a0"
     const tokenID = parseInt(name, 16);
-    console.log(address);
+    // console.log(address);
     
     // router.replace(`/assets/matic?value=${dynamicValue}&tokenId=${tokenID}`);
     if(address){
@@ -531,7 +531,7 @@ if(chainIdNum===80001){
                
                   key={index}
                 >
-                  <img src="/images/untitled.png" alt="" />
+                  <img src={item.metadata.image} alt="" />
                   <img src="/images/Nomal.png" className={style.icon} onClick={()=>{jumpToOpenC(item.id.tokenId,item.contract.address)}}></img>
                   <div className={style.textCon}    onClick={()=>{detailClick(item.id.tokenId,item.contract.address)}}>
                     <p className={style.idP1}>{item.metadata.name}</p>
