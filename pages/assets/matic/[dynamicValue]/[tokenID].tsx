@@ -67,7 +67,7 @@ export default function Matic() {
       
       try {
         const response = await getBagsNum(tokenID); // 假设 getBagsDetail 是一个异步函数
-        setWorld(response.contract.address)
+        setWorld(response.tokenUri.raw)
       
         
         setTitle(response.title)
@@ -205,7 +205,7 @@ const btnAccount =  (id)=>{
   const contract = new web3s.eth.Contract(abi as [], contractAddress);
   // console.log(1111,contract);
 const id = parseInt(tokenID as string)
-  const ownerOfAddr = contract.methods.ownerOf(6).call({});
+  const ownerOfAddr = contract.methods.ownerOf(tokenID).call({});
   // console.log(ownerOfAddr,"你想要的地址");
   // console.log(ownerOfAddr===addR,'结果啊');
   // console.log(ownerOfAddr,addR);
@@ -337,12 +337,13 @@ const RefreshMetadata =()=>{
            <>
             {dataInfo.map((item) => {
               // console.log(item);
+              console.log(world);
               
               return (
                 <div className={style.boxContent} key={item.id}>
                   <img src={item.metadata.image} alt="" />
                   <img src="/images/Nomal.png" className={style.icon} onClick={()=>{jumpToOpenC(item)}}></img>
-                  <div className={style.worldCon}>world
+                  <div className={style.worldCon}>
                 {world==='1'?
                 <>Vox</>
                 :null}

@@ -539,7 +539,7 @@ if(chainIdNum===80001){
                     <p className={style.idP1}>{item.metadata.name}</p>
                     <p className={style.idP2}>{item.metadata.description}</p>
                     <div >
-                      <p className={style.idP3} ref={textRef} data-clipboard-text={truncatedAddress}>Wallect: {truncatedAddress}</p></div>
+                      <p className={style.idP3} ref={textRef} data-clipboard-text={truncatedAddress}><span style={{display:"inline-block",color:"#fff"}}>Wallect:  </span>{truncatedAddress}</p></div>
                   </div>
                 </div>
               );
