@@ -311,7 +311,7 @@ const RefreshMetadata =()=>{
             <div style={{display:'flex'}}>
             <div onClick={handleCopyClick}>
               <p className={style.TbaAdd}>
-              Wallect: {tokenboundAccountNum}
+              Wallet:&nbsp;{tokenboundAccountNum}
               </p>
             </div>
             {
