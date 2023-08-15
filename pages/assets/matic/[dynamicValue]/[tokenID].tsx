@@ -67,7 +67,11 @@ export default function Matic() {
       
       try {
         const response = await getBagsNum(tokenID); // 假设 getBagsDetail 是一个异步函数
+        // const worldEach = response.tokenUri.raw
+        // console.log(worldEach,666);
+        // const substring = worldEach.substring(0, 28);
         setWorld(response.tokenUri.raw)
+      // console.log(substring,3333);
       
         
         setTitle(response.title)
@@ -337,22 +341,25 @@ const RefreshMetadata =()=>{
            <>
             {dataInfo.map((item) => {
               // console.log(item);
-              console.log(world);
+          
               
               return (
                 <div className={style.boxContent} key={item.id}>
                   <img src={item.metadata.image} alt="" />
                   <img src="/images/Nomal.png" className={style.icon} onClick={()=>{jumpToOpenC(item)}}></img>
                   <div className={style.worldCon}>
-                {world==='1'?
-                <>Vox</>
+                {world.includes("https://www.cryptovoxels.com")?
+                <>Voxels</>
                 :null}
-                {world==='2'?
-                <>Vox</>
+                {world.includes("https://peer.decentraland.org")?
+                <>Decentraland</>
                 :null}
-                {world==='3'?
-                <>Vox</>
-                :null}
+                {world.includes('https://contracts.sandbox.game')?
+                <>The Sandbox</>:null
+                  }
+                {world.includes("https://www.cryptovoxels.com")||world.includes("https://peer.decentraland.org")||world.includes('https://contracts.sandbox.game')?
+                <>null</>
+                :  <>Other</>}
                 </div>
                   <div className={style.textCon}>
                     <p className={style.idP1}>{item.metadata.name}</p>
