@@ -796,7 +796,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     <div className={cn('',style.homeContent)}>
       <div className={cn('',style.homeC)}>
       <div className={style.titCon} onClick={goBack}>  
-      {/* <img src="/images/20230809103925.png" alt="" /> */}
+      <img src="/images/20230815165115.jpg" alt="" />
       Wearable Pack</div>
       <div className={style.iconSvg} onClick={iconSvg}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

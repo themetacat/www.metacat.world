@@ -249,14 +249,27 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           // }
           if (typeof window.ethereum !== 'undefined') {
             // 创建一个 Web3 实例
-            const web3 = new Web3(window.ethereum);
+            const web3a = new Web3(window.ethereum);
       
             // 获取当前链Id
-            const chainId = await web3.eth.getChainId();
+            const chainId = await web3a.eth.getChainId();
       
             // 检查当前链Id是否为 Mumbai Testnet 的 80001
             if (chainId === 80001) {
               console.log('Already connected to Mumbai Testnet');
+              web3.connect().then(
+                async (res) => {
+                  console.log("connect==>", res);
+                  const { address: addr, provider } = res;
+                    setSwitcherNet(false)
+                  connect(addr, provider);
+                  window.localStorage.setItem("metaMaskAddress", res.address);
+                },
+                (err) => {
+                  setLoading(false);
+                }
+              );
+              window.localStorage.setItem("LoginType", "metaMask");
               return;
             }
       
@@ -861,6 +874,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     
                 if (!profile?.address) {
                   connectToChain();
+                  
                 }
                 toast.success("Successful");
                 setLoading(true);
@@ -1232,7 +1246,7 @@ web3.eth.getBalance(walletAddress)
       <div className={cn('',style.homeC)}>
       
       <div className={style.titCon}>  
-      {/* <img src="/images/20230809103925.png" alt="" /> */}
+      <img src="/images/20230815165115.jpg" alt="" />
       Wearable Pack</div>
       <div className={style.iconSvg} onClick={iconSvg}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
