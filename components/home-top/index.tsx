@@ -947,7 +947,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                     params: [
                       {
                         chainId: '0x13881',
-                        chainName: 'Mumbai Testnet',
+                        chainName: 'Mumbai',
                         nativeCurrency: {
                           name: 'MATIC',
                           symbol: 'MATIC',
