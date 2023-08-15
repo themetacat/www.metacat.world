@@ -222,30 +222,87 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           return;
         }
         try {
-          const networkId = await window.ethereum.request({
-            method: "net_version",
-          });
-          // console.log(networkId === "80001", "networkId", networkId);
-          // 判断当前网络是否为 Ethereum Sepolia 网络
-          // await  window.ethereum.request({
-          //   method: 'wallet_switchEthereumChain',
-          //   params: [{ chainId: '80001' }],
+          // const networkId = await window.ethereum.request({
+          //   method: "net_version",
           // });
-          if (networkId !== "80001") {
-            // 根据需要跳转到引导转换网络的网页或执行其他逻辑
-            // window.open("https://example.com");
-            // return;
-            const chainId = "0x" + (80001).toString(16);
-            // console.log(chainId, "chainId");
+          // // console.log(networkId === "80001", "networkId", networkId);
+          // // 判断当前网络是否为 Ethereum Sepolia 网络
+          // // await  window.ethereum.request({
+          // //   method: 'wallet_switchEthereumChain',
+          // //   params: [{ chainId: '80001' }],
+          // // });
+          // if (networkId !== "80001") {
+          //   // 根据需要跳转到引导转换网络的网页或执行其他逻辑
+          //   // window.open("https://example.com");
+          //   // return;
+          //   const chainId = "0x" + (80001).toString(16);
+          //   // console.log(chainId, "chainId");
     
-            await window.ethereum.request({
-              method: "wallet_switchEthereumChain",
-              params: [
-                {
-                  chainId: chainId,
-                },
-              ],
-            });
+          //   await window.ethereum.request({
+          //     method: "wallet_switchEthereumChain",
+          //     params: [
+          //       {
+          //         chainId: chainId,
+          //       },
+          //     ],
+          //   });
+          // }
+          if (typeof window.ethereum !== 'undefined') {
+            // 创建一个 Web3 实例
+            const web3 = new Web3(window.ethereum);
+      
+            // 获取当前链Id
+            const chainId = await web3.eth.getChainId();
+      
+            // 检查当前链Id是否为 Mumbai Testnet 的 80001
+            if (chainId === 80001) {
+              console.log('Already connected to Mumbai Testnet');
+              return;
+            }
+      
+            try {
+              // 切换到 Mumbai Testnet
+              await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [
+                  {
+                    chainId: '0x13881',
+                  },
+                ],
+              });
+              console.log('Switched to Mumbai Testnet');
+            } catch (error) {
+              // 检查错误类型，如果是因为网络不存在而报错，则添加 Mumbai Testnet
+              if (
+                error.code === 4902 || // MetaMask error code
+                (error.message && error.message.includes('networkId'))
+              ) {
+                try {
+                  await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [
+                      {
+                        chainId: '0x13881',
+                        chainName: 'Mumbai',
+                        nativeCurrency: {
+                          name: 'MATIC',
+                          symbol: 'MATIC',
+                          decimals: 18,
+                        },
+                        rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+                      },
+                    ],
+                  });
+                  console.log('Added Mumbai Testnet');
+                } catch (addError) {
+                  console.error('Failed to add network:', addError);
+                }
+              } else {
+                console.error('Failed to switch network:', error);
+              }
+            }
+          } else {
+            console.log('MetaMask not detected');
           }
     
           web3.connect().then(
@@ -908,70 +965,70 @@ export default function HomePage({ onClickHandler }: Props,ref) {
         }
       };
 
-      useEffect(() => {
-        const checkMetaMaskNetwork = async () => {
-          // 检查 MetaMask 是否可用
-          if (typeof window.ethereum !== 'undefined') {
-            // 创建一个 Web3 实例
-            const web3 = new Web3(window.ethereum);
+      // useEffect(() => {
+      //   const checkMetaMaskNetwork = async () => {
+      //     // 检查 MetaMask 是否可用
+      //     if (typeof window.ethereum !== 'undefined') {
+      //       // 创建一个 Web3 实例
+      //       const web3 = new Web3(window.ethereum);
       
-            // 获取当前链Id
-            const chainId = await web3.eth.getChainId();
+      //       // 获取当前链Id
+      //       const chainId = await web3.eth.getChainId();
       
-            // 检查当前链Id是否为 Mumbai Testnet 的 80001
-            if (chainId === 80001) {
-              console.log('Already connected to Mumbai Testnet');
-              return;
-            }
+      //       // 检查当前链Id是否为 Mumbai Testnet 的 80001
+      //       if (chainId === 80001) {
+      //         console.log('Already connected to Mumbai Testnet');
+      //         return;
+      //       }
       
-            try {
-              // 切换到 Mumbai Testnet
-              await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [
-                  {
-                    chainId: '0x13881',
-                  },
-                ],
-              });
-              console.log('Switched to Mumbai Testnet');
-            } catch (error) {
-              // 检查错误类型，如果是因为网络不存在而报错，则添加 Mumbai Testnet
-              if (
-                error.code === 4902 || // MetaMask error code
-                (error.message && error.message.includes('networkId'))
-              ) {
-                try {
-                  await window.ethereum.request({
-                    method: 'wallet_addEthereumChain',
-                    params: [
-                      {
-                        chainId: '0x13881',
-                        chainName: 'Mumbai',
-                        nativeCurrency: {
-                          name: 'MATIC',
-                          symbol: 'MATIC',
-                          decimals: 18,
-                        },
-                        rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
-                      },
-                    ],
-                  });
-                  console.log('Added Mumbai Testnet');
-                } catch (addError) {
-                  console.error('Failed to add network:', addError);
-                }
-              } else {
-                console.error('Failed to switch network:', error);
-              }
-            }
-          } else {
-            console.log('MetaMask not detected');
-          }
-        };
+      //       try {
+      //         // 切换到 Mumbai Testnet
+      //         await window.ethereum.request({
+      //           method: 'wallet_switchEthereumChain',
+      //           params: [
+      //             {
+      //               chainId: '0x13881',
+      //             },
+      //           ],
+      //         });
+      //         console.log('Switched to Mumbai Testnet');
+      //       } catch (error) {
+      //         // 检查错误类型，如果是因为网络不存在而报错，则添加 Mumbai Testnet
+      //         if (
+      //           error.code === 4902 || // MetaMask error code
+      //           (error.message && error.message.includes('networkId'))
+      //         ) {
+      //           try {
+      //             await window.ethereum.request({
+      //               method: 'wallet_addEthereumChain',
+      //               params: [
+      //                 {
+      //                   chainId: '0x13881',
+      //                   chainName: 'Mumbai',
+      //                   nativeCurrency: {
+      //                     name: 'MATIC',
+      //                     symbol: 'MATIC',
+      //                     decimals: 18,
+      //                   },
+      //                   rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+      //                 },
+      //               ],
+      //             });
+      //             console.log('Added Mumbai Testnet');
+      //           } catch (addError) {
+      //             console.error('Failed to add network:', addError);
+      //           }
+      //         } else {
+      //           console.error('Failed to switch network:', error);
+      //         }
+      //       }
+      //     } else {
+      //       console.log('MetaMask not detected');
+      //     }
+      //   };
       
-        checkMetaMaskNetwork();
-      }, []);
+      //   checkMetaMaskNetwork();
+      // }, []);
 
       useEffect(() => {
         async function fetchBalance() {
