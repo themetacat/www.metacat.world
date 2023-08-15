@@ -927,13 +927,6 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                   params: [
                     {
                       chainId: '0x13881',
-                      chainName: 'Mumbai',
-                      nativeCurrency: {
-                        name: 'MATIC',
-                        symbol: 'MATIC',
-                        decimals: 18,
-                      },
-                      rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
                     },
                   ],
                 });
