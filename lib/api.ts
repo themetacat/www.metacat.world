@@ -289,6 +289,7 @@ class API {
 
     return json;
   }
+
 //详情页列表页
   public async getBagsDetail(TBAAddress): Promise<any> {
     const search = qs.stringify({ TBAAddress}, { addQueryPrefix: true });
@@ -298,6 +299,7 @@ class API {
 
     return json;
   }
+
 //详情页TBA
   public async getBagsNum(tokenId): Promise<any> {
     const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
@@ -311,12 +313,39 @@ class API {
 
     return json;
   }
+
 //列表页
   public async getBagsList(address): Promise<any> {
     const search = qs.stringify({ address}, { addQueryPrefix: true });
     const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&withMetadata=true&pageSize=48`;
 
     const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getAccount(tokenId): Promise<any> {
+    const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
+    // const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&tokenId=${tokenId}&refreshCache=false`;
+    const url = `https://polygon-mumbai.g.alchemy.com/nft/v3/0jIWuk4VdK14pDWrrwFoXaSShg_2tu32/refreshNftMetadata`;
+
+    const res = await fetch(url, {
+      method: 'post',
+      headers: {accept: 'application/json', 'content-type': 'application/json'},
+      // headers: {
+      //   'Content-Type': 'application/x-www-form-urlencoded',
+      // },
+      body: JSON.stringify({contractAddress: '0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c', tokenId: tokenId})
+      // body: search,
+    });
+    const options = {
+      method: 'POST',
+      headers: {accept: 'application/json', 'content-type': 'application/json'},
+      body: JSON.stringify({contractAddress: '0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c', tokenId: '44'})
+    };
+    
+    
     const json = await res.json();
 
     return json;

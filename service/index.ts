@@ -32,6 +32,25 @@ export const getBagsNum = async (tokenId) => {
   return json;
 };
 
+export const getAccount = async (tokenId) => {
+  const search = qs.stringify({ tokenId }, { addQueryPrefix: true });
+  const url = `/api/bags_account${search}`;
+
+  const res = await fetch(url, {
+    method: 'post',
+    headers: {accept: 'application/json', 'content-type': 'application/json'},
+    // headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded',
+    // },
+    body: JSON.stringify({contractAddress: '0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c', tokenId: tokenId})
+    // body: search,
+  });
+  
+  const json = await res.json();
+
+  return json;
+};
+
 export const getBagsList = async (address) => {
   const search = qs.stringify({ address }, { addQueryPrefix: true });
   const url = `/api/bags_list${search}`;

@@ -47,6 +47,15 @@
     right: 20px;
     top: 20px;
   }
+  .btnAccount{
+    width: 150px;
+    color: #4d4d50;
+    height: 30px;
+    background-color: #fff;
+    margin-left: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
   .worldCon{
     position: absolute;
     top: 15px;
