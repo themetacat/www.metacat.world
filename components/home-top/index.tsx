@@ -1294,7 +1294,7 @@ web3.eth.getBalance(walletAddress)
     // </>
     <>
     <div className={cn((0.01 * num).toFixed(3) >= ethBalance?style.content1:style.content,)}>
-            <span>{(0.01 * num).toFixed(2)}</span>
+            <span>{(0.01 * num).toFixed(2)} MATIC</span>
             <p className={cn(style.supply1)}>
               Supply:
               <span>{mintNum}</span>

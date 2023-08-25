@@ -3,9 +3,21 @@ import HomePage from "../../../../components/home-page";
 import Page from "../../../../components/page";
 import { toast } from "react-hot-toast";
 import { SITE_NAME, META_DESCRIPTION } from "../../../../common/const";
+import WalletConnect from '@walletconnect/client';
+import  WalletConnectProvider  from '@walletconnect/web3-provider';
+import { useWalletConnect } from '@walletconnect/react-native-dapp';
+import { buildApprovedNamespaces } from '@walletconnect/utils'
 
+// import { SessionTypes,ICore } from '@walletconnect/types';
+import { Core } from '@walletconnect/core'
+import { Web3Wallet} from '@walletconnect/web3wallet'
+import QRCodeModal from "@walletconnect/qrcode-modal";
+import AuthClient from "@walletconnect/auth-client";
+import SignClient from "@walletconnect/sign-client";
 import { useWalletProvider } from "../../../../components/web3modal";
 import { createWalletClient, http, custom, WalletClient, Account } from "viem";
+// const WalletConnect = require('@walletconnect/client').default;
+const { url} = require('url');
 import { TokenboundClient } from "@tokenbound/sdk";
 import { polygonMumbai } from "viem/chains";
 import cn from "classnames";
@@ -31,11 +43,19 @@ export default function Matic() {
   const [title, setTitle] = useState('');
   const [world, setWorld] = useState('');
   const [getCode, setGetCode] = useState(false);
+  const [popUp, setPopUp] = useState(false);
+  const [editNum, setEditNum] = useState('WalletConnect URI');
   const [dataInfoList, setDataInfoList] = React.useState([] || null);
+  
   const meta = {
     title: ` ${SITE_NAME}`,
     description: META_DESCRIPTION,
   };
+
+  const core = new Core({
+    projectId:'ff09b474e78c83e2d6e7c7091f9d3517'
+  })
+
   const web3 = useWalletProvider();
   // const truncatedAccount =
   // `${tokenboundAccount}`.slice(0, 6) +
@@ -302,8 +322,231 @@ const RefreshMetadata =()=>{
     
   })
 }
+
+const wallet =()=>{
+  setPopUp(true)
+  setEditNum('WalletConnect URI')
+}
+const handleBlur = ()=>{
+  
+}
+const handleNumChange =(event)=>{
+  setEditNum(event.target.value)
+}
+
+const connect = async (val) => {
+  // 解析二维码URL
+  console.log(val);
+  console.log(core,22);
+  
+  const web3wallet = await Web3Wallet.init({
+    core, // <- pass the shared `core` instance
+    metadata: {
+      name: 'WearablePack',
+      description: 'WearablePack',
+      url: 'https://wearablepack.xyz',
+      icons: []
+    },
+  })
+
+  const request = {
+    method: 'eth_requestAccounts',//eth_requestAccounts
+    params: [
+      {
+        approved: true,
+        chainId: [80001,11155111],
+        accounts: ['0x79EF3DA763754387F06022Cf66c2668854B3389B'],
+        methods: ['eth_sendTransaction', 'per///sonal_sign','wc_sessionPropose'],
+        events: ['accountsChanged', 'chainChanged'],
+        uri : "wc_sessionPropose"
+      },
+    ],
+  };
+  console.log(request,3333);
+
+  
+  window.ethereum.send(request, (error, result) => {
+    console.log(99999);
+    
+    if (error) {
+      // 处理错误
+      console.error(error);
+    } else {
+      // 处理来自钱包客户端的会话提案响应1
+      console.log(result);
+    }
+  });
+
+  
+  
+
+  // web3wallet.on('session_proposal', async sessionProposal => {
+  //   const { id, params } = sessionProposal
+  
+  //   const approvedNamespaces = buildApprovedNamespaces({
+  //     proposal: params,
+  //     supportedNamespaces: {
+  //       eip155: {
+  //         chains: ['80001',],
+  //         methods: ['eth_sendTransaction', 'personal_sign'],
+  //         events: ['accountsChanged', 'chainChanged'],
+  //         accounts: [
+  //           '80001:0x79EF3DA763754387F06022Cf66c2668854B3389B',
+  //         ]
+  //       }
+  //     }
+  //   })
+  // console.log(approvedNamespaces,3333);
+  
+  //   const session = await web3wallet.approveSession({
+  //     id,
+  //     namespaces: approvedNamespaces
+  //   })
+  //   console.log(session,55556);
+    
+  // })
+  
+  // web3wallet.on('session_proposal', async (sessionProposal) => {
+  //   const { id, params } = sessionProposal;
+  
+  //   // 处理 session proposal，例如检查权限、验证提案等
+  
+  //   const approvedNamespaces = buildApprovedNamespaces({
+  //     proposal: params,
+  //     supportedNamespaces: {
+  //       eip155: {
+  //         chains: ['eip155:1', 'eip155:137'],
+  //         methods: ['eth_sendTransaction', 'personal_sign'],
+  //         events: ['accountsChanged', 'chainChanged'],
+  //         accounts: [
+  //           'eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb',
+  //           'eip155:137:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+  //         ]
+  //       }
+  //     }
+  //   });
+  
+  //   const response = {
+  //     approved: true, // 设置会话提案是否批准
+  //     namespaces: web3wallet.metadata
+  //   };
+  // console.log(response,321);
+  
+  //   // web3wallet.sendSessionRequestResponse(id, response);
+  // });
+  // console.log(web3wallet,5555);
+  
+// 手动触发会话提议
+// const sessionProposal  = {
+//   id: 'unique-session-id',
+//   params: {} // 添加适当的参数
+// };
+
+// web3wallet.on('session_proposal',null).emit(sessionProposal);
+  // const { connect } = useWalletConnect();
+  // const parsedURL = new URL(val);
+  // const session = parsedURL.protocol === 'wc:' ? parsedURL.pathname.slice(1) : parsedURL.host;
+  // const bridge = parsedURL.searchParams.get('bridge');
+  // const key = parsedURL.searchParams.get('key'); // 修改这里的键名
+  // const uri = key;
+
+  // const parsedURI = val.split("wc:").pop();
+  // const [sessionId, version] = parsedURI.split("@");
+  
+  // const bridge = new URL(val).searchParams.get("bridge");
+  // const key = new URL(val).searchParams.get("key");
+  
+  // const connectionOptions = {
+  //   uri: `wc:${sessionId}@${version}`,
+  //   bridge,
+  //   key,
+  // };
+  // const signClient = await SignClient.init({
+  //   projectId: "31e7b421de4c6ef0a606174038828e76",
+  // });
+  // console.log(signClient.opts.projectId);
+  
+  const authClient = await AuthClient.init({
+    projectId:'ff09b474e78c83e2d6e7c7091f9d3517',
+    // iss: `did:pkh:eip155:1:<WALLET_ADDRESS>`,
+
+    metadata:web3wallet.metadata
+  });
+
+  await authClient.core.pairing.pair({uri: val });
+  // const parsedURI = val.split("?")[0];
+  // const [sessionId, version] = parsedURI.split("@");
+  
+  // const url = new URL(val);
+  // const bridge = url.searchParams.get("bridge");
+  // const session = url.searchParams.get("key");
+  
+  // const connectionOptions = {
+  //   uri: parsedURI,
+  //   bridge,
+  //   session,
+  // };
+
+  // console.log(connectionOptions);
+  
+  // const connectionOptions = {
+  //   uri,
+  //   bridge,
+  //   session,
+  // };
+// 连接并进行登录
+// const connector = new WalletConnect({});
+
+// connector.connect(connectionOptions as ICreateSessionOptions)
+//   .then(() => {
+//     // 登录成功，执行相应操作
+//     console.log('登录成功！');
+//     // 可执行其他逻辑或将连接保存到全局上下文中
+//   })
+//   .catch((error) => {
+//     // 处理登录错误
+//     console.error('登录失败:', error);
+//   });
+  return
+  const provider = new WalletConnectProvider({
+    infuraId: 'f9d7d835ed864a299a13e841a1b654f8',
+    bridge: 'https://bridge.walletconnect.org',
+  });
+
+  // 重置 provider 状态
+  if (provider.wc.connected) {
+    await provider.disconnect();
+  }
+
+  provider.on('connect', () => {
+    // 连接成功时触发
+    console.log('Connected with WalletConnect');
+  });
+
+  provider.on('disconnect', (error) => {
+    // 连接断开时触发
+    console.error('Disconnected from WalletConnect:', error);
+  });
+
+  try {
+    // await provider.enable();
+    // // const web3 = new Web3(provider);
+    // const web3s = new Web3(window.ethereum);
+     // 使用二维码 URL 进行连接
+     await provider.connect({
+      uri: val
+    });
+
+      // 连接成功后的处理逻辑
+      console.log('Connected:', provider.connected, provider.accounts);
+  } catch (error) {
+    console.error('Failed to connect with WalletConnect:', error);
+  }
+};
+
     return (
-      <Page meta={meta} className={cn("", style.page)}>
+      <>
+      <Page meta={meta} className={cn("", popUp===true?style.page1:style.page)}>
         <HomePage />
         <div className={style.container}>
           <div className={style.cont}>
@@ -318,7 +561,8 @@ const RefreshMetadata =()=>{
               getCode===true?
               <div className={style.btnAccount} onClick={(id)=>{
                 btnAccount(id)
-              }}>Deploy Account</div>:<div className={style.btnAccount} >Deployed</div>
+              }}>Deploy Account</div>:
+              <div className={style.btnAccount} >Deployed</div>
             }
            
             <div className={style.btnAccount} onClick={RefreshMetadata}>Refresh metadata</div>
@@ -371,8 +615,34 @@ const RefreshMetadata =()=>{
            </>
             )}
           </div>
-          
+         
         </div>
+       
       </Page>
+      {popUp===true?<div className={style.popUp}>
+          <img src="/images/close-pop.png" alt="" className={style.conRendImg}
+                    onClick={()=>{
+                      setPopUp(false);
+                    }}/>
+            <p className={style.p1}>Log in as your NFT</p>
+            <p className={style.p2}>Step One</p>
+            <p className={style.p3}><span className={style.spanCo}>Open WalletConnect</span> on the site you want to login as your NFT with</p>
+            <p className={style.p2}>Step Two</p>
+            <p className={style.p3}>Click the <span className={style.spanCo}>copy to clipboard</span> icon in the top right corner of the modal</p>
+            <p className={style.p2}>Step Three</p>
+            <p className={style.p3}><span className={style.spanCo}>Return to tokenbound.org,</span> paste the code into the input below, and click connect</p>
+            <div><input   
+                  type='string'
+                  className={cn(style.numIn)}
+                  value={editNum}
+                  onChange={handleNumChange}
+                  onBlur={handleBlur}
+                  style={{ appearance: "none" }}
+                  autoFocus /></div>
+            <div className={style.conBttn} onClick={()=>{
+              connect(editNum)
+            }}>Connect</div>
+          </div>:null}
+      </>
     );
   };
