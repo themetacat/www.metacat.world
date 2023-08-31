@@ -47,6 +47,14 @@ function MyApp({ Component, pageProps }) {
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
       />
+      {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-P4EB21K2DV"></script> */}
+      {/* <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-P4EB21K2DV');
+</script> */}
       <Script
         id="gtag-init"
         strategy="afterInteractive"

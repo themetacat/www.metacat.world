@@ -52,9 +52,9 @@ export default function Matic() {
     description: META_DESCRIPTION,
   };
 
-  const core = new Core({
-    projectId:'ff09b474e78c83e2d6e7c7091f9d3517'
-  })
+  // const core = new Core({
+  //   projectId:'ff09b474e78c83e2d6e7c7091f9d3517'
+  // })
 
   const web3 = useWalletProvider();
   // const truncatedAccount =
@@ -337,47 +337,62 @@ const handleNumChange =(event)=>{
 const connect = async (val) => {
   // 解析二维码URL
   console.log(val);
-  console.log(core,22);
+  // console.log(core,22);
   
-  const web3wallet = await Web3Wallet.init({
-    core, // <- pass the shared `core` instance
-    metadata: {
-      name: 'WearablePack',
-      description: 'WearablePack',
-      url: 'https://wearablepack.xyz',
-      icons: []
-    },
-  })
+  // const web3wallet = await Web3Wallet.init({
+  //   core, // <- pass the shared `core` instance
+  //   metadata: {
+  //     name: 'WearablePack',
+  //     description: 'WearablePack',
+  //     url: 'https://wearablepack.xyz',
+  //     icons: []
+  //   },
+  // })
 
-  const request = {
-    method: 'eth_requestAccounts',//eth_requestAccounts
-    params: [
-      {
-        approved: true,
-        chainId: [80001,11155111],
-        accounts: ['0x79EF3DA763754387F06022Cf66c2668854B3389B'],
-        methods: ['eth_sendTransaction', 'per///sonal_sign','wc_sessionPropose'],
-        events: ['accountsChanged', 'chainChanged'],
-        uri : "wc_sessionPropose"
-      },
-    ],
-  };
-  console.log(request,3333);
+  // const request = {
+  //   method: 'eth_requestAccounts',//eth_requestAccounts
+  //   params: [
+  //     {
+  //       // approved: true,
+  //       chains: '80001',//[80001,11155111],
+  //       // accounts: ['0x79EF3DA763754387F06022Cf66c2668854B3389B'],
+  //       methods: 'eth_sendTransaction',//['eth_sendTransaction', 'per///sonal_sign','wc_sessionPropose'],
+  //       events: 'accountsChanged',//['accountsChanged', 'chainChanged'],
+  //       // uri : "wc_sessionPropose"
+  //     },
+  //   ],
+  // };
+  // console.log(request,3333);
 
   
-  window.ethereum.send(request, (error, result) => {
-    console.log(99999);
+  // window.ethereum.send(request, (error, result) => {
     
-    if (error) {
-      // 处理错误
-      console.error(error);
-    } else {
-      // 处理来自钱包客户端的会话提案响应1
-      console.log(result);
-    }
-  });
+  //   if (error) {
+  //     // 处理错误
+  //     console.error(error);
+  //   } else {
+  //     // 处理来自钱包客户端的会话提案响应1
+  //     console.log(result);
+  //   }
+  // });
+console.log(process,333);
 
-  
+  const core = new Core({
+    logger: 'debug',
+    projectId: 'ff09b474e78c83e2d6e7c7091f9d3517',
+    relayUrl: val ?? process.env.NEXT_PUBLIC_RELAY_URL
+  })
+  console.log(core,222);
+
+  const web3wallet = await Web3Wallet.init({
+    core,
+    metadata: {
+      name: 'React Web3Wallet',
+      description: 'React Web3Wallet for WalletConnect',
+      url: 'https://www.wearablepack.xyz/',
+      icons: ['https://avatars.githubusercontent.com/u/37784886']
+    }
+  })
   
 
   // web3wallet.on('session_proposal', async sessionProposal => {
@@ -466,14 +481,15 @@ const connect = async (val) => {
   // });
   // console.log(signClient.opts.projectId);
   
-  const authClient = await AuthClient.init({
-    projectId:'ff09b474e78c83e2d6e7c7091f9d3517',
-    // iss: `did:pkh:eip155:1:<WALLET_ADDRESS>`,
+  // const authClient = await AuthClient.init({
+  //   projectId:'ff09b474e78c83e2d6e7c7091f9d3517',
+  //   // iss: `did:pkh:eip155:1:<WALLET_ADDRESS>`,
 
-    metadata:web3wallet.metadata
-  });
+  //   metadata:web3wallet.metadata
+  // });
 
-  await authClient.core.pairing.pair({uri: val });
+  // await authClient.core.pairing.pair({uri: val });
+  
   // const parsedURI = val.split("?")[0];
   // const [sessionId, version] = parsedURI.split("@");
   
@@ -559,10 +575,13 @@ const connect = async (val) => {
             </div>
             {
               getCode===true?
-              <div className={style.btnAccount} onClick={(id)=>{
+              <div className={style.btnAccount}
+               onClick={(id)=>{
                 btnAccount(id)
               }}>Deploy Account</div>:
-              <div className={style.btnAccount} >Deployed</div>
+              <div className={style.btnAccount}
+              //  onClick={wallet}
+               >Deployed</div>
             }
            
             <div className={style.btnAccount} onClick={RefreshMetadata}>Refresh metadata</div>
