@@ -4,15 +4,19 @@ import Page from "../../../../components/page";
 import { toast } from "react-hot-toast";
 import { SITE_NAME, META_DESCRIPTION } from "../../../../common/const";
 import WalletConnect from '@walletconnect/client';
-import  WalletConnectProvider  from '@walletconnect/web3-provider';
+// import  WalletConnectProvider  from '@walletconnect/web3-provider';
+import ModalStore from '@/store/ModalStore'
 import { useWalletConnect } from '@walletconnect/react-native-dapp';
-import { buildApprovedNamespaces } from '@walletconnect/utils'
-
+// import { buildApprovedNamespaces } from '@walletconnect/utils'
+// import { SignClientTypes } from '@walletconnect/types'
+import dynamic from "next/dynamic";
+// import VoxFiled from '../vox';
+const VoxFiled = dynamic(import("../vox"),{ ssr: false }); 
 // import { SessionTypes,ICore } from '@walletconnect/types';
 import { Core } from '@walletconnect/core'
 import { Web3Wallet} from '@walletconnect/web3wallet'
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import AuthClient from "@walletconnect/auth-client";
+// import AuthClient from "@walletconnect/auth-client";
 import SignClient from "@walletconnect/sign-client";
 import { useWalletProvider } from "../../../../components/web3modal";
 import { createWalletClient, http, custom, WalletClient, Account } from "viem";
@@ -334,10 +338,22 @@ const handleNumChange =(event)=>{
   setEditNum(event.target.value)
 }
 
+// const onSessionProposal = useCallback(
+//   (proposal: SignClientTypes.EventArguments['session_proposal']) => {
+//     console.log(11111);
+    
+//     //onSessionProposal方法配置proposal参数进行操作
+//     ModalStore.open('SessionProposalModal', { proposal })
+//     //ModalStore是一个用于管理模态框状态和操作的对象或组件
+//   },
+//   []
+// )
+
 const connect = async (val) => {
   // 解析二维码URL
   console.log(val);
   // console.log(core,22);
+
   
   // const web3wallet = await Web3Wallet.init({
   //   core, // <- pass the shared `core` instance
@@ -378,9 +394,9 @@ const connect = async (val) => {
 console.log(process,333);
 
   const core = new Core({
-    logger: 'debug',
+    // logger: 'debug',
     projectId: 'ff09b474e78c83e2d6e7c7091f9d3517',
-    relayUrl: val ?? process.env.NEXT_PUBLIC_RELAY_URL
+    // relayUrl: val ?? process.env.NEXT_PUBLIC_RELAY_URL
   })
   console.log(core,222);
 
@@ -389,38 +405,67 @@ console.log(process,333);
     metadata: {
       name: 'React Web3Wallet',
       description: 'React Web3Wallet for WalletConnect',
-      url: 'https://www.wearablepack.xyz/',
-      icons: ['https://avatars.githubusercontent.com/u/37784886']
+      url: 'www.walletconnect.com',
+      icons: []
     }
   })
-  
+  console.log(web3wallet,3654);
 
-  // web3wallet.on('session_proposal', async sessionProposal => {
-  //   const { id, params } = sessionProposal
-  
-  //   const approvedNamespaces = buildApprovedNamespaces({
-  //     proposal: params,
-  //     supportedNamespaces: {
-  //       eip155: {
-  //         chains: ['80001',],
-  //         methods: ['eth_sendTransaction', 'personal_sign'],
-  //         events: ['accountsChanged', 'chainChanged'],
-  //         accounts: [
-  //           '80001:0x79EF3DA763754387F06022Cf66c2668854B3389B',
-  //         ]
-  //       }
-  //     }
-  //   })
-  // console.log(approvedNamespaces,3333);
-  
-  //   const session = await web3wallet.approveSession({
-  //     id,
-  //     namespaces: approvedNamespaces
-  //   })
-  //   console.log(session,55556);
+  // web3wallet.on('session_proposal', onSessionProposal)
+
+//   web3wallet.on('session_proposal', async sessionProposal => {
+//     try{
+//       const { id, params } = sessionProposal
+//       console.log(sessionProposal,5555);
+      
+//         const approvedNamespaces = buildApprovedNamespaces({
+//           proposal: params,
+//           supportedNamespaces: {
+//             eip155: {
+//               chains: ['eip155:80001,eip155:137',],
+//               methods: ['eth_sendTransaction', 'personal_sign'],
+//               events: ['accountsChanged', 'chainChanged'],
+//               accounts: [
+//                 'eip155:80001:0x79EF3DA763754387F06022Cf66c2668854B3389B',
+//               ]
+//             }
+//           }
+//         })
+//       console.log(approvedNamespaces,3333);
+      
+//         const session = await web3wallet.approveSession({
+//           id,
+//           namespaces: approvedNamespaces
+//         })
+//         console.log(session,55556);
+//     }catch{
+// console.log('存在错误啊');
+
+//     }
+   
     
-  // })
+//   })
   
+  //  const signClient = await SignClient.init({
+  //   projectId: 'ff09b474e78c83e2d6e7c7091f9d3517',
+  //   metadata: {
+  //     name: 'React Web3Wallet',
+  //     description: 'React Web3Wallet for WalletConnect',
+  //     url: 'https://www.wearablepack.xyz/',
+  //     icons: ['https://avatars.githubusercontent.com/u/37784886']
+  //   }
+  //     })
+  //     console.log(signClient,33333);
+        // signClient.on("session_proposal", async (proposal) => {
+        //   console.log(66666666);
+          
+        //     // const { acknowledged } = await signClient.approve({
+        //     //   id: proposal.id,
+        //     //   namespaces,
+        //     // });
+        //     // const session = await acknowledged();
+        //   });
+
   // web3wallet.on('session_proposal', async (sessionProposal) => {
   //   const { id, params } = sessionProposal;
   
@@ -523,41 +568,7 @@ console.log(process,333);
 //     // 处理登录错误
 //     console.error('登录失败:', error);
 //   });
-  return
-  const provider = new WalletConnectProvider({
-    infuraId: 'f9d7d835ed864a299a13e841a1b654f8',
-    bridge: 'https://bridge.walletconnect.org',
-  });
-
-  // 重置 provider 状态
-  if (provider.wc.connected) {
-    await provider.disconnect();
-  }
-
-  provider.on('connect', () => {
-    // 连接成功时触发
-    console.log('Connected with WalletConnect');
-  });
-
-  provider.on('disconnect', (error) => {
-    // 连接断开时触发
-    console.error('Disconnected from WalletConnect:', error);
-  });
-
-  try {
-    // await provider.enable();
-    // // const web3 = new Web3(provider);
-    // const web3s = new Web3(window.ethereum);
-     // 使用二维码 URL 进行连接
-     await provider.connect({
-      uri: val
-    });
-
-      // 连接成功后的处理逻辑
-      console.log('Connected:', provider.connected, provider.accounts);
-  } catch (error) {
-    console.error('Failed to connect with WalletConnect:', error);
-  }
+  
 };
 
     return (
@@ -634,9 +645,9 @@ console.log(process,333);
            </>
             )}
           </div>
-         
+          <div><VoxFiled/></div>
         </div>
-       
+      
       </Page>
       {popUp===true?<div className={style.popUp}>
           <img src="/images/close-pop.png" alt="" className={style.conRendImg}
