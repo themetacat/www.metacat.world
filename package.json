@@ -29,7 +29,7 @@
     "@web3auth/core": "^4.3.2",
     "abitype": "^0.8.11",
     "ao-mesher": "^0.2.10",
-    "babylonjs": "^6.19.1",
+    "babylonjs": "^6.21.2",
     "babylonjs-loaders": "^6.19.1",
     "babylonjs-materials": "^6.19.1",
     "eslint-config-next": "13.2.3",

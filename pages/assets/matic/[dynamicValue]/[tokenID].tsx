@@ -3,7 +3,7 @@ import HomePage from "../../../../components/home-page";
 import Page from "../../../../components/page";
 import { toast } from "react-hot-toast";
 import { SITE_NAME, META_DESCRIPTION } from "../../../../common/const";
-import WalletConnect from "@walletconnect/client";
+// import WalletConnect from "@walletconnect/client";
 // import  WalletConnectProvider  from '@walletconnect/web3-provider';
 import ModalStore from "@/store/ModalStore";
 import { useWalletConnect } from "@walletconnect/react-native-dapp";
