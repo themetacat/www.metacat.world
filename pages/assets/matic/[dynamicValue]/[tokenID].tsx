@@ -101,9 +101,9 @@ export default function Matic() {
               } else {
                 setwearableType("Other");
               }
-              console.log(wearableType,222);
+              // console.log(wearableType,222);
             } else {
-              console.log(2333333);
+              // console.log(2333333);
 
               if (item.tokenUri.raw.includes("https://www.cryptovoxels.com")) {
                 if (wearableType !== "voxels") {
