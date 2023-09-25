@@ -953,7 +953,7 @@ export default function Matic() {
       >
         <HomePage />
 
-        {wearableType==='Voxels'? (
+        {wearableType==='voxels'? (
           <div style={{ marginTop: "20px" }}>
             <VoxFiled />
           </div>

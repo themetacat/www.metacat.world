@@ -2019,11 +2019,11 @@ modelList[the_wearable.hashValue] =false
     // 获取按钮元素
     const deleteButton = document.getElementById("mesh_dispose");
     const download_json_file = document.getElementById("download");
-    const up_load = document.getElementById("upload");
+    // const up_load = document.getElementById("upload");
     // 添加点击事件处理程序
     deleteButton.addEventListener("click", dispose_mesh);
     download_json_file.addEventListener("click", downloadCostume);
-    up_load.addEventListener("click", onLoadCostume);
+    // up_load.addEventListener("click", onLoadCostume);
 
     engine.runRenderLoop(function () {
       scene.render();
@@ -2032,6 +2032,7 @@ modelList[the_wearable.hashValue] =false
     window.addEventListener("resize", function () {
       engine.resize();
     });
+    onLoadCostume()
   }, []);
   const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 
@@ -2253,9 +2254,9 @@ modelList[the_wearable.hashValue] =false
             <button className={style.buton} id="download">
               Download
             </button>
-            <button className={style.buton} id="upload">
+            {/* <button className={style.buton} id="upload">
               Upload
-            </button>
+            </button> */}
           </div>
           <div id="wearable_list"></div>
         </div>

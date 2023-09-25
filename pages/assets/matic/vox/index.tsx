@@ -1722,6 +1722,8 @@ const tokenUri = item.tokenUri.raw
       element_dow.remove();
     }
 
+   
+
     async function onLoadCostume() {
       // console.log(router.query.tokenID);
 // console.log(getModelInfo(19));
@@ -1768,8 +1770,8 @@ const tokenUri = item.tokenUri.raw
     // 获取按钮元素
     const deleteButton = document.getElementById("mesh_dispose");
     const download_json_file = document.getElementById("download");
-    const up_load = document.getElementById('upload');
-    up_load.addEventListener('click', onLoadCostume);
+    // const up_load = document.getElementById('upload');
+    // up_load.addEventListener('click', onLoadCostume);
 
     // 添加点击事件处理程序
     deleteButton.addEventListener("click", dispose_mesh);
@@ -1782,6 +1784,8 @@ const tokenUri = item.tokenUri.raw
     window.addEventListener("resize", function () {
       engine.resize();
     });
+    onLoadCostume()
+
   }, []);
  
 
@@ -1848,6 +1852,8 @@ const tokenUri = item.tokenUri.raw
       z: event.target.value,
     }));
   };
+
+
 
   return (
     <>
@@ -2000,7 +2006,7 @@ const tokenUri = item.tokenUri.raw
           <div>
             <button className={style.buton} id="mesh_dispose">Remove</button>
             <button className={style.buton} id="download">Download</button>
-            <button className={style.buton} id="upload">Upload</button>
+            {/* <button className={style.buton} id="upload">Upload</button> */}
           </div>
           <div id="wearable_list"></div>
         </div>
