@@ -10,6 +10,35 @@ export const getCVEventList = async (cursor: number, count: number) => {
   return json;
 };
 
+export const getDataHandle = async (pointers) => {
+  const url = 'http://47.243.184.241/api/v1/get_dcl_wearable_content_entities';
+const headers = {
+    'content-type': 'application/json',
+};
+const data = {pointers};
+// fetch(url, {
+//     method: 'POST',
+//     headers: headers,
+//     body: JSON.stringify(pointers),
+// })
+// .then(response => response.json())
+// .then(data => console.log(data))
+// .catch(error => console.error('Error1111:', error));
+try {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(pointers),
+  });
+
+  const jsonData = await response.json();
+  return jsonData.data;
+} catch (error) {
+  console.error('Error:', error);
+  throw error;
+}
+};
+
 export const getBagsDetail = async (TBAAddress) => {
   const search = qs.stringify({ TBAAddress }, { addQueryPrefix: true });
   
@@ -30,6 +59,86 @@ export const getBagsNum = async (tokenId) => {
   const json = await res.json();
 
   return json;
+};
+
+export const getModelInfo = async (token_id) => {
+  const search = qs.stringify({ token_id }, { addQueryPrefix: true });
+  const url = `/api/get_model_info${search}`;
+
+  const res = await fetch(url);
+  
+  const json = await res.json();
+
+  return json;
+};
+
+export const rmBabylonModel = async (token,token_id) => {
+  const search = qs.stringify({ token_id }, { addQueryPrefix: true });
+  const url = `/api/rm_babylon_model${search}`;
+
+  const res = await fetch(url, {
+    method: 'get',
+    headers: {
+      Authorization: token,
+    },
+  });
+  const json = await res.json();
+
+  return json;
+};
+
+
+export const setModelInfo = async (token,costume) => {
+  // const search = qs.stringify({costume}, { addQueryPrefix: false });
+  // const url = `/api/set_model_info`;
+  // // const formData = new FormData();
+  // console.log(search);
+  
+  // // formData.append('costume',JSON.stringify({costume}))
+  // const res = await fetch(url, {
+  //   method: 'post',
+  //   headers: {
+  //     Authorization: token,
+  //     // 'Content-Type': 'application/json',
+  //     // 'Content-Type': 'application/x-www-form-urlencoded',
+  //   },
+  //   body: JSON.stringify({ costume})
+   
+  //   // body: search
+  // });
+
+  // console.log(costume,666);
+  
+  // const json = await res.json();
+
+  // return json;
+
+
+  // const url = '/api/set_model_info'; // 替换为你的接口地址
+  const url = 'http://8.130.23.16/api/v1/set_babylon_model_info'; // 替换为你的接口地址
+
+  const requestData = {
+    costume
+  };
+  // console.log(costume,55555555555);
+  
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData)
+  })
+    .then(response => response.json())
+    .then(data => {
+      // 处理响应数据
+      console.log(data,);
+    })
+    .catch(error => {
+      console.error('Error:', error,);
+    });
+
 };
 
 export const getAccount = async (tokenId) => {

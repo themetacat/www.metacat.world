@@ -100,7 +100,7 @@
                 var parser = new vox.Parser();
                 // parser.parse(requestConfig.url).then(function (parsed) {
                  console.log(requestConfig.token_id);
-                parser.parse("./" + requestConfig.token_id+'.vox').then(function (parsed) {
+                parser.parse( "https://wearable.vercel.app/"+requestConfig.url.hash+".vox").then(function (parsed) {
                 // parser.parse("./910a5b27-374e-45cc-b68c-99baf909b8d4.vox").then(function (parsed) {
                     //     console.log(parsed);
                     // })
@@ -128,7 +128,7 @@
                         let { x, y, z, colorIndex } = row
                         field.set(x, y, z, colorIndex + (1 << 15))
                     })
-
+console.log(parsed.voxels);
                     const vertData = aoMesher(field)
 
                     // Convert the vertData format into a babylon.js Mesh

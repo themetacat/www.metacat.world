@@ -35,6 +35,7 @@ import {
   loginSignature,
   getBaseInfo,
   getCVEventList,
+  rmBabylonModel
 } from "../../service";
 
 import { convert, getToken, removeToken, setToken } from "../../common/utils";
@@ -559,6 +560,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     if (idTokenWeb3 && web3AuthAddress) {
       setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
       const webGetBase = getBaseInfo(getToken("atk"));
+
       webGetBase.then((webGetBase1) => {
         state.setState({
           profile: {
@@ -621,6 +623,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       }, 2000);
     } else {
       const renConcent = getBaseInfo(metaCatAtk);
+  
 
       renConcent.then((renConcent1) => {
         setProfileConcent(renConcent1.profile?.address);

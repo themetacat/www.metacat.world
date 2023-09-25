@@ -223,7 +223,7 @@ export default function Web3ModalProvider({
   }, [getNetwork, subscribeProvider]);
 
   React.useEffect(() => {
-    console.log(getNetwork,2222);
+    // console.log(getNetwork,2222);
     
     // eslint-disable-next-line prefer-object-spread
     const params = Object.assign(

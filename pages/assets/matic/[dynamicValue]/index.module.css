@@ -17,7 +17,7 @@
   z-index: 1; /* 确保遮罩层在页面元素之上 */
 }
 .container{
-  height: 100vh;
+  /* height: 100vh; */
     /* width: 100vw; */
     background-color: rgba(0,0,0,0.8);
 padding-top: 20px;
@@ -69,6 +69,7 @@ padding-top: 20px;
     margin-left: 20px;
     text-align: center;
     cursor: pointer;
+    border-radius:5px;
   }
   .worldCon{
     position: absolute;

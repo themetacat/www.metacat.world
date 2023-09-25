@@ -25,6 +25,7 @@
    border-radius: 20px;
    border: 1px solid #fff;
    color: #fff;
+   cursor: pointer;
  }
  .btnContent{
     position: absolute;

@@ -8,9 +8,9 @@ import aoMesher from "ao-mesher";
 import * as BABYLON from "babylonjs";
 import "@babylonjs/loaders/glTF";
 import "babylonjs-loaders";
-
+import { getModelInfo,setModelInfo,getBagsDetail} from "../../../../service";
 // console.log(a,666666);
-
+import Router, { useRouter } from "next/router";
 // import avatarModel from './41.vox';
 // console.log(avatarModel,6666);
 
@@ -18,38 +18,51 @@ import "babylonjs-materials";
 import vox from "vox.js";
 
 export default function VoxFiled() {
+const router = useRouter();
+
   // eslint-disable-next-line @next/next/no-sync-scripts
   <>
-    <script src="https://cdn.babylonjs.com/babylon.js"></script>
-    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vox.js@1.1.0/build/vox.min.js"></script>
+    {/* <script src="https://cdn.babylonjs.com/babylon.js"></script> */}
+    {/* <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script> */}
+    {/* <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script> */}
+    {/* <script src="https://cdn.jsdelivr.net/npm/vox.js@1.1.0/build/vox.min.js"></script> */}
   </>;
   const [editNum, setEditNum] = useState(null);
-  const [editNumPoY, setEditNumPoY] = useState(null);
-  const [editNumPoX, setEditNumPoX] = useState(null);
-  const [editNumPoZ, setEditNumPoZ] = useState(null);
-  const [editNumRoX, setEditNumRoX] = useState(null);
-  const [editNumRoY, setEditNumRoY] = useState(null);
-  const [editNumRoZ, setEditNumRoZ] = useState(null);
-  const [editNumSaX, setEditNumSaX] = useState(null);
-  const [editNumSaY, setEditNumSaY] = useState(null);
-  const [editNumSaZ, setEditNumSaZ] = useState(null);
+  // const [editNumPoY, setEditNumPoY] = useState(null);
+  // const [editNumPoX, setEditNumPoX] = useState(null);
+  // const [editNumPoZ, setEditNumPoZ] = useState(null);
+  // const [editNumRoX, setEditNumRoX] = useState(null);
+  // const [editNumRoY, setEditNumRoY] = useState(null);
+  // const [editNumRoZ, setEditNumRoZ] = useState(null);
+  // const [editNumSaX, setEditNumSaX] = useState(null);
+  // const [editNumSaY, setEditNumSaY] = useState(null);
+  // const [editNumSaZ, setEditNumSaZ] = useState(null);
+  const [editNumPo, setEditNumPo] = useState({ x: 0, y: 0 ,z:0} as any);
+  // const [editNumPoZ, setEditNumPoZ] = useState(0);
+  const [editNumRoX, setEditNumRoX] = useState({ x: 0, y: 0 ,z:0} as any);
+  // const [editNumRoY, setEditNumRoY] = useState(0);
+  // const [editNumRoZ, setEditNumRoZ] = useState(0);
+  const [editNumSaX, setEditNumSaX] = useState({ x: 1, y: 1 ,z:1} as any);
   const [getdroppedWearable, setGetdroppedWearable] = useState({});
   const [voxMeshState, setVoxMeshState] = useState(null);
   // var voxMesh = null;
+  var last_rotation = {};
+  let voxMesh;
+  let targetBone = null;
+  let attachmentId = null;
+ const all_last_rotation = React.useRef({});
+  let modelList = [];
   const get_vox_data = (requestConfig, voxMesh) => {
     var parser = new vox.Parser();
-    console.log(requestConfig,'-----------');
+    // console.log(requestConfig,55656);
     
     parser
       .parse(
-        "https://www.voxels.com/c/v2/polygon/0x1e3D804415dCbb7ceA3478f176e123562e09b514/" +
-          requestConfig.token_id +
-          "/vox"
+        "https://www.voxels.com"+requestConfig.url
+          // "https://wearable.vercel.app/"+requestConfig.url.hash+".vox"
       )
       .then(function (parsed) {
-        console.log(parsed, "有没有");
+        // console.log(parsed, "有没有");
 
         let size = parsed.size;
 
@@ -158,7 +171,7 @@ export default function VoxFiled() {
         }
 
         requestConfig.positions = positions;
-console.log(positions);
+// console.log(positions);
 
         requestConfig.indices = indices;
         requestConfig.colors = colors;
@@ -175,7 +188,9 @@ console.log(positions);
         vertexData.positions = t;
         vertexData.indices = r;
         vertexData.colors = co;
-
+        // console.log(t);
+        // console.log(r)
+        // console.log(co);
         // BABYLON.VertexData.ComputeNormals(positions, indices, normals);
         // vertexData.normals = normals;
 
@@ -183,65 +198,97 @@ console.log(positions);
         // voxMesh.position.y = 0.926;
         // voxMesh.position.y = 1.509;
 
+      
+
+
         voxMesh.checkCollisions = false;
         voxMesh.refreshBoundingInfo();
         return voxMesh;
       });
+      (window as any).get_vox_data = get_vox_data;
   };
   let skeleton = null;
   function num(value) {
-    console.log(value,'value');
+    // console.log(value,'value');
     
     const t = parseFloat(value);
-    return t.toString() === value.toString() ? t : null;
+    return t;
+    // return t.toString() === value.toString() ? t : null;
   }
-  var costume = {
-    id: 79413,
-    wallet: "0x60ea96f57b3a5715a90dae1440a78f8bb339c92e",
+  let costume = {
+    token_id: router.query.tokenID,
+    // wallet: "0x60ea96f57b3a5715a90dae1440a78f8bb339c92e",
     attachments: [],
     skin: null,
     name: "Costume-2",
-    default_color: "#f3f3f3",
+    // default_color: "#f3f3f3",
   };
 
   // const updateAttachment = ()=>{
 
   // }
+  // function updateAttachment() {
+  //   if (!voxMesh) {
+  //     console.log("no voxMesh");
+  //     return;
+  //   }
+  //   if (costume.attachments)
+  //     costume.attachments.forEach((t) => {
+  //       if (t.uuid == attachmentId) {
+  //         t.position = [
+  //           voxMesh.position.x.toFixed(2),
+  //           voxMesh.position.y.toFixed(2),
+  //           voxMesh.position.z.toFixed(2),
+  //         ];
+  //         t.rotation = [
+  //           voxMesh.rotation.x.toFixed(2),
+  //           voxMesh.rotation.y.toFixed(2),
+  //           voxMesh.rotation.z.toFixed(2),
+  //         ];
+  //         t.scaling = [
+  //           voxMesh.scaling.x.toFixed(2),
+  //           voxMesh.scaling.y.toFixed(2),
+  //           voxMesh.scaling.z.toFixed(2),
+  //         ];
+  //         return true;
+  //       }
+  //     });
+  // }
+
   function updateAttachment() {
     if (!voxMesh) {
-      console.log("no voxMesh");
-      return;
+        console.log('no voxMesh');
+        return
     }
+    
     if (costume.attachments)
-      costume.attachments.forEach((t) => {
-        if (t.uuid == attachmentId) {
-          t.position = [
-            voxMesh.position.x.toFixed(2),
-            voxMesh.position.y.toFixed(2),
-            voxMesh.position.z.toFixed(2),
-          ];
-          t.rotation = [
-            voxMesh.rotation.x.toFixed(2),
-            voxMesh.rotation.y.toFixed(2),
-            voxMesh.rotation.z.toFixed(2),
-          ];
-          t.scaling = [
-            voxMesh.scaling.x.toFixed(2),
-            voxMesh.scaling.x.toFixed(2),
-            voxMesh.scaling.x.toFixed(2),
-          ];
-          return true;
+        costume.attachments.forEach((t => {
+            if (t.uuid == attachmentId) {
+                t.position = [voxMesh.position.x.toFixed(2), voxMesh.position.y.toFixed(2), voxMesh.position.z.toFixed(2)]
+                t.rotation = [parseFloat(voxMesh.rotation.x).toFixed(2), parseFloat(voxMesh.rotation.y).toFixed(2), parseFloat(voxMesh.rotation.z).toFixed(2)]
+
+                // t.rotation = [voxMesh.rotation.x.toFixed(2), voxMesh.rotation.y.toFixed(2), voxMesh.rotation.z.toFixed(2)]
+                t.scaling = [parseFloat(voxMesh.scaling.x).toFixed(2), parseFloat(voxMesh.scaling.y).toFixed(2), parseFloat(voxMesh.scaling.z).toFixed(2)]
+                all_last_rotation.current[attachmentId] = t.rotation
+// console.log(costume);
+const metaCatAtk = window.localStorage.getItem("METACAT_atk");
+// console.log(metaCatAtk,22222);
+
+                // console.log(setModelInfo(metaCatAtk,costume));
+                
+                setModelInfo(metaCatAtk,costume)
+                return true
+            }
         }
-      });
-  }
+        ));
+}
 
-  var voxMesh;
-  var targetBone = null;
-  var attachmentId = null;
+ 
 
-  const updatePosition = (type, index, value) => {
-    console.log(voxMesh, 3235,voxMeshState);
+  const updatePosition =(type, index, value) => {
+   
     voxMesh=voxMeshState;
+    
     if (!voxMesh) {
       console.log("voxMesh is Null");
       return;
@@ -261,42 +308,197 @@ console.log(positions);
     } else if (type === "rotation") {
       switch (index) {
         case 0:
-          voxMesh.rotation.x = num(value);
-          break;
-        case 1:
-          voxMesh.rotation.y = num(value);
-          break;
-        case 2:
-          voxMesh.rotation.z = num(value);
-          break;
+          voxMesh.rotation.x = num(value)
+          last_rotation['x'] = voxMesh.rotation.x
+          break
+      case 1:
+          voxMesh.rotation.y = num(value)
+          last_rotation['y'] = voxMesh.rotation.y
+          break
+      case 2:
+          voxMesh.rotation.z = num(value)
+          last_rotation['z'] = voxMesh.rotation.z
+          break
       }
     } else if (type === "scale") {
-      switch (index) {
-        case 0:
-          voxMesh.scaling.x = num(value);
-          break;
-        case 1:
-          voxMesh.scaling.y = num(value);
-          break;
-        case 2:
-          voxMesh.scaling.z = num(value);
-          break;
-      }
+      // switch (index) {
+      //   case 0:
+      //     voxMesh.scaling.x = num(value);
+      //     break;
+      //   case 1:
+      //     voxMesh.scaling.y = num(value);
+      //     break;
+      //   case 2:
+      //     voxMesh.scaling.z = num(value);
+      //     break;
+      // }
+      const scale_x = document.getElementById("scale[x]") as any;
+      const scale_y = document.getElementById("scale[y]")as any;
+      const scale_z = document.getElementById("scale[z]")as any;
+      // voxMesh.scaling.set(num(scale_x.value), num(scale_y.value), num(scale_z.value))
+      // console.log(voxMesh.scaling.x);
+      // return
+      
+      voxMesh.scaling.x = num(scale_x.value)
+      voxMesh.scaling.y = num(scale_y.value)
+      voxMesh.scaling.z = num(scale_z.value)
+
+      voxMesh.rotationQuaternion = null;
+      const rotation_x = document.getElementById(
+        "rotation[x]"
+      ) as HTMLInputElement;
+      const rotation_y = document.getElementById(
+        "rotation[y]"
+      ) as HTMLInputElement;
+      const rotation_z = document.getElementById(
+        "rotation[z]"
+      ) as HTMLInputElement;
+      voxMesh.rotation.x = parseFloat(rotation_x.value);
+      voxMesh.rotation.y = parseFloat(rotation_y.value);
+      voxMesh.rotation.z = parseFloat(rotation_z.value);
+      // last_rotation['x'] = voxMesh.rotation.x
+      // last_rotation['y'] = voxMesh.rotation.y
+      // last_rotation['z'] = voxMesh.rotation.z
+      last_rotation[0] = voxMesh.rotation.x;
+      last_rotation[1] = voxMesh.rotation.y;
+      last_rotation[2] = voxMesh.rotation.z;
     }
     updateAttachment();
   };
 
   useEffect(()=>{
-console.log(voxMeshState)
-  },[voxMeshState,editNum])
+// console.log(voxMeshState)
+  },[voxMeshState,editNum,voxMesh])
+
+  function generateUUID(e, random, r) {
+    let lastNsecs = 0;
+    let lastTimestamp = 0;
+    let lastClockSequence = null;
+    let nodeIdentifier = null;
+
+    let index = (random && r) || 0;
+    const uuidArray = random || new Array(16);
+    e = e || {};
+
+    let node = e.node || nodeIdentifier;
+    let clockSeq = e.clockSeq !== undefined ? e.clockSeq : lastClockSequence;
+
+    if (node === null || clockSeq === null) {
+      const random = getRandomValues();
+      if (node === null) {
+        node = nodeIdentifier = [
+          random[0] | 1,
+          random[1],
+          random[2],
+          random[3],
+          random[4],
+          random[5],
+        ];
+      }
+      if (clockSeq === null) {
+        clockSeq = lastClockSequence = ((random[6] << 8) | random[7]) & 16383;
+      }
+    }
+
+    let timestamp = e.timestamp !== undefined ? e.timestamp : Date.now();
+    let nsecs = e.nsecs !== undefined ? e.nsecs : lastNsecs + 1;
+
+    const clockOffset =
+      (timestamp - lastTimestamp + (nsecs - lastNsecs)) / 10000;
+
+    if (clockOffset < 0 && e.clockSeq === undefined) {
+      clockSeq = (clockSeq + 1) & 16383;
+    }
+
+    if (
+      (clockOffset < 0 || timestamp > lastTimestamp) &&
+      e.nsecs === undefined
+    ) {
+      nsecs = 0;
+    }
+
+    if (nsecs >= 10000) {
+      throw new Error("generateUUID(): Can't create more than 10M uuids/sec");
+    }
+
+    lastTimestamp = timestamp;
+    lastNsecs = nsecs;
+    lastClockSequence = clockSeq;
+
+    timestamp += 122192928e5;
+    const timeLow = ((timestamp & 268435455) * 10000 + nsecs) % 4294967296;
+    uuidArray[index++] = (timeLow >>> 24) & 255;
+    uuidArray[index++] = (timeLow >>> 16) & 255;
+    uuidArray[index++] = (timeLow >>> 8) & 255;
+    uuidArray[index++] = timeLow & 255;
+
+    const timeMid = ((timestamp / 4294967296) * 10000) & 268435455;
+    uuidArray[index++] = (timeMid >>> 8) & 255;
+    uuidArray[index++] = timeMid & 255;
+    uuidArray[index++] = ((timeMid >>> 24) & 15) | 16;
+    uuidArray[index++] = (timeMid >>> 16) & 255;
+
+    uuidArray[index++] = (clockSeq >>> 8) | 128;
+    uuidArray[index++] = clockSeq & 255;
+
+    for (let i = 0; i < 6; ++i) {
+      uuidArray[index + i] = node[i];
+    }
+    return byteArrayToHexString(uuidArray);
+  }
+
+  function getRandomValues() {
+    let getRandom;
+    const arr = new Uint8Array(16);
+    if (!getRandom) {
+      getRandom =
+        typeof crypto !== "undefined" &&
+        crypto.getRandomValues &&
+        crypto.getRandomValues.bind(crypto);
+      if (!getRandom)
+        throw new Error(
+          "crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported"
+        );
+    }
+    return getRandom(arr);
+  }
+  let hexChars = [];
+  for (let i = 0; i < 256; ++i) {
+    hexChars.push((i + 256).toString(16).slice(1));
+  }
+
+  function byteArrayToHexString(byteArray, startIndex = 0) {
+    return (
+      hexChars[byteArray[startIndex + 0]] +
+      hexChars[byteArray[startIndex + 1]] +
+      hexChars[byteArray[startIndex + 2]] +
+      hexChars[byteArray[startIndex + 3]] +
+      "-" +
+      hexChars[byteArray[startIndex + 4]] +
+      hexChars[byteArray[startIndex + 5]] +
+      "-" +
+      hexChars[byteArray[startIndex + 6]] +
+      hexChars[byteArray[startIndex + 7]] +
+      "-" +
+      hexChars[byteArray[startIndex + 8]] +
+      hexChars[byteArray[startIndex + 9]] +
+      "-" +
+      hexChars[byteArray[startIndex + 10]] +
+      hexChars[byteArray[startIndex + 11]] +
+      hexChars[byteArray[startIndex + 12]] +
+      hexChars[byteArray[startIndex + 13]] +
+      hexChars[byteArray[startIndex + 14]] +
+      hexChars[byteArray[startIndex + 15]]
+    ).toLowerCase();
+  }
 
   useEffect(() => {
     const canvas = document.getElementById("renderCanvas");
-    console.log(canvas);
+    // console.log(canvas);
 
     const engine = new BABYLON.Engine(canvas as HTMLCanvasElement, true);
-    console.log(engine, 222);
-
+    // console.log(engine, 222);
+   
     const getdroppedWearable = {
         
     }
@@ -308,12 +510,14 @@ console.log(voxMeshState)
     };
 
     const onClick = (e) => {
+      
       if (!e) {
         if (layer()) layer().removeAllMeshes();
         if (gizmoManager) {
           gizmoManager.attachToMesh(null);
         }
         update_voxMesh(null);
+        
       }
     };
 
@@ -342,8 +546,12 @@ console.log(voxMeshState)
                 onClick(
                   eventData.pickInfo?.hit && eventData.pickInfo.pickedMesh
                 );
+               
+                
                 if (eventData.pickInfo.pickedMesh) {
+                  
                   if (voxMesh != eventData.pickInfo.pickedMesh) {
+                  
                     // voxMesh = eventData.pickInfo.pickedMesh
                     update_voxMesh(eventData.pickInfo.pickedMesh);
                     focus();
@@ -442,7 +650,7 @@ console.log(voxMeshState)
       costumeMaterial.specularPower = 1000;
       costumeMaterial.blockDirtyMechanism = true;
       let material = costumeMaterial;
-      console.log(material, "material3366666");
+    //   console.log(material, "material3366666");
 
       BABYLON.SceneLoader.ImportMesh(
         null,
@@ -464,7 +672,7 @@ console.log(voxMeshState)
           skeletonRoot = skeletons[0];
           // window["skeleton"] = skeletonRoot;
           skeleton = skeletonRoot;
-          console.log(skeleton, 658741);
+        //   console.log(skeleton, 658741);
 
           const bones = skeletonRoot.bones.filter(
             (bone) => !bone.name.match(/index/i)
@@ -540,14 +748,15 @@ console.log(voxMeshState)
     // }
 
     function getWearableURL(droppedWearable) {
-      return `/c/v2/${chain_info[droppedWearable.chain_id]}/${
+      // ${chain_info[droppedWearable.chain_id]}
+      return `/c/v2/polygon/${
         droppedWearable.collection_address
       }/${droppedWearable.token_id}/vox`;
     }
 
     // 模型高亮层
     function layer() {
-      var e, t;
+      let e, t;
       return (t =
         (e = scene) === null || e === void 0
           ? void 0
@@ -562,7 +771,7 @@ console.log(voxMeshState)
     };
     // get bones info
     const bonespheres = function () {
-      var e, t;
+      let e, t;
       return (t =
         (e = scene) === null || e === void 0
           ? void 0
@@ -573,8 +782,8 @@ console.log(voxMeshState)
 
     // hide bones
     const hideBoneSpheres = function () {
-      console.log(bonespheres());
-      var e;
+    //   console.log(bonespheres());
+      let e;
       (e = bonespheres()) === null || e === void 0
         ? void 0
         : e.forEach((e) => {
@@ -585,7 +794,7 @@ console.log(voxMeshState)
     function onDrop() {
       hideBoneSpheres(); // 隐藏骨骼球体
       // 异步添加可穿戴物品到装饰中
-      console.log(targetBone, 5656);
+    //   console.log(targetBone, 5656);
 
       if (!targetBone) {
         console.log("no Bone");
@@ -593,7 +802,7 @@ console.log(voxMeshState)
       }
       // 获取被拖放的可穿戴物品
       const droppedWearable = getDroppedWearable();
-      console.log(droppedWearable, 666);
+    //   console.log(droppedWearable, 666);
 
       if (!droppedWearable) {
         console.warn("no wearable"); // 没有可穿戴物品，打印警告信息
@@ -616,7 +825,7 @@ console.log(voxMeshState)
       const r = {
         invertX: false,
       };
-      renderVoxModel(droppedWearable, scene, r, targetBone);
+      renderVoxModel();
     }
 
     async function addAttachment(wearable, bone) {
@@ -631,16 +840,16 @@ console.log(voxMeshState)
 
       const attachmentInfo = {
         name: wearable.name,
-        wearable_id:
-          typeof wearable.token_id === "number"
-            ? wearable.token_id
-            : parseInt(wearable.token_id, 10),
+        token_id:wearable.token_id,
+          // typeof wearable.token_id === "number"
+          //   ? wearable.token_id
+          //   : parseInt(wearable.token_id, 10),
         collection_address: wearable.collection_address || undefined,
-        chain_id: wearable.chain_id,
-        collection_id:
-          typeof wearable.collection_id === "number"
-            ? wearable.collection_id
-            : parseInt(wearable.collection_id, 10),
+        // chain_id: wearable.chain_id,
+        // collection_id:
+        //   typeof wearable.collection_id === "number"
+        //     ? wearable.collection_id
+        //     : parseInt(wearable.collection_id, 10),
         position: [0, 0, 0],
         rotation: [0, 0, 0],
         scaling: [defaultScale, defaultScale, defaultScale],
@@ -710,91 +919,75 @@ console.log(voxMeshState)
       shaderMaterial.blockDirtyMechanism = true;
     }
 
-    function renderVoxModel(modelUrl, the_sence, options, bone_name) {
+    function renderVoxModel() {
+      let found = false;
+      let droppedWearable = getDroppedWearable()
+
+      modelList.some((item=>{
+
         
-      // const vertexShaderCode = 'x'; // Replace 'x' with the actual vertex shader code
-      // const pixelShaderCode = 'z';  // Replace 'z' with the actual pixel shader code
+        if(droppedWearable.token_id===item){
+            found = true;
+            return
+        }
+     }))
+     if(found){
+        return
+    }
 
-      // BABYLON.Effect.ShadersStore["LegacyVoxVertexShader"] = vertexShaderCode;
-      // BABYLON.Effect.ShadersStore["LegacyVoxPixelShader"] = pixelShaderCode;
-
-      // const workerURL = new URL(r.p + r.u(181), r.b);
-      let currentRenderJobId = 0;
-      let isWorkerListening = false;
-      // let shaderMaterial = null;
-
-      // if (!shaderMaterial) {
-      //     createVoxShaderMaterial(the_sence);
-      // }
-      const shaderMaterial = new BABYLON.StandardMaterial(
-        "wearable",
-        the_sence
-      );
-      shaderMaterial.emissiveColor.set(0.3, 0.3, 0.3);
+      const shaderMaterial = new BABYLON.StandardMaterial("wearable", scene);
+      shaderMaterial.emissiveColor.set(.3, .3, .3);
       shaderMaterial.diffuseColor.set(1, 1, 1);
       shaderMaterial.blockDirtyMechanism = true;
 
-      const sizeHint =
-        options && "sizeHint" in options ? options.sizeHint : [1, 1, 1];
-      const droppedWearable = getDroppedWearable();
-      let wearable_url = getWearableURL(droppedWearable);
+     let wearable_url = getWearableURL(droppedWearable)
 
       const requestConfig = {
-        renderJob: 1,
-        url: modelUrl,
-        token_id: droppedWearable.token_id,
-        flipX: options && "invertX" in options ? !!options.invertX : true,
-        megavox: options && !!options.megavox,
-        sizeHint: sizeHint,
+          renderJob: 1,
+          url: wearable_url,
+          token_id: droppedWearable.token_id,
       };
 
-      voxMesh = new BABYLON.Mesh("utils/vox-box", the_sence);
+      voxMesh = new BABYLON.Mesh("utils/vox-box", scene);
       voxMesh.material = shaderMaterial;
       voxMesh.isPickable = true;
       voxMesh.checkCollisions = false;
-      // voxMesh.rotationQuaternion = BABYLON.Quaternion.Identity();
 
-      // voxMesh.position.set(0, 0, 0);
       voxMesh.scaling.set(0.5, 0.5, 0.5);
       const origin = new BABYLON.TransformNode("Node/wearable", scene);
 
       voxMesh.setParent(origin);
       origin.rotation.x = -Math.PI / 2;
 
-      const the_bone = bone(bone_name);
-
+      const the_bone = bone(targetBone);
       if (!the_bone) {
-        console.log("no Bone");
-        return;
+          console.log('no Bone');
+          return
       }
-
       if (get_avatar()) {
+          origin.attachToBone(the_bone, get_avatar());
+          last_rotation = {}
+          if (droppedWearable?.position && droppedWearable?.rotation && droppedWearable?.scaling) {
+              updateAllPositionValue('load_model_json')
+          } else {
+              updateAllPositionValue(null)
+          }
+          focus()
+          modelList.push(droppedWearable.token_id)
+          // "https://www.voxels.com/c/v2/polygon/0x1e3D804415dCbb7ceA3478f176e123562e09b514/155/vox"
+          // 将模型绕 y 轴旋转 180 度，使其正上方朝向 y 轴
 
-        origin.attachToBone(the_bone, get_avatar());
-        updateAllPositionValue(null);
-        focus();
-        // "https://www.voxels.com/c/v2/polygon/0x1e3D804415dCbb7ceA3478f176e123562e09b514/155/vox"
-        // 将模型绕 y 轴旋转 180 度，使其正上方朝向 y 轴
-
-        // get vox data
-        get_vox_data(requestConfig, voxMesh);
+          // get vox data
+         get_vox_data(requestConfig, voxMesh)
       }
 
-      // the_wearable = getDroppedWearable()
-      // voxMesh.rotation.fromArray(the_wearable.rotation.map((the_wearable=>the_wearable * Math.PI / 180)))
-console.log(voxMesh,6654);
-
-      // ！！！！！！
-      voxMesh.id = attachmentId;
-      setVoxMeshState(voxMesh)
-
-      // if (this.props.onSelect)
-      //     this.mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger,this.props.onSelect));
-    }
+      voxMesh.uuid = attachmentId
+setVoxMeshState(voxMesh)
+  }
 
     // 获取 拖放的wearable
     function getDroppedWearable() {
-      var droppedWearableValue = window["droppedWearable"];
+      let droppedWearableValue = window["droppedWearable"];
       return droppedWearableValue !== null && droppedWearableValue !== undefined
         ? droppedWearableValue
         : null;
@@ -821,7 +1014,7 @@ console.log(voxMesh,6654);
     }
 
     function onDragOver(e) {
-      var t;
+      let t;
 
       // 初始化目标骨骼为空
       // targetBone = null;
@@ -829,8 +1022,8 @@ console.log(voxMesh,6654);
       // 遍历所有的 bonespheres（骨骼球体）
       const all_bonespheres = bonespheres();
       if (all_bonespheres) {
-        for (var i = 0; i < all_bonespheres.length; i++) {
-          var bonesphere = all_bonespheres[i];
+        for (let i = 0; i < all_bonespheres.length; i++) {
+          let bonesphere = all_bonespheres[i];
           // 启用每个 bonesphere
           bonesphere.setEnabled(true);
 
@@ -840,7 +1033,7 @@ console.log(voxMesh,6654);
             continue;
           }
 
-          var bonesphereMaterial = bonesphere.material;
+          let bonesphereMaterial = bonesphere.material;
           // 将每个 bonesphere 的材质发光颜色设置为白色
           bonesphereMaterial.emissiveColor.set(1, 1, 1);
         }
@@ -848,7 +1041,7 @@ console.log(voxMesh,6654);
 
       if (scene) {
         // 使用场景的 pick 方法，检测是否拾取到 id 为 "bonesphere" 的物体
-        var pickResult = scene.pick(e.offsetX, e.offsetY, function (mesh) {
+        let pickResult = scene.pick(e.offsetX, e.offsetY, function (mesh) {
           return mesh.id === "bonesphere";
         });
 
@@ -857,9 +1050,17 @@ console.log(voxMesh,6654);
           pickResult.pickedMesh &&
           pickResult.pickedMesh.material
         ) {
-          var pickedMaterial = pickResult.pickedMesh.material;
+          var pickedMaterial  = pickResult.pickedMesh.material;
+      
+        
           // 将拾取到的物体的材质发光颜色设置为指定颜色
-          pickedMaterial.emissiveColor.set(0.3, 0, 1);
+          // pickedMaterial.emissiveColor.set(0.3, 0, 1);
+ // 创建 EmissiveMaterial 材质
+let emissiveMaterial = new BABYLON.StandardMaterial("emissiveMaterial", scene);
+emissiveMaterial.emissiveColor = new BABYLON.Color3(0.3, 0, 1);
+
+// 将拾取到的物体应用 EmissiveMaterial 材质
+pickResult.pickedMesh.material = emissiveMaterial;
           // 设置目标骨骼为拾取到的物体的元数据
           targetBone = pickResult.pickedMesh.metadata;
         } else {
@@ -877,51 +1078,115 @@ console.log(voxMesh,6654);
 
     // 生成wearables列表
     function renderWearables() {
-      const collectibles = [
-        {
-          id: "4f8a99d2-89c2-4c18-ab87-b35d064021a4",
-          token_id: 37,
-          name: "CV Wearables: head - by MetaCat",
-          description: "",
-          collection_id: 353,
-          category: "facewear",
-          author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
-          hash: "28614b00f9f807b8d71421d62d1612cab7501d20",
-          suppressed: false,
-          chain_id: 137,
-          collection_address: "0x1e3D804415dCbb7ceA3478f176e123562e09b514",
-          collection_name: "MetaCat",
-        },
-        {
-          id: "e1c82d5b-ffca-49fe-864e-b5dce843d120",
-          token_id: 41,
-          name: "CV Wearables: Knight Hat(red) - by MetaCat",
-          description: "",
-          collection_id: 353,
-          category: "facewear",
-          author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
-          hash: "a35eeb4b70b976fbdf09f8d87302f10ea8dd4f5f",
-          suppressed: false,
-          chain_id: 137,
-          collection_address: "0x1e3D804415dCbb7ceA3478f176e123562e09b514",
-          collection_name: "MetaCat",
-        },
-        {
-          id: "910a5b27-374e-45cc-b68c-99baf909b8d4",
-          token_id: 48,
-          name: "CV Wearables: Chinese Traditional Cloak(black) - by MetaCat",
-          description: "",
-          collection_id: 353,
-          category: "facewear",
-          author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
-          hash: "be258d360416db3ac56288f9af4d890bab4aa643",
-          suppressed: false,
-          chain_id: 137,
-          collection_address: "0x1e3D804415dCbb7ceA3478f176e123562e09b514",
-          collection_name: "MetaCat",
-        },
-      ];
+      const collectibles = []
+      // const collectibles = [
+      //   {
+      //     id: "4f8a99d2-89c2-4c18-ab87-b35d064021a4",
+      //     token_id: 37,
+      //     name: "CV Wearables: head - by MetaCat",
+      //     description: "",
+      //     collection_id: 353,
+      //     category: "facewear",
+      //     author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
+      //     hash: "28614b00f9f807b8d71421d62d1612cab7501d20",
+      //     suppressed: false,
+      //     chain_id: 137,
+      //     collection_address: "0x1e3D804415dCbb7ceA3478f176e123562e09b514",
+      //     collection_name: "MetaCat",
+      //   },
+      //   {
+      //     id: "e1c82d5b-ffca-49fe-864e-b5dce843d120",
+      //     token_id: 41,
+      //     name: "CV Wearables: Knight Hat(red) - by MetaCat",
+      //     description: "",
+      //     collection_id: 353,
+      //     category: "facewear",
+      //     author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
+      //     hash: "a35eeb4b70b976fbdf09f8d87302f10ea8dd4f5f",
+      //     suppressed: false,
+      //     chain_id: 137,
+      //     collection_address: "0x1e3D804415dCbb7ceA3478f176e123562e09b514",
+      //     collection_name: "MetaCat",
+      //   },
+      //   {
+      //     id: "910a5b27-374e-45cc-b68c-99baf909b8d4",
+      //     token_id: 48,
+      //     name: "CV Wearables: Chinese Traditional Cloak(black) - by MetaCat",
+      //     description: "",
+      //     collection_id: 353,
+      //     category: "facewear",
+      //     author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
+      //     hash: "be258d360416db3ac56288f9af4d890bab4aa643",
+      //     suppressed: false,
+      //     chain_id: 137,
+      //     collection_address: "0x1e3D804415dCbb7ceA3478f176e123562e09b514",
+      //     collection_name: "MetaCat",
+      //   },
+      //   {
+      //     id: "910a5b51-374e-45cc-b68c-99baf909b8d4",
+      //     token_id: 102,
+      //     name: "CV Wearables: Chinese Traditional Cloak(black) - by MetaCat51",
+      //     description: "",
+      //     collection_id: 353,
+      //     category: "facewear",
+      //     author: "0x38bbd375d49d6237984cbfa19719c419af9fe514",
+      //     hash: "be258d360416db3ac56288f9af4d890bab4aa643",
+      //     suppressed: false,
+      //     chain_id: 137,
+      //     collection_address: "0x527A5E544632A12b2bbcA8f3e0aEaF3De599e95c",
+      //     collection_name: "MetaCat",
+      //   },
+      // ];
+      
+     const tokenboundAccount=  window.localStorage.getItem('tokenboundAccount')
+        const detailHandleq = getBagsDetail('0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e');
+        // console.log(detailHandleq);
+        detailHandleq.then((detailHandleItem)=>{
+            
+detailHandleItem.ownedNfts.forEach((item=>{
+    if (Object.keys(item?.metadata).length === 0) {
+        return;
+      }
+//  console.log(item.tokenUri.raw,3333123);1
+ const typeData =item?.metadata?.image
+// console.log(typeData);
+const splitParts = typeData?.split("/");
+const desiredValue = splitParts[splitParts?.length - 1];
+const tokenUri = item.tokenUri.raw
+// console.log(tokenUri);
+// console.log(tokenUri.includes("https://peer.decentraland.org"),66666666666666);
+
+ const newItem ={
+    "token_id":item.id.tokenId,
+    // "token_id":25,
+    "name":item.metadata.name,
+    "id":item.metadata.id,
+    "description":item.description,
+    "collection_address":item.contract.address,
+    "hash":tokenUri.includes("https://www.cryptovoxels.com")?desiredValue:null,
+    "image":item.metadata.image
+
+ }
+
+ if (tokenUri.includes("https://www.cryptovoxels.com")) {
+  collectibles.push(newItem)
+} 
+
+
+// console.log(item.metadata.image,34444444444);
+        // img.src=item.metadata.image
+        // img.alt = tooltip;
+// console.log(img.src,'-----------------');
+
+}))
+
+// console.log(collectibles,444444);
+
+
+      
       const wearables = collectibles.map((wearable) => {
+        // console.log(wearable,'----==========');
+        
         const onDragStart = (event) => {
           const dataTransfer = event.dataTransfer;
           if (dataTransfer) {
@@ -931,7 +1196,9 @@ console.log(voxMesh,6654);
           if (event.target instanceof HTMLElement) {
             event.target.className = "dragging-wearable";
           }
-          window.droppedWearable = wearable;
+          // console.log(window,6363636);
+          (window as any).droppedWearable = wearable;
+          // window.droppedWearable = wearable;
         //   setGetdroppedWearable(wearable)
         };
 
@@ -959,8 +1226,8 @@ console.log(voxMesh,6654);
         const img = document.createElement("img");
         img.width = 94;
         img.height = 94;
-        // img.src = Jf(wearable);
-        img.src = getWearableGIFUrl(wearable.id, wearable.name);
+        img.src = wearable.image;
+        // img.src = getWearableGIFUrl(wearable.token_id, wearable.name);
         // img.src = 'https://wearables.crvox.com/910a5b27-374e-45cc-b68c-99baf909b8d4-cv-wearables-chinese-traditional-cloak-black-by-metacat.gif'
         img.alt = tooltip;
 
@@ -985,6 +1252,7 @@ console.log(voxMesh,6654);
       div.appendChild(ul);
 
       // document.body.appendChild(fragment);
+    })
     }
     renderWearables();
 
@@ -1050,6 +1318,11 @@ console.log(voxMesh,6654);
       const scale = document.getElementById("gizmo-scale");
       if (!scale) throw new Error("scaleGizmo not found");
       scale.addEventListener("click", () => {
+        if (voxMesh) {
+          last_rotation['x'] = voxMesh.rotation.x
+          last_rotation['y'] = voxMesh.rotation.y
+          last_rotation['z'] = voxMesh.rotation.z
+      }
         gizmoManager.positionGizmoEnabled = false;
         gizmoManager.rotationGizmoEnabled = false;
         gizmoManager.boundingBoxGizmoEnabled = true;
@@ -1062,6 +1335,7 @@ console.log(voxMesh,6654);
     }
 
     function focus() {
+      
       let lay = layer();
       const col = new BABYLON.Color3(0.7, 0.3, 1);
       if (lay && voxMesh) {
@@ -1086,14 +1360,25 @@ console.log(voxMesh,6654);
     }
 
     function update_voxMesh(value) {
+      
       voxMesh = value;
       setVoxMeshState(value)
+    
       if (voxMesh) {
-        attachmentId = voxMesh.id;
+        attachmentId = voxMesh.uuid;
+        
+       let  the_rotation = all_last_rotation.current[attachmentId]
+       
+        last_rotation['x'] = the_rotation[0]
+        last_rotation['y'] = the_rotation[1]
+        last_rotation['z'] = the_rotation[2]
       } else {
         attachmentId = null;
       }
+
       updateAllPositionValue(1);
+   
+      
     }
 
     // function updatePosition(type, index, value) {
@@ -1250,6 +1535,27 @@ console.log(voxMesh,6654);
         scale_x.value = (0.5).toString();
         scale_y.value = (0.5).toString();
         scale_z.value = (0.5).toString();
+        scale_z.value = 0.5.toString();
+      } else if (type === 'change_model_mesh') {
+
+          position_x.value = voxMesh.position.x.toFixed(2);
+          position_y.value = voxMesh.position.y.toFixed(2);
+          position_z.value = voxMesh.position.z.toFixed(2);
+
+          scale_x.value = voxMesh.scaling.x.toFixed(2);
+          scale_y.value = voxMesh.scaling.y.toFixed(2);
+          scale_z.value = voxMesh.scaling.z.toFixed(2);
+          voxMesh.rotationQuaternion = null;
+          // rotation_x.value = voxMesh.rotation.x = last_rotation['x'] 
+          // rotation_y.value = voxMesh.rotation.y = last_rotation['y']
+          // rotation_z.value = voxMesh.rotation.z = last_rotation['z']
+          rotation_x.value  = last_rotation[0];
+          rotation_y.value  = last_rotation[1];
+          rotation_z.value  = last_rotation[2];
+  
+          voxMesh.rotation.x=parseFloat(last_rotation[0])
+          voxMesh.rotation.y=parseFloat(last_rotation[1])
+          voxMesh.rotation.z=parseFloat(last_rotation[2])
       } else {
         // const rot = e=>Math.round(e * 1e3 * 180 / Math.PI) / 1e3;
         // const po_sc = e=>Math.round(e * 1e3) / 1e3;
@@ -1257,31 +1563,127 @@ console.log(voxMesh,6654);
         // [position_x.value, position_y.value, position_z.value] = voxMesh.position.asArray().map(po_sc);
         // [rotation_x.value, rotation_y.value, rotation_z.value] = voxMesh.position.asArray().map(po_sc);
         // [scale_x.value, scale_y.value, scale_z.value] = voxMesh.position.asArray().map(po_sc);
-        position_x.value = voxMesh.position.x.toFixed(2);
-        position_y.value = voxMesh.position.y.toFixed(2);
-        position_z.value = voxMesh.position.z.toFixed(2);
-        setEditNumPoY(voxMesh.position.y.toFixed(2))
-        setEditNumPoX(voxMesh.position.x.toFixed(2))
-        setEditNumPoZ(voxMesh.position.z.toFixed(2))
+        // position_x.value = voxMesh.position.x.toFixed(2);
+        // position_y.value = voxMesh.position.y.toFixed(2);
+        // position_z.value = voxMesh.position.z.toFixed(2);
+        // setEditNumPoY(voxMesh.position.y.toFixed(2))
+        // setEditNumPoX(voxMesh.position.x.toFixed(2))
+        // setEditNumPoZ(voxMesh.position.z.toFixed(2))
 
-        rotation_x.value = voxMesh.rotation.x.toFixed(2);
-        rotation_y.value = voxMesh.rotation.y.toFixed(2);
-        rotation_z.value = voxMesh.rotation.z.toFixed(2);
+        // rotation_x.value = voxMesh.rotation.x.toFixed(2);
+        // rotation_y.value = voxMesh.rotation.y.toFixed(2);
+        // rotation_z.value = voxMesh.rotation.z.toFixed(2);
 
-        setEditNumRoX(voxMesh.rotation.x.toFixed(2))
-        setEditNumRoY(voxMesh.rotation.y.toFixed(2))
-        setEditNumRoZ(voxMesh.rotation.z.toFixed(2))
-        scale_x.value = voxMesh.scaling.x.toFixed(2);
-        scale_y.value = voxMesh.scaling.y.toFixed(2);
-        scale_z.value = voxMesh.scaling.z.toFixed(2);
-        setEditNumSaX(voxMesh.scaling.x.toFixed(2))
-        setEditNumSaY(voxMesh.scaling.y.toFixed(2))
-        setEditNumSaZ(voxMesh.scaling.z.toFixed(2))
-        if (!type) {
-          // 更新接口数据坐标
-          updateAttachment();
-        }
+        // setEditNumRoX(voxMesh.rotation.x.toFixed(2))
+        // setEditNumRoY(voxMesh.rotation.y.toFixed(2))
+        // setEditNumRoZ(voxMesh.rotation.z.toFixed(2))
+        // scale_x.value = voxMesh.scaling.x.toFixed(2);
+        // scale_y.value = voxMesh.scaling.y.toFixed(2);
+        // scale_z.value = voxMesh.scaling.z.toFixed(2);
+        // setEditNumSaX(voxMesh.scaling.x.toFixed(2))
+        // setEditNumSaY(voxMesh.scaling.y.toFixed(2))
+        // setEditNumSaZ(voxMesh.scaling.z.toFixed(2))
+        // if (!type) {
+        //   // 更新接口数据坐标
+        //   updateAttachment();
+        // }
+        if (type === 'load_model_json') {
+        let  the_wearable = getDroppedWearable()
+
+          voxMesh.position.x = parseFloat(the_wearable.position[0]);
+          voxMesh.position.y = parseFloat(the_wearable.position[1]);
+          voxMesh.position.z = parseFloat(the_wearable.position[2]);
+
+          voxMesh.rotation.x = parseFloat(the_wearable.rotation[0]);
+          voxMesh.rotation.y = parseFloat(the_wearable.rotation[1]);
+          voxMesh.rotation.z = parseFloat(the_wearable.rotation[2]);
+
+          voxMesh.scaling.x = parseFloat(the_wearable.scaling[0]);
+          voxMesh.scaling.y = parseFloat(the_wearable.scaling[1]);
+          voxMesh.scaling.z = parseFloat(the_wearable.scaling[2]);
       }
+      position_x.value = voxMesh.position.x.toFixed(2);
+      position_y.value = voxMesh.position.y.toFixed(2);
+      position_z.value = voxMesh.position.z.toFixed(2);
+
+      scale_x.value = voxMesh.scaling.x.toFixed(2);
+      scale_y.value = voxMesh.scaling.y.toFixed(2);
+      scale_z.value = voxMesh.scaling.z.toFixed(2);
+      voxMesh.rotationQuaternion = null;
+
+      if ('x' as any  in last_rotation){
+          rotation_x.value  = voxMesh.rotation.x = parseFloat(last_rotation['x']).toFixed(2) ;
+      }else{
+          rotation_x.value = voxMesh.rotation.x.toFixed(2);
+      }
+
+      if ('y' as any  in last_rotation){
+          rotation_y.value = voxMesh.rotation.y = parseFloat(last_rotation['y']).toFixed(2);
+      }else{
+          rotation_y.value = voxMesh.rotation.y.toFixed(2);
+      }
+
+      if ('z' as any  in last_rotation){
+          rotation_z.value = voxMesh.rotation.z = parseFloat(last_rotation['z']).toFixed(2);
+      }else{
+          rotation_z.value = voxMesh.rotation.z.toFixed(2);
+      }
+
+      if (!gizmoManager.boundingBoxGizmoEnabled) {
+              last_rotation = {}
+          }
+
+      if (!type) {
+          updateAttachment()
+      }
+      }
+       setEditNumPo((prevEditNumPo) => ({
+        ...prevEditNumPo,
+        x:voxMesh? voxMesh.position.x.toFixed(2):0,
+      }));
+      setEditNumPo((prevEditNumPo) => ({
+        ...prevEditNumPo,
+        y:voxMesh? voxMesh.position.y.toFixed(2):0,
+      }));
+      setEditNumPo((prevEditNumPo) => ({
+        ...prevEditNumPo,
+        z: voxMesh?voxMesh.position.z.toFixed(2):0,
+      }));
+      const refValueX = voxMesh?.rotation.x; // 示例字符串值
+         const refValueY = voxMesh?.rotation.y; // 示例字符串值
+         const refValueZ = voxMesh?.rotation.z; // 示例字符串值
+      const fixedValueX = parseFloat(refValueX).toFixed(2);
+      const fixedValueY = parseFloat(refValueY).toFixed(2);
+      const fixedValueZ = parseFloat(refValueZ).toFixed(2);
+     
+      
+         setEditNumRoX((prevEditNumPo) => ({
+           ...prevEditNumPo,
+           
+           x:voxMesh? fixedValueX:0 ,
+           }));
+          setEditNumRoX((prevEditNumPo) => ({
+           ...prevEditNumPo,
+           y: voxMesh? fixedValueY:0,
+           }));
+          setEditNumRoX((prevEditNumPo) => ({
+           ...prevEditNumPo,
+           z: voxMesh? fixedValueZ:0,
+           }));
+
+ 
+        setEditNumSaX((prevEditNumPo) => ({
+           ...prevEditNumPo,
+           x: voxMesh?voxMesh.scaling.x.toFixed(2):0,
+          }));
+        setEditNumSaX((prevEditNumPo) => ({
+           ...prevEditNumPo,
+           y: voxMesh?voxMesh.scaling.y.toFixed(2):0,
+          }));
+        setEditNumSaX((prevEditNumPo) => ({
+           ...prevEditNumPo,
+           z:voxMesh? voxMesh.scaling.z.toFixed(2):0,
+          }));
     }
 
     function deleteAttachment() {
@@ -1301,7 +1703,7 @@ console.log(voxMesh,6654);
     }
 
     function downloadCostume() {
-      var file_name;
+      let file_name;
       // const t = this.costume;
       if (!costume) return;
       const json_costume = JSON.stringify(costume, null, 2);
@@ -1315,132 +1717,46 @@ console.log(voxMesh,6654);
       element_dow.download =
         ((file_name = costume.name) !== null && file_name !== void 0
           ? file_name
-          : costume.id) + ".json";
+          : costume.token_id) + ".json";
       element_dow.click();
       element_dow.remove();
     }
 
-    function generateUUID(e, random, r) {
-      let lastNsecs = 0;
-      let lastTimestamp = 0;
-      let lastClockSequence = null;
-      let nodeIdentifier = null;
-
-      let index = (random && r) || 0;
-      const uuidArray = random || new Array(16);
-      e = e || {};
-
-      let node = e.node || nodeIdentifier;
-      let clockSeq = e.clockSeq !== undefined ? e.clockSeq : lastClockSequence;
-
-      if (node === null || clockSeq === null) {
-        const random = getRandomValues();
-        if (node === null) {
-          node = nodeIdentifier = [
-            random[0] | 1,
-            random[1],
-            random[2],
-            random[3],
-            random[4],
-            random[5],
-          ];
+    async function onLoadCostume() {
+      // console.log(router.query.tokenID);
+// console.log(getModelInfo(19));
+      const getModelInfoData = getModelInfo(router.query.tokenID)
+      
+      getModelInfoData.then(async(getModelInfoItem)=>{
+        if (JSON.stringify(getModelInfoItem.data) === '{}') {
+          console.log('错误');
+        }else{
+        const data = getModelInfoItem.data;
+        // const data = await response.json();
+  // console.log(data,'data');
+  // if(getModelInfoItem.data){
+    
+  // }
+        // 在这里使用从JSON文件中读取到的数据
+        const attachments = data.attachments;
+  
+        for (let att of attachments) {
+          (window as any).droppedWearable = att;
+          (window as any).droppedWearable.token_id = att.token_id
+            targetBone = att.bone;
+            attachmentId = att.uuid
+            all_last_rotation.current[attachmentId] = att.rotation
+            costume.attachments.push(att)
+            renderVoxModel();
+  
         }
-        if (clockSeq === null) {
-          clockSeq = lastClockSequence = ((random[6] << 8) | random[7]) & 16383;
+        onClick(null)
         }
-      }
+      })
+     
+  }
 
-      let timestamp = e.timestamp !== undefined ? e.timestamp : Date.now();
-      let nsecs = e.nsecs !== undefined ? e.nsecs : lastNsecs + 1;
-
-      const clockOffset =
-        (timestamp - lastTimestamp + (nsecs - lastNsecs)) / 10000;
-
-      if (clockOffset < 0 && e.clockSeq === undefined) {
-        clockSeq = (clockSeq + 1) & 16383;
-      }
-
-      if (
-        (clockOffset < 0 || timestamp > lastTimestamp) &&
-        e.nsecs === undefined
-      ) {
-        nsecs = 0;
-      }
-
-      if (nsecs >= 10000) {
-        throw new Error("generateUUID(): Can't create more than 10M uuids/sec");
-      }
-
-      lastTimestamp = timestamp;
-      lastNsecs = nsecs;
-      lastClockSequence = clockSeq;
-
-      timestamp += 122192928e5;
-      const timeLow = ((timestamp & 268435455) * 10000 + nsecs) % 4294967296;
-      uuidArray[index++] = (timeLow >>> 24) & 255;
-      uuidArray[index++] = (timeLow >>> 16) & 255;
-      uuidArray[index++] = (timeLow >>> 8) & 255;
-      uuidArray[index++] = timeLow & 255;
-
-      const timeMid = ((timestamp / 4294967296) * 10000) & 268435455;
-      uuidArray[index++] = (timeMid >>> 8) & 255;
-      uuidArray[index++] = timeMid & 255;
-      uuidArray[index++] = ((timeMid >>> 24) & 15) | 16;
-      uuidArray[index++] = (timeMid >>> 16) & 255;
-
-      uuidArray[index++] = (clockSeq >>> 8) | 128;
-      uuidArray[index++] = clockSeq & 255;
-
-      for (let i = 0; i < 6; ++i) {
-        uuidArray[index + i] = node[i];
-      }
-      return byteArrayToHexString(uuidArray);
-    }
-
-    function getRandomValues() {
-      let getRandom;
-      const arr = new Uint8Array(16);
-      if (!getRandom) {
-        getRandom =
-          typeof crypto !== "undefined" &&
-          crypto.getRandomValues &&
-          crypto.getRandomValues.bind(crypto);
-        if (!getRandom)
-          throw new Error(
-            "crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported"
-          );
-      }
-      return getRandom(arr);
-    }
-    let hexChars = [];
-    for (let i = 0; i < 256; ++i) {
-      hexChars.push((i + 256).toString(16).slice(1));
-    }
-
-    function byteArrayToHexString(byteArray, startIndex = 0) {
-      return (
-        hexChars[byteArray[startIndex + 0]] +
-        hexChars[byteArray[startIndex + 1]] +
-        hexChars[byteArray[startIndex + 2]] +
-        hexChars[byteArray[startIndex + 3]] +
-        "-" +
-        hexChars[byteArray[startIndex + 4]] +
-        hexChars[byteArray[startIndex + 5]] +
-        "-" +
-        hexChars[byteArray[startIndex + 6]] +
-        hexChars[byteArray[startIndex + 7]] +
-        "-" +
-        hexChars[byteArray[startIndex + 8]] +
-        hexChars[byteArray[startIndex + 9]] +
-        "-" +
-        hexChars[byteArray[startIndex + 10]] +
-        hexChars[byteArray[startIndex + 11]] +
-        hexChars[byteArray[startIndex + 12]] +
-        hexChars[byteArray[startIndex + 13]] +
-        hexChars[byteArray[startIndex + 14]] +
-        hexChars[byteArray[startIndex + 15]]
-      ).toLowerCase();
-    }
+  
 
     // canvas增加监听事件
     canvas.addEventListener("wheel", onWheel);
@@ -1452,6 +1768,9 @@ console.log(voxMesh,6654);
     // 获取按钮元素
     const deleteButton = document.getElementById("mesh_dispose");
     const download_json_file = document.getElementById("download");
+    const up_load = document.getElementById('upload');
+    up_load.addEventListener('click', onLoadCostume);
+
     // 添加点击事件处理程序
     deleteButton.addEventListener("click", dispose_mesh);
     download_json_file.addEventListener("click", downloadCostume);
@@ -1464,41 +1783,78 @@ console.log(voxMesh,6654);
       engine.resize();
     });
   }, []);
+ 
 
-  const onChangeEdiumY = (event)=>{
-    setEditNumPoY(event.target.value);
-  }
-  const onChangeEdiumX = (event)=>{
-    setEditNumPoX(event.target.value);
-  }
-  const onChangeEdiumZ = (event)=>{
-    setEditNumPoZ(event.target.value);
-  }
-  const onChangeEdiumRoX = (event)=>{
-    setEditNumRoX(event.target.value);
-  }
-  const onChangeEdiumRoY = (event)=>{
-    setEditNumRoY(event.target.value);
-  }
-  const onChangeEdiumRoZ = (event)=>{
-    setEditNumRoZ(event.target.value);
-  }
-  const onChangeEdiumSaX = (event)=>{
-    setEditNumSaX(event.target.value);
-  }
-  const onChangeEdiumSaY = (event)=>{
-    setEditNumSaY(event.target.value);
-  }
-  const onChangeEdiumSaZ = (event)=>{
-    setEditNumSaZ(event.target.value);
-  }
+  const onChangeEdiumY =(event) => {
+    // setEditNumPoY(event.target.value);
+    setEditNumPo((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      y: event.target.value,
+    }));
+  };
+  const onChangeEdiumX = (event) => {
+    // setEditNumPoX(event.target.value);
+    setEditNumPo((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      x: event.target.value,
+    }));
+  };
+  const onChangeEdiumZ = (event) => {
+    // setEditNumPoZ(event.target.value);
+    setEditNumPo((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      z: event.target.value,
+    }));
+  };
+  const onChangeEdiumRoX = (event) => {
+    // setEditNumRoX(event.target.value);
+    setEditNumRoX((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      x: event.target.value,
+    }));
+  };
+  const onChangeEdiumRoY = (event) => {
+   
+    setEditNumRoX((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      y: event.target.value,
+    }));
+  };
+  const onChangeEdiumRoZ = (event) => {
+    // setEditNumRoZ(event.target.value);
+    setEditNumRoX((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      z: event.target.value,
+    }));
+  };
+  const onChangeEdiumSaX = (event) => {
+    // setEditNumSaX(event.target.value);
+    setEditNumSaX((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      x: event.target.value,
+    }));
+  };
+  const onChangeEdiumSaY = (event) => {
+    // setEditNumSaY(event.target.value);
+    setEditNumSaX((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      y: event.target.value,
+    }));
+  };
+  const onChangeEdiumSaZ = (event) => {
+    // setEditNumSaZ(event.target.value);
+    setEditNumSaX((prevEditNumPo) => ({
+      ...prevEditNumPo,
+      z: event.target.value,
+    }));
+  };
 
   return (
     <>
       <div
         id="gizmos"
         className="active"
-        style={{ position: "relative", height: " 80%", top: "10%" }}
+        style={{ position: "relative", }}
       >
         <canvas id="renderCanvas" className={style.canvas}></canvas>
         <div style={{ position: "absolute", top: "10px" }}>
@@ -1506,7 +1862,7 @@ console.log(voxMesh,6654);
           <button className={style.btn} id="gizmo-rotation">Rotation</button>
           <button className={style.btn} id="gizmo-scale">Scale</button>
         </div>
-        <div style={{ position: "absolute", right: "10px", top: "10px" }}>
+        <div style={{ position: "absolute", right: "10px", top: "10px" ,width:"30%"}}>
           <div className="editor-field position">
             <label>Position</label>
             <div className="fields">
@@ -1515,9 +1871,10 @@ console.log(voxMesh,6654);
                 type="number"
                 step="0.01"
                 title="x"
-                value={editNum}
-                onInput={() => {
-                  updatePosition("position", 0, editNumPoX);
+                value={editNumPo.x}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("position", 0, inputElement.value);
                 }}
                 onChange={onChangeEdiumX}
               />
@@ -1526,12 +1883,17 @@ console.log(voxMesh,6654);
                 type="number"
                 step="0.01"
                 title="y"
-                onInput={() => {
-                  updatePosition("position", 1, editNumPoY);
-                }}
+                value={editNumPo.y}
                 onChange={onChangeEdiumY}
-                // onChange={() => {
-                //   updatePosition("position", 1, editNum);
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("position", 1, inputElement.value);
+                }}
+                // onChange={(event) => {
+                //   console.log(event);
+                //   console.log(event.target.value,22);
+                  
+                //   updatePosition("position", 1, event.target.value);
                 // }}
               />
               {/* onInput="updatePosition('position', 1, this.value)"
@@ -1541,8 +1903,10 @@ console.log(voxMesh,6654);
                 type="number"
                 step="0.01"
                 title="z"
-                onInput={() => {
-                  updatePosition("position", 2, editNumPoZ);
+                value={editNumPo.z}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("position", 2, inputElement.value);
                 }}
                 onChange={onChangeEdiumZ}
               />
@@ -1558,9 +1922,10 @@ console.log(voxMesh,6654);
                 type="number"
                 step="2"
                 title="x"
-                // value={editNum}
-                onInput={() => {
-                  updatePosition("rotation", 0, editNumRoX);
+                value={editNumRoX.x}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("rotation", 0, inputElement.value);
                 }}
                 onChange={onChangeEdiumRoX}
               />
@@ -1569,9 +1934,10 @@ console.log(voxMesh,6654);
                 type="number"
                 step="2"
                 title="y"
-                // value={editNum}
-                onInput={() => {
-                  updatePosition("rotation", 1, editNumRoY);
+                value={editNumRoX.y}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("rotation", 1, inputElement.value);
                 }}
                 onChange={onChangeEdiumRoY}
               />
@@ -1580,9 +1946,10 @@ console.log(voxMesh,6654);
                 type="number"
                 step="2"
                 title="z"
-                // value={editNum}
-                onInput={() => {
-                  updatePosition("rotation", 2, editNumRoZ);
+                value={editNumRoX.z}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("rotation", 2, inputElement.value);
                 }}
                 onChange={onChangeEdiumRoZ}
               />
@@ -1596,9 +1963,11 @@ console.log(voxMesh,6654);
                 type="number"
                 step="0.01"
                 title="all"
-                // value="0.5"
-                onInput={() => {
-                  updatePosition("scale", 0, editNumSaX);
+                value={editNumSaX.x}
+                onInput={(event) => {
+                  
+                      const inputElement = event.target as HTMLInputElement;
+                  updatePosition("scale", 0, inputElement.value);
                 }}
                 onChange={onChangeEdiumSaX}
               />
@@ -1607,9 +1976,10 @@ console.log(voxMesh,6654);
                 type="number"
                 step="0.01"
                 title="all"
-                // value="0.5"
-                onInput={() => {
-                  updatePosition("scale", 1, editNumSaY);
+                value={editNumSaX.y}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("scale", 1, inputElement.value);
                 }}
                 onChange={onChangeEdiumSaY}
               />
@@ -1618,17 +1988,19 @@ console.log(voxMesh,6654);
                 type="number"
                 step="0.01"
                 title="all"
-                // value="0.5"
-                onInput={() => {
-                  updatePosition("scale", 2, editNumSaZ);
+                value={editNumSaX.z}
+                onInput={(event) => {
+                    const inputElement = event.target as HTMLInputElement;
+                  updatePosition("scale", 2, inputElement.value);
                 }}
                 onChange={onChangeEdiumSaZ}
               />
             </div>
           </div>
           <div>
-            <button id="mesh_dispose">Remove</button>
-            <button id="download">Download</button>
+            <button className={style.buton} id="mesh_dispose">Remove</button>
+            <button className={style.buton} id="download">Download</button>
+            <button className={style.buton} id="upload">Upload</button>
           </div>
           <div id="wearable_list"></div>
         </div>

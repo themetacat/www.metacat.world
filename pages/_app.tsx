@@ -47,6 +47,7 @@ function MyApp({ Component, pageProps }) {
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
       />
+      {/* <Script src="https://cdn.jsdelivr.net/npm/vox.js@1.1.0/build/vox.min.js"></Script> */}
       {/* <script async src="https://www.googletagmanager.com/gtag/js?id=G-P4EB21K2DV"></script> */}
       {/* <script>
   window.dataLayer = window.dataLayer || [];

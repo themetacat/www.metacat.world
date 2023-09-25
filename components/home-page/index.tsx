@@ -19,7 +19,6 @@ import {
     getNonce,
     loginSignature,
     getBaseInfo,
-    getCVEventList,
   } from "../../service";
   import { convert, getToken, removeToken, setToken } from "../../common/utils";
 
@@ -318,6 +317,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     if (idTokenWeb3 && web3AuthAddress) {
       setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
       const webGetBase = getBaseInfo(getToken("atk"));
+      
       webGetBase.then((webGetBase1) => {
         state.setState({
           profile: {
@@ -750,8 +750,9 @@ export default function HomePage({ onClickHandler }: Props,ref) {
         }
       }, [profileData]);
       useEffect(() => {
+        
         const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-    
+      
         if (!metaCatAtk) {
           setTimeout(() => {
             profilConent();
