@@ -37,9 +37,7 @@
     "lokijs": "^1.5.12",
     "ndarray": "^1.0.19",
     "ndarray-fill": "^1.0.2",
- 
-    "next": "^11.0.0",
-    "next-intl": "^1.5.1",
+    "next-intl": "^1.4.4",
     "react-hot-toast": "^2.2.0",
     "react-router-dom": "^6.15.0",
     "typescript": "^5.1.6",
@@ -69,6 +67,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-unused-imports": "^3.0.0",
     "moment": "^2.29.1",
+    "next": "^12.3.4",
     "prettier": "^3.0.2",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.1.0",
