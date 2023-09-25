@@ -190,16 +190,16 @@ export default function DclContent() {
   const all_last_rotation = React.useRef({});
   let modelList = {};
 
-  const position_x = document.getElementById("position[x]") as HTMLInputElement;
-  const position_y = document.getElementById("position[y]") as HTMLInputElement;
-  const position_z = document.getElementById("position[z]") as HTMLInputElement;
-  const rotation_x = document.getElementById("rotation[x]") as HTMLInputElement;
-  const rotation_y = document.getElementById("rotation[y]") as HTMLInputElement;
-  const rotation_z = document.getElementById("rotation[z]") as HTMLInputElement;
+  // const position_x = document.getElementById("position[x]") as HTMLInputElement;
+  // const position_y = document.getElementById("position[y]") as HTMLInputElement;
+  // const position_z = document.getElementById("position[z]") as HTMLInputElement;
+  // const rotation_x = document.getElementById("rotation[x]") as HTMLInputElement;
+  // const rotation_y = document.getElementById("rotation[y]") as HTMLInputElement;
+  // const rotation_z = document.getElementById("rotation[z]") as HTMLInputElement;
 
-  const scale_x = document.getElementById("scale[x]") as HTMLInputElement;
-  const scale_y = document.getElementById("scale[y]") as HTMLInputElement;
-  const scale_z = document.getElementById("scale[z]") as HTMLInputElement;
+  // const scale_x = document.getElementById("scale[x]") as HTMLInputElement;
+  // const scale_y = document.getElementById("scale[y]") as HTMLInputElement;
+  // const scale_z = document.getElementById("scale[z]") as HTMLInputElement;
 
 //   let costume = {
 //     token_id: router.query.tokenID,
@@ -222,7 +222,9 @@ export default function DclContent() {
 
   function updatePosition(type, index, value) {
     modelMesh = voxMeshState;
-   
+    const rotation_x = document.getElementById("rotation[x]") as HTMLInputElement;
+    const rotation_y = document.getElementById("rotation[y]") as HTMLInputElement;
+    const rotation_z = document.getElementById("rotation[z]") as HTMLInputElement;
 // console.log(editNumPoY,
 //     editNumPoX,
 //     editNumPoZ,
