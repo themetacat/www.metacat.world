@@ -446,7 +446,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
   //   }
   //   return byteArrayToHexString(uuidArray);
   // }
-  // const crypto = require('crypto');
+  const crypto = require('crypto');
 
   
   // function getRandomValues() {

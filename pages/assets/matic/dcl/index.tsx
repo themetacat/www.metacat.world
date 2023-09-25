@@ -5,6 +5,7 @@ import "@babylonjs/loaders/glTF";
 import "babylonjs-loaders";
 import "babylonjs-materials";
 import axios from "axios";
+const crypto = require('crypto');
 import {
   getModelInfo,
   setModelInfo,
