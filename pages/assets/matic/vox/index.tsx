@@ -370,98 +370,101 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 // console.log(voxMeshState)
   },[voxMeshState,editNum,voxMesh])
 
-  function generateUUID(e, random, r) {
-    let lastNsecs = 0;
-    let lastTimestamp = 0;
-    let lastClockSequence = null;
-    let nodeIdentifier = null;
+  // function generateUUID(e, random, r) {
+  //   let lastNsecs = 0;
+  //   let lastTimestamp = 0;
+  //   let lastClockSequence = null;
+  //   let nodeIdentifier = null;
 
-    let index = (random && r) || 0;
-    const uuidArray = random || new Array(16);
-    e = e || {};
+  //   let index = (random && r) || 0;
+  //   const uuidArray = random || new Array(16);
+  //   e = e || {};
 
-    let node = e.node || nodeIdentifier;
-    let clockSeq = e.clockSeq !== undefined ? e.clockSeq : lastClockSequence;
+  //   let node = e.node || nodeIdentifier;
+  //   let clockSeq = e.clockSeq !== undefined ? e.clockSeq : lastClockSequence;
 
-    if (node === null || clockSeq === null) {
-      const random = getRandomValues();
-      if (node === null) {
-        node = nodeIdentifier = [
-          random[0] | 1,
-          random[1],
-          random[2],
-          random[3],
-          random[4],
-          random[5],
-        ];
-      }
-      if (clockSeq === null) {
-        clockSeq = lastClockSequence = ((random[6] << 8) | random[7]) & 16383;
-      }
-    }
+  //   if (node === null || clockSeq === null) {
+  //     const random = getRandomValues();
+  //     if (node === null) {
+  //       node = nodeIdentifier = [
+  //         random[0] | 1,
+  //         random[1],
+  //         random[2],
+  //         random[3],
+  //         random[4],
+  //         random[5],
+  //       ];
+  //     }
+  //     if (clockSeq === null) {
+  //       clockSeq = lastClockSequence = ((random[6] << 8) | random[7]) & 16383;
+  //     }
+  //   }
 
-    let timestamp = e.timestamp !== undefined ? e.timestamp : Date.now();
-    let nsecs = e.nsecs !== undefined ? e.nsecs : lastNsecs + 1;
+  //   let timestamp = e.timestamp !== undefined ? e.timestamp : Date.now();
+  //   let nsecs = e.nsecs !== undefined ? e.nsecs : lastNsecs + 1;
 
-    const clockOffset =
-      (timestamp - lastTimestamp + (nsecs - lastNsecs)) / 10000;
+  //   const clockOffset =
+  //     (timestamp - lastTimestamp + (nsecs - lastNsecs)) / 10000;
 
-    if (clockOffset < 0 && e.clockSeq === undefined) {
-      clockSeq = (clockSeq + 1) & 16383;
-    }
+  //   if (clockOffset < 0 && e.clockSeq === undefined) {
+  //     clockSeq = (clockSeq + 1) & 16383;
+  //   }
 
-    if (
-      (clockOffset < 0 || timestamp > lastTimestamp) &&
-      e.nsecs === undefined
-    ) {
-      nsecs = 0;
-    }
+  //   if (
+  //     (clockOffset < 0 || timestamp > lastTimestamp) &&
+  //     e.nsecs === undefined
+  //   ) {
+  //     nsecs = 0;
+  //   }
 
-    if (nsecs >= 10000) {
-      throw new Error("generateUUID(): Can't create more than 10M uuids/sec");
-    }
+  //   if (nsecs >= 10000) {
+  //     throw new Error("generateUUID(): Can't create more than 10M uuids/sec");
+  //   }
 
-    lastTimestamp = timestamp;
-    lastNsecs = nsecs;
-    lastClockSequence = clockSeq;
+  //   lastTimestamp = timestamp;
+  //   lastNsecs = nsecs;
+  //   lastClockSequence = clockSeq;
 
-    timestamp += 122192928e5;
-    const timeLow = ((timestamp & 268435455) * 10000 + nsecs) % 4294967296;
-    uuidArray[index++] = (timeLow >>> 24) & 255;
-    uuidArray[index++] = (timeLow >>> 16) & 255;
-    uuidArray[index++] = (timeLow >>> 8) & 255;
-    uuidArray[index++] = timeLow & 255;
+  //   timestamp += 122192928e5;
+  //   const timeLow = ((timestamp & 268435455) * 10000 + nsecs) % 4294967296;
+  //   uuidArray[index++] = (timeLow >>> 24) & 255;
+  //   uuidArray[index++] = (timeLow >>> 16) & 255;
+  //   uuidArray[index++] = (timeLow >>> 8) & 255;
+  //   uuidArray[index++] = timeLow & 255;
 
-    const timeMid = ((timestamp / 4294967296) * 10000) & 268435455;
-    uuidArray[index++] = (timeMid >>> 8) & 255;
-    uuidArray[index++] = timeMid & 255;
-    uuidArray[index++] = ((timeMid >>> 24) & 15) | 16;
-    uuidArray[index++] = (timeMid >>> 16) & 255;
+  //   const timeMid = ((timestamp / 4294967296) * 10000) & 268435455;
+  //   uuidArray[index++] = (timeMid >>> 8) & 255;
+  //   uuidArray[index++] = timeMid & 255;
+  //   uuidArray[index++] = ((timeMid >>> 24) & 15) | 16;
+  //   uuidArray[index++] = (timeMid >>> 16) & 255;
 
-    uuidArray[index++] = (clockSeq >>> 8) | 128;
-    uuidArray[index++] = clockSeq & 255;
+  //   uuidArray[index++] = (clockSeq >>> 8) | 128;
+  //   uuidArray[index++] = clockSeq & 255;
 
-    for (let i = 0; i < 6; ++i) {
-      uuidArray[index + i] = node[i];
-    }
-    return byteArrayToHexString(uuidArray);
-  }
+  //   for (let i = 0; i < 6; ++i) {
+  //     uuidArray[index + i] = node[i];
+  //   }
+  //   return byteArrayToHexString(uuidArray);
+  // }
+  // const crypto = require('crypto');
 
-  function getRandomValues() {
-    let getRandom;
-    const arr = new Uint8Array(16);
-    if (!getRandom) {
-      getRandom =
-        typeof crypto !== "undefined" &&
-        crypto.getRandomValues &&
-        crypto.getRandomValues.bind(crypto);
-      if (!getRandom)
-        throw new Error(
-          "crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported"
-        );
-    }
-    return getRandom(arr);
-  }
+  
+  // function getRandomValues() {
+  //   let getRandom;
+  //   const arr = new Uint8Array(16);
+  //   if (!getRandom) {
+  //     getRandom =
+  //       typeof crypto !== "undefined" &&
+  //       crypto.getRandomValues &&
+  //       crypto.getRandomValues.bind(crypto);
+  //       console.log(getRandom,5555)
+  //     if (!getRandom)
+  //       throw new Error(
+  //         "crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported"
+  //       );
+  //   }
+  //   return getRandom(arr);
+  // }
   let hexChars = [];
   for (let i = 0; i < 256; ++i) {
     hexChars.push((i + 256).toString(16).slice(1));
@@ -836,7 +839,8 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 
       const defaultScale = 0.5;
       const updatedCostume = Object.assign({}, costume);
-      const uniqueId = generateUUID(null, null, null);
+      // const uniqueId = generateUUID(null, null, null);
+      const uniqueId = crypto.randomUUID();;
 
       const attachmentInfo = {
         name: wearable.name,
