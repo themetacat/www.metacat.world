@@ -1004,7 +1004,11 @@ export default function DclContent() {
 
     // 获取 拖放的wearable
     function getDroppedWearable() {
-      let droppedWearableValue = window["droppedWearable"];
+      let droppedWearableValue;
+      // let droppedWearableValue = window["droppedWearable"];
+      if (typeof window !== "undefined") {
+        droppedWearableValue = window["droppedWearable"];
+      }
       return droppedWearableValue !== null && droppedWearableValue !== undefined
         ? droppedWearableValue
         : null;
@@ -1403,7 +1407,10 @@ export default function DclContent() {
             if (event.target instanceof HTMLElement) {
               event.target.className = "dragging-wearable";
             }
-            (window as any).droppedWearable = wearable;
+            // (window as any).droppedWearable = wearable;
+            if (typeof window !== "undefined") {
+              (window as any).droppedWearable = wearable;
+            }
           };
 
           const onClickWearable = (event) => {
@@ -1415,7 +1422,10 @@ export default function DclContent() {
             // if (event.target instanceof HTMLElement) {
             //     event.target.className = "click-wearable";
             // }
-            (window as any).droppedWearable = wearable;
+            // (window as any).droppedWearable = wearable;
+            if (typeof window !== "undefined") {
+              (window as any).droppedWearable = wearable;
+            }
             wearableOnClick();
           };
 
@@ -1965,11 +1975,14 @@ modelList[the_wearable.hashValue] =false
       const json_costume = JSON.stringify(costume, null, 2);
       const element_dow = document.createElement("a");
       element_dow.style.display = "hidden";
-      element_dow.href = window.URL.createObjectURL(
-        new Blob([json_costume], {
-          type: "application/json",
-        })
-      );
+      if (typeof window !== "undefined") {
+        element_dow.href = window.URL.createObjectURL(
+          new Blob([json_costume], {
+            type: "application/json",
+          })
+        );
+      }
+    
       element_dow.download =
         ((file_name = costume.name) !== null && file_name !== void 0
           ? file_name
@@ -1991,7 +2004,10 @@ modelList[the_wearable.hashValue] =false
           const attachments = data.attachments;
 
           for (let att of attachments) {
-            (window as any).droppedWearable = att;
+            // (window as any).droppedWearable = att;
+            if (typeof window !== "undefined") {
+              (window as any).droppedWearable = att;
+            }
             targetBone = att.bone;
             attachmentId.current = att.uuid;
             all_last_rotation.current[attachmentId.current] = att.rotation;
