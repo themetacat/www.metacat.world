@@ -46,6 +46,7 @@ const router = useRouter();
   const [getdroppedWearable, setGetdroppedWearable] = useState({});
   const [voxMeshState, setVoxMeshState] = useState(null);
   // var voxMesh = null;
+  let windowVal = {};
   var last_rotation = {};
   let voxMesh;
   let targetBone = null;
@@ -205,7 +206,9 @@ const router = useRouter();
         voxMesh.refreshBoundingInfo();
         return voxMesh;
       });
-      (window as any).get_vox_data = get_vox_data;
+    
+      // (window as any).get_vox_data = get_vox_data;
+
   };
   let skeleton = null;
   function num(value) {
@@ -980,7 +983,6 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
           modelList.push(droppedWearable.token_id)
           // "https://www.voxels.com/c/v2/polygon/0x1e3D804415dCbb7ceA3478f176e123562e09b514/155/vox"
           // 将模型绕 y 轴旋转 180 度，使其正上方朝向 y 轴
-
           // get vox data
          get_vox_data(requestConfig, voxMesh)
       }
@@ -991,7 +993,8 @@ setVoxMeshState(voxMesh)
 
     // 获取 拖放的wearable
     function getDroppedWearable() {
-      let droppedWearableValue = window["droppedWearable"];
+      // let droppedWearableValue = window["droppedWearable"];
+      let droppedWearableValue = windowVal["droppedWearable"];
       return droppedWearableValue !== null && droppedWearableValue !== undefined
         ? droppedWearableValue
         : null;
@@ -1201,7 +1204,8 @@ const tokenUri = item.tokenUri.raw
             event.target.className = "dragging-wearable";
           }
           // console.log(window,6363636);
-          (window as any).droppedWearable = wearable;
+          // (window as any).droppedWearable = wearable;
+          windowVal['droppedWearable']= wearable
           // window.droppedWearable = wearable;
         //   setGetdroppedWearable(wearable)
         };
@@ -1706,25 +1710,25 @@ const tokenUri = item.tokenUri.raw
       });
     }
 
-    function downloadCostume() {
-      let file_name;
-      // const t = this.costume;
-      if (!costume) return;
-      const json_costume = JSON.stringify(costume, null, 2);
-      const element_dow = document.createElement("a");
-      element_dow.style.display = "hidden";
-      element_dow.href = window.URL.createObjectURL(
-        new Blob([json_costume], {
-          type: "application/json",
-        })
-      );
-      element_dow.download =
-        ((file_name = costume.name) !== null && file_name !== void 0
-          ? file_name
-          : costume.token_id) + ".json";
-      element_dow.click();
-      element_dow.remove();
-    }
+    // function downloadCostume() {
+    //   let file_name;
+    //   // const t = this.costume;
+    //   if (!costume) return;
+    //   const json_costume = JSON.stringify(costume, null, 2);
+    //   const element_dow = document.createElement("a");
+    //   element_dow.style.display = "hidden";
+    //   element_dow.href = window.URL.createObjectURL(
+    //     new Blob([json_costume], {
+    //       type: "application/json",
+    //     })
+    //   );
+    //   element_dow.download =
+    //     ((file_name = costume.name) !== null && file_name !== void 0
+    //       ? file_name
+    //       : costume.token_id) + ".json";
+    //   element_dow.click();
+    //   element_dow.remove();
+    // }
 
    
 
@@ -1747,8 +1751,10 @@ const tokenUri = item.tokenUri.raw
         const attachments = data.attachments;
   
         for (let att of attachments) {
-          (window as any).droppedWearable = att;
-          (window as any).droppedWearable.token_id = att.token_id
+          // (window as any).droppedWearable = att;
+          windowVal['droppedWearable']= att
+          // (window as any).droppedWearable.token_id = att.token_id
+          windowVal['droppedWearable'].token_id= att.token_id
             targetBone = att.bone;
             attachmentId = att.uuid
             all_last_rotation.current[attachmentId] = att.rotation
@@ -1779,7 +1785,7 @@ const tokenUri = item.tokenUri.raw
 
     // 添加点击事件处理程序
     deleteButton.addEventListener("click", dispose_mesh);
-    download_json_file.addEventListener("click", downloadCostume);
+    // download_json_file.addEventListener("click", downloadCostume);
 
     engine.runRenderLoop(function () {
       scene.render();
@@ -2009,7 +2015,7 @@ const tokenUri = item.tokenUri.raw
           </div>
           <div>
             <button className={style.buton} id="mesh_dispose">Remove</button>
-            <button className={style.buton} id="download">Download</button>
+            {/* <button className={style.buton} id="download">Download</button> */}
             {/* <button className={style.buton} id="upload">Upload</button> */}
           </div>
           <div id="wearable_list"></div>

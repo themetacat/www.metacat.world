@@ -134,6 +134,7 @@ export default function DclContent() {
   //   }
   //   return byteArrayToHexString(uuidArray);
   // }
+  let windowVal = {};
   let hexChars = [];
   for (let i = 0; i < 256; ++i) {
     hexChars?.push((i + 256)?.toString(16)?.slice(1));
@@ -1004,11 +1005,8 @@ export default function DclContent() {
 
     // 获取 拖放的wearable
     function getDroppedWearable() {
-      let droppedWearableValue;
-      // let droppedWearableValue = window["droppedWearable"];
-      if (typeof window !== "undefined") {
-        droppedWearableValue = window["droppedWearable"];
-      }
+      let droppedWearableValue = windowVal["droppedWearable"];
+      
       return droppedWearableValue !== null && droppedWearableValue !== undefined
         ? droppedWearableValue
         : null;
@@ -1408,9 +1406,7 @@ export default function DclContent() {
               event.target.className = "dragging-wearable";
             }
             // (window as any).droppedWearable = wearable;
-            if (typeof window !== "undefined") {
-              (window as any).droppedWearable = wearable;
-            }
+            windowVal['droppedWearable']= wearable
           };
 
           const onClickWearable = (event) => {
@@ -1423,9 +1419,7 @@ export default function DclContent() {
             //     event.target.className = "click-wearable";
             // }
             // (window as any).droppedWearable = wearable;
-            if (typeof window !== "undefined") {
-              (window as any).droppedWearable = wearable;
-            }
+            windowVal['droppedWearable']= wearable
             wearableOnClick();
           };
 
@@ -1968,28 +1962,25 @@ modelList[the_wearable.hashValue] =false
       });
     }
 
-    function downloadCostume() {
-      var file_name;
-      // const t = this.costume;
-      if (!costume) return;
-      const json_costume = JSON.stringify(costume, null, 2);
-      const element_dow = document.createElement("a");
-      element_dow.style.display = "hidden";
-      if (typeof window !== "undefined") {
-        element_dow.href = window.URL.createObjectURL(
-          new Blob([json_costume], {
-            type: "application/json",
-          })
-        );
-      }
-    
-      element_dow.download =
-        ((file_name = costume.name) !== null && file_name !== void 0
-          ? file_name
-          : costume.token_id) + ".json";
-      element_dow.click();
-      element_dow.remove();
-    }
+    // function downloadCostume() {
+    //   var file_name;
+    //   // const t = this.costume;
+    //   if (!costume) return;
+    //   const json_costume = JSON.stringify(costume, null, 2);
+    //   const element_dow = document.createElement("a");
+    //   element_dow.style.display = "hidden";
+    //   element_dow.href = window.URL.createObjectURL(
+    //     new Blob([json_costume], {
+    //       type: "application/json",
+    //     })
+    //   );
+    //   element_dow.download =
+    //     ((file_name = costume.name) !== null && file_name !== void 0
+    //       ? file_name
+    //       : costume.token_id) + ".json";
+    //   element_dow.click();
+    //   element_dow.remove();
+    // }
 
     async function onLoadCostume() {
       // const response = await fetch('./load1.json');
@@ -2005,9 +1996,7 @@ modelList[the_wearable.hashValue] =false
 
           for (let att of attachments) {
             // (window as any).droppedWearable = att;
-            if (typeof window !== "undefined") {
-              (window as any).droppedWearable = att;
-            }
+            windowVal['droppedWearable']= att
             targetBone = att.bone;
             attachmentId.current = att.uuid;
             all_last_rotation.current[attachmentId.current] = att.rotation;
@@ -2044,7 +2033,7 @@ modelList[the_wearable.hashValue] =false
     // const up_load = document.getElementById("upload");
     // 添加点击事件处理程序
     deleteButton.addEventListener("click", dispose_mesh);
-    download_json_file.addEventListener("click", downloadCostume);
+    // download_json_file.addEventListener("click", downloadCostume);
     // up_load.addEventListener("click", onLoadCostume);
 
     engine.runRenderLoop(function () {
@@ -2273,9 +2262,9 @@ modelList[the_wearable.hashValue] =false
             <button className={style.buton} id="mesh_dispose">
               Remove
             </button>
-            <button className={style.buton} id="download">
+            {/* <button className={style.buton} id="download">
               Download
-            </button>
+            </button> */}
             {/* <button className={style.buton} id="upload">
               Upload
             </button> */}
