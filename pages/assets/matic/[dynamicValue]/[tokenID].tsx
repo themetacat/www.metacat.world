@@ -1070,10 +1070,10 @@ export default function Matic() {
                 )}
               </div>
 
-              {/* <div style={{ marginTop: "20px" }}>
+              <div style={{ marginTop: "20px" }}>
                 {" "}
                 <VoxFiled />
-              </div> */}
+              </div>
             </div>
           </>
         ):<></>}

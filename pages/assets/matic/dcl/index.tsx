@@ -1276,8 +1276,8 @@ export default function DclContent() {
       //      }
       //  ]
 
-      const tokenboundAccount =
-        window.localStorage.getItem("tokenboundAccount");
+      // const tokenboundAccount =
+      //   window.localStorage.getItem("tokenboundAccount");
       const detailHandleq = getBagsDetail(
         "0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e"
       );
@@ -1603,7 +1603,6 @@ export default function DclContent() {
         modelMesh.dispose(); // 销毁模型及其资源
         deleteAttachment();
 modelList[the_wearable.hashValue] =false
-        // console.log(costume,33444);
         
         update_modelMesh(null);
         updateAllPositionValue(null);
