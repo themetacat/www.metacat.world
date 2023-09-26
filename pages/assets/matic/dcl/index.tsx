@@ -2045,7 +2045,6 @@ modelList[the_wearable.hashValue] =false
     });
     onLoadCostume()
   }, []);
-  const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 
   const onChangeEdiumY =(event) => {
     // setEditNumPoY(event.target.value);

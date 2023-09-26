@@ -1145,7 +1145,6 @@ pickResult.pickedMesh.material = emissiveMaterial;
       //   },
       // ];
       
-     const tokenboundAccount=  window.localStorage.getItem('tokenboundAccount')
         const detailHandleq = getBagsDetail('0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e');
         // console.log(detailHandleq);
         detailHandleq.then((detailHandleItem)=>{
