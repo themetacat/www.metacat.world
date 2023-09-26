@@ -10,9 +10,10 @@ import { useWalletConnect } from "@walletconnect/react-native-dapp";
 // import { buildApprovedNamespaces } from '@walletconnect/utils'
 // import { SignClientTypes } from '@walletconnect/types'
 import dynamic from "next/dynamic";
-// import VoxFiled from '../vox';
-const VoxFiled = dynamic(import("../vox"), { ssr: false });
-const DclContent = dynamic(import("../dcl"), { ssr: false });
+import VoxFiled from '../vox';
+import DclContent from '../dcl';
+// const VoxFiled = dynamic(import("../vox"), { ssr: false });
+// const DclContent = dynamic(import("../dcl"), { ssr: false });
 // import { SessionTypes,ICore } from '@walletconnect/types';
 import { Core } from "@walletconnect/core";
 import { Web3Wallet } from "@walletconnect/web3wallet";
@@ -1070,10 +1071,10 @@ export default function Matic() {
                 )}
               </div>
 
-              <div style={{ marginTop: "20px" }}>
+              {/* <div style={{ marginTop: "20px" }}>
                 {" "}
                 <VoxFiled />
-              </div>
+              </div> */}
             </div>
           </>
         ):<></>}

@@ -1603,6 +1603,7 @@ export default function DclContent() {
         modelMesh.dispose(); // 销毁模型及其资源
         deleteAttachment();
 modelList[the_wearable.hashValue] =false
+        // console.log(costume,33444);
         
         update_modelMesh(null);
         updateAllPositionValue(null);
