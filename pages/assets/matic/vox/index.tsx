@@ -60,8 +60,8 @@ const router = useRouter();
   // let attachmentId = null;
  const all_last_rotation = React.useRef({});
   let modelList = {};
-  const uniqueId  = crypto.randomUUID();
-  const attachmentId = React.useRef(uniqueId);
+  // const uniqueId  = crypto.randomUUID();
+  const attachmentId = React.useRef(null);
   const get_vox_data = (requestConfig, voxMesh) => {
     var parser = new vox.Parser();
     // console.log(requestConfig,55656);
