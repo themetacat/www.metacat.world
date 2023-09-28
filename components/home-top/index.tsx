@@ -868,7 +868,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             
     
               // 对比 ETH 余额和数量与单价的乘积
-              if (parseFloat(ethBalance) >= 0.01 * num) {
+              if (parseFloat(ethBalance) >= 1 * num) {
                 // 执行 mint 操作
                 // your mint logic here
                 // // console.log("Minting...");
@@ -896,7 +896,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 }, 5000);
     
                 const tx = await contract.methods
-                  .mintAndCreate(profile.address,num,'0x2D25602551487C3f3354dD80D76D54383A243358',137,0)
+                  .mintAndCreate(profile.address,num,'0x2D25602551487C3f3354dD80D76D54383A243358',137,0,"0x8129fc1c")
                   .send({
                     from: profile.address,
                     value: web3a.utils.toWei(`${1 * num}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
@@ -1206,7 +1206,7 @@ web3.eth.getBalance(walletAddress)
         
         setIsEditing(false);
        
-        if(((0.01 * editNum).toFixed(2)>=ethBalance)===true){
+        if(((1 * editNum).toFixed(2)>=ethBalance)===true){
           setBalanceNum(true)
         }else{
           setBalanceNum(false)
@@ -1295,8 +1295,8 @@ web3.eth.getBalance(walletAddress)
     // <MintContent handleMint={()=>{mintBag}}/>
     // </>
     <>
-    <div className={cn((0.01 * num).toFixed(3) >= ethBalance?style.content1:style.content,)}>
-            <span>{(0.01 * num).toFixed(2)} MATIC</span>
+    <div className={cn((1 * num).toFixed(3) >= ethBalance?style.content1:style.content,)}>
+            <span>{(1 * num).toFixed(2)} MATIC</span>
             <p className={cn(style.supply1)}>
               Supply:
               <span>{mintNum}</span>
@@ -1340,7 +1340,7 @@ web3.eth.getBalance(walletAddress)
             {balanceNum===true ? (
               <div>
                 <p className={style.gasMax}>
-                MATIC Balance: You need {(0.01 * num).toFixed(2)} MATIC + gas fee{" "}
+                MATIC Balance: You need {(1 * num).toFixed(2)} MATIC + gas fee{" "}
                   <br /> You MATIC wallet Balance: {ethBalance} MATIC
                 </p>
               </div>
