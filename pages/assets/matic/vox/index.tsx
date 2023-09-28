@@ -767,9 +767,11 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 
     function getWearableURL(droppedWearable) {
       // ${chain_info[droppedWearable.chain_id]}
+      const hexValue = droppedWearable.token_id;
+      const decimalValue = parseInt(hexValue, 16);
       return `/c/v2/polygon/${
         droppedWearable.collection_address
-      }/${droppedWearable.token_id}/vox`;
+      }/${decimalValue}/vox`;
     }
 
     // 模型高亮层
