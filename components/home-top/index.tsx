@@ -805,7 +805,6 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, [profileData]);
       useEffect(() => {
         const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-        // console.log(333333333,metaCatAtk);
         // console.log(rmBabylonModel('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTUxMTAwODAsImZsYWciOjAsImlhdCI6MTY5NDUwNTI4MCwiaXNzIjoibWV0YWNhdCIsIndhbGxldF9hZGRyZXNzIjoiMHg3OUVGM0RBNzYzNzU0Mzg3RjA2MDIyQ2Y2NmMyNjY4ODU0QjMzODlCIn0.2APgSNk5N5_4_DSwJNejkulKtpJs8MSOrCxwZM-qOaU',6));
         if (!metaCatAtk) {
           setTimeout(() => {
