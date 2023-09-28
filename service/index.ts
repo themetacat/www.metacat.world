@@ -11,7 +11,7 @@ export const getCVEventList = async (cursor: number, count: number) => {
 };
 
 export const getDataHandle = async (pointers) => {
-  const url = 'http://47.243.184.241/api/v1/get_dcl_wearable_content_entities';
+  const url = 'https://api.metacat.world/api/v1/get_dcl_wearable_content_entities';
 const headers = {
     'content-type': 'application/json',
 };
@@ -115,7 +115,7 @@ export const setModelInfo = async (token,costume) => {
 
 
   // const url = '/api/set_model_info'; // 替换为你的接口地址
-  const url = 'http://47.243.184.241/api/v1/set_babylon_model_info'; // 替换为你的接口地址
+  const url = 'https://api.metacat.world/api/v1/set_babylon_model_info'; // 替换为你的接口地址
 
   const requestData = {
     costume

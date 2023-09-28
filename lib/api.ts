@@ -354,7 +354,7 @@ class API {
 
 
 
-const url = 'http://47.243.184.241/api/v1/get_dcl_wearable_content_entities';
+const url = 'https://api.metacat.world/api/v1/get_dcl_wearable_content_entities';
 // const proxy = '127.0.0.1:7890'; // 代理地址和端口号
 
 const headers = {
@@ -412,7 +412,7 @@ fetch(url, {
 
   public async getModelInfo(token_id): Promise<any> {
     const search = qs.stringify({ token_id}, { addQueryPrefix: true });
-    const url = `http://47.243.184.241/api/v1/get_babylon_model_info?token_id=${token_id}`;
+    const url = `https://api.metacat.world/api/v1/get_babylon_model_info?token_id=${token_id}`;
 
 
     const res = await fetch(url);
@@ -425,7 +425,7 @@ fetch(url, {
 
   public async rmBabylonModel(token: string,token_id): Promise<any> {
     const search = qs.stringify({ token_id}, { addQueryPrefix: false });
-    const url = `http://47.243.184.241/api/v1/rm_babylon_model_info?token_id=${token_id}`;
+    const url = `https://api.metacat.world/api/v1/rm_babylon_model_info?token_id=${token_id}`;
 
     const res = await fetch(url, {
          method: 'get',
@@ -469,7 +469,7 @@ fetch(url, {
 //     return json;
 
 
-const url = 'http://47.243.184.241/api/v1/set_babylon_model_info'; // 替换为你的接口地址
+const url = 'https://api.metacat.world/api/v1/set_babylon_model_info'; // 替换为你的接口地址
 
   const requestData = {
     costume
