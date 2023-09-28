@@ -68,6 +68,7 @@ const router = useRouter();
     
     parser
       .parse(
+        
         "https://www.voxels.com"+requestConfig.url
           // "https://wearable.vercel.app/"+requestConfig.url.hash+".vox"
       )
@@ -1165,8 +1166,8 @@ pickResult.pickedMesh.material = emissiveMaterial;
       //     collection_name: "MetaCat",
       //   },
       // ];
-      
-        const detailHandleq = getBagsDetail('0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e');
+      const tokenboundAccount = window.localStorage.getItem('tokenboundAccount')
+        const detailHandleq = getBagsDetail(tokenboundAccount);
         // console.log(detailHandleq);
         detailHandleq.then((detailHandleItem)=>{
             
