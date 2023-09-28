@@ -136,7 +136,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
  
       const onClick = React.useCallback(
         (event) => {
-          // console.log(showMenu);
+          // // console.log(showMenu);
           
           if (idTokenWeb3 === null) {
             setShowMenu(false);
@@ -225,18 +225,18 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           // const networkId = await window.ethereum.request({
           //   method: "net_version",
           // });
-          // // console.log(networkId === "80001", "networkId", networkId);
+          // // // console.log(networkId === "137", "networkId", networkId);
           // // 判断当前网络是否为 Ethereum Sepolia 网络
           // // await  window.ethereum.request({
           // //   method: 'wallet_switchEthereumChain',
-          // //   params: [{ chainId: '80001' }],
+          // //   params: [{ chainId: '137' }],
           // // });
-          // if (networkId !== "80001") {
+          // if (networkId !== "137") {
           //   // 根据需要跳转到引导转换网络的网页或执行其他逻辑
           //   // window.open("https://example.com");
           //   // return;
-          //   const chainId = "0x" + (80001).toString(16);
-          //   // console.log(chainId, "chainId");
+          //   const chainId = "0x" + (137).toString(16);
+          //   // // console.log(chainId, "chainId");
     
           //   await window.ethereum.request({
           //     method: "wallet_switchEthereumChain",
@@ -254,12 +254,12 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             // 获取当前链Id
             const chainId = await web3a.eth.getChainId();
       
-            // 检查当前链Id是否为 Mumbai Testnet 的 80001
-            if (chainId === 80001) {
-              console.log('Already connected to Mumbai Testnet');
+            // 检查当前链Id是否为 Mumbai Testnet 的 137
+            if (chainId === 137) {
+              // console.log('Already connected to Mumbai Testnet');
               web3.connect().then(
                 async (res) => {
-                  console.log("connect==>", res);
+                  // console.log("connect==>", res);
                   const { address: addr, provider } = res;
                     setSwitcherNet(false)
                   connect(addr, provider);
@@ -277,13 +277,13 @@ export default function HomePage({ onClickHandler }: Props,ref) {
               // 切换到 Mumbai Testnet
               await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [
-                  {
-                    chainId: '0x13881',
-                  },
-                ],
-              });
-              console.log('Switched to Mumbai Testnet');
+    params: [
+      {
+        chainId: '0x89', // 使用十六进制表示的 chainID，对应十进制的 137
+      },
+    ],
+  });
+              // console.log('Switched to Mumbai Testnet');
             } catch (error) {
               // 检查错误类型，如果是因为网络不存在而报错，则添加 Mumbai Testnet
               if (
@@ -295,32 +295,32 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                     method: 'wallet_addEthereumChain',
                     params: [
                       {
-                        chainId: '0x13881',
-                        chainName: 'Mumbai',
+                        chainId: '0x89', // 使用十六进制表示的 chainID，对应十进制的 137
+                        chainName: 'Polygon',
                         nativeCurrency: {
                           name: 'MATIC',
                           symbol: 'MATIC',
                           decimals: 18,
                         },
-                        rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+                        rpcUrls: ['https://rpc-mainnet.matic.network'],
                       },
                     ],
                   });
-                  console.log('Added Mumbai Testnet');
+                  // console.log('Added Mumbai Testnet');
                 } catch (addError) {
-                  console.error('Failed to add network:', addError);
+                  // console.error('Failed to add network:', addError);
                 }
               } else {
-                console.error('Failed to switch network:', error);
+                // console.error('Failed to switch network:', error);
               }
             }
           } else {
-            console.log('MetaMask not detected');
+            // console.log('MetaMask not detected');
           }
     
           web3.connect().then(
             async (res) => {
-              console.log("connect==>", res);
+              // console.log("connect==>", res);
               const { address: addr, provider } = res;
                 setSwitcherNet(false)
               connect(addr, provider);
@@ -337,7 +337,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, [web3, connect]);
       const authenticateUser = React.useCallback(async () => {
         if (!web3auth) {
-          console.log("web3auth not initialized yet");
+          // console.log("web3auth not initialized yet");
           return;
         }
         const idTokenAuthenticateUser = await web3auth.authenticateUser();
@@ -359,7 +359,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       
   const getAccounts = React.useCallback(async () => {
     if (!providerWeb3auth) {
-      console.log("provider not initialized yet");
+      // console.log("provider not initialized yet");
       return;
     }
     const rpc = new RPC(providerWeb3auth);
@@ -385,7 +385,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
   }, [providerWeb3auth, idTokenWeb3, web3AuthAddress]);
       const login = React.useCallback(async () => {
         if (!web3auth) {
-          console.log("web3auth not initialized yet");
+          // console.log("web3auth not initialized yet");
           return;
         }
     
@@ -408,12 +408,12 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             getAccounts();
             const idtoken = authenticateUser();
             idtoken.then((res) => {
-              console.log(res);
+              // console.log(res);
             });
             if (idtoken !== null) {
               const address3 = getAccounts();
               address3.then((res) => {
-                console.log(res);
+                // console.log(res);
               });
             }
           }
@@ -423,7 +423,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, [providerWeb3auth, web3auth, showMenu, web3AuthAddress, idTokenWeb3]);
       const logout = React.useCallback(() => {
         if (!web3auth) {
-          console.log("web3auth not initialized yet");
+          // console.log("web3auth not initialized yet");
           return;
         }
     
@@ -726,7 +726,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
         let text = "Connect";
         if (profile?.address) {
           if ( profile?.address) {
-            // console.log(profile);
+            // // console.log(profile);
             // text = profile?.nickName;
             text = clipName(profile?.address);
             // setShowMenu(true);
@@ -805,8 +805,8 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, [profileData]);
       useEffect(() => {
         const metaCatAtk = window.localStorage.getItem("METACAT_atk");
-        console.log(333333333,metaCatAtk);
-        console.log(rmBabylonModel('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTUxMTAwODAsImZsYWciOjAsImlhdCI6MTY5NDUwNTI4MCwiaXNzIjoibWV0YWNhdCIsIndhbGxldF9hZGRyZXNzIjoiMHg3OUVGM0RBNzYzNzU0Mzg3RjA2MDIyQ2Y2NmMyNjY4ODU0QjMzODlCIn0.2APgSNk5N5_4_DSwJNejkulKtpJs8MSOrCxwZM-qOaU',6));
+        // console.log(333333333,metaCatAtk);
+        // console.log(rmBabylonModel('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTUxMTAwODAsImZsYWciOjAsImlhdCI6MTY5NDUwNTI4MCwiaXNzIjoibWV0YWNhdCIsIndhbGxldF9hZGRyZXNzIjoiMHg3OUVGM0RBNzYzNzU0Mzg3RjA2MDIyQ2Y2NmMyNjY4ODU0QjMzODlCIn0.2APgSNk5N5_4_DSwJNejkulKtpJs8MSOrCxwZM-qOaU',6));
         if (!metaCatAtk) {
           setTimeout(() => {
             profilConent();
@@ -832,17 +832,20 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
         }
       }, [loginState]);
-      const abi = [{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"toTokenId","type":"uint256"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getInfo","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"send","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+
+      const abi =[{"inputs":[{"internalType":"address","name":"_logic","type":"address"},{"internalType":"bytes","name":"_data","type":"bytes"}],"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"stateMutability":"payable","type":"fallback"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"toTokenId","type":"uint256"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"version","type":"uint8"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"ERC6551RegistryAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"implementation","type":"address"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"uint256","name":"salt","type":"uint256"}],"name":"adminMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getImplementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getInfo","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"implementation","type":"address"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"uint256","name":"salt","type":"uint256"}],"name":"mintAndCreate","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newERC6551RegistryAddress","type":"address"}],"name":"setERC6551RegistryAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"testNum","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"testStr","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"}],"name":"upgradeTo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+
+
       const mintBag =async ()=>{
         try {
           
           if (typeof window.ethereum !== "undefined") {
             // 请求用户授权连接 MetaMask
             const networkVersion = window.ethereum.networkVersion;
-            console.log(networkVersion);
+            // console.log(networkVersion);
             
-            if (networkVersion !== "80001") {
-              console.log("有没有问题");
+            if (networkVersion !== "137") {
+              // console.log("有没有问题");
               setSwitcherNet(true);
               connectToChain();
             } else {
@@ -850,7 +853,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
               setLoading(true)
 
               await window.ethereum.request({ method: "eth_requestAccounts" });
-          // console.log(window.ethereum.request({ method: "eth_requestAccounts" }));
+          // // console.log(window.ethereum.request({ method: "eth_requestAccounts" }));
           
               // 创建 Web3 实例
               const web3Con = new Web3(window.ethereum);
@@ -863,15 +866,15 @@ export default function HomePage({ onClickHandler }: Props,ref) {
               // const balance = await web3Con.eth.getBalance(accountAddress);
               // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
               // const ethBalance = Number(web3Con.utils.fromWei(balance, "ether"));
-              // console.log(accountAddress, "accountAddres1111s");
+              // // console.log(accountAddress, "accountAddres1111s");
             
     
               // 对比 ETH 余额和数量与单价的乘积
               if (parseFloat(ethBalance) >= 0.01 * num) {
                 // 执行 mint 操作
                 // your mint logic here
-                // console.log("Minting...");
-                // console.log(mintNum, "mintNummintNummintNum");
+                // // console.log("Minting...");
+                // // console.log(mintNum, "mintNummintNummintNum");
     
                 if (!profile?.address) {
                   connectToChain();
@@ -881,11 +884,11 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 setLoading(true);
                 const web3a = new Web3(Web3.givenProvider);
                 const contractAddress =
-                  "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c";
+                  "0x7524194dfCf68820006891d5D5810065F233A0B8";
                       
-                // const contractAddress = "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c";
+                // const contractAddress = "0x7524194dfCf68820006891d5D5810065F233A0B8";
                 const contract = new web3a.eth.Contract(abi as [], contractAddress);
-                // console.log(contract.methods.ownerOf(1).call({}),3333);
+                
                 // const mintNums = num; // 在这里定义要mint的数量
                 setTimeout(() => {
                   setLoading(false);
@@ -895,14 +898,14 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 }, 5000);
     
                 const tx = await contract.methods
-                  .mint(profile.address,num,)
+                  .mintAndCreate(profile.address,num,'0x2D25602551487C3f3354dD80D76D54383A243358',137,0)
                   .send({
                     from: profile.address,
-                    value: web3a.utils.toWei(`${0.01 * num}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
+                    value: web3a.utils.toWei(`${1 * num}`, "ether"), // 计算价格,根据合约可知，第一阶段是0.006eth，第二阶段是0.009eth，建议做成可读取的变量
                   })
                   .on("receipt", (receipt) => {
                     // 获取交易收据
-                    // console.log("收据: ", receipt);
+                    // // console.log("收据: ", receipt);
                     router.replace('/bags')
                     // 在这里执行交易成功后的逻辑操作
                   })
@@ -910,7 +913,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                  
                     
                     if (error.code === 4001) {
-                      // console.log('错误错误错误！！！');
+                      // // console.log('错误错误错误！！！');
                       
                       setLoading(false);
                     }
@@ -918,7 +921,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                   .then((success) => {
                     // if (success.code === 0x1||1) {
                     setLoading(false);
-                    // console.log("成功",editNum,num);
+                    // // console.log("成功",editNum,num);
                  
                     // }
                   });
@@ -931,7 +934,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 //   )
                 //   .on("data", (event) => {
                 //     setLoading(false);
-                //     console.log(contract,55555);
+                //     // console.log(contract,55555);
                     
                 //     const totalSupply = contract.methods.totalSupply().call({});
                 //     // const name = daiContract.methods.name().call({});
@@ -947,7 +950,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 //   })
     
                 //   .on("error", (error) => {
-                //     console.error(error);
+                //     // console.error(error);
                 //   });
                 if (tx) {
                   toast.success("Successful");
@@ -955,11 +958,11 @@ export default function HomePage({ onClickHandler }: Props,ref) {
                 }
                 setLoading(false);
 
-                console.log("tx:", tx);
+                // console.log("tx:", tx);
                 // mint 成功, 进行后续操作
               } else {
                 setBalanceNum(true);
-                console.log("Insufficient ETH balance");
+                // console.log("Insufficient ETH balance");
               }
             }
           }
@@ -990,9 +993,9 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       //       // 获取当前链Id
       //       const chainId = await web3.eth.getChainId();
       
-      //       // 检查当前链Id是否为 Mumbai Testnet 的 80001
-      //       if (chainId === 80001) {
-      //         console.log('Already connected to Mumbai Testnet');
+      //       // 检查当前链Id是否为 Mumbai Testnet 的 137
+      //       if (chainId === 137) {
+      //         // console.log('Already connected to Mumbai Testnet');
       //         return;
       //       }
       
@@ -1006,7 +1009,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       //             },
       //           ],
       //         });
-      //         console.log('Switched to Mumbai Testnet');
+      //         // console.log('Switched to Mumbai Testnet');
       //       } catch (error) {
       //         // 检查错误类型，如果是因为网络不存在而报错，则添加 Mumbai Testnet
       //         if (
@@ -1025,20 +1028,20 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       //                     symbol: 'MATIC',
       //                     decimals: 18,
       //                   },
-      //                   rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+      //                   rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
       //                 },
       //               ],
       //             });
-      //             console.log('Added Mumbai Testnet');
+      //             // console.log('Added Mumbai Testnet');
       //           } catch (addError) {
-      //             console.error('Failed to add network:', addError);
+      //             // console.error('Failed to add network:', addError);
       //           }
       //         } else {
-      //           console.error('Failed to switch network:', error);
+      //           // console.error('Failed to switch network:', error);
       //         }
       //       }
       //     } else {
-      //       console.log('MetaMask not detected');
+      //       // console.log('MetaMask not detected');
       //     }
       //   };
       
@@ -1051,14 +1054,14 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             
            
             // 请求用户授权连接 MetaMask
-            // console.log(window.ethereum);
+            // // console.log(window.ethereum);
     if(profile.address !==null){
       const networkId =await  window.ethereum.request({
         method: "net_version",
       });
-      // console.log(networkId === "11155111", "networkId", networkId);
+      // // console.log(networkId === "11155111", "networkId", networkId);
      
-        if (networkId !== "80001") {
+        if (networkId !== "137") {
           removeToken("atk");
           removeToken("rtk");
           removeToken("address");
@@ -1088,7 +1091,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             // 获取当前账户地址
             const accounts = await web3.eth.getAccounts();
             const accountAddress = accounts[0];
-            // console.log(accountAddress, "5555555ddress");
+            // // console.log(accountAddress, "5555555ddress");
     
             if (window.ethereum) {
               window.ethereum.on("accountsChanged", handleAccountsChanged);
@@ -1103,10 +1106,10 @@ web3.eth.getBalance(walletAddress)
         const balanceMatic = web3.utils.fromWei(balanceWei, 'ether');
         const balanceMaticFormatted = parseFloat(balanceMatic).toFixed(2);
         setEthBalance(balanceMaticFormatted);
-        // console.log(`Matic Balance for ${walletAddress}: ${balanceMatic} MATIC`);
+        // // console.log(`Matic Balance for ${walletAddress}: ${balanceMatic} MATIC`);
     })
     .catch(error => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
     });
     
             // 将 balance 单位由 wei 转换为以太币，并设置为保留三位小数
@@ -1116,7 +1119,7 @@ web3.eth.getBalance(walletAddress)
             // setEthBalance(ethBalance);
             // setEthBalance(ethBalance);
           } else {
-            console.log("MetaMask is not installed");
+            // console.log("MetaMask is not installed");
           }
         }
     
@@ -1127,18 +1130,18 @@ web3.eth.getBalance(walletAddress)
        if(window.ethereum){
          
     // 创建 Web3 实例
-      const web3Con = new Web3('https://polygon-mumbai.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e');
+      const web3Con = new Web3('https://polygon-mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e');
       // const web3Con = new Web3(window.web3.currentProvider);
             
-      const contractAddressCon = "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c";
+      const contractAddressCon = "0x7524194dfCf68820006891d5D5810065F233A0B8";
       const daiContract = new web3Con.eth.Contract(abi as [], contractAddressCon);
-        // console.log(daiContract.methods.getInfo().call({}));
+        // // console.log(daiContract.methods.getInfo().call({}));
       const totalSupply = daiContract.methods.getInfo().call({});
       // const name = daiContract.methods.name().call({});
-        // console.log(totalSupply,66665);
+        // // console.log(totalSupply,66665);
 
       totalSupply.then((result) => { 
-      // console.log(result,'resultresultresult');
+      // // console.log(result,'resultresultresult');
 
       setMintNum(result[1]);
       setTotalNum(result[0])
@@ -1163,7 +1166,7 @@ web3.eth.getBalance(walletAddress)
                 chainNamespace: CHAIN_NAMESPACES.EIP155,
                 chainId: "0xaa36a7",
                 rpcTarget:
-                  "https://polygon-mumbai.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
+                  "https://polygon-mainnet.infura.io/v3/04e6d8eadecd41d68beb8f5e1a57dd7e", // This is the public RPC we have added, please pass on your own endpoint while creating an app
               },
             });
     
@@ -1195,7 +1198,7 @@ web3.eth.getBalance(walletAddress)
               setProviderWeb3auth(coreWeb3auth.provider);
             }
           } catch (error) {
-            console.error(error);
+            // console.error(error);
           }
         };
         init();
@@ -1356,7 +1359,7 @@ web3.eth.getBalance(walletAddress)
               disabled={mintNum === totalNum||balanceNum===true}
               onClick={mintBag}
             >
-              Mint
+              Mint And Create
             </button>
           </div>
       </>

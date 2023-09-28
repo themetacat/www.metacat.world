@@ -275,7 +275,7 @@ export default function ParcelList() {
         return null;
       }
       const { accessToken, refreshToken: rtk } = convert(data);
-     console.log(accessToken,333);
+    // console.log(accessToken,333);
      
       setToken('atk', accessToken);
       setToken('rtk', rtk);
@@ -319,7 +319,6 @@ export default function ParcelList() {
   const requestData = React.useCallback(
     async (token: string) => {
       setLoading(true);
-      console.log(11111,token);
       
       try {
         const res = await getParcelList2(token);
@@ -355,10 +354,8 @@ export default function ParcelList() {
     [resultHandler, tabState, nav_Label],
   );
   const onRetry = React.useCallback(async () => {
-    console.log(1111);
     
     const accessToken = getToken('atk');
-    console.log(accessToken);
     
     if (accessToken && tabState === 'cryptovoxels') {
       requestData(accessToken);
@@ -440,7 +437,6 @@ export default function ParcelList() {
   );
 
   const renderContent = React.useMemo(() => {
-    console.log(tabState);
     
     if (loading) {
       return <Status status="loading" />;
@@ -532,7 +528,6 @@ export default function ParcelList() {
   const randerCardList = React.useMemo(() => {
  
     if (routeTab === 'trafficreport') {
-      console.log(tokenWearable,'哈哈哈哈哈',showType);
       
       if (showType === 'cryptovoxels') {
         return (

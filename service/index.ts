@@ -115,7 +115,7 @@ export const setModelInfo = async (token,costume) => {
 
 
   // const url = '/api/set_model_info'; // 替换为你的接口地址
-  const url = 'http://8.130.23.16/api/v1/set_babylon_model_info'; // 替换为你的接口地址
+  const url = 'http://47.243.184.241/api/v1/set_babylon_model_info'; // 替换为你的接口地址
 
   const requestData = {
     costume
@@ -151,7 +151,7 @@ export const getAccount = async (tokenId) => {
     // headers: {
     //   'Content-Type': 'application/x-www-form-urlencoded',
     // },
-    body: JSON.stringify({contractAddress: '0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c', tokenId: tokenId})
+    body: JSON.stringify({contractAddress: '0x7524194dfCf68820006891d5D5810065F233A0B8', tokenId: tokenId})
     // body: search,
   });
   

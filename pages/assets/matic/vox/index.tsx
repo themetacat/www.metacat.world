@@ -45,14 +45,23 @@ const router = useRouter();
   const [editNumSaX, setEditNumSaX] = useState({ x: 1, y: 1 ,z:1} as any);
   const [getdroppedWearable, setGetdroppedWearable] = useState({});
   const [voxMeshState, setVoxMeshState] = useState(null);
+  const [costume, setCostume] = useState({  
+    token_id: router.query.tokenID,
+    // "wallet": "0x60ea96f57b3a5715a90dae1440a78f8bb339c92e",
+    attachments: [],
+    skin: null,
+    name: "Costume-2",});
   // var voxMesh = null;
   let windowVal = {};
   var last_rotation = {};
   let voxMesh;
+  let found = false;
   let targetBone = null;
-  let attachmentId = null;
+  // let attachmentId = null;
  const all_last_rotation = React.useRef({});
-  let modelList = [];
+  let modelList = {};
+  const uniqueId  = crypto.randomUUID();
+  const attachmentId = React.useRef(uniqueId);
   const get_vox_data = (requestConfig, voxMesh) => {
     var parser = new vox.Parser();
     // console.log(requestConfig,55656);
@@ -218,14 +227,14 @@ const router = useRouter();
     return t;
     // return t.toString() === value.toString() ? t : null;
   }
-  let costume = {
-    token_id: router.query.tokenID,
-    // wallet: "0x60ea96f57b3a5715a90dae1440a78f8bb339c92e",
-    attachments: [],
-    skin: null,
-    name: "Costume-2",
-    // default_color: "#f3f3f3",
-  };
+  // let costume = {
+  //   token_id: router.query.tokenID,
+  //   // wallet: "0x60ea96f57b3a5715a90dae1440a78f8bb339c92e",
+  //   attachments: [],
+  //   skin: null,
+  //   name: "Costume-2",
+  //   // default_color: "#f3f3f3",
+  // };
 
   // const updateAttachment = ()=>{
 
@@ -264,15 +273,17 @@ const router = useRouter();
         return
     }
     
+    
     if (costume.attachments)
         costume.attachments.forEach((t => {
-            if (t.uuid == attachmentId) {
+      
+            if (t.uuid == attachmentId.current) {
                 t.position = [voxMesh.position.x.toFixed(2), voxMesh.position.y.toFixed(2), voxMesh.position.z.toFixed(2)]
                 t.rotation = [parseFloat(voxMesh.rotation.x).toFixed(2), parseFloat(voxMesh.rotation.y).toFixed(2), parseFloat(voxMesh.rotation.z).toFixed(2)]
 
                 // t.rotation = [voxMesh.rotation.x.toFixed(2), voxMesh.rotation.y.toFixed(2), voxMesh.rotation.z.toFixed(2)]
                 t.scaling = [parseFloat(voxMesh.scaling.x).toFixed(2), parseFloat(voxMesh.scaling.y).toFixed(2), parseFloat(voxMesh.scaling.z).toFixed(2)]
-                all_last_rotation.current[attachmentId] = t.rotation
+                all_last_rotation.current[attachmentId.current] = t.rotation
 // console.log(costume);
 const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 // console.log(metaCatAtk,22222);
@@ -366,6 +377,9 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
       last_rotation[1] = voxMesh.rotation.y;
       last_rotation[2] = voxMesh.rotation.z;
     }
+
+    
+    
     updateAttachment();
   };
 
@@ -449,7 +463,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
   //   }
   //   return byteArrayToHexString(uuidArray);
   // }
-  const crypto = require('crypto');
+  // const crypto = require('crypto');
 
   
   // function getRandomValues() {
@@ -505,9 +519,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
     const engine = new BABYLON.Engine(canvas as HTMLCanvasElement, true);
     // console.log(engine, 222);
    
-    const getdroppedWearable = {
-        
-    }
+   
     const chain_info = {
       1: "eth",
       137: "polygon",
@@ -678,7 +690,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
           skeletonRoot = skeletons[0];
           // window["skeleton"] = skeletonRoot;
           skeleton = skeletonRoot;
-        //   console.log(skeleton, 658741);
+          console.log(skeleton, 658741);
 
           const bones = skeletonRoot.bones.filter(
             (bone) => !bone.name.match(/index/i)
@@ -822,24 +834,33 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
       // }
 
       addAttachment(droppedWearable, targetBone)
-        .then(() => {
-          console.log("apply addAttachment");
-        })
-        .catch((error) => {
-          console.error("Error adding attachment:", error);
-        });
+        // .then(() => {
+        //   console.log("apply addAttachment");
+        // })
+        // .catch((error) => {
+        //   console.error("Error adding attachment:", error);
+        // });
       const r = {
         invertX: false,
       };
       renderVoxModel();
     }
 
-    async function addAttachment(wearable, bone) {
+     function addAttachment(wearable, bone) {
       // if (!selectedCostume) {
       //     showSnackbar("Can't attach wearable when no costume is selected", MessageType.Warning, 5000);
       //     return;
       // }
-
+     
+      
+      if(modelList[wearable.gateway]){
+        // found = true;
+        return
+      }
+     
+    //  if(found){
+    //     return
+    // }
       const defaultScale = 0.5;
       const updatedCostume = Object.assign({}, costume);
       // const uniqueId = generateUUID(null, null, null);
@@ -862,14 +883,16 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
         scaling: [defaultScale, defaultScale, defaultScale],
         bone: bone,
         uuid: uniqueId,
+        gateway:wearable.gateway,
       };
 
       if (!updatedCostume.attachments) {
         updatedCostume.attachments = [];
       }
       updatedCostume.attachments.push(attachmentInfo);
-      attachmentId = uniqueId;
-
+      attachmentId.current = uniqueId;
+      const updatedCostumeD = { ...costume }; 
+setCostume(updatedCostumeD)
       // const expandAttachments = true;
 
       // 调用api 更新Costume数据
@@ -877,8 +900,11 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
     }
 
     function bone(e) {
+      
       if (!skeleton) return null;
       const t = skeleton.getBoneIndexByName(`mixamorig:${e}`);
+      console.log(skeleton.bones[t]);
+
       if (t == -1) {
         console.error(`Bad bone name "${e}"`);
         return null;
@@ -927,20 +953,13 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
     }
 
     function renderVoxModel() {
-      let found = false;
+     
       let droppedWearable = getDroppedWearable()
 
-      modelList.some((item=>{
-
-        
-        if(droppedWearable.token_id===item){
-            found = true;
-            return
-        }
-     }))
-     if(found){
+      if(modelList[droppedWearable.gateway]){
+        // found = true;
         return
-    }
+      }
 
       const shaderMaterial = new BABYLON.StandardMaterial("wearable", scene);
       shaderMaterial.emissiveColor.set(.3, .3, .3);
@@ -959,7 +978,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
       voxMesh.material = shaderMaterial;
       voxMesh.isPickable = true;
       voxMesh.checkCollisions = false;
-
+      voxMesh.gateway=droppedWearable.gateway
       voxMesh.scaling.set(0.5, 0.5, 0.5);
       const origin = new BABYLON.TransformNode("Node/wearable", scene);
 
@@ -980,14 +999,14 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
               updateAllPositionValue(null)
           }
           focus()
-          modelList.push(droppedWearable.token_id)
+          modelList[droppedWearable.gateway]=true
           // "https://www.voxels.com/c/v2/polygon/0x1e3D804415dCbb7ceA3478f176e123562e09b514/155/vox"
           // 将模型绕 y 轴旋转 180 度，使其正上方朝向 y 轴
           // get vox data
          get_vox_data(requestConfig, voxMesh)
       }
 
-      voxMesh.uuid = attachmentId
+      voxMesh.uuid = attachmentId.current
 setVoxMeshState(voxMesh)
   }
 
@@ -1157,7 +1176,7 @@ detailHandleItem.ownedNfts.forEach((item=>{
  const typeData =item?.metadata?.image
 // console.log(typeData);
 const splitParts = typeData?.split("/");
-const desiredValue = splitParts[splitParts?.length - 1];
+const desiredValue =splitParts? splitParts[splitParts?.length - 1]:null;
 const tokenUri = item.tokenUri.raw
 // console.log(tokenUri);
 // console.log(tokenUri.includes("https://peer.decentraland.org"),66666666666666);
@@ -1170,7 +1189,8 @@ const tokenUri = item.tokenUri.raw
     "description":item.description,
     "collection_address":item.contract.address,
     "hash":tokenUri.includes("https://www.cryptovoxels.com")?desiredValue:null,
-    "image":item.metadata.image
+    "image":item.metadata.image,
+    "gateway":item.tokenUri.gateway,
 
  }
 
@@ -1253,10 +1273,10 @@ const tokenUri = item.tokenUri.raw
       // div.className = "column-header";
       const ul = document.createElement("ul");
       ul.className = "wearables-list";
-      wearables.forEach((li) => ul.appendChild(li));
+      wearables.forEach((li) => ul?.appendChild(li));
       // fragment.appendChild(h3);
       // div.appendChild(div);
-      div.appendChild(ul);
+      div?.appendChild(ul);
 
       // document.body.appendChild(fragment);
     })
@@ -1355,9 +1375,14 @@ const tokenUri = item.tokenUri.raw
     function dispose_mesh() {
       if (voxMesh) {
         voxMesh.dispose(); // 销毁模型及其资源
+        const droppedWearable=getDroppedWearable();
+        modelList[voxMesh.gateway]=false
         deleteAttachment();
         update_voxMesh(null);
         updateAllPositionValue(null);
+        const metaCatAtk = window.localStorage.getItem("METACAT_atk");
+        setModelInfo(metaCatAtk, costume);
+  
       }
     }
 
@@ -1372,15 +1397,15 @@ const tokenUri = item.tokenUri.raw
       setVoxMeshState(value)
     
       if (voxMesh) {
-        attachmentId = voxMesh.uuid;
+        attachmentId.current = voxMesh.uuid;
         
-       let  the_rotation = all_last_rotation.current[attachmentId]
+       let  the_rotation = all_last_rotation.current[attachmentId.current]
        
         last_rotation['x'] = the_rotation[0]
         last_rotation['y'] = the_rotation[1]
         last_rotation['z'] = the_rotation[2]
       } else {
-        attachmentId = null;
+        attachmentId.current = null;
       }
 
       updateAllPositionValue(1);
@@ -1701,7 +1726,7 @@ const tokenUri = item.tokenUri.raw
 
       if (costume.attachments) var index = 0;
       costume.attachments.forEach((t) => {
-        if (t.uuid == attachmentId) {
+        if (t.uuid == attachmentId.current) {
           costume.attachments.splice(index, 1);
           return;
         }
@@ -1755,8 +1780,8 @@ const tokenUri = item.tokenUri.raw
           // (window as any).droppedWearable.token_id = att.token_id
           windowVal['droppedWearable'].token_id= att.token_id
             targetBone = att.bone;
-            attachmentId = att.uuid
-            all_last_rotation.current[attachmentId] = att.rotation
+            attachmentId.current = att.uuid
+            all_last_rotation.current[attachmentId.current] = att.rotation
             costume.attachments.push(att)
             renderVoxModel();
   

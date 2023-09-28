@@ -25,7 +25,7 @@ import { createWalletClient, http, custom, WalletClient, Account } from "viem";
 // const WalletConnect = require('@walletconnect/client').default;
 const { url } = require("url");
 import { TokenboundClient } from "@tokenbound/sdk";
-import { polygonMumbai } from "viem/chains";
+import { polygon } from "viem/chains";
 import cn from "classnames";
 import style from "./index.module.css";
 import Router, { useRouter } from "next/router";
@@ -81,14 +81,14 @@ export default function Matic() {
     const getData = async () => {
       try {
         const response = await getBagsDetail(tokenboundAccountNum); // 假设 getBagsDetail 是一个异步函数
-        // console.log(response, 2333333);
+        // // console.log(response, 2333333);
         // let wearableType =null;
-        // console.log(tokenboundAccountNum, 333);
+        // // console.log(tokenboundAccountNum, 333);
         setDataInfo(response.ownedNfts);
         if (response.ownedNfts.length !== 0) {
           //         }else{
           response.ownedNfts.map((item) => {
-            // console.log(item.tokenUri.raw, 2333);
+            // // console.log(item.tokenUri.raw, 2333);
             // setwearableType(item.tokenUri.raw);
             if (wearableType === null) {
               
@@ -102,9 +102,9 @@ export default function Matic() {
               } else {
                 setwearableType("Other");
               }
-              // console.log(wearableType,222);
+              // // console.log(wearableType,222);
             } else {
-              // console.log(2333333);
+              // // console.log(2333333);
 
               if (item.tokenUri.raw.includes("https://www.cryptovoxels.com")) {
                 if (wearableType !== "voxels") {
@@ -113,7 +113,6 @@ export default function Matic() {
                   
                   return;
                 }
-                console.log(wearableType);
                 
               } else if (
                 item.tokenUri.raw.includes("https://peer.decentraland.org")
@@ -122,7 +121,6 @@ export default function Matic() {
                   setwearableType("Other");
                   return;
                 }
-                console.log(wearableType,1222222);
 
               // } else {
               //   if (wearableType !== "Other") {
@@ -136,9 +134,9 @@ export default function Matic() {
         } else {
           setDataInfoList(null);
         }
-        // console.log(dataInfo, 666);
+        // // console.log(dataInfo, 666);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
@@ -147,20 +145,20 @@ export default function Matic() {
 
   const handleBag = useCallback(() => {
     const getData = async () => {
-      // console.log(router.query.tokenId);
+      // // console.log(router.query.tokenId);
 
       try {
         const response = await getBagsNum(tokenID); // 假设 getBagsDetail 是一个异步函数
         const wearableTypeEach = response.tokenUri.raw;
-        // console.log(wearableTypeEach,666);
+        // // console.log(wearableTypeEach,666);
         // const substring = wearableTypeEach.substring(0, 28);
         // setwearableType(response.tokenUri.raw);
-        // console.log(substring,3333);
+        // // console.log(substring,3333);
 
         setTitle(response.title);
-        // console.log(response, 'response');
+        // // console.log(response, 'response');
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
@@ -174,41 +172,41 @@ export default function Matic() {
     }
   }, [router.query, tokenboundAccountNum, handleMint,handleBag,dataInfoList, wearableType]);
 
-  useEffect(() => {
-    const { dynamicValue, tokenID } = router.query;
-    // console.log(router.query,333333);
-    // console.log(tokenID,66656);
-    // console.log(dynamicValue);
+  // useEffect(() => {
+  //   const { dynamicValue, tokenID } = router.query;
+  //   // // console.log(router.query,333333);
+  //   // // console.log(tokenID,66656);
+  //   // // console.log(dynamicValue);
 
-    if (tokenID !== undefined) {
-      if (dynamicValue !== "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c") {
-        alert("Contract address error");
-        router.replace("/"); // 跳转回首页
-        // } else {
-        //   // 这里可以处理 dynamicValue 和 tokenID 的其他逻辑
-        //   // 可以根据需要进行页面跳转或其他操作
-      }
-    }
-  }, [router.query]);
+  //   if (tokenID !== undefined) {
+  //     if (dynamicValue !== "0x7524194dfCf68820006891d5D5810065F233A0B8") {
+  //       alert("Contract address error");
+  //       router.replace("/"); // 跳转回首页
+  //       // } else {
+  //       //   // 这里可以处理 dynamicValue 和 tokenID 的其他逻辑
+  //       //   // 可以根据需要进行页面跳转或其他操作
+  //     }
+  //   }
+  // }, [router.query]);
 
   const handleCopyClick = () => {
     const textToCopy = tokenboundAccountNum;
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
-        // console.log("文本已复制到剪贴板");
+        // // console.log("文本已复制到剪贴板");
         alert("文本已复制到剪贴板");
         toast.success("文本已复制到剪贴板");
       })
       .catch((error) => {
-        console.error("复制文本到剪贴板时出错:", error);
+        // console.error("复制文本到剪贴板时出错:", error);
       });
   };
 
   useEffect(() => {
     // 检查浏览器是否支持Clipboard API
     if (!navigator.clipboard) {
-      console.warn("该浏览器不支持Clipboard API");
+      // console.warn("该浏览器不支持Clipboard API");
     }
   }, []);
 
@@ -216,7 +214,7 @@ export default function Matic() {
     // if (tokenId) {
     //   const searchParams = new URLSearchParams(router.asPath.split('?')[1]);
     // const decodedTokenId = decodeURIComponent(searchParams.get('tokenId'));
-    //   console.log(decodedTokenId,6544);
+    //   // console.log(decodedTokenId,6544);
     //   setDecodedToken(decodedTokenId)
     // }
     const fetchData = async () => {
@@ -226,19 +224,19 @@ export default function Matic() {
 
       const accounts = await web3s.eth.getAccounts();
       const walletClient: WalletClient = createWalletClient({
-        chain: polygonMumbai,
+        chain: polygon ,
         account: accounts[0] as `0x${string}`,
         transport: window.ethereum ? custom(window.ethereum) : http(),
       });
       const tokenboundClient = new TokenboundClient({
         walletClient,
-        chainId: 80001,
+        chainId: 137,
       });
 
       if (!tokenboundClient) return;
 
       const tokenboundAccount = tokenboundClient?.getAccount({
-        tokenContract: "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c",
+        tokenContract: "0x7524194dfCf68820006891d5D5810065F233A0B8",
         tokenId: tokenID as string,
       });
 
@@ -257,401 +255,70 @@ export default function Matic() {
     };
 
     fetchData();
-  }, [tokenID]);
+  }, [tokenID,tokenboundAccountNum]);
 
   const jumpToOpenC = (item) => {
-    // console.log(item,'w22');
+    // // console.log(item,'w22');
     const idToken = item.id.tokenId;
-    // console.log(idToken);
+    // // console.log(idToken);
     const decimalValue = parseInt(idToken, 16);
-    // console.log(decimalValue,556);
+    // // console.log(decimalValue,556);
     // window.open(`https://opensea.io/assets/matic/${wearableType}/${decimalValue}`)
     window.open(
-      `https://testnets.opensea.io/assets/mumbai/${item.contract.address}/${decimalValue}`
+      `https://opensea.io/assets/matic/${item.contract.address}/${decimalValue}`
     );
   };
-  const abi = [
-    {
-      inputs: [{ internalType: "string", name: "newURI", type: "string" }],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    { inputs: [], name: "ApprovalCallerNotOwnerNorApproved", type: "error" },
-    { inputs: [], name: "ApprovalQueryForNonexistentToken", type: "error" },
-    { inputs: [], name: "BalanceQueryForZeroAddress", type: "error" },
-    { inputs: [], name: "MintERC2309QuantityExceedsLimit", type: "error" },
-    { inputs: [], name: "MintToZeroAddress", type: "error" },
-    { inputs: [], name: "MintZeroQuantity", type: "error" },
-    { inputs: [], name: "OwnerQueryForNonexistentToken", type: "error" },
-    { inputs: [], name: "OwnershipNotInitializedForExtraData", type: "error" },
-    { inputs: [], name: "TransferCallerNotOwnerNorApproved", type: "error" },
-    { inputs: [], name: "TransferFromIncorrectOwner", type: "error" },
-    {
-      inputs: [],
-      name: "TransferToNonERC721ReceiverImplementer",
-      type: "error",
-    },
-    { inputs: [], name: "TransferToZeroAddress", type: "error" },
-    { inputs: [], name: "URIQueryForNonexistentToken", type: "error" },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "owner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "approved",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "tokenId",
-          type: "uint256",
-        },
-      ],
-      name: "Approval",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "owner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "operator",
-          type: "address",
-        },
-        {
-          indexed: false,
-          internalType: "bool",
-          name: "approved",
-          type: "bool",
-        },
-      ],
-      name: "ApprovalForAll",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "fromTokenId",
-          type: "uint256",
-        },
-        {
-          indexed: false,
-          internalType: "uint256",
-          name: "toTokenId",
-          type: "uint256",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
-        },
-        { indexed: true, internalType: "address", name: "to", type: "address" },
-      ],
-      name: "ConsecutiveTransfer",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "previousOwner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "newOwner",
-          type: "address",
-        },
-      ],
-      name: "OwnershipTransferred",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
-        },
-        { indexed: true, internalType: "address", name: "to", type: "address" },
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "tokenId",
-          type: "uint256",
-        },
-      ],
-      name: "Transfer",
-      type: "event",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-      ],
-      name: "approve",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "address", name: "owner", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-      name: "getApproved",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "getInfo",
-      outputs: [
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "owner", type: "address" },
-        { internalType: "address", name: "operator", type: "address" },
-      ],
-      name: "isApprovedForAll",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "maxSupply",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "mint",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "name",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "owner",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-      name: "ownerOf",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "renounceOwnership",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-      ],
-      name: "safeTransferFrom",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-        { internalType: "bytes", name: "_data", type: "bytes" },
-      ],
-      name: "safeTransferFrom",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "recipient", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "send",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "operator", type: "address" },
-        { internalType: "bool", name: "approved", type: "bool" },
-      ],
-      name: "setApprovalForAll",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "string", name: "newURI", type: "string" }],
-      name: "setURI",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
-      name: "supportsInterface",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "symbol",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-      name: "tokenURI",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "totalSupply",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-      ],
-      name: "transferFrom",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-      name: "transferOwnership",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "addr", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "withdraw",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-  ];
+  const abi = [{"inputs":[{"internalType":"address","name":"_logic","type":"address"},{"internalType":"bytes","name":"_data","type":"bytes"}],"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"stateMutability":"payable","type":"fallback"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"toTokenId","type":"uint256"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"version","type":"uint8"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"ERC6551RegistryAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"implementation","type":"address"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"uint256","name":"salt","type":"uint256"}],"name":"adminMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getImplementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getInfo","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"implementation","type":"address"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"uint256","name":"salt","type":"uint256"}],"name":"mintAndCreate","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newERC6551RegistryAddress","type":"address"}],"name":"setERC6551RegistryAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"testNum","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"testStr","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"}],"name":"upgradeTo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
   const btnAccount = (id) => {
     // 添加点击事件处理程序
-    // console.log('在这里处理逻辑',id,tokenID);
+    // // console.log('在这里处理逻辑',id,tokenID);
     async function createAccount() {
       await window.ethereum.request({
-        method: "eth_requestAccounts",
+      
+        method: 'wallet_switchEthereumChain',
       });
 
       const web3s = new Web3(window.ethereum);
-      //   console.log(web3s);
+      //   // console.log(web3s);
       const accounts = web3s.eth.getAccounts();
 
       const addR: unknown = window.localStorage.getItem("metaMaskAddress");
 
       const address = addR as Account;
-      const contractAddress = "0xed2A07B9b40acf575F0CF61475034a0CCF5Bd29c";
+      const contractAddress = "0x7524194dfCf68820006891d5D5810065F233A0B8";
       const contract = new web3s.eth.Contract(abi as [], contractAddress);
-      // console.log(1111,contract);
+      // // console.log(1111,contract);
 
       const id = parseInt(tokenID as string);
       const ownerOfAddr = contract.methods.ownerOf(tokenID).call({});
-      // console.log(ownerOfAddr,"你想要的地址");
-      // console.log(ownerOfAddr===addR,'结果啊');
-      // console.log(ownerOfAddr,addR);
+      // // console.log(ownerOfAddr,"你想要的地址");
+      // // console.log(ownerOfAddr===addR,'结果啊');
+      console.log(tokenID,addR);
       ownerOfAddr.then((ownerOfAddress) => {
+        console.log(ownerOfAddress,223);
+        
         if (ownerOfAddress === addR) {
           const walletClient: WalletClient = createWalletClient({
-            chain: polygonMumbai,
+            chain: polygon ,
             account: address,
             transport: window.ethereum ? custom(window.ethereum) : http(),
           });
 
           const tokenboundClient = new TokenboundClient({
             walletClient,
-            chainId: 80001,
+            chainId: 137,
           });
           const createAccount1 = tokenboundClient.createAccount({
-            tokenContract: "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c",
+            tokenContract: "0x7524194dfCf68820006891d5D5810065F233A0B8",
             tokenId: tokenID as string,
           });
-          // console.log(createAccount1,'walletClient');
+          // // console.log(createAccount1,'walletClient');
           if (!tokenboundClient) return;
 
           // const tokenboundAccount =
           // tokenboundClient.getAccount({
           //   tokenContract:
-          //     "0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c",
+          //     "0x7524194dfCf68820006891d5D5810065F233A0B8",
           //   tokenId: tokenID as string,
           // });
         } else {
@@ -662,10 +329,10 @@ export default function Matic() {
         // async function checkAddressType(address) {
         //   const code = await web3.eth.getCode(address);
         //   if (code === "0x") {
-        //     // console.log('This is a normal address.');
+        //     // // console.log('This is a normal address.');
         //     pElement.textContent = "Deploy Account";
         //   } else {
-        //     // console.log('This is a contract address.');
+        //     // // console.log('This is a contract address.');
         //     pElement.textContent = "Deployed";
         //   }
         // } // 处理 tokenURI 数据
@@ -675,19 +342,22 @@ export default function Matic() {
   };
 
   useEffect(() => {
+    
     const web3s = new Web3(window.ethereum);
+    
     async function checkAddressType() {
       const code = web3s.eth?.getCode(tokenboundAccountNum);
-      // console.log(code,654987);
+      
       code.then((codeNum) => {
+
         if (codeNum === "0x") {
-          // console.log(
+          // // console.log(
           //   "This is a normal address."
           // );
           setGetCode(true);
           // pElement.textContent = "Deploy Account";
         } else {
-          // console.log(
+          // // console.log(
           //   "This is a contract address."
           // );
           setGetCode(false);
@@ -696,7 +366,7 @@ export default function Matic() {
       });
     }
     checkAddressType();
-  });
+  },[tokenboundAccountNum]);
 
   const RefreshMetadata = () => {
     const res = getAccount(tokenID);
@@ -718,7 +388,7 @@ export default function Matic() {
 
   // const onSessionProposal = useCallback(
   //   (proposal: SignClientTypes.EventArguments['session_proposal']) => {
-  //     console.log(11111);
+  //     // console.log(11111);
 
   //     //onSessionProposal方法配置proposal参数进行操作
   //     ModalStore.open('SessionProposalModal', { proposal })
@@ -729,8 +399,8 @@ export default function Matic() {
 
   const connect = async (val) => {
     // 解析二维码URL
-    // console.log(val);
-    // console.log(core,22);
+    // // console.log(val);
+    // // console.log(core,22);
 
     // const web3wallet = await Web3Wallet.init({
     //   core, // <- pass the shared `core` instance
@@ -747,7 +417,7 @@ export default function Matic() {
     //   params: [
     //     {
     //       // approved: true,
-    //       chains: '80001',//[80001,11155111],
+    //       chains: '137',//[137,11155111],
     //       // accounts: ['0x79EF3DA763754387F06022Cf66c2668854B3389B'],
     //       methods: 'eth_sendTransaction',//['eth_sendTransaction', 'per///sonal_sign','wc_sessionPropose'],
     //       events: 'accountsChanged',//['accountsChanged', 'chainChanged'],
@@ -755,26 +425,26 @@ export default function Matic() {
     //     },
     //   ],
     // };
-    // console.log(request,3333);
+    // // console.log(request,3333);
 
     // window.ethereum.send(request, (error, result) => {
 
     //   if (error) {
     //     // 处理错误
-    //     console.error(error);
+    //     // console.error(error);
     //   } else {
     //     // 处理来自钱包客户端的会话提案响应1
-    //     console.log(result);
+    //     // console.log(result);
     //   }
     // });
-    // console.log(process, 333);
-
+    // // console.log(process, 333);
+  
     const core = new Core({
       // logger: 'debug',
       projectId: "ff09b474e78c83e2d6e7c7091f9d3517",
       // relayUrl: val ?? process.env.NEXT_PUBLIC_RELAY_URL
     });
-    // console.log(core, 222);
+    // // console.log(core, 222);
 
     const web3wallet = await Web3Wallet.init({
       core,
@@ -785,37 +455,37 @@ export default function Matic() {
         icons: [],
       },
     });
-    // console.log(web3wallet, 3654);
+    // // console.log(web3wallet, 3654);
 
     // web3wallet.on('session_proposal', onSessionProposal)
 
     //   web3wallet.on('session_proposal', async sessionProposal => {
     //     try{
     //       const { id, params } = sessionProposal
-    //       console.log(sessionProposal,5555);
+    //       // console.log(sessionProposal,5555);
 
     //         const approvedNamespaces = buildApprovedNamespaces({
     //           proposal: params,
     //           supportedNamespaces: {
     //             eip155: {
-    //               chains: ['eip155:80001,eip155:137',],
+    //               chains: ['eip155:137,eip155:137',],
     //               methods: ['eth_sendTransaction', 'personal_sign'],
     //               events: ['accountsChanged', 'chainChanged'],
     //               accounts: [
-    //                 'eip155:80001:0x79EF3DA763754387F06022Cf66c2668854B3389B',
+    //                 'eip155:137:0x79EF3DA763754387F06022Cf66c2668854B3389B',
     //               ]
     //             }
     //           }
     //         })
-    //       console.log(approvedNamespaces,3333);
+    //       // console.log(approvedNamespaces,3333);
 
     //         const session = await web3wallet.approveSession({
     //           id,
     //           namespaces: approvedNamespaces
     //         })
-    //         console.log(session,55556);
+    //         // console.log(session,55556);
     //     }catch{
-    // console.log('存在错误啊');
+    // // console.log('存在错误啊');
 
     //     }
 
@@ -830,9 +500,9 @@ export default function Matic() {
     //     icons: ['https://avatars.githubusercontent.com/u/37784886']
     //   }
     //     })
-    //     console.log(signClient,33333);
+    //     // console.log(signClient,33333);
     // signClient.on("session_proposal", async (proposal) => {
-    //   console.log(66666666);
+    //   // console.log(66666666);
 
     //     // const { acknowledged } = await signClient.approve({
     //     //   id: proposal.id,
@@ -865,11 +535,11 @@ export default function Matic() {
     //     approved: true, // 设置会话提案是否批准
     //     namespaces: web3wallet.metadata
     //   };
-    // console.log(response,321);
+    // // console.log(response,321);
 
     //   // web3wallet.sendSessionRequestResponse(id, response);
     // });
-    // console.log(web3wallet,5555);
+    // // console.log(web3wallet,5555);
 
     // 手动触发会话提议
     // const sessionProposal  = {
@@ -899,7 +569,7 @@ export default function Matic() {
     // const signClient = await SignClient.init({
     //   projectId: "31e7b421de4c6ef0a606174038828e76",
     // });
-    // console.log(signClient.opts.projectId);
+    // // console.log(signClient.opts.projectId);
 
     // const authClient = await AuthClient.init({
     //   projectId:'ff09b474e78c83e2d6e7c7091f9d3517',
@@ -923,7 +593,7 @@ export default function Matic() {
     //   session,
     // };
 
-    // console.log(connectionOptions);
+    // // console.log(connectionOptions);
 
     // const connectionOptions = {
     //   uri,
@@ -936,14 +606,36 @@ export default function Matic() {
     // connector.connect(connectionOptions as ICreateSessionOptions)
     //   .then(() => {
     //     // 登录成功，执行相应操作
-    //     console.log('登录成功！');
+    //     // console.log('登录成功！');
     //     // 可执行其他逻辑或将连接保存到全局上下文中
     //   })
     //   .catch((error) => {
     //     // 处理登录错误
-    //     console.error('登录失败:', error);
+    //     // console.error('登录失败:', error);
     //   });
   };
+
+  React.useEffect(() => {
+    async function checkNetwork() {
+      if (window.ethereum) {
+        const currentChainId = await window.ethereum.request({
+          method: 'eth_chainId',
+        });
+
+        // 目标网络的 chainID（137）
+        const targetChainId = '0x89';
+
+        if (currentChainId !== targetChainId) {
+          // 弹出提示框，要求用户切换到正确的网络
+        alert('Sorry, Please connect to Polygon Mainnet')
+         window.localStorage.removeItem('metaMaskAddress');
+         router.replace('/')
+        }
+      }
+    }
+
+    checkNetwork();
+  }, []); // 注意要添加空数组以确保只在组件加载时运行一次
 
   return (
     <>
@@ -952,7 +644,6 @@ export default function Matic() {
         className={cn("", popUp === true ? style.page1 : style.page)}
       >
         <HomePage />
-
         {wearableType==='voxels'? (
           <div style={{ marginTop: "20px" }}>
             <VoxFiled />
@@ -960,11 +651,10 @@ export default function Matic() {
         ) : null}
         {wearableType==='Decentraland' ? (
           <div style={{ marginTop: "20px" }}>
-            {" "}
             <DclContent />
           </div>
         ) : null}
-        {wearableType==='Other'? (
+        {wearableType==='Other'||wearableType===null? (
           <>
             <div className={style.container}>
               <div className={style.cont}>
@@ -1072,8 +762,7 @@ export default function Matic() {
               </div>
 
               {/* <div style={{ marginTop: "20px" }}>
-                {" "}
-                <VoxFiled />
+                <DclContent />
               </div> */}
             </div>
           </>

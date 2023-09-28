@@ -146,7 +146,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
   // }));
       const onClick = React.useCallback(
         (event) => {
-          console.log(showMenu);
+          // console.log(showMenu);
           
           if (idTokenWeb3 === null) {
             setShowMenu(false);
@@ -240,7 +240,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
           const networkId = await window.ethereum.request({
             method: "net_version",
           });
-          console.log(networkId === "11155111", "networkId", networkId);
+          // console.log(networkId === "11155111", "networkId", networkId);
           // 判断当前网络是否为 Ethereum Sepolia 网络
           // await  window.ethereum.request({
           //   method: 'wallet_switchEthereumChain',
@@ -251,7 +251,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             // window.open("https://example.com");
             // return;
             const chainId = "0x" + (11155111).toString(16);
-            console.log(chainId, "chainId");
+            // console.log(chainId, "chainId");
     
             await window.ethereum.request({
               method: "wallet_switchEthereumChain",
@@ -265,7 +265,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
     
           web3.connect().then(
             async (res) => {
-              console.log("connect==>", res);
+              // console.log("connect==>", res);
               const { address: addr, provider } = res;
     
               connect(addr, provider);
@@ -282,7 +282,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, [web3, connect]);
       const authenticateUser = React.useCallback(async () => {
         if (!web3auth) {
-          console.log("web3auth not initialized yet");
+          // console.log("web3auth not initialized yet");
           return;
         }
         const idTokenAuthenticateUser = await web3auth.authenticateUser();
@@ -304,7 +304,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       
   const getAccounts = React.useCallback(async () => {
     if (!providerWeb3auth) {
-      console.log("provider not initialized yet");
+      // console.log("provider not initialized yet");
       return;
     }
     const rpc = new RPC(providerWeb3auth);
@@ -331,7 +331,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
   }, [providerWeb3auth, idTokenWeb3, web3AuthAddress]);
       const login = React.useCallback(async () => {
         if (!web3auth) {
-          console.log("web3auth not initialized yet");
+          // console.log("web3auth not initialized yet");
           return;
         }
     
@@ -354,12 +354,12 @@ export default function HomePage({ onClickHandler }: Props,ref) {
             getAccounts();
             const idtoken = authenticateUser();
             idtoken.then((res) => {
-              console.log(res);
+              // console.log(res);
             });
             if (idtoken !== null) {
               const address3 = getAccounts();
               address3.then((res) => {
-                console.log(res);
+                // console.log(res);
               });
             }
           }
@@ -369,7 +369,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
       }, [providerWeb3auth, web3auth, showMenu, web3AuthAddress, idTokenWeb3]);
       const logout = React.useCallback(() => {
         if (!web3auth) {
-          console.log("web3auth not initialized yet");
+          // console.log("web3auth not initialized yet");
           return;
         }
     
@@ -672,7 +672,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
         let text = "Connect";
         if (profile?.address) {
           if ( profile?.address) {
-            // console.log(profile);
+            // // console.log(profile);
             // text = profile?.nickName;
             text = clipName(profile?.address);
             // setShowMenu(true);
@@ -779,7 +779,7 @@ export default function HomePage({ onClickHandler }: Props,ref) {
         }
       }, [loginState]);
       const mintBag = ()=>{
-        console.log(11111,profile.address);
+        // console.log(11111,profile.address);
         if(!profile.address){
           connectToChain();
         }

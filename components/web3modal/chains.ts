@@ -64,6 +64,22 @@ const supportedChains: IChainData[] = [
       contractAddress: '',
       balance: '',
     },
+  },
+  {
+    name: 'Polygon Mainnet',
+    short_name: 'polygon',
+    chain: 'ETH',
+    network: 'polygon',
+    chain_id: 137,
+    network_id: 137,
+    rpc_url: 'https://rpc-mainnet.matic.network',
+    native_currency: {
+      symbol: 'MATIC',
+      name: 'Matic',
+      decimals: '18',
+      contractAddress: '',
+      balance: '',
+    },
   }
   // {
   //   name: 'Ethereum Rinkeby',

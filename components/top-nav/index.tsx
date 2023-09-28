@@ -38,7 +38,7 @@ export default function TopNav() {
     const mintBag = ()=>{
       
       const localAddr = window.localStorage.getItem('metaMaskAddress')
-      console.log(localAddr);
+     // console.log(localAddr);
       router.replace('/bags')
       // if(localAddr){
       //   router.replace('/assets/matic')

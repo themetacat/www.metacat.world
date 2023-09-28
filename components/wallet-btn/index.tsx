@@ -277,7 +277,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       const networkId = await window.ethereum.request({
         method: "net_version",
       });
-      console.log(networkId === "11155111", "networkId", networkId);
       // 判断当前网络是否为 Ethereum Sepolia 网络
       // await  window.ethereum.request({
       //   method: 'wallet_switchEthereumChain',
@@ -288,7 +287,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         // window.open("https://example.com");
         // return;
         const chainId = "0x" + (11155111).toString(16);
-        console.log(chainId, "chainId");
 
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
@@ -302,7 +300,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       web3.connect().then(
         async (res) => {
-          console.log("connect==>", res);
+          // console.log("connect==>", res);
           const { address: addr, provider } = res;
 
           connect(addr, provider);
@@ -428,7 +426,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
            URI={web3Modal.cachedProvider}
          /> */
     }
-    console.log(web3Modal, Web3Modal, web3Modal.cachedProvider, 8888888);
 
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org",
@@ -1375,7 +1372,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
           // 获取用户钱包中的 ETH 余额
           const balance = await web3.eth.getBalance(accountAddress);
-          console.log(accountAddress, "accountAddres1111s");
           // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
           const ethBalance = Number(web3.utils.fromWei(balance, "ether"));
 
@@ -1389,7 +1385,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             // 执行 mint 操作
             // your mint logic here
             console.log("Minting...");
-            console.log(mintNum, "mintNummintNummintNum");
 
             if (!profile?.address) {
               connectToChain();
@@ -1477,7 +1472,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                       fetch(tokenURIResult)
                         .then((response) => response.json())
                         .then((data) => {
-                          console.log(data, 3333333);
                           const dataArray = [];
                           dataArray.push(data);
                           // const transformedArray = dataArray.reduce((acc, curr) => {
@@ -1491,20 +1485,15 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                           });
 
                           setobj((state) => {
-                            console.log(state, transformedObject, 2222222);
 
                             const sortedKeys = Object?.keys(state)
                               .map(Number)
                               .sort((a, b) => b - a);
-                            console.log(sortedKeys);
 
                             const sortedData = sortedKeys?.map(
                               (key) => state[key]
                             );
-                            console.log(
-                              sortedData,
-                              "sortedDatasortedDatasortedData"
-                            );
+                            
 
                             // const gridContainer = document.createElement("div");
 
@@ -1670,11 +1659,9 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                                   const ownerOfAddr = await contract.methods
                                     .ownerOf(item.id)
                                     .call({});
-                                  console.log(ownerOfAddr, "你想要的地址");
-                                  console.log(ownerOfAddr === addR, "结果啊");
+                              
 
                                   if (ownerOfAddr === addR) {
-                                    console.log(111111);
                                     const walletClient: WalletClient =
                                       createWalletClient({
                                         chain: sepolia,

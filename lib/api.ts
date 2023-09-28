@@ -381,14 +381,15 @@ fetch(url, {
 })
 .then(response => response.json())
 .then(data => console.log(data.data,'.............'))
-.catch(error => console.error('Error222:', error));
+.catch(error => console.error('Error:', error));
   }
 
 //详情页列表页
   public async getBagsDetail(TBAAddress): Promise<any> {
     const search = qs.stringify({ TBAAddress}, { addQueryPrefix: true });
-    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=${TBAAddress}&pageSize=100&withMetadata=true`;
-    // const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e&pageSize=100&withMetadata=true`;
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=${TBAAddress}&pageSize=100&withMetadata=true`;
+    // const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=0xc96b7C00cBA95ea3C0E10e21Ea4661d481204f5C&pageSize=100&withMetadata=true`;
+    // const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e&pageSize=100&withMetadata=true`
     const res = await fetch(url);
     const json = await res.json();
 
@@ -398,7 +399,7 @@ fetch(url, {
 //详情页TBA
   public async getBagsNum(tokenId): Promise<any> {
     const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
-    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&tokenId=${tokenId}&refreshCache=false`;
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0x7524194dfCf68820006891d5D5810065F233A0B8&tokenId=${tokenId}&refreshCache=false`;
 
 
     const res = await fetch(url);
@@ -411,7 +412,7 @@ fetch(url, {
 
   public async getModelInfo(token_id): Promise<any> {
     const search = qs.stringify({ token_id}, { addQueryPrefix: true });
-    const url = `http://8.130.23.16/api/v1/get_babylon_model_info?token_id=${token_id}`;
+    const url = `http://47.243.184.241/api/v1/get_babylon_model_info?token_id=${token_id}`;
 
 
     const res = await fetch(url);
@@ -424,7 +425,7 @@ fetch(url, {
 
   public async rmBabylonModel(token: string,token_id): Promise<any> {
     const search = qs.stringify({ token_id}, { addQueryPrefix: false });
-    const url = `http://8.130.23.16/api/v1/rm_babylon_model_info?token_id=${token_id}`;
+    const url = `http://47.243.184.241/api/v1/rm_babylon_model_info?token_id=${token_id}`;
 
     const res = await fetch(url, {
          method: 'get',
@@ -443,11 +444,8 @@ fetch(url, {
   public async setModelInfo(token,costume): Promise<any> {
 //     const search = qs.stringify({ costume}, { addQueryPrefix: false });
 //     const url = `http://8.130.23.16/api/v1/set_babylon_model_info`;
-// console.log(token,5555);
 // // const formData = new FormData() as any;
 // // formData.append('costume',JSON.stringify({costume}))
-// // console.log(formData,6678);
-// console.log(search,99999999999999);
 
 // // const searchParams = new URLSearchParams(formData);
 //     const res = await fetch(url, {
@@ -463,7 +461,6 @@ fetch(url, {
 //       // body: search,
 //     });
 
-//     console.log(costume,65555);
     
 
     
@@ -472,16 +469,12 @@ fetch(url, {
 //     return json;
 
 
-const url = 'http://8.130.23.16/api/v1/set_babylon_model_info'; // 替换为你的接口地址
+const url = 'http://47.243.184.241/api/v1/set_babylon_model_info'; // 替换为你的接口地址
 
   const requestData = {
     costume
   };
-  // console.log(costume,444);
-  // console.log(token,999999);
-  // console.log(requestData,6666666666);
-  
-  // console.log(JSON.stringify(requestData),2222222222);
+
   
   fetch(url, {
     method: 'POST',
@@ -505,7 +498,7 @@ const url = 'http://8.130.23.16/api/v1/set_babylon_model_info'; // 替换为你�
 //列表页
   public async getBagsList(address): Promise<any> {
     const search = qs.stringify({ address}, { addQueryPrefix: true });
-    const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&withMetadata=true&pageSize=48`;
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0x7524194dfCf68820006891d5D5810065F233A0B8&withMetadata=true&pageSize=48`;
 
     const res = await fetch(url);
     const json = await res.json();
@@ -515,8 +508,8 @@ const url = 'http://8.130.23.16/api/v1/set_babylon_model_info'; // 替换为你�
 
   public async getAccount(tokenId): Promise<any> {
     const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
-    // const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c&tokenId=${tokenId}&refreshCache=false`;
-    const url = `https://polygon-mumbai.g.alchemy.com/nft/v3/0jIWuk4VdK14pDWrrwFoXaSShg_2tu32/refreshNftMetadata`;
+    // const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0x7524194dfCf68820006891d5D5810065F233A0B8&tokenId=${tokenId}&refreshCache=false`;
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v3/0jIWuk4VdK14pDWrrwFoXaSShg_2tu32/refreshNftMetadata`;
 
     const res = await fetch(url, {
       method: 'post',
@@ -524,13 +517,13 @@ const url = 'http://8.130.23.16/api/v1/set_babylon_model_info'; // 替换为你�
       // headers: {
       //   'Content-Type': 'application/x-www-form-urlencoded',
       // },
-      body: JSON.stringify({contractAddress: '0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c', tokenId: tokenId})
+      body: JSON.stringify({contractAddress: '0x7524194dfCf68820006891d5D5810065F233A0B8', tokenId: tokenId})
       // body: search,
     });
     const options = {
       method: 'POST',
       headers: {accept: 'application/json', 'content-type': 'application/json'},
-      body: JSON.stringify({contractAddress: '0xed2a07b9b40acf575f0cf61475034a0ccf5bd29c', tokenId: '44'})
+      body: JSON.stringify({contractAddress: '0x7524194dfCf68820006891d5D5810065F233A0B8', tokenId: '44'})
     };
     
     
