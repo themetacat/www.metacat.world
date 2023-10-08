@@ -50,7 +50,7 @@ const router = useRouter();
     // "wallet": "0x60ea96f57b3a5715a90dae1440a78f8bb339c92e",
     attachments: [],
     skin: null,
-    name: "Costume-2",});
+    name: "Bag-"+router.query.tokenID,});
   // var voxMesh = null;
   let windowVal = {};
   var last_rotation = {};
@@ -64,13 +64,13 @@ const router = useRouter();
   const attachmentId = React.useRef(null);
   const get_vox_data = (requestConfig, voxMesh) => {
     var parser = new vox.Parser();
-    // console.log(requestConfig,55656);
     
     parser
       .parse(
         
-        "https://www.voxels.com"+requestConfig.url
+        // "https://www.voxels.com"+requestConfig.url
           // "https://wearable.vercel.app/"+requestConfig.url.hash+".vox"
+          "https://wearable.vercel.app/"+requestConfig.voxHash+".vox"
       )
       .then(function (parsed) {
         // console.log(parsed, "有没有");
@@ -691,7 +691,6 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
           skeletonRoot = skeletons[0];
           // window["skeleton"] = skeletonRoot;
           skeleton = skeletonRoot;
-          console.log(skeleton, 658741);
 
           const bones = skeletonRoot.bones.filter(
             (bone) => !bone.name.match(/index/i)
@@ -768,11 +767,12 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
 
     function getWearableURL(droppedWearable) {
       // ${chain_info[droppedWearable.chain_id]}
-      const hexValue = droppedWearable.token_id;
-      const decimalValue = parseInt(hexValue, 16);
-      return `/c/v2/polygon/${
-        droppedWearable.collection_address
-      }/${decimalValue}/vox`;
+      const hexValue = droppedWearable.voxHash;
+      // const decimalValue = parseInt(hexValue, 16);
+      // return `/c/v2/polygon/${
+      //   droppedWearable.collection_address
+      // }/${decimalValue}/vox`;
+      return `https://wearable.vercel.app/${hexValue}.vox`
     }
 
     // 模型高亮层
@@ -885,6 +885,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
         rotation: [0, 0, 0],
         scaling: [defaultScale, defaultScale, defaultScale],
         bone: bone,
+        voxHash:wearable.voxHash,
         uuid: uniqueId,
         gateway:wearable.gateway,
       };
@@ -975,6 +976,7 @@ setCostume(updatedCostumeD)
           renderJob: 1,
           url: wearable_url,
           token_id: droppedWearable.token_id,
+          voxHash:droppedWearable.voxHash
       };
 
       voxMesh = new BABYLON.Mesh("utils/vox-box", scene);
@@ -1183,7 +1185,14 @@ const desiredValue =splitParts? splitParts[splitParts?.length - 1]:null;
 const tokenUri = item.tokenUri.raw
 // console.log(tokenUri);
 // console.log(tokenUri.includes("https://peer.decentraland.org"),66666666666666);
+const attributesData = item.metadata.attributes
+?.filter(itemNum => itemNum.trait_type === 'vox')
+.map(itemNum => itemNum.value);
 
+// console.log(attributesData[0]);
+const regex = /\/w\/([a-f0-9]+)\/vox/;
+const matches = regex.exec(attributesData[0]);
+// console.log(matches[1])
  const newItem ={
     "token_id":item.id.tokenId,
     // "token_id":25,
@@ -1194,13 +1203,14 @@ const tokenUri = item.tokenUri.raw
     "hash":tokenUri.includes("https://www.cryptovoxels.com")?desiredValue:null,
     "image":item.metadata.image,
     "gateway":item.tokenUri.gateway,
-
+    "voxHash":matches[1],
  }
 
  if (tokenUri.includes("https://www.cryptovoxels.com")) {
   collectibles.push(newItem)
 } 
 
+// console.log(collectibles,33);
 
 // console.log(item.metadata.image,34444444444);
         // img.src=item.metadata.image

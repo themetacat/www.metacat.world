@@ -444,7 +444,6 @@ if(router){
     }
     const createScene = function () {
       // var engine = new BABYLON.Engine(canvas, true, { antialiasing: true });
-console.log(11111111)
       const scene = new BABYLON.Scene(engine);
 
       // Set the scene's clear color
