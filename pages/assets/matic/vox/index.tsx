@@ -896,7 +896,7 @@ const metaCatAtk = window.localStorage.getItem("METACAT_atk");
       updatedCostume.attachments.push(attachmentInfo);
       attachmentId.current = uniqueId;
       const updatedCostumeD = { ...costume }; 
-setCostume(updatedCostumeD)
+      setCostume(updatedCostumeD)
       // const expandAttachments = true;
 
       // 调用api 更新Costume数据
