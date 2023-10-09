@@ -4,6 +4,7 @@ const nextConfig = {
   i18n: {
     // locales: ['en-US', 'fr', 'nl-NL'],
     // defaultLocale: 'en-US',
+    swcMinify:false,
     locales: ['zh-CN', 'en-US'],
     defaultLocale: 'zh-CN',
   },

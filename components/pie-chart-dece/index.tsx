@@ -129,8 +129,8 @@ export default function PieChartDece({ id, options, labelText, dataHandlder, tok
   );
   const requestData = React.useCallback(
     async (tok) => {
-      console.log(dataHandlder,'dataHandlder',tok);
-      console.log(dataHandlder(tok),showType);
+      // console.log(dataHandlder,'dataHandlder',tok);
+      // console.log(dataHandlder(tok),showType);
       
       setLoading(true);
       let result = {};
@@ -234,9 +234,9 @@ export default function PieChartDece({ id, options, labelText, dataHandlder, tok
 
   React.useEffect(() => {
     const accessToken = getToken('atk');
-    console.log(accessToken,55655);
+    // console.log(accessToken,55655);
     
-  // console.log(accessToken,
+  // // console.log(accessToken,
   //   getParcelList2(accessToken))
   requestData(accessToken);
 }, [requestData,token]);

@@ -10,7 +10,7 @@ import WalletConnect from "@walletconnect/client";
 import { createWalletClient, http, custom, WalletClient, Account } from "viem";
 import { sepolia } from "viem/chains";
 import NodeWalletConnect from "@walletconnect/node";
-import MintConcent from "./mintContent";
+import MintConcent from "../home-top/mintContent";
 // import { useEthersSigner } from './hooks'
 import Page from "../page";
 import {
@@ -35,6 +35,7 @@ import {
   loginSignature,
   getBaseInfo,
   getCVEventList,
+  rmBabylonModel
 } from "../../service";
 
 import { convert, getToken, removeToken, setToken } from "../../common/utils";
@@ -276,7 +277,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       const networkId = await window.ethereum.request({
         method: "net_version",
       });
-      console.log(networkId === "11155111", "networkId", networkId);
       // 判断当前网络是否为 Ethereum Sepolia 网络
       // await  window.ethereum.request({
       //   method: 'wallet_switchEthereumChain',
@@ -287,7 +287,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
         // window.open("https://example.com");
         // return;
         const chainId = "0x" + (11155111).toString(16);
-        console.log(chainId, "chainId");
 
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
@@ -301,7 +300,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
       web3.connect().then(
         async (res) => {
-          console.log("connect==>", res);
+          // console.log("connect==>", res);
           const { address: addr, provider } = res;
 
           connect(addr, provider);
@@ -427,7 +426,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
            URI={web3Modal.cachedProvider}
          /> */
     }
-    console.log(web3Modal, Web3Modal, web3Modal.cachedProvider, 8888888);
 
     const connector = new WalletConnect({
       bridge: "https://bridge.walletconnect.org",
@@ -559,6 +557,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
     if (idTokenWeb3 && web3AuthAddress) {
       setToken("atk", `${idTokenWeb3}-.-${web3AuthAddress}`);
       const webGetBase = getBaseInfo(getToken("atk"));
+
       webGetBase.then((webGetBase1) => {
         state.setState({
           profile: {
@@ -621,6 +620,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
       }, 2000);
     } else {
       const renConcent = getBaseInfo(metaCatAtk);
+  
 
       renConcent.then((renConcent1) => {
         setProfileConcent(renConcent1.profile?.address);
@@ -971,376 +971,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
   //   console.log(tokenBoundAccount);
   // }, []);
 
-  const abi = [
-    {
-      inputs: [
-        { internalType: "address", name: "_owner", type: "address" },
-        { internalType: "string", name: "newURI", type: "string" },
-      ],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    { inputs: [], name: "ApprovalCallerNotOwnerNorApproved", type: "error" },
-    { inputs: [], name: "ApprovalQueryForNonexistentToken", type: "error" },
-    { inputs: [], name: "BalanceQueryForZeroAddress", type: "error" },
-    { inputs: [], name: "MintERC2309QuantityExceedsLimit", type: "error" },
-    { inputs: [], name: "MintToZeroAddress", type: "error" },
-    { inputs: [], name: "MintZeroQuantity", type: "error" },
-    { inputs: [], name: "OwnerQueryForNonexistentToken", type: "error" },
-    { inputs: [], name: "OwnershipNotInitializedForExtraData", type: "error" },
-    { inputs: [], name: "TransferCallerNotOwnerNorApproved", type: "error" },
-    { inputs: [], name: "TransferFromIncorrectOwner", type: "error" },
-    {
-      inputs: [],
-      name: "TransferToNonERC721ReceiverImplementer",
-      type: "error",
-    },
-    { inputs: [], name: "TransferToZeroAddress", type: "error" },
-    { inputs: [], name: "URIQueryForNonexistentToken", type: "error" },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "owner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "approved",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "tokenId",
-          type: "uint256",
-        },
-      ],
-      name: "Approval",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "owner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "operator",
-          type: "address",
-        },
-        {
-          indexed: false,
-          internalType: "bool",
-          name: "approved",
-          type: "bool",
-        },
-      ],
-      name: "ApprovalForAll",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "fromTokenId",
-          type: "uint256",
-        },
-        {
-          indexed: false,
-          internalType: "uint256",
-          name: "toTokenId",
-          type: "uint256",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
-        },
-        { indexed: true, internalType: "address", name: "to", type: "address" },
-      ],
-      name: "ConsecutiveTransfer",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "previousOwner",
-          type: "address",
-        },
-        {
-          indexed: true,
-          internalType: "address",
-          name: "newOwner",
-          type: "address",
-        },
-      ],
-      name: "OwnershipTransferred",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "address",
-          name: "from",
-          type: "address",
-        },
-        { indexed: true, internalType: "address", name: "to", type: "address" },
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "tokenId",
-          type: "uint256",
-        },
-      ],
-      name: "Transfer",
-      type: "event",
-    },
-    {
-      inputs: [],
-      name: "advance",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address[]", name: "recipients", type: "address[]" },
-      ],
-      name: "airdrop",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-      ],
-      name: "approve",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "address", name: "owner", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-      name: "getApproved",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "getBipEnglish",
-      outputs: [{ internalType: "string[]", name: "", type: "string[]" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "getInfo",
-      outputs: [
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-        { internalType: "uint256", name: "", type: "uint256" },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "owner", type: "address" },
-        { internalType: "address", name: "operator", type: "address" },
-      ],
-      name: "isApprovedForAll",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
-      name: "mint",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "name",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "owner",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-      name: "ownerOf",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "renounceOwnership",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-      ],
-      name: "safeTransferFrom",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-        { internalType: "bytes", name: "_data", type: "bytes" },
-      ],
-      name: "safeTransferFrom",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "recipient", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "send",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "operator", type: "address" },
-        { internalType: "bool", name: "approved", type: "bool" },
-      ],
-      name: "setApprovalForAll",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "string[]", name: "_BipEnglish", type: "string[]" },
-      ],
-      name: "setBipEnglish",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "string", name: "newURI", type: "string" }],
-      name: "setURI",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
-      name: "supportsInterface",
-      outputs: [{ internalType: "bool", name: "", type: "bool" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "symbol",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "tokenToBip",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
-      name: "tokenURI",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "totalSupply",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "from", type: "address" },
-        { internalType: "address", name: "to", type: "address" },
-        { internalType: "uint256", name: "tokenId", type: "uint256" },
-      ],
-      name: "transferFrom",
-      outputs: [],
-      stateMutability: "payable",
-      type: "function",
-    },
-    {
-      inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-      name: "transferOwnership",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        { internalType: "address", name: "addr", type: "address" },
-        { internalType: "uint256", name: "amount", type: "uint256" },
-      ],
-      name: "withdraw",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-  ];
+  const abi = [{"inputs":[{"internalType":"address","name":"_logic","type":"address"},{"internalType":"bytes","name":"_data","type":"bytes"}],"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"stateMutability":"payable","type":"fallback"},{"stateMutability":"payable","type":"receive"},{"inputs":[],"name":"ApprovalCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"ApprovalQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"BalanceQueryForZeroAddress","type":"error"},{"inputs":[],"name":"MintERC2309QuantityExceedsLimit","type":"error"},{"inputs":[],"name":"MintToZeroAddress","type":"error"},{"inputs":[],"name":"MintZeroQuantity","type":"error"},{"inputs":[],"name":"OwnerQueryForNonexistentToken","type":"error"},{"inputs":[],"name":"OwnershipNotInitializedForExtraData","type":"error"},{"inputs":[],"name":"TransferCallerNotOwnerNorApproved","type":"error"},{"inputs":[],"name":"TransferFromIncorrectOwner","type":"error"},{"inputs":[],"name":"TransferToNonERC721ReceiverImplementer","type":"error"},{"inputs":[],"name":"TransferToZeroAddress","type":"error"},{"inputs":[],"name":"URIQueryForNonexistentToken","type":"error"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"previousAdmin","type":"address"},{"indexed":false,"internalType":"address","name":"newAdmin","type":"address"}],"name":"AdminChanged","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"beacon","type":"address"}],"name":"BeaconUpgraded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"fromTokenId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"toTokenId","type":"uint256"},{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"}],"name":"ConsecutiveTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint8","name":"version","type":"uint8"}],"name":"Initialized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"implementation","type":"address"}],"name":"Upgraded","type":"event"},{"inputs":[],"name":"ERC6551RegistryAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"implementation","type":"address"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"uint256","name":"salt","type":"uint256"},{"internalType":"bytes","name":"initData","type":"bytes"}],"name":"adminMint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getImplementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getInfo","outputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"initialize","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"quantity","type":"uint256"},{"internalType":"address","name":"implementation","type":"address"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"uint256","name":"salt","type":"uint256"},{"internalType":"bytes","name":"initData","type":"bytes"}],"name":"mintAndCreate","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxiableUUID","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newERC6551RegistryAddress","type":"address"}],"name":"setERC6551RegistryAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"newURI","type":"string"}],"name":"setURI","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"testNum","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[],"name":"testStr","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"}],"name":"upgradeTo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newImplementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"upgradeToAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"addr","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 
   const handleMint = async () => {
     try {
@@ -1372,7 +1003,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
 
           // 获取用户钱包中的 ETH 余额
           const balance = await web3.eth.getBalance(accountAddress);
-          console.log(accountAddress, "accountAddres1111s");
           // 将 balance 单位由 wei 转换为以太币，并将其转换为数字类型
           const ethBalance = Number(web3.utils.fromWei(balance, "ether"));
 
@@ -1386,7 +1016,6 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             // 执行 mint 操作
             // your mint logic here
             console.log("Minting...");
-            console.log(mintNum, "mintNummintNummintNum");
 
             if (!profile?.address) {
               connectToChain();
@@ -1395,7 +1024,7 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
             setLoading(true);
             const web3 = new Web3(Web3.givenProvider);
             const contractAddress =
-              "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+              "0x7524194dfCf68820006891d5D5810065F233A0B8";
             const contract = new web3.eth.Contract(abi as [], contractAddress);
             console.log(contract.events.Transfer);
             const mintNums = num; // 在这里定义要mint的数量
@@ -1469,253 +1098,258 @@ export default function WalletBtn({ name, address, onClickHandler }: Props) {
                     .tokenURI(event.returnValues.tokenId)
                     .call({});
                   // const nameCon = contract.methods.name().call({});
-                  Promise.all([ tokenURI]).then(
-                    ([ tokenURIResult]) => {
-                    
+                  Promise.all([tokenURI]).then(([tokenURIResult]) => {
+                    setTimeout(() => {
+                      fetch(tokenURIResult)
+                        .then((response) => response.json())
+                        .then((data) => {
+                          const dataArray = [];
+                          dataArray.push(data);
+                          // const transformedArray = dataArray.reduce((acc, curr) => {
+                          //   acc[curr.id] = curr;
+                          //   return acc;
+                          // }, {});
+                          const transformedObject = {};
 
-                      setTimeout(() => {
-                        fetch(tokenURIResult)
-                          .then((response) => response.json())
-                          .then((data) => {
-                            console.log(data, 3333333);
-                            const dataArray = [];
-                            dataArray.push(data);
-                            // const transformedArray = dataArray.reduce((acc, curr) => {
-                            //   acc[curr.id] = curr;
-                            //   return acc;
-                            // }, {});
-                            const transformedObject = {};
+                          dataArray.forEach((event) => {
+                            transformedObject[event.id] = event;
+                          });
 
-                            dataArray.forEach((event) => {
-                              transformedObject[event.id] = event;
-                            });
+                          setobj((state) => {
 
-                            setobj((state) => {
-                              console.log(state, transformedObject, 2222222);
+                            const sortedKeys = Object?.keys(state)
+                              .map(Number)
+                              .sort((a, b) => b - a);
 
-                              const sortedKeys = Object?.keys(state)
-                                .map(Number)
-                                .sort((a, b) => b - a);
-                              console.log(sortedKeys);
+                            const sortedData = sortedKeys?.map(
+                              (key) => state[key]
+                            );
+                            
 
-                              const sortedData = sortedKeys?.map(
-                                (key) => state[key]
-                              );
-                              console.log(
-                                sortedData,
-                                "sortedDatasortedDatasortedData"
-                              );
+                            // const gridContainer = document.createElement("div");
 
-                              // const gridContainer = document.createElement("div");
+                            // 移除旧的数据
+                            while (eventDataElement.firstChild) {
+                              eventDataElement.firstChild.remove();
+                            }
 
-                              // 移除旧的数据
-                              while (eventDataElement.firstChild) {
-                                eventDataElement.firstChild.remove();
+                            sortedData.forEach((item) => {
+                              const itemContainer =
+                                document.createElement("div");
+                              itemContainer.style.marginLeft = "20px";
+
+                              itemContainer.textContent = `${item.name}`;
+                              // gridContainer.appendChild(itemContainer);
+                              itemContainer.style.height = "300px";
+
+                              eventDataElement.appendChild(itemContainer);
+                              const tokenToBip = contract.methods
+                                .tokenToBip(item.id)
+                                .call({});
+
+                              async function testTokenboundClass() {
+                                const web3s = new Web3(window.ethereum);
+                                await window.ethereum.request({
+                                  method: "eth_requestAccounts",
+                                });
+                                // 获取当前账户地址
+                                const accounts = web3s.eth
+                                  .getAccounts()
+
+                                  .then((accounts) => {
+                                    const accountAddress = accounts[0];
+                                    const walletClient: WalletClient =
+                                      createWalletClient({
+                                        chain: sepolia,
+                                        account: web3s.eth.getAccounts()[0],
+                                        transport: window.ethereum
+                                          ? custom(window.ethereum)
+                                          : http(),
+                                      });
+
+                                    const tokenboundClient =
+                                      new TokenboundClient({
+                                        walletClient,
+                                        chainId: 11155111,
+                                      });
+                                    // console.log(walletClient,'walletClient');
+                                    if (!tokenboundClient) return;
+
+                                    const tokenboundAccount =
+                                      tokenboundClient.getAccount({
+                                        tokenContract:
+                                          "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                        tokenId: item.id,
+                                      });
+
+                                    // console.log('getAccount', tokenboundAccount)
+                                    const truncatedAccount =
+                                      `${tokenboundAccount}`.slice(0, 6) +
+                                      "..." +
+                                      `${tokenboundAccount}`.slice(-4);
+
+                                    const tokenboundSpan =
+                                      document.createElement("span");
+                                    tokenboundSpan.style.width = "200px";
+
+                                    tokenboundSpan.style.overflow = "hidden";
+                                    tokenboundSpan.style.display =
+                                      "inlineBlock";
+                                    tokenboundSpan.style.display =
+                                      "inline-block";
+                                    tokenboundSpan.textContent = `${truncatedAccount}`;
+                                    tokenboundSpan.style.width = "100px";
+                                    tokenboundSpan.style.height = "50px";
+                                    tokenboundSpan.style.backgroundColor =
+                                      "#c870d6";
+                                    tokenboundSpan.addEventListener(
+                                      "click",
+                                      () => {
+                                        const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
+                                        // 在新窗口中打开链接
+                                        window.open(url);
+                                      }
+                                    );
+                                    async function checkAddressType(address) {
+                                      const code = await web3.eth.getCode(
+                                        address
+                                      );
+                                      if (code === "0x") {
+                                        console.log(
+                                          "This is a normal address."
+                                        );
+                                        pElement.textContent = "Deploy Account";
+                                      } else {
+                                        console.log(
+                                          "This is a contract address."
+                                        );
+                                        pElement.textContent = "Deployed";
+                                      }
+                                    } // 处理 tokenURI 数据
+                                    checkAddressType(tokenboundAccount);
+
+                                    itemContainer.appendChild(tokenboundSpan);
+                                  });
                               }
 
-                              sortedData.forEach((item) => {
-                                const itemContainer =
-                                  document.createElement("div");
-                                itemContainer.style.marginLeft = "20px";
-
-                                itemContainer.textContent = `${item.name}`;
-                                // gridContainer.appendChild(itemContainer);
-                                itemContainer.style.height = "300px";
-
-                                eventDataElement.appendChild(itemContainer);
-                                const tokenToBip = contract.methods
-                                  .tokenToBip(item.id)
-                                  .call({});
-
-                                  async function testTokenboundClass() {
-                                    const web3s = new Web3(window.ethereum);
-                                    await window.ethereum.request({
-                                      method: "eth_requestAccounts",
-                                    });
-                                    // 获取当前账户地址
-                                    const accounts = web3s.eth
-                                      .getAccounts()
-        
-                                      .then((accounts) => {
-                                        const accountAddress = accounts[0];
-                                        const walletClient: WalletClient =
-                                          createWalletClient({
-                                            chain: sepolia,
-                                            account: web3s.eth.getAccounts()[0],
-                                            transport: window.ethereum
-                                              ? custom(window.ethereum)
-                                              : http(),
-                                          });
-        
-                                        const tokenboundClient = new TokenboundClient({
-                                          walletClient,
-                                          chainId: 11155111,
-                                        });
-                                        // console.log(walletClient,'walletClient');
-                                        if (!tokenboundClient) return;
-        
-                                        const tokenboundAccount =
-                                          tokenboundClient.getAccount({
-                                            tokenContract:
-                                              "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
-                                            tokenId: item.id,
-                                          });
-                                   
-        
-                                        // console.log('getAccount', tokenboundAccount)
-                                        const truncatedAccount =
-                                          `${tokenboundAccount}`.slice(0, 6) +
-                                          "..." +
-                                          `${tokenboundAccount}`.slice(-4);
-        
-            const tokenboundSpan =document.createElement("span");
-            tokenboundSpan.style.width = "200px";
-        
-            tokenboundSpan.style.overflow = "hidden";
-            tokenboundSpan.style.display = "inlineBlock";
-            tokenboundSpan.style.display = "inline-block";
-            tokenboundSpan.textContent = `${truncatedAccount}`;
-            tokenboundSpan.style.width = "100px";
-            tokenboundSpan.style.height = "50px";
-            tokenboundSpan.style.backgroundColor ='#c870d6'
-            tokenboundSpan.addEventListener("click", () => {
-              const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
-              // 在新窗口中打开链接
-              window.open(url);
-            })
-            async function checkAddressType(address) {
-              const code = await web3.eth.getCode(address);
-              if (code === '0x') {
-                console.log('This is a normal address.');
-                pElement.textContent = "Deploy Account";
-              } else {
-                console.log('This is a contract address.');
-                pElement.textContent = 'Deployed';
-              }
-            }// 处理 tokenURI 数据
-            checkAddressType(tokenboundAccount)
-        
-                                        itemContainer.appendChild(tokenboundSpan);
-                                      });
-        
-                                  }
-        
-                                  testTokenboundClass();
-                                tokenToBip.then((result) => {
-                                  // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
-                                  const tokenToBipPElement =
-                                    document.createElement("span");
-                                  tokenToBipPElement.style.display = "flex";
-                                  tokenToBipPElement.style.justifyContent =
-                                    "space-between";
-                                  tokenToBipPElement.textContent = `${result}`;
-                                  tokenToBipPElement.style.marginLeft = "20px";
-                                  itemContainer.appendChild(tokenToBipPElement);
-                                });
-
-                                // 处理 tokenURI 数据
-                                const imgTokenURIElement =
-                                  document.createElement("div");
-                                const imgElement =
-                                  document.createElement("img");
-                                  const pElement = document.createElement("button");
-                          pElement.textContent = "Deploy Account";
-                          pElement.style.width = "100px";
-                          pElement.style.height = "50px";
-                          pElement.style.backgroundColor ='#f2f2f2'
-                                // console.log(transformedArray,5555555);
-                                imgElement.setAttribute("src", item.image);
-
-                                imgTokenURIElement.appendChild(imgElement);
-                                imgTokenURIElement.appendChild(pElement);
-                                itemContainer.appendChild(imgTokenURIElement);
-                                // 添加点击事件处理程序
-pElement.addEventListener("click", () => {
-  console.log('在这里处理逻辑');
-  async function createAccount() {
-    await window.ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    const web3s = new Web3(window.ethereum);
-  //   console.log(web3s);
-  const accounts = web3s.eth.getAccounts()
-  
-  
-  .then((accounts) => {
-    
-    const accountAddress = accounts[0];
-    // console.log(accountAddress,66666);
-    
-  })
-  
-  const addR: unknown = window.localStorage.getItem('metaMaskAddress')
-
-  const address = addR as  Account;
-  const contract = new web3.eth.Contract(abi as [], contractAddress);
-  const ownerOfAddr =await contract.methods.ownerOf(item.id).call({});
-  console.log(ownerOfAddr,"你想要的地址");
-  console.log(ownerOfAddr===addR,'结果啊');
-  
-  if(ownerOfAddr===addR){
-    console.log(111111);
-    const walletClient: WalletClient =createWalletClient({
-    chain: sepolia,
-    account: address,
-    transport: window.ethereum
-      ? custom(window.ethereum)
-      : http(),
-  });
-  
-  const tokenboundClient = new TokenboundClient({
-  walletClient,
-  chainId: 11155111,
-  });
-  // console.log(walletClient,'walletClient');
-  if (!tokenboundClient) return;
-  
-  const tokenboundAccount =
-  tokenboundClient.getAccount({
-    tokenContract:
-      "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
-    tokenId: item.id,
-  });
-  // async function checkAddressType(address) {
-  //   const code = await web3.eth.getCode(address);
-  //   if (code === '0x') {
-  //     console.log('This is a normal address.');
-  //   } else {
-  //     console.log('This is a contract address.');
-  //   }
-  // }// 处理 tokenURI 数据
-  // checkAddressType(tokenboundAccount)
-  
-    const createAccount = await tokenboundClient.createAccount({
-      tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
-      tokenId: item.id,
-    })
-  }else{
-    alert('No operation permission')
-  }
-  
-  }
-  createAccount()
-  
-  });
-                                eventDataElement.appendChild(itemContainer);
-                                imgElement.style.width = "100px";
-                                imgElement.style.height = "100px";
+                              testTokenboundClass();
+                              tokenToBip.then((result) => {
+                                // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
+                                const tokenToBipPElement =
+                                  document.createElement("span");
+                                tokenToBipPElement.style.display = "flex";
+                                tokenToBipPElement.style.justifyContent =
+                                  "space-between";
+                                tokenToBipPElement.textContent = `${result}`;
+                                tokenToBipPElement.style.marginLeft = "20px";
+                                itemContainer.appendChild(tokenToBipPElement);
                               });
-                              return { ...state, ...transformedObject };
+
+                              // 处理 tokenURI 数据
+                              const imgTokenURIElement =
+                                document.createElement("div");
+                              const imgElement = document.createElement("img");
+                              const pElement = document.createElement("button");
+                              pElement.textContent = "Deploy Account";
+                              pElement.style.width = "100px";
+                              pElement.style.height = "50px";
+                              pElement.style.backgroundColor = "#f2f2f2";
+                              // console.log(transformedArray,5555555);
+                              imgElement.setAttribute("src", item.image);
+
+                              imgTokenURIElement.appendChild(imgElement);
+                              imgTokenURIElement.appendChild(pElement);
+                              itemContainer.appendChild(imgTokenURIElement);
+                              // 添加点击事件处理程序
+                              pElement.addEventListener("click", () => {
+                                console.log("在这里处理逻辑");
+                                async function createAccount() {
+                                  await window.ethereum.request({
+                                    method: "eth_requestAccounts",
+                                  });
+                                  const web3s = new Web3(window.ethereum);
+                                  //   console.log(web3s);
+                                  const accounts = web3s.eth
+                                    .getAccounts()
+
+                                    .then((accounts) => {
+                                      const accountAddress = accounts[0];
+                                      // console.log(accountAddress,66666);
+                                    });
+
+                                  const addR: unknown =
+                                    window.localStorage.getItem(
+                                      "metaMaskAddress"
+                                    );
+
+                                  const address = addR as Account;
+                                  const contract = new web3.eth.Contract(
+                                    abi as [],
+                                    contractAddress
+                                  );
+                                  const ownerOfAddr = await contract.methods
+                                    .ownerOf(item.id)
+                                    .call({});
+                              
+
+                                  if (ownerOfAddr === addR) {
+                                    const walletClient: WalletClient =
+                                      createWalletClient({
+                                        chain: sepolia,
+                                        account: address,
+                                        transport: window.ethereum
+                                          ? custom(window.ethereum)
+                                          : http(),
+                                      });
+
+                                    const tokenboundClient =
+                                      new TokenboundClient({
+                                        walletClient,
+                                        chainId: 11155111,
+                                      });
+                                    // console.log(walletClient,'walletClient');
+                                    if (!tokenboundClient) return;
+
+                                    const tokenboundAccount =
+                                      tokenboundClient.getAccount({
+                                        tokenContract:
+                                          "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                        tokenId: item.id,
+                                      });
+                                    // async function checkAddressType(address) {
+                                    //   const code = await web3.eth.getCode(address);
+                                    //   if (code === '0x') {
+                                    //     console.log('This is a normal address.');
+                                    //   } else {
+                                    //     console.log('This is a contract address.');
+                                    //   }
+                                    // }// 处理 tokenURI 数据
+                                    // checkAddressType(tokenboundAccount)
+
+                                    const createAccount =
+                                      await tokenboundClient.createAccount({
+                                        tokenContract:
+                                          "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                        tokenId: item.id,
+                                      });
+                                  } else {
+                                    alert("No operation permission");
+                                  }
+                                }
+                                createAccount();
+                              });
+                              eventDataElement.appendChild(itemContainer);
+                              imgElement.style.width = "100px";
+                              imgElement.style.height = "100px";
                             });
-                         
-                          })
-                          .catch((error) => {
-                            console.error("Error fetching tokenURI:", error);
+                            return { ...state, ...transformedObject };
                           });
-                      }, 3000); // 添加延迟，每隔1秒发送一个请求
-                    }
-                  );
-                 
+                        })
+                        .catch((error) => {
+                          console.error("Error fetching tokenURI:", error);
+                        });
+                    }, 3000); // 添加延迟，每隔1秒发送一个请求
+                  });
                 }
                 setLoading(false);
               })
@@ -1739,29 +1373,27 @@ pElement.addEventListener("click", () => {
       toast.error("something went wrong");
     }
   };
-//   const web3s = new Web3(window.ethereum);
-//   const walletClient: WalletClient =
-//   createWalletClient({
-//     chain: sepolia,
-//     account: web3s.eth.getAccounts()[0],
-//     transport: window.ethereum
-//       ? custom(window.ethereum)
-//       : http(),
-//   });
+  //   const web3s = new Web3(window.ethereum);
+  //   const walletClient: WalletClient =
+  //   createWalletClient({
+  //     chain: sepolia,
+  //     account: web3s.eth.getAccounts()[0],
+  //     transport: window.ethereum
+  //       ? custom(window.ethereum)
+  //       : http(),
+  //   });
 
-// const tokenboundClient = new TokenboundClient({
-//   walletClient,
-//   chainId: 11155111,
-// });
-
-
+  // const tokenboundClient = new TokenboundClient({
+  //   walletClient,
+  //   chainId: 11155111,
+  // });
 
   useEffect(() => {
     const Addr = window.localStorage.getItem("metaMaskAddress");
     if (window.ethereum && Addr) {
       window.ethereum.enable().then(() => {
         const web3 = new Web3(window.web3.currentProvider);
-        const contractAddress = "0xadd22a3efa6f22dd60df65cdfe096da0366ee002";
+        const contractAddress = "0x7524194dfCf68820006891d5D5810065F233A0B8";
         const daiContract = new web3.eth.Contract(abi as [], contractAddress);
         // const mintNums = 1;
         // let existingTokenIds = new Set();
@@ -1779,41 +1411,41 @@ pElement.addEventListener("click", () => {
           )
           .on("data", (event) => {
             const tokenId = event.returnValues.tokenId;
-          
+
             // existingTokenIds.add(tokenId);
-           // 添加每个 tokenId 的 Promise 到数组中
-//     tokenPromises.push(
-//       daiContract.methods.tokenToBip(tokenId).call({}),
-//       daiContract.methods.tokenURI(tokenId).call({})
-//     );
-//     // 添加 totalSupply 和 name 的 Promise 到数组中
-// tokenPromises.push(
-//   daiContract.methods.totalSupply().call({}),
-//   daiContract.methods.name().call({})
-// )
+            // 添加每个 tokenId 的 Promise 到数组中
+            //     tokenPromises.push(
+            //       daiContract.methods.tokenToBip(tokenId).call({}),
+            //       daiContract.methods.tokenURI(tokenId).call({})
+            //     );
+            //     // 添加 totalSupply 和 name 的 Promise 到数组中
+            // tokenPromises.push(
+            //   daiContract.methods.totalSupply().call({}),
+            //   daiContract.methods.name().call({})
+            // )
 
-// Promise.all(tokenPromises)
-//   .then(results => {
-//     const tokenToBipResults = results.slice(0, existingTokenIds.size * 2);
-//     const tokenURIs = results.slice(existingTokenIds.size * 2);
+            // Promise.all(tokenPromises)
+            //   .then(results => {
+            //     const tokenToBipResults = results.slice(0, existingTokenIds.size * 2);
+            //     const tokenURIs = results.slice(existingTokenIds.size * 2);
 
-//     // 获取 totalSupply 和 name 的结果
-//     const totalSupplyResult = results[results.length - 2];
-//     const nameResult = results[results.length - 1];
+            //     // 获取 totalSupply 和 name 的结果
+            //     const totalSupplyResult = results[results.length - 2];
+            //     const nameResult = results[results.length - 1];
 
-//     // 处理获取到的结果
-//     console.log("tokenToBip results:", tokenToBipResults);
-//     console.log("tokenURIs:", tokenURIs);
-//     console.log("totalSupply:", totalSupplyResult);
-//     console.log("name:", nameResult);
-//   })
-//   .catch(error => {
-//     // 处理错误
-//     console.log("Error:", error);
-//   });
-//   console.log(tokenPromises,'tokenPromises');
-  
-//   return
+            //     // 处理获取到的结果
+            //     console.log("tokenToBip results:", tokenToBipResults);
+            //     console.log("tokenURIs:", tokenURIs);
+            //     console.log("totalSupply:", totalSupplyResult);
+            //     console.log("name:", nameResult);
+            //   })
+            //   .catch(error => {
+            //     // 处理错误
+            //     console.log("Error:", error);
+            //   });
+            //   console.log(tokenPromises,'tokenPromises');
+
+            //   return
             // console.log(event);
             const totalSupply = daiContract.methods.totalSupply().call({});
             // const name = daiContract.methods.name().call({});
@@ -1832,8 +1464,8 @@ pElement.addEventListener("click", () => {
               .tokenURI(event.returnValues.tokenId)
               .call({});
             // const nameCon = daiContract.methods.name().call({});
-            Promise.all([ tokenURI])
-              .then(([ tokenURIResult]) => {
+            Promise.all([tokenURI])
+              .then(([tokenURIResult]) => {
                 setTimeout(() => {
                   fetch(tokenURIResult)
                     .then((response) => response.json())
@@ -1849,9 +1481,9 @@ pElement.addEventListener("click", () => {
                         const sortedKeys = Object?.keys(state)
                           .map(Number)
                           .sort((a, b) => b - a);
-                      
+
                         const sortedData = sortedKeys?.map((key) => state[key]);
-                  
+
                         // 移除旧的数据
                         while (eventDataElement.firstChild) {
                           eventDataElement.firstChild.remove();
@@ -1902,43 +1534,43 @@ pElement.addEventListener("click", () => {
                                       "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
                                     tokenId: item.id,
                                   });
-                           
-                                 
+
                                 // console.log('getAccount', tokenboundAccount)
                                 const truncatedAccount =
                                   `${tokenboundAccount}`.slice(0, 6) +
                                   "..." +
                                   `${tokenboundAccount}`.slice(-4);
 
-    const tokenboundSpan =document.createElement("span");
-    tokenboundSpan.style.width = "200px";
+                                const tokenboundSpan =
+                                  document.createElement("span");
+                                tokenboundSpan.style.width = "200px";
 
-    tokenboundSpan.style.overflow = "hidden";
-    tokenboundSpan.style.display = "inlineBlock";
-    tokenboundSpan.style.display = "inline-block";
-    tokenboundSpan.textContent = `${truncatedAccount}`;
-    tokenboundSpan.style.width = "120px";
-    tokenboundSpan.style.height = "30px";
-    tokenboundSpan.style.backgroundColor ='#c870d6'
-    tokenboundSpan.addEventListener("click", () => {
-      const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
-      // 在新窗口中打开链接
-      window.open(url);
-    })
-    async function checkAddressType(address) {
-      const code = await web3.eth.getCode(address);
-      if (code === '0x') {
-        // console.log('This is a normal address.');
-        pElement.textContent = "Deploy Account";
-      } else {
-        // console.log('This is a contract address.');
-        pElement.textContent = 'Deployed';
-      }
-    }// 处理 tokenURI 数据
-    checkAddressType(tokenboundAccount)
+                                tokenboundSpan.style.overflow = "hidden";
+                                tokenboundSpan.style.display = "inlineBlock";
+                                tokenboundSpan.style.display = "inline-block";
+                                tokenboundSpan.textContent = `${truncatedAccount}`;
+                                tokenboundSpan.style.width = "120px";
+                                tokenboundSpan.style.height = "30px";
+                                tokenboundSpan.style.backgroundColor =
+                                  "#c870d6";
+                                tokenboundSpan.addEventListener("click", () => {
+                                  const url = `https://sepolia.etherscan.io/address/${tokenboundAccount}`;
+                                  // 在新窗口中打开链接
+                                  window.open(url);
+                                });
+                                async function checkAddressType(address) {
+                                  const code = await web3.eth.getCode(address);
+                                  if (code === "0x") {
+                                    // console.log('This is a normal address.');
+                                    pElement.textContent = "Deploy Account";
+                                  } else {
+                                    // console.log('This is a contract address.');
+                                    pElement.textContent = "Deployed";
+                                  }
+                                } // 处理 tokenURI 数据
+                                checkAddressType(tokenboundAccount);
                                 itemContainer.appendChild(tokenboundSpan);
                               });
-
                           }
 
                           testTokenboundClass();
@@ -1946,87 +1578,96 @@ pElement.addEventListener("click", () => {
                           tokenToBip.then((result) => {
                             // 在 Promise 解析后的回调函数中获取到 tokenToBip 的值
                             // console.log(result, 'tokenToBip result');
-                            const tokenToBipPElement =document.createElement("span");
+                            const tokenToBipPElement =
+                              document.createElement("span");
                             tokenToBipPElement.style.display = "flex";
-                            tokenToBipPElement.style.justifyContent ="space-between";
+                            tokenToBipPElement.style.justifyContent =
+                              "space-between";
                             tokenToBipPElement.textContent = `${result}`;
                             tokenToBipPElement.style.marginLeft = "20px";
                             itemContainer.appendChild(tokenToBipPElement);
                           });
-                        
-                          
-                          const imgTokenURIElement =document.createElement("div");
+
+                          const imgTokenURIElement =
+                            document.createElement("div");
                           const imgElement = document.createElement("img");
                           const pElement = document.createElement("button");
                           // pElement.textContent = "Deploy Account";
                           pElement.style.width = "100px";
                           pElement.style.height = "50px";
-                          pElement.style.backgroundColor ='#f2f2f2'
+                          pElement.style.backgroundColor = "#f2f2f2";
 
-// 添加点击事件处理程序
-pElement.addEventListener("click", () => {
-// console.log('在这里处理逻辑');
-async function createAccount() {
-  await window.ethereum.request({
-    method: "eth_requestAccounts",
-  });
-  const web3s = new Web3(window.ethereum);
-//   console.log(web3s);
-const accounts = web3s.eth.getAccounts()
+                          // 添加点击事件处理程序
+                          pElement.addEventListener("click", () => {
+                            // console.log('在这里处理逻辑');
+                            async function createAccount() {
+                              await window.ethereum.request({
+                                method: "eth_requestAccounts",
+                              });
+                              const web3s = new Web3(window.ethereum);
+                              //   console.log(web3s);
+                              const accounts = web3s.eth.getAccounts();
 
-  const addR: unknown = window.localStorage.getItem('metaMaskAddress')
+                              const addR: unknown =
+                                window.localStorage.getItem("metaMaskAddress");
 
-const address = addR as  Account;
-const contract = new web3.eth.Contract(abi as [], contractAddress);
-const ownerOfAddr =await contract.methods.ownerOf(item.id).call({});
-// console.log(ownerOfAddr,"你想要的地址");
-// console.log(ownerOfAddr===addR,'结果啊');
+                              const address = addR as Account;
+                              const contract = new web3.eth.Contract(
+                                abi as [],
+                                contractAddress
+                              );
+                              const ownerOfAddr = await contract.methods
+                                .ownerOf(item.id)
+                                .call({});
+                              // console.log(ownerOfAddr,"你想要的地址");
+                              // console.log(ownerOfAddr===addR,'结果啊');
 
-if(ownerOfAddr===addR){
-  const walletClient: WalletClient =createWalletClient({
-  chain: sepolia,
-  account: address,
-  transport: window.ethereum
-    ? custom(window.ethereum)
-    : http(),
-});
+                              if (ownerOfAddr === addR) {
+                                const walletClient: WalletClient =
+                                  createWalletClient({
+                                    chain: sepolia,
+                                    account: address,
+                                    transport: window.ethereum
+                                      ? custom(window.ethereum)
+                                      : http(),
+                                  });
 
-const tokenboundClient = new TokenboundClient({
-walletClient,
-chainId: 11155111,
-});
-// console.log(walletClient,'walletClient');
-if (!tokenboundClient) return;
+                                const tokenboundClient = new TokenboundClient({
+                                  walletClient,
+                                  chainId: 11155111,
+                                });
+                                // console.log(walletClient,'walletClient');
+                                if (!tokenboundClient) return;
 
-const tokenboundAccount =
-tokenboundClient.getAccount({
-  tokenContract:
-    "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
-  tokenId: item.id,
-});
-// async function checkAddressType(address) {
-//   const code = await web3.eth.getCode(address);
-//   if (code === '0x') {
-//     console.log('This is a normal address.');
-//   } else {
-//     console.log('This is a contract address.');
-//   }
-// }// 处理 tokenURI 数据
-// checkAddressType(tokenboundAccount)
+                                const tokenboundAccount =
+                                  tokenboundClient.getAccount({
+                                    tokenContract:
+                                      "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                    tokenId: item.id,
+                                  });
+                                // async function checkAddressType(address) {
+                                //   const code = await web3.eth.getCode(address);
+                                //   if (code === '0x') {
+                                //     console.log('This is a normal address.');
+                                //   } else {
+                                //     console.log('This is a contract address.');
+                                //   }
+                                // }// 处理 tokenURI 数据
+                                // checkAddressType(tokenboundAccount)
 
-  const createAccount = await tokenboundClient.createAccount({
-    tokenContract: '0xADD22a3efa6f22dd60DF65CDfE096da0366eE002',
-    tokenId: item.id,
-  })
-}else{
-  alert('No operation permission')
-  toast.error('No operation permission')
-}
-
-}
-createAccount()
-
-});
+                                const createAccount =
+                                  await tokenboundClient.createAccount({
+                                    tokenContract:
+                                      "0xADD22a3efa6f22dd60DF65CDfE096da0366eE002",
+                                    tokenId: item.id,
+                                  });
+                              } else {
+                                alert("No operation permission");
+                                toast.error("No operation permission");
+                              }
+                            }
+                            createAccount();
+                          });
                           // console.log(transformedArray,5555555);
                           imgElement.setAttribute("src", item.image);
 
@@ -2068,44 +1709,36 @@ createAccount()
     }
   };
 
-
-
   useEffect(() => {
     async function fetchBalance() {
       if (typeof window.ethereum !== "undefined") {
-        
-       
         // 请求用户授权连接 MetaMask
         // console.log(window.ethereum);
-if(profile.address !==null){
-  const networkId =await  window.ethereum.request({
-    method: "net_version",
-  });
-  // console.log(networkId === "11155111", "networkId", networkId);
- 
-    if (networkId !== "11155111") {
-      removeToken("atk");
-      removeToken("rtk");
-      removeToken("address");
-      // if (w3) {
-      //   w3.resetApp()
-      // }
-      window.localStorage.clear();
+        if (profile.address !== null) {
+          const networkId = await window.ethereum.request({
+            method: "net_version",
+          });
+          // console.log(networkId === "11155111", "networkId", networkId);
 
-      state.setState({
-        accessToken: "",
-        refreshToken: "",
-        profile: { address: null, nickName: null, avatar: null },
-      });
-      if (pathname !== "/") {
-        window.location.href = "/";
-      
-        
-      }
-    
-    }
-}
-       
+          if (networkId !== "11155111") {
+            removeToken("atk");
+            removeToken("rtk");
+            removeToken("address");
+            // if (w3) {
+            //   w3.resetApp()
+            // }
+            window.localStorage.clear();
+
+            state.setState({
+              accessToken: "",
+              refreshToken: "",
+              profile: { address: null, nickName: null, avatar: null },
+            });
+            if (pathname !== "/") {
+              window.location.href = "/";
+            }
+          }
+        }
 
         // 创建 Web3 实例
         const web3 = new Web3(window.ethereum);

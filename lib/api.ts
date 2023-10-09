@@ -1,6 +1,6 @@
 // https://www.metacat.world/api/v1/get_cv_parcel_list?page=2&count=50&query=&type=gallery
 import * as qs from 'qs';
-
+import FormData from 'form-data';
 class API {
   private url: string;
 
@@ -285,6 +285,248 @@ class API {
     const url = `${this.url}/get_cv_event_list${search}`;
 
     const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getDataHandle(pointers): Promise<any> {
+  // const url = 'https://peer.decentraland.org/content/entities/active';
+//       const headers = {
+//   'authority': 'peer.decentraland.org',
+//   'accept': '*/*',
+//   'accept-language': 'zh-CN,zh;q=0.9,ko;q=0.8,en;q=0.7',
+//   'content-type': 'application/json',
+//   'origin': 'https://wearable-preview.decentraland.org',
+//   'referer': 'https://wearable-preview.decentraland.org/',
+//   'sec-ch-ua': '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
+//   'sec-ch-ua-mobile': '?0',
+//   'sec-ch-ua-platform': '"macOS"',
+//   'sec-fetch-dest': 'empty',
+//   'sec-fetch-mode': 'cors',
+//   'sec-fetch-site': 'same-site',
+//   'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+//       };
+//       const data  = pointers;
+//       console.log(data,222,pointers);
+      
+//   //     fetch(url, {
+//   //       method: 'POST',
+//   //       headers: headers,
+//   //       body: JSON.stringify(data),
+//   //     })
+//   //       .then(response => response.json())
+//   //       .then(data => console.log(data,'数据'))
+//   //       .catch(error => console.error('Error111111:', error));
+//   const url = 'http://47.243.184.241/api/v1/get_dcl_wearable_content_entities'; // 替换为你的接口地址
+
+
+//   fetch(url, {
+//     method: 'POST',
+//     // headers: {
+//     //   'Content-Type': 'application/json'
+//     // },
+//     headers:headers,
+//     body: JSON.stringify(pointers)
+//   })
+  
+//     // .then(response => response.json())
+//     .then(response => console.log(response.json()))
+//     .then(data => {
+//       // 处理响应数据
+// // const dataq =data.data[0].content
+// // let hashValue = null;
+
+// // dataq.forEach(item => {
+// //   if (item.file.includes('male/')) {
+// //     hashValue = item.hash;
+// //   }
+// //   console.log(hashValue,66666);
+  
+// // });
+
+// // console.log(hashValue); 
+//       console.log(data,'数据1222');
+//     })
+//     .catch(error => {
+//       console.error('Error:', error,'错误1');
+//     });
+
+
+
+const url = 'https://api.metacat.world/api/v1/get_dcl_wearable_content_entities';
+// const proxy = '127.0.0.1:7890'; // 代理地址和端口号
+
+const headers = {
+    // 'authority': 'peer.decentraland.org',
+    // 'accept': '*/*',
+    // 'accept-language': 'zh-CN,zh;q=0.9,ko;q=0.8,en;q=0.7',
+    'content-type': 'application/json',
+    // 'origin': 'https://wearable-preview.decentraland.org',
+    // 'referer': 'https://wearable-preview.decentraland.org/',
+    // 'sec-ch-ua': '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
+    // 'sec-ch-ua-mobile': '?0',
+    // 'sec-ch-ua-platform': '"macOS"',
+    // 'sec-fetch-dest': 'empty',
+    // 'sec-fetch-mode': 'cors',
+    // 'sec-fetch-site': 'same-site',
+    // 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+};
+
+const data = pointers;
+fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => console.log(data.data,'.............'))
+.catch(error => console.error('Error:', error));
+  }
+
+//详情页列表页
+  public async getBagsDetail(TBAAddress): Promise<any> {
+    const search = qs.stringify({ TBAAddress}, { addQueryPrefix: true });
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=${TBAAddress}&pageSize=100&withMetadata=true`;
+    // const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=0xc96b7C00cBA95ea3C0E10e21Ea4661d481204f5C&pageSize=100&withMetadata=true`;
+    // const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?pageKey=undefined&owner=0x60EA96f57B3a5715A90DAe1440a78f8bb339C92e&pageSize=100&withMetadata=true`
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+//详情页TBA
+  public async getBagsNum(tokenId): Promise<any> {
+    const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0x7524194dfCf68820006891d5D5810065F233A0B8&tokenId=${tokenId}&refreshCache=false`;
+
+
+    const res = await fetch(url);
+
+    
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getModelInfo(token_id): Promise<any> {
+    const search = qs.stringify({ token_id}, { addQueryPrefix: true });
+    const url = `https://api.metacat.world/api/v1/get_babylon_model_info?token_id=${token_id}`;
+
+
+    const res = await fetch(url);
+
+    
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async rmBabylonModel(token: string,token_id): Promise<any> {
+    const search = qs.stringify({ token_id}, { addQueryPrefix: false });
+    const url = `https://api.metacat.world/api/v1/rm_babylon_model_info?token_id=${token_id}`;
+
+    const res = await fetch(url, {
+         method: 'get',
+         headers: {
+          Authorization: token,
+         },
+        });
+    
+    const json = await res.json();
+
+    return json;
+  }
+
+    
+
+  public async setModelInfo(token,costume): Promise<any> {
+//     const search = qs.stringify({ costume}, { addQueryPrefix: false });
+//     const url = `http://8.130.23.16/api/v1/set_babylon_model_info`;
+// // const formData = new FormData() as any;
+// // formData.append('costume',JSON.stringify({costume}))
+
+// // const searchParams = new URLSearchParams(formData);
+//     const res = await fetch(url, {
+//       method: 'post',
+//       mode:'cors',
+//       headers: {
+//         Authorization: token,
+//         // 'Content-Type': 'application/json',
+//         // 'Content-Type': 'application/x-www-form-urlencoded',
+//        },
+//     body: JSON.stringify({ costume})
+
+//       // body: search,
+//     });
+
+    
+
+    
+//     const json = await res.json();
+
+//     return json;
+
+
+const url = 'https://api.metacat.world/api/v1/set_babylon_model_info'; // 替换为你的接口地址
+
+  const requestData = {
+    costume
+  };
+
+  
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData)
+  })
+  
+    .then(response => response.json())
+    .then(data => {
+      // 处理响应数据
+      console.log(data,'数据');
+    })
+    .catch(error => {
+      console.error('Error:', error,'cuowu');
+    });
+  }
+
+//列表页
+  public async getBagsList(address): Promise<any> {
+    const search = qs.stringify({ address}, { addQueryPrefix: true });
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTs?owner=${address}&contractAddresses[]=0x7524194dfCf68820006891d5D5810065F233A0B8&withMetadata=true&pageSize=48`;
+
+    const res = await fetch(url);
+    const json = await res.json();
+
+    return json;
+  }
+
+  public async getAccount(tokenId): Promise<any> {
+    const search = qs.stringify({ tokenId}, { addQueryPrefix: true });
+    // const url = `https://polygon-mumbai.g.alchemy.com/nft/v2/6UJiv2Zs3C0EUTmYMoDBt7PSQCGMvCn2/getNFTMetadata?contractAddress=0x7524194dfCf68820006891d5D5810065F233A0B8&tokenId=${tokenId}&refreshCache=false`;
+    const url = `https://polygon-mainnet.g.alchemy.com/nft/v3/0jIWuk4VdK14pDWrrwFoXaSShg_2tu32/refreshNftMetadata`;
+
+    const res = await fetch(url, {
+      method: 'post',
+      headers: {accept: 'application/json', 'content-type': 'application/json'},
+      // headers: {
+      //   'Content-Type': 'application/x-www-form-urlencoded',
+      // },
+      body: JSON.stringify({contractAddress: '0x7524194dfCf68820006891d5D5810065F233A0B8', tokenId: tokenId})
+      // body: search,
+    });
+    const options = {
+      method: 'POST',
+      headers: {accept: 'application/json', 'content-type': 'application/json'},
+      body: JSON.stringify({contractAddress: '0x7524194dfCf68820006891d5D5810065F233A0B8', tokenId: '44'})
+    };
+    
+    
     const json = await res.json();
 
     return json;
@@ -909,5 +1151,6 @@ class API {
 
 // export default new API('https://api.metacat.world/api/v1');
 export default new API('http://47.243.184.241/api/v1');
+// export default new API('http://8.130.23.16/api/v1');
 // http://8.130.23.16/
 // https://api.metacat.world

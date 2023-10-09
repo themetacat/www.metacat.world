@@ -49,6 +49,38 @@ const supportedChains: IChainData[] = [
       balance: '',
     },
   },
+  {
+    name: 'Mumbai Testnet',
+    short_name: 'mumbai',
+    chain: 'ETH',
+    network: 'mumbai',
+    chain_id: 80001,
+    network_id: 80001,
+    rpc_url: 'https://rpc-mumbai.maticvigil.com/',
+    native_currency: {
+      symbol: 'MATIC',
+      name: 'Matic',
+      decimals: '18',
+      contractAddress: '',
+      balance: '',
+    },
+  },
+  {
+    name: 'Polygon Mainnet',
+    short_name: 'polygon',
+    chain: 'ETH',
+    network: 'polygon',
+    chain_id: 137,
+    network_id: 137,
+    rpc_url: 'https://rpc-mainnet.matic.network',
+    native_currency: {
+      symbol: 'MATIC',
+      name: 'Matic',
+      decimals: '18',
+      contractAddress: '',
+      balance: '',
+    },
+  }
   // {
   //   name: 'Ethereum Rinkeby',
   //   short_name: 'rin',

@@ -15,6 +15,7 @@ import DclCard from "../components/parcels-dcl-card";
 import store from "../store/profile";
 import TopNav from "../components/top-nav";
 import HomePage from "../components/home-page";
+import HomeTop from "../components/home-top";
 import Card from "../components/parcels-card";
 import ParcelList from "../components/parcelList";
 import Tab3 from "../components/tab3";
@@ -289,28 +290,30 @@ useEffect(()=>{
 
 
   return (
-    <Page meta={meta} className={cn("", style.page)}>
-      {/* <WalletBtn /> */}
-      <TopNav/>
-
-      {/* <div className={cn("", style.parselist)}>
-        <div className={cn(style.tableList)}>
-          {TAB3.map((item) => {
-            return (
-              <Tab3
-                label={item.label}
-                key={item.label}
-                active={routeTab === item.type}
-                onClick={() => {
-                  changeTab3(item.label, item.type);
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
-      {routeTab === "parcellist" ? <ParcelList /> : null}
-      {routeTab === "trafficreport" ? <Trafficreport /> : null} */}
-    </Page>
+    // <Page meta={meta} className={cn("", style.page)}>
+      // {/* <WalletBtn /> */}
+      // {/* <TopNav/> */}
+      <>
+      <HomeTop/>
+      </>
+      // {/* <div className={cn("", style.parselist)}>
+      //   <div className={cn(style.tableList)}>
+      //     {TAB3.map((item) => {
+      //       return (
+      //         <Tab3
+      //           label={item.label}
+      //           key={item.label}
+      //           active={routeTab === item.type}
+      //           onClick={() => {
+      //             changeTab3(item.label, item.type);
+      //           }}
+      //         />
+      //       );
+      //     })}
+      //   </div>
+      // </div>
+      // {routeTab === "parcellist" ? <ParcelList /> : null}
+      // {routeTab === "trafficreport" ? <Trafficreport /> : null} */}
+    // </Page>
   );
 }

@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState,forwardRef ,useRef} from "react";
 import cn from "classnames";
 import style from "./index.module.css";
 import HomePage from "../home-page";
 import Router, { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 interface IProfileData {
     accessToken: string;
@@ -31,13 +32,26 @@ interface IProfileData {
   };
 
 export default function TopNav() {
+  
+  const funRef = useRef(null)
     const router = useRouter();
     const mintBag = ()=>{
-router.replace('/assets')
+      
+      const localAddr = window.localStorage.getItem('metaMaskAddress')
+     // console.log(localAddr);
+      router.replace('/bags')
+      // if(localAddr){
+      //   router.replace('/assets/matic')
+      // }else{
+      //   console.log(toast);
+        
+      //   toast.error('aaaaa')
+      // }
     }
+   
   return (
     <>
-    <HomePage/>
+    <HomePage ref={funRef}/>
     <div className={style.container}>
     <p>Pack Your Wearable.</p>
     <p  className={style.PBox}>UseERC-6551to package and sell your Wearables.</p>

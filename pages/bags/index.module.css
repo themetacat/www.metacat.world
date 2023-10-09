@@ -1,0 +1,81 @@
+.page{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.8);
+}
+.container{
+    width: 100vw;
+    /* height: 100vh; */
+    /* background-color: rgba(0,0,0,0.8); */
+}
+.mintBtn{
+  width: 200px;
+  height: 50px;
+  background-color: bisque;
+}
+.titleBox{
+    width: 1200px;
+    margin: auto;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+}
+.dataSourceCard{
+    width: 1200px;
+    margin: auto;
+    display: grid;
+    margin-top: 20px;
+    /* height: 300px; */
+    gap: 1.25rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .boxContent{
+    width: 270px;
+    height: 370px;
+    background-color: black;
+    border-radius: 10px;
+    color: #fff;
+    position: relative;
+  }
+  .boxContent img{
+    border-radius: 10px 10px 0px 0px;
+  }
+  .textCon{
+    padding: 15px 12px ;
+  }
+  .idP1{
+font-size: 16px;
+font-weight: 600;
+  }
+  .icon{
+    width: 23.53px;
+    height: 24.12px;
+    border-radius: 20px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+  .idP2{
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 5px;
+    width: 240px;
+    overflow: hidden;
+   white-space: nowrap;
+  text-overflow: ellipsis;
+  }
+  .idP3{
+    margin-top: 5px;
+    color: #4d4d50;
+  }
+  .nothingInfo{
+    width: 1200px;
+    text-align: center;
+    color: #515151;
+    font-size: 26px;
+font-weight: 600;
+height: 30px;
+line-height: 300px;
+  }
