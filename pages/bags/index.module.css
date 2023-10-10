@@ -26,7 +26,6 @@
     margin: auto;
     display: grid;
     margin-top: 20px;
-    /* height: 300px; */
     gap: 1.25rem;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     grid-template-columns: repeat(4, minmax(0, 1fr));
