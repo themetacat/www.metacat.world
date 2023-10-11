@@ -1051,7 +1051,6 @@ console.log(getModelInfoData);
           modelMesh.scaling.set(100, 100, 100);
           modelMesh.hashValue = the_wearable.hashValue
           modelMesh.uuid = attachmentId.current;
-          // console.log(the_wearable,5555555)
           modelMesh.rotationQuaternion = null;
           modelMesh.setParent(origin);
           origin.attachToBone(the_bone, the_avatar);
