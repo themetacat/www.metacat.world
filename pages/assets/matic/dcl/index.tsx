@@ -337,7 +337,6 @@ export default function DclContent() {
   }
 
  const updateAttachment = useCallback ( () =>{
-  console.log(11111);
   
 // // costume.attachments=costumeData
 // setCostume((state)=>{
@@ -411,6 +410,7 @@ if(router){
 
 
       const getModelInfoData = getModelInfo(router.query.tokenID);
+console.log(getModelInfoData);
 
       getModelInfoData.then(async (getModelInfoItem) => {
 
@@ -422,6 +422,7 @@ if(router){
 
           for (let att of attachments) {
             if(!att.type||att.type!='dcl'){continue}
+           console.log('=============');
            
             // (window as any).droppedWearable = att;
             windowVal['droppedWearable']= att
@@ -967,14 +968,17 @@ if(router){
       if (!updatedCostume.attachments) {
         updatedCostume.attachments = [];
       }
+  // console.log(attachmentInfo);
   
       updatedCostume.attachments.push(attachmentInfo);
+      // console.log(updatedCostume);
+      // costume.attachments.push(attachmentInfo)
       const updatedCostumeD = { ...costume }; 
-      console.log(updatedCostumeD);
+      // console.log(updatedCostumeD);
       
       setCostume(updatedCostumeD); 
       // attachmentId = uniqueId;
-      // console.log(uniqueId,);
+      // console.log(costume,23213123);
       
       attachmentId.current = uniqueId;
 
@@ -1047,7 +1051,7 @@ if(router){
           modelMesh.scaling.set(100, 100, 100);
           modelMesh.hashValue = the_wearable.hashValue
           modelMesh.uuid = attachmentId.current;
-          
+          // console.log(the_wearable,5555555)
           modelMesh.rotationQuaternion = null;
           modelMesh.setParent(origin);
           origin.attachToBone(the_bone, the_avatar);

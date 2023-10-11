@@ -413,6 +413,7 @@ fetch(url, {
   public async getModelInfo(token_id): Promise<any> {
     const search = qs.stringify({ token_id}, { addQueryPrefix: true });
     const url = `https://api.metacat.world/api/v1/get_babylon_model_info?token_id=${token_id}`;
+    // const url = `http://47.243.184.241/api/v1/get_babylon_model_info?token_id=${token_id}`;
 
 
     const res = await fetch(url);
