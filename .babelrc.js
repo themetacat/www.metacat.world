@@ -4,8 +4,12 @@
 //   plugins: [['import', { libraryName: 'antd', style: true }]],
 // };
 
-module.exports = {
+ module.exports =module.exports = {
+  presets: [require.resolve('next/babel')],
   plugins: [
-    ['import', { libraryName: 'antd', style: 'css' }]
+    [
+      require.resolve('babel-plugin-import'),
+      { libraryName: 'foo' }
+    ]
   ]
-};
+}
